@@ -36,6 +36,7 @@
 #include <QDesktopWidget>
 #include <QTextLayout>
 #include <QTextLine>
+#include <QScreen>
 #include <QLibrary>
 
 namespace Scintilla {
@@ -329,7 +330,7 @@ void SurfaceImpl::RoundedRectangle(PRectangle rc,
 {
 	PenColour(fore);
 	BrushColour(back);
-	GetPainter()->drawRoundRect(QRectFFromPRect(rc));
+	GetPainter()->drawRoundedRect(QRectFFromPRect(rc), 25, 25, Qt::RelativeSize);
 }
 
 void SurfaceImpl::AlphaRectangle(PRectangle rc,
@@ -642,8 +643,7 @@ void Window::SetPositionRelative(PRectangle rc, const Window *relativeTo)
 	ox += rc.left;
 	oy += rc.top;
 
-	QDesktopWidget *desktop = QApplication::desktop();
-	QRect rectDesk = desktop->availableGeometry(QPoint(ox, oy));
+	QRect rectDesk = QGuiApplication::screenAt(QPoint(ox, oy))->availableGeometry();
 	/* do some corrections to fit into screen */
 	int sizex = rc.right - rc.left;
 	int sizey = rc.bottom - rc.top;
@@ -724,7 +724,7 @@ PRectangle Window::GetMonitorRect(Point pt)
 	QPoint originGlobal = window(wid)->mapToGlobal(QPoint(0, 0));
 	QPoint posGlobal = window(wid)->mapToGlobal(QPoint(pt.x, pt.y));
 	QDesktopWidget *desktop = QApplication::desktop();
-	QRect rectScreen = desktop->availableGeometry(posGlobal);
+	QRect rectScreen = QGuiApplication::screenAt(posGlobal)->availableGeometry();
 	rectScreen.translate(-originGlobal.x(), -originGlobal.y());
 	return PRectangle(rectScreen.left(), rectScreen.top(),
 	        rectScreen.right(), rectScreen.bottom());

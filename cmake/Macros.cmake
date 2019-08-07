@@ -9,6 +9,7 @@ macro(add_sources target)
         endif()
         source_group("${group}" FILES "${file}")
     endforeach()
+    target_sources("${target}" PRIVATE ${ARGN})
 endmacro()
 
 macro(mingw_install_libraries)
