@@ -5,11 +5,12 @@
 #include <QPushButton>
 #include <QCloseEvent>
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
 {
     mUi->setupUi(this);
     mUi->tabWidget->setCurrentWidget(mUi->codeTab);
+    mUi->codeFileManager->init(QStringLiteral("%1/code").arg(path), QStringLiteral(".asm"));
     updateUi();
 }
 

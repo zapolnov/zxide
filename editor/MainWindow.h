@@ -11,7 +11,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow();
+    explicit MainWindow(const QString& path);
     ~MainWindow() override;
 
 protected:

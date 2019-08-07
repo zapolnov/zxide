@@ -142,7 +142,7 @@
      <x>0</x>
      <y>0</y>
      <width>630</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -308,6 +308,10 @@
    </property>
   </action>
   <action name="actionSaveAll">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/disk_multiple.png</normaloff>:/resources/fatcow16x16/disk_multiple.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save all</string>
    </property>

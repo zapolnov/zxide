@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
 
-    MainWindow mainWindow;
+    MainWindow mainWindow(GAME_DIR);
     mainWindow.show();
 
     return app.exec();

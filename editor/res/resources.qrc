@@ -1,12 +1,20 @@
 <RCC>
   <qresource prefix="resources">
+    <file>fatcow16x16/arrow_refresh.png</file>
+    <file>fatcow16x16/bin_closed.png</file>
     <file>fatcow16x16/cross.png</file>
+    <file>fatcow16x16/disk_multiple.png</file>
     <file>fatcow16x16/door_in.png</file>
+    <file>fatcow16x16/folder.png</file>
+    <file>fatcow16x16/folder_add.png</file>
     <file>fatcow16x16/lightbulb_off.png</file>
     <file>fatcow16x16/page_copy.png</file>
+    <file>fatcow16x16/page_white.png</file>
+    <file>fatcow16x16/page_white_add.png</file>
     <file>fatcow16x16/paste_plain.png</file>
     <file>fatcow16x16/redo.png</file>
     <file>fatcow16x16/select_by_adding_to_selection.png</file>
+    <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
     <file>tango16x16/edit-cut.png</file>
     <file>tango16x16/media-playback-start.png</file>
