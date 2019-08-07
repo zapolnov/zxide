@@ -76,6 +76,16 @@
            <attribute name="title">
             <string>Code</string>
            </attribute>
+           <widget class="FileManager" name="codeFileManager" native="true">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>201</width>
+              <height>521</height>
+             </rect>
+            </property>
+           </widget>
           </widget>
           <widget class="QWidget" name="tilesTab">
            <attribute name="title">
@@ -306,6 +316,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FileManager</class>
+   <extends>QWidget</extends>
+   <header>FileManager.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="res/resources.qrc"/>
  </resources>

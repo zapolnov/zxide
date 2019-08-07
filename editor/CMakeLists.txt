@@ -14,6 +14,9 @@ qt_add_sources(GameEditor
         AboutDialog.cpp
         AboutDialog.h
         AboutDialog.ui
+        FileManager.cpp
+        FileManager.h
+        FileManager.ui
         MainWindow.cpp
         MainWindow.h
         MainWindow.ui
