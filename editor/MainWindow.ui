@@ -290,7 +290,7 @@
   <action name="actionDelete">
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/fatcow16x16/cross.png</normaloff>:/resources/fatcow16x16/cross.png</iconset>
+     <normaloff>:/resources/fatcow16x16/broom.png</normaloff>:/resources/fatcow16x16/broom.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Delete</string>
@@ -312,6 +312,10 @@
    </property>
   </action>
   <action name="actionGoToLine">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/page_go.png</normaloff>:/resources/fatcow16x16/page_go.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Go to line...</string>
    </property>

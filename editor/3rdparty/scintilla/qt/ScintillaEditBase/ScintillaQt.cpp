@@ -662,6 +662,15 @@ void ScintillaQt::AddToPopUp(const char *label,
 		menu->addSeparator();
 	} else {
 		QAction *action = menu->addAction(text);
+		switch (cmd) {
+			case idcmdUndo: action->setText(tr("&Undo")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/undo.png"))); break;
+			case idcmdRedo: action->setText(tr("&Redo")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/redo.png"))); break;
+			case idcmdCut: action->setText(tr("Cu&t")); action->setIcon(QIcon(QStringLiteral(":/resources/tango16x16/edit-cut.png"))); break;
+			case idcmdCopy: action->setText(tr("&Copy")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/page_copy.png"))); break;
+			case idcmdPaste: action->setText(tr("&Paste")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/paste_plain.png"))); break;
+			case idcmdDelete: action->setText(tr("&Delete")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/broom.png"))); break;
+			case idcmdSelectAll: action->setText(tr("Select &all")); action->setIcon(QIcon(QStringLiteral(":/resources/fatcow16x16/select_by_adding_to_selection.png"))); break;
+		}
 		action->setData(cmd);
 		action->setEnabled(enabled);
 	}

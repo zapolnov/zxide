@@ -21,9 +21,16 @@ MainWindow::MainWindow(const QString& path)
 {
     mUi->setupUi(this);
 
-    mEditorTabs.emplace_back(mUi->codeTab);
-    mEditorTabs.emplace_back(mUi->tilesTab);
-    mEditorTabs.emplace_back(mUi->levelsTab);
+    int n = mUi->tabWidget->count();
+    for (int i = 0; i < n; i++) {
+        IEditorTab* tab = dynamic_cast<IEditorTab*>(mUi->tabWidget->widget(i));
+        Q_ASSERT(tab != nullptr);
+        if (tab) {
+            tab->updateUi = std::bind(&MainWindow::updateUi, this);
+            mEditorTabs.emplace_back(tab);
+        }
+    }
+
     mUi->tabWidget->setCurrentWidget(mUi->codeTab);
 
     mUi->codeTab->init(QStringLiteral("%1/code").arg(path));
@@ -174,12 +181,12 @@ void MainWindow::on_actionGoToLine_triggered()
         dlg.setInputMode(QInputDialog::IntInput);
         dlg.setWindowTitle(tr("Go to line"));
         dlg.setLabelText(tr("Line number:"));
-        dlg.setIntRange(0, INT_MAX);
+        dlg.setIntRange(1, INT_MAX);
         dlg.setIntStep(1);
         dlg.setIntValue(1);
         if (dlg.exec() != QDialog::Accepted)
             return;
-        tab->goToLine(dlg.intValue());
+        tab->goToLine(dlg.intValue() - 1);
     }
 }
 

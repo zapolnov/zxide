@@ -1,9 +1,13 @@
 #ifndef IEDITORTAB_H
 #define IEDITORTAB_H
 
+#include <functional>
+
 class IEditorTab
 {
 public:
+    std::function<void()> updateUi = []{};
+
     virtual ~IEditorTab() = default;
 
     virtual bool hasModifiedFiles() const { return false; }

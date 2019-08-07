@@ -1,10 +1,5 @@
 #include "TextEditor.h"
 #include "Settings.h"
-#include <LineMarker.h>
-#include <Indicator.h>
-#include <UniqueString.h>
-#include <Style.h>
-#include <ViewStyle.h>
 #include <QSettings>
 
 TextEditor::TextEditor(QWidget* parent)
@@ -19,8 +14,21 @@ TextEditor::~TextEditor()
 
 void TextEditor::reloadSettings()
 {
+    setCodePage(SC_CP_UTF8);
+    setEndAtLastLine(true);
+    setEOLMode(SC_EOL_LF);
+    setIndent(0); // 0 = the same as tab size
+    setScrollWidth(0);
+    setScrollWidthTracking(true);
+    setTabDrawMode(SCTD_LONGARROW);
+    setUndoCollection(true);
+    setWrapMode(SC_WRAP_NONE);
+
     QSettings settings;
-    setViewWS(settings.value(SettingShowWhitespace, Scintilla::wsVisibleAlways).toInt());
-    setViewEOL(settings.value(SettingShowEndOfLine, 0).toInt());
-    setTabDrawMode(Scintilla::tdLongArrow);
+    setBackSpaceUnIndents(settings.value(SettingBackspaceUnindents, true).toBool());
+    setTabIndents(settings.value(SettingTabIndents, false).toBool());
+    setTabWidth(settings.value(SettingTabWidth, 4).toInt());
+    setUseTabs(settings.value(SettingUseTabs, false).toBool());
+    setViewEOL(settings.value(SettingShowEndOfLine, false).toBool());
+    setViewWS(settings.value(SettingShowWhitespace, SCWS_VISIBLEALWAYS).toInt());
 }
