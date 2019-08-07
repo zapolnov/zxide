@@ -18,7 +18,7 @@ void TextEditor::reloadSettings()
     setEndAtLastLine(true);
     setEOLMode(SC_EOL_LF);
     setIndent(0); // 0 = the same as tab size
-    setScrollWidth(0);
+    setScrollWidth(10);
     setScrollWidthTracking(true);
     setTabDrawMode(SCTD_LONGARROW);
     setUndoCollection(true);
