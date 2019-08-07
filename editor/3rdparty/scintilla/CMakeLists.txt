@@ -9,13 +9,10 @@ target_compile_definitions(Scintilla PUBLIC
 
 target_include_directories(Scintilla PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/qt"
-    "${CMAKE_CURRENT_SOURCE_DIR}/qt/ScintillaEditBase"
-    )
-
-target_include_directories(Scintilla PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
     "${CMAKE_CURRENT_SOURCE_DIR}/lexlib"
+    "${CMAKE_CURRENT_SOURCE_DIR}/qt"
+    "${CMAKE_CURRENT_SOURCE_DIR}/qt/ScintillaEditBase"
     "${CMAKE_CURRENT_SOURCE_DIR}/qt/ScintillaEdit"
     )
 

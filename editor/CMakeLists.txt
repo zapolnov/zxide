@@ -14,16 +14,29 @@ qt_add_executable(GameEditor USES Core Gui Widgets)
 target_link_libraries(GameEditor Scintilla)
 
 qt_add_sources(GameEditor
+        code/CodeTab.cpp
+        code/CodeTab.h
+        code/CodeTab.ui
+        code/TextEditor.cpp
+        code/TextEditor.h
+        levels/LevelsTab.cpp
+        levels/LevelsTab.h
+        levels/LevelsTab.ui
         res/resources.qrc
+        tiles/TilesTab.cpp
+        tiles/TilesTab.h
+        tiles/TilesTab.ui
         AboutDialog.cpp
         AboutDialog.h
         AboutDialog.ui
         FileManager.cpp
         FileManager.h
         FileManager.ui
+        IEditorTab.h
         MainWindow.cpp
         MainWindow.h
         MainWindow.ui
+        Settings.h
         main.cpp
     )
 

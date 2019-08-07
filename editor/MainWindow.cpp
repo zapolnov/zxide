@@ -1,21 +1,63 @@
 #include "MainWindow.h"
 #include "AboutDialog.h"
+#include "IEditorTab.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include <QCloseEvent>
+#include <QInputDialog>
+
+namespace
+{
+    class DummyTab : public IEditorTab
+    {
+    };
+
+    static DummyTab dummyTab;
+}
 
 MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
 {
     mUi->setupUi(this);
+
+    mEditorTabs.emplace_back(mUi->codeTab);
+    mEditorTabs.emplace_back(mUi->tilesTab);
+    mEditorTabs.emplace_back(mUi->levelsTab);
     mUi->tabWidget->setCurrentWidget(mUi->codeTab);
-    mUi->codeFileManager->init(QStringLiteral("%1/code").arg(path), QStringLiteral(".asm"));
+
+    mUi->codeTab->init(QStringLiteral("%1/code").arg(path));
+    mUi->tilesTab->init(QStringLiteral("%1/tiles").arg(path));
+    mUi->levelsTab->init(QStringLiteral("%1/levels").arg(path));
+
     updateUi();
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+IEditorTab* MainWindow::currentTab() const
+{
+    QWidget* widget = mUi->tabWidget->currentWidget();
+    if (widget == nullptr)
+        return &dummyTab;
+
+    auto tab = dynamic_cast<IEditorTab*>(widget);
+    Q_ASSERT(tab != nullptr);
+    if (tab == nullptr)
+        return &dummyTab;
+
+    return tab;
+}
+
+bool MainWindow::hasModifiedFiles() const
+{
+    for (auto tab : mEditorTabs) {
+        if (tab->hasModifiedFiles())
+            return true;
+    }
+    return false;
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -28,7 +70,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 bool MainWindow::confirmSave()
 {
-    if (!isWindowModified())
+    if (!hasModifiedFiles())
         return true;
 
     QMessageBox msgbox(QMessageBox::Warning, tr("Confirmation"), tr("Save changes?"), QMessageBox::NoButton, this);
@@ -50,67 +92,95 @@ bool MainWindow::confirmSave()
 
 bool MainWindow::saveAll()
 {
-    // FIXME
-    return true;
+    bool success = true;
+    for (auto tab : mEditorTabs) {
+        if (!tab->saveAll())
+            success = false;
+    }
+    return success;
 }
 
 void MainWindow::updateUi()
 {
-    setWindowModified(false); // FIXME
-    mUi->actionUndo->setEnabled(false); // FIXME
-    mUi->actionRedo->setEnabled(false); // FIXME
-    mUi->actionCut->setEnabled(false); // FIXME
-    mUi->actionCopy->setEnabled(false); // FIXME
-    mUi->actionPaste->setEnabled(false); // FIXME
-    mUi->actionDelete->setEnabled(false); // FIXME
-    mUi->actionSelectAll->setEnabled(false); // FIXME
-    mUi->actionClearSelection->setEnabled(false); // FIXME
+    bool modified = hasModifiedFiles();
+    setWindowModified(modified);
+
+    IEditorTab* tab = currentTab();
+    mUi->actionSaveAll->setEnabled(modified);
+    mUi->actionUndo->setEnabled(tab->canUndo());
+    mUi->actionRedo->setEnabled(tab->canRedo());
+    mUi->actionCut->setEnabled(tab->canCut());
+    mUi->actionCopy->setEnabled(tab->canCopy());
+    mUi->actionPaste->setEnabled(tab->canPaste());
+    mUi->actionDelete->setEnabled(tab->canClear());
+    mUi->actionSelectAll->setEnabled(tab->canSelectAll());
+    mUi->actionClearSelection->setEnabled(tab->canClearSelection());
+    mUi->actionGoToLine->setEnabled(tab->canGoToLine());
+
     mUi->stackedWidget->setCurrentIndex(0); // FIXME
 }
 
 void MainWindow::on_actionSaveAll_triggered()
 {
-    // FIXME
+    for (auto tab : mEditorTabs)
+        tab->saveAll();
 }
 
 void MainWindow::on_actionUndo_triggered()
 {
-    // FIXME
+    currentTab()->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    // FIXME
+    currentTab()->redo();
 }
 
 void MainWindow::on_actionCut_triggered()
 {
-    // FIXME
+    currentTab()->cut();
 }
 
 void MainWindow::on_actionCopy_triggered()
 {
-    // FIXME
+    currentTab()->copy();
 }
 
 void MainWindow::on_actionPaste_triggered()
 {
-    // FIXME
+    currentTab()->paste();
 }
 
 void MainWindow::on_actionDelete_triggered()
 {
-    // FIXME
+    currentTab()->clear();
 }
 
 void MainWindow::on_actionSelectAll_triggered()
 {
-    // FIXME
+    currentTab()->selectAll();
 }
 
 void MainWindow::on_actionClearSelection_triggered()
 {
-    // FIXME
+    currentTab()->clearSelection();
+}
+
+void MainWindow::on_actionGoToLine_triggered()
+{
+    auto tab = currentTab();
+    if (tab->canGoToLine()) {
+        QInputDialog dlg(this);
+        dlg.setInputMode(QInputDialog::IntInput);
+        dlg.setWindowTitle(tr("Go to line"));
+        dlg.setLabelText(tr("Line number:"));
+        dlg.setIntRange(0, INT_MAX);
+        dlg.setIntStep(1);
+        dlg.setIntValue(1);
+        if (dlg.exec() != QDialog::Accepted)
+            return;
+        tab->goToLine(dlg.intValue());
+    }
 }
 
 void MainWindow::on_actionRun_triggered()
@@ -122,4 +192,9 @@ void MainWindow::on_actionAbout_triggered()
 {
     AboutDialog dlg(this);
     dlg.exec();
+}
+
+void MainWindow::on_tabWidget_currentChanged(int)
+{
+    updateUi();
 }

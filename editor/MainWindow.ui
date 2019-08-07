@@ -72,27 +72,17 @@
           <property name="documentMode">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="codeTab">
+          <widget class="CodeTab" name="codeTab">
            <attribute name="title">
             <string>Code</string>
            </attribute>
-           <widget class="FileManager" name="codeFileManager" native="true">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>201</width>
-              <height>521</height>
-             </rect>
-            </property>
-           </widget>
           </widget>
-          <widget class="QWidget" name="tilesTab">
+          <widget class="TilesTab" name="tilesTab">
            <attribute name="title">
             <string>Tiles</string>
            </attribute>
           </widget>
-          <widget class="QWidget" name="levelsTab">
+          <widget class="LevelsTab" name="levelsTab">
            <attribute name="title">
             <string>Levels</string>
            </attribute>
@@ -167,6 +157,8 @@
     <addaction name="separator"/>
     <addaction name="actionSelectAll"/>
     <addaction name="actionClearSelection"/>
+    <addaction name="separator"/>
+    <addaction name="actionGoToLine"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -319,12 +311,32 @@
     <string>Ctrl+S</string>
    </property>
   </action>
+  <action name="actionGoToLine">
+   <property name="text">
+    <string>&amp;Go to line...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FileManager</class>
+   <class>CodeTab</class>
    <extends>QWidget</extends>
-   <header>FileManager.h</header>
+   <header>code/CodeTab.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TilesTab</class>
+   <extends>QWidget</extends>
+   <header>tiles/TilesTab.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LevelsTab</class>
+   <extends>QWidget</extends>
+   <header>levels/LevelsTab.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
