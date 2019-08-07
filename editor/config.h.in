@@ -1,0 +1,7 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define GAME_NAME QStringLiteral("@GAME_NAME@")
+#define GAME_DIR QStringLiteral("@GAME_DIR@")
+
+#endif
