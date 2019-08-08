@@ -46,7 +46,7 @@ public:
     void NotifySavePoint(Document *doc, void *userData, bool atSavePoint) override;
     void NotifyModified(Document *doc, DocModification mh, void *userData) override;
     void NotifyDeleted(Document *doc, void *userData) noexcept override;
-    void NotifyStyleNeeded(Document *doc, void *userData, Sci::Position endPos);
+    void NotifyStyleNeeded(Document *doc, void *userData, Sci::Position endPos) override;
     void NotifyLexerChanged(Document *doc, void *userData) override;
     void NotifyErrorOccurred(Document *doc, void *userData, int status) override;
 };
