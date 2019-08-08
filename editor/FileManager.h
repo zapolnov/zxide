@@ -83,6 +83,10 @@ public:
 
     FileOrDirectory* selectedFileOrDirectory() const;
 
+signals:
+    void fileSelected(File* file);
+    void fileDisappeared(File* file);
+
 private:
     std::unique_ptr<Ui_FileManager> mUi;
     QIcon mFolderIcon;

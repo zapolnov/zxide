@@ -108,8 +108,11 @@ void FileManager::refreshDirectory(Directory* directory)
 
     for (auto dir : oldDirectories)
         delete dir;
-    for (auto file : oldFiles)
+
+    for (auto file : oldFiles) {
+        emit fileDisappeared(file);
         delete file;
+    }
 
     directory->sortChildren(0, Qt::AscendingOrder);
 }
@@ -120,6 +123,9 @@ void FileManager::on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QT
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
     mUi->renameButton->setEnabled(parent != nullptr);
     mUi->deleteButton->setEnabled(parent != nullptr);
+
+    if (selected->type() == File::Type)
+        emit fileSelected(static_cast<File*>(selected));
 }
 
 void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
