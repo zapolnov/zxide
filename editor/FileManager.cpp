@@ -304,6 +304,13 @@ void FileManager::on_renameButton_clicked()
         return;
     }
 
+    if (selected->type() == File::Type) {
+        bool shouldAbort = false;
+        emit willRenameFile(static_cast<File*>(selected), &shouldAbort);
+        if (shouldAbort)
+            return;
+    }
+
     if (!dir.rename(fullOldName, fullNewName)) {
         QMessageBox::critical(this, tr("Error"), tr("Unable to rename \"%1\" to \"%2\" in \"%3\".")
             .arg(fullOldName).arg(fullNewName).arg(dir.absolutePath()));

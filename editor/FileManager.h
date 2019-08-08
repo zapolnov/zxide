@@ -84,6 +84,7 @@ public:
     FileOrDirectory* selectedFileOrDirectory() const;
 
 signals:
+    void willRenameFile(File* file, bool* shouldAbort);
     void fileSelected(File* file);
     void fileDisappeared(File* file);
 
