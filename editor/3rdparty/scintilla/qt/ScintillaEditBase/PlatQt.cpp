@@ -141,6 +141,7 @@ void Font::Create(const FontParameters &fp)
 	Release();
 
 	QFont *font = new QFont;
+	font->setStyleHint(QFont::Monospace);
 	font->setStyleStrategy(ChooseStrategy(fp.extraFontFlag));
 	font->setFamily(QString::fromUtf8(fp.faceName));
 	font->setPointSize(fp.size);
@@ -1146,12 +1147,15 @@ ColourDesired Platform::ChromeHighlight()
 
 const char *Platform::DefaultFont()
 {
+	/*
 	static char fontNameDefault[200] = "";
 	if (!fontNameDefault[0]) {
 		QFont font = QApplication::font();
 		strcpy(fontNameDefault, font.family().toUtf8());
 	}
 	return fontNameDefault;
+	*/
+	return "Courier";
 }
 
 int Platform::DefaultFontSize()
