@@ -3,6 +3,7 @@
 
 #include <QString>
 
+static const QString SettingAutoIndent = QStringLiteral("SettingAutoIndent");
 static const QString SettingBackspaceUnindents = QStringLiteral("SettingBackspaceUnindents");
 static const QString SettingShowEndOfLine = QStringLiteral("ShowEndOfLine");
 static const QString SettingShowWhitespace = QStringLiteral("ShowWhitespace");

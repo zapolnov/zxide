@@ -11,9 +11,15 @@ public:
     explicit TextEditor(QWidget* parent = nullptr);
     ~TextEditor() override;
 
+    void setLineIndent(int line, int indent);
+
     void reloadSettings();
 
 private:
+    bool mAutoIndent;
+
+    void charAdded(int ch) override;
+
     Q_DISABLE_COPY(TextEditor)
 };
 

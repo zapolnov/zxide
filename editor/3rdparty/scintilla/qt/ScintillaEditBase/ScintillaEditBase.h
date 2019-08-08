@@ -86,7 +86,6 @@ signals:
 
 	// Scintilla Notifications
 	void styleNeeded(int position);
-	void charAdded(int ch);
 	void savePointChanged(bool dirty);
 	void modifyAttemptReadOnly();
 	void key(int key);
@@ -122,6 +121,8 @@ signals:
 	void resized();
 
 protected:
+	virtual void charAdded(int ch) {}
+
 	bool event(QEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
