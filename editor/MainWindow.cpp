@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QCloseEvent>
 #include <QInputDialog>
+#include <QLabel>
 
 namespace
 {
@@ -20,6 +21,20 @@ MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
 {
     mUi->setupUi(this);
+
+    mInsOverwriteLabel = new QLabel(mUi->statusBar);
+    mInsOverwriteLabel->setFixedWidth(35);
+    mInsOverwriteLabel->setFrameShape(QFrame::StyledPanel);
+    mInsOverwriteLabel->setFrameShadow(QFrame::Sunken);
+    mInsOverwriteLabel->setAlignment(Qt::AlignCenter);
+    mUi->statusBar->addPermanentWidget(mInsOverwriteLabel);
+
+    mLineColumnLabel = new QLabel(mUi->statusBar);
+    mLineColumnLabel->setFixedWidth(120);
+    mLineColumnLabel->setFrameShape(QFrame::StyledPanel);
+    mLineColumnLabel->setFrameShadow(QFrame::Sunken);
+    mLineColumnLabel->setAlignment(Qt::AlignCenter);
+    mUi->statusBar->addPermanentWidget(mLineColumnLabel);
 
     int n = mUi->tabWidget->count();
     for (int i = 0; i < n; i++) {
@@ -128,6 +143,9 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
+
+    mLineColumnLabel->setText(tab->lineColumnLabelText());
+    mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
 
     mUi->stackedWidget->setCurrentIndex(0); // FIXME
 }

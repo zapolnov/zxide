@@ -6,6 +6,7 @@
 #include <memory>
 
 class IEditorTab;
+class QLabel;
 class Ui_MainWindow;
 
 class MainWindow : public QMainWindow
@@ -25,6 +26,8 @@ protected:
 private:
     std::unique_ptr<Ui_MainWindow> mUi;
     std::vector<IEditorTab*> mEditorTabs;
+    QLabel* mInsOverwriteLabel;
+    QLabel* mLineColumnLabel;
 
     bool confirmSave();
     bool saveAll();

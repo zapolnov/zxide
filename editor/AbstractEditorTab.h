@@ -4,7 +4,6 @@
 #include <QWidget>
 #include "IEditorTab.h"
 
-class File;
 class FileManager;
 
 class AbstractEditorTab : public QWidget, public IEditorTab
@@ -15,7 +14,7 @@ public:
     explicit AbstractEditorTab(QWidget* parent = nullptr);
     ~AbstractEditorTab();
 
-    File* currentFile() const { return mCurrentFile; }
+    File* currentFile() const override { return mCurrentFile; }
 
     bool canCreateFile() const override;
     bool canCreateDirectory() const override;

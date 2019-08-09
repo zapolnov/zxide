@@ -45,6 +45,7 @@ void TextEditor::reloadSettings()
     setTabDrawMode(SCTD_LONGARROW);
     setUndoCollection(true);
     setWrapMode(SC_WRAP_NONE);
+    setCaretStyle(CARETSTYLE_LINE | CARETSTYLE_OVERSTRIKE_BLOCK);
 
     QSettings settings;
     mAutoIndent = settings.value(SettingAutoIndent, true).toBool();

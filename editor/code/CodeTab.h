@@ -19,6 +19,9 @@ public:
 
     void init(const QString& path);
 
+    QString lineColumnLabelText() const override;
+    QString insOverwriteLabelText() const override;
+
     bool hasModifiedFiles() const override;
     bool canUndo() const override;
     bool canRedo() const override;

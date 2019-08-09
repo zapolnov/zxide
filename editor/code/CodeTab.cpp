@@ -24,6 +24,22 @@ void CodeTab::init(const QString& path)
     mUi->fileManager->init(path, QStringLiteral(".asm"));
 }
 
+QString CodeTab::lineColumnLabelText() const
+{
+    if (!currentFile())
+        return QString();
+
+    auto pos = mUi->textEditor->currentPos();
+    int line = mUi->textEditor->lineFromPosition(pos) + 1;
+    int column = mUi->textEditor->column(pos) + 1;
+    return tr("Line %1, column %2").arg(line).arg(column);
+}
+
+QString CodeTab::insOverwriteLabelText() const
+{
+    return (mUi->textEditor->overtype() ? tr("OVR") : tr("INS"));
+}
+
 bool CodeTab::hasModifiedFiles() const
 {
     for (const auto& it : mFiles) {

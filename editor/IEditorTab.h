@@ -3,12 +3,19 @@
 
 #include <functional>
 
+class File;
+
 class IEditorTab
 {
 public:
     std::function<void()> updateUi = []{};
 
     virtual ~IEditorTab() = default;
+
+    virtual File* currentFile() const { return nullptr; }
+
+    virtual QString lineColumnLabelText() const { return QString(); }
+    virtual QString insOverwriteLabelText() const { return QString(); }
 
     virtual bool canCreateFile() const { return false; }
     virtual bool canCreateDirectory() const { return false; }
