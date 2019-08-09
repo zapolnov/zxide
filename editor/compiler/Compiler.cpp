@@ -1,10 +1,13 @@
 #include "Compiler.h"
+#include "Program.h"
+#include "Assembler.h"
 #include "FileManager.h"
 #include <exception>
 #include <QThread> // FIXME
 
 Compiler::Compiler(QObject* parent)
     : QObject(parent)
+    , mProgram(new Program)
     , mErrorFile(nullptr)
     , mErrorLine(0)
     , mWasError(false)
@@ -23,14 +26,31 @@ void Compiler::addSourceFile(File* file)
 void Compiler::compile()
 {
     try {
-        // FIXME
-        setStatusText("Warming up...");
-        QThread::sleep(2);
-        error(nullptr, 0, "Compiler is not implemented yet");
+        for (const auto& source : mSources) {
+            QFileInfo info(source.path);
+            setStatusText(tr("Compiling %1").arg(info.fileName()));
+            QString extension = info.suffix();
+
+            QFile file(info.absoluteFilePath());
+            if (!file.open(QFile::ReadOnly)) {
+                error(source.file, 0, file.errorString());
+                break;
+            }
+
+            QByteArray fileData = file.readAll();
+            file.close();
+
+            if (extension == QStringLiteral("asm"))
+                Assembler(mProgram.get(), this).parse(source.file, fileData);
+            else {
+                error(source.file, 0, tr("Unsupported file type: %1").arg(extension));
+                break;
+            }
+        }
     } catch (const std::exception& e) {
         error(nullptr, 0, tr("Exception: %1").arg(e.what()));
     } catch (...) {
-        error(nullptr, 0, "Unhandled Exception");
+        error(nullptr, 0, tr("Unhandled Exception"));
     }
 
     setStatusText(tr("Compilation succeeded!"));

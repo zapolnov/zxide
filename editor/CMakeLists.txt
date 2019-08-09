@@ -19,11 +19,16 @@ qt_add_sources(GameEditor
         code/CodeTab.ui
         code/TextEditor.cpp
         code/TextEditor.h
+        compiler/Assembler.cpp
+        compiler/Assembler.h
         compiler/Compiler.cpp
         compiler/Compiler.h
         compiler/CompilerDialog.cpp
         compiler/CompilerDialog.h
         compiler/CompilerDialog.ui
+        compiler/IErrorReporter.h
+        compiler/Program.cpp
+        compiler/Program.h
         levels/LevelsTab.cpp
         levels/LevelsTab.h
         levels/LevelsTab.ui

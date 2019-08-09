@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="statusLabel">
      <property name="text">
-      <string>Compiling source code</string>
+      <string>Starting up</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
