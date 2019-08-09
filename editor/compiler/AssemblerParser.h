@@ -37,6 +37,8 @@ private:
     std::string readLabelName();
 
     quint32 expectNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
+    bool expectByteLiteral(unsigned* out);
+    bool expectWordLiteral(unsigned* out);
     std::string expectIdentifier(int tokenId);
     void expectComma(int tokenId);
     void expectEol(int tokenId);

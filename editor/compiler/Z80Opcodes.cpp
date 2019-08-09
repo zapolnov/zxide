@@ -1,6 +1,52 @@
 // THIS IS A GENERATED FILE. DO NOT EDIT!
 #include "Z80Opcodes.h"
 
+void ADC_A_A::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8F);
+}
+
+void ADC_A_B::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x88);
+}
+
+void ADC_A_C::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x89);
+}
+
+void ADC_A_D::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8A);
+}
+
+void ADC_A_E::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8B);
+}
+
+void ADC_A_H::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8C);
+}
+
+void ADC_A_L::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8D);
+}
+
+void ADC_A_mHL::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x8E);
+}
+
+void ADC_A_n::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xCE);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
 void CCF::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0x3F);

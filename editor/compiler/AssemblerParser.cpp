@@ -101,78 +101,12 @@ void AssemblerParser::parseSectionDecl()
 void AssemblerParser::parseOpcode()
 {
     auto opcode = toLower(lastTokenText());
-    if (opcode == "ccf")
-        mSection->emit<CCF>(lastToken());
-    else if (opcode == "cpd")
-        mSection->emit<CPD>(lastToken());
-    else if (opcode == "cpdr")
-        mSection->emit<CPDR>(lastToken());
-    else if (opcode == "cpi")
-        mSection->emit<CPI>(lastToken());
-    else if (opcode == "cpir")
-        mSection->emit<CPIR>(lastToken());
-    else if (opcode == "cpl")
-        mSection->emit<CPL>(lastToken());
-    else if (opcode == "daa")
-        mSection->emit<DAA>(lastToken());
-    else if (opcode == "di")
-        mSection->emit<DI>(lastToken());
-    else if (opcode == "ei")
-        mSection->emit<EI>(lastToken());
-    else if (opcode == "exx")
-        mSection->emit<EXX>(lastToken());
-    else if (opcode == "halt")
-        mSection->emit<HALT>(lastToken());
-    else if (opcode == "ind")
-        mSection->emit<IND>(lastToken());
-    else if (opcode == "indr")
-        mSection->emit<INDR>(lastToken());
-    else if (opcode == "ini")
-        mSection->emit<INI>(lastToken());
-    else if (opcode == "inir")
-        mSection->emit<INIR>(lastToken());
-    else if (opcode == "ldd")
-        mSection->emit<LDD>(lastToken());
-    else if (opcode == "lddr")
-        mSection->emit<LDDR>(lastToken());
-    else if (opcode == "ldi")
-        mSection->emit<LDI>(lastToken());
-    else if (opcode == "ldir")
-        mSection->emit<LDIR>(lastToken());
-    else if (opcode == "neg")
-        mSection->emit<NEG>(lastToken());
-    else if (opcode == "nop")
-        mSection->emit<NOP>(lastToken());
-    else if (opcode == "otdr")
-        mSection->emit<OTDR>(lastToken());
-    else if (opcode == "otir")
-        mSection->emit<OTIR>(lastToken());
-    else if (opcode == "outd")
-        mSection->emit<OUTD>(lastToken());
-    else if (opcode == "outi")
-        mSection->emit<OUTI>(lastToken());
-    else if (opcode == "ret")
-        mSection->emit<RET>(lastToken());
-    else if (opcode == "reti")
-        mSection->emit<RETI>(lastToken());
-    else if (opcode == "retn")
-        mSection->emit<RETN>(lastToken());
-    else if (opcode == "rla")
-        mSection->emit<RLA>(lastToken());
-    else if (opcode == "rlca")
-        mSection->emit<RLCA>(lastToken());
-    else if (opcode == "rld")
-        mSection->emit<RLD>(lastToken());
-    else if (opcode == "rra")
-        mSection->emit<RRA>(lastToken());
-    else if (opcode == "rrca")
-        mSection->emit<RRCA>(lastToken());
-    else if (opcode == "rrd")
-        mSection->emit<RRD>(lastToken());
-    else if (opcode == "scf")
-        mSection->emit<SCF>(lastToken());
-    else
-        error(tr("unexpected '%1'").arg(lastTokenCStr()));
+    unsigned literal1, literal2;
+    Token token = lastToken();
+
+    PARSE_OPCODE
+
+    error(tr("syntax error"));
 }
 
 std::string AssemblerParser::readLabelName()
@@ -212,6 +146,29 @@ quint32 AssemblerParser::expectNumber(int tokenId, quint32 min, quint32 max)
     }
 
     return number;
+}
+
+bool AssemblerParser::expectByteLiteral(unsigned* out)
+{
+    if (lastTokenId() == T_NUMBER) {
+        unsigned num = lastToken().number;
+        if (num > 255)
+            error(tr("Value %1 does not fit into a byte.").arg(num));
+        *out = num;
+        return true;
+    }
+
+    return false;
+}
+
+bool AssemblerParser::expectWordLiteral(unsigned* out)
+{
+    if (lastTokenId() == T_NUMBER) {
+        *out = lastToken().number;
+        return true;
+    }
+
+    return false;
 }
 
 std::string AssemblerParser::expectIdentifier(int tokenId)
