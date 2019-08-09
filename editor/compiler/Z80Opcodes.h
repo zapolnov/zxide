@@ -124,23 +124,6 @@ public:
     Q_DISABLE_COPY(ADC_A_L)
 };
 
-class ADC_A_mHL : public ProgramOpcode
-{
-public:
-    ADC_A_mHL(const Token& token)
-        : ProgramOpcode(token)
-    {
-    }
-
-    unsigned lengthInBytes() const override { return 1; }
-    unsigned tstatesIfNotTaken() const override { return 4; }
-    unsigned tstatesIfTaken() const override { return 4; }
-
-    void emitBinary(ProgramBinary* bin) const override;
-
-    Q_DISABLE_COPY(ADC_A_mHL)
-};
-
 class ADC_A_n : public ProgramOpcode
 {
 public:
@@ -160,6 +143,65 @@ private:
     unsigned mLiteral1;
 
     Q_DISABLE_COPY(ADC_A_n)
+};
+
+class ADC_A_mHL : public ProgramOpcode
+{
+public:
+    ADC_A_mHL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 1; }
+    unsigned tstatesIfNotTaken() const override { return 7; }
+    unsigned tstatesIfTaken() const override { return 7; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(ADC_A_mHL)
+};
+
+class ADC_A_mIXn : public ProgramOpcode
+{
+public:
+    ADC_A_mIXn(const Token& token, unsigned literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(literal1)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 3; }
+    unsigned tstatesIfNotTaken() const override { return 19; }
+    unsigned tstatesIfTaken() const override { return 19; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+private:
+    unsigned mLiteral1;
+
+    Q_DISABLE_COPY(ADC_A_mIXn)
+};
+
+class ADC_A_mIYn : public ProgramOpcode
+{
+public:
+    ADC_A_mIYn(const Token& token, unsigned literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(literal1)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 3; }
+    unsigned tstatesIfNotTaken() const override { return 19; }
+    unsigned tstatesIfTaken() const override { return 19; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+private:
+    unsigned mLiteral1;
+
+    Q_DISABLE_COPY(ADC_A_mIYn)
 };
 
 class CCF : public ProgramOpcode
@@ -813,6 +855,13 @@ public:
                         return; \
                     } \
                 } \
+                if (expectByteLiteral(&literal1)) { \
+                    nextToken(); \
+                    if (lastTokenId() == T_EOL) { \
+                        mSection->emit<ADC_A_n>(token, literal1); \
+                        return; \
+                    } \
+                } \
                 if (lastTokenId() == T_LPAREN) { \
                     nextToken(); \
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") { \
@@ -825,12 +874,37 @@ public:
                             } \
                         } \
                     } \
-                } \
-                if (expectByteLiteral(&literal1)) { \
-                    nextToken(); \
-                    if (lastTokenId() == T_EOL) { \
-                        mSection->emit<ADC_A_n>(token, literal1); \
-                        return; \
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") { \
+                        nextToken(); \
+                        if (lastTokenId() == T_PLUS) { \
+                            nextToken(); \
+                            if (expectByteLiteral(&literal1)) { \
+                                nextToken(); \
+                                if (lastTokenId() == T_RPAREN) { \
+                                    nextToken(); \
+                                    if (lastTokenId() == T_EOL) { \
+                                        mSection->emit<ADC_A_mIXn>(token, literal1); \
+                                        return; \
+                                    } \
+                                } \
+                            } \
+                        } \
+                    } \
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") { \
+                        nextToken(); \
+                        if (lastTokenId() == T_PLUS) { \
+                            nextToken(); \
+                            if (expectByteLiteral(&literal1)) { \
+                                nextToken(); \
+                                if (lastTokenId() == T_RPAREN) { \
+                                    nextToken(); \
+                                    if (lastTokenId() == T_EOL) { \
+                                        mSection->emit<ADC_A_mIYn>(token, literal1); \
+                                        return; \
+                                    } \
+                                } \
+                            } \
+                        } \
                     } \
                 } \
             } \

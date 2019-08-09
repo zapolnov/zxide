@@ -36,14 +36,28 @@ void ADC_A_L::emitBinary(ProgramBinary* bin) const
     bin->emitByte(0x8D);
 }
 
+void ADC_A_n::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xCE);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
 void ADC_A_mHL::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0x8E);
 }
 
-void ADC_A_n::emitBinary(ProgramBinary* bin) const
+void ADC_A_mIXn::emitBinary(ProgramBinary* bin) const
 {
-    bin->emitByte(0xCE);
+    bin->emitByte(0xDD);
+    bin->emitByte(0x8E);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
+void ADC_A_mIYn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xFD);
+    bin->emitByte(0x8E);
     bin->emitByte(mLiteral1 & 0xFF);
 }
 
