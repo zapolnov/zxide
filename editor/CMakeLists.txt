@@ -21,6 +21,11 @@ qt_add_sources(GameEditor
         code/TextEditor.h
         compiler/Assembler.cpp
         compiler/Assembler.h
+        compiler/AssemblerLexer.cpp
+        compiler/AssemblerLexer.h
+        compiler/AssemblerParser.cpp
+        compiler/AssemblerParser.h
+        compiler/AssemblerToken.h
         compiler/Compiler.cpp
         compiler/Compiler.h
         compiler/CompilerDialog.cpp

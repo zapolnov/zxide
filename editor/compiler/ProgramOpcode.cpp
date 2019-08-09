@@ -1,8 +1,9 @@
 #include "ProgramOpcode.h"
+#include "AssemblerToken.h"
 
-ProgramOpcode::ProgramOpcode(File* file, int line)
-    : mFile(file)
-    , mLine(line)
+ProgramOpcode::ProgramOpcode(const Token& token)
+    : mFile(token.file)
+    , mLine(token.line)
 {
 }
 

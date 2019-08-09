@@ -20,6 +20,7 @@ public:
     ~ProgramSection();
 
     const std::string& name() const { return mName; }
+    const char* nameCStr() const { return mName.c_str(); }
 
     bool hasBase() const { return mHasBase; }
     unsigned base() const { Q_ASSERT(mHasBase); return mBase; }

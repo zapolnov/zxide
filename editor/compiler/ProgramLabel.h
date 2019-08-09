@@ -2,7 +2,6 @@
 #define COMPILER_PROGRAMLABEL_H
 
 #include "ProgramOpcode.h"
-#include <QtGlobal>
 #include <string>
 
 class ProgramSection;
@@ -10,7 +9,7 @@ class ProgramSection;
 class ProgramLabel : public ProgramOpcode
 {
 public:
-    ProgramLabel(File* file, int line, ProgramSection* section, std::string name);
+    ProgramLabel(const Token& token, ProgramSection* section, std::string name);
     ~ProgramLabel() override;
 
     ProgramSection* section() const { return mSection; }

@@ -5,11 +5,12 @@
 #include <vector>
 
 class File;
+struct Token;
 
 class ProgramOpcode
 {
 public:
-    ProgramOpcode(File* file, int line);
+    explicit ProgramOpcode(const Token& token);
     virtual ~ProgramOpcode();
 
     File* file() const { return mFile; }

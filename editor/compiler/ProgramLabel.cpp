@@ -1,8 +1,8 @@
 #include "ProgramLabel.h"
 #include "ProgramSection.h"
 
-ProgramLabel::ProgramLabel(File* file, int line, ProgramSection* section, std::string name)
-    : ProgramOpcode(file, line)
+ProgramLabel::ProgramLabel(const Token& token, ProgramSection* section, std::string name)
+    : ProgramOpcode(token)
     , mSection(section)
     , mName(std::move(name))
     , mAddress(0)

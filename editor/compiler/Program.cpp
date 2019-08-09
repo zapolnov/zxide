@@ -9,7 +9,7 @@ Program::~Program()
 {
 }
 
-ProgramLabel* Program::addLabel(File* file, int line, ProgramSection* section, const std::string& name)
+ProgramLabel* Program::addLabel(const Token& token, ProgramSection* section, const std::string& name)
 {
     Q_ASSERT(section != nullptr);
     if (!section)
@@ -19,7 +19,7 @@ ProgramLabel* Program::addLabel(File* file, int line, ProgramSection* section, c
     if (it != mLabels.end())
         return nullptr;
 
-    auto label = section->emit<ProgramLabel>(file, line, section, name);
+    auto label = section->emit<ProgramLabel>(token, section, name);
     mLabels[name] = label;
 
     return label;

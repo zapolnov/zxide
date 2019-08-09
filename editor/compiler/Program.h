@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 
-class File;
+struct Token;
 
 class Program
 {
@@ -14,7 +14,7 @@ public:
     Program();
     ~Program();
 
-    ProgramLabel* addLabel(File* file, int line, ProgramSection* section, const std::string& name);
+    ProgramLabel* addLabel(const Token& token, ProgramSection* section, const std::string& name);
 
     ProgramSection* getOrCreateSection(const std::string& name);
 
