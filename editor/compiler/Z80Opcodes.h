@@ -328,6 +328,74 @@ public:
     Q_DISABLE_COPY(LDIR)
 };
 
+class OTDR : public ProgramOpcode
+{
+public:
+    OTDR(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 16; }
+    unsigned tstatesIfTaken() const override { return 21; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(OTDR)
+};
+
+class OTIR : public ProgramOpcode
+{
+public:
+    OTIR(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 16; }
+    unsigned tstatesIfTaken() const override { return 21; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(OTIR)
+};
+
+class OUTD : public ProgramOpcode
+{
+public:
+    OUTD(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 16; }
+    unsigned tstatesIfTaken() const override { return 16; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(OUTD)
+};
+
+class OUTI : public ProgramOpcode
+{
+public:
+    OUTI(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 16; }
+    unsigned tstatesIfTaken() const override { return 16; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(OUTI)
+};
+
 class NEG : public ProgramOpcode
 {
 public:
@@ -377,6 +445,108 @@ public:
     void emitBinary(ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET)
+};
+
+class RETI : public ProgramOpcode
+{
+public:
+    RETI(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 14; }
+    unsigned tstatesIfTaken() const override { return 14; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RETI)
+};
+
+class RETN : public ProgramOpcode
+{
+public:
+    RETN(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 14; }
+    unsigned tstatesIfTaken() const override { return 14; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RETN)
+};
+
+class RLA : public ProgramOpcode
+{
+public:
+    RLA(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 1; }
+    unsigned tstatesIfNotTaken() const override { return 4; }
+    unsigned tstatesIfTaken() const override { return 4; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RLA)
+};
+
+class RLCA : public ProgramOpcode
+{
+public:
+    RLCA(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 1; }
+    unsigned tstatesIfNotTaken() const override { return 4; }
+    unsigned tstatesIfTaken() const override { return 4; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RLCA)
+};
+
+class RLD : public ProgramOpcode
+{
+public:
+    RLD(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 2; }
+    unsigned tstatesIfNotTaken() const override { return 18; }
+    unsigned tstatesIfTaken() const override { return 18; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RLD)
+};
+
+class RRA : public ProgramOpcode
+{
+public:
+    RRA(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes() const override { return 1; }
+    unsigned tstatesIfNotTaken() const override { return 4; }
+    unsigned tstatesIfTaken() const override { return 4; }
+
+    void emitBinary(ProgramBinary* bin) const override;
+
+    Q_DISABLE_COPY(RRA)
 };
 
 class RRCA : public ProgramOpcode

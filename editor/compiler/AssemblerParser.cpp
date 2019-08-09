@@ -143,8 +143,28 @@ void AssemblerParser::parseOpcode()
         mSection->emit<NEG>(lastToken());
     else if (opcode == "nop")
         mSection->emit<NOP>(lastToken());
+    else if (opcode == "otdr")
+        mSection->emit<OTDR>(lastToken());
+    else if (opcode == "otir")
+        mSection->emit<OTIR>(lastToken());
+    else if (opcode == "outd")
+        mSection->emit<OUTD>(lastToken());
+    else if (opcode == "outi")
+        mSection->emit<OUTI>(lastToken());
     else if (opcode == "ret")
         mSection->emit<RET>(lastToken());
+    else if (opcode == "reti")
+        mSection->emit<RETI>(lastToken());
+    else if (opcode == "retn")
+        mSection->emit<RETN>(lastToken());
+    else if (opcode == "rla")
+        mSection->emit<RLA>(lastToken());
+    else if (opcode == "rlca")
+        mSection->emit<RLCA>(lastToken());
+    else if (opcode == "rld")
+        mSection->emit<RLD>(lastToken());
+    else if (opcode == "rra")
+        mSection->emit<RRA>(lastToken());
     else if (opcode == "rrca")
         mSection->emit<RRCA>(lastToken());
     else if (opcode == "rrd")

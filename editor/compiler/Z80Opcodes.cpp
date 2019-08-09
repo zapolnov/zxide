@@ -108,6 +108,30 @@ void LDIR::emitBinary(ProgramBinary* bin) const
     bin->emitByte(0xB0);
 }
 
+void OTDR::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0xBB);
+}
+
+void OTIR::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0xB3);
+}
+
+void OUTD::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0xAB);
+}
+
+void OUTI::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0xA3);
+}
+
 void NEG::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
@@ -122,6 +146,39 @@ void NOP::emitBinary(ProgramBinary* bin) const
 void RET::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xC9);
+}
+
+void RETI::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0x4D);
+}
+
+void RETN::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0x45);
+}
+
+void RLA::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x17);
+}
+
+void RLCA::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x07);
+}
+
+void RLD::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xED);
+    bin->emitByte(0x6F);
+}
+
+void RRA::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0x1F);
 }
 
 void RRCA::emitBinary(ProgramBinary* bin) const
