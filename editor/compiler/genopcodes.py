@@ -5,8 +5,8 @@ class SimpleOpcode:
         self.name = name
         self.bytes = bytes
         self.lengthInBytes = len(bytes)
-        self.tstatesIfNotTaken = tstates
-        self.tstatesIfTaken = tstates
+        self.tstatesIfNotTaken = (tstates if isinstance(tstates, int) else tstates[1])
+        self.tstatesIfTaken = (tstates if isinstance(tstates, int) else tstates[0])
 
     def codeForEmit(self):
         code = ''
@@ -15,8 +15,31 @@ class SimpleOpcode:
         return code
 
 opcodes = [
-        SimpleOpcode('nop', [ 0x00 ], 4),
-        SimpleOpcode('ret', [ 0xC9 ], 10),
+        SimpleOpcode( 'ccf', [ 0x3F       ],  4),
+        SimpleOpcode( 'cpd', [ 0xED, 0xA9 ], 16),
+        SimpleOpcode('cpdr', [ 0xED, 0xB9 ], [ 21, 16 ]),
+        SimpleOpcode( 'cpi', [ 0xED, 0xA1 ], 16),
+        SimpleOpcode('cpir', [ 0xED, 0xB1 ], [ 21, 16 ]),
+        SimpleOpcode( 'cpl', [ 0x2F       ],  4),
+        SimpleOpcode( 'daa', [ 0x27       ],  4),
+        SimpleOpcode(  'di', [ 0xF3       ],  4),
+        SimpleOpcode(  'ei', [ 0xFB       ],  4),
+        SimpleOpcode( 'exx', [ 0xD9       ],  4),
+        SimpleOpcode('halt', [ 0x76       ],  4),
+        SimpleOpcode( 'ind', [ 0xED, 0xAA ], 16),
+        SimpleOpcode('indr', [ 0xED, 0xBA ], [ 21, 16 ]),
+        SimpleOpcode( 'ini', [ 0xED, 0xA2 ], 16),
+        SimpleOpcode('inir', [ 0xED, 0xB2 ], [ 21, 16 ]),
+        SimpleOpcode( 'ldd', [ 0xED, 0xA8 ], 16),
+        SimpleOpcode('lddr', [ 0xED, 0xB8 ], [ 21, 16 ]),
+        SimpleOpcode( 'ldi', [ 0xED, 0xA0 ], 16),
+        SimpleOpcode('ldir', [ 0xED, 0xB0 ], [ 21, 17 ]),
+        SimpleOpcode( 'neg', [ 0xED, 0x44 ],  8),
+        SimpleOpcode( 'nop', [ 0x00       ],  4),
+        SimpleOpcode( 'ret', [ 0xC9       ], 10),
+        SimpleOpcode('rrca', [ 0x0F       ],  4),
+        SimpleOpcode( 'rrd', [ 0xED, 0x67 ], 18),
+        SimpleOpcode( 'scf', [ 0x37       ],  4),
     ]
 
 hdr  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
