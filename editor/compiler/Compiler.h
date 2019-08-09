@@ -15,7 +15,7 @@ class Compiler : public QObject, public IErrorReporter
 
 public:
     explicit Compiler(QObject* parent = nullptr);
-    ~Compiler();
+    ~Compiler() override;
 
     bool wasError() const { QMutexLocker lock(&mMutex); return mWasError; }
     QString errorMessage() const { QMutexLocker lock(&mMutex); return mErrorMessage; }

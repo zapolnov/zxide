@@ -168,6 +168,7 @@ bool MainWindow::build()
             } else {
                 mUi->codeTab->setCurrentFile(file);
                 mUi->codeTab->goToLine(line - 1);
+                mUi->codeTab->setFocusToEditor();
                 message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
             }
 

@@ -15,7 +15,7 @@ class Assembler : public QObject
 
 public:
     Assembler(Program* program, IErrorReporter* reporter);
-    ~Assembler();
+    ~Assembler() override;
 
     bool parse(File* file, const QByteArray& fileData);
 
@@ -24,16 +24,27 @@ private:
     IErrorReporter* mReporter;
     File* mFile;
     ProgramSection* mSection;
+    std::string mLastNonLocalLabel;
     const char* mSource;
     const char* mEnd;
     std::string mTokenText;
-    quint64 mTokenValue;
+    quint32 mTokenValue;
     int mLine;
     int mTokenLine;
+    int mTokenId;
 
+    // parser
     void parseLine();
+    void parseSectionDecl();
+    void parseOpcode();
+    quint32 expectNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
+    std::string expectIdentifier(int tokenId);
+    void expectComma(int tokenId);
+    void expectEol(int tokenId);
 
+    // lexer
     int nextToken();
+    int readToken();
     void readHexNumber();
     void readBinNumber();
     void readDecNumber();

@@ -3,7 +3,10 @@
 #include "Assembler.h"
 #include "FileManager.h"
 #include <exception>
-#include <QThread> // FIXME
+
+#ifndef emit
+#define emit
+#endif
 
 Compiler::Compiler(QObject* parent)
     : QObject(parent)

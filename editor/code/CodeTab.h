@@ -46,6 +46,8 @@ public:
 
     void reloadSettings() override;
 
+    void setFocusToEditor();
+
 private:
     std::unique_ptr<Ui_CodeTab> mUi;
     std::unordered_map<File*, ScintillaDocument*> mFiles;

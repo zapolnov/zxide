@@ -16,7 +16,7 @@ class CompilerDialog : public QDialog
 
 public:
     explicit CompilerDialog(QWidget* parent = nullptr);
-    ~CompilerDialog();
+    ~CompilerDialog() override;
 
     void addSourceFile(File* file);
     bool runCompiler();

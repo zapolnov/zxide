@@ -12,7 +12,7 @@ class AbstractEditorTab : public QWidget, public IEditorTab
 
 public:
     explicit AbstractEditorTab(QWidget* parent = nullptr);
-    ~AbstractEditorTab();
+    ~AbstractEditorTab() override;
 
     File* currentFile() const override { return mCurrentFile; }
     void setCurrentFile(File* file);

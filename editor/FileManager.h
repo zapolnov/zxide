@@ -81,6 +81,7 @@ public:
 
     void init(const QString& path, const QString& extension);
 
+    void selectFileOrDirectory(FileOrDirectory* item);
     FileOrDirectory* selectedFileOrDirectory() const;
 
     bool canRename() const;

@@ -44,6 +44,11 @@ void FileManager::init(const QString& path, const QString& extension)
     refresh();
 }
 
+void FileManager::selectFileOrDirectory(FileOrDirectory* item)
+{
+    mUi->sourcesTree->setCurrentItem(item);
+}
+
 FileOrDirectory* FileManager::selectedFileOrDirectory() const
 {
     QTreeWidgetItem* item = mUi->sourcesTree->currentItem();

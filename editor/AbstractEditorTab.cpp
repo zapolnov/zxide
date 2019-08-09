@@ -24,6 +24,9 @@ void AbstractEditorTab::setCurrentFile(File* file)
     else
         mCurrentFile = nullptr;
 
+    if (mFileManager && mFileManager->selectedFileOrDirectory() != mCurrentFile)
+        mFileManager->selectFileOrDirectory(mCurrentFile);
+
     updateUi();
 }
 

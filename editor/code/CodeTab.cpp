@@ -170,6 +170,11 @@ void CodeTab::reloadSettings()
     mUi->textEditor->reloadSettings();
 }
 
+void CodeTab::setFocusToEditor()
+{
+    mUi->textEditor->setFocus(true);
+}
+
 bool CodeTab::isFileModified(File* file) const
 {
     auto it = mFiles.find(file);

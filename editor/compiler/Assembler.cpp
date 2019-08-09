@@ -18,6 +18,12 @@ namespace
         T_COMMA,
         T_QUESTION,
         T_COLON,
+        T_LPAREN,
+        T_RPAREN,
+        T_LBRACKET,
+        T_RBRACKET,
+        T_LCURLY,
+        T_RCURLY,
         T_AMPERSAND,
         T_LOGIC_AND,
         T_VERTICALBAR,
@@ -143,7 +149,7 @@ bool Assembler::parse(File* file, const QByteArray& fileData)
         mSource = fileData.constData();
         mEnd = mSource + fileData.length();
 
-        for (;;)
+        while (nextToken() != T_EOF)
             parseLine();
 
         return true;
@@ -154,9 +160,134 @@ bool Assembler::parse(File* file, const QByteArray& fileData)
 
 void Assembler::parseLine()
 {
+    ProgramLabel* label = nullptr;
+
+    // read label, if any
+    switch (mTokenId) {
+        case T_LABEL:
+            label = mProgram->addLabel(mFile, mTokenLine, mSection, mTokenText);
+            if (!label)
+                error(mFile, mTokenLine, tr("duplicate label '%1'").arg(mTokenText.c_str()));
+            mLastNonLocalLabel = mTokenText;
+            nextToken();
+            break;
+
+        case T_LOCAL_LABEL:
+            if (mLastNonLocalLabel.empty())
+                error(mFile, mTokenLine, tr("local label without previous global one").arg(mTokenText.c_str()));
+            label = mProgram->addLabel(mFile, mTokenLine, mSection, mLastNonLocalLabel + "@@" + mTokenText);
+            if (!label)
+                error(mFile, mTokenLine, tr("duplicate local label '%1'").arg(mTokenText.c_str()));
+            nextToken();
+            break;
+    }
+
+    // skip empty or label-only lines
+    if (mTokenId == T_EOL)
+        return;
+
+    // read directive / instruction
+    if (mTokenId != T_IDENTIFIER)
+        error(mFile, mTokenLine, tr("expected opcode or directive"));
+    if (mTokenText == "section")
+        parseSectionDecl();
+    else
+        parseOpcode();
+}
+
+void Assembler::parseSectionDecl()
+{
+    std::string sectionName = expectIdentifier(nextToken());
+    mSection = mProgram->getOrCreateSection(sectionName);
+
+    if (nextToken() == T_LBRACKET) {
+        for (;;) {
+            expectIdentifier(nextToken());
+            if (mTokenText == "align") {
+                auto alignment = (unsigned)expectNumber(nextToken(), 1, 0xFFFF);
+                if (mSection->hasAlignment() && mSection->alignment() != alignment) {
+                    error(mFile, mTokenLine, tr("conflicting alignment for section '%1' (%2 != %3)")
+                        .arg(mSection->name().c_str()).arg(alignment).arg(mSection->alignment()));
+                }
+                if (mSection->hasBase() && (mSection->base() % alignment) != 0) {
+                    error(mFile, mTokenLine, tr("base address 0x%2 of section '%1' is not aligned to %3")
+                        .arg(mSection->name().c_str()).arg(mSection->base(), 0, 10).arg(alignment));
+                }
+                mSection->setAlignment(alignment);
+            } else if (mTokenText == "base") {
+                auto base = (unsigned)expectNumber(nextToken());
+                if (mSection->hasBase() && mSection->base() != base) {
+                    error(mFile, mTokenLine, tr("conflicting base address for section '%1' (%2 != %3)")
+                        .arg(mSection->name().c_str()).arg(base).arg(mSection->base()));
+                }
+                if (mSection->hasAlignment() && (base % mSection->alignment()) != 0) {
+                    error(mFile, mTokenLine, tr("base address 0x%2 of section '%1' is not aligned to %3")
+                        .arg(mSection->name().c_str()).arg(base, 0, 10).arg(mSection->alignment()));
+                }
+                mSection->setBase(base);
+            } else
+                error(mFile, mTokenLine, tr("unexpected '%1'").arg(mTokenText.c_str()));
+
+            if (nextToken() == T_RBRACKET) {
+                nextToken();
+                break;
+            }
+
+            expectComma(mTokenId);
+        }
+    }
+
+    expectEol(mTokenId);
+    return;
+}
+
+void Assembler::parseOpcode()
+{
+    if (mTokenText == "ret")
+        ; // FIXME
+    else
+        error(mFile, mTokenLine, tr("unexpected '%1'").arg(mTokenText.c_str()));
+}
+
+quint32 Assembler::expectNumber(int tokenId, quint32 min, quint32 max)
+{
+    if (tokenId != T_NUMBER)
+        error(mFile, mTokenLine, tr("expected numeric literal"));
+
+    if (mTokenValue < min || mTokenValue > max) {
+        error(mFile, mTokenLine,
+            tr("numeric value is out of range (valid range is 0x%1..0x%2 inclusive)").arg(min, 0, 16).arg(max, 0, 16));
+    }
+
+    return mTokenValue;
+}
+
+std::string Assembler::expectIdentifier(int tokenId)
+{
+    if (tokenId != T_IDENTIFIER)
+        error(mFile, mTokenLine, tr("expected identifier"));
+    return mTokenText;
+}
+
+void Assembler::expectComma(int tokenId)
+{
+    if (tokenId != T_COMMA)
+        error(mFile, mTokenLine, tr("expected ','"));
+}
+
+void Assembler::expectEol(int tokenId)
+{
+    if (tokenId != T_EOL)
+        error(mFile, mTokenLine, tr("expected end of line"));
 }
 
 int Assembler::nextToken()
+{
+    mTokenId = readToken();
+    return mTokenId;
+}
+
+int Assembler::readToken()
 {
     for (;;) {
         mTokenLine = mLine;
@@ -196,6 +327,30 @@ int Assembler::nextToken()
             case ':':
                 ++mSource;
                 return T_COLON;
+
+            case '(':
+                ++mSource;
+                return T_LPAREN;
+
+            case ')':
+                ++mSource;
+                return T_RPAREN;
+
+            case '[':
+                ++mSource;
+                return T_LBRACKET;
+
+            case ']':
+                ++mSource;
+                return T_RBRACKET;
+
+            case '{':
+                ++mSource;
+                return T_LCURLY;
+
+            case '}':
+                ++mSource;
+                return T_RCURLY;
 
             case '&':
                 ++mSource;
@@ -255,6 +410,9 @@ int Assembler::nextToken()
                     std::stringstream ss;
                     while (isIdent(*mSource))
                         ss << *mSource++;
+                    if (*mSource != ':')
+                        error(mFile, mLine, "missing ':' after label name.");
+                    ++mSource;
                     mTokenText = ss.str();
                     return T_LOCAL_LABEL;
                 }
@@ -316,9 +474,19 @@ int Assembler::nextToken()
 
             case LETTER: {
                 std::stringstream ss;
-                ss << *++mSource;
-                while (isIdent(*mSource))
+                bool hadAt = false;
+                for (;;) {
                     ss << *mSource++;
+                    if (!isIdent(*mSource)) {
+                        if (mSource[0] == '@' && mSource[1] == '@' && !hadAt) {
+                            mSource += 2;
+                            ss << '@' << '@';
+                            hadAt = true;
+                            continue;
+                        }
+                        break;
+                    }
+                }
                 mTokenText = ss.str();
                 if (*mSource == ':') {
                     ++mSource;
@@ -353,7 +521,7 @@ void Assembler::readHexNumber()
         if (value > 0xFFFFFFFF)
             error(mFile, mTokenLine, tr("hexadecimal literal is too large"));
     } while (isHexDigit(*mSource));
-    mTokenValue = value;
+    mTokenValue = (quint32)value;
 }
 
 void Assembler::readBinNumber()
@@ -369,7 +537,7 @@ void Assembler::readBinNumber()
         if (value > 0xFFFFFFFF)
             error(mFile, mTokenLine, tr("binary literal is too large"));
     } while (isBinDigit(*mSource));
-    mTokenValue = value;
+    mTokenValue = (quint32)value;
 }
 
 void Assembler::readDecNumber()
@@ -381,7 +549,7 @@ void Assembler::readDecNumber()
         if (value > 0xFFFFFFFF)
             error(mFile, mTokenLine, tr("numeric literal is too large"));
     } while (isDigit(*mSource));
-    mTokenValue = value;
+    mTokenValue = (quint32)value;
 }
 
 void Assembler::readStringLiteral()
