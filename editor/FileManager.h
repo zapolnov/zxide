@@ -83,7 +83,19 @@ public:
 
     FileOrDirectory* selectedFileOrDirectory() const;
 
+    bool canRename() const;
+    bool canDelete() const;
+
+    void createFile() { on_newFileAction_triggered(); }
+    void createDirectory() { on_newDirectoryAction_triggered(); }
+    void renameSelected() { on_renameAction_triggered(); }
+    void deleteSelected() { on_deleteAction_triggered(); }
+
+    void refresh();
+    void refreshDirectory(Directory* directory);
+
 signals:
+    void updateUi();
     void willRenameFile(File* file, bool* shouldAbort);
     void fileSelected(File* file);
     void fileDisappeared(File* file);
@@ -96,23 +108,14 @@ private:
     QString mPath;
     QString mExtension;
 
-    void refresh();
-    void refreshDirectory(Directory* directory);
-
     Q_SLOT void on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
     Q_SLOT void on_sourcesTree_customContextMenuRequested(const QPoint& pos);
 
-    Q_SLOT void on_refreshButton_clicked();
-    Q_SLOT void on_newDirectoryButton_clicked();
-    Q_SLOT void on_newFileButton_clicked();
-    Q_SLOT void on_renameButton_clicked();
-    Q_SLOT void on_deleteButton_clicked();
-
-    Q_SLOT void on_refreshAction_triggered() { on_refreshButton_clicked(); }
-    Q_SLOT void on_newDirectoryAction_triggered() { on_newDirectoryButton_clicked(); }
-    Q_SLOT void on_newFileAction_triggered() { on_newFileButton_clicked(); }
-    Q_SLOT void on_renameAction_triggered() { on_renameButton_clicked(); }
-    Q_SLOT void on_deleteAction_triggered() { on_deleteButton_clicked(); }
+    Q_SLOT void on_refreshAction_triggered();
+    Q_SLOT void on_newDirectoryAction_triggered();
+    Q_SLOT void on_newFileAction_triggered();
+    Q_SLOT void on_renameAction_triggered();
+    Q_SLOT void on_deleteAction_triggered();
 
     Q_DISABLE_COPY(FileManager)
 };

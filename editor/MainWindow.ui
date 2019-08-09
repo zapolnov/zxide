@@ -115,7 +115,11 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNewFile"/>
+   <addaction name="actionNewDirectory"/>
    <addaction name="actionSaveAll"/>
+   <addaction name="separator"/>
+   <addaction name="actionRefreshFileList"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
@@ -139,7 +143,14 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNewFile"/>
+    <addaction name="actionNewDirectory"/>
     <addaction name="actionSaveAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionRenameFile"/>
+    <addaction name="actionDeleteFile"/>
+    <addaction name="separator"/>
+    <addaction name="actionRefreshFileList"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -183,7 +194,7 @@
      <normaloff>:/resources/fatcow16x16/door_in.png</normaloff>:/resources/fatcow16x16/door_in.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Exit</string>
+    <string>E&amp;xit</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -321,6 +332,54 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionNewFile">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New file...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionRenameFile">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/text_edit.png</normaloff>:/resources/fatcow16x16/text_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Rename...</string>
+   </property>
+  </action>
+  <action name="actionDeleteFile">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/bin_closed.png</normaloff>:/resources/fatcow16x16/bin_closed.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+  </action>
+  <action name="actionNewDirectory">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>New director&amp;y...</string>
+   </property>
+  </action>
+  <action name="actionRefreshFileList">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/arrow_refresh.png</normaloff>:/resources/fatcow16x16/arrow_refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Re&amp;fresh file list</string>
    </property>
   </action>
  </widget>

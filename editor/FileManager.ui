@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>602</height>
+    <width>300</width>
+    <height>600</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
@@ -92,173 +92,6 @@
      </column>
     </widget>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="buttonsLayout">
-     <property name="spacing">
-      <number>1</number>
-     </property>
-     <item>
-      <widget class="QToolButton" name="refreshButton">
-       <property name="toolTip">
-        <string>Refresh view</string>
-       </property>
-       <property name="text">
-        <string>New directory</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res/resources.qrc">
-         <normaloff>:/resources/fatcow16x16/arrow_refresh.png</normaloff>:/resources/fatcow16x16/arrow_refresh.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QWidget" name="separator1" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>2</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>2</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="newFileButton">
-       <property name="toolTip">
-        <string>Create file</string>
-       </property>
-       <property name="text">
-        <string>New file</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res/resources.qrc">
-         <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+N</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="newDirectoryButton">
-       <property name="toolTip">
-        <string>Create directory</string>
-       </property>
-       <property name="text">
-        <string>New directory</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res/resources.qrc">
-         <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QWidget" name="separator2" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>2</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>2</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="renameButton">
-       <property name="toolTip">
-        <string>Rename selected file or directory</string>
-       </property>
-       <property name="text">
-        <string>Rename</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res/resources.qrc">
-         <normaloff>:/resources/fatcow16x16/text_edit.png</normaloff>:/resources/fatcow16x16/text_edit.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="deleteButton">
-       <property name="toolTip">
-        <string>Delete selected file or directory</string>
-       </property>
-       <property name="text">
-        <string>Delete</string>
-       </property>
-       <property name="icon">
-        <iconset resource="res/resources.qrc">
-         <normaloff>:/resources/fatcow16x16/bin_closed.png</normaloff>:/resources/fatcow16x16/bin_closed.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="buttonsSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
   </layout>
   <action name="newDirectoryAction">
    <property name="icon">
@@ -266,7 +99,7 @@
      <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Create directory...</string>
+    <string>New director&amp;y...</string>
    </property>
   </action>
   <action name="newFileAction">
@@ -275,7 +108,7 @@
      <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
    </property>
    <property name="text">
-    <string>Create &amp;file...</string>
+    <string>&amp;New file...</string>
    </property>
   </action>
   <action name="renameAction">
@@ -308,11 +141,6 @@
  </widget>
  <tabstops>
   <tabstop>sourcesTree</tabstop>
-  <tabstop>refreshButton</tabstop>
-  <tabstop>newFileButton</tabstop>
-  <tabstop>newDirectoryButton</tabstop>
-  <tabstop>renameButton</tabstop>
-  <tabstop>deleteButton</tabstop>
  </tabstops>
  <resources>
   <include location="res/resources.qrc"/>

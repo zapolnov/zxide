@@ -58,6 +58,20 @@ FileOrDirectory* FileManager::selectedFileOrDirectory() const
     return nullptr;
 }
 
+bool FileManager::canRename() const
+{
+    auto selected = selectedFileOrDirectory();
+    Directory* parent = (selected ? selected->parentDirectory() : nullptr);
+    return (parent != nullptr);
+}
+
+bool FileManager::canDelete() const
+{
+    auto selected = selectedFileOrDirectory();
+    Directory* parent = (selected ? selected->parentDirectory() : nullptr);
+    return (parent != nullptr);
+}
+
 void FileManager::refresh()
 {
     refreshDirectory(mRootDirectory);
@@ -121,11 +135,8 @@ void FileManager::on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QT
 {
     auto selected = selectedFileOrDirectory();
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
-    mUi->renameButton->setEnabled(parent != nullptr);
-    mUi->deleteButton->setEnabled(parent != nullptr);
-
-    if (selected->type() == File::Type)
-        emit fileSelected(static_cast<File*>(selected));
+    emit fileSelected(selected && selected->type() == File::Type ? static_cast<File*>(selected) : nullptr);
+    emit updateUi();
 }
 
 void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
@@ -143,19 +154,18 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
     menu.addAction(mUi->newDirectoryAction);
     menu.addSeparator();
     menu.addAction(mUi->renameAction);
-    menu.addSeparator();
     menu.addAction(mUi->deleteAction);
     menu.addSeparator();
     menu.addAction(mUi->refreshAction);
     menu.exec(mapToGlobal(pos));
 }
 
-void FileManager::on_refreshButton_clicked()
+void FileManager::on_refreshAction_triggered()
 {
     refresh();
 }
 
-void FileManager::on_newDirectoryButton_clicked()
+void FileManager::on_newDirectoryAction_triggered()
 {
     Directory* parent = nullptr;
     auto selected = selectedFileOrDirectory();
@@ -200,7 +210,7 @@ void FileManager::on_newDirectoryButton_clicked()
         mUi->sourcesTree->setCurrentItem(newDirectory);
 }
 
-void FileManager::on_newFileButton_clicked()
+void FileManager::on_newFileAction_triggered()
 {
     Directory* parent = nullptr;
     auto selected = selectedFileOrDirectory();
@@ -255,7 +265,7 @@ void FileManager::on_newFileButton_clicked()
         mUi->sourcesTree->setCurrentItem(newFile);
 }
 
-void FileManager::on_renameButton_clicked()
+void FileManager::on_renameAction_triggered()
 {
     auto selected = selectedFileOrDirectory();
     if (!selected)
@@ -332,7 +342,7 @@ void FileManager::on_renameButton_clicked()
     }
 }
 
-void FileManager::on_deleteButton_clicked()
+void FileManager::on_deleteAction_triggered()
 {
     auto selected = selectedFileOrDirectory();
     if (!selected)

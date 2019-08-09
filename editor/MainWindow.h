@@ -31,7 +31,12 @@ private:
 
     void updateUi();
 
+    Q_SLOT void on_actionNewFile_triggered();
     Q_SLOT void on_actionSaveAll_triggered();
+    Q_SLOT void on_actionCreateDirectory_triggered();
+    Q_SLOT void on_actionRenameFile_triggered();
+    Q_SLOT void on_actionDeleteFile_triggered();
+    Q_SLOT void on_actionRefreshFileList_triggered();
 
     Q_SLOT void on_actionUndo_triggered();
     Q_SLOT void on_actionRedo_triggered();

@@ -113,7 +113,12 @@ void MainWindow::updateUi()
     setWindowModified(modified);
 
     IEditorTab* tab = currentTab();
+    mUi->actionNewFile->setEnabled(tab->canCreateFile());
+    mUi->actionNewDirectory->setEnabled(tab->canCreateDirectory());
     mUi->actionSaveAll->setEnabled(modified);
+    mUi->actionRenameFile->setEnabled(tab->canRenameFile());
+    mUi->actionDeleteFile->setEnabled(tab->canDeleteFile());
+    mUi->actionRefreshFileList->setEnabled(tab->canRefreshFileList());
     mUi->actionUndo->setEnabled(tab->canUndo());
     mUi->actionRedo->setEnabled(tab->canRedo());
     mUi->actionCut->setEnabled(tab->canCut());
@@ -127,10 +132,35 @@ void MainWindow::updateUi()
     mUi->stackedWidget->setCurrentIndex(0); // FIXME
 }
 
+void MainWindow::on_actionNewFile_triggered()
+{
+    currentTab()->createFile();
+}
+
 void MainWindow::on_actionSaveAll_triggered()
 {
     for (auto tab : mEditorTabs)
         tab->saveAll();
+}
+
+void MainWindow::on_actionCreateDirectory_triggered()
+{
+    currentTab()->createDirectory();
+}
+
+void MainWindow::on_actionRenameFile_triggered()
+{
+    currentTab()->renameFile();
+}
+
+void MainWindow::on_actionDeleteFile_triggered()
+{
+    currentTab()->deleteFile();
+}
+
+void MainWindow::on_actionRefreshFileList_triggered()
+{
+    currentTab()->refreshFileList();
 }
 
 void MainWindow::on_actionUndo_triggered()

@@ -3,17 +3,16 @@
 #include "ui_CodeTab.h"
 #include <QSaveFile>
 #include <QMessageBox>
-#include <QPushButton>
 
 CodeTab::CodeTab(QWidget* parent)
-    : QWidget(parent)
+    : AbstractEditorTab(parent)
     , mUi(new Ui_CodeTab)
     , mDummyDocument(new ScintillaDocument(this))
-    , mCurrentFile(nullptr)
 {
     mUi->setupUi(this);
-    mUi->textEditor->setLexer(SCLEX_ASM);
+    mUi->stackedWidget->setCurrentWidget(mUi->noEditor);
     mUi->textEditor->setEnabled(false);
+    setFileManager(mUi->fileManager);
 }
 
 CodeTab::~CodeTab()
@@ -37,51 +36,51 @@ bool CodeTab::hasModifiedFiles() const
 
 bool CodeTab::canUndo() const
 {
-    auto it = mFiles.find(mCurrentFile);
-    return mCurrentFile && it != mFiles.end() && it->second->can_undo();
+    auto it = mFiles.find(currentFile());
+    return currentFile() && it != mFiles.end() && it->second->can_undo();
 }
 
 bool CodeTab::canRedo() const
 {
-    auto it = mFiles.find(mCurrentFile);
-    return mCurrentFile && it != mFiles.end() && it->second->can_redo();
+    auto it = mFiles.find(currentFile());
+    return currentFile() && it != mFiles.end() && it->second->can_redo();
 }
 
 bool CodeTab::canCut() const
 {
-    auto it = mFiles.find(mCurrentFile);
-    return mCurrentFile && it != mFiles.end() && !mUi->textEditor->selectionEmpty();
+    auto it = mFiles.find(currentFile());
+    return currentFile() && it != mFiles.end() && !mUi->textEditor->selectionEmpty();
 }
 
 bool CodeTab::canCopy() const
 {
-    auto it = mFiles.find(mCurrentFile);
-    return mCurrentFile && it != mFiles.end() && !mUi->textEditor->selectionEmpty();
+    auto it = mFiles.find(currentFile());
+    return currentFile() && it != mFiles.end() && !mUi->textEditor->selectionEmpty();
 }
 
 bool CodeTab::canPaste() const
 {
-    return mCurrentFile != nullptr;
+    return currentFile() != nullptr;
 }
 
 bool CodeTab::canClear() const
 {
-    return mCurrentFile != nullptr;
+    return currentFile() != nullptr;
 }
 
 bool CodeTab::canSelectAll() const
 {
-    return mCurrentFile != nullptr;
+    return currentFile() != nullptr;
 }
 
 bool CodeTab::canClearSelection() const
 {
-    return mCurrentFile && !mUi->textEditor->selectionEmpty();
+    return currentFile() && !mUi->textEditor->selectionEmpty();
 }
 
 bool CodeTab::canGoToLine() const
 {
-    return mCurrentFile != nullptr;
+    return currentFile() != nullptr;
 }
 
 bool CodeTab::saveAll()
@@ -92,67 +91,73 @@ bool CodeTab::saveAll()
             success = saveFile(it.first) && success;
     }
 
-    emit updateUi();
+    updateUi();
     return success;
 }
 
 void CodeTab::undo()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->undo();
 }
 
 void CodeTab::redo()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->redo();
 }
 
 void CodeTab::cut()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->cut();
 }
 
 void CodeTab::copy()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->copy();
 }
 
 void CodeTab::paste()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->paste();
 }
 
 void CodeTab::clear()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->clear();
 }
 
 void CodeTab::selectAll()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->selectAll();
 }
 
 void CodeTab::clearSelection()
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->clearSelections();
 }
 
 void CodeTab::goToLine(int line)
 {
-    if (mCurrentFile)
+    if (currentFile())
         mUi->textEditor->gotoLine(line);
 }
 
 void CodeTab::reloadSettings()
 {
     mUi->textEditor->reloadSettings();
+}
+
+bool CodeTab::isFileModified(File* file) const
+{
+    auto it = mFiles.find(file);
+    return (it != mFiles.end() && !it->second->is_save_point());
 }
 
 bool CodeTab::saveFile(File* file)
@@ -194,34 +199,8 @@ bool CodeTab::saveFile(File* file)
     return true;
 }
 
-void CodeTab::on_fileManager_willRenameFile(File* file, bool* shouldAbort)
+bool CodeTab::loadFile(File* file)
 {
-    auto it = mFiles.find(file);
-    if (it == mFiles.end() || it->second->is_save_point())
-        return;
-
-    QMessageBox msgbox(QMessageBox::Warning,
-        tr("Confirmation"), tr("Save changes to \"%1\"?").arg(file->name()), QMessageBox::NoButton, this);
-    auto btnSave = msgbox.addButton(tr("Save"), QMessageBox::AcceptRole);
-    auto btnDiscard = msgbox.addButton(tr("Discard"), QMessageBox::DestructiveRole);
-    auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-    msgbox.setDefaultButton(btnCancel);
-    msgbox.setEscapeButton(btnCancel);
-    msgbox.exec();
-
-    auto clicked = msgbox.clickedButton();
-    if (clicked == btnSave) {
-        if (!saveFile(file))
-            *shouldAbort = true;
-    } else if (clicked != btnDiscard)
-        *shouldAbort = true;
-}
-
-void CodeTab::on_fileManager_fileSelected(File* file)
-{
-    if (file == mCurrentFile)
-        return;
-
     ScintillaDocument* doc = nullptr;
     if (file) {
         int load_file = false;
@@ -258,33 +237,22 @@ void CodeTab::on_fileManager_fileSelected(File* file)
     }
 
     if (doc) {
-        mCurrentFile = file;
         mUi->textEditor->set_doc(doc);
+        mUi->textEditor->setLexer(SCLEX_ASM);
         mUi->textEditor->setEnabled(true);
+        mUi->stackedWidget->setCurrentWidget(mUi->textEditor);
     } else {
-        mCurrentFile = nullptr;
         mUi->textEditor->set_doc(mDummyDocument);
         mUi->textEditor->setEnabled(false);
+        mUi->stackedWidget->setCurrentWidget(mUi->noEditor);
     }
 
     reloadSettings();
-    updateUi();
+
+    return doc != nullptr;
 }
 
-void CodeTab::on_fileManager_fileDisappeared(File* file)
+void CodeTab::removeFile(File* file)
 {
     mFiles.erase(file);
-    if (mCurrentFile == file)
-        on_fileManager_fileSelected(nullptr);
-    updateUi();
-}
-
-void CodeTab::on_textEditor_updateUi(int)
-{
-    updateUi();
-}
-
-void CodeTab::on_textEditor_savePointChanged(bool)
-{
-    updateUi();
 }

@@ -2,15 +2,14 @@
 #define CODE_CODETAB_H
 
 #include <QWidget>
-#include "IEditorTab.h"
+#include "AbstractEditorTab.h"
 #include <memory>
 #include <unordered_map>
 
-class File;
-class ScintillaDocument;
 class Ui_CodeTab;
+class ScintillaDocument;
 
-class CodeTab : public QWidget, public IEditorTab
+class CodeTab : public AbstractEditorTab
 {
     Q_OBJECT
 
@@ -48,16 +47,14 @@ private:
     std::unique_ptr<Ui_CodeTab> mUi;
     std::unordered_map<File*, ScintillaDocument*> mFiles;
     ScintillaDocument* mDummyDocument;
-    File* mCurrentFile;
 
-    bool saveFile(File* file);
+    bool isFileModified(File* file) const override;
+    bool saveFile(File* file) override;
+    bool loadFile(File* file) override;
+    void removeFile(File* file) override;
 
-    Q_SLOT void on_fileManager_willRenameFile(File* file, bool* shouldAbort);
-    Q_SLOT void on_fileManager_fileSelected(File* file);
-    Q_SLOT void on_fileManager_fileDisappeared(File* file);
-
-    Q_SLOT void on_textEditor_updateUi(int updated);
-    Q_SLOT void on_textEditor_savePointChanged(bool dirty);
+    Q_SLOT void on_textEditor_updateUi(int updated) { updateUi(); }
+    Q_SLOT void on_textEditor_savePointChanged(bool dirty) { updateUi(); }
 
     Q_DISABLE_COPY(CodeTab)
 };

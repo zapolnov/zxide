@@ -10,7 +10,12 @@ public:
 
     virtual ~IEditorTab() = default;
 
+    virtual bool canCreateFile() const { return false; }
+    virtual bool canCreateDirectory() const { return false; }
     virtual bool hasModifiedFiles() const { return false; }
+    virtual bool canRenameFile() const { return false; }
+    virtual bool canDeleteFile() const { return false; }
+    virtual bool canRefreshFileList() const { return false; }
     virtual bool canUndo() const { return false; }
     virtual bool canRedo() const { return false; }
     virtual bool canCut() const { return false; }
@@ -21,7 +26,12 @@ public:
     virtual bool canClearSelection() const { return false; }
     virtual bool canGoToLine() const { return false; }
 
+    virtual void createFile() {}
+    virtual void createDirectory() {}
     virtual bool saveAll() { return true; }
+    virtual void renameFile() {}
+    virtual void deleteFile() {}
+    virtual void refreshFileList() {}
     virtual void undo() {}
     virtual void redo() {}
     virtual void cut() {}
