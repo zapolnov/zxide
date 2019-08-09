@@ -1,12 +1,12 @@
 // THIS IS A GENERATED FILE. DO NOT EDIT!
 #include "Z80Opcodes.h"
 
-void NOP::emit(std::vector<unsigned char>& out) const
+void NOP::emitBinary(ProgramBinary* bin) const
 {
-    out.emplace_back(0x00);
+    bin->emitByte(0x00);
 }
 
-void RET::emit(std::vector<unsigned char>& out) const
+void RET::emitBinary(ProgramBinary* bin) const
 {
-    out.emplace_back(0xC9);
+    bin->emitByte(0xC9);
 }

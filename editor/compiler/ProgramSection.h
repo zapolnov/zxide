@@ -10,8 +10,10 @@
 #undef emit
 #endif
 
+class ProgramBinary;
 class ProgramLabel;
 class ProgramOpcode;
+class IErrorReporter;
 
 class ProgramSection
 {
@@ -21,6 +23,8 @@ public:
 
     const std::string& name() const { return mName; }
     const char* nameCStr() const { return mName.c_str(); }
+
+    bool isEmpty() const { return mOpcodes.empty(); }
 
     bool hasBase() const { return mHasBase; }
     unsigned base() const { Q_ASSERT(mHasBase); return mBase; }
@@ -38,9 +42,11 @@ public:
         return ptr;
     }
 
+    bool resolveAddresses(IErrorReporter* reporter, quint32& address) const;
+    void emitCode(ProgramBinary* binary) const;
+
 private:
     std::string mName;
-    std::vector<ProgramLabel*> mLabels;
     std::vector<std::unique_ptr<ProgramOpcode>> mOpcodes;
     unsigned mBase;
     unsigned mAlignment;
@@ -48,7 +54,6 @@ private:
     bool mHasAlignment;
 
     Q_DISABLE_COPY(ProgramSection)
-    friend class ProgramLabel;
 };
 
 #endif

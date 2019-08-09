@@ -32,8 +32,12 @@ qt_add_sources(GameEditor
         compiler/CompilerDialog.h
         compiler/CompilerDialog.ui
         compiler/IErrorReporter.h
+        compiler/Linker.cpp
+        compiler/Linker.h
         compiler/Program.cpp
         compiler/Program.h
+        compiler/ProgramBinary.cpp
+        compiler/ProgramBinary.h
         compiler/ProgramLabel.cpp
         compiler/ProgramLabel.h
         compiler/ProgramOpcode.cpp

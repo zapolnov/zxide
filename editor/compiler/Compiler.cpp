@@ -1,12 +1,22 @@
 #include "Compiler.h"
 #include "Program.h"
+#include "ProgramBinary.h"
 #include "Assembler.h"
+#include "Linker.h"
 #include "FileManager.h"
+#include "Util.h"
 #include <exception>
 
 #ifndef emit
 #define emit
 #endif
+
+namespace
+{
+    class CompilationFailed
+    {
+    };
+}
 
 Compiler::Compiler(QObject* parent)
     : QObject(parent)
@@ -43,13 +53,26 @@ void Compiler::compile()
             QByteArray fileData = file.readAll();
             file.close();
 
-            if (extension == QStringLiteral("asm"))
-                Assembler(mProgram.get(), this).parse(source.file, fileData);
-            else {
+            if (extension == QStringLiteral("asm")) {
+                if (!Assembler(mProgram.get(), this).parse(source.file, fileData))
+                    throw CompilationFailed();
+            } else {
                 error(source.file, 0, tr("Unsupported file type: %1").arg(extension));
-                break;
+                throw CompilationFailed();
             }
         }
+
+        setStatusText(tr("Generating code..."));
+        auto binary = Linker(mProgram.get(), this).emitCode();
+        if (!binary)
+            throw CompilationFailed();
+
+        // FIXME
+        if (!writeFile("out.bin", binary->codeBytes(), binary->codeLength(), this))
+            throw CompilationFailed();
+    } catch (const CompilationFailed&) {
+        emit compilationEnded();
+        return;
     } catch (const std::exception& e) {
         error(nullptr, 0, tr("Exception: %1").arg(e.what()));
     } catch (...) {

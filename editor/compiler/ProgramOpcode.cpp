@@ -10,3 +10,8 @@ ProgramOpcode::ProgramOpcode(const Token& token)
 ProgramOpcode::~ProgramOpcode()
 {
 }
+
+void ProgramOpcode::resolveAddress(quint32& address)
+{
+    address += lengthInBytes();
+}

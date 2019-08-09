@@ -8,8 +8,9 @@
 #undef emit
 #endif
 
-class File;
 struct Token;
+class File;
+class ProgramBinary;
 
 class ProgramOpcode
 {
@@ -24,7 +25,8 @@ public:
     virtual unsigned tstatesIfNotTaken() const = 0;
     virtual unsigned tstatesIfTaken() const = 0;
 
-    virtual void emit(std::vector<unsigned char>& out) const = 0;
+    virtual void resolveAddress(quint32& address);
+    virtual void emitBinary(ProgramBinary* bin) const = 0;
 
 private:
     File* mFile;

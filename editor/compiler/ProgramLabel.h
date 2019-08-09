@@ -4,6 +4,7 @@
 #include "ProgramOpcode.h"
 #include <string>
 
+class ProgramBinary;
 class ProgramSection;
 
 class ProgramLabel : public ProgramOpcode
@@ -17,13 +18,13 @@ public:
 
     bool hasAddress() const { return mHasAddress; }
     unsigned address() const { Q_ASSERT(mHasAddress); return mAddress; }
-    void setAddress(unsigned value) { Q_ASSERT(!mHasAddress); mAddress = value; mHasAddress = true; }
 
     unsigned lengthInBytes() const override;
     unsigned tstatesIfNotTaken() const override;
     unsigned tstatesIfTaken() const override;
 
-    void emit(std::vector<unsigned char>& out) const override;
+    void resolveAddress(quint32& address) override;
+    void emitBinary(ProgramBinary* bin) const override;
 
 private:
     ProgramSection* mSection;

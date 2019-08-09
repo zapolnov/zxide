@@ -11,7 +11,7 @@ class SimpleOpcode:
     def codeForEmit(self):
         code = ''
         for byte in self.bytes:
-            code += '    out.emplace_back(0x%02X);\n' % byte
+            code += '    bin->emitByte(0x%02X);\n' % byte
         return code
 
 opcodes = [
@@ -27,6 +27,7 @@ hdr += '#include "ProgramOpcode.h"\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
+hdr += '#include "ProgramBinary.h"\n'
 
 for opcode in opcodes:
     hdr += '\n'
@@ -42,13 +43,13 @@ for opcode in opcodes:
     hdr += '    unsigned tstatesIfNotTaken() const override { return %d; }\n' % opcode.tstatesIfNotTaken
     hdr += '    unsigned tstatesIfTaken() const override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
-    hdr += '    void emit(std::vector<unsigned char>& out) const override;\n'
+    hdr += '    void emitBinary(ProgramBinary* bin) const override;\n'
     hdr += '\n'
     hdr += '    Q_DISABLE_COPY(%s)\n' % opcode.name.upper()
     hdr += '};\n'
 
     src += '\n'
-    src += 'void %s::emit(std::vector<unsigned char>& out) const\n' % opcode.name.upper()
+    src += 'void %s::emitBinary(ProgramBinary* bin) const\n' % opcode.name.upper()
     src += '{\n'
     src += opcode.codeForEmit()
     src += '}\n'

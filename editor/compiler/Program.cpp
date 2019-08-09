@@ -37,3 +37,9 @@ ProgramSection* Program::getOrCreateSection(const std::string& name)
 
     return ptr;
 }
+
+void Program::forEachSection(const std::function<void(ProgramSection*)>& iterator) const
+{
+    for (const auto& it : mSections)
+        iterator(it.second.get());
+}

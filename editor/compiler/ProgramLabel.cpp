@@ -1,5 +1,4 @@
 #include "ProgramLabel.h"
-#include "ProgramSection.h"
 
 ProgramLabel::ProgramLabel(const Token& token, ProgramSection* section, std::string name)
     : ProgramOpcode(token)
@@ -8,9 +7,6 @@ ProgramLabel::ProgramLabel(const Token& token, ProgramSection* section, std::str
     , mAddress(0)
     , mHasAddress(false)
 {
-    Q_ASSERT(section != nullptr);
-    if (section)
-        section->mLabels.emplace_back(this);
 }
 
 ProgramLabel::~ProgramLabel()
@@ -32,6 +28,13 @@ unsigned ProgramLabel::tstatesIfTaken() const
     return 0;
 }
 
-void ProgramLabel::emit(std::vector<unsigned char>&) const
+void ProgramLabel::resolveAddress(quint32& address)
+{
+    Q_ASSERT(!mHasAddress);
+    mHasAddress = true;
+    mAddress = unsigned(address);
+}
+
+void ProgramLabel::emitBinary(ProgramBinary* bin) const
 {
 }
