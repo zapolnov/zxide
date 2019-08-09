@@ -29,6 +29,8 @@ qt_add_sources(GameEditor
         compiler/IErrorReporter.h
         compiler/Program.cpp
         compiler/Program.h
+        compiler/ProgramSection.cpp
+        compiler/ProgramSection.h
         levels/LevelsTab.cpp
         levels/LevelsTab.h
         levels/LevelsTab.ui
