@@ -1,6 +1,8 @@
 #include "AssemblerParser.h"
 #include "AssemblerLexer.h"
 #include "IErrorReporter.h"
+#include "Z80Opcodes.h"
+#include "Util.h"
 #include "Program.h"
 #include <sstream>
 
@@ -43,7 +45,7 @@ void AssemblerParser::parseLine()
     // read directive / instruction
     if (lastTokenId() != T_IDENTIFIER)
         error(tr("expected opcode or directive"));
-    const auto& directive = lastTokenText();
+    auto directive = toLower(lastTokenText());
     if (directive == "section")
         parseSectionDecl();
     else
@@ -57,8 +59,8 @@ void AssemblerParser::parseSectionDecl()
 
     if (nextToken() == T_LBRACKET) {
         for (;;) {
-            expectIdentifier(nextToken());
-            if (lastTokenText() == "align") {
+            auto param = toLower(expectIdentifier(nextToken()));
+            if (param == "align") {
                 auto alignment = (unsigned)expectNumber(nextToken(), 1, 0xFFFF);
                 if (mSection->hasAlignment() && mSection->alignment() != alignment) {
                     error(tr("conflicting alignment for section '%1' (%2 != %3)")
@@ -69,7 +71,7 @@ void AssemblerParser::parseSectionDecl()
                         .arg(mSection->nameCStr()).arg(mSection->base(), 0, 10).arg(alignment));
                 }
                 mSection->setAlignment(alignment);
-            } else if (lastTokenText() == "base") {
+            } else if (param == "base") {
                 auto base = (unsigned)expectNumber(nextToken());
                 if (mSection->hasBase() && mSection->base() != base) {
                     error(tr("conflicting base address for section '%1' (%2 != %3)")
@@ -98,9 +100,11 @@ void AssemblerParser::parseSectionDecl()
 
 void AssemblerParser::parseOpcode()
 {
-    const auto& opcode = lastTokenText();
-    if (opcode == "ret")
-        ; // FIXME
+    auto opcode = toLower(lastTokenText());
+    if (opcode == "nop")
+        mSection->emit<NOP>(lastToken());
+    else if (opcode == "ret")
+        mSection->emit<RET>(lastToken());
     else
         error(tr("unexpected '%1'").arg(lastTokenCStr()));
 }

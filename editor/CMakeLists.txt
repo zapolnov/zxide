@@ -40,6 +40,10 @@ qt_add_sources(GameEditor
         compiler/ProgramOpcode.h
         compiler/ProgramSection.cpp
         compiler/ProgramSection.h
+        compiler/Util.cpp
+        compiler/Util.h
+        compiler/Z80Opcodes.cpp
+        compiler/Z80Opcodes.h
         levels/LevelsTab.cpp
         levels/LevelsTab.h
         levels/LevelsTab.ui

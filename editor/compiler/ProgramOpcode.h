@@ -4,6 +4,10 @@
 #include <QtGlobal>
 #include <vector>
 
+#ifdef emit
+#undef emit
+#endif
+
 class File;
 struct Token;
 
