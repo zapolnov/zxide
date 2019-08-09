@@ -28,9 +28,12 @@ private:
     std::vector<IEditorTab*> mEditorTabs;
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
+    QLabel* mBuildResultLabel;
 
     bool confirmSave();
     bool saveAll();
+
+    bool build();
 
     void updateUi();
 
@@ -52,6 +55,7 @@ private:
     Q_SLOT void on_actionClearSelection_triggered();
     Q_SLOT void on_actionGoToLine_triggered();
 
+    Q_SLOT void on_actionBuild_triggered();
     Q_SLOT void on_actionRun_triggered();
 
     Q_SLOT void on_actionAbout_triggered();

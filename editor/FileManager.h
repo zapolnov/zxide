@@ -94,6 +94,9 @@ public:
     void refresh();
     void refreshDirectory(Directory* directory);
 
+    void enumerateFiles(std::vector<File*>& files);
+    void enumerateFilesInDirectory(Directory* directory, std::vector<File*>& files);
+
 signals:
     void updateUi();
     void willRenameFile(File* file, bool* shouldAbort);

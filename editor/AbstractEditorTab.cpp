@@ -14,6 +14,19 @@ AbstractEditorTab::~AbstractEditorTab()
 {
 }
 
+void AbstractEditorTab::setCurrentFile(File* file)
+{
+    if (file == mCurrentFile)
+        return;
+
+    if (loadFile(file))
+        mCurrentFile = file;
+    else
+        mCurrentFile = nullptr;
+
+    updateUi();
+}
+
 bool AbstractEditorTab::canCreateFile() const
 {
     return mFileManager != nullptr;
@@ -69,6 +82,12 @@ void AbstractEditorTab::refreshFileList()
         mFileManager->refresh();
 }
 
+void AbstractEditorTab::enumerateFiles(std::vector<File*>& files)
+{
+    if (mFileManager)
+        mFileManager->enumerateFiles(files);
+}
+
 void AbstractEditorTab::setFileManager(FileManager* manager)
 {
     if (mFileManager != manager) {
@@ -106,15 +125,7 @@ void AbstractEditorTab::on_fileManager_willRenameFile(File* file, bool* shouldAb
 
 void AbstractEditorTab::on_fileManager_fileSelected(File* file)
 {
-    if (file == mCurrentFile)
-        return;
-
-    if (loadFile(file))
-        mCurrentFile = file;
-    else
-        mCurrentFile = nullptr;
-
-    updateUi();
+    setCurrentFile(file);
 }
 
 void AbstractEditorTab::on_fileManager_fileDisappeared(File* file)

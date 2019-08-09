@@ -1,5 +1,7 @@
 #include "MainWindow.h"
+#include "compiler/CompilerDialog.h"
 #include "AboutDialog.h"
+#include "FileManager.h"
 #include "IEditorTab.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -35,6 +37,11 @@ MainWindow::MainWindow(const QString& path)
     mLineColumnLabel->setFrameShadow(QFrame::Sunken);
     mLineColumnLabel->setAlignment(Qt::AlignCenter);
     mUi->statusBar->addPermanentWidget(mLineColumnLabel);
+
+    mBuildResultLabel = new QLabel(mUi->statusBar);
+    mBuildResultLabel->setText(tr("Ready"));
+    mBuildResultLabel->setStyleSheet(QStringLiteral("font-weight: bold; padding-right: 5px"));
+    mUi->statusBar->addWidget(mBuildResultLabel);
 
     int n = mUi->tabWidget->count();
     for (int i = 0; i < n; i++) {
@@ -75,7 +82,7 @@ IEditorTab* MainWindow::currentTab() const
 
 bool MainWindow::hasModifiedFiles() const
 {
-    for (auto tab : mEditorTabs) {
+    for (IEditorTab* tab : mEditorTabs) {
         if (tab->hasModifiedFiles())
             return true;
     }
@@ -97,7 +104,7 @@ bool MainWindow::confirmSave()
 
     QMessageBox msgbox(QMessageBox::Warning, tr("Confirmation"), tr("Save changes?"), QMessageBox::NoButton, this);
     auto btnSave = msgbox.addButton(tr("Save"), QMessageBox::AcceptRole);
-    auto btnDiscard = msgbox.addButton(tr("Discard"), QMessageBox::DestructiveRole);
+    auto btnDontSave = msgbox.addButton(tr("Don't Save"), QMessageBox::DestructiveRole);
     auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
     msgbox.setDefaultButton(btnCancel);
     msgbox.setEscapeButton(btnCancel);
@@ -106,7 +113,7 @@ bool MainWindow::confirmSave()
     auto clicked = msgbox.clickedButton();
     if (clicked == btnSave)
         return saveAll();
-    if (clicked == btnDiscard)
+    if (clicked == btnDontSave)
         return true;
 
     return false;
@@ -115,11 +122,61 @@ bool MainWindow::confirmSave()
 bool MainWindow::saveAll()
 {
     bool success = true;
-    for (auto tab : mEditorTabs) {
+    for (IEditorTab* tab : mEditorTabs) {
         if (!tab->saveAll())
             success = false;
     }
     return success;
+}
+
+bool MainWindow::build()
+{
+    if (!confirmSave()) {
+        mBuildResultLabel->setToolTip(QString());
+        mBuildResultLabel->setText(tr("Ready"));
+        mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
+        return false;
+    }
+
+    mBuildResultLabel->setToolTip(QString());
+    mBuildResultLabel->setText(tr("Compiling..."));
+    mBuildResultLabel->setStyleSheet(QStringLiteral("color: #ccaa00; font-weight: bold; padding-right: 5px"));
+
+    CompilerDialog dlg(this);
+
+    std::vector<File*> files;
+    for (IEditorTab* tab : mEditorTabs)
+        tab->enumerateFiles(files);
+    for (File* file : files)
+        dlg.addSourceFile(file);
+
+    connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this] {
+            mBuildResultLabel->setToolTip(QString());
+            mBuildResultLabel->setText(tr("Ready"));
+            mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
+        });
+
+    connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
+            mUi->tabWidget->setCurrentWidget(mUi->codeTab);
+
+            QString message;
+            if (!file)
+                message = errorMessage;
+            else if (file && line <= 0) {
+                mUi->codeTab->setCurrentFile(file);
+                message = tr("%1: %2").arg(file->fileInfo().fileName()).arg(errorMessage);
+            } else {
+                mUi->codeTab->setCurrentFile(file);
+                mUi->codeTab->goToLine(line - 1);
+                message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
+            }
+
+            mBuildResultLabel->setText(message);
+            mBuildResultLabel->setToolTip(message);
+            mBuildResultLabel->setStyleSheet(QStringLiteral("color: red; font-weight: bold; padding-right: 5px"));
+        });
+
+    return dlg.runCompiler();
 }
 
 void MainWindow::updateUi()
@@ -238,9 +295,14 @@ void MainWindow::on_actionGoToLine_triggered()
     }
 }
 
+void MainWindow::on_actionBuild_triggered()
+{
+    build();
+}
+
 void MainWindow::on_actionRun_triggered()
 {
-    // FIXME
+    build();
 }
 
 void MainWindow::on_actionAbout_triggered()

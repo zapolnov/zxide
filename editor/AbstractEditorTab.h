@@ -15,6 +15,7 @@ public:
     ~AbstractEditorTab();
 
     File* currentFile() const override { return mCurrentFile; }
+    void setCurrentFile(File* file);
 
     bool canCreateFile() const override;
     bool canCreateDirectory() const override;
@@ -27,6 +28,8 @@ public:
     void renameFile() override;
     void deleteFile() override;
     void refreshFileList() override;
+
+    void enumerateFiles(std::vector<File*>& files) override;
 
 protected:
     void setFileManager(FileManager* manager);

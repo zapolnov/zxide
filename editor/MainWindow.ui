@@ -128,6 +128,7 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+   <addaction name="actionBuild"/>
    <addaction name="actionRun"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -177,15 +178,16 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuDebug">
+   <widget class="QMenu" name="menuProgram">
     <property name="title">
-     <string>&amp;Debug</string>
+     <string>&amp;Program</string>
     </property>
+    <addaction name="actionBuild"/>
     <addaction name="actionRun"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuDebug"/>
+   <addaction name="menuProgram"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -293,7 +295,7 @@
      <normaloff>:/resources/tango16x16/media-playback-start.png</normaloff>:/resources/tango16x16/media-playback-start.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Run...</string>
+    <string>Build and &amp;run</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
@@ -381,6 +383,18 @@
    </property>
    <property name="text">
     <string>Re&amp;fresh file list</string>
+   </property>
+  </action>
+  <action name="actionBuild">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/compile.png</normaloff>:/resources/fatcow16x16/compile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Build</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>

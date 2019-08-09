@@ -2,6 +2,7 @@
 #define IEDITORTAB_H
 
 #include <functional>
+#include <vector>
 
 class File;
 
@@ -48,6 +49,8 @@ public:
     virtual void selectAll() {}
     virtual void clearSelection() {}
     virtual void goToLine(int line) {}
+
+    virtual void enumerateFiles(std::vector<File*>& files) {}
 
     virtual void reloadSettings() {}
 };

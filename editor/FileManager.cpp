@@ -131,6 +131,19 @@ void FileManager::refreshDirectory(Directory* directory)
     directory->sortChildren(0, Qt::AscendingOrder);
 }
 
+void FileManager::enumerateFiles(std::vector<File*>& files)
+{
+    enumerateFilesInDirectory(mRootDirectory, files);
+}
+
+void FileManager::enumerateFilesInDirectory(Directory* directory, std::vector<File*>& files)
+{
+    for (Directory* subdir : directory->mDirectories)
+        enumerateFilesInDirectory(subdir, files);
+    for (File* file : directory->mFiles)
+        files.emplace_back(file);
+}
+
 void FileManager::on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
     auto selected = selectedFileOrDirectory();
