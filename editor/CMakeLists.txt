@@ -13,6 +13,10 @@ source_group("Generated Files" FILES "${config_h}")
 qt_add_executable(GameEditor USES Core Gui Widgets)
 target_link_libraries(GameEditor Scintilla)
 
+if(MSVC)
+    set_source_files_properties(compiler/Z80Opcodes.cpp PROPERTIES COMPILE_FLAGS "/bigobj")
+endif()
+
 qt_add_sources(GameEditor
         code/CodeTab.cpp
         code/CodeTab.h
