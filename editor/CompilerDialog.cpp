@@ -1,5 +1,6 @@
 #include "CompilerDialog.h"
-#include "Compiler.h"
+#include "FileManager.h"
+#include "compiler/Compiler.h"
 #include "ui_CompilerDialog.h"
 #include <QCloseEvent>
 #include <QTimer>
@@ -34,7 +35,7 @@ CompilerDialog::~CompilerDialog()
 
 void CompilerDialog::addSourceFile(File* file)
 {
-    mCompiler->addSourceFile(file);
+    mCompiler->addSourceFile(file, file->fileInfo().absoluteFilePath());
 }
 
 bool CompilerDialog::runCompiler()

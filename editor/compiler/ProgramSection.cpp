@@ -2,7 +2,7 @@
 #include "ProgramOpcode.h"
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
-#include <QApplication>
+#include <QCoreApplication>
 
 ProgramSection::ProgramSection(std::string name)
     : mName(std::move(name))
@@ -25,7 +25,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
         address = (address + mAlignment - 1) / mAlignment * mAlignment;
 
     if (address > 0xFFFF) {
-        reporter->error(nullptr, 0, QApplication::tr("section '%1' overflows 64K barrier").arg(nameCStr()));
+        reporter->error(nullptr, 0, QCoreApplication::tr("section '%1' overflows 64K barrier").arg(nameCStr()));
         return false;
     }
 
@@ -34,7 +34,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
         opcode->resolveAddress(address);
         Q_ASSERT(address == old + opcode->lengthInBytes());
         if (address > 0xFFFF) {
-            reporter->error(opcode->file(), opcode->line(), QApplication::tr("address is over 64K"));
+            reporter->error(opcode->file(), opcode->line(), QCoreApplication::tr("address is over 64K"));
             return false;
         }
     }

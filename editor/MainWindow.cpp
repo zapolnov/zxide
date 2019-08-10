@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "compiler/CompilerDialog.h"
+#include "CompilerDialog.h"
 #include "AboutDialog.h"
 #include "FileManager.h"
 #include "IEditorTab.h"

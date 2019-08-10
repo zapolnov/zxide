@@ -1,5 +1,5 @@
-#ifndef COMPILER_COMPILERDIALOG_H
-#define COMPILER_COMPILERDIALOG_H
+#ifndef COMPILERDIALOG_H
+#define COMPILERDIALOG_H
 
 #include <QDialog>
 #include <QThread>

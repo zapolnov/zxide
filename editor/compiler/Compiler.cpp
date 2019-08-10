@@ -3,9 +3,10 @@
 #include "ProgramBinary.h"
 #include "Assembler.h"
 #include "Linker.h"
-#include "FileManager.h"
 #include "Util.h"
 #include <exception>
+#include <QFile>
+#include <QFileInfo>
 
 #ifndef emit
 #define emit
@@ -31,9 +32,9 @@ Compiler::~Compiler()
 {
 }
 
-void Compiler::addSourceFile(File* file)
+void Compiler::addSourceFile(File* file, const QString& path)
 {
-    mSources.emplace_back(SourceFile{ file, file->fileInfo().absoluteFilePath() });
+    mSources.emplace_back(SourceFile{ file, path });
 }
 
 void Compiler::compile()

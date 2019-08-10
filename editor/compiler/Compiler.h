@@ -24,7 +24,7 @@ public:
 
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
-    void addSourceFile(File* file);
+    void addSourceFile(File* file, const QString& path);
 
     void compile();
 
