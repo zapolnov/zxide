@@ -1,6 +1,6 @@
 
 if(MSVC)
-    set_source_files_properties(Z80Opcodes.cpp PROPERTIES COMPILE_FLAGS "/bigobj")
+    set_source_files_properties(Z80Opcodes_parser.cpp PROPERTIES COMPILE_FLAGS "/bigobj")
 endif()
 
 add_library(Compiler STATIC)
@@ -33,6 +33,7 @@ qt_add_sources(Compiler
         Util.cpp
         Util.h
         Z80Opcodes.cpp
+        Z80Opcodes_parser.cpp
         Z80Opcodes.h
     )
 

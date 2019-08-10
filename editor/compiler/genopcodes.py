@@ -798,15 +798,23 @@ hdr += '#include "ProgramOpcode.h"\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
-src += '#include "ProgramSection.h"\n'
+#src += '#include "ProgramSection.h"\n'
 src += '#include "ProgramBinary.h"\n'
-src += '#include "AssemblerParser.h"\n'
-src += '#include "AssemblerToken.h"\n'
-src += '#include "Util.h"\n'
-src += '\n'
-src += '#ifdef emit\n'
-src += '#undef emit\n'
-src += '#endif\n'
+#src += '#include "AssemblerParser.h"\n'
+#src += '#include "AssemblerToken.h"\n'
+#src += '#include "Util.h"\n'
+
+src2  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
+src2 += '#include "Z80Opcodes.h"\n'
+src2 += '#include "ProgramSection.h"\n'
+#src2 += '#include "ProgramBinary.h"\n'
+src2 += '#include "AssemblerParser.h"\n'
+src2 += '#include "AssemblerToken.h"\n'
+src2 += '#include "Util.h"\n'
+src2 += '\n'
+src2 += '#ifdef emit\n'
+src2 += '#undef emit\n'
+src2 += '#endif\n'
 
 for opcode in opcodes:
     hdr += '\n'
@@ -849,17 +857,17 @@ def getDict(dict, key):
         return obj
 
 def genCode(dict, indent):
-    global src
+    global src2
     for key, value in dict.items():
-        src += '%sif (%s) {\n' % (indent, key)
+        src2 += '%sif (%s) {\n' % (indent, key)
         if not isinstance(value, Opcode):
-            src += '%s    nextToken();\n' % indent
+            src2 += '%s    nextToken();\n' % indent
             genCode(value, indent + '    ')
         else:
-            src += '%s    mSection->emit<%s>(token%s);\n' % (indent, value.className, value.argsCall())
-            src += '%s    return true;\n' % indent
-        src += '%s}\n' % indent
-    src += '%sreturn false;\n' % indent
+            src2 += '%s    mSection->emit<%s>(token%s);\n' % (indent, value.className, value.argsCall())
+            src2 += '%s    return true;\n' % indent
+        src2 += '%s}\n' % indent
+    src2 += '%sreturn false;\n' % indent
 
 opcodeMap = OrderedDict()
 for opcode in opcodes:
@@ -922,14 +930,14 @@ for opcode in opcodes:
         dict = getDict(dict, cond)
     dict['lastTokenId() == T_EOL'] = opcode
 
-src += '\n'
-src += 'bool AssemblerParser::parseOpcode_generated(const std::string& opcode)\n'
-src += '{\n'
-src += '    unsigned literal1, literal2;\n'
-src += '    Token token = lastToken();\n'
+src2 += '\n'
+src2 += 'bool AssemblerParser::parseOpcode_generated(const std::string& opcode)\n'
+src2 += '{\n'
+src2 += '    unsigned literal1, literal2;\n'
+src2 += '    Token token = lastToken();\n'
 genCode(opcodeMap, '    ')
-src += '    return false;\n'
-src += '}\n'
+src2 += '    return false;\n'
+src2 += '}\n'
 
 hdr += '\n'
 hdr += '#endif\n'
@@ -938,3 +946,5 @@ with open("Z80Opcodes.h", "w") as f:
     f.write(hdr)
 with open("Z80Opcodes.cpp", "w") as f:
     f.write(src)
+with open("Z80Opcodes_parser.cpp", "w") as f:
+    f.write(src2)
