@@ -2697,7 +2697,7 @@ void RES_6_L::emitBinary(ProgramBinary* bin) const
 void RES_7_A::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xCB);
-    bin->emitByte(0xBE);
+    bin->emitByte(0xBF);
 }
 
 void RES_7_B::emitBinary(ProgramBinary* bin) const
@@ -3433,7 +3433,7 @@ void SET_1_L::emitBinary(ProgramBinary* bin) const
 void SET_2_A::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xCB);
-    bin->emitByte(0x97);
+    bin->emitByte(0xD7);
 }
 
 void SET_2_B::emitBinary(ProgramBinary* bin) const
@@ -3643,7 +3643,7 @@ void SET_6_L::emitBinary(ProgramBinary* bin) const
 void SET_7_A::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xCB);
-    bin->emitByte(0xFE);
+    bin->emitByte(0xFF);
 }
 
 void SET_7_B::emitBinary(ProgramBinary* bin) const
@@ -4153,13 +4153,13 @@ void XOR_n::emitBinary(ProgramBinary* bin) const
 
 void XOR_mHL::emitBinary(ProgramBinary* bin) const
 {
-    bin->emitByte(0xA6);
+    bin->emitByte(0xAE);
 }
 
 void XOR_mIXn::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
-    bin->emitByte(0xA6);
+    bin->emitByte(0xAE);
     bin->emitByte(mLiteral1 & 0xFF);
 }
 
