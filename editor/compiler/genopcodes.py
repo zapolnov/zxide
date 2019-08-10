@@ -16,7 +16,7 @@ class Opcode:
                 self.lengthInBytes += 1
         literalCount = 0
         for op in operands:
-            if op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)' ]:
+            if op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)', '(sp)' ]:
                 self.className += '_m%s' % op[1:3].upper()
             elif op in [ '(ix+#)', '(iy+#)' ]:
                 literalCount += 1
@@ -205,6 +205,15 @@ opcodes = [
         Opcode( 'bit', [        '7',       'e' ], [ 0xCB, 0x7B             ],  8),
         Opcode( 'bit', [        '7',       'h' ], [ 0xCB, 0x7C             ],  8),
         Opcode( 'bit', [        '7',       'l' ], [ 0xCB, 0x7D             ],  8),
+        Opcode('call', [                  '##' ], [ 0xCD, '#'              ], 17),
+        Opcode('call', [        'c',      '##' ], [ 0xDC, '#'              ], [ 17, 10 ]),
+        Opcode('call', [        'm',      '##' ], [ 0xFC, '#'              ], [ 17, 10 ]),
+        Opcode('call', [       'nc',      '##' ], [ 0xD4, '#'              ], [ 17, 10 ]),
+        Opcode('call', [       'nz',      '##' ], [ 0xC4, '#'              ], [ 17, 10 ]),
+        Opcode('call', [        'p',      '##' ], [ 0xF4, '#'              ], [ 17, 10 ]),
+        Opcode('call', [       'pe',      '##' ], [ 0xEC, '#'              ], [ 17, 10 ]),
+        Opcode('call', [       'po',      '##' ], [ 0xE4, '#'              ], [ 17, 10 ]),
+        Opcode('call', [        'z',      '##' ], [ 0xCC, '#'              ], [ 17, 10 ]),
 
         Opcode( 'ccf', [                       ], [ 0x3F                   ],  4),
         Opcode( 'cpd', [                       ], [ 0xED, 0xA9             ], 16),
@@ -311,6 +320,7 @@ def genCode(dict, indent):
             src += '%s    mSection->emit<%s>(token%s);\n' % (indent, value.className, value.argsCall())
             src += '%s    return true;\n' % indent
         src += '%s}\n' % indent
+    src += '%sreturn false;\n' % indent
 
 opcodeMap = OrderedDict()
 for opcode in opcodes:
@@ -325,9 +335,11 @@ for opcode in opcodes:
 
         if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af' ]:
             conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op)
+        elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
+            conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op)
         elif op in [ '0', '1', '2', '3', '4', '5', '6', '7' ]:
             conds.append('lastTokenId() == T_NUMBER && lastToken().number == %s' % op)
-        elif op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)' ]:
+        elif op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)', '(sp)' ]:
             conds.append('lastTokenId() == T_LPAREN')
             conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op[1:3])
             conds.append('lastTokenId() == T_RPAREN')

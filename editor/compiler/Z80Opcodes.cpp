@@ -793,6 +793,69 @@ void BIT_7_L::emitBinary(ProgramBinary* bin) const
     bin->emitByte(0x7D);
 }
 
+void CALL_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xCD);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_C_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xDC);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_M_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xFC);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_NC_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xD4);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_NZ_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xC4);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_P_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xF4);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_PE_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xEC);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_PO_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xE4);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
+void CALL_Z_nn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xCC);
+    bin->emitByte(mLiteral1 & 0xFF);
+    bin->emitByte((mLiteral1 >> 8) & 0xFF);
+}
+
 void CCF::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0x3F);
@@ -1005,6 +1068,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1012,6 +1076,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1019,6 +1084,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1026,6 +1092,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1033,6 +1100,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1040,6 +1108,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1047,6 +1116,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_L>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (expectByteLiteral(&literal1)) {
                     nextToken();
@@ -1054,6 +1124,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_A_n>(token, literal1);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_LPAREN) {
                     nextToken();
@@ -1065,7 +1136,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<ADC_A_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1079,9 +1152,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<ADC_A_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1095,12 +1172,19 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<ADC_A_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
             nextToken();
@@ -1112,6 +1196,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_HL_BC>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
                     nextToken();
@@ -1119,6 +1204,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_HL_DE>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
                     nextToken();
@@ -1126,6 +1212,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_HL_HL>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
                     nextToken();
@@ -1133,9 +1220,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADC_HL_SP>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
+        return false;
     }
     if (opcode == "add") {
         nextToken();
@@ -1149,6 +1240,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1156,6 +1248,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1163,6 +1256,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1170,6 +1264,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1177,6 +1272,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1184,6 +1280,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1191,6 +1288,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_L>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (expectByteLiteral(&literal1)) {
                     nextToken();
@@ -1198,6 +1296,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_A_n>(token, literal1);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_LPAREN) {
                     nextToken();
@@ -1209,7 +1308,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<ADD_A_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1223,9 +1324,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<ADD_A_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1239,12 +1344,19 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<ADD_A_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
             nextToken();
@@ -1256,6 +1368,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_HL_BC>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
                     nextToken();
@@ -1263,6 +1376,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_HL_DE>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
                     nextToken();
@@ -1270,6 +1384,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_HL_HL>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
                     nextToken();
@@ -1277,8 +1392,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_HL_SP>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
             nextToken();
@@ -1290,6 +1408,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IX_BC>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
                     nextToken();
@@ -1297,6 +1416,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IX_DE>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                     nextToken();
@@ -1304,6 +1424,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IX_IX>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
                     nextToken();
@@ -1311,8 +1432,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IX_SP>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
             nextToken();
@@ -1324,6 +1448,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IY_BC>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
                     nextToken();
@@ -1331,6 +1456,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IY_DE>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                     nextToken();
@@ -1338,6 +1464,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IY_IY>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
                     nextToken();
@@ -1345,9 +1472,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<ADD_IY_SP>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
+        return false;
     }
     if (opcode == "and") {
         nextToken();
@@ -1357,6 +1488,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_A>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
             nextToken();
@@ -1364,6 +1496,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_B>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
             nextToken();
@@ -1371,6 +1504,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_C>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
             nextToken();
@@ -1378,6 +1512,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_D>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
             nextToken();
@@ -1385,6 +1520,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_E>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
             nextToken();
@@ -1392,6 +1528,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_H>(token);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
             nextToken();
@@ -1399,6 +1536,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_L>(token);
                 return true;
             }
+            return false;
         }
         if (expectByteLiteral(&literal1)) {
             nextToken();
@@ -1406,6 +1544,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                 mSection->emit<AND_n>(token, literal1);
                 return true;
             }
+            return false;
         }
         if (lastTokenId() == T_LPAREN) {
             nextToken();
@@ -1417,7 +1556,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<AND_mHL>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
             if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                 nextToken();
@@ -1431,9 +1572,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<AND_mIXn>(token, literal1);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
+                return false;
             }
             if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                 nextToken();
@@ -1447,11 +1592,17 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<AND_mIYn>(token, literal1);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
+        return false;
     }
     if (opcode == "bit") {
         nextToken();
@@ -1469,7 +1620,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_0_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1483,9 +1636,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_0_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1499,10 +1656,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_0_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -1510,6 +1672,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1517,6 +1680,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1524,6 +1688,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1531,6 +1696,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1538,6 +1704,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1545,6 +1712,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1552,8 +1720,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_0_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 1) {
             nextToken();
@@ -1569,7 +1740,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_1_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1583,9 +1756,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_1_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1599,10 +1776,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_1_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -1610,6 +1792,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1617,6 +1800,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1624,6 +1808,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1631,6 +1816,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1638,6 +1824,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1645,6 +1832,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1652,8 +1840,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_1_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 2) {
             nextToken();
@@ -1669,7 +1860,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_2_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1683,9 +1876,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_2_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1699,10 +1896,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_2_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -1710,6 +1912,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1717,6 +1920,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1724,6 +1928,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1731,6 +1936,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1738,6 +1944,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1745,6 +1952,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1752,8 +1960,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_2_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 3) {
             nextToken();
@@ -1769,7 +1980,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_3_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1783,9 +1996,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_3_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1799,10 +2016,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_3_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -1810,6 +2032,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1817,6 +2040,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1824,6 +2048,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1831,6 +2056,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1838,6 +2064,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1845,6 +2072,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1852,8 +2080,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_3_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 4) {
             nextToken();
@@ -1869,7 +2100,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_4_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1883,9 +2116,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_4_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1899,10 +2136,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_4_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -1910,6 +2152,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -1917,6 +2160,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -1924,6 +2168,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -1931,6 +2176,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -1938,6 +2184,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -1945,6 +2192,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -1952,8 +2200,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_4_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 5) {
             nextToken();
@@ -1969,7 +2220,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_5_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -1983,9 +2236,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_5_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -1999,10 +2256,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_5_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -2010,6 +2272,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -2017,6 +2280,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -2024,6 +2288,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -2031,6 +2296,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -2038,6 +2304,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -2045,6 +2312,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -2052,8 +2320,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_5_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 6) {
             nextToken();
@@ -2069,7 +2340,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_6_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -2083,9 +2356,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_6_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -2099,10 +2376,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_6_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -2110,6 +2392,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -2117,6 +2400,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -2124,6 +2408,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -2131,6 +2416,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -2138,6 +2424,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -2145,6 +2432,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -2152,8 +2440,11 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_6_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
         if (lastTokenId() == T_NUMBER && lastToken().number == 7) {
             nextToken();
@@ -2169,7 +2460,9 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                 mSection->emit<BIT_7_mHL>(token);
                                 return true;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
                         nextToken();
@@ -2183,9 +2476,13 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_7_mIXn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
                     if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
                         nextToken();
@@ -2199,10 +2496,15 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                                         mSection->emit<BIT_7_mIYn>(token, literal1);
                                         return true;
                                     }
+                                    return false;
                                 }
+                                return false;
                             }
+                            return false;
                         }
+                        return false;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
                     nextToken();
@@ -2210,6 +2512,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_A>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
                     nextToken();
@@ -2217,6 +2520,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_B>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
                     nextToken();
@@ -2224,6 +2528,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_C>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
                     nextToken();
@@ -2231,6 +2536,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_D>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
                     nextToken();
@@ -2238,6 +2544,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_E>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
                     nextToken();
@@ -2245,6 +2552,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_H>(token);
                         return true;
                     }
+                    return false;
                 }
                 if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
                     nextToken();
@@ -2252,9 +2560,153 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
                         mSection->emit<BIT_7_L>(token);
                         return true;
                     }
+                    return false;
                 }
+                return false;
             }
+            return false;
         }
+        return false;
+    }
+    if (opcode == "call") {
+        nextToken();
+        if (expectWordLiteral(&literal1)) {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CALL_nn>(token, literal1);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_C_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "m") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_M_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "nc") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_NC_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "nz") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_NZ_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "p") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_P_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "pe") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_PE_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "po") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_PO_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "z") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (expectWordLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CALL_Z_nn>(token, literal1);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
     }
     if (opcode == "ccf") {
         nextToken();
@@ -2262,6 +2714,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CCF>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "cpd") {
         nextToken();
@@ -2269,6 +2722,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CPD>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "cpdr") {
         nextToken();
@@ -2276,6 +2730,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CPDR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "cpi") {
         nextToken();
@@ -2283,6 +2738,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CPI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "cpir") {
         nextToken();
@@ -2290,6 +2746,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CPIR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "cpl") {
         nextToken();
@@ -2297,6 +2754,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<CPL>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "daa") {
         nextToken();
@@ -2304,6 +2762,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<DAA>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "di") {
         nextToken();
@@ -2311,6 +2770,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<DI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ei") {
         nextToken();
@@ -2318,6 +2778,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<EI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "exx") {
         nextToken();
@@ -2325,6 +2786,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<EXX>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "halt") {
         nextToken();
@@ -2332,6 +2794,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<HALT>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ind") {
         nextToken();
@@ -2339,6 +2802,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<IND>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "indr") {
         nextToken();
@@ -2346,6 +2810,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<INDR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ini") {
         nextToken();
@@ -2353,6 +2818,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<INI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "inir") {
         nextToken();
@@ -2360,6 +2826,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<INIR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ldd") {
         nextToken();
@@ -2367,6 +2834,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<LDD>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "lddr") {
         nextToken();
@@ -2374,6 +2842,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<LDDR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ldi") {
         nextToken();
@@ -2381,6 +2850,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<LDI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ldir") {
         nextToken();
@@ -2388,6 +2858,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<LDIR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "otdr") {
         nextToken();
@@ -2395,6 +2866,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<OTDR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "otir") {
         nextToken();
@@ -2402,6 +2874,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<OTIR>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "outd") {
         nextToken();
@@ -2409,6 +2882,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<OUTD>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "outi") {
         nextToken();
@@ -2416,6 +2890,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<OUTI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "neg") {
         nextToken();
@@ -2423,6 +2898,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<NEG>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "nop") {
         nextToken();
@@ -2430,6 +2906,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<NOP>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "ret") {
         nextToken();
@@ -2437,6 +2914,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RET>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "reti") {
         nextToken();
@@ -2444,6 +2922,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RETI>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "retn") {
         nextToken();
@@ -2451,6 +2930,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RETN>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rla") {
         nextToken();
@@ -2458,6 +2938,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RLA>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rlca") {
         nextToken();
@@ -2465,6 +2946,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RLCA>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rld") {
         nextToken();
@@ -2472,6 +2954,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RLD>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rra") {
         nextToken();
@@ -2479,6 +2962,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RRA>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rrca") {
         nextToken();
@@ -2486,6 +2970,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RRCA>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "rrd") {
         nextToken();
@@ -2493,6 +2978,7 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<RRD>(token);
             return true;
         }
+        return false;
     }
     if (opcode == "scf") {
         nextToken();
@@ -2500,6 +2986,8 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
             mSection->emit<SCF>(token);
             return true;
         }
+        return false;
     }
+    return false;
     return false;
 }
