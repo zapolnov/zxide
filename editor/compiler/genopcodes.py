@@ -251,7 +251,14 @@ hdr += '#include "ProgramOpcode.h"\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
-hdr += '#include "ProgramBinary.h"\n'
+src += '#include "ProgramSection.h"\n'
+src += '#include "ProgramBinary.h"\n'
+src += '#include "AssemblerParser.h"\n'
+src += '#include "AssemblerToken.h"\n'
+src += '\n'
+src += '#ifdef emit\n'
+src += '#undef emit\n'
+src += '#endif\n'
 
 for opcode in opcodes:
     hdr += '\n'
@@ -294,16 +301,16 @@ def getDict(dict, key):
         return obj
 
 def genCode(dict, indent):
-    global hdr
+    global src
     for key, value in dict.items():
-        hdr += '%sif (%s) { \\\n' % (indent, key)
+        src += '%sif (%s) {\n' % (indent, key)
         if not isinstance(value, Opcode):
-            hdr += '%s    nextToken(); \\\n' % indent
+            src += '%s    nextToken();\n' % indent
             genCode(value, indent + '    ')
         else:
-            hdr += '%s    mSection->emit<%s>(token%s); \\\n' % (indent, value.className, value.argsCall())
-            hdr += '%s    return; \\\n' % indent
-        hdr += '%s} \\\n' % indent
+            src += '%s    mSection->emit<%s>(token%s);\n' % (indent, value.className, value.argsCall())
+            src += '%s    return true;\n' % indent
+        src += '%s}\n' % indent
 
 opcodeMap = OrderedDict()
 for opcode in opcodes:
@@ -345,9 +352,14 @@ for opcode in opcodes:
         dict = getDict(dict, cond)
     dict['lastTokenId() == T_EOL'] = opcode
 
-hdr += '\n'
-hdr += '#define PARSE_OPCODE \\\n'
+src += '\n'
+src += 'bool AssemblerParser::parseOpcode_generated(const std::string& opcode)\n'
+src += '{\n'
+src += '    unsigned literal1, literal2;\n'
+src += '    Token token = lastToken();\n'
 genCode(opcodeMap, '    ')
+src += '    return false;\n'
+src += '}\n'
 
 hdr += '\n'
 hdr += '#endif\n'

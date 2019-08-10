@@ -33,6 +33,7 @@ private:
     void parseLine();
     void parseSectionDecl();
     void parseOpcode();
+    bool parseOpcode_generated(const std::string& opcode); // in Z80Opcode.cpp
 
     std::string readLabelName();
 

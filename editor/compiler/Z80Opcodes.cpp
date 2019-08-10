@@ -1,5 +1,13 @@
 // THIS IS A GENERATED FILE. DO NOT EDIT!
 #include "Z80Opcodes.h"
+#include "ProgramSection.h"
+#include "ProgramBinary.h"
+#include "AssemblerParser.h"
+#include "AssemblerToken.h"
+
+#ifdef emit
+#undef emit
+#endif
 
 void ADC_A_A::emitBinary(ProgramBinary* bin) const
 {
@@ -979,4 +987,1519 @@ void RRD::emitBinary(ProgramBinary* bin) const
 void SCF::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0x37);
+}
+
+bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
+{
+    unsigned literal1, literal2;
+    Token token = lastToken();
+    if (opcode == "adc") {
+        nextToken();
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_L>(token);
+                        return true;
+                    }
+                }
+                if (expectByteLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_A_n>(token, literal1);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<ADC_A_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<ADC_A_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<ADC_A_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "bc") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_HL_BC>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_HL_DE>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_HL_HL>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADC_HL_SP>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    if (opcode == "add") {
+        nextToken();
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_L>(token);
+                        return true;
+                    }
+                }
+                if (expectByteLiteral(&literal1)) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_A_n>(token, literal1);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<ADD_A_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<ADD_A_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<ADD_A_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "bc") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_HL_BC>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_HL_DE>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_HL_HL>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_HL_SP>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "bc") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IX_BC>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IX_DE>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IX_IX>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IX_SP>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "bc") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IY_BC>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "de") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IY_DE>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IY_IY>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "sp") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<ADD_IY_SP>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    if (opcode == "and") {
+        nextToken();
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_A>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_B>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_C>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_D>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_E>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_H>(token);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_L>(token);
+                return true;
+            }
+        }
+        if (expectByteLiteral(&literal1)) {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<AND_n>(token, literal1);
+                return true;
+            }
+        }
+        if (lastTokenId() == T_LPAREN) {
+            nextToken();
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                nextToken();
+                if (lastTokenId() == T_RPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<AND_mHL>(token);
+                        return true;
+                    }
+                }
+            }
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                nextToken();
+                if (lastTokenId() == T_PLUS) {
+                    nextToken();
+                    if (expectByteLiteral(&literal1)) {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<AND_mIXn>(token, literal1);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                nextToken();
+                if (lastTokenId() == T_PLUS) {
+                    nextToken();
+                    if (expectByteLiteral(&literal1)) {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<AND_mIYn>(token, literal1);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (opcode == "bit") {
+        nextToken();
+        if (lastTokenId() == T_NUMBER && lastToken().number == 0) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_0_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_0_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_0_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_0_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 1) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_1_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_1_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_1_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_1_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 2) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_2_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_2_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_2_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_2_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 3) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_3_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_3_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_3_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_3_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 4) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_4_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_4_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_4_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_4_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 5) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_5_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_5_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_5_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_5_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 6) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_6_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_6_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_6_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_6_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (lastTokenId() == T_NUMBER && lastToken().number == 7) {
+            nextToken();
+            if (lastTokenId() == T_COMMA) {
+                nextToken();
+                if (lastTokenId() == T_LPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<BIT_7_mHL>(token);
+                                return true;
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_7_mIXn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                        nextToken();
+                        if (lastTokenId() == T_PLUS) {
+                            nextToken();
+                            if (expectByteLiteral(&literal1)) {
+                                nextToken();
+                                if (lastTokenId() == T_RPAREN) {
+                                    nextToken();
+                                    if (lastTokenId() == T_EOL) {
+                                        mSection->emit<BIT_7_mIYn>(token, literal1);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_A>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_B>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_C>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_D>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_E>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_H>(token);
+                        return true;
+                    }
+                }
+                if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<BIT_7_L>(token);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    if (opcode == "ccf") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CCF>(token);
+            return true;
+        }
+    }
+    if (opcode == "cpd") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CPD>(token);
+            return true;
+        }
+    }
+    if (opcode == "cpdr") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CPDR>(token);
+            return true;
+        }
+    }
+    if (opcode == "cpi") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CPI>(token);
+            return true;
+        }
+    }
+    if (opcode == "cpir") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CPIR>(token);
+            return true;
+        }
+    }
+    if (opcode == "cpl") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<CPL>(token);
+            return true;
+        }
+    }
+    if (opcode == "daa") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<DAA>(token);
+            return true;
+        }
+    }
+    if (opcode == "di") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<DI>(token);
+            return true;
+        }
+    }
+    if (opcode == "ei") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<EI>(token);
+            return true;
+        }
+    }
+    if (opcode == "exx") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<EXX>(token);
+            return true;
+        }
+    }
+    if (opcode == "halt") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<HALT>(token);
+            return true;
+        }
+    }
+    if (opcode == "ind") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<IND>(token);
+            return true;
+        }
+    }
+    if (opcode == "indr") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<INDR>(token);
+            return true;
+        }
+    }
+    if (opcode == "ini") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<INI>(token);
+            return true;
+        }
+    }
+    if (opcode == "inir") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<INIR>(token);
+            return true;
+        }
+    }
+    if (opcode == "ldd") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<LDD>(token);
+            return true;
+        }
+    }
+    if (opcode == "lddr") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<LDDR>(token);
+            return true;
+        }
+    }
+    if (opcode == "ldi") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<LDI>(token);
+            return true;
+        }
+    }
+    if (opcode == "ldir") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<LDIR>(token);
+            return true;
+        }
+    }
+    if (opcode == "otdr") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<OTDR>(token);
+            return true;
+        }
+    }
+    if (opcode == "otir") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<OTIR>(token);
+            return true;
+        }
+    }
+    if (opcode == "outd") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<OUTD>(token);
+            return true;
+        }
+    }
+    if (opcode == "outi") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<OUTI>(token);
+            return true;
+        }
+    }
+    if (opcode == "neg") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<NEG>(token);
+            return true;
+        }
+    }
+    if (opcode == "nop") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<NOP>(token);
+            return true;
+        }
+    }
+    if (opcode == "ret") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RET>(token);
+            return true;
+        }
+    }
+    if (opcode == "reti") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RETI>(token);
+            return true;
+        }
+    }
+    if (opcode == "retn") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RETN>(token);
+            return true;
+        }
+    }
+    if (opcode == "rla") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RLA>(token);
+            return true;
+        }
+    }
+    if (opcode == "rlca") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RLCA>(token);
+            return true;
+        }
+    }
+    if (opcode == "rld") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RLD>(token);
+            return true;
+        }
+    }
+    if (opcode == "rra") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RRA>(token);
+            return true;
+        }
+    }
+    if (opcode == "rrca") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RRCA>(token);
+            return true;
+        }
+    }
+    if (opcode == "rrd") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<RRD>(token);
+            return true;
+        }
+    }
+    if (opcode == "scf") {
+        nextToken();
+        if (lastTokenId() == T_EOL) {
+            mSection->emit<SCF>(token);
+            return true;
+        }
+    }
+    return false;
 }

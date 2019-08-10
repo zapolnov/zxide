@@ -100,13 +100,8 @@ void AssemblerParser::parseSectionDecl()
 
 void AssemblerParser::parseOpcode()
 {
-    auto opcode = toLower(lastTokenText());
-    unsigned literal1, literal2;
-    Token token = lastToken();
-
-    PARSE_OPCODE
-
-    error(tr("syntax error"));
+    if (!parseOpcode_generated(toLower(lastTokenText())))
+        error(tr("syntax error"));
 }
 
 std::string AssemblerParser::readLabelName()
