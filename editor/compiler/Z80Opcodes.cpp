@@ -2917,6 +2917,46 @@ void RET::emitBinary(ProgramBinary* bin) const
     bin->emitByte(0xC9);
 }
 
+void RET_C::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xD8);
+}
+
+void RET_M::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xF8);
+}
+
+void RET_NC::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xD0);
+}
+
+void RET_NZ::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xC0);
+}
+
+void RET_P::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xF0);
+}
+
+void RET_PE::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xE8);
+}
+
+void RET_PO::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xE0);
+}
+
+void RET_Z::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xC8);
+}
+
 void RETI::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
@@ -9883,6 +9923,70 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
         if (lastTokenId() == T_EOL) {
             mSection->emit<RET>(token);
             return true;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "c") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_C>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "m") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_M>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "nc") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_NC>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "nz") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_NZ>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "p") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_P>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "pe") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_PE>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "po") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_PO>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "z") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<RET_Z>(token);
+                return true;
+            }
+            return false;
         }
         return false;
     }
