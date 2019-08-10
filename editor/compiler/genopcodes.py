@@ -22,6 +22,8 @@ class Opcode:
                 literalCount += 1
                 self.lengthInBytes += 1
                 self.className += '_m%sn' % op[1:3].upper()
+            elif op == "af'":
+                self.className += '_AFs'
             elif op == '#':
                 literalCount += 1
                 self.lengthInBytes += 1
@@ -232,11 +234,36 @@ opcodes = [
         Opcode('cpir', [                       ], [ 0xED, 0xB1             ], [ 21, 16 ]),
         Opcode( 'cpl', [                       ], [ 0x2F                   ],  4),
         Opcode( 'daa', [                       ], [ 0x27                   ],  4),
-
+        Opcode( 'dec', [                   'a' ], [ 0x3D                   ],  4),
+        Opcode( 'dec', [                   'b' ], [ 0x05                   ],  4),
+        Opcode( 'dec', [                   'c' ], [ 0x0D                   ],  4),
+        Opcode( 'dec', [                   'd' ], [ 0x15                   ],  4),
+        Opcode( 'dec', [                   'e' ], [ 0x1D                   ],  4),
+        Opcode( 'dec', [                   'h' ], [ 0x25                   ],  4),
+        Opcode( 'dec', [                   'l' ], [ 0x2D                   ],  4),
+        Opcode( 'dec', [                '(hl)' ], [ 0x35                   ], 11),
+        Opcode( 'dec', [              '(ix+#)' ], [ 0xDD, 0x35, '#'        ], 23),
+        Opcode( 'dec', [              '(iy+#)' ], [ 0xFD, 0x35, '#'        ], 23),
+        Opcode( 'dec', [                  'ix' ], [ 0xDD, 0x2B             ], 10),
+        Opcode( 'dec', [                  'iy' ], [ 0xFD, 0x2B             ], 10),
+        Opcode( 'dec', [                  'bc' ], [ 0x0B                   ],  6),
+        Opcode( 'dec', [                  'de' ], [ 0x1B                   ],  6),
+        Opcode( 'dec', [                  'hl' ], [ 0x2B                   ],  6),
+        Opcode( 'dec', [                  'sp' ], [ 0x3B                   ],  6),
         Opcode(  'di', [                       ], [ 0xF3                   ],  4),
+        Opcode('djnz', [                   '#' ], [ 0x10, '#'              ], [ 8, 13 ]),
         Opcode(  'ei', [                       ], [ 0xFB                   ],  4),
+        Opcode(  'ex', [     '(sp)',      'hl' ], [ 0xE3                   ], 19),
+        Opcode(  'ex', [     '(sp)',      'ix' ], [ 0xDD, 0xE3             ], 23),
+        Opcode(  'ex', [     '(sp)',      'iy' ], [ 0xFD, 0xE3             ], 23),
+        Opcode(  'ex', [       'af',     "af'" ], [ 0x08                   ],  4),
+        Opcode(  'ex', [       'de',      'hl' ], [ 0xEB                   ],  4),
         Opcode( 'exx', [                       ], [ 0xD9                   ],  4),
         Opcode('halt', [                       ], [ 0x76                   ],  4),
+        Opcode(  'im', [                   '0' ], [ 0xED, 0x46             ],  8),
+        Opcode(  'im', [                   '1' ], [ 0xED, 0x56             ],  8),
+        Opcode(  'im', [                   '2' ], [ 0xED, 0x5E             ],  8),
+
         Opcode( 'ind', [                       ], [ 0xED, 0xAA             ], 16),
         Opcode('indr', [                       ], [ 0xED, 0xBA             ], [ 21, 16 ]),
         Opcode( 'ini', [                       ], [ 0xED, 0xA2             ], 16),
@@ -275,6 +302,7 @@ src += '#include "ProgramSection.h"\n'
 src += '#include "ProgramBinary.h"\n'
 src += '#include "AssemblerParser.h"\n'
 src += '#include "AssemblerToken.h"\n'
+src += '#include "Util.h"\n'
 src += '\n'
 src += '#ifdef emit\n'
 src += '#undef emit\n'
@@ -344,19 +372,19 @@ for opcode in opcodes:
         else:
             conds.append('lastTokenId() == T_COMMA')
 
-        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af' ]:
-            conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op)
+        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', "af'" ]:
+            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
-            conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op)
+            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
         elif op in [ '0', '1', '2', '3', '4', '5', '6', '7' ]:
             conds.append('lastTokenId() == T_NUMBER && lastToken().number == %s' % op)
         elif op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)', '(sp)' ]:
             conds.append('lastTokenId() == T_LPAREN')
-            conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op[1:3])
+            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op[1:3])
             conds.append('lastTokenId() == T_RPAREN')
         elif op in [ '(ix+#)', '(iy+#)' ]:
             conds.append('lastTokenId() == T_LPAREN')
-            conds.append('lastTokenId() == T_IDENTIFIER && lastTokenText() == "%s"' % op[1:3])
+            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op[1:3])
             conds.append('lastTokenId() == T_PLUS')
             conds.append('expectByteLiteral(&literal%d)' % literalIndex)
             conds.append('lastTokenId() == T_RPAREN')

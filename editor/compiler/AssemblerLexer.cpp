@@ -298,7 +298,13 @@ int AssemblerLexer::readToken()
                     }
                 }
                 mToken.text = ss.str();
-                if (*mSource == ':') {
+                if (*mSource == '\''
+                        && mToken.text.length() == 2
+                        && tolower(mToken.text[0]) == 'a'
+                        && tolower(mToken.text[1]) == 'f') {
+                    ++mSource;
+                    mToken.text += '\'';
+                } else if (*mSource == ':') {
                     ++mSource;
                     return T_LABEL;
                 }
