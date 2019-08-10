@@ -861,6 +861,66 @@ void CCF::emitBinary(ProgramBinary* bin) const
     bin->emitByte(0x3F);
 }
 
+void CP_A::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBF);
+}
+
+void CP_B::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xB8);
+}
+
+void CP_C::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xB9);
+}
+
+void CP_D::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBA);
+}
+
+void CP_E::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBB);
+}
+
+void CP_H::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBC);
+}
+
+void CP_L::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBD);
+}
+
+void CP_n::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xFE);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
+void CP_mHL::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xBE);
+}
+
+void CP_mIXn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xDD);
+    bin->emitByte(0xBE);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
+void CP_mIYn::emitBinary(ProgramBinary* bin) const
+{
+    bin->emitByte(0xFD);
+    bin->emitByte(0xBE);
+    bin->emitByte(mLiteral1 & 0xFF);
+}
+
 void CPD::emitBinary(ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
@@ -2713,6 +2773,130 @@ bool AssemblerParser::parseOpcode_generated(const std::string& opcode)
         if (lastTokenId() == T_EOL) {
             mSection->emit<CCF>(token);
             return true;
+        }
+        return false;
+    }
+    if (opcode == "cp") {
+        nextToken();
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "a") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_A>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "b") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_B>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "c") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_C>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "d") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_D>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "e") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_E>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "h") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_H>(token);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "l") {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_L>(token);
+                return true;
+            }
+            return false;
+        }
+        if (expectByteLiteral(&literal1)) {
+            nextToken();
+            if (lastTokenId() == T_EOL) {
+                mSection->emit<CP_n>(token, literal1);
+                return true;
+            }
+            return false;
+        }
+        if (lastTokenId() == T_LPAREN) {
+            nextToken();
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "hl") {
+                nextToken();
+                if (lastTokenId() == T_RPAREN) {
+                    nextToken();
+                    if (lastTokenId() == T_EOL) {
+                        mSection->emit<CP_mHL>(token);
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "ix") {
+                nextToken();
+                if (lastTokenId() == T_PLUS) {
+                    nextToken();
+                    if (expectByteLiteral(&literal1)) {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<CP_mIXn>(token, literal1);
+                                return true;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            if (lastTokenId() == T_IDENTIFIER && lastTokenText() == "iy") {
+                nextToken();
+                if (lastTokenId() == T_PLUS) {
+                    nextToken();
+                    if (expectByteLiteral(&literal1)) {
+                        nextToken();
+                        if (lastTokenId() == T_RPAREN) {
+                            nextToken();
+                            if (lastTokenId() == T_EOL) {
+                                mSection->emit<CP_mIYn>(token, literal1);
+                                return true;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
         }
         return false;
     }
