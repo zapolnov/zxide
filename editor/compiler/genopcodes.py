@@ -22,6 +22,8 @@ class Opcode:
                 literalCount += 1
                 self.lengthInBytes += 1
                 self.className += '_m%sn' % op[1:3].upper()
+            elif op == "(c)":
+                self.className += '_mC'
             elif op == "af'":
                 self.className += '_AFs'
             elif op == '#':
@@ -32,6 +34,18 @@ class Opcode:
                 literalCount += 1
                 self.lengthInBytes += 2
                 self.className += '_nn'
+            elif op == '(#)':
+                literalCount += 1
+                self.lengthInBytes += 1
+                self.className += '_mn'
+            elif op == '(##)':
+                literalCount += 1
+                self.lengthInBytes += 2
+                self.className += '_mnn'
+            elif op == 'R#':
+                literalCount += 1
+                self.lengthInBytes += 1
+                self.className += '_off'
             else:
                 self.className += '_%s' % op.upper()
         self.numLiterals = literalCount
@@ -263,21 +277,194 @@ opcodes = [
         Opcode(  'im', [                   '0' ], [ 0xED, 0x46             ],  8),
         Opcode(  'im', [                   '1' ], [ 0xED, 0x56             ],  8),
         Opcode(  'im', [                   '2' ], [ 0xED, 0x5E             ],  8),
-
+        Opcode(  'in', [        'a',     '(#)' ], [ 0xDB, '#'              ], 11),
+        Opcode(  'in', [        'a',     '(c)' ], [ 0xED, 0x78             ], 12),
+        Opcode(  'in', [        'b',     '(c)' ], [ 0xED, 0x40             ], 12),
+        Opcode(  'in', [        'c',     '(c)' ], [ 0xED, 0x48             ], 12),
+        Opcode(  'in', [        'd',     '(c)' ], [ 0xED, 0x50             ], 12),
+        Opcode(  'in', [        'e',     '(c)' ], [ 0xED, 0x58             ], 12),
+        Opcode(  'in', [        'h',     '(c)' ], [ 0xED, 0x60             ], 12),
+        Opcode(  'in', [        'l',     '(c)' ], [ 0xED, 0x68             ], 12),
+        Opcode( 'inc', [                   'a' ], [ 0x3C                   ],  4),
+        Opcode( 'inc', [                   'b' ], [ 0x04                   ],  4),
+        Opcode( 'inc', [                   'c' ], [ 0x0C                   ],  4),
+        Opcode( 'inc', [                   'd' ], [ 0x14                   ],  4),
+        Opcode( 'inc', [                   'e' ], [ 0x1C                   ],  4),
+        Opcode( 'inc', [                   'h' ], [ 0x24                   ],  4),
+        Opcode( 'inc', [                   'l' ], [ 0x2C                   ],  4),
+        Opcode( 'inc', [                '(hl)' ], [ 0x34                   ], 11),
+        Opcode( 'inc', [              '(ix+#)' ], [ 0xDD, 0x34, '#'        ], 23),
+        Opcode( 'inc', [              '(iy+#)' ], [ 0xFD, 0x34, '#'        ], 23),
+        Opcode( 'inc', [                  'ix' ], [ 0xDD, 0x23             ], 10),
+        Opcode( 'inc', [                  'iy' ], [ 0xFD, 0x23             ], 10),
+        Opcode( 'inc', [                  'bc' ], [ 0x03                   ],  6),
+        Opcode( 'inc', [                  'de' ], [ 0x13                   ],  6),
+        Opcode( 'inc', [                  'hl' ], [ 0x23                   ],  6),
+        Opcode( 'inc', [                  'sp' ], [ 0x33                   ],  6),
         Opcode( 'ind', [                       ], [ 0xED, 0xAA             ], 16),
         Opcode('indr', [                       ], [ 0xED, 0xBA             ], [ 21, 16 ]),
         Opcode( 'ini', [                       ], [ 0xED, 0xA2             ], 16),
         Opcode('inir', [                       ], [ 0xED, 0xB2             ], [ 21, 16 ]),
+        Opcode(  'jp', [                  '##' ], [ 0xC3, '#'              ], 10),
+        Opcode(  'jp', [        'c',      '##' ], [ 0xDA, '#'              ], 10),
+        Opcode(  'jp', [        'm',      '##' ], [ 0xFA, '#'              ], 10),
+        Opcode(  'jp', [       'nc',      '##' ], [ 0xD2, '#'              ], 10),
+        Opcode(  'jp', [       'nz',      '##' ], [ 0xC2, '#'              ], 10),
+        Opcode(  'jp', [        'p',      '##' ], [ 0xF2, '#'              ], 10),
+        Opcode(  'jp', [       'pe',      '##' ], [ 0xEA, '#'              ], 10),
+        Opcode(  'jp', [       'po',      '##' ], [ 0xE2, '#'              ], 10),
+        Opcode(  'jp', [        'z',      '##' ], [ 0xCA, '#'              ], 10),
+        Opcode(  'jp', [                '(hl)' ], [ 0xE9,                  ],  4),
+        Opcode(  'jp', [                '(ix)' ], [ 0xDD, 0xE9             ],  8),
+        Opcode(  'jp', [                '(iy)' ], [ 0xFD, 0xE9             ],  8),
+        Opcode(  'jr', [                  'R#' ], [ 0x18, '#'              ], 12),
+        Opcode(  'jr', [         'c',     'R#' ], [ 0x38, '#'              ], [ 12, 7 ]),
+        Opcode(  'jr', [        'nc',     'R#' ], [ 0x30, '#'              ], [ 12, 7 ]),
+        Opcode(  'jr', [        'nz',     'R#' ], [ 0x20, '#'              ], [ 12, 7 ]),
+        Opcode(  'jr', [         'z',     'R#' ], [ 0x28, '#'              ], [ 12, 7 ]),
+        Opcode(  'ld', [         'a',   '(bc)' ], [ 0x0A                   ],  7),
+        Opcode(  'ld', [         'a',   '(de)' ], [ 0x1A                   ],  7),
+        Opcode(  'ld', [         'a',      'i' ], [ 0xED, 0x57             ],  9),
+        Opcode(  'ld', [         'a',   '(##)' ], [ 0x3A, '#'              ], 13),
+        Opcode(  'ld', [         'a',      'r' ], [ 0xED, 0x5F             ],  9),
+        Opcode(  'ld', [      '(bc)',      'a' ], [ 0x02                   ],  7),
+        Opcode(  'ld', [      '(de)',      'a' ], [ 0x12                   ],  7),
+        Opcode(  'ld', [      '(hl)',      '#' ], [ 0x36, '#'              ], 10),
+        Opcode(  'ld', [    '(ix+#)',      '#' ], [ 0xDD, 0x36, '#', '#'   ], 19),
+        Opcode(  'ld', [    '(iy+#)',      '#' ], [ 0xFD, 0x36, '#', '#'   ], 19),
+        Opcode(  'ld', [      '(##)',      'a' ], [ 0x32, '#'              ], 13),
+        Opcode(  'ld', [      '(##)',     'bc' ], [ 0xED, 0x43, '#'        ], 20),
+        Opcode(  'ld', [      '(##)',     'de' ], [ 0xED, 0x53, '#'        ], 20),
+        Opcode(  'ld', [      '(##)',     'hl' ], [ 0x22, '#'              ], 16),
+        Opcode(  'ld', [      '(##)',     'sp' ], [ 0xED, 0x73, '#'        ], 20),
+        Opcode(  'ld', [      '(##)',     'ix' ], [ 0xDD, 0x22, '#'        ], 20),
+        Opcode(  'ld', [      '(##)',     'iy' ], [ 0xFD, 0x22, '#'        ], 20),
+        Opcode(  'ld', [        'bc',     '##' ], [ 0x01, '#'              ], 10),
+        Opcode(  'ld', [        'de',     '##' ], [ 0x11, '#'              ], 10),
+        Opcode(  'ld', [        'hl',     '##' ], [ 0x21, '#'              ], 10),
+        Opcode(  'ld', [        'sp',     '##' ], [ 0x31, '#'              ], 10),
+        Opcode(  'ld', [        'bc',   '(##)' ], [ 0xED, 0x4B, '#'        ], 20),
+        Opcode(  'ld', [        'de',   '(##)' ], [ 0xED, 0x5B, '#'        ], 20),
+        Opcode(  'ld', [        'hl',   '(##)' ], [ 0x2A, '#'              ], 16),
+        Opcode(  'ld', [        'sp',   '(##)' ], [ 0xED, 0x7B, '#'        ], 20),
+        Opcode(  'ld', [      '(hl)',      'a' ], [ 0x77                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'b' ], [ 0x70                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'c' ], [ 0x71                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'd' ], [ 0x72                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'e' ], [ 0x73                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'h' ], [ 0x74                   ],  7),
+        Opcode(  'ld', [      '(hl)',      'l' ], [ 0x75                   ],  7),
+        Opcode(  'ld', [    '(ix+#)',      'a' ], [ 0xDD, 0x77, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'b' ], [ 0xDD, 0x70, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'c' ], [ 0xDD, 0x71, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'd' ], [ 0xDD, 0x72, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'e' ], [ 0xDD, 0x73, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'h' ], [ 0xDD, 0x74, '#'        ], 19),
+        Opcode(  'ld', [    '(ix+#)',      'l' ], [ 0xDD, 0x75, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'a' ], [ 0xFD, 0x77, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'b' ], [ 0xFD, 0x70, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'c' ], [ 0xFD, 0x71, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'd' ], [ 0xFD, 0x72, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'e' ], [ 0xFD, 0x73, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'h' ], [ 0xFD, 0x74, '#'        ], 19),
+        Opcode(  'ld', [    '(iy+#)',      'l' ], [ 0xFD, 0x75, '#'        ], 19),
+        Opcode(  'ld', [         'i',      'a' ], [ 0xED, 0x47             ],  9),
+        Opcode(  'ld', [        'ix',     '##' ], [ 0xDD, 0x21, '#'        ], 14),
+        Opcode(  'ld', [        'ix',   '(##)' ], [ 0xDD, 0x2A, '#'        ], 20),
+        Opcode(  'ld', [        'iy',     '##' ], [ 0xFD, 0x21, '#'        ], 14),
+        Opcode(  'ld', [        'iy',   '(##)' ], [ 0xFD, 0x2A, '#'        ], 20),
+        Opcode(  'ld', [         'r',      'a' ], [ 0xED, 0x4F             ],  9),
+        Opcode(  'ld', [         'a',   '(hl)' ], [ 0x7E                   ],  7),
+        Opcode(  'ld', [         'b',   '(hl)' ], [ 0x46                   ],  7),
+        Opcode(  'ld', [         'c',   '(hl)' ], [ 0x4E                   ],  7),
+        Opcode(  'ld', [         'd',   '(hl)' ], [ 0x56                   ],  7),
+        Opcode(  'ld', [         'e',   '(hl)' ], [ 0x5E                   ],  7),
+        Opcode(  'ld', [         'h',   '(hl)' ], [ 0x66                   ],  7),
+        Opcode(  'ld', [         'l',   '(hl)' ], [ 0x6E                   ],  7),
+        Opcode(  'ld', [         'a', '(ix+#)' ], [ 0xDD, 0x7E, '#'        ], 19),
+        Opcode(  'ld', [         'b', '(ix+#)' ], [ 0xDD, 0x46, '#'        ], 19),
+        Opcode(  'ld', [         'c', '(ix+#)' ], [ 0xDD, 0x4E, '#'        ], 19),
+        Opcode(  'ld', [         'd', '(ix+#)' ], [ 0xDD, 0x56, '#'        ], 19),
+        Opcode(  'ld', [         'e', '(ix+#)' ], [ 0xDD, 0x5E, '#'        ], 19),
+        Opcode(  'ld', [         'h', '(ix+#)' ], [ 0xDD, 0x66, '#'        ], 19),
+        Opcode(  'ld', [         'l', '(ix+#)' ], [ 0xDD, 0x6E, '#'        ], 19),
+        Opcode(  'ld', [         'a', '(iy+#)' ], [ 0xFD, 0x7E, '#'        ], 19),
+        Opcode(  'ld', [         'b', '(iy+#)' ], [ 0xFD, 0x46, '#'        ], 19),
+        Opcode(  'ld', [         'c', '(iy+#)' ], [ 0xFD, 0x4E, '#'        ], 19),
+        Opcode(  'ld', [         'd', '(iy+#)' ], [ 0xFD, 0x56, '#'        ], 19),
+        Opcode(  'ld', [         'e', '(iy+#)' ], [ 0xFD, 0x5E, '#'        ], 19),
+        Opcode(  'ld', [         'h', '(iy+#)' ], [ 0xFD, 0x66, '#'        ], 19),
+        Opcode(  'ld', [         'l', '(iy+#)' ], [ 0xFD, 0x6E, '#'        ], 19),
+        Opcode(  'ld', [         'a',      '#' ], [ 0x3E, '#'              ],  7),
+        Opcode(  'ld', [         'b',      '#' ], [ 0x06, '#'              ],  7),
+        Opcode(  'ld', [         'c',      '#' ], [ 0x0E, '#'              ],  7),
+        Opcode(  'ld', [         'd',      '#' ], [ 0x16, '#'              ],  7),
+        Opcode(  'ld', [         'e',      '#' ], [ 0x1E, '#'              ],  7),
+        Opcode(  'ld', [         'h',      '#' ], [ 0x26, '#'              ],  7),
+        Opcode(  'ld', [         'l',      '#' ], [ 0x2E, '#'              ],  7),
+        Opcode(  'ld', [         'a',      'a' ], [ 0x7F                   ],  4),
+        Opcode(  'ld', [         'b',      'a' ], [ 0x47                   ],  4),
+        Opcode(  'ld', [         'c',      'a' ], [ 0x4F                   ],  4),
+        Opcode(  'ld', [         'd',      'a' ], [ 0x57                   ],  4),
+        Opcode(  'ld', [         'e',      'a' ], [ 0x5F                   ],  4),
+        Opcode(  'ld', [         'h',      'a' ], [ 0x67                   ],  4),
+        Opcode(  'ld', [         'l',      'a' ], [ 0x6F                   ],  4),
+        Opcode(  'ld', [         'a',      'b' ], [ 0x78                   ],  4),
+        Opcode(  'ld', [         'b',      'b' ], [ 0x40                   ],  4),
+        Opcode(  'ld', [         'c',      'b' ], [ 0x48                   ],  4),
+        Opcode(  'ld', [         'd',      'b' ], [ 0x50                   ],  4),
+        Opcode(  'ld', [         'e',      'b' ], [ 0x58                   ],  4),
+        Opcode(  'ld', [         'h',      'b' ], [ 0x60                   ],  4),
+        Opcode(  'ld', [         'l',      'b' ], [ 0x68                   ],  4),
+        Opcode(  'ld', [         'a',      'c' ], [ 0x79                   ],  4),
+        Opcode(  'ld', [         'b',      'c' ], [ 0x41                   ],  4),
+        Opcode(  'ld', [         'c',      'c' ], [ 0x49                   ],  4),
+        Opcode(  'ld', [         'd',      'c' ], [ 0x51                   ],  4),
+        Opcode(  'ld', [         'e',      'c' ], [ 0x59                   ],  4),
+        Opcode(  'ld', [         'h',      'c' ], [ 0x61                   ],  4),
+        Opcode(  'ld', [         'l',      'c' ], [ 0x69                   ],  4),
+        Opcode(  'ld', [         'a',      'd' ], [ 0x7A                   ],  4),
+        Opcode(  'ld', [         'b',      'd' ], [ 0x42                   ],  4),
+        Opcode(  'ld', [         'c',      'd' ], [ 0x4A                   ],  4),
+        Opcode(  'ld', [         'd',      'd' ], [ 0x52                   ],  4),
+        Opcode(  'ld', [         'e',      'd' ], [ 0x5A                   ],  4),
+        Opcode(  'ld', [         'h',      'd' ], [ 0x62                   ],  4),
+        Opcode(  'ld', [         'l',      'd' ], [ 0x6A                   ],  4),
+        Opcode(  'ld', [         'a',      'e' ], [ 0x7B                   ],  4),
+        Opcode(  'ld', [         'b',      'e' ], [ 0x43                   ],  4),
+        Opcode(  'ld', [         'c',      'e' ], [ 0x4B                   ],  4),
+        Opcode(  'ld', [         'd',      'e' ], [ 0x53                   ],  4),
+        Opcode(  'ld', [         'e',      'e' ], [ 0x5B                   ],  4),
+        Opcode(  'ld', [         'h',      'e' ], [ 0x63                   ],  4),
+        Opcode(  'ld', [         'l',      'e' ], [ 0x6B                   ],  4),
+        Opcode(  'ld', [         'a',      'h' ], [ 0x7C                   ],  4),
+        Opcode(  'ld', [         'b',      'h' ], [ 0x44                   ],  4),
+        Opcode(  'ld', [         'c',      'h' ], [ 0x4C                   ],  4),
+        Opcode(  'ld', [         'd',      'h' ], [ 0x54                   ],  4),
+        Opcode(  'ld', [         'e',      'h' ], [ 0x5C                   ],  4),
+        Opcode(  'ld', [         'h',      'h' ], [ 0x64                   ],  4),
+        Opcode(  'ld', [         'l',      'h' ], [ 0x6C                   ],  4),
+        Opcode(  'ld', [         'a',      'l' ], [ 0x7D                   ],  4),
+        Opcode(  'ld', [         'b',      'l' ], [ 0x45                   ],  4),
+        Opcode(  'ld', [         'c',      'l' ], [ 0x4D                   ],  4),
+        Opcode(  'ld', [         'd',      'l' ], [ 0x55                   ],  4),
+        Opcode(  'ld', [         'e',      'l' ], [ 0x5D                   ],  4),
+        Opcode(  'ld', [         'h',      'l' ], [ 0x65                   ],  4),
+        Opcode(  'ld', [         'l',      'l' ], [ 0x6D                   ],  4),
+        Opcode(  'ld', [        'sp',     'hl' ], [ 0xF9                   ],  6),
+        Opcode(  'ld', [        'sp',     'ix' ], [ 0xDD, 0xF9             ], 10),
+        Opcode(  'ld', [        'sp',     'iy' ], [ 0xFD, 0xF9             ], 10),
         Opcode( 'ldd', [                       ], [ 0xED, 0xA8             ], 16),
         Opcode('lddr', [                       ], [ 0xED, 0xB8             ], [ 21, 16 ]),
         Opcode( 'ldi', [                       ], [ 0xED, 0xA0             ], 16),
         Opcode('ldir', [                       ], [ 0xED, 0xB0             ], [ 21, 17 ]),
+        Opcode( 'neg', [                       ], [ 0xED, 0x44             ],  8),
+        Opcode( 'nop', [                       ], [ 0x00                   ],  4),
+
         Opcode('otdr', [                       ], [ 0xED, 0xBB             ], [ 21, 16 ]),
         Opcode('otir', [                       ], [ 0xED, 0xB3             ], [ 21, 16 ]),
         Opcode('outd', [                       ], [ 0xED, 0xAB             ], 16),
         Opcode('outi', [                       ], [ 0xED, 0xA3             ], 16),
-        Opcode( 'neg', [                       ], [ 0xED, 0x44             ],  8),
-        Opcode( 'nop', [                       ], [ 0x00                   ],  4),
         Opcode( 'ret', [                       ], [ 0xC9                   ], 10),
         Opcode('reti', [                       ], [ 0xED, 0x4D             ], 14),
         Opcode('retn', [                       ], [ 0xED, 0x45             ], 14),
@@ -372,7 +559,7 @@ for opcode in opcodes:
         else:
             conds.append('lastTokenId() == T_COMMA')
 
-        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', "af'" ]:
+        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', "af'" ]:
             conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
             conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
@@ -389,11 +576,28 @@ for opcode in opcodes:
             conds.append('expectByteLiteral(&literal%d)' % literalIndex)
             conds.append('lastTokenId() == T_RPAREN')
             literalIndex += 1
+        elif op == '(c)':
+            conds.append('lastTokenId() == T_LPAREN')
+            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "c"')
+            conds.append('lastTokenId() == T_RPAREN')
+        elif op == '(#)':
+            conds.append('lastTokenId() == T_LPAREN')
+            conds.append('expectByteLiteral(&literal%d)' % literalIndex)
+            conds.append('lastTokenId() == T_RPAREN')
+            literalIndex += 1
+        elif op == '(##)':
+            conds.append('lastTokenId() == T_LPAREN')
+            conds.append('expectWordLiteral(&literal%d)' % literalIndex)
+            conds.append('lastTokenId() == T_RPAREN')
+            literalIndex += 1
         elif op == '#':
             conds.append('expectByteLiteral(&literal%d)' % literalIndex)
             literalIndex += 1
         elif op == '##':
             conds.append('expectWordLiteral(&literal%d)' % literalIndex)
+            literalIndex += 1
+        elif op == 'R#':
+            conds.append('expectRelativeByteOffset(&literal%d)' % literalIndex)
             literalIndex += 1
         else:
             raise Exception('Unknown operand "%s"' % op)

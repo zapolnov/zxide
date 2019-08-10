@@ -166,6 +166,12 @@ bool AssemblerParser::expectWordLiteral(unsigned* out)
     return false;
 }
 
+bool AssemblerParser::expectRelativeByteOffset(unsigned* out)
+{
+    // FIXME
+    return false;
+}
+
 std::string AssemblerParser::expectIdentifier(int tokenId)
 {
     if (tokenId != T_IDENTIFIER)
