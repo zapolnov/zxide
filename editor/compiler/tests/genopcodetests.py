@@ -839,8 +839,8 @@ for opcode in opcodes:
     src += '    ErrorConsumer errorConsumer;\n'
     src += '    DataBlob actual = assemble(errorConsumer, source);\n'
     src += '    DataBlob expected(binary, sizeof(binary));\n'
-    src += '    REQUIRE(errorConsumer.errorCount() == 0);\n'
     src += '    REQUIRE(errorConsumer.lastErrorMessage() == "");\n'
+    src += '    REQUIRE(errorConsumer.errorCount() == 0);\n'
     src += '    REQUIRE(actual == expected);\n'
     src += '}\n'
 

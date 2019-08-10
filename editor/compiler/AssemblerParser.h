@@ -8,6 +8,7 @@ class AssemblerLexer;
 class Program;
 class ProgramSection;
 class IErrorReporter;
+class Z80OpcodeParser;
 
 class ParserError
 {
@@ -45,6 +46,11 @@ private:
     void expectComma(int tokenId);
     void expectEol(int tokenId);
 
+    bool matchEol();
+    bool matchToken(int token);
+    bool matchIdentifier(const char* ident);
+    bool matchNumber(quint32 value);
+
     int nextToken() const;
     const Token& lastToken() const;
     int lastTokenId() const;
@@ -55,6 +61,7 @@ private:
     void error(const Token& token, const QString& message);
 
     Q_DISABLE_COPY(AssemblerParser)
+    friend class Z80OpcodeParser;
 };
 
 #endif

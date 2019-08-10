@@ -18,8 +18,8 @@ TEST_CASE("adc a, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -51,8 +51,8 @@ TEST_CASE("adc a, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -84,8 +84,8 @@ TEST_CASE("adc a, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -103,8 +103,8 @@ TEST_CASE("adc a, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -122,8 +122,8 @@ TEST_CASE("adc a, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -141,8 +141,8 @@ TEST_CASE("adc a, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -160,8 +160,8 @@ TEST_CASE("adc a, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -179,8 +179,8 @@ TEST_CASE("adc a, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -198,8 +198,8 @@ TEST_CASE("adc a, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -217,8 +217,8 @@ TEST_CASE("adc a, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -246,8 +246,8 @@ TEST_CASE("adc a, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -266,8 +266,8 @@ TEST_CASE("adc hl, bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -286,8 +286,8 @@ TEST_CASE("adc hl, de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -306,8 +306,8 @@ TEST_CASE("adc hl, hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -326,8 +326,8 @@ TEST_CASE("adc hl, sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -345,8 +345,8 @@ TEST_CASE("add a, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -378,8 +378,8 @@ TEST_CASE("add a, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -411,8 +411,8 @@ TEST_CASE("add a, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -430,8 +430,8 @@ TEST_CASE("add a, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -449,8 +449,8 @@ TEST_CASE("add a, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -468,8 +468,8 @@ TEST_CASE("add a, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -487,8 +487,8 @@ TEST_CASE("add a, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -506,8 +506,8 @@ TEST_CASE("add a, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -525,8 +525,8 @@ TEST_CASE("add a, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -544,8 +544,8 @@ TEST_CASE("add a, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -573,8 +573,8 @@ TEST_CASE("add a, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -592,8 +592,8 @@ TEST_CASE("add hl, bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -611,8 +611,8 @@ TEST_CASE("add hl, de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -630,8 +630,8 @@ TEST_CASE("add hl, hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -649,8 +649,8 @@ TEST_CASE("add hl, sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -669,8 +669,8 @@ TEST_CASE("add ix, bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -689,8 +689,8 @@ TEST_CASE("add ix, de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -709,8 +709,8 @@ TEST_CASE("add ix, ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -729,8 +729,8 @@ TEST_CASE("add ix, sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -749,8 +749,8 @@ TEST_CASE("add iy, bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -769,8 +769,8 @@ TEST_CASE("add iy, de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -789,8 +789,8 @@ TEST_CASE("add iy, iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -809,8 +809,8 @@ TEST_CASE("add iy, sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -828,8 +828,8 @@ TEST_CASE("and (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -861,8 +861,8 @@ TEST_CASE("and (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -894,8 +894,8 @@ TEST_CASE("and (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -913,8 +913,8 @@ TEST_CASE("and a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -932,8 +932,8 @@ TEST_CASE("and b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -951,8 +951,8 @@ TEST_CASE("and c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -970,8 +970,8 @@ TEST_CASE("and d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -989,8 +989,8 @@ TEST_CASE("and e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1008,8 +1008,8 @@ TEST_CASE("and h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1027,8 +1027,8 @@ TEST_CASE("and l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1056,8 +1056,8 @@ TEST_CASE("and #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1076,8 +1076,8 @@ TEST_CASE("bit 0, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1113,8 +1113,8 @@ TEST_CASE("bit 0, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1150,8 +1150,8 @@ TEST_CASE("bit 0, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1170,8 +1170,8 @@ TEST_CASE("bit 0, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1190,8 +1190,8 @@ TEST_CASE("bit 0, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1210,8 +1210,8 @@ TEST_CASE("bit 0, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1230,8 +1230,8 @@ TEST_CASE("bit 0, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1250,8 +1250,8 @@ TEST_CASE("bit 0, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1270,8 +1270,8 @@ TEST_CASE("bit 0, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1290,8 +1290,8 @@ TEST_CASE("bit 0, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1310,8 +1310,8 @@ TEST_CASE("bit 1, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1347,8 +1347,8 @@ TEST_CASE("bit 1, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1384,8 +1384,8 @@ TEST_CASE("bit 1, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1404,8 +1404,8 @@ TEST_CASE("bit 1, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1424,8 +1424,8 @@ TEST_CASE("bit 1, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1444,8 +1444,8 @@ TEST_CASE("bit 1, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1464,8 +1464,8 @@ TEST_CASE("bit 1, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1484,8 +1484,8 @@ TEST_CASE("bit 1, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1504,8 +1504,8 @@ TEST_CASE("bit 1, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1524,8 +1524,8 @@ TEST_CASE("bit 1, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1544,8 +1544,8 @@ TEST_CASE("bit 2, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1581,8 +1581,8 @@ TEST_CASE("bit 2, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1618,8 +1618,8 @@ TEST_CASE("bit 2, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1638,8 +1638,8 @@ TEST_CASE("bit 2, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1658,8 +1658,8 @@ TEST_CASE("bit 2, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1678,8 +1678,8 @@ TEST_CASE("bit 2, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1698,8 +1698,8 @@ TEST_CASE("bit 2, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1718,8 +1718,8 @@ TEST_CASE("bit 2, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1738,8 +1738,8 @@ TEST_CASE("bit 2, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1758,8 +1758,8 @@ TEST_CASE("bit 2, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1778,8 +1778,8 @@ TEST_CASE("bit 3, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1815,8 +1815,8 @@ TEST_CASE("bit 3, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1852,8 +1852,8 @@ TEST_CASE("bit 3, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1872,8 +1872,8 @@ TEST_CASE("bit 3, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1892,8 +1892,8 @@ TEST_CASE("bit 3, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1912,8 +1912,8 @@ TEST_CASE("bit 3, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1932,8 +1932,8 @@ TEST_CASE("bit 3, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1952,8 +1952,8 @@ TEST_CASE("bit 3, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1972,8 +1972,8 @@ TEST_CASE("bit 3, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -1992,8 +1992,8 @@ TEST_CASE("bit 3, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2012,8 +2012,8 @@ TEST_CASE("bit 4, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2049,8 +2049,8 @@ TEST_CASE("bit 4, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2086,8 +2086,8 @@ TEST_CASE("bit 4, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2106,8 +2106,8 @@ TEST_CASE("bit 4, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2126,8 +2126,8 @@ TEST_CASE("bit 4, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2146,8 +2146,8 @@ TEST_CASE("bit 4, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2166,8 +2166,8 @@ TEST_CASE("bit 4, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2186,8 +2186,8 @@ TEST_CASE("bit 4, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2206,8 +2206,8 @@ TEST_CASE("bit 4, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2226,8 +2226,8 @@ TEST_CASE("bit 4, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2246,8 +2246,8 @@ TEST_CASE("bit 5, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2283,8 +2283,8 @@ TEST_CASE("bit 5, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2320,8 +2320,8 @@ TEST_CASE("bit 5, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2340,8 +2340,8 @@ TEST_CASE("bit 5, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2360,8 +2360,8 @@ TEST_CASE("bit 5, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2380,8 +2380,8 @@ TEST_CASE("bit 5, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2400,8 +2400,8 @@ TEST_CASE("bit 5, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2420,8 +2420,8 @@ TEST_CASE("bit 5, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2440,8 +2440,8 @@ TEST_CASE("bit 5, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2460,8 +2460,8 @@ TEST_CASE("bit 5, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2480,8 +2480,8 @@ TEST_CASE("bit 6, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2517,8 +2517,8 @@ TEST_CASE("bit 6, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2554,8 +2554,8 @@ TEST_CASE("bit 6, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2574,8 +2574,8 @@ TEST_CASE("bit 6, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2594,8 +2594,8 @@ TEST_CASE("bit 6, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2614,8 +2614,8 @@ TEST_CASE("bit 6, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2634,8 +2634,8 @@ TEST_CASE("bit 6, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2654,8 +2654,8 @@ TEST_CASE("bit 6, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2674,8 +2674,8 @@ TEST_CASE("bit 6, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2694,8 +2694,8 @@ TEST_CASE("bit 6, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2714,8 +2714,8 @@ TEST_CASE("bit 7, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2751,8 +2751,8 @@ TEST_CASE("bit 7, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2788,8 +2788,8 @@ TEST_CASE("bit 7, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2808,8 +2808,8 @@ TEST_CASE("bit 7, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2828,8 +2828,8 @@ TEST_CASE("bit 7, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2848,8 +2848,8 @@ TEST_CASE("bit 7, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2868,8 +2868,8 @@ TEST_CASE("bit 7, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2888,8 +2888,8 @@ TEST_CASE("bit 7, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2908,8 +2908,8 @@ TEST_CASE("bit 7, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2928,8 +2928,8 @@ TEST_CASE("bit 7, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2961,8 +2961,8 @@ TEST_CASE("call ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -2994,8 +2994,8 @@ TEST_CASE("call c, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3027,8 +3027,8 @@ TEST_CASE("call m, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3060,8 +3060,8 @@ TEST_CASE("call nc, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3093,8 +3093,8 @@ TEST_CASE("call nz, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3126,8 +3126,8 @@ TEST_CASE("call p, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3159,8 +3159,8 @@ TEST_CASE("call pe, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3192,8 +3192,8 @@ TEST_CASE("call po, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3225,8 +3225,8 @@ TEST_CASE("call z, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3244,8 +3244,8 @@ TEST_CASE("ccf", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3263,8 +3263,8 @@ TEST_CASE("cp (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3296,8 +3296,8 @@ TEST_CASE("cp (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3329,8 +3329,8 @@ TEST_CASE("cp (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3348,8 +3348,8 @@ TEST_CASE("cp a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3367,8 +3367,8 @@ TEST_CASE("cp b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3386,8 +3386,8 @@ TEST_CASE("cp c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3405,8 +3405,8 @@ TEST_CASE("cp d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3424,8 +3424,8 @@ TEST_CASE("cp e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3443,8 +3443,8 @@ TEST_CASE("cp h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3462,8 +3462,8 @@ TEST_CASE("cp l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3491,8 +3491,8 @@ TEST_CASE("cp #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3511,8 +3511,8 @@ TEST_CASE("cpd", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3531,8 +3531,8 @@ TEST_CASE("cpdr", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3551,8 +3551,8 @@ TEST_CASE("cpir", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3571,8 +3571,8 @@ TEST_CASE("cpi", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3590,8 +3590,8 @@ TEST_CASE("cpl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3609,8 +3609,8 @@ TEST_CASE("daa", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3628,8 +3628,8 @@ TEST_CASE("dec (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3661,8 +3661,8 @@ TEST_CASE("dec (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3694,8 +3694,8 @@ TEST_CASE("dec (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3713,8 +3713,8 @@ TEST_CASE("dec a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3732,8 +3732,8 @@ TEST_CASE("dec b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3751,8 +3751,8 @@ TEST_CASE("dec bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3770,8 +3770,8 @@ TEST_CASE("dec c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3789,8 +3789,8 @@ TEST_CASE("dec d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3808,8 +3808,8 @@ TEST_CASE("dec de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3827,8 +3827,8 @@ TEST_CASE("dec e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3846,8 +3846,8 @@ TEST_CASE("dec h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3865,8 +3865,8 @@ TEST_CASE("dec hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3885,8 +3885,8 @@ TEST_CASE("dec ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3905,8 +3905,8 @@ TEST_CASE("dec iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3924,8 +3924,8 @@ TEST_CASE("dec l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3943,8 +3943,8 @@ TEST_CASE("dec sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3962,8 +3962,8 @@ TEST_CASE("di", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -3991,8 +3991,8 @@ TEST_CASE("djnz $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4010,8 +4010,8 @@ TEST_CASE("ei", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4029,8 +4029,8 @@ TEST_CASE("ex (sp), hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4049,8 +4049,8 @@ TEST_CASE("ex (sp), ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4069,8 +4069,8 @@ TEST_CASE("ex (sp), iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4088,8 +4088,8 @@ TEST_CASE("ex af, af'", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4107,8 +4107,8 @@ TEST_CASE("ex de, hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4126,8 +4126,8 @@ TEST_CASE("exx", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4145,8 +4145,8 @@ TEST_CASE("halt", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4165,8 +4165,8 @@ TEST_CASE("im 0", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4185,8 +4185,8 @@ TEST_CASE("im 1", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4205,8 +4205,8 @@ TEST_CASE("im 2", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4234,8 +4234,8 @@ TEST_CASE("in a, (#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4254,8 +4254,8 @@ TEST_CASE("in a, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4274,8 +4274,8 @@ TEST_CASE("in b, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4294,8 +4294,8 @@ TEST_CASE("in c, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4314,8 +4314,8 @@ TEST_CASE("in d, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4334,8 +4334,8 @@ TEST_CASE("in e, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4354,8 +4354,8 @@ TEST_CASE("in h, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4374,8 +4374,8 @@ TEST_CASE("in l, (c)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4393,8 +4393,8 @@ TEST_CASE("inc (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4426,8 +4426,8 @@ TEST_CASE("inc (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4459,8 +4459,8 @@ TEST_CASE("inc (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4478,8 +4478,8 @@ TEST_CASE("inc a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4497,8 +4497,8 @@ TEST_CASE("inc b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4516,8 +4516,8 @@ TEST_CASE("inc bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4535,8 +4535,8 @@ TEST_CASE("inc c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4554,8 +4554,8 @@ TEST_CASE("inc d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4573,8 +4573,8 @@ TEST_CASE("inc de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4592,8 +4592,8 @@ TEST_CASE("inc e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4611,8 +4611,8 @@ TEST_CASE("inc h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4630,8 +4630,8 @@ TEST_CASE("inc hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4650,8 +4650,8 @@ TEST_CASE("inc ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4670,8 +4670,8 @@ TEST_CASE("inc iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4689,8 +4689,8 @@ TEST_CASE("inc l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4708,8 +4708,8 @@ TEST_CASE("inc sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4728,8 +4728,8 @@ TEST_CASE("ind", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4748,8 +4748,8 @@ TEST_CASE("indr", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4768,8 +4768,8 @@ TEST_CASE("ini", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4788,8 +4788,8 @@ TEST_CASE("inir", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4821,8 +4821,8 @@ TEST_CASE("jp ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4854,8 +4854,8 @@ TEST_CASE("jp c, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4887,8 +4887,8 @@ TEST_CASE("jp m, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4920,8 +4920,8 @@ TEST_CASE("jp nc, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4953,8 +4953,8 @@ TEST_CASE("jp nz, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -4986,8 +4986,8 @@ TEST_CASE("jp p, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5019,8 +5019,8 @@ TEST_CASE("jp pe, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5052,8 +5052,8 @@ TEST_CASE("jp po, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5085,8 +5085,8 @@ TEST_CASE("jp z, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5104,8 +5104,8 @@ TEST_CASE("jp (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5124,8 +5124,8 @@ TEST_CASE("jp (ix)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5144,8 +5144,8 @@ TEST_CASE("jp (iy)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5173,8 +5173,8 @@ TEST_CASE("jr c, $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5202,8 +5202,8 @@ TEST_CASE("jr nc, $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5231,8 +5231,8 @@ TEST_CASE("jr nz, $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5260,8 +5260,8 @@ TEST_CASE("jr z, $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5289,8 +5289,8 @@ TEST_CASE("jr $+#", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5308,8 +5308,8 @@ TEST_CASE("ld (bc), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5327,8 +5327,8 @@ TEST_CASE("ld (de), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5346,8 +5346,8 @@ TEST_CASE("ld (hl), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5365,8 +5365,8 @@ TEST_CASE("ld (hl), b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5384,8 +5384,8 @@ TEST_CASE("ld (hl), c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5403,8 +5403,8 @@ TEST_CASE("ld (hl), d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5422,8 +5422,8 @@ TEST_CASE("ld (hl), e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5441,8 +5441,8 @@ TEST_CASE("ld (hl), h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5460,8 +5460,8 @@ TEST_CASE("ld (hl), l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5489,8 +5489,8 @@ TEST_CASE("ld (hl), #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5522,8 +5522,8 @@ TEST_CASE("ld (ix+#), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5555,8 +5555,8 @@ TEST_CASE("ld (ix+#), b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5588,8 +5588,8 @@ TEST_CASE("ld (ix+#), c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5621,8 +5621,8 @@ TEST_CASE("ld (ix+#), d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5654,8 +5654,8 @@ TEST_CASE("ld (ix+#), e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5687,8 +5687,8 @@ TEST_CASE("ld (ix+#), h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5720,8 +5720,8 @@ TEST_CASE("ld (ix+#), l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5817,8 +5817,8 @@ TEST_CASE("ld (ix+#), #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5850,8 +5850,8 @@ TEST_CASE("ld (iy+#), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5883,8 +5883,8 @@ TEST_CASE("ld (iy+#), b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5916,8 +5916,8 @@ TEST_CASE("ld (iy+#), c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5949,8 +5949,8 @@ TEST_CASE("ld (iy+#), d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -5982,8 +5982,8 @@ TEST_CASE("ld (iy+#), e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6015,8 +6015,8 @@ TEST_CASE("ld (iy+#), h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6048,8 +6048,8 @@ TEST_CASE("ld (iy+#), l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6145,8 +6145,8 @@ TEST_CASE("ld (iy+#), #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6178,8 +6178,8 @@ TEST_CASE("ld (##), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6215,8 +6215,8 @@ TEST_CASE("ld (##), bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6252,8 +6252,8 @@ TEST_CASE("ld (##), de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6285,8 +6285,8 @@ TEST_CASE("ld (##), hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6322,8 +6322,8 @@ TEST_CASE("ld (##), ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6359,8 +6359,8 @@ TEST_CASE("ld (##), iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6396,8 +6396,8 @@ TEST_CASE("ld (##), sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6415,8 +6415,8 @@ TEST_CASE("ld a, (bc)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6434,8 +6434,8 @@ TEST_CASE("ld a, (de)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6453,8 +6453,8 @@ TEST_CASE("ld a, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6486,8 +6486,8 @@ TEST_CASE("ld a, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6519,8 +6519,8 @@ TEST_CASE("ld a, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6552,8 +6552,8 @@ TEST_CASE("ld a, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6571,8 +6571,8 @@ TEST_CASE("ld a, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6590,8 +6590,8 @@ TEST_CASE("ld a, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6609,8 +6609,8 @@ TEST_CASE("ld a, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6628,8 +6628,8 @@ TEST_CASE("ld a, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6647,8 +6647,8 @@ TEST_CASE("ld a, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6666,8 +6666,8 @@ TEST_CASE("ld a, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6686,8 +6686,8 @@ TEST_CASE("ld a, i", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6705,8 +6705,8 @@ TEST_CASE("ld a, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6734,8 +6734,8 @@ TEST_CASE("ld a, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6754,8 +6754,8 @@ TEST_CASE("ld a, r", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6773,8 +6773,8 @@ TEST_CASE("ld b, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6806,8 +6806,8 @@ TEST_CASE("ld b, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6839,8 +6839,8 @@ TEST_CASE("ld b, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6858,8 +6858,8 @@ TEST_CASE("ld b, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6877,8 +6877,8 @@ TEST_CASE("ld b, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6896,8 +6896,8 @@ TEST_CASE("ld b, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6915,8 +6915,8 @@ TEST_CASE("ld b, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6934,8 +6934,8 @@ TEST_CASE("ld b, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6953,8 +6953,8 @@ TEST_CASE("ld b, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -6972,8 +6972,8 @@ TEST_CASE("ld b, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7001,8 +7001,8 @@ TEST_CASE("ld b, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7038,8 +7038,8 @@ TEST_CASE("ld bc, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7071,8 +7071,8 @@ TEST_CASE("ld bc, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7090,8 +7090,8 @@ TEST_CASE("ld c, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7123,8 +7123,8 @@ TEST_CASE("ld c, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7156,8 +7156,8 @@ TEST_CASE("ld c, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7175,8 +7175,8 @@ TEST_CASE("ld c, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7194,8 +7194,8 @@ TEST_CASE("ld c, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7213,8 +7213,8 @@ TEST_CASE("ld c, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7232,8 +7232,8 @@ TEST_CASE("ld c, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7251,8 +7251,8 @@ TEST_CASE("ld c, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7270,8 +7270,8 @@ TEST_CASE("ld c, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7289,8 +7289,8 @@ TEST_CASE("ld c, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7318,8 +7318,8 @@ TEST_CASE("ld c, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7337,8 +7337,8 @@ TEST_CASE("ld d, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7370,8 +7370,8 @@ TEST_CASE("ld d, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7403,8 +7403,8 @@ TEST_CASE("ld d, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7422,8 +7422,8 @@ TEST_CASE("ld d, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7441,8 +7441,8 @@ TEST_CASE("ld d, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7460,8 +7460,8 @@ TEST_CASE("ld d, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7479,8 +7479,8 @@ TEST_CASE("ld d, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7498,8 +7498,8 @@ TEST_CASE("ld d, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7517,8 +7517,8 @@ TEST_CASE("ld d, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7536,8 +7536,8 @@ TEST_CASE("ld d, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7565,8 +7565,8 @@ TEST_CASE("ld d, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7602,8 +7602,8 @@ TEST_CASE("ld de, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7635,8 +7635,8 @@ TEST_CASE("ld de, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7654,8 +7654,8 @@ TEST_CASE("ld e, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7687,8 +7687,8 @@ TEST_CASE("ld e, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7720,8 +7720,8 @@ TEST_CASE("ld e, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7739,8 +7739,8 @@ TEST_CASE("ld e, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7758,8 +7758,8 @@ TEST_CASE("ld e, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7777,8 +7777,8 @@ TEST_CASE("ld e, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7796,8 +7796,8 @@ TEST_CASE("ld e, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7815,8 +7815,8 @@ TEST_CASE("ld e, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7834,8 +7834,8 @@ TEST_CASE("ld e, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7853,8 +7853,8 @@ TEST_CASE("ld e, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7882,8 +7882,8 @@ TEST_CASE("ld e, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7901,8 +7901,8 @@ TEST_CASE("ld h, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7934,8 +7934,8 @@ TEST_CASE("ld h, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7967,8 +7967,8 @@ TEST_CASE("ld h, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -7986,8 +7986,8 @@ TEST_CASE("ld h, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8005,8 +8005,8 @@ TEST_CASE("ld h, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8024,8 +8024,8 @@ TEST_CASE("ld h, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8043,8 +8043,8 @@ TEST_CASE("ld h, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8062,8 +8062,8 @@ TEST_CASE("ld h, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8081,8 +8081,8 @@ TEST_CASE("ld h, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8100,8 +8100,8 @@ TEST_CASE("ld h, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8129,8 +8129,8 @@ TEST_CASE("ld h, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8162,8 +8162,8 @@ TEST_CASE("ld hl, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8195,8 +8195,8 @@ TEST_CASE("ld hl, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8215,8 +8215,8 @@ TEST_CASE("ld i, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8252,8 +8252,8 @@ TEST_CASE("ld ix, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8289,8 +8289,8 @@ TEST_CASE("ld ix, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8326,8 +8326,8 @@ TEST_CASE("ld iy, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8363,8 +8363,8 @@ TEST_CASE("ld iy, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8382,8 +8382,8 @@ TEST_CASE("ld l, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8415,8 +8415,8 @@ TEST_CASE("ld l, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8448,8 +8448,8 @@ TEST_CASE("ld l, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8467,8 +8467,8 @@ TEST_CASE("ld l, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8486,8 +8486,8 @@ TEST_CASE("ld l, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8505,8 +8505,8 @@ TEST_CASE("ld l, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8524,8 +8524,8 @@ TEST_CASE("ld l, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8543,8 +8543,8 @@ TEST_CASE("ld l, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8562,8 +8562,8 @@ TEST_CASE("ld l, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8581,8 +8581,8 @@ TEST_CASE("ld l, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8610,8 +8610,8 @@ TEST_CASE("ld l, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8630,8 +8630,8 @@ TEST_CASE("ld r, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8667,8 +8667,8 @@ TEST_CASE("ld sp, (##)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8686,8 +8686,8 @@ TEST_CASE("ld sp, hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8706,8 +8706,8 @@ TEST_CASE("ld sp, ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8726,8 +8726,8 @@ TEST_CASE("ld sp, iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8759,8 +8759,8 @@ TEST_CASE("ld sp, ##", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8779,8 +8779,8 @@ TEST_CASE("ldd", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8799,8 +8799,8 @@ TEST_CASE("lddr", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8819,8 +8819,8 @@ TEST_CASE("ldi", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8839,8 +8839,8 @@ TEST_CASE("ldir", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8859,8 +8859,8 @@ TEST_CASE("neg", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8878,8 +8878,8 @@ TEST_CASE("nop", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8897,8 +8897,8 @@ TEST_CASE("or (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8930,8 +8930,8 @@ TEST_CASE("or (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8963,8 +8963,8 @@ TEST_CASE("or (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -8982,8 +8982,8 @@ TEST_CASE("or a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9001,8 +9001,8 @@ TEST_CASE("or b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9020,8 +9020,8 @@ TEST_CASE("or c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9039,8 +9039,8 @@ TEST_CASE("or d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9058,8 +9058,8 @@ TEST_CASE("or e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9077,8 +9077,8 @@ TEST_CASE("or h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9096,8 +9096,8 @@ TEST_CASE("or l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9125,8 +9125,8 @@ TEST_CASE("or #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9145,8 +9145,8 @@ TEST_CASE("otdr", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9165,8 +9165,8 @@ TEST_CASE("otir", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9185,8 +9185,8 @@ TEST_CASE("out (c), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9205,8 +9205,8 @@ TEST_CASE("out (c), b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9225,8 +9225,8 @@ TEST_CASE("out (c), c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9245,8 +9245,8 @@ TEST_CASE("out (c), d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9265,8 +9265,8 @@ TEST_CASE("out (c), e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9285,8 +9285,8 @@ TEST_CASE("out (c), h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9305,8 +9305,8 @@ TEST_CASE("out (c), l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9334,8 +9334,8 @@ TEST_CASE("out (#), a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9354,8 +9354,8 @@ TEST_CASE("outd", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9374,8 +9374,8 @@ TEST_CASE("outi", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9393,8 +9393,8 @@ TEST_CASE("pop af", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9412,8 +9412,8 @@ TEST_CASE("pop bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9431,8 +9431,8 @@ TEST_CASE("pop de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9450,8 +9450,8 @@ TEST_CASE("pop hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9470,8 +9470,8 @@ TEST_CASE("pop ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9490,8 +9490,8 @@ TEST_CASE("pop iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9509,8 +9509,8 @@ TEST_CASE("push af", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9528,8 +9528,8 @@ TEST_CASE("push bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9547,8 +9547,8 @@ TEST_CASE("push de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9566,8 +9566,8 @@ TEST_CASE("push hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9586,8 +9586,8 @@ TEST_CASE("push ix", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9606,8 +9606,8 @@ TEST_CASE("push iy", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9626,8 +9626,8 @@ TEST_CASE("res 0, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9663,8 +9663,8 @@ TEST_CASE("res 0, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9700,8 +9700,8 @@ TEST_CASE("res 0, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9720,8 +9720,8 @@ TEST_CASE("res 0, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9740,8 +9740,8 @@ TEST_CASE("res 0, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9760,8 +9760,8 @@ TEST_CASE("res 0, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9780,8 +9780,8 @@ TEST_CASE("res 0, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9800,8 +9800,8 @@ TEST_CASE("res 0, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9820,8 +9820,8 @@ TEST_CASE("res 0, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9840,8 +9840,8 @@ TEST_CASE("res 0, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9860,8 +9860,8 @@ TEST_CASE("res 1, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9897,8 +9897,8 @@ TEST_CASE("res 1, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9934,8 +9934,8 @@ TEST_CASE("res 1, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9954,8 +9954,8 @@ TEST_CASE("res 1, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9974,8 +9974,8 @@ TEST_CASE("res 1, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -9994,8 +9994,8 @@ TEST_CASE("res 1, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10014,8 +10014,8 @@ TEST_CASE("res 1, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10034,8 +10034,8 @@ TEST_CASE("res 1, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10054,8 +10054,8 @@ TEST_CASE("res 1, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10074,8 +10074,8 @@ TEST_CASE("res 1, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10094,8 +10094,8 @@ TEST_CASE("res 2, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10131,8 +10131,8 @@ TEST_CASE("res 2, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10168,8 +10168,8 @@ TEST_CASE("res 2, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10188,8 +10188,8 @@ TEST_CASE("res 2, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10208,8 +10208,8 @@ TEST_CASE("res 2, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10228,8 +10228,8 @@ TEST_CASE("res 2, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10248,8 +10248,8 @@ TEST_CASE("res 2, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10268,8 +10268,8 @@ TEST_CASE("res 2, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10288,8 +10288,8 @@ TEST_CASE("res 2, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10308,8 +10308,8 @@ TEST_CASE("res 2, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10328,8 +10328,8 @@ TEST_CASE("res 3, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10365,8 +10365,8 @@ TEST_CASE("res 3, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10402,8 +10402,8 @@ TEST_CASE("res 3, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10422,8 +10422,8 @@ TEST_CASE("res 3, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10442,8 +10442,8 @@ TEST_CASE("res 3, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10462,8 +10462,8 @@ TEST_CASE("res 3, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10482,8 +10482,8 @@ TEST_CASE("res 3, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10502,8 +10502,8 @@ TEST_CASE("res 3, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10522,8 +10522,8 @@ TEST_CASE("res 3, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10542,8 +10542,8 @@ TEST_CASE("res 3, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10562,8 +10562,8 @@ TEST_CASE("res 4, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10599,8 +10599,8 @@ TEST_CASE("res 4, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10636,8 +10636,8 @@ TEST_CASE("res 4, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10656,8 +10656,8 @@ TEST_CASE("res 4, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10676,8 +10676,8 @@ TEST_CASE("res 4, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10696,8 +10696,8 @@ TEST_CASE("res 4, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10716,8 +10716,8 @@ TEST_CASE("res 4, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10736,8 +10736,8 @@ TEST_CASE("res 4, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10756,8 +10756,8 @@ TEST_CASE("res 4, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10776,8 +10776,8 @@ TEST_CASE("res 4, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10796,8 +10796,8 @@ TEST_CASE("res 5, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10833,8 +10833,8 @@ TEST_CASE("res 5, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10870,8 +10870,8 @@ TEST_CASE("res 5, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10890,8 +10890,8 @@ TEST_CASE("res 5, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10910,8 +10910,8 @@ TEST_CASE("res 5, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10930,8 +10930,8 @@ TEST_CASE("res 5, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10950,8 +10950,8 @@ TEST_CASE("res 5, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10970,8 +10970,8 @@ TEST_CASE("res 5, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -10990,8 +10990,8 @@ TEST_CASE("res 5, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11010,8 +11010,8 @@ TEST_CASE("res 5, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11030,8 +11030,8 @@ TEST_CASE("res 6, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11067,8 +11067,8 @@ TEST_CASE("res 6, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11104,8 +11104,8 @@ TEST_CASE("res 6, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11124,8 +11124,8 @@ TEST_CASE("res 6, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11144,8 +11144,8 @@ TEST_CASE("res 6, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11164,8 +11164,8 @@ TEST_CASE("res 6, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11184,8 +11184,8 @@ TEST_CASE("res 6, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11204,8 +11204,8 @@ TEST_CASE("res 6, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11224,8 +11224,8 @@ TEST_CASE("res 6, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11244,8 +11244,8 @@ TEST_CASE("res 6, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11264,8 +11264,8 @@ TEST_CASE("res 7, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11301,8 +11301,8 @@ TEST_CASE("res 7, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11338,8 +11338,8 @@ TEST_CASE("res 7, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11358,8 +11358,8 @@ TEST_CASE("res 7, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11378,8 +11378,8 @@ TEST_CASE("res 7, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11398,8 +11398,8 @@ TEST_CASE("res 7, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11418,8 +11418,8 @@ TEST_CASE("res 7, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11438,8 +11438,8 @@ TEST_CASE("res 7, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11458,8 +11458,8 @@ TEST_CASE("res 7, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11478,8 +11478,8 @@ TEST_CASE("res 7, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11497,8 +11497,8 @@ TEST_CASE("ret", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11516,8 +11516,8 @@ TEST_CASE("ret c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11535,8 +11535,8 @@ TEST_CASE("ret m", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11554,8 +11554,8 @@ TEST_CASE("ret nc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11573,8 +11573,8 @@ TEST_CASE("ret nz", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11592,8 +11592,8 @@ TEST_CASE("ret p", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11611,8 +11611,8 @@ TEST_CASE("ret pe", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11630,8 +11630,8 @@ TEST_CASE("ret po", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11649,8 +11649,8 @@ TEST_CASE("ret z", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11669,8 +11669,8 @@ TEST_CASE("reti", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11689,8 +11689,8 @@ TEST_CASE("retn", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11709,8 +11709,8 @@ TEST_CASE("rl (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11746,8 +11746,8 @@ TEST_CASE("rl (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11783,8 +11783,8 @@ TEST_CASE("rl (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11803,8 +11803,8 @@ TEST_CASE("rl a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11823,8 +11823,8 @@ TEST_CASE("rl b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11843,8 +11843,8 @@ TEST_CASE("rl c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11863,8 +11863,8 @@ TEST_CASE("rl d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11883,8 +11883,8 @@ TEST_CASE("rl e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11903,8 +11903,8 @@ TEST_CASE("rl h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11923,8 +11923,8 @@ TEST_CASE("rl l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11942,8 +11942,8 @@ TEST_CASE("rla", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11962,8 +11962,8 @@ TEST_CASE("rlc (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -11999,8 +11999,8 @@ TEST_CASE("rlc (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12036,8 +12036,8 @@ TEST_CASE("rlc (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12056,8 +12056,8 @@ TEST_CASE("rlc a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12076,8 +12076,8 @@ TEST_CASE("rlc b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12096,8 +12096,8 @@ TEST_CASE("rlc c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12116,8 +12116,8 @@ TEST_CASE("rlc d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12136,8 +12136,8 @@ TEST_CASE("rlc e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12156,8 +12156,8 @@ TEST_CASE("rlc h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12176,8 +12176,8 @@ TEST_CASE("rlc l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12195,8 +12195,8 @@ TEST_CASE("rlca", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12215,8 +12215,8 @@ TEST_CASE("rld", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12235,8 +12235,8 @@ TEST_CASE("rr (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12272,8 +12272,8 @@ TEST_CASE("rr (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12309,8 +12309,8 @@ TEST_CASE("rr (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12329,8 +12329,8 @@ TEST_CASE("rr a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12349,8 +12349,8 @@ TEST_CASE("rr b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12369,8 +12369,8 @@ TEST_CASE("rr c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12389,8 +12389,8 @@ TEST_CASE("rr d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12409,8 +12409,8 @@ TEST_CASE("rr e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12429,8 +12429,8 @@ TEST_CASE("rr h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12449,8 +12449,8 @@ TEST_CASE("rr l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12468,8 +12468,8 @@ TEST_CASE("rra", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12488,8 +12488,8 @@ TEST_CASE("rrc (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12525,8 +12525,8 @@ TEST_CASE("rrc (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12562,8 +12562,8 @@ TEST_CASE("rrc (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12582,8 +12582,8 @@ TEST_CASE("rrc a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12602,8 +12602,8 @@ TEST_CASE("rrc b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12622,8 +12622,8 @@ TEST_CASE("rrc c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12642,8 +12642,8 @@ TEST_CASE("rrc d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12662,8 +12662,8 @@ TEST_CASE("rrc e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12682,8 +12682,8 @@ TEST_CASE("rrc h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12702,8 +12702,8 @@ TEST_CASE("rrc l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12721,8 +12721,8 @@ TEST_CASE("rrca", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12741,8 +12741,8 @@ TEST_CASE("rrd", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12760,8 +12760,8 @@ TEST_CASE("rst 0", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12779,8 +12779,8 @@ TEST_CASE("rst 8", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12798,8 +12798,8 @@ TEST_CASE("rst 10h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12817,8 +12817,8 @@ TEST_CASE("rst 18h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12836,8 +12836,8 @@ TEST_CASE("rst 20h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12855,8 +12855,8 @@ TEST_CASE("rst 28h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12874,8 +12874,8 @@ TEST_CASE("rst 30h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12893,8 +12893,8 @@ TEST_CASE("rst 38h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12922,8 +12922,8 @@ TEST_CASE("sbc a, #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12941,8 +12941,8 @@ TEST_CASE("sbc a, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -12974,8 +12974,8 @@ TEST_CASE("sbc a, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13007,8 +13007,8 @@ TEST_CASE("sbc a, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13026,8 +13026,8 @@ TEST_CASE("sbc a, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13045,8 +13045,8 @@ TEST_CASE("sbc a, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13064,8 +13064,8 @@ TEST_CASE("sbc a, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13083,8 +13083,8 @@ TEST_CASE("sbc a, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13102,8 +13102,8 @@ TEST_CASE("sbc a, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13121,8 +13121,8 @@ TEST_CASE("sbc a, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13140,8 +13140,8 @@ TEST_CASE("sbc a, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13160,8 +13160,8 @@ TEST_CASE("sbc hl, bc", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13180,8 +13180,8 @@ TEST_CASE("sbc hl, de", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13200,8 +13200,8 @@ TEST_CASE("sbc hl, hl", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13220,8 +13220,8 @@ TEST_CASE("sbc hl, sp", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13239,8 +13239,8 @@ TEST_CASE("scf", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13259,8 +13259,8 @@ TEST_CASE("set 0, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13296,8 +13296,8 @@ TEST_CASE("set 0, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13333,8 +13333,8 @@ TEST_CASE("set 0, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13353,8 +13353,8 @@ TEST_CASE("set 0, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13373,8 +13373,8 @@ TEST_CASE("set 0, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13393,8 +13393,8 @@ TEST_CASE("set 0, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13413,8 +13413,8 @@ TEST_CASE("set 0, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13433,8 +13433,8 @@ TEST_CASE("set 0, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13453,8 +13453,8 @@ TEST_CASE("set 0, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13473,8 +13473,8 @@ TEST_CASE("set 0, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13493,8 +13493,8 @@ TEST_CASE("set 1, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13530,8 +13530,8 @@ TEST_CASE("set 1, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13567,8 +13567,8 @@ TEST_CASE("set 1, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13587,8 +13587,8 @@ TEST_CASE("set 1, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13607,8 +13607,8 @@ TEST_CASE("set 1, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13627,8 +13627,8 @@ TEST_CASE("set 1, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13647,8 +13647,8 @@ TEST_CASE("set 1, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13667,8 +13667,8 @@ TEST_CASE("set 1, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13687,8 +13687,8 @@ TEST_CASE("set 1, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13707,8 +13707,8 @@ TEST_CASE("set 1, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13727,8 +13727,8 @@ TEST_CASE("set 2, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13764,8 +13764,8 @@ TEST_CASE("set 2, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13801,8 +13801,8 @@ TEST_CASE("set 2, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13821,8 +13821,8 @@ TEST_CASE("set 2, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13841,8 +13841,8 @@ TEST_CASE("set 2, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13861,8 +13861,8 @@ TEST_CASE("set 2, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13881,8 +13881,8 @@ TEST_CASE("set 2, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13901,8 +13901,8 @@ TEST_CASE("set 2, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13921,8 +13921,8 @@ TEST_CASE("set 2, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13941,8 +13941,8 @@ TEST_CASE("set 2, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13961,8 +13961,8 @@ TEST_CASE("set 3, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -13998,8 +13998,8 @@ TEST_CASE("set 3, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14035,8 +14035,8 @@ TEST_CASE("set 3, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14055,8 +14055,8 @@ TEST_CASE("set 3, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14075,8 +14075,8 @@ TEST_CASE("set 3, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14095,8 +14095,8 @@ TEST_CASE("set 3, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14115,8 +14115,8 @@ TEST_CASE("set 3, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14135,8 +14135,8 @@ TEST_CASE("set 3, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14155,8 +14155,8 @@ TEST_CASE("set 3, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14175,8 +14175,8 @@ TEST_CASE("set 3, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14195,8 +14195,8 @@ TEST_CASE("set 4, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14232,8 +14232,8 @@ TEST_CASE("set 4, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14269,8 +14269,8 @@ TEST_CASE("set 4, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14289,8 +14289,8 @@ TEST_CASE("set 4, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14309,8 +14309,8 @@ TEST_CASE("set 4, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14329,8 +14329,8 @@ TEST_CASE("set 4, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14349,8 +14349,8 @@ TEST_CASE("set 4, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14369,8 +14369,8 @@ TEST_CASE("set 4, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14389,8 +14389,8 @@ TEST_CASE("set 4, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14409,8 +14409,8 @@ TEST_CASE("set 4, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14429,8 +14429,8 @@ TEST_CASE("set 5, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14466,8 +14466,8 @@ TEST_CASE("set 5, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14503,8 +14503,8 @@ TEST_CASE("set 5, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14523,8 +14523,8 @@ TEST_CASE("set 5, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14543,8 +14543,8 @@ TEST_CASE("set 5, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14563,8 +14563,8 @@ TEST_CASE("set 5, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14583,8 +14583,8 @@ TEST_CASE("set 5, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14603,8 +14603,8 @@ TEST_CASE("set 5, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14623,8 +14623,8 @@ TEST_CASE("set 5, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14643,8 +14643,8 @@ TEST_CASE("set 5, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14663,8 +14663,8 @@ TEST_CASE("set 6, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14700,8 +14700,8 @@ TEST_CASE("set 6, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14737,8 +14737,8 @@ TEST_CASE("set 6, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14757,8 +14757,8 @@ TEST_CASE("set 6, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14777,8 +14777,8 @@ TEST_CASE("set 6, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14797,8 +14797,8 @@ TEST_CASE("set 6, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14817,8 +14817,8 @@ TEST_CASE("set 6, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14837,8 +14837,8 @@ TEST_CASE("set 6, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14857,8 +14857,8 @@ TEST_CASE("set 6, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14877,8 +14877,8 @@ TEST_CASE("set 6, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14897,8 +14897,8 @@ TEST_CASE("set 7, (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14934,8 +14934,8 @@ TEST_CASE("set 7, (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14971,8 +14971,8 @@ TEST_CASE("set 7, (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -14991,8 +14991,8 @@ TEST_CASE("set 7, a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15011,8 +15011,8 @@ TEST_CASE("set 7, b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15031,8 +15031,8 @@ TEST_CASE("set 7, c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15051,8 +15051,8 @@ TEST_CASE("set 7, d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15071,8 +15071,8 @@ TEST_CASE("set 7, e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15091,8 +15091,8 @@ TEST_CASE("set 7, h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15111,8 +15111,8 @@ TEST_CASE("set 7, l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15131,8 +15131,8 @@ TEST_CASE("sla (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15168,8 +15168,8 @@ TEST_CASE("sla (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15205,8 +15205,8 @@ TEST_CASE("sla (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15225,8 +15225,8 @@ TEST_CASE("sla a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15245,8 +15245,8 @@ TEST_CASE("sla b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15265,8 +15265,8 @@ TEST_CASE("sla c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15285,8 +15285,8 @@ TEST_CASE("sla d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15305,8 +15305,8 @@ TEST_CASE("sla e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15325,8 +15325,8 @@ TEST_CASE("sla h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15345,8 +15345,8 @@ TEST_CASE("sla l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15365,8 +15365,8 @@ TEST_CASE("sra (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15402,8 +15402,8 @@ TEST_CASE("sra (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15439,8 +15439,8 @@ TEST_CASE("sra (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15459,8 +15459,8 @@ TEST_CASE("sra a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15479,8 +15479,8 @@ TEST_CASE("sra b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15499,8 +15499,8 @@ TEST_CASE("sra c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15519,8 +15519,8 @@ TEST_CASE("sra d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15539,8 +15539,8 @@ TEST_CASE("sra e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15559,8 +15559,8 @@ TEST_CASE("sra h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15579,8 +15579,8 @@ TEST_CASE("sra l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15599,8 +15599,8 @@ TEST_CASE("srl (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15636,8 +15636,8 @@ TEST_CASE("srl (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15673,8 +15673,8 @@ TEST_CASE("srl (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15693,8 +15693,8 @@ TEST_CASE("srl a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15713,8 +15713,8 @@ TEST_CASE("srl b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15733,8 +15733,8 @@ TEST_CASE("srl c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15753,8 +15753,8 @@ TEST_CASE("srl d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15773,8 +15773,8 @@ TEST_CASE("srl e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15793,8 +15793,8 @@ TEST_CASE("srl h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15813,8 +15813,8 @@ TEST_CASE("srl l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15832,8 +15832,8 @@ TEST_CASE("sub (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15865,8 +15865,8 @@ TEST_CASE("sub (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15898,8 +15898,8 @@ TEST_CASE("sub (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15917,8 +15917,8 @@ TEST_CASE("sub a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15936,8 +15936,8 @@ TEST_CASE("sub b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15955,8 +15955,8 @@ TEST_CASE("sub c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15974,8 +15974,8 @@ TEST_CASE("sub d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -15993,8 +15993,8 @@ TEST_CASE("sub e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16012,8 +16012,8 @@ TEST_CASE("sub h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16031,8 +16031,8 @@ TEST_CASE("sub l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16060,8 +16060,8 @@ TEST_CASE("sub #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16079,8 +16079,8 @@ TEST_CASE("xor (hl)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16112,8 +16112,8 @@ TEST_CASE("xor (ix+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16145,8 +16145,8 @@ TEST_CASE("xor (iy+#)", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16164,8 +16164,8 @@ TEST_CASE("xor a", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16183,8 +16183,8 @@ TEST_CASE("xor b", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16202,8 +16202,8 @@ TEST_CASE("xor c", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16221,8 +16221,8 @@ TEST_CASE("xor d", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16240,8 +16240,8 @@ TEST_CASE("xor e", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16259,8 +16259,8 @@ TEST_CASE("xor h", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16278,8 +16278,8 @@ TEST_CASE("xor l", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
 
@@ -16307,7 +16307,7 @@ TEST_CASE("xor #", "[opcodes]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected(binary, sizeof(binary));
-    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }

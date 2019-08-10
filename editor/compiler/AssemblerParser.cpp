@@ -150,6 +150,7 @@ bool AssemblerParser::expectByteLiteral(unsigned* out)
         if (num > 255)
             error(tr("Value %1 does not fit into a byte.").arg(num));
         *out = num;
+        nextToken();
         return true;
     }
 
@@ -160,6 +161,7 @@ bool AssemblerParser::expectWordLiteral(unsigned* out)
 {
     if (lastTokenId() == T_NUMBER) {
         *out = lastToken().number;
+        nextToken();
         return true;
     }
 
@@ -168,7 +170,12 @@ bool AssemblerParser::expectWordLiteral(unsigned* out)
 
 bool AssemblerParser::expectRelativeByteOffset(unsigned* out)
 {
-    // FIXME
+    if (lastTokenId() == T_NUMBER) {
+        *out = lastToken().number;
+        nextToken();
+        return true;
+    }
+
     return false;
 }
 
@@ -189,6 +196,35 @@ void AssemblerParser::expectEol(int tokenId)
 {
     if (tokenId != T_EOL)
         error(tr("expected end of line"));
+}
+
+bool AssemblerParser::matchEol()
+{
+    return (lastTokenId() == T_EOL);
+}
+
+bool AssemblerParser::matchToken(int token)
+{
+    if (lastTokenId() != token)
+        return false;
+    nextToken();
+    return true;
+}
+
+bool AssemblerParser::matchIdentifier(const char* ident)
+{
+    if (lastTokenId() != T_IDENTIFIER || toLower(lastTokenText()) != ident)
+        return false;
+    nextToken();
+    return true;
+}
+
+bool AssemblerParser::matchNumber(quint32 value)
+{
+    if (lastTokenId() != T_NUMBER || lastToken().number != value) // FIXME: expressions
+        return false;
+    nextToken();
+    return true;
 }
 
 int AssemblerParser::nextToken() const

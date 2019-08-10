@@ -798,19 +798,14 @@ hdr += '#include "ProgramOpcode.h"\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
-#src += '#include "ProgramSection.h"\n'
 src += '#include "ProgramBinary.h"\n'
-#src += '#include "AssemblerParser.h"\n'
-#src += '#include "AssemblerToken.h"\n'
-#src += '#include "Util.h"\n'
 
 src2  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src2 += '#include "Z80Opcodes.h"\n'
 src2 += '#include "ProgramSection.h"\n'
-#src2 += '#include "ProgramBinary.h"\n'
 src2 += '#include "AssemblerParser.h"\n'
 src2 += '#include "AssemblerToken.h"\n'
-src2 += '#include "Util.h"\n'
+src2 += '#include <unordered_map>\n'
 src2 += '\n'
 src2 += '#ifdef emit\n'
 src2 += '#undef emit\n'
@@ -859,83 +854,149 @@ def getDict(dict, key):
 def genCode(dict, indent):
     global src2
     for key, value in dict.items():
-        src2 += '%sif (%s) {\n' % (indent, key)
+        src2 += '%sif (%s)' % (indent, key)
         if not isinstance(value, Opcode):
-            src2 += '%s    nextToken();\n' % indent
+            src2 += ' {\n'
             genCode(value, indent + '    ')
+            src2 += '%s}\n' % indent
         else:
-            src2 += '%s    mSection->emit<%s>(token%s);\n' % (indent, value.className, value.argsCall())
-            src2 += '%s    return true;\n' % indent
-        src2 += '%s}\n' % indent
+            src2 += '\n'
+            src2 += '%s    return mSection->emit<%s>(mToken%s);\n' % (indent, value.className, value.argsCall())
     src2 += '%sreturn false;\n' % indent
+
+def addCond(conds, what):
+    for condlist in conds:
+        condlist.append(what)
+
+def forkConds(conds, orig):
+    newlist = []
+    for condlist in orig:
+        newlist.append(condlist[:])
+    for lst in newlist:
+        conds.append(lst)
+    return newlist
 
 opcodeMap = OrderedDict()
 for opcode in opcodes:
-    conds = [ 'opcode == "%s"' % opcode.name ]
+    conds = [ [ opcode.name ] ]
     literalIndex = 1
     first = True
     for op in opcode.operands:
         if first:
             first = False
         else:
-            conds.append('lastTokenId() == T_COMMA')
+            addCond(conds, 'token(T_COMMA)')
 
         if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', "af'" ]:
-            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
+            addCond(conds, 'ident("%s")' % op)
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
-            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op)
+            addCond(conds, 'ident("%s")' % op)
         elif op in [ '0', '1', '2', '3', '4', '5', '6', '7' ]:
-            conds.append('lastTokenId() == T_NUMBER && lastToken().number == %s' % op)
+            addCond(conds, 'number(%s)' % op)
         elif op in [ '00', '08', '10', '18', '20', '28', '30', '38' ]:
-            conds.append('lastTokenId() == T_NUMBER && lastToken().number == 0x%s' % op)
+            addCond(conds, 'number(0x%s)' % op)
         elif op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)', '(sp)' ]:
-            conds.append('lastTokenId() == T_LPAREN')
-            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op[1:3])
-            conds.append('lastTokenId() == T_RPAREN')
+            addCond(conds, 'token(T_LPAREN)')
+            addCond(conds, 'ident("%s")' % op[1:3])
+            addCond(conds, 'token(T_RPAREN)')
         elif op in [ '(ix+#)', '(iy+#)' ]:
-            conds.append('lastTokenId() == T_LPAREN')
-            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "%s"' % op[1:3])
-            conds.append('lastTokenId() == T_PLUS')
-            conds.append('expectByteLiteral(&literal%d)' % literalIndex)
-            conds.append('lastTokenId() == T_RPAREN')
+            addCond(conds, 'token(T_LPAREN)')
+            addCond(conds, 'ident("%s")' % op[1:3])
+            orig = conds[:]
+            alt1 = forkConds(conds, orig)
+            alt2 = forkConds(conds, orig)
+            addCond(orig, 'token(T_RPAREN)')
+            addCond(alt1, 'token(T_PLUS)')
+            addCond(alt1, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(alt1, 'token(T_RPAREN)')
+            addCond(alt2, 'token(T_MINUS)')
+            addCond(alt2, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(alt2, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '(c)':
-            conds.append('lastTokenId() == T_LPAREN')
-            conds.append('lastTokenId() == T_IDENTIFIER && toLower(lastTokenText()) == "c"')
-            conds.append('lastTokenId() == T_RPAREN')
+            addCond(conds, 'token(T_LPAREN)')
+            addCond(conds, 'ident("c")')
+            addCond(conds, 'token(T_RPAREN)')
         elif op == '(#)':
-            conds.append('lastTokenId() == T_LPAREN')
-            conds.append('expectByteLiteral(&literal%d)' % literalIndex)
-            conds.append('lastTokenId() == T_RPAREN')
+            addCond(conds, 'token(T_LPAREN)')
+            addCond(conds, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '(##)':
-            conds.append('lastTokenId() == T_LPAREN')
-            conds.append('expectWordLiteral(&literal%d)' % literalIndex)
-            conds.append('lastTokenId() == T_RPAREN')
+            addCond(conds, 'token(T_LPAREN)')
+            addCond(conds, 'wordLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '#':
-            conds.append('expectByteLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'byteLiteral(&literal%d)' % literalIndex)
             literalIndex += 1
         elif op == '##':
-            conds.append('expectWordLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'wordLiteral(&literal%d)' % literalIndex)
             literalIndex += 1
         elif op == 'R#':
-            conds.append('expectRelativeByteOffset(&literal%d)' % literalIndex)
+            addCond(conds, 'byteOffset(&literal%d)' % literalIndex)
             literalIndex += 1
         else:
             raise Exception('Unknown operand "%s"' % op)
 
-    dict = opcodeMap
-    for cond in conds:
-        dict = getDict(dict, cond)
-    dict['lastTokenId() == T_EOL'] = opcode
+    for condlist in conds:
+        dict = opcodeMap
+        for cond in condlist:
+            dict = getDict(dict, cond)
+        dict['eol()'] = opcode
+
+src2 += '\n'
+src2 += 'class Z80OpcodeParser\n'
+src2 += '{\n'
+src2 += 'private:\n'
+src2 += '    AssemblerParser* mParser;\n'
+src2 += '    ProgramSection* mSection;\n'
+src2 += '    const Token& mToken;\n'
+src2 += '\n'
+src2 += '    bool eol() const { return mParser->matchEol(); }\n'
+src2 += '    bool token(int tok) const { return mParser->matchToken(tok); }\n'
+src2 += '    bool ident(const char* id) const { return mParser->matchIdentifier(id); }\n'
+src2 += '    bool number(quint32 value) const { return mParser->matchNumber(value); }\n'
+src2 += '\n'
+src2 += '    bool byteLiteral(unsigned* value) const { return mParser->expectByteLiteral(value); }\n'
+src2 += '    bool byteOffset(unsigned* value) const { return mParser->expectRelativeByteOffset(value); }\n'
+src2 += '    bool wordLiteral(unsigned* value) const { return mParser->expectWordLiteral(value); }\n'
+src2 += '\n'
+src2 += 'public:\n'
+src2 += '    explicit Z80OpcodeParser(AssemblerParser* parser)\n'
+src2 += '        : mParser(parser)\n'
+src2 += '        , mSection(parser->mSection)\n'
+src2 += '        , mToken(parser->lastToken())\n'
+src2 += '    {\n'
+src2 += '        mParser->nextToken();\n'
+src2 += '    }\n'
+
+for opcode, dict in opcodeMap.items():
+    src2 += '\n'
+    src2 += '    bool %s()\n' % opcode
+    src2 += '    {\n'
+    src2 += '        unsigned literal1, literal2;\n'
+    src2 += '        (void)literal1; (void)literal2;\n'
+    src2 += '\n'
+    genCode(dict, '        ')
+    src2 += '    }\n'
+
+src2 += '};\n'
+src2 += '\n'
+src2 += 'using Func = bool (Z80OpcodeParser::*)();\n'
+src2 += 'static std::unordered_map<std::string, Func> opcodes = {\n'
+for opcode, dict in opcodeMap.items():
+    src2 += '        { "%s", &Z80OpcodeParser::%s },\n' % (opcode, opcode)
+src2 += '    };\n'
 
 src2 += '\n'
 src2 += 'bool AssemblerParser::parseOpcode_generated(const std::string& opcode)\n'
 src2 += '{\n'
-src2 += '    unsigned literal1, literal2;\n'
-src2 += '    Token token = lastToken();\n'
-genCode(opcodeMap, '    ')
+src2 += '    auto it = opcodes.find(opcode);\n'
+src2 += '    if (it != opcodes.end()) {\n'
+src2 += '        Z80OpcodeParser parser(this);\n'
+src2 += '        return (parser.*(it->second))();\n'
+src2 += '    }\n'
 src2 += '    return false;\n'
 src2 += '}\n'
 
