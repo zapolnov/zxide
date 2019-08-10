@@ -12784,11 +12784,11 @@ TEST_CASE("rst 8", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 10h", "[opcodes]")
+TEST_CASE("rst 16", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 10h\n"
+        "rst 16\n"
         ;
 
     static const unsigned char binary[] = {
@@ -12803,11 +12803,11 @@ TEST_CASE("rst 10h", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 18h", "[opcodes]")
+TEST_CASE("rst 24", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 18h\n"
+        "rst 24\n"
         ;
 
     static const unsigned char binary[] = {
@@ -12822,11 +12822,11 @@ TEST_CASE("rst 18h", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 20h", "[opcodes]")
+TEST_CASE("rst 32", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 20h\n"
+        "rst 32\n"
         ;
 
     static const unsigned char binary[] = {
@@ -12841,11 +12841,11 @@ TEST_CASE("rst 20h", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 28h", "[opcodes]")
+TEST_CASE("rst 40", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 28h\n"
+        "rst 40\n"
         ;
 
     static const unsigned char binary[] = {
@@ -12860,11 +12860,11 @@ TEST_CASE("rst 28h", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 30h", "[opcodes]")
+TEST_CASE("rst 48", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 30h\n"
+        "rst 48\n"
         ;
 
     static const unsigned char binary[] = {
@@ -12879,11 +12879,11 @@ TEST_CASE("rst 30h", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("rst 38h", "[opcodes]")
+TEST_CASE("rst 56", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rst 38h\n"
+        "rst 56\n"
         ;
 
     static const unsigned char binary[] = {
