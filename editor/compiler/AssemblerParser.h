@@ -32,6 +32,7 @@ private:
     IErrorReporter* mReporter;
     ProgramSection* mSection;
     std::string mLastNonLocalLabel;
+    QString mExpressionError;
 
     void parseLine();
     void parseSectionDecl();
@@ -41,7 +42,10 @@ private:
     std::string readLabelName();
 
     quint32 parseNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
-    bool parseExpression(int tokenId, std::unique_ptr<Expression>* out); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseAtomicExpression(int tokenId, bool allowParen); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseUnaryExpression(int tokenId, bool allowParen); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseExpression(int tokenId, bool allowParen); // in ExpressionParser.cpp
+    bool tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool allowParen); // in ExpressionParser.cpp
 
     std::string expectIdentifier(int tokenId);
     void expectComma(int tokenId);

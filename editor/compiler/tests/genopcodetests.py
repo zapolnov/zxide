@@ -793,7 +793,7 @@ def formatOpcode(opcode, i):
         str2 += '(iy%d)' % (127 - i)
     else:
         asm1 += opcode.replace('##', '%d' % i).replace('$+#', '$%+d' % (129 - i)).replace('#', '%d' % i)
-        str2 += opcode.replace('##', '%d' % i).replace('$+#', '%d' % (129 - i)).replace('#', '%d' % i)
+        str2 += opcode.replace('##', '%d' % i).replace('$+#', '%d' % (127 - i)).replace('#', '%d' % i)
 
 for opcode in opcodes:
     opcode_name = opcode[0]

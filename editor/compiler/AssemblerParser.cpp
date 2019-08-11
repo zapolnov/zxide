@@ -132,9 +132,9 @@ std::string AssemblerParser::readLabelName()
 
 quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
 {
-    std::unique_ptr<Expression> expr;
-    if (!parseExpression(tokenId, &expr))
-        error(tr("expected expression"));
+    auto expr = parseExpression(tokenId, true);
+    if (!expr)
+        error(mExpressionError);
 
     qint64 number = expr->evaluate(mReporter);
     if (number < qint64(min) || number > qint64(max)) {
@@ -187,13 +187,7 @@ bool AssemblerParser::matchIdentifier(const char* ident)
 
 bool AssemblerParser::matchExpression(std::unique_ptr<Expression>* out)
 {
-    mLexer->save();
-    if (parseExpression(lastTokenId(), out)) {
-        mLexer->forget();
-        return true;
-    }
-    mLexer->restore();
-    return false;
+    return tryParseExpression(lastTokenId(), out, false);
 }
 
 bool AssemblerParser::matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out)
