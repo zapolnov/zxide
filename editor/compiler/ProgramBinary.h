@@ -13,14 +13,16 @@ public:
     unsigned baseAddress() const { return mBaseAddress; }
     unsigned endAddress() const { return mEndAddress; }
 
-    const unsigned char* codeBytes() const { return mCode.data(); }
+    const quint8* codeBytes() const { return mCode.data(); }
     size_t codeLength() const { return mCode.size(); }
 
-    void emitByte(unsigned char byte);
-    void emitWord(unsigned short word);
+    void emitByte(quint8 byte);
+    void emitWord(quint16 word);
+    void emitDWord(quint32 dword);
+    void emitQWord(quint64 qword);
 
 private:
-    std::vector<unsigned char> mCode;
+    std::vector<quint8> mCode;
     unsigned mBaseAddress;
     unsigned mEndAddress;
 

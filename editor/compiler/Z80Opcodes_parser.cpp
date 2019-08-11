@@ -18,7 +18,7 @@ private:
     Token mMinusToken;
     std::unique_ptr<Expression> mLiteral1;
     std::unique_ptr<Expression> mLiteral2;
-    unsigned char mByteConstant;
+    quint8 mByteConstant;
 
     bool eol() const { return mParser->matchEol(); }
     bool token(int tok) const { return mParser->matchToken(tok); }

@@ -44,6 +44,14 @@ void Value::truncateTo16Bit()
         number = qint64(quint16(number & 0xffff));
 }
 
+void Value::truncateTo32Bit()
+{
+    if (sign == Sign::Signed)
+        number = qint64(qint32(number & 0xffffffff));
+    else
+        number = qint64(quint32(number & 0xffffffff));
+}
+
 void Value::truncateToSignificantBits()
 {
     switch (bits) {

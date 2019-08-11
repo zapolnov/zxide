@@ -17,6 +17,7 @@ add_sources(CompilerTests
     helpers/TestUtil.h
     helpers/main.cpp
     CaseTests.cpp
+    DataTests.cpp
     EquTests.cpp
     ErrorTests.cpp
     ExprTests.cpp

@@ -8,6 +8,18 @@
 #include "Program.h"
 #include <sstream>
 
+std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDataDirectives = {
+        { "db", &AssemblerParser::parseDefByte },
+        { "dw", &AssemblerParser::parseDefWord },
+        { "dd", &AssemblerParser::parseDefDWord },
+        { "defb", &AssemblerParser::parseDefByte },
+        { "defw", &AssemblerParser::parseDefWord },
+    };
+
+std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDirectives = {
+        { "section", &AssemblerParser::parseSectionDecl },
+    };
+
 AssemblerParser::AssemblerParser(AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
     : mLexer(lexer)
     , mProgram(program)
@@ -49,23 +61,45 @@ void AssemblerParser::parseLine()
         auto str = toLower(lastTokenText());
         if (parseOpcode(str))
             return;
-        else if (str == "section") {
-            parseSectionDecl();
+
+        auto it = mDirectives.find(str);
+        if (it != mDirectives.end()) {
+            (this->*(it->second))();
+            return;
+        }
+
+        auto jt = mDataDirectives.find(str);
+        if (jt != mDataDirectives.end()) {
+            (this->*(jt->second))();
             return;
         }
     }
 
-    // 'equ' directive handling
+    // 'equ' and data directives handling (may be preceded by label without ':')
 
+    // read label name
     Token nameToken = lastToken();
     std::string name;
+    bool isIdentifier = false;
     if (lastTokenId() == T_IDENTIFIER)
         name = nameToken.text.c_str();
     else if (lastTokenId() == T_LOCAL_LABEL_NAME)
         name = readLabelName(lastTokenId());
     else
         error(tr("expected opcode or directive"));
-    if (nextToken() == T_IDENTIFIER && toLower(lastTokenText()) == "equ") {
+
+    // read directive
+    nextToken();
+    std::unordered_map<std::string, void(AssemblerParser::*)()>::iterator iter;
+    std::string lower = toLower(lastTokenText());
+    if (lastTokenId() == T_IDENTIFIER && (iter = mDataDirectives.find(lower)) != mDataDirectives.end()) {
+        label = mProgram->addLabel(nameToken, mSection, name);
+        if (!label)
+            error(tr("duplicate identifier '%1'").arg(name.c_str()));
+        if (nameToken.id == T_IDENTIFIER)
+            mLastNonLocalLabel = name;
+        (this->*(iter->second))();
+    } else if (lastTokenId() == T_IDENTIFIER && lower == "equ") {
         auto expr = parseExpression(nextToken(), true);
         if (!expr)
             error(tr("expected expression after 'equ'"));
@@ -123,6 +157,42 @@ void AssemblerParser::parseSectionDecl()
 
     expectEol(lastTokenId());
     return;
+}
+
+void AssemblerParser::parseDefByte()
+{
+    do {
+        auto token = (nextToken(), lastToken());
+        auto expr = parseExpression(token.id, true);
+        if (!expr)
+            error(mExpressionError);
+        mSection->emit<DEFB>(token, std::move(expr));
+    } while (lastTokenId() == T_COMMA);
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseDefWord()
+{
+    do {
+        auto token = (nextToken(), lastToken());
+        auto expr = parseExpression(token.id, true);
+        if (!expr)
+            error(mExpressionError);
+        mSection->emit<DEFW>(token, std::move(expr));
+    } while (lastTokenId() == T_COMMA);
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseDefDWord()
+{
+    do {
+        auto token = (nextToken(), lastToken());
+        auto expr = parseExpression(token.id, true);
+        if (!expr)
+            error(mExpressionError);
+        mSection->emit<DEFD>(token, std::move(expr));
+    } while (lastTokenId() == T_COMMA);
+    expectEol(lastTokenId());
 }
 
 bool AssemblerParser::parseOpcode(const std::string& str)
@@ -235,7 +305,7 @@ bool AssemblerParser::matchExpressionNegative(const Token& minusToken, std::uniq
     return true;
 }
 
-bool AssemblerParser::matchByte(unsigned char* out)
+bool AssemblerParser::matchByte(quint8* out)
 {
     std::unique_ptr<Expression> expr;
     if (!matchExpression(&expr))

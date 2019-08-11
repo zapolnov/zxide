@@ -24,9 +24,10 @@ public:
     unsigned baseAddress(const Token& token) const;
     unsigned nextAddress(const Token& token) const;
 
-    unsigned char evaluateByte(const std::unique_ptr<Expression>& expr);
-    unsigned char evaluateByteOffset(const std::unique_ptr<Expression>& expr);
-    unsigned short evaluateWord(const std::unique_ptr<Expression>& expr);
+    quint8 evaluateByte(const std::unique_ptr<Expression>& expr);
+    quint8 evaluateByteOffset(const std::unique_ptr<Expression>& expr);
+    quint16 evaluateWord(const std::unique_ptr<Expression>& expr);
+    quint32 evaluateDWord(const std::unique_ptr<Expression>& expr);
     Value evaluate(const std::unique_ptr<Expression>& expr);
 
 private:

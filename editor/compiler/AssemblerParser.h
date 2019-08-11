@@ -2,6 +2,7 @@
 #define COMPILER_ASSEMBLERPARSER_H
 
 #include <QObject>
+#include <unordered_map>
 #include <memory>
 
 struct Token;
@@ -40,9 +41,14 @@ private:
     ProgramSection* mSection;
     std::string mLastNonLocalLabel;
     QString mExpressionError;
+    static std::unordered_map<std::string, void(AssemblerParser::*)()> mDataDirectives;
+    static std::unordered_map<std::string, void(AssemblerParser::*)()> mDirectives;
 
     void parseLine();
     void parseSectionDecl();
+    void parseDefByte();
+    void parseDefWord();
+    void parseDefDWord();
     bool parseOpcode(const std::string& str);
     OpcodeParseResult parseOpcode_generated(const std::string& opcode); // in Z80Opcodes_parser.cpp
 
@@ -74,7 +80,7 @@ private:
     bool matchIdentifier(const char* ident);
     bool matchExpression(std::unique_ptr<Expression>* out);
     bool matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out);
-    bool matchByte(unsigned char* out);
+    bool matchByte(quint8* out);
 
     int nextToken() const;
     const Token& lastToken() const;

@@ -2,6 +2,7 @@
 #define COMPILER_PROGRAMOPCODE_H
 
 #include "AssemblerToken.h"
+#include <memory>
 #include <vector>
 
 #ifdef emit
@@ -13,6 +14,7 @@ class IErrorReporter;
 class ProgramBinary;
 class ProgramSection;
 class Program;
+class Expression;
 
 class ProgramOpcode
 {
@@ -35,6 +37,63 @@ private:
     qint32 mAddress;
 
     Q_DISABLE_COPY(ProgramOpcode)
+};
+
+class DEFB final : public ProgramOpcode
+{
+public:
+    DEFB(const Token& token, std::unique_ptr<Expression> value);
+    ~DEFB() override;
+
+    unsigned lengthInBytes() const final override { return 1; }
+    unsigned tstatesIfNotTaken() const final override { return 0; }
+    unsigned tstatesIfTaken() const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    Token mToken;
+    std::unique_ptr<Expression> mValue;
+
+    Q_DISABLE_COPY(DEFB)
+};
+
+class DEFW final : public ProgramOpcode
+{
+public:
+    DEFW(const Token& token, std::unique_ptr<Expression> value);
+    ~DEFW() override;
+
+    unsigned lengthInBytes() const final override { return 2; }
+    unsigned tstatesIfNotTaken() const final override { return 0; }
+    unsigned tstatesIfTaken() const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    Token mToken;
+    std::unique_ptr<Expression> mValue;
+
+    Q_DISABLE_COPY(DEFW)
+};
+
+class DEFD final : public ProgramOpcode
+{
+public:
+    DEFD(const Token& token, std::unique_ptr<Expression> value);
+    ~DEFD() override;
+
+    unsigned lengthInBytes() const final override { return 4; }
+    unsigned tstatesIfNotTaken() const final override { return 0; }
+    unsigned tstatesIfTaken() const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    Token mToken;
+    std::unique_ptr<Expression> mValue;
+
+    Q_DISABLE_COPY(DEFD)
 };
 
 #endif

@@ -48,7 +48,7 @@ unsigned ExprEvalContext::nextAddress(const Token& token) const
 }
 
 
-unsigned char ExprEvalContext::evaluateByte(const std::unique_ptr<Expression>& expr)
+quint8 ExprEvalContext::evaluateByte(const std::unique_ptr<Expression>& expr)
 {
     Value value = evaluate(expr);
 
@@ -63,12 +63,12 @@ unsigned char ExprEvalContext::evaluateByte(const std::unique_ptr<Expression>& e
     }
 
     if (value.number >= 0 || value.sign == Sign::Unsigned)
-        return (unsigned char)value.number;
+        return (quint8)value.number;
     else
-        return (unsigned char)(char)value.number;
+        return (quint8)(qint8)value.number;
 }
 
-unsigned char ExprEvalContext::evaluateByteOffset(const std::unique_ptr<Expression>& expr)
+quint8 ExprEvalContext::evaluateByteOffset(const std::unique_ptr<Expression>& expr)
 {
     Value value = evaluate(expr);
     if (value.bits != SignificantBits::All)
@@ -83,12 +83,12 @@ unsigned char ExprEvalContext::evaluateByteOffset(const std::unique_ptr<Expressi
     }
 
     if (offset >= 0 || value.sign == Sign::Unsigned)
-        return (unsigned char)offset;
+        return (quint8)offset;
     else
-        return (unsigned char)(char)offset;
+        return (quint8)(qint8)offset;
 }
 
-unsigned short ExprEvalContext::evaluateWord(const std::unique_ptr<Expression>& expr)
+quint16 ExprEvalContext::evaluateWord(const std::unique_ptr<Expression>& expr)
 {
     Value value = evaluate(expr);
 
@@ -103,9 +103,29 @@ unsigned short ExprEvalContext::evaluateWord(const std::unique_ptr<Expression>& 
     }
 
     if (value.number >= 0 || value.sign == Sign::Unsigned)
-        return (unsigned short)value.number;
+        return (quint16)value.number;
     else
-        return (unsigned short)(short)value.number;
+        return (quint16)(qint16)value.number;
+}
+
+quint32 ExprEvalContext::evaluateDWord(const std::unique_ptr<Expression>& expr)
+{
+    Value value = evaluate(expr);
+
+    if (value.bits == SignificantBits::NoMoreThan8 || value.bits == SignificantBits::NoMoreThan16)
+        value.truncateTo32Bit();
+    else if (value.number < -qint64(0x80000000) || value.number > 0xffffffff) {
+        auto token = expr->token();
+        mErrorReporter->error(token.file, token.line,
+            QCoreApplication::tr("value %1 (0x%2) does not fit into a dword")
+            .arg(value.number).arg(value.number, 0, 16));
+        throw EvalError();
+    }
+
+    if (value.number >= 0 || value.sign == Sign::Unsigned)
+        return (quint32)value.number;
+    else
+        return (quint32)(qint32)value.number;
 }
 
 Value ExprEvalContext::evaluate(const std::unique_ptr<Expression>& expr)

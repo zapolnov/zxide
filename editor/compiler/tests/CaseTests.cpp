@@ -14,6 +14,9 @@ TEST_CASE("case insensitivity in instructions and operands", "[case]")
         "adD hL, Sp\n"
         "sEt 0, (HL)\n"
         "ex Af, aF'\n"
+        "dB 0x01\n"
+        "Dw 0xc0de\n"
+        "DD 0xbadc0de\n"
         ;
 
     static const unsigned char binary[] = {
@@ -27,6 +30,13 @@ TEST_CASE("case insensitivity in instructions and operands", "[case]")
         0xcb,
         0xc6,
         0x08,
+        0x01,
+        0xde,
+        0xc0,
+        0xde,
+        0xc0,
+        0xad,
+        0x0b,
         };
 
     ErrorConsumer errorConsumer;
