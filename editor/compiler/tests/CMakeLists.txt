@@ -14,6 +14,7 @@ add_sources(CompilerTests
     ErrorConsumer.cpp
     ErrorConsumer.h
     ExpressionTests.cpp
+    LabelTests.cpp
     OpcodeTests.cpp
     TestUtil.cpp
     TestUtil.h
