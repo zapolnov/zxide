@@ -22,6 +22,7 @@ TEST_CASE("data byte definition", "[data]")
         "ld hl,@@5\n"
         "ld hl,label3\n"
         "ld hl,label4\n"
+        "db -1,-2,-3\n"
         ;
 
     static const unsigned char binary[] = {
@@ -55,6 +56,9 @@ TEST_CASE("data byte definition", "[data]")
         0x21,
         0x3d,
         0x12,
+        0xff,
+        0xfe,
+        0xfd,
         };
 
     ErrorConsumer errorConsumer;
@@ -112,6 +116,7 @@ TEST_CASE("data word definition", "[data]")
         "ld hl,@@5\n"
         "ld hl,label3\n"
         "ld hl,label4\n"
+        "dw -1,-2,-3\n"
         ;
 
     static const unsigned char binary[] = {
@@ -157,6 +162,12 @@ TEST_CASE("data word definition", "[data]")
         0x21,
         0x46,
         0x12,
+        0xff,
+        0xff,
+        0xfe,
+        0xff,
+        0xfd,
+        0xff,
         };
 
     ErrorConsumer errorConsumer;
@@ -214,6 +225,7 @@ TEST_CASE("data dword definition", "[data]")
         "ld hl,@@5\n"
         "ld hl,label3\n"
         "ld hl,label4\n"
+        "dd -1,-2,-3\n"
         ;
 
     static const unsigned char binary[] = {
@@ -283,6 +295,18 @@ TEST_CASE("data dword definition", "[data]")
         0x21,
         0x58,
         0x12,
+        0xff,
+        0xff,
+        0xff,
+        0xff,
+        0xfe,
+        0xff,
+        0xff,
+        0xff,
+        0xfd,
+        0xff,
+        0xff,
+        0xff,
         };
 
     ErrorConsumer errorConsumer;
@@ -319,4 +343,51 @@ TEST_CASE("data dword underflow", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "value -2147483649 (0xffffffff7fffffff) does not fit into a dword");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("'$' in data definition", "[data]")
+{
+    static const char source[] =
+        "section main [base 0x15]\n"
+        "db $\n"
+        "dw $\n"
+        "dd $\n"
+        "db $+1\n"
+        "dw $+2\n"
+        "dd $+3\n"
+        "db $-1\n"
+        "dw $-2\n"
+        "dd $-3\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x15,
+        0x16,
+        0x00,
+        0x18,
+        0x00,
+        0x00,
+        0x00,
+        0x1d,
+        0x1f,
+        0x00,
+        0x22,
+        0x00,
+        0x00,
+        0x00,
+        0x22,
+        0x22,
+        0x00,
+        0x23,
+        0x00,
+        0x00,
+        0x00,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
 }
