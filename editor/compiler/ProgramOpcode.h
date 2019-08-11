@@ -22,17 +22,20 @@ public:
 
     File* file() const { return mFile; }
     int line() const { return mLine; }
+    unsigned address() const { Q_ASSERT(mAddress >= 0); return unsigned(mAddress); }
 
     virtual unsigned lengthInBytes() const = 0;
     virtual unsigned tstatesIfNotTaken() const = 0;
     virtual unsigned tstatesIfTaken() const = 0;
 
     virtual void resolveAddress(const ProgramSection* section, quint32& address);
+    virtual bool resolveValues(const ProgramSection* section, IErrorReporter* reporter);
     virtual void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const = 0;
 
 private:
     File* mFile;
     int mLine;
+    qint32 mAddress;
 
     Q_DISABLE_COPY(ProgramOpcode)
 };

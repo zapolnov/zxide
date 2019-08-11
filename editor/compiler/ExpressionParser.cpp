@@ -2,8 +2,41 @@
 #include "AssemblerLexer.h"
 #include "AssemblerToken.h"
 #include "Expression.h"
+#include "Util.h"
+#include <unordered_set>
 
-std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, bool allowParen)
+static std::unordered_set<std::string> registerNames = {
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "h",
+        "l",
+        "i",
+        "r",
+        "bc",
+        "de",
+        "hl",
+        "sp",
+        "ix",
+        "iy",
+        "af",
+        "af'",
+    };
+
+static std::unordered_set<std::string> conditionNames = {
+        "c",
+        "nc",
+        "z",
+        "nz",
+        "m",
+        "p",
+        "pe",
+        "po",
+    };
+
+std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, bool unambiguous)
 {
     switch (tokenId) {
         case T_NUMBER: {
@@ -18,8 +51,33 @@ std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, 
             return expr;
         }
 
+        case T_IDENTIFIER: {
+            std::string lowerText = toLower(lastTokenText());
+            if (!unambiguous && registerNames.find(lowerText) != registerNames.end()) {
+                mExpressionError =
+                    tr("'%1' is ambiguous in this context (could be expression or register)").arg(lowerText.c_str());
+                return nullptr;
+            }
+            if (!unambiguous && conditionNames.find(lowerText) != conditionNames.end()) {
+                mExpressionError =
+                    tr("'%1' is ambiguous in this context (could be expression or condition)").arg(lowerText.c_str());
+                return nullptr;
+            }
+
+            std::unique_ptr<Expression> expr{new IdentifierExpression(lastToken())};
+            nextToken();
+            return expr;
+        }
+
+        case T_LOCAL_LABEL_NAME: {
+            std::string name = readLabelName(lastTokenId());
+            std::unique_ptr<Expression> expr{new IdentifierExpression(lastToken(), std::move(name))};
+            nextToken();
+            return expr;
+        }
+
         case T_LPAREN:
-            if (allowParen) {
+            if (unambiguous) {
                 auto expr = parseExpression(nextToken(), true);
                 if (!expr)
                     return nullptr;
@@ -42,7 +100,7 @@ std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, 
     }
 }
 
-std::unique_ptr<Expression> AssemblerParser::parseUnaryExpression(int tokenId, bool allowParen)
+std::unique_ptr<Expression> AssemblerParser::parseUnaryExpression(int tokenId, bool unambiguous)
 {
     switch (tokenId) {
         case T_MINUS: {
@@ -57,12 +115,12 @@ std::unique_ptr<Expression> AssemblerParser::parseUnaryExpression(int tokenId, b
             return parseAtomicExpression(nextToken(), true);
     }
 
-    return parseAtomicExpression(tokenId, allowParen);
+    return parseAtomicExpression(tokenId, unambiguous);
 }
 
-std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId, bool allowParen)
+std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId, bool unambiguous)
 {
-    auto expr = parseUnaryExpression(tokenId, allowParen);
+    auto expr = parseUnaryExpression(tokenId, unambiguous);
     if (!expr)
         return nullptr;
 
@@ -82,16 +140,16 @@ std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId
     return expr;
 }
 
-std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool allowParen)
+std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool unambiguous)
 {
-    return parseAdditionExpression(tokenId, allowParen);
+    return parseAdditionExpression(tokenId, unambiguous);
 }
 
-bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool allowParen)
+bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool unambiguous)
 {
     mLexer->save();
 
-    auto expr = parseExpression(tokenId, allowParen);
+    auto expr = parseExpression(tokenId, unambiguous);
     if (!expr) {
         mLexer->restore();
         return false;

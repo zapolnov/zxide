@@ -141,7 +141,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -182,7 +182,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -206,7 +206,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -417,7 +417,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -458,7 +458,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -482,7 +482,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -829,7 +829,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -870,7 +870,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -894,7 +894,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1054,7 +1054,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1078,7 +1078,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1102,7 +1102,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1126,7 +1126,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1150,7 +1150,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1174,7 +1174,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1198,7 +1198,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1222,7 +1222,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1246,7 +1246,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1270,7 +1270,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1294,7 +1294,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1318,7 +1318,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1342,7 +1342,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1366,7 +1366,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1390,7 +1390,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -1414,7 +1414,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2390,7 +2390,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2414,7 +2414,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2438,7 +2438,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2462,7 +2462,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2486,7 +2486,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2510,7 +2510,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2534,7 +2534,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2558,7 +2558,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2582,7 +2582,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2742,7 +2742,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2783,7 +2783,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -2807,7 +2807,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3069,7 +3069,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3093,7 +3093,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3236,7 +3236,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3447,7 +3447,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3726,7 +3726,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3750,7 +3750,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3944,7 +3944,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3968,7 +3968,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -3992,7 +3992,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4016,7 +4016,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4040,7 +4040,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4064,7 +4064,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4088,7 +4088,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4112,7 +4112,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4136,7 +4136,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4211,7 +4211,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4235,7 +4235,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4259,7 +4259,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4283,7 +4283,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4307,7 +4307,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4382,7 +4382,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4457,7 +4457,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4483,7 +4483,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4510,7 +4510,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4535,7 +4535,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4559,7 +4559,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4583,7 +4583,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4607,7 +4607,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4631,7 +4631,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4655,7 +4655,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4679,7 +4679,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4703,7 +4703,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4727,7 +4727,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4751,7 +4751,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4775,7 +4775,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4799,7 +4799,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4823,7 +4823,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4847,7 +4847,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -4871,7 +4871,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5014,7 +5014,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5038,7 +5038,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5062,7 +5062,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5086,7 +5086,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5110,7 +5110,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5134,7 +5134,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5158,7 +5158,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5182,7 +5182,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5206,7 +5206,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5230,7 +5230,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5254,7 +5254,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5278,7 +5278,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5302,7 +5302,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5326,7 +5326,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5367,7 +5367,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5391,7 +5391,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5415,7 +5415,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5439,7 +5439,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5599,7 +5599,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5623,7 +5623,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5647,7 +5647,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5671,7 +5671,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5695,7 +5695,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5719,7 +5719,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5743,7 +5743,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5767,7 +5767,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5791,7 +5791,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5815,7 +5815,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5839,7 +5839,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5863,7 +5863,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5887,7 +5887,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5911,7 +5911,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5935,7 +5935,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5959,7 +5959,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -5983,7 +5983,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -6007,7 +6007,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -6031,7 +6031,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -6055,7 +6055,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -6079,7 +6079,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -7208,7 +7208,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -7249,7 +7249,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -7273,7 +7273,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -7331,7 +7331,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8800,7 +8800,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8824,7 +8824,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8848,7 +8848,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8872,7 +8872,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8896,7 +8896,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8920,7 +8920,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8944,7 +8944,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8968,7 +8968,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -8992,7 +8992,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9016,7 +9016,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9040,7 +9040,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9064,7 +9064,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9088,7 +9088,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9112,7 +9112,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9136,7 +9136,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9160,7 +9160,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9507,7 +9507,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9531,7 +9531,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9708,7 +9708,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9732,7 +9732,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9926,7 +9926,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -9950,7 +9950,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -10127,7 +10127,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -10151,7 +10151,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -10464,7 +10464,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -10505,7 +10505,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -10529,7 +10529,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11726,7 +11726,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11750,7 +11750,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11774,7 +11774,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11798,7 +11798,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11822,7 +11822,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11846,7 +11846,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11870,7 +11870,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11894,7 +11894,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11918,7 +11918,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11942,7 +11942,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11966,7 +11966,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -11990,7 +11990,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12014,7 +12014,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12038,7 +12038,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12062,7 +12062,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12086,7 +12086,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12246,7 +12246,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12270,7 +12270,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12430,7 +12430,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12454,7 +12454,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12614,7 +12614,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12638,7 +12638,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12781,7 +12781,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12822,7 +12822,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12846,7 +12846,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -12989,7 +12989,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -13030,7 +13030,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;
@@ -13054,7 +13054,7 @@ public:
 
     void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) final override;
+    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;
 
 private:
     std::unique_ptr<Expression> mLiteral1;

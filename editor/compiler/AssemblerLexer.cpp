@@ -249,11 +249,13 @@ int AssemblerLexer::readToken()
                     std::stringstream ss;
                     while (isIdent(*mSource))
                         ss << *mSource++;
-                    if (*mSource != ':')
-                        error(mLine, tr("missing ':' after label name."));
-                    ++mSource;
+                    if (*mSource == ':') {
+                        ++mSource;
+                        mToken.text = ss.str();
+                        return T_LOCAL_LABEL;
+                    }
                     mToken.text = ss.str();
-                    return T_LOCAL_LABEL;
+                    return T_LOCAL_LABEL_NAME;
                 }
                 return T_AT;
             }

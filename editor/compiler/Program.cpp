@@ -26,6 +26,12 @@ ProgramLabel* Program::addLabel(const Token& token, ProgramSection* section, con
     return label;
 }
 
+ProgramLabel* Program::findLabel(const std::string& name) const
+{
+    auto it = mLabels.find(name);
+    return (it != mLabels.end() ? it->second : nullptr);
+}
+
 ProgramSection* Program::getOrCreateSection(const std::string& name)
 {
     auto it = mSections.find(name);

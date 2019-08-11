@@ -32,7 +32,7 @@ void AssemblerParser::parseLine()
 
     // read label, if any
     if (lastTokenId() == T_LABEL || lastTokenId() == T_LOCAL_LABEL) {
-        std::string name = readLabelName();
+        std::string name = readLabelName(lastTokenId());
         label = mProgram->addLabel(lastToken(), mSection, name);
         if (!label)
             error(tr("duplicate label '%1'").arg(name.c_str()));
@@ -105,18 +105,19 @@ void AssemblerParser::parseOpcode()
         error(tr("syntax error"));
 }
 
-std::string AssemblerParser::readLabelName()
+std::string AssemblerParser::readLabelName(int tokenId)
 {
-    switch (lastTokenId()) {
+    switch (tokenId) {
         case T_LABEL: {
             const auto& name = lastTokenText();
             mLastNonLocalLabel = name;
             return name;
         }
 
-        case T_LOCAL_LABEL: {
+        case T_LOCAL_LABEL:
+        case T_LOCAL_LABEL_NAME: {
             if (mLastNonLocalLabel.empty())
-                error(tr("local label without previous global one"));
+                error(tr("found local label name without previous global label"));
             std::stringstream ss;
             ss << mLastNonLocalLabel;
             ss << "@@";

@@ -34,12 +34,20 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
 
         auto binary = std::make_unique<ProgramBinary>(sections[0]->base());
 
+        // Resolve addresses of labels
         quint32 addr = binary->baseAddress();
         for (ProgramSection* section : sections) {
             if (!section->resolveAddresses(mReporter, addr))
                 throw LinkerError();
         }
 
+        // Resolve values in expressions (as a separate pass as they may depend on label addresses)
+        for (ProgramSection* section : sections) {
+            if (!section->resolveValues(mReporter))
+                throw LinkerError();
+        }
+
+        // Emit code
         for (ProgramSection* section : sections)
             section->emitCode(mReporter, binary.get());
 

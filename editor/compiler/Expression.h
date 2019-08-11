@@ -2,6 +2,7 @@
 #define COMPILER_EXPRESSION_H
 
 #include "AssemblerToken.h"
+#include <string>
 #include <memory>
 
 class IErrorReporter;
@@ -19,7 +20,7 @@ public:
 
     const Token& token() const { return mToken; }
 
-    virtual void resolveAddresses(const ProgramSection* section, unsigned endAddress);
+    virtual bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter);
 
     unsigned char evaluateByte(IErrorReporter* reporter) const;
     unsigned char evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const;
@@ -55,7 +56,7 @@ public:
     explicit DollarExpression(const Token& token);
     ~DollarExpression() override;
 
-    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -65,13 +66,31 @@ private:
     Q_DISABLE_COPY(DollarExpression)
 };
 
+class IdentifierExpression : public Expression
+{
+public:
+    explicit IdentifierExpression(const Token& token);
+    IdentifierExpression(const Token& token, std::string name);
+    ~IdentifierExpression() override;
+
+    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    qint64 evaluate(IErrorReporter* reporter) const override;
+
+private:
+    std::string mName;
+    qint64 mValue;
+    bool mHasValue;
+
+    Q_DISABLE_COPY(IdentifierExpression)
+};
+
 class NegateExpression : public Expression
 {
 public:
     NegateExpression(const Token& token, std::unique_ptr<Expression> operand);
     ~NegateExpression() override;
 
-    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -86,7 +105,7 @@ public:
     AddExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~AddExpression() override;
 
-    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -102,7 +121,7 @@ public:
     SubtractExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~SubtractExpression() override;
 
-    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:

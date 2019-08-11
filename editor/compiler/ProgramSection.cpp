@@ -43,6 +43,15 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
     return true;
 }
 
+bool ProgramSection::resolveValues(IErrorReporter* reporter) const
+{
+    for (auto& opcode : mOpcodes) {
+        if (!opcode->resolveValues(this, reporter))
+            return false;
+    }
+    return true;
+}
+
 void ProgramSection::emitCode(IErrorReporter* reporter, ProgramBinary* binary) const
 {
     if (mHasBase) {

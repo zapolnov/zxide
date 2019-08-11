@@ -1,5 +1,8 @@
 #include "Expression.h"
 #include "IErrorReporter.h"
+#include "Program.h"
+#include "ProgramSection.h"
+#include "ProgramLabel.h"
 #include <QCoreApplication>
 
 Expression::Expression(const Token& token)
@@ -11,8 +14,9 @@ Expression::~Expression()
 {
 }
 
-void Expression::resolveAddresses(const ProgramSection*, unsigned)
+bool Expression::resolveValues(const ProgramSection*, unsigned, IErrorReporter*)
 {
+    return true;
 }
 
 unsigned char Expression::evaluateByte(IErrorReporter* reporter) const
@@ -90,11 +94,12 @@ DollarExpression::~DollarExpression()
 {
 }
 
-void DollarExpression::resolveAddresses(const ProgramSection*, unsigned endAddress)
+bool DollarExpression::resolveValues(const ProgramSection*, unsigned endAddress, IErrorReporter*)
 {
     Q_ASSERT(!mHasValue);
     mHasValue = true;
     mAddress = endAddress;
+    return true;
 }
 
 qint64 DollarExpression::evaluate(IErrorReporter* reporter) const
@@ -103,6 +108,52 @@ qint64 DollarExpression::evaluate(IErrorReporter* reporter) const
         error(reporter, QCoreApplication::tr("'$' is not allowed in this context"));
 
     return mAddress;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+IdentifierExpression::IdentifierExpression(const Token& token)
+    : Expression(token)
+    , mName(token.text)
+    , mValue(0)
+    , mHasValue(false)
+{
+}
+
+IdentifierExpression::IdentifierExpression(const Token& token, std::string name)
+    : Expression(token)
+    , mName(std::move(name))
+    , mValue(0)
+    , mHasValue(false)
+{
+}
+
+IdentifierExpression::~IdentifierExpression()
+{
+}
+
+bool IdentifierExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
+{
+    Q_ASSERT(!mHasValue);
+
+    auto label = section->program()->findLabel(mName);
+    if (label != nullptr) {
+        Q_ASSERT(label->hasAddress());
+        mValue = label->address();
+        mHasValue = true;
+        return true;
+    }
+
+    error(reporter, QCoreApplication::tr("use of undeclared identifier '%1'").arg(mName.c_str()));
+    return false;
+}
+
+qint64 IdentifierExpression::evaluate(IErrorReporter* reporter) const
+{
+    if (!mHasValue)
+        error(reporter, QCoreApplication::tr("'%1' is not allowed in this context").arg(mName.c_str()));
+
+    return mValue;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,9 +168,9 @@ NegateExpression::~NegateExpression()
 {
 }
 
-void NegateExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+bool NegateExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
 {
-    mOperand->resolveAddresses(section, endAddress);
+    return mOperand->resolveValues(section, endAddress, reporter);
 }
 
 qint64 NegateExpression::evaluate(IErrorReporter* reporter) const
@@ -140,10 +191,10 @@ AddExpression::~AddExpression()
 {
 }
 
-void AddExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+bool AddExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
 {
-    mOperand1->resolveAddresses(section, endAddress);
-    mOperand2->resolveAddresses(section, endAddress);
+    return mOperand1->resolveValues(section, endAddress, reporter)
+        && mOperand2->resolveValues(section, endAddress, reporter);
 }
 
 qint64 AddExpression::evaluate(IErrorReporter* reporter) const
@@ -164,10 +215,10 @@ SubtractExpression::~SubtractExpression()
 {
 }
 
-void SubtractExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+bool SubtractExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
 {
-    mOperand1->resolveAddresses(section, endAddress);
-    mOperand2->resolveAddresses(section, endAddress);
+    return mOperand1->resolveValues(section, endAddress, reporter)
+        && mOperand2->resolveValues(section, endAddress, reporter);
 }
 
 qint64 SubtractExpression::evaluate(IErrorReporter* reporter) const

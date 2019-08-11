@@ -15,6 +15,7 @@ enum TokenID
     T_STRING,
     T_LABEL,
     T_LOCAL_LABEL,
+    T_LOCAL_LABEL_NAME,
     T_AT,
     T_COMMA,
     T_QUESTION,
