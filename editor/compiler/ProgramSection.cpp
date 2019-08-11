@@ -42,7 +42,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
     return true;
 }
 
-void ProgramSection::emitCode(ProgramBinary* binary) const
+void ProgramSection::emitCode(IErrorReporter* reporter, ProgramBinary* binary) const
 {
     if (mHasBase) {
         while (binary->endAddress() < mBase)
@@ -55,7 +55,7 @@ void ProgramSection::emitCode(ProgramBinary* binary) const
 
     for (auto& opcode : mOpcodes) {
         unsigned old = binary->endAddress();
-        opcode->emitBinary(binary);
+        opcode->emitBinary(reporter, binary);
         Q_ASSERT(binary->endAddress() == old + opcode->lengthInBytes());
     }
 }

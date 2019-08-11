@@ -3,6 +3,8 @@
 #define COMPILER_Z80OPCODES_H
 
 #include "ProgramOpcode.h"
+#include "Expression.h"
+#include <memory>
 
 class ADC_A_A : public ProgramOpcode
 {
@@ -16,7 +18,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_A)
 };
@@ -33,7 +35,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_B)
 };
@@ -50,7 +52,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_C)
 };
@@ -67,7 +69,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_D)
 };
@@ -84,7 +86,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_E)
 };
@@ -101,7 +103,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_H)
 };
@@ -118,7 +120,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_L)
 };
@@ -126,9 +128,9 @@ public:
 class ADC_A_n : public ProgramOpcode
 {
 public:
-    ADC_A_n(const Token& token, unsigned literal1)
+    ADC_A_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -136,10 +138,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADC_A_n)
 };
@@ -156,7 +158,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_A_mHL)
 };
@@ -164,9 +166,9 @@ public:
 class ADC_A_mIXn : public ProgramOpcode
 {
 public:
-    ADC_A_mIXn(const Token& token, unsigned literal1)
+    ADC_A_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -174,10 +176,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADC_A_mIXn)
 };
@@ -185,9 +187,9 @@ private:
 class ADC_A_mIYn : public ProgramOpcode
 {
 public:
-    ADC_A_mIYn(const Token& token, unsigned literal1)
+    ADC_A_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -195,10 +197,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADC_A_mIYn)
 };
@@ -215,7 +217,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_HL_BC)
 };
@@ -232,7 +234,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_HL_DE)
 };
@@ -249,7 +251,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_HL_HL)
 };
@@ -266,7 +268,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADC_HL_SP)
 };
@@ -283,7 +285,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_A)
 };
@@ -300,7 +302,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_B)
 };
@@ -317,7 +319,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_C)
 };
@@ -334,7 +336,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_D)
 };
@@ -351,7 +353,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_E)
 };
@@ -368,7 +370,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_H)
 };
@@ -385,7 +387,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_L)
 };
@@ -393,9 +395,9 @@ public:
 class ADD_A_n : public ProgramOpcode
 {
 public:
-    ADD_A_n(const Token& token, unsigned literal1)
+    ADD_A_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -403,10 +405,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADD_A_n)
 };
@@ -423,7 +425,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_A_mHL)
 };
@@ -431,9 +433,9 @@ public:
 class ADD_A_mIXn : public ProgramOpcode
 {
 public:
-    ADD_A_mIXn(const Token& token, unsigned literal1)
+    ADD_A_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -441,10 +443,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADD_A_mIXn)
 };
@@ -452,9 +454,9 @@ private:
 class ADD_A_mIYn : public ProgramOpcode
 {
 public:
-    ADD_A_mIYn(const Token& token, unsigned literal1)
+    ADD_A_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -462,10 +464,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(ADD_A_mIYn)
 };
@@ -482,7 +484,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_HL_BC)
 };
@@ -499,7 +501,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_HL_DE)
 };
@@ -516,7 +518,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_HL_HL)
 };
@@ -533,7 +535,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_HL_SP)
 };
@@ -550,7 +552,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IX_BC)
 };
@@ -567,7 +569,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IX_DE)
 };
@@ -584,7 +586,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IX_IX)
 };
@@ -601,7 +603,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IX_SP)
 };
@@ -618,7 +620,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IY_BC)
 };
@@ -635,7 +637,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IY_DE)
 };
@@ -652,7 +654,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IY_IY)
 };
@@ -669,7 +671,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(ADD_IY_SP)
 };
@@ -686,7 +688,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_A)
 };
@@ -703,7 +705,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_B)
 };
@@ -720,7 +722,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_C)
 };
@@ -737,7 +739,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_D)
 };
@@ -754,7 +756,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_E)
 };
@@ -771,7 +773,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_H)
 };
@@ -788,7 +790,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_L)
 };
@@ -796,9 +798,9 @@ public:
 class AND_n : public ProgramOpcode
 {
 public:
-    AND_n(const Token& token, unsigned literal1)
+    AND_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -806,10 +808,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(AND_n)
 };
@@ -826,7 +828,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(AND_mHL)
 };
@@ -834,9 +836,9 @@ public:
 class AND_mIXn : public ProgramOpcode
 {
 public:
-    AND_mIXn(const Token& token, unsigned literal1)
+    AND_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -844,10 +846,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(AND_mIXn)
 };
@@ -855,9 +857,9 @@ private:
 class AND_mIYn : public ProgramOpcode
 {
 public:
-    AND_mIYn(const Token& token, unsigned literal1)
+    AND_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -865,10 +867,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(AND_mIYn)
 };
@@ -885,7 +887,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_mHL)
 };
@@ -902,7 +904,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_mHL)
 };
@@ -919,7 +921,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_mHL)
 };
@@ -936,7 +938,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_mHL)
 };
@@ -953,7 +955,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_mHL)
 };
@@ -970,7 +972,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_mHL)
 };
@@ -987,7 +989,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_mHL)
 };
@@ -1004,7 +1006,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_mHL)
 };
@@ -1012,9 +1014,9 @@ public:
 class BIT_0_mIXn : public ProgramOpcode
 {
 public:
-    BIT_0_mIXn(const Token& token, unsigned literal1)
+    BIT_0_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1022,10 +1024,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_0_mIXn)
 };
@@ -1033,9 +1035,9 @@ private:
 class BIT_1_mIXn : public ProgramOpcode
 {
 public:
-    BIT_1_mIXn(const Token& token, unsigned literal1)
+    BIT_1_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1043,10 +1045,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_1_mIXn)
 };
@@ -1054,9 +1056,9 @@ private:
 class BIT_2_mIXn : public ProgramOpcode
 {
 public:
-    BIT_2_mIXn(const Token& token, unsigned literal1)
+    BIT_2_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1064,10 +1066,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_2_mIXn)
 };
@@ -1075,9 +1077,9 @@ private:
 class BIT_3_mIXn : public ProgramOpcode
 {
 public:
-    BIT_3_mIXn(const Token& token, unsigned literal1)
+    BIT_3_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1085,10 +1087,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_3_mIXn)
 };
@@ -1096,9 +1098,9 @@ private:
 class BIT_4_mIXn : public ProgramOpcode
 {
 public:
-    BIT_4_mIXn(const Token& token, unsigned literal1)
+    BIT_4_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1106,10 +1108,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_4_mIXn)
 };
@@ -1117,9 +1119,9 @@ private:
 class BIT_5_mIXn : public ProgramOpcode
 {
 public:
-    BIT_5_mIXn(const Token& token, unsigned literal1)
+    BIT_5_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1127,10 +1129,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_5_mIXn)
 };
@@ -1138,9 +1140,9 @@ private:
 class BIT_6_mIXn : public ProgramOpcode
 {
 public:
-    BIT_6_mIXn(const Token& token, unsigned literal1)
+    BIT_6_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1148,10 +1150,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_6_mIXn)
 };
@@ -1159,9 +1161,9 @@ private:
 class BIT_7_mIXn : public ProgramOpcode
 {
 public:
-    BIT_7_mIXn(const Token& token, unsigned literal1)
+    BIT_7_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1169,10 +1171,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_7_mIXn)
 };
@@ -1180,9 +1182,9 @@ private:
 class BIT_0_mIYn : public ProgramOpcode
 {
 public:
-    BIT_0_mIYn(const Token& token, unsigned literal1)
+    BIT_0_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1190,10 +1192,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_0_mIYn)
 };
@@ -1201,9 +1203,9 @@ private:
 class BIT_1_mIYn : public ProgramOpcode
 {
 public:
-    BIT_1_mIYn(const Token& token, unsigned literal1)
+    BIT_1_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1211,10 +1213,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_1_mIYn)
 };
@@ -1222,9 +1224,9 @@ private:
 class BIT_2_mIYn : public ProgramOpcode
 {
 public:
-    BIT_2_mIYn(const Token& token, unsigned literal1)
+    BIT_2_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1232,10 +1234,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_2_mIYn)
 };
@@ -1243,9 +1245,9 @@ private:
 class BIT_3_mIYn : public ProgramOpcode
 {
 public:
-    BIT_3_mIYn(const Token& token, unsigned literal1)
+    BIT_3_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1253,10 +1255,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_3_mIYn)
 };
@@ -1264,9 +1266,9 @@ private:
 class BIT_4_mIYn : public ProgramOpcode
 {
 public:
-    BIT_4_mIYn(const Token& token, unsigned literal1)
+    BIT_4_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1274,10 +1276,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_4_mIYn)
 };
@@ -1285,9 +1287,9 @@ private:
 class BIT_5_mIYn : public ProgramOpcode
 {
 public:
-    BIT_5_mIYn(const Token& token, unsigned literal1)
+    BIT_5_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1295,10 +1297,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_5_mIYn)
 };
@@ -1306,9 +1308,9 @@ private:
 class BIT_6_mIYn : public ProgramOpcode
 {
 public:
-    BIT_6_mIYn(const Token& token, unsigned literal1)
+    BIT_6_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1316,10 +1318,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_6_mIYn)
 };
@@ -1327,9 +1329,9 @@ private:
 class BIT_7_mIYn : public ProgramOpcode
 {
 public:
-    BIT_7_mIYn(const Token& token, unsigned literal1)
+    BIT_7_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -1337,10 +1339,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(BIT_7_mIYn)
 };
@@ -1357,7 +1359,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_A)
 };
@@ -1374,7 +1376,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_B)
 };
@@ -1391,7 +1393,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_C)
 };
@@ -1408,7 +1410,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_D)
 };
@@ -1425,7 +1427,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_E)
 };
@@ -1442,7 +1444,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_H)
 };
@@ -1459,7 +1461,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_0_L)
 };
@@ -1476,7 +1478,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_A)
 };
@@ -1493,7 +1495,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_B)
 };
@@ -1510,7 +1512,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_C)
 };
@@ -1527,7 +1529,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_D)
 };
@@ -1544,7 +1546,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_E)
 };
@@ -1561,7 +1563,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_H)
 };
@@ -1578,7 +1580,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_1_L)
 };
@@ -1595,7 +1597,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_A)
 };
@@ -1612,7 +1614,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_B)
 };
@@ -1629,7 +1631,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_C)
 };
@@ -1646,7 +1648,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_D)
 };
@@ -1663,7 +1665,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_E)
 };
@@ -1680,7 +1682,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_H)
 };
@@ -1697,7 +1699,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_2_L)
 };
@@ -1714,7 +1716,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_A)
 };
@@ -1731,7 +1733,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_B)
 };
@@ -1748,7 +1750,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_C)
 };
@@ -1765,7 +1767,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_D)
 };
@@ -1782,7 +1784,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_E)
 };
@@ -1799,7 +1801,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_H)
 };
@@ -1816,7 +1818,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_3_L)
 };
@@ -1833,7 +1835,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_A)
 };
@@ -1850,7 +1852,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_B)
 };
@@ -1867,7 +1869,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_C)
 };
@@ -1884,7 +1886,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_D)
 };
@@ -1901,7 +1903,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_E)
 };
@@ -1918,7 +1920,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_H)
 };
@@ -1935,7 +1937,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_4_L)
 };
@@ -1952,7 +1954,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_A)
 };
@@ -1969,7 +1971,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_B)
 };
@@ -1986,7 +1988,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_C)
 };
@@ -2003,7 +2005,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_D)
 };
@@ -2020,7 +2022,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_E)
 };
@@ -2037,7 +2039,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_H)
 };
@@ -2054,7 +2056,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_5_L)
 };
@@ -2071,7 +2073,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_A)
 };
@@ -2088,7 +2090,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_B)
 };
@@ -2105,7 +2107,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_C)
 };
@@ -2122,7 +2124,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_D)
 };
@@ -2139,7 +2141,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_E)
 };
@@ -2156,7 +2158,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_H)
 };
@@ -2173,7 +2175,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_6_L)
 };
@@ -2190,7 +2192,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_A)
 };
@@ -2207,7 +2209,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_B)
 };
@@ -2224,7 +2226,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_C)
 };
@@ -2241,7 +2243,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_D)
 };
@@ -2258,7 +2260,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_E)
 };
@@ -2275,7 +2277,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_H)
 };
@@ -2292,7 +2294,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(BIT_7_L)
 };
@@ -2300,9 +2302,9 @@ public:
 class CALL_nn : public ProgramOpcode
 {
 public:
-    CALL_nn(const Token& token, unsigned literal1)
+    CALL_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2310,10 +2312,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 17; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_nn)
 };
@@ -2321,9 +2323,9 @@ private:
 class CALL_C_nn : public ProgramOpcode
 {
 public:
-    CALL_C_nn(const Token& token, unsigned literal1)
+    CALL_C_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2331,10 +2333,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_C_nn)
 };
@@ -2342,9 +2344,9 @@ private:
 class CALL_M_nn : public ProgramOpcode
 {
 public:
-    CALL_M_nn(const Token& token, unsigned literal1)
+    CALL_M_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2352,10 +2354,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_M_nn)
 };
@@ -2363,9 +2365,9 @@ private:
 class CALL_NC_nn : public ProgramOpcode
 {
 public:
-    CALL_NC_nn(const Token& token, unsigned literal1)
+    CALL_NC_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2373,10 +2375,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_NC_nn)
 };
@@ -2384,9 +2386,9 @@ private:
 class CALL_NZ_nn : public ProgramOpcode
 {
 public:
-    CALL_NZ_nn(const Token& token, unsigned literal1)
+    CALL_NZ_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2394,10 +2396,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_NZ_nn)
 };
@@ -2405,9 +2407,9 @@ private:
 class CALL_P_nn : public ProgramOpcode
 {
 public:
-    CALL_P_nn(const Token& token, unsigned literal1)
+    CALL_P_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2415,10 +2417,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_P_nn)
 };
@@ -2426,9 +2428,9 @@ private:
 class CALL_PE_nn : public ProgramOpcode
 {
 public:
-    CALL_PE_nn(const Token& token, unsigned literal1)
+    CALL_PE_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2436,10 +2438,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_PE_nn)
 };
@@ -2447,9 +2449,9 @@ private:
 class CALL_PO_nn : public ProgramOpcode
 {
 public:
-    CALL_PO_nn(const Token& token, unsigned literal1)
+    CALL_PO_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2457,10 +2459,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_PO_nn)
 };
@@ -2468,9 +2470,9 @@ private:
 class CALL_Z_nn : public ProgramOpcode
 {
 public:
-    CALL_Z_nn(const Token& token, unsigned literal1)
+    CALL_Z_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2478,10 +2480,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 17; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CALL_Z_nn)
 };
@@ -2498,7 +2500,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CCF)
 };
@@ -2515,7 +2517,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_A)
 };
@@ -2532,7 +2534,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_B)
 };
@@ -2549,7 +2551,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_C)
 };
@@ -2566,7 +2568,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_D)
 };
@@ -2583,7 +2585,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_E)
 };
@@ -2600,7 +2602,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_H)
 };
@@ -2617,7 +2619,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_L)
 };
@@ -2625,9 +2627,9 @@ public:
 class CP_n : public ProgramOpcode
 {
 public:
-    CP_n(const Token& token, unsigned literal1)
+    CP_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2635,10 +2637,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CP_n)
 };
@@ -2655,7 +2657,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CP_mHL)
 };
@@ -2663,9 +2665,9 @@ public:
 class CP_mIXn : public ProgramOpcode
 {
 public:
-    CP_mIXn(const Token& token, unsigned literal1)
+    CP_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2673,10 +2675,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CP_mIXn)
 };
@@ -2684,9 +2686,9 @@ private:
 class CP_mIYn : public ProgramOpcode
 {
 public:
-    CP_mIYn(const Token& token, unsigned literal1)
+    CP_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2694,10 +2696,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(CP_mIYn)
 };
@@ -2714,7 +2716,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CPD)
 };
@@ -2731,7 +2733,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CPDR)
 };
@@ -2748,7 +2750,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CPI)
 };
@@ -2765,7 +2767,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CPIR)
 };
@@ -2782,7 +2784,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(CPL)
 };
@@ -2799,7 +2801,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DAA)
 };
@@ -2816,7 +2818,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_A)
 };
@@ -2833,7 +2835,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_B)
 };
@@ -2850,7 +2852,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_C)
 };
@@ -2867,7 +2869,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_D)
 };
@@ -2884,7 +2886,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_E)
 };
@@ -2901,7 +2903,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_H)
 };
@@ -2918,7 +2920,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_L)
 };
@@ -2935,7 +2937,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_mHL)
 };
@@ -2943,9 +2945,9 @@ public:
 class DEC_mIXn : public ProgramOpcode
 {
 public:
-    DEC_mIXn(const Token& token, unsigned literal1)
+    DEC_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2953,10 +2955,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(DEC_mIXn)
 };
@@ -2964,9 +2966,9 @@ private:
 class DEC_mIYn : public ProgramOpcode
 {
 public:
-    DEC_mIYn(const Token& token, unsigned literal1)
+    DEC_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -2974,10 +2976,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(DEC_mIYn)
 };
@@ -2994,7 +2996,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_IX)
 };
@@ -3011,7 +3013,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_IY)
 };
@@ -3028,7 +3030,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_BC)
 };
@@ -3045,7 +3047,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_DE)
 };
@@ -3062,7 +3064,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_HL)
 };
@@ -3079,7 +3081,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DEC_SP)
 };
@@ -3096,7 +3098,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(DI)
 };
@@ -3104,9 +3106,9 @@ public:
 class DJNZ_n : public ProgramOpcode
 {
 public:
-    DJNZ_n(const Token& token, unsigned literal1)
+    DJNZ_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3114,10 +3116,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 13; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(DJNZ_n)
 };
@@ -3134,7 +3136,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EI)
 };
@@ -3151,7 +3153,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EX_mSP_HL)
 };
@@ -3168,7 +3170,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EX_mSP_IX)
 };
@@ -3185,7 +3187,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EX_mSP_IY)
 };
@@ -3202,7 +3204,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EX_AF_AFs)
 };
@@ -3219,7 +3221,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EX_DE_HL)
 };
@@ -3236,7 +3238,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(EXX)
 };
@@ -3253,7 +3255,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(HALT)
 };
@@ -3270,7 +3272,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IM_0)
 };
@@ -3287,7 +3289,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IM_1)
 };
@@ -3304,7 +3306,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IM_2)
 };
@@ -3312,9 +3314,9 @@ public:
 class IN_A_mn : public ProgramOpcode
 {
 public:
-    IN_A_mn(const Token& token, unsigned literal1)
+    IN_A_mn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3322,10 +3324,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(IN_A_mn)
 };
@@ -3342,7 +3344,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_A_mC)
 };
@@ -3359,7 +3361,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_B_mC)
 };
@@ -3376,7 +3378,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_C_mC)
 };
@@ -3393,7 +3395,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_D_mC)
 };
@@ -3410,7 +3412,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_E_mC)
 };
@@ -3427,7 +3429,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_H_mC)
 };
@@ -3444,7 +3446,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IN_L_mC)
 };
@@ -3461,7 +3463,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_A)
 };
@@ -3478,7 +3480,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_B)
 };
@@ -3495,7 +3497,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_C)
 };
@@ -3512,7 +3514,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_D)
 };
@@ -3529,7 +3531,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_E)
 };
@@ -3546,7 +3548,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_H)
 };
@@ -3563,7 +3565,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_L)
 };
@@ -3580,7 +3582,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_mHL)
 };
@@ -3588,9 +3590,9 @@ public:
 class INC_mIXn : public ProgramOpcode
 {
 public:
-    INC_mIXn(const Token& token, unsigned literal1)
+    INC_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3598,10 +3600,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(INC_mIXn)
 };
@@ -3609,9 +3611,9 @@ private:
 class INC_mIYn : public ProgramOpcode
 {
 public:
-    INC_mIYn(const Token& token, unsigned literal1)
+    INC_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3619,10 +3621,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(INC_mIYn)
 };
@@ -3639,7 +3641,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_IX)
 };
@@ -3656,7 +3658,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_IY)
 };
@@ -3673,7 +3675,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_BC)
 };
@@ -3690,7 +3692,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_DE)
 };
@@ -3707,7 +3709,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_HL)
 };
@@ -3724,7 +3726,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INC_SP)
 };
@@ -3741,7 +3743,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(IND)
 };
@@ -3758,7 +3760,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INDR)
 };
@@ -3775,7 +3777,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INI)
 };
@@ -3792,7 +3794,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(INIR)
 };
@@ -3800,9 +3802,9 @@ public:
 class JP_nn : public ProgramOpcode
 {
 public:
-    JP_nn(const Token& token, unsigned literal1)
+    JP_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3810,10 +3812,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_nn)
 };
@@ -3821,9 +3823,9 @@ private:
 class JP_C_nn : public ProgramOpcode
 {
 public:
-    JP_C_nn(const Token& token, unsigned literal1)
+    JP_C_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3831,10 +3833,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_C_nn)
 };
@@ -3842,9 +3844,9 @@ private:
 class JP_M_nn : public ProgramOpcode
 {
 public:
-    JP_M_nn(const Token& token, unsigned literal1)
+    JP_M_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3852,10 +3854,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_M_nn)
 };
@@ -3863,9 +3865,9 @@ private:
 class JP_NC_nn : public ProgramOpcode
 {
 public:
-    JP_NC_nn(const Token& token, unsigned literal1)
+    JP_NC_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3873,10 +3875,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_NC_nn)
 };
@@ -3884,9 +3886,9 @@ private:
 class JP_NZ_nn : public ProgramOpcode
 {
 public:
-    JP_NZ_nn(const Token& token, unsigned literal1)
+    JP_NZ_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3894,10 +3896,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_NZ_nn)
 };
@@ -3905,9 +3907,9 @@ private:
 class JP_P_nn : public ProgramOpcode
 {
 public:
-    JP_P_nn(const Token& token, unsigned literal1)
+    JP_P_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3915,10 +3917,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_P_nn)
 };
@@ -3926,9 +3928,9 @@ private:
 class JP_PE_nn : public ProgramOpcode
 {
 public:
-    JP_PE_nn(const Token& token, unsigned literal1)
+    JP_PE_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3936,10 +3938,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_PE_nn)
 };
@@ -3947,9 +3949,9 @@ private:
 class JP_PO_nn : public ProgramOpcode
 {
 public:
-    JP_PO_nn(const Token& token, unsigned literal1)
+    JP_PO_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3957,10 +3959,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_PO_nn)
 };
@@ -3968,9 +3970,9 @@ private:
 class JP_Z_nn : public ProgramOpcode
 {
 public:
-    JP_Z_nn(const Token& token, unsigned literal1)
+    JP_Z_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -3978,10 +3980,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JP_Z_nn)
 };
@@ -3998,7 +4000,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(JP_mHL)
 };
@@ -4015,7 +4017,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(JP_mIX)
 };
@@ -4032,7 +4034,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(JP_mIY)
 };
@@ -4040,9 +4042,9 @@ public:
 class JR_off : public ProgramOpcode
 {
 public:
-    JR_off(const Token& token, unsigned literal1)
+    JR_off(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4050,10 +4052,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JR_off)
 };
@@ -4061,9 +4063,9 @@ private:
 class JR_C_off : public ProgramOpcode
 {
 public:
-    JR_C_off(const Token& token, unsigned literal1)
+    JR_C_off(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4071,10 +4073,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JR_C_off)
 };
@@ -4082,9 +4084,9 @@ private:
 class JR_NC_off : public ProgramOpcode
 {
 public:
-    JR_NC_off(const Token& token, unsigned literal1)
+    JR_NC_off(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4092,10 +4094,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JR_NC_off)
 };
@@ -4103,9 +4105,9 @@ private:
 class JR_NZ_off : public ProgramOpcode
 {
 public:
-    JR_NZ_off(const Token& token, unsigned literal1)
+    JR_NZ_off(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4113,10 +4115,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JR_NZ_off)
 };
@@ -4124,9 +4126,9 @@ private:
 class JR_Z_off : public ProgramOpcode
 {
 public:
-    JR_Z_off(const Token& token, unsigned literal1)
+    JR_Z_off(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4134,10 +4136,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(JR_Z_off)
 };
@@ -4154,7 +4156,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_mBC)
 };
@@ -4171,7 +4173,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_mDE)
 };
@@ -4188,7 +4190,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 9; }
     unsigned tstatesIfTaken() const override { return 9; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_I)
 };
@@ -4196,9 +4198,9 @@ public:
 class LD_A_mnn : public ProgramOpcode
 {
 public:
-    LD_A_mnn(const Token& token, unsigned literal1)
+    LD_A_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4206,10 +4208,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 13; }
     unsigned tstatesIfTaken() const override { return 13; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_A_mnn)
 };
@@ -4226,7 +4228,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 9; }
     unsigned tstatesIfTaken() const override { return 9; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_R)
 };
@@ -4243,7 +4245,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mBC_A)
 };
@@ -4260,7 +4262,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mDE_A)
 };
@@ -4268,9 +4270,9 @@ public:
 class LD_mHL_n : public ProgramOpcode
 {
 public:
-    LD_mHL_n(const Token& token, unsigned literal1)
+    LD_mHL_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4278,10 +4280,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mHL_n)
 };
@@ -4289,10 +4291,10 @@ private:
 class LD_mIXn_n : public ProgramOpcode
 {
 public:
-    LD_mIXn_n(const Token& token, unsigned literal1, unsigned literal2)
+    LD_mIXn_n(const Token& token, std::unique_ptr<Expression> literal1, std::unique_ptr<Expression> literal2)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
-        , mLiteral2(literal2)
+        , mLiteral1(std::move(literal1))
+        , mLiteral2(std::move(literal2))
     {
     }
 
@@ -4300,11 +4302,11 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
-    unsigned mLiteral2;
+    std::unique_ptr<Expression> mLiteral1;
+    std::unique_ptr<Expression> mLiteral2;
 
     Q_DISABLE_COPY(LD_mIXn_n)
 };
@@ -4312,10 +4314,10 @@ private:
 class LD_mIYn_n : public ProgramOpcode
 {
 public:
-    LD_mIYn_n(const Token& token, unsigned literal1, unsigned literal2)
+    LD_mIYn_n(const Token& token, std::unique_ptr<Expression> literal1, std::unique_ptr<Expression> literal2)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
-        , mLiteral2(literal2)
+        , mLiteral1(std::move(literal1))
+        , mLiteral2(std::move(literal2))
     {
     }
 
@@ -4323,11 +4325,11 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
-    unsigned mLiteral2;
+    std::unique_ptr<Expression> mLiteral1;
+    std::unique_ptr<Expression> mLiteral2;
 
     Q_DISABLE_COPY(LD_mIYn_n)
 };
@@ -4335,9 +4337,9 @@ private:
 class LD_mnn_A : public ProgramOpcode
 {
 public:
-    LD_mnn_A(const Token& token, unsigned literal1)
+    LD_mnn_A(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4345,10 +4347,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 13; }
     unsigned tstatesIfTaken() const override { return 13; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_A)
 };
@@ -4356,9 +4358,9 @@ private:
 class LD_mnn_BC : public ProgramOpcode
 {
 public:
-    LD_mnn_BC(const Token& token, unsigned literal1)
+    LD_mnn_BC(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4366,10 +4368,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_BC)
 };
@@ -4377,9 +4379,9 @@ private:
 class LD_mnn_DE : public ProgramOpcode
 {
 public:
-    LD_mnn_DE(const Token& token, unsigned literal1)
+    LD_mnn_DE(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4387,10 +4389,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_DE)
 };
@@ -4398,9 +4400,9 @@ private:
 class LD_mnn_HL : public ProgramOpcode
 {
 public:
-    LD_mnn_HL(const Token& token, unsigned literal1)
+    LD_mnn_HL(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4408,10 +4410,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_HL)
 };
@@ -4419,9 +4421,9 @@ private:
 class LD_mnn_SP : public ProgramOpcode
 {
 public:
-    LD_mnn_SP(const Token& token, unsigned literal1)
+    LD_mnn_SP(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4429,10 +4431,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_SP)
 };
@@ -4440,9 +4442,9 @@ private:
 class LD_mnn_IX : public ProgramOpcode
 {
 public:
-    LD_mnn_IX(const Token& token, unsigned literal1)
+    LD_mnn_IX(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4450,10 +4452,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_IX)
 };
@@ -4461,9 +4463,9 @@ private:
 class LD_mnn_IY : public ProgramOpcode
 {
 public:
-    LD_mnn_IY(const Token& token, unsigned literal1)
+    LD_mnn_IY(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4471,10 +4473,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mnn_IY)
 };
@@ -4482,9 +4484,9 @@ private:
 class LD_BC_nn : public ProgramOpcode
 {
 public:
-    LD_BC_nn(const Token& token, unsigned literal1)
+    LD_BC_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4492,10 +4494,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_BC_nn)
 };
@@ -4503,9 +4505,9 @@ private:
 class LD_DE_nn : public ProgramOpcode
 {
 public:
-    LD_DE_nn(const Token& token, unsigned literal1)
+    LD_DE_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4513,10 +4515,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_DE_nn)
 };
@@ -4524,9 +4526,9 @@ private:
 class LD_HL_nn : public ProgramOpcode
 {
 public:
-    LD_HL_nn(const Token& token, unsigned literal1)
+    LD_HL_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4534,10 +4536,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_HL_nn)
 };
@@ -4545,9 +4547,9 @@ private:
 class LD_SP_nn : public ProgramOpcode
 {
 public:
-    LD_SP_nn(const Token& token, unsigned literal1)
+    LD_SP_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4555,10 +4557,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_SP_nn)
 };
@@ -4566,9 +4568,9 @@ private:
 class LD_BC_mnn : public ProgramOpcode
 {
 public:
-    LD_BC_mnn(const Token& token, unsigned literal1)
+    LD_BC_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4576,10 +4578,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_BC_mnn)
 };
@@ -4587,9 +4589,9 @@ private:
 class LD_DE_mnn : public ProgramOpcode
 {
 public:
-    LD_DE_mnn(const Token& token, unsigned literal1)
+    LD_DE_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4597,10 +4599,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_DE_mnn)
 };
@@ -4608,9 +4610,9 @@ private:
 class LD_HL_mnn : public ProgramOpcode
 {
 public:
-    LD_HL_mnn(const Token& token, unsigned literal1)
+    LD_HL_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4618,10 +4620,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_HL_mnn)
 };
@@ -4629,9 +4631,9 @@ private:
 class LD_SP_mnn : public ProgramOpcode
 {
 public:
-    LD_SP_mnn(const Token& token, unsigned literal1)
+    LD_SP_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4639,10 +4641,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_SP_mnn)
 };
@@ -4659,7 +4661,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_A)
 };
@@ -4676,7 +4678,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_B)
 };
@@ -4693,7 +4695,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_C)
 };
@@ -4710,7 +4712,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_D)
 };
@@ -4727,7 +4729,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_E)
 };
@@ -4744,7 +4746,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_H)
 };
@@ -4761,7 +4763,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_mHL_L)
 };
@@ -4769,9 +4771,9 @@ public:
 class LD_mIXn_A : public ProgramOpcode
 {
 public:
-    LD_mIXn_A(const Token& token, unsigned literal1)
+    LD_mIXn_A(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4779,10 +4781,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_A)
 };
@@ -4790,9 +4792,9 @@ private:
 class LD_mIXn_B : public ProgramOpcode
 {
 public:
-    LD_mIXn_B(const Token& token, unsigned literal1)
+    LD_mIXn_B(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4800,10 +4802,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_B)
 };
@@ -4811,9 +4813,9 @@ private:
 class LD_mIXn_C : public ProgramOpcode
 {
 public:
-    LD_mIXn_C(const Token& token, unsigned literal1)
+    LD_mIXn_C(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4821,10 +4823,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_C)
 };
@@ -4832,9 +4834,9 @@ private:
 class LD_mIXn_D : public ProgramOpcode
 {
 public:
-    LD_mIXn_D(const Token& token, unsigned literal1)
+    LD_mIXn_D(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4842,10 +4844,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_D)
 };
@@ -4853,9 +4855,9 @@ private:
 class LD_mIXn_E : public ProgramOpcode
 {
 public:
-    LD_mIXn_E(const Token& token, unsigned literal1)
+    LD_mIXn_E(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4863,10 +4865,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_E)
 };
@@ -4874,9 +4876,9 @@ private:
 class LD_mIXn_H : public ProgramOpcode
 {
 public:
-    LD_mIXn_H(const Token& token, unsigned literal1)
+    LD_mIXn_H(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4884,10 +4886,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_H)
 };
@@ -4895,9 +4897,9 @@ private:
 class LD_mIXn_L : public ProgramOpcode
 {
 public:
-    LD_mIXn_L(const Token& token, unsigned literal1)
+    LD_mIXn_L(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4905,10 +4907,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIXn_L)
 };
@@ -4916,9 +4918,9 @@ private:
 class LD_mIYn_A : public ProgramOpcode
 {
 public:
-    LD_mIYn_A(const Token& token, unsigned literal1)
+    LD_mIYn_A(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4926,10 +4928,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_A)
 };
@@ -4937,9 +4939,9 @@ private:
 class LD_mIYn_B : public ProgramOpcode
 {
 public:
-    LD_mIYn_B(const Token& token, unsigned literal1)
+    LD_mIYn_B(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4947,10 +4949,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_B)
 };
@@ -4958,9 +4960,9 @@ private:
 class LD_mIYn_C : public ProgramOpcode
 {
 public:
-    LD_mIYn_C(const Token& token, unsigned literal1)
+    LD_mIYn_C(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4968,10 +4970,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_C)
 };
@@ -4979,9 +4981,9 @@ private:
 class LD_mIYn_D : public ProgramOpcode
 {
 public:
-    LD_mIYn_D(const Token& token, unsigned literal1)
+    LD_mIYn_D(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -4989,10 +4991,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_D)
 };
@@ -5000,9 +5002,9 @@ private:
 class LD_mIYn_E : public ProgramOpcode
 {
 public:
-    LD_mIYn_E(const Token& token, unsigned literal1)
+    LD_mIYn_E(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5010,10 +5012,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_E)
 };
@@ -5021,9 +5023,9 @@ private:
 class LD_mIYn_H : public ProgramOpcode
 {
 public:
-    LD_mIYn_H(const Token& token, unsigned literal1)
+    LD_mIYn_H(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5031,10 +5033,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_H)
 };
@@ -5042,9 +5044,9 @@ private:
 class LD_mIYn_L : public ProgramOpcode
 {
 public:
-    LD_mIYn_L(const Token& token, unsigned literal1)
+    LD_mIYn_L(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5052,10 +5054,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_mIYn_L)
 };
@@ -5072,7 +5074,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 9; }
     unsigned tstatesIfTaken() const override { return 9; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_I_A)
 };
@@ -5080,9 +5082,9 @@ public:
 class LD_IX_nn : public ProgramOpcode
 {
 public:
-    LD_IX_nn(const Token& token, unsigned literal1)
+    LD_IX_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5090,10 +5092,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_IX_nn)
 };
@@ -5101,9 +5103,9 @@ private:
 class LD_IX_mnn : public ProgramOpcode
 {
 public:
-    LD_IX_mnn(const Token& token, unsigned literal1)
+    LD_IX_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5111,10 +5113,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_IX_mnn)
 };
@@ -5122,9 +5124,9 @@ private:
 class LD_IY_nn : public ProgramOpcode
 {
 public:
-    LD_IY_nn(const Token& token, unsigned literal1)
+    LD_IY_nn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5132,10 +5134,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_IY_nn)
 };
@@ -5143,9 +5145,9 @@ private:
 class LD_IY_mnn : public ProgramOpcode
 {
 public:
-    LD_IY_mnn(const Token& token, unsigned literal1)
+    LD_IY_mnn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5153,10 +5155,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 20; }
     unsigned tstatesIfTaken() const override { return 20; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_IY_mnn)
 };
@@ -5173,7 +5175,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 9; }
     unsigned tstatesIfTaken() const override { return 9; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_R_A)
 };
@@ -5190,7 +5192,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_mHL)
 };
@@ -5207,7 +5209,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_mHL)
 };
@@ -5224,7 +5226,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_mHL)
 };
@@ -5241,7 +5243,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_mHL)
 };
@@ -5258,7 +5260,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_mHL)
 };
@@ -5275,7 +5277,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_mHL)
 };
@@ -5292,7 +5294,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_mHL)
 };
@@ -5300,9 +5302,9 @@ public:
 class LD_A_mIXn : public ProgramOpcode
 {
 public:
-    LD_A_mIXn(const Token& token, unsigned literal1)
+    LD_A_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5310,10 +5312,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_A_mIXn)
 };
@@ -5321,9 +5323,9 @@ private:
 class LD_B_mIXn : public ProgramOpcode
 {
 public:
-    LD_B_mIXn(const Token& token, unsigned literal1)
+    LD_B_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5331,10 +5333,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_B_mIXn)
 };
@@ -5342,9 +5344,9 @@ private:
 class LD_C_mIXn : public ProgramOpcode
 {
 public:
-    LD_C_mIXn(const Token& token, unsigned literal1)
+    LD_C_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5352,10 +5354,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_C_mIXn)
 };
@@ -5363,9 +5365,9 @@ private:
 class LD_D_mIXn : public ProgramOpcode
 {
 public:
-    LD_D_mIXn(const Token& token, unsigned literal1)
+    LD_D_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5373,10 +5375,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_D_mIXn)
 };
@@ -5384,9 +5386,9 @@ private:
 class LD_E_mIXn : public ProgramOpcode
 {
 public:
-    LD_E_mIXn(const Token& token, unsigned literal1)
+    LD_E_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5394,10 +5396,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_E_mIXn)
 };
@@ -5405,9 +5407,9 @@ private:
 class LD_H_mIXn : public ProgramOpcode
 {
 public:
-    LD_H_mIXn(const Token& token, unsigned literal1)
+    LD_H_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5415,10 +5417,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_H_mIXn)
 };
@@ -5426,9 +5428,9 @@ private:
 class LD_L_mIXn : public ProgramOpcode
 {
 public:
-    LD_L_mIXn(const Token& token, unsigned literal1)
+    LD_L_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5436,10 +5438,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_L_mIXn)
 };
@@ -5447,9 +5449,9 @@ private:
 class LD_A_mIYn : public ProgramOpcode
 {
 public:
-    LD_A_mIYn(const Token& token, unsigned literal1)
+    LD_A_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5457,10 +5459,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_A_mIYn)
 };
@@ -5468,9 +5470,9 @@ private:
 class LD_B_mIYn : public ProgramOpcode
 {
 public:
-    LD_B_mIYn(const Token& token, unsigned literal1)
+    LD_B_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5478,10 +5480,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_B_mIYn)
 };
@@ -5489,9 +5491,9 @@ private:
 class LD_C_mIYn : public ProgramOpcode
 {
 public:
-    LD_C_mIYn(const Token& token, unsigned literal1)
+    LD_C_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5499,10 +5501,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_C_mIYn)
 };
@@ -5510,9 +5512,9 @@ private:
 class LD_D_mIYn : public ProgramOpcode
 {
 public:
-    LD_D_mIYn(const Token& token, unsigned literal1)
+    LD_D_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5520,10 +5522,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_D_mIYn)
 };
@@ -5531,9 +5533,9 @@ private:
 class LD_E_mIYn : public ProgramOpcode
 {
 public:
-    LD_E_mIYn(const Token& token, unsigned literal1)
+    LD_E_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5541,10 +5543,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_E_mIYn)
 };
@@ -5552,9 +5554,9 @@ private:
 class LD_H_mIYn : public ProgramOpcode
 {
 public:
-    LD_H_mIYn(const Token& token, unsigned literal1)
+    LD_H_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5562,10 +5564,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_H_mIYn)
 };
@@ -5573,9 +5575,9 @@ private:
 class LD_L_mIYn : public ProgramOpcode
 {
 public:
-    LD_L_mIYn(const Token& token, unsigned literal1)
+    LD_L_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5583,10 +5585,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_L_mIYn)
 };
@@ -5594,9 +5596,9 @@ private:
 class LD_A_n : public ProgramOpcode
 {
 public:
-    LD_A_n(const Token& token, unsigned literal1)
+    LD_A_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5604,10 +5606,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_A_n)
 };
@@ -5615,9 +5617,9 @@ private:
 class LD_B_n : public ProgramOpcode
 {
 public:
-    LD_B_n(const Token& token, unsigned literal1)
+    LD_B_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5625,10 +5627,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_B_n)
 };
@@ -5636,9 +5638,9 @@ private:
 class LD_C_n : public ProgramOpcode
 {
 public:
-    LD_C_n(const Token& token, unsigned literal1)
+    LD_C_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5646,10 +5648,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_C_n)
 };
@@ -5657,9 +5659,9 @@ private:
 class LD_D_n : public ProgramOpcode
 {
 public:
-    LD_D_n(const Token& token, unsigned literal1)
+    LD_D_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5667,10 +5669,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_D_n)
 };
@@ -5678,9 +5680,9 @@ private:
 class LD_E_n : public ProgramOpcode
 {
 public:
-    LD_E_n(const Token& token, unsigned literal1)
+    LD_E_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5688,10 +5690,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_E_n)
 };
@@ -5699,9 +5701,9 @@ private:
 class LD_H_n : public ProgramOpcode
 {
 public:
-    LD_H_n(const Token& token, unsigned literal1)
+    LD_H_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5709,10 +5711,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_H_n)
 };
@@ -5720,9 +5722,9 @@ private:
 class LD_L_n : public ProgramOpcode
 {
 public:
-    LD_L_n(const Token& token, unsigned literal1)
+    LD_L_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -5730,10 +5732,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(LD_L_n)
 };
@@ -5750,7 +5752,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_A)
 };
@@ -5767,7 +5769,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_A)
 };
@@ -5784,7 +5786,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_A)
 };
@@ -5801,7 +5803,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_A)
 };
@@ -5818,7 +5820,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_A)
 };
@@ -5835,7 +5837,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_A)
 };
@@ -5852,7 +5854,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_A)
 };
@@ -5869,7 +5871,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_B)
 };
@@ -5886,7 +5888,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_B)
 };
@@ -5903,7 +5905,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_B)
 };
@@ -5920,7 +5922,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_B)
 };
@@ -5937,7 +5939,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_B)
 };
@@ -5954,7 +5956,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_B)
 };
@@ -5971,7 +5973,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_B)
 };
@@ -5988,7 +5990,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_C)
 };
@@ -6005,7 +6007,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_C)
 };
@@ -6022,7 +6024,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_C)
 };
@@ -6039,7 +6041,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_C)
 };
@@ -6056,7 +6058,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_C)
 };
@@ -6073,7 +6075,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_C)
 };
@@ -6090,7 +6092,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_C)
 };
@@ -6107,7 +6109,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_D)
 };
@@ -6124,7 +6126,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_D)
 };
@@ -6141,7 +6143,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_D)
 };
@@ -6158,7 +6160,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_D)
 };
@@ -6175,7 +6177,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_D)
 };
@@ -6192,7 +6194,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_D)
 };
@@ -6209,7 +6211,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_D)
 };
@@ -6226,7 +6228,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_E)
 };
@@ -6243,7 +6245,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_E)
 };
@@ -6260,7 +6262,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_E)
 };
@@ -6277,7 +6279,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_E)
 };
@@ -6294,7 +6296,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_E)
 };
@@ -6311,7 +6313,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_E)
 };
@@ -6328,7 +6330,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_E)
 };
@@ -6345,7 +6347,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_H)
 };
@@ -6362,7 +6364,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_H)
 };
@@ -6379,7 +6381,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_H)
 };
@@ -6396,7 +6398,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_H)
 };
@@ -6413,7 +6415,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_H)
 };
@@ -6430,7 +6432,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_H)
 };
@@ -6447,7 +6449,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_H)
 };
@@ -6464,7 +6466,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_A_L)
 };
@@ -6481,7 +6483,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_B_L)
 };
@@ -6498,7 +6500,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_C_L)
 };
@@ -6515,7 +6517,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_D_L)
 };
@@ -6532,7 +6534,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_E_L)
 };
@@ -6549,7 +6551,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_H_L)
 };
@@ -6566,7 +6568,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_L_L)
 };
@@ -6583,7 +6585,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 6; }
     unsigned tstatesIfTaken() const override { return 6; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_SP_HL)
 };
@@ -6600,7 +6602,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_SP_IX)
 };
@@ -6617,7 +6619,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LD_SP_IY)
 };
@@ -6634,7 +6636,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LDD)
 };
@@ -6651,7 +6653,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LDDR)
 };
@@ -6668,7 +6670,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LDI)
 };
@@ -6685,7 +6687,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 17; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(LDIR)
 };
@@ -6702,7 +6704,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(NEG)
 };
@@ -6719,7 +6721,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(NOP)
 };
@@ -6736,7 +6738,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_A)
 };
@@ -6753,7 +6755,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_B)
 };
@@ -6770,7 +6772,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_C)
 };
@@ -6787,7 +6789,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_D)
 };
@@ -6804,7 +6806,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_E)
 };
@@ -6821,7 +6823,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_H)
 };
@@ -6838,7 +6840,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_L)
 };
@@ -6846,9 +6848,9 @@ public:
 class OR_n : public ProgramOpcode
 {
 public:
-    OR_n(const Token& token, unsigned literal1)
+    OR_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -6856,10 +6858,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OR_n)
 };
@@ -6876,7 +6878,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OR_mHL)
 };
@@ -6884,9 +6886,9 @@ public:
 class OR_mIXn : public ProgramOpcode
 {
 public:
-    OR_mIXn(const Token& token, unsigned literal1)
+    OR_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -6894,10 +6896,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OR_mIXn)
 };
@@ -6905,9 +6907,9 @@ private:
 class OR_mIYn : public ProgramOpcode
 {
 public:
-    OR_mIYn(const Token& token, unsigned literal1)
+    OR_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -6915,10 +6917,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OR_mIYn)
 };
@@ -6935,7 +6937,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OTDR)
 };
@@ -6952,7 +6954,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 21; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OTIR)
 };
@@ -6960,9 +6962,9 @@ public:
 class OUT_mn_A : public ProgramOpcode
 {
 public:
-    OUT_mn_A(const Token& token, unsigned literal1)
+    OUT_mn_A(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -6970,10 +6972,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OUT_mn_A)
 };
@@ -6990,7 +6992,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_A)
 };
@@ -7007,7 +7009,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_B)
 };
@@ -7024,7 +7026,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_C)
 };
@@ -7041,7 +7043,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_D)
 };
@@ -7058,7 +7060,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_E)
 };
@@ -7075,7 +7077,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_H)
 };
@@ -7092,7 +7094,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 12; }
     unsigned tstatesIfTaken() const override { return 12; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUT_mC_L)
 };
@@ -7109,7 +7111,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUTD)
 };
@@ -7126,7 +7128,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 16; }
     unsigned tstatesIfTaken() const override { return 16; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(OUTI)
 };
@@ -7143,7 +7145,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_IX)
 };
@@ -7160,7 +7162,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_IY)
 };
@@ -7177,7 +7179,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_BC)
 };
@@ -7194,7 +7196,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_DE)
 };
@@ -7211,7 +7213,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_HL)
 };
@@ -7228,7 +7230,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(POP_AF)
 };
@@ -7245,7 +7247,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_IX)
 };
@@ -7262,7 +7264,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_IY)
 };
@@ -7279,7 +7281,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_BC)
 };
@@ -7296,7 +7298,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_DE)
 };
@@ -7313,7 +7315,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_HL)
 };
@@ -7330,7 +7332,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(PUSH_AF)
 };
@@ -7347,7 +7349,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_A)
 };
@@ -7364,7 +7366,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_B)
 };
@@ -7381,7 +7383,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_C)
 };
@@ -7398,7 +7400,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_D)
 };
@@ -7415,7 +7417,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_E)
 };
@@ -7432,7 +7434,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_H)
 };
@@ -7449,7 +7451,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_L)
 };
@@ -7466,7 +7468,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_A)
 };
@@ -7483,7 +7485,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_B)
 };
@@ -7500,7 +7502,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_C)
 };
@@ -7517,7 +7519,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_D)
 };
@@ -7534,7 +7536,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_E)
 };
@@ -7551,7 +7553,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_H)
 };
@@ -7568,7 +7570,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_L)
 };
@@ -7585,7 +7587,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_A)
 };
@@ -7602,7 +7604,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_B)
 };
@@ -7619,7 +7621,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_C)
 };
@@ -7636,7 +7638,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_D)
 };
@@ -7653,7 +7655,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_E)
 };
@@ -7670,7 +7672,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_H)
 };
@@ -7687,7 +7689,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_L)
 };
@@ -7704,7 +7706,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_A)
 };
@@ -7721,7 +7723,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_B)
 };
@@ -7738,7 +7740,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_C)
 };
@@ -7755,7 +7757,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_D)
 };
@@ -7772,7 +7774,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_E)
 };
@@ -7789,7 +7791,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_H)
 };
@@ -7806,7 +7808,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_L)
 };
@@ -7823,7 +7825,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_A)
 };
@@ -7840,7 +7842,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_B)
 };
@@ -7857,7 +7859,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_C)
 };
@@ -7874,7 +7876,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_D)
 };
@@ -7891,7 +7893,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_E)
 };
@@ -7908,7 +7910,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_H)
 };
@@ -7925,7 +7927,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_L)
 };
@@ -7942,7 +7944,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_A)
 };
@@ -7959,7 +7961,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_B)
 };
@@ -7976,7 +7978,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_C)
 };
@@ -7993,7 +7995,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_D)
 };
@@ -8010,7 +8012,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_E)
 };
@@ -8027,7 +8029,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_H)
 };
@@ -8044,7 +8046,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_L)
 };
@@ -8061,7 +8063,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_A)
 };
@@ -8078,7 +8080,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_B)
 };
@@ -8095,7 +8097,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_C)
 };
@@ -8112,7 +8114,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_D)
 };
@@ -8129,7 +8131,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_E)
 };
@@ -8146,7 +8148,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_H)
 };
@@ -8163,7 +8165,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_L)
 };
@@ -8180,7 +8182,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_A)
 };
@@ -8197,7 +8199,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_B)
 };
@@ -8214,7 +8216,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_C)
 };
@@ -8231,7 +8233,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_D)
 };
@@ -8248,7 +8250,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_E)
 };
@@ -8265,7 +8267,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_H)
 };
@@ -8282,7 +8284,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_L)
 };
@@ -8299,7 +8301,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_0_mHL)
 };
@@ -8316,7 +8318,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_1_mHL)
 };
@@ -8333,7 +8335,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_2_mHL)
 };
@@ -8350,7 +8352,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_3_mHL)
 };
@@ -8367,7 +8369,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_4_mHL)
 };
@@ -8384,7 +8386,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_5_mHL)
 };
@@ -8401,7 +8403,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_6_mHL)
 };
@@ -8418,7 +8420,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RES_7_mHL)
 };
@@ -8426,9 +8428,9 @@ public:
 class RES_0_mIXn : public ProgramOpcode
 {
 public:
-    RES_0_mIXn(const Token& token, unsigned literal1)
+    RES_0_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8436,10 +8438,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_0_mIXn)
 };
@@ -8447,9 +8449,9 @@ private:
 class RES_1_mIXn : public ProgramOpcode
 {
 public:
-    RES_1_mIXn(const Token& token, unsigned literal1)
+    RES_1_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8457,10 +8459,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_1_mIXn)
 };
@@ -8468,9 +8470,9 @@ private:
 class RES_2_mIXn : public ProgramOpcode
 {
 public:
-    RES_2_mIXn(const Token& token, unsigned literal1)
+    RES_2_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8478,10 +8480,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_2_mIXn)
 };
@@ -8489,9 +8491,9 @@ private:
 class RES_3_mIXn : public ProgramOpcode
 {
 public:
-    RES_3_mIXn(const Token& token, unsigned literal1)
+    RES_3_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8499,10 +8501,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_3_mIXn)
 };
@@ -8510,9 +8512,9 @@ private:
 class RES_4_mIXn : public ProgramOpcode
 {
 public:
-    RES_4_mIXn(const Token& token, unsigned literal1)
+    RES_4_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8520,10 +8522,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_4_mIXn)
 };
@@ -8531,9 +8533,9 @@ private:
 class RES_5_mIXn : public ProgramOpcode
 {
 public:
-    RES_5_mIXn(const Token& token, unsigned literal1)
+    RES_5_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8541,10 +8543,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_5_mIXn)
 };
@@ -8552,9 +8554,9 @@ private:
 class RES_6_mIXn : public ProgramOpcode
 {
 public:
-    RES_6_mIXn(const Token& token, unsigned literal1)
+    RES_6_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8562,10 +8564,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_6_mIXn)
 };
@@ -8573,9 +8575,9 @@ private:
 class RES_7_mIXn : public ProgramOpcode
 {
 public:
-    RES_7_mIXn(const Token& token, unsigned literal1)
+    RES_7_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8583,10 +8585,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_7_mIXn)
 };
@@ -8594,9 +8596,9 @@ private:
 class RES_0_mIYn : public ProgramOpcode
 {
 public:
-    RES_0_mIYn(const Token& token, unsigned literal1)
+    RES_0_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8604,10 +8606,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_0_mIYn)
 };
@@ -8615,9 +8617,9 @@ private:
 class RES_1_mIYn : public ProgramOpcode
 {
 public:
-    RES_1_mIYn(const Token& token, unsigned literal1)
+    RES_1_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8625,10 +8627,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_1_mIYn)
 };
@@ -8636,9 +8638,9 @@ private:
 class RES_2_mIYn : public ProgramOpcode
 {
 public:
-    RES_2_mIYn(const Token& token, unsigned literal1)
+    RES_2_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8646,10 +8648,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_2_mIYn)
 };
@@ -8657,9 +8659,9 @@ private:
 class RES_3_mIYn : public ProgramOpcode
 {
 public:
-    RES_3_mIYn(const Token& token, unsigned literal1)
+    RES_3_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8667,10 +8669,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_3_mIYn)
 };
@@ -8678,9 +8680,9 @@ private:
 class RES_4_mIYn : public ProgramOpcode
 {
 public:
-    RES_4_mIYn(const Token& token, unsigned literal1)
+    RES_4_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8688,10 +8690,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_4_mIYn)
 };
@@ -8699,9 +8701,9 @@ private:
 class RES_5_mIYn : public ProgramOpcode
 {
 public:
-    RES_5_mIYn(const Token& token, unsigned literal1)
+    RES_5_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8709,10 +8711,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_5_mIYn)
 };
@@ -8720,9 +8722,9 @@ private:
 class RES_6_mIYn : public ProgramOpcode
 {
 public:
-    RES_6_mIYn(const Token& token, unsigned literal1)
+    RES_6_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8730,10 +8732,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_6_mIYn)
 };
@@ -8741,9 +8743,9 @@ private:
 class RES_7_mIYn : public ProgramOpcode
 {
 public:
-    RES_7_mIYn(const Token& token, unsigned literal1)
+    RES_7_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -8751,10 +8753,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RES_7_mIYn)
 };
@@ -8771,7 +8773,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 10; }
     unsigned tstatesIfTaken() const override { return 10; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET)
 };
@@ -8788,7 +8790,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_C)
 };
@@ -8805,7 +8807,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_M)
 };
@@ -8822,7 +8824,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_NC)
 };
@@ -8839,7 +8841,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_NZ)
 };
@@ -8856,7 +8858,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_P)
 };
@@ -8873,7 +8875,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_PE)
 };
@@ -8890,7 +8892,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_PO)
 };
@@ -8907,7 +8909,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 5; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RET_Z)
 };
@@ -8924,7 +8926,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RETI)
 };
@@ -8941,7 +8943,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 14; }
     unsigned tstatesIfTaken() const override { return 14; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RETN)
 };
@@ -8958,7 +8960,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_A)
 };
@@ -8975,7 +8977,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_B)
 };
@@ -8992,7 +8994,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_C)
 };
@@ -9009,7 +9011,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_D)
 };
@@ -9026,7 +9028,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_E)
 };
@@ -9043,7 +9045,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_H)
 };
@@ -9060,7 +9062,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_L)
 };
@@ -9077,7 +9079,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RL_mHL)
 };
@@ -9085,9 +9087,9 @@ public:
 class RL_mIXn : public ProgramOpcode
 {
 public:
-    RL_mIXn(const Token& token, unsigned literal1)
+    RL_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9095,10 +9097,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RL_mIXn)
 };
@@ -9106,9 +9108,9 @@ private:
 class RL_mIYn : public ProgramOpcode
 {
 public:
-    RL_mIYn(const Token& token, unsigned literal1)
+    RL_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9116,10 +9118,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RL_mIYn)
 };
@@ -9136,7 +9138,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLA)
 };
@@ -9153,7 +9155,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_A)
 };
@@ -9170,7 +9172,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_B)
 };
@@ -9187,7 +9189,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_C)
 };
@@ -9204,7 +9206,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_D)
 };
@@ -9221,7 +9223,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_E)
 };
@@ -9238,7 +9240,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_H)
 };
@@ -9255,7 +9257,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_L)
 };
@@ -9272,7 +9274,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLC_mHL)
 };
@@ -9280,9 +9282,9 @@ public:
 class RLC_mIXn : public ProgramOpcode
 {
 public:
-    RLC_mIXn(const Token& token, unsigned literal1)
+    RLC_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9290,10 +9292,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RLC_mIXn)
 };
@@ -9301,9 +9303,9 @@ private:
 class RLC_mIYn : public ProgramOpcode
 {
 public:
-    RLC_mIYn(const Token& token, unsigned literal1)
+    RLC_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9311,10 +9313,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RLC_mIYn)
 };
@@ -9331,7 +9333,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLCA)
 };
@@ -9348,7 +9350,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 18; }
     unsigned tstatesIfTaken() const override { return 18; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RLD)
 };
@@ -9365,7 +9367,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_A)
 };
@@ -9382,7 +9384,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_B)
 };
@@ -9399,7 +9401,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_C)
 };
@@ -9416,7 +9418,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_D)
 };
@@ -9433,7 +9435,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_E)
 };
@@ -9450,7 +9452,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_H)
 };
@@ -9467,7 +9469,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_L)
 };
@@ -9484,7 +9486,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RR_mHL)
 };
@@ -9492,9 +9494,9 @@ public:
 class RR_mIXn : public ProgramOpcode
 {
 public:
-    RR_mIXn(const Token& token, unsigned literal1)
+    RR_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9502,10 +9504,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RR_mIXn)
 };
@@ -9513,9 +9515,9 @@ private:
 class RR_mIYn : public ProgramOpcode
 {
 public:
-    RR_mIYn(const Token& token, unsigned literal1)
+    RR_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9523,10 +9525,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RR_mIYn)
 };
@@ -9543,7 +9545,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRA)
 };
@@ -9560,7 +9562,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_A)
 };
@@ -9577,7 +9579,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_B)
 };
@@ -9594,7 +9596,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_C)
 };
@@ -9611,7 +9613,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_D)
 };
@@ -9628,7 +9630,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_E)
 };
@@ -9645,7 +9647,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_H)
 };
@@ -9662,7 +9664,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_L)
 };
@@ -9679,7 +9681,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRC_mHL)
 };
@@ -9687,9 +9689,9 @@ public:
 class RRC_mIXn : public ProgramOpcode
 {
 public:
-    RRC_mIXn(const Token& token, unsigned literal1)
+    RRC_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9697,10 +9699,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RRC_mIXn)
 };
@@ -9708,9 +9710,9 @@ private:
 class RRC_mIYn : public ProgramOpcode
 {
 public:
-    RRC_mIYn(const Token& token, unsigned literal1)
+    RRC_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -9718,10 +9720,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(RRC_mIYn)
 };
@@ -9738,7 +9740,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRCA)
 };
@@ -9755,7 +9757,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 18; }
     unsigned tstatesIfTaken() const override { return 18; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RRD)
 };
@@ -9772,7 +9774,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_00)
 };
@@ -9789,7 +9791,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_08)
 };
@@ -9806,7 +9808,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_10)
 };
@@ -9823,7 +9825,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_18)
 };
@@ -9840,7 +9842,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_20)
 };
@@ -9857,7 +9859,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_28)
 };
@@ -9874,7 +9876,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_30)
 };
@@ -9891,7 +9893,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 11; }
     unsigned tstatesIfTaken() const override { return 11; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(RST_38)
 };
@@ -9908,7 +9910,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_A)
 };
@@ -9925,7 +9927,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_B)
 };
@@ -9942,7 +9944,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_C)
 };
@@ -9959,7 +9961,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_D)
 };
@@ -9976,7 +9978,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_E)
 };
@@ -9993,7 +9995,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_H)
 };
@@ -10010,7 +10012,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_L)
 };
@@ -10018,9 +10020,9 @@ public:
 class SBC_A_n : public ProgramOpcode
 {
 public:
-    SBC_A_n(const Token& token, unsigned literal1)
+    SBC_A_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -10028,10 +10030,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SBC_A_n)
 };
@@ -10048,7 +10050,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_A_mHL)
 };
@@ -10056,9 +10058,9 @@ public:
 class SBC_A_mIXn : public ProgramOpcode
 {
 public:
-    SBC_A_mIXn(const Token& token, unsigned literal1)
+    SBC_A_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -10066,10 +10068,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SBC_A_mIXn)
 };
@@ -10077,9 +10079,9 @@ private:
 class SBC_A_mIYn : public ProgramOpcode
 {
 public:
-    SBC_A_mIYn(const Token& token, unsigned literal1)
+    SBC_A_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -10087,10 +10089,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SBC_A_mIYn)
 };
@@ -10107,7 +10109,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_HL_BC)
 };
@@ -10124,7 +10126,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_HL_DE)
 };
@@ -10141,7 +10143,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_HL_HL)
 };
@@ -10158,7 +10160,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SBC_HL_SP)
 };
@@ -10175,7 +10177,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SCF)
 };
@@ -10192,7 +10194,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_A)
 };
@@ -10209,7 +10211,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_B)
 };
@@ -10226,7 +10228,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_C)
 };
@@ -10243,7 +10245,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_D)
 };
@@ -10260,7 +10262,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_E)
 };
@@ -10277,7 +10279,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_H)
 };
@@ -10294,7 +10296,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_L)
 };
@@ -10311,7 +10313,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_A)
 };
@@ -10328,7 +10330,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_B)
 };
@@ -10345,7 +10347,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_C)
 };
@@ -10362,7 +10364,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_D)
 };
@@ -10379,7 +10381,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_E)
 };
@@ -10396,7 +10398,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_H)
 };
@@ -10413,7 +10415,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_L)
 };
@@ -10430,7 +10432,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_A)
 };
@@ -10447,7 +10449,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_B)
 };
@@ -10464,7 +10466,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_C)
 };
@@ -10481,7 +10483,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_D)
 };
@@ -10498,7 +10500,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_E)
 };
@@ -10515,7 +10517,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_H)
 };
@@ -10532,7 +10534,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_L)
 };
@@ -10549,7 +10551,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_A)
 };
@@ -10566,7 +10568,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_B)
 };
@@ -10583,7 +10585,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_C)
 };
@@ -10600,7 +10602,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_D)
 };
@@ -10617,7 +10619,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_E)
 };
@@ -10634,7 +10636,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_H)
 };
@@ -10651,7 +10653,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_L)
 };
@@ -10668,7 +10670,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_A)
 };
@@ -10685,7 +10687,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_B)
 };
@@ -10702,7 +10704,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_C)
 };
@@ -10719,7 +10721,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_D)
 };
@@ -10736,7 +10738,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_E)
 };
@@ -10753,7 +10755,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_H)
 };
@@ -10770,7 +10772,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_L)
 };
@@ -10787,7 +10789,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_A)
 };
@@ -10804,7 +10806,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_B)
 };
@@ -10821,7 +10823,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_C)
 };
@@ -10838,7 +10840,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_D)
 };
@@ -10855,7 +10857,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_E)
 };
@@ -10872,7 +10874,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_H)
 };
@@ -10889,7 +10891,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_L)
 };
@@ -10906,7 +10908,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_A)
 };
@@ -10923,7 +10925,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_B)
 };
@@ -10940,7 +10942,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_C)
 };
@@ -10957,7 +10959,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_D)
 };
@@ -10974,7 +10976,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_E)
 };
@@ -10991,7 +10993,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_H)
 };
@@ -11008,7 +11010,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_L)
 };
@@ -11025,7 +11027,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_A)
 };
@@ -11042,7 +11044,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_B)
 };
@@ -11059,7 +11061,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_C)
 };
@@ -11076,7 +11078,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_D)
 };
@@ -11093,7 +11095,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_E)
 };
@@ -11110,7 +11112,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_H)
 };
@@ -11127,7 +11129,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_L)
 };
@@ -11144,7 +11146,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_0_mHL)
 };
@@ -11161,7 +11163,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_1_mHL)
 };
@@ -11178,7 +11180,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_2_mHL)
 };
@@ -11195,7 +11197,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_3_mHL)
 };
@@ -11212,7 +11214,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_4_mHL)
 };
@@ -11229,7 +11231,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_5_mHL)
 };
@@ -11246,7 +11248,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_6_mHL)
 };
@@ -11263,7 +11265,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SET_7_mHL)
 };
@@ -11271,9 +11273,9 @@ public:
 class SET_0_mIXn : public ProgramOpcode
 {
 public:
-    SET_0_mIXn(const Token& token, unsigned literal1)
+    SET_0_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11281,10 +11283,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_0_mIXn)
 };
@@ -11292,9 +11294,9 @@ private:
 class SET_1_mIXn : public ProgramOpcode
 {
 public:
-    SET_1_mIXn(const Token& token, unsigned literal1)
+    SET_1_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11302,10 +11304,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_1_mIXn)
 };
@@ -11313,9 +11315,9 @@ private:
 class SET_2_mIXn : public ProgramOpcode
 {
 public:
-    SET_2_mIXn(const Token& token, unsigned literal1)
+    SET_2_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11323,10 +11325,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_2_mIXn)
 };
@@ -11334,9 +11336,9 @@ private:
 class SET_3_mIXn : public ProgramOpcode
 {
 public:
-    SET_3_mIXn(const Token& token, unsigned literal1)
+    SET_3_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11344,10 +11346,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_3_mIXn)
 };
@@ -11355,9 +11357,9 @@ private:
 class SET_4_mIXn : public ProgramOpcode
 {
 public:
-    SET_4_mIXn(const Token& token, unsigned literal1)
+    SET_4_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11365,10 +11367,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_4_mIXn)
 };
@@ -11376,9 +11378,9 @@ private:
 class SET_5_mIXn : public ProgramOpcode
 {
 public:
-    SET_5_mIXn(const Token& token, unsigned literal1)
+    SET_5_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11386,10 +11388,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_5_mIXn)
 };
@@ -11397,9 +11399,9 @@ private:
 class SET_6_mIXn : public ProgramOpcode
 {
 public:
-    SET_6_mIXn(const Token& token, unsigned literal1)
+    SET_6_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11407,10 +11409,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_6_mIXn)
 };
@@ -11418,9 +11420,9 @@ private:
 class SET_7_mIXn : public ProgramOpcode
 {
 public:
-    SET_7_mIXn(const Token& token, unsigned literal1)
+    SET_7_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11428,10 +11430,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_7_mIXn)
 };
@@ -11439,9 +11441,9 @@ private:
 class SET_0_mIYn : public ProgramOpcode
 {
 public:
-    SET_0_mIYn(const Token& token, unsigned literal1)
+    SET_0_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11449,10 +11451,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_0_mIYn)
 };
@@ -11460,9 +11462,9 @@ private:
 class SET_1_mIYn : public ProgramOpcode
 {
 public:
-    SET_1_mIYn(const Token& token, unsigned literal1)
+    SET_1_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11470,10 +11472,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_1_mIYn)
 };
@@ -11481,9 +11483,9 @@ private:
 class SET_2_mIYn : public ProgramOpcode
 {
 public:
-    SET_2_mIYn(const Token& token, unsigned literal1)
+    SET_2_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11491,10 +11493,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_2_mIYn)
 };
@@ -11502,9 +11504,9 @@ private:
 class SET_3_mIYn : public ProgramOpcode
 {
 public:
-    SET_3_mIYn(const Token& token, unsigned literal1)
+    SET_3_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11512,10 +11514,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_3_mIYn)
 };
@@ -11523,9 +11525,9 @@ private:
 class SET_4_mIYn : public ProgramOpcode
 {
 public:
-    SET_4_mIYn(const Token& token, unsigned literal1)
+    SET_4_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11533,10 +11535,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_4_mIYn)
 };
@@ -11544,9 +11546,9 @@ private:
 class SET_5_mIYn : public ProgramOpcode
 {
 public:
-    SET_5_mIYn(const Token& token, unsigned literal1)
+    SET_5_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11554,10 +11556,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_5_mIYn)
 };
@@ -11565,9 +11567,9 @@ private:
 class SET_6_mIYn : public ProgramOpcode
 {
 public:
-    SET_6_mIYn(const Token& token, unsigned literal1)
+    SET_6_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11575,10 +11577,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_6_mIYn)
 };
@@ -11586,9 +11588,9 @@ private:
 class SET_7_mIYn : public ProgramOpcode
 {
 public:
-    SET_7_mIYn(const Token& token, unsigned literal1)
+    SET_7_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11596,10 +11598,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SET_7_mIYn)
 };
@@ -11616,7 +11618,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_A)
 };
@@ -11633,7 +11635,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_B)
 };
@@ -11650,7 +11652,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_C)
 };
@@ -11667,7 +11669,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_D)
 };
@@ -11684,7 +11686,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_E)
 };
@@ -11701,7 +11703,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_H)
 };
@@ -11718,7 +11720,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_L)
 };
@@ -11735,7 +11737,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SLA_mHL)
 };
@@ -11743,9 +11745,9 @@ public:
 class SLA_mIXn : public ProgramOpcode
 {
 public:
-    SLA_mIXn(const Token& token, unsigned literal1)
+    SLA_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11753,10 +11755,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SLA_mIXn)
 };
@@ -11764,9 +11766,9 @@ private:
 class SLA_mIYn : public ProgramOpcode
 {
 public:
-    SLA_mIYn(const Token& token, unsigned literal1)
+    SLA_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11774,10 +11776,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SLA_mIYn)
 };
@@ -11794,7 +11796,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_A)
 };
@@ -11811,7 +11813,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_B)
 };
@@ -11828,7 +11830,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_C)
 };
@@ -11845,7 +11847,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_D)
 };
@@ -11862,7 +11864,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_E)
 };
@@ -11879,7 +11881,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_H)
 };
@@ -11896,7 +11898,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_L)
 };
@@ -11913,7 +11915,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRA_mHL)
 };
@@ -11921,9 +11923,9 @@ public:
 class SRA_mIXn : public ProgramOpcode
 {
 public:
-    SRA_mIXn(const Token& token, unsigned literal1)
+    SRA_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11931,10 +11933,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SRA_mIXn)
 };
@@ -11942,9 +11944,9 @@ private:
 class SRA_mIYn : public ProgramOpcode
 {
 public:
-    SRA_mIYn(const Token& token, unsigned literal1)
+    SRA_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -11952,10 +11954,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SRA_mIYn)
 };
@@ -11972,7 +11974,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_A)
 };
@@ -11989,7 +11991,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_B)
 };
@@ -12006,7 +12008,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_C)
 };
@@ -12023,7 +12025,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_D)
 };
@@ -12040,7 +12042,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_E)
 };
@@ -12057,7 +12059,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_H)
 };
@@ -12074,7 +12076,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 8; }
     unsigned tstatesIfTaken() const override { return 8; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_L)
 };
@@ -12091,7 +12093,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 15; }
     unsigned tstatesIfTaken() const override { return 15; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SRL_mHL)
 };
@@ -12099,9 +12101,9 @@ public:
 class SRL_mIXn : public ProgramOpcode
 {
 public:
-    SRL_mIXn(const Token& token, unsigned literal1)
+    SRL_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12109,10 +12111,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SRL_mIXn)
 };
@@ -12120,9 +12122,9 @@ private:
 class SRL_mIYn : public ProgramOpcode
 {
 public:
-    SRL_mIYn(const Token& token, unsigned literal1)
+    SRL_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12130,10 +12132,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 23; }
     unsigned tstatesIfTaken() const override { return 23; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SRL_mIYn)
 };
@@ -12150,7 +12152,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_A)
 };
@@ -12167,7 +12169,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_B)
 };
@@ -12184,7 +12186,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_C)
 };
@@ -12201,7 +12203,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_D)
 };
@@ -12218,7 +12220,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_E)
 };
@@ -12235,7 +12237,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_H)
 };
@@ -12252,7 +12254,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_L)
 };
@@ -12260,9 +12262,9 @@ public:
 class SUB_n : public ProgramOpcode
 {
 public:
-    SUB_n(const Token& token, unsigned literal1)
+    SUB_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12270,10 +12272,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SUB_n)
 };
@@ -12290,7 +12292,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(SUB_mHL)
 };
@@ -12298,9 +12300,9 @@ public:
 class SUB_mIXn : public ProgramOpcode
 {
 public:
-    SUB_mIXn(const Token& token, unsigned literal1)
+    SUB_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12308,10 +12310,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SUB_mIXn)
 };
@@ -12319,9 +12321,9 @@ private:
 class SUB_mIYn : public ProgramOpcode
 {
 public:
-    SUB_mIYn(const Token& token, unsigned literal1)
+    SUB_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12329,10 +12331,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(SUB_mIYn)
 };
@@ -12349,7 +12351,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_A)
 };
@@ -12366,7 +12368,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_B)
 };
@@ -12383,7 +12385,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_C)
 };
@@ -12400,7 +12402,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_D)
 };
@@ -12417,7 +12419,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_E)
 };
@@ -12434,7 +12436,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_H)
 };
@@ -12451,7 +12453,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 4; }
     unsigned tstatesIfTaken() const override { return 4; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_L)
 };
@@ -12459,9 +12461,9 @@ public:
 class XOR_n : public ProgramOpcode
 {
 public:
-    XOR_n(const Token& token, unsigned literal1)
+    XOR_n(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12469,10 +12471,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(XOR_n)
 };
@@ -12489,7 +12491,7 @@ public:
     unsigned tstatesIfNotTaken() const override { return 7; }
     unsigned tstatesIfTaken() const override { return 7; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
     Q_DISABLE_COPY(XOR_mHL)
 };
@@ -12497,9 +12499,9 @@ public:
 class XOR_mIXn : public ProgramOpcode
 {
 public:
-    XOR_mIXn(const Token& token, unsigned literal1)
+    XOR_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12507,10 +12509,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(XOR_mIXn)
 };
@@ -12518,9 +12520,9 @@ private:
 class XOR_mIYn : public ProgramOpcode
 {
 public:
-    XOR_mIYn(const Token& token, unsigned literal1)
+    XOR_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
         : ProgramOpcode(token)
-        , mLiteral1(literal1)
+        , mLiteral1(std::move(literal1))
     {
     }
 
@@ -12528,10 +12530,10 @@ public:
     unsigned tstatesIfNotTaken() const override { return 19; }
     unsigned tstatesIfTaken() const override { return 19; }
 
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
-    unsigned mLiteral1;
+    std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(XOR_mIYn)
 };

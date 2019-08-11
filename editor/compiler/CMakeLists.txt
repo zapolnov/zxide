@@ -17,6 +17,9 @@ qt_add_sources(Compiler
         AssemblerToken.h
         Compiler.cpp
         Compiler.h
+        Expression.cpp
+        Expression.h
+        ExpressionParser.cpp
         IErrorReporter.h
         Linker.cpp
         Linker.h

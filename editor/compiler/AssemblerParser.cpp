@@ -2,6 +2,7 @@
 #include "AssemblerLexer.h"
 #include "IErrorReporter.h"
 #include "Z80Opcodes.h"
+#include "Expression.h"
 #include "Util.h"
 #include "Program.h"
 #include <sstream>
@@ -61,7 +62,7 @@ void AssemblerParser::parseSectionDecl()
         for (;;) {
             auto param = toLower(expectIdentifier(nextToken()));
             if (param == "align") {
-                auto alignment = (unsigned)expectNumber(nextToken(), 1, 0xFFFF);
+                auto alignment = (unsigned)parseNumber(nextToken(), 1, 0xFFFF);
                 if (mSection->hasAlignment() && mSection->alignment() != alignment) {
                     error(tr("conflicting alignment for section '%1' (%2 != %3)")
                         .arg(mSection->nameCStr()).arg(alignment).arg(mSection->alignment()));
@@ -72,7 +73,7 @@ void AssemblerParser::parseSectionDecl()
                 }
                 mSection->setAlignment(alignment);
             } else if (param == "base") {
-                auto base = (unsigned)expectNumber(nextToken());
+                auto base = (unsigned)parseNumber(nextToken());
                 if (mSection->hasBase() && mSection->base() != base) {
                     error(tr("conflicting base address for section '%1' (%2 != %3)")
                         .arg(mSection->nameCStr()).arg(base).arg(mSection->base()));
@@ -85,7 +86,7 @@ void AssemblerParser::parseSectionDecl()
             } else
                 error(tr("unexpected '%1'").arg(lastTokenCStr()));
 
-            if (nextToken() == T_RBRACKET) {
+            if (lastTokenId() == T_RBRACKET) {
                 nextToken();
                 break;
             }
@@ -129,54 +130,19 @@ std::string AssemblerParser::readLabelName()
     return std::string();
 }
 
-quint32 AssemblerParser::expectNumber(int tokenId, quint32 min, quint32 max)
+quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
 {
-    if (tokenId != T_NUMBER)
-        error(tr("expected numeric literal"));
+    std::unique_ptr<Expression> expr;
+    if (!parseExpression(&expr))
+        error(tr("expected expression"));
 
-    quint32 number = lastToken().number;
-    if (number < min || number > max) {
-        error(tr("numeric value is out of range (valid range is 0x%1..0x%2 inclusive)")
-            .arg(min, 0, 16).arg(max, 0, 16));
+    qint64 number = expr->evaluate(mReporter);
+    if (number < qint64(min) || number > qint64(max)) {
+        error(tr("numeric value 0x%1 is out of range (valid range is 0x%2..0x%3 inclusive)")
+            .arg(number, 0, 16).arg(min, 0, 16).arg(max, 0, 16));
     }
 
-    return number;
-}
-
-bool AssemblerParser::expectByteLiteral(unsigned* out)
-{
-    if (lastTokenId() == T_NUMBER) {
-        unsigned num = lastToken().number;
-        if (num > 255)
-            error(tr("Value %1 does not fit into a byte.").arg(num));
-        *out = num;
-        nextToken();
-        return true;
-    }
-
-    return false;
-}
-
-bool AssemblerParser::expectWordLiteral(unsigned* out)
-{
-    if (lastTokenId() == T_NUMBER) {
-        *out = lastToken().number;
-        nextToken();
-        return true;
-    }
-
-    return false;
-}
-
-bool AssemblerParser::expectRelativeByteOffset(unsigned* out)
-{
-    if (lastTokenId() == T_NUMBER) {
-        *out = lastToken().number;
-        nextToken();
-        return true;
-    }
-
-    return false;
+    return quint32(number);
 }
 
 std::string AssemblerParser::expectIdentifier(int tokenId)
@@ -221,7 +187,8 @@ bool AssemblerParser::matchIdentifier(const char* ident)
 
 bool AssemblerParser::matchNumber(quint32 value)
 {
-    if (lastTokenId() != T_NUMBER || lastToken().number != value) // FIXME: expressions
+    // FIXME: expressions
+    if (lastTokenId() != T_NUMBER || lastToken().number != value)
         return false;
     nextToken();
     return true;

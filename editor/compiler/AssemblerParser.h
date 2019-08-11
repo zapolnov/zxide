@@ -2,13 +2,15 @@
 #define COMPILER_ASSEMBLERPARSER_H
 
 #include <QObject>
+#include <memory>
 
 struct Token;
 class AssemblerLexer;
 class Program;
 class ProgramSection;
-class IErrorReporter;
+class Expression;
 class Z80OpcodeParser;
+class IErrorReporter;
 
 class ParserError
 {
@@ -38,10 +40,9 @@ private:
 
     std::string readLabelName();
 
-    quint32 expectNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
-    bool expectByteLiteral(unsigned* out);
-    bool expectWordLiteral(unsigned* out);
-    bool expectRelativeByteOffset(unsigned* out);
+    quint32 parseNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
+    bool parseExpression(std::unique_ptr<Expression>* out); // in ExpressionParser.cpp
+
     std::string expectIdentifier(int tokenId);
     void expectComma(int tokenId);
     void expectEol(int tokenId);

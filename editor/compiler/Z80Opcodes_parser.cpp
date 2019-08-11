@@ -21,9 +21,9 @@ private:
     bool ident(const char* id) const { return mParser->matchIdentifier(id); }
     bool number(quint32 value) const { return mParser->matchNumber(value); }
 
-    bool byteLiteral(unsigned* value) const { return mParser->expectByteLiteral(value); }
-    bool byteOffset(unsigned* value) const { return mParser->expectRelativeByteOffset(value); }
-    bool wordLiteral(unsigned* value) const { return mParser->expectWordLiteral(value); }
+    bool byteLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }
+    bool byteOffset(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }
+    bool wordLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }
 
 public:
     explicit Z80OpcodeParser(AssemblerParser* parser)
@@ -36,8 +36,7 @@ public:
 
     bool adc()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -78,7 +77,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<ADC_A_n>(mToken, literal1);
+                        return mSection->emit<ADC_A_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
@@ -93,14 +92,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<ADC_A_mIXn>(mToken, literal1);
+                                return mSection->emit<ADC_A_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADC_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<ADC_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -111,7 +110,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADC_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<ADC_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -123,14 +122,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<ADC_A_mIYn>(mToken, literal1);
+                                return mSection->emit<ADC_A_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADC_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<ADC_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -141,7 +140,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADC_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<ADC_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -187,8 +186,7 @@ public:
 
     bool add()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -229,7 +227,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<ADD_A_n>(mToken, literal1);
+                        return mSection->emit<ADD_A_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
@@ -244,14 +242,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<ADD_A_mIXn>(mToken, literal1);
+                                return mSection->emit<ADD_A_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADD_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<ADD_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -262,7 +260,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADD_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<ADD_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -274,14 +272,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<ADD_A_mIYn>(mToken, literal1);
+                                return mSection->emit<ADD_A_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADD_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<ADD_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -292,7 +290,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<ADD_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<ADD_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -390,8 +388,7 @@ public:
 
     bool and()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -430,7 +427,7 @@ public:
         }
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<AND_n>(mToken, literal1);
+                return mSection->emit<AND_n>(mToken, std::move(literal1));
             return false;
         }
         if (token(T_LPAREN)) {
@@ -445,14 +442,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<AND_mIXn>(mToken, literal1);
+                        return mSection->emit<AND_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<AND_mIXn>(mToken, literal1);
+                                return mSection->emit<AND_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -463,7 +460,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<AND_mIXn>(mToken, literal1);
+                                return mSection->emit<AND_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -475,14 +472,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<AND_mIYn>(mToken, literal1);
+                        return mSection->emit<AND_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<AND_mIYn>(mToken, literal1);
+                                return mSection->emit<AND_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -493,7 +490,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<AND_mIYn>(mToken, literal1);
+                                return mSection->emit<AND_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -509,8 +506,7 @@ public:
 
     bool bit()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (number(0)) {
             if (token(T_COMMA)) {
@@ -526,14 +522,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_0_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_0_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -544,7 +540,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -556,14 +552,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_0_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_0_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -574,7 +570,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -638,14 +634,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_1_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_1_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -656,7 +652,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -668,14 +664,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_1_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_1_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -686,7 +682,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -750,14 +746,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_2_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_2_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -768,7 +764,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -780,14 +776,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_2_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_2_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -798,7 +794,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -862,14 +858,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_3_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_3_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -880,7 +876,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -892,14 +888,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_3_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_3_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -910,7 +906,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -974,14 +970,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_4_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_4_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -992,7 +988,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1004,14 +1000,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_4_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_4_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1022,7 +1018,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1086,14 +1082,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_5_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_5_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1104,7 +1100,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1116,14 +1112,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_5_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_5_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1134,7 +1130,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1198,14 +1194,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_6_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_6_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1216,7 +1212,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1228,14 +1224,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_6_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_6_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1246,7 +1242,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1310,14 +1306,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_7_mIXn>(mToken, literal1);
+                                return mSection->emit<BIT_7_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1328,7 +1324,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<BIT_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1340,14 +1336,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<BIT_7_mIYn>(mToken, literal1);
+                                return mSection->emit<BIT_7_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1358,7 +1354,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<BIT_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<BIT_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -1413,19 +1409,18 @@ public:
 
     bool call()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (wordLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<CALL_nn>(mToken, literal1);
+                return mSection->emit<CALL_nn>(mToken, std::move(literal1));
             return false;
         }
         if (ident("c")) {
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_C_nn>(mToken, literal1);
+                        return mSection->emit<CALL_C_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1436,7 +1431,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_M_nn>(mToken, literal1);
+                        return mSection->emit<CALL_M_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1447,7 +1442,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_NC_nn>(mToken, literal1);
+                        return mSection->emit<CALL_NC_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1458,7 +1453,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_NZ_nn>(mToken, literal1);
+                        return mSection->emit<CALL_NZ_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1469,7 +1464,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_P_nn>(mToken, literal1);
+                        return mSection->emit<CALL_P_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1480,7 +1475,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_PE_nn>(mToken, literal1);
+                        return mSection->emit<CALL_PE_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1491,7 +1486,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_PO_nn>(mToken, literal1);
+                        return mSection->emit<CALL_PO_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1502,7 +1497,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<CALL_Z_nn>(mToken, literal1);
+                        return mSection->emit<CALL_Z_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -1514,8 +1509,7 @@ public:
 
     bool ccf()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CCF>(mToken);
@@ -1524,8 +1518,7 @@ public:
 
     bool cp()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -1564,7 +1557,7 @@ public:
         }
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<CP_n>(mToken, literal1);
+                return mSection->emit<CP_n>(mToken, std::move(literal1));
             return false;
         }
         if (token(T_LPAREN)) {
@@ -1579,14 +1572,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<CP_mIXn>(mToken, literal1);
+                        return mSection->emit<CP_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<CP_mIXn>(mToken, literal1);
+                                return mSection->emit<CP_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1597,7 +1590,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<CP_mIXn>(mToken, literal1);
+                                return mSection->emit<CP_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1609,14 +1602,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<CP_mIYn>(mToken, literal1);
+                        return mSection->emit<CP_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<CP_mIYn>(mToken, literal1);
+                                return mSection->emit<CP_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1627,7 +1620,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<CP_mIYn>(mToken, literal1);
+                                return mSection->emit<CP_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1643,8 +1636,7 @@ public:
 
     bool cpd()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CPD>(mToken);
@@ -1653,8 +1645,7 @@ public:
 
     bool cpdr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CPDR>(mToken);
@@ -1663,8 +1654,7 @@ public:
 
     bool cpi()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CPI>(mToken);
@@ -1673,8 +1663,7 @@ public:
 
     bool cpir()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CPIR>(mToken);
@@ -1683,8 +1672,7 @@ public:
 
     bool cpl()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<CPL>(mToken);
@@ -1693,8 +1681,7 @@ public:
 
     bool daa()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<DAA>(mToken);
@@ -1703,8 +1690,7 @@ public:
 
     bool dec()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -1753,14 +1739,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<DEC_mIXn>(mToken, literal1);
+                        return mSection->emit<DEC_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<DEC_mIXn>(mToken, literal1);
+                                return mSection->emit<DEC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1771,7 +1757,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<DEC_mIXn>(mToken, literal1);
+                                return mSection->emit<DEC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1783,14 +1769,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<DEC_mIYn>(mToken, literal1);
+                        return mSection->emit<DEC_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<DEC_mIYn>(mToken, literal1);
+                                return mSection->emit<DEC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1801,7 +1787,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<DEC_mIYn>(mToken, literal1);
+                                return mSection->emit<DEC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -1847,8 +1833,7 @@ public:
 
     bool di()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<DI>(mToken);
@@ -1857,12 +1842,11 @@ public:
 
     bool djnz()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<DJNZ_n>(mToken, literal1);
+                return mSection->emit<DJNZ_n>(mToken, std::move(literal1));
             return false;
         }
         return false;
@@ -1870,8 +1854,7 @@ public:
 
     bool ei()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<EI>(mToken);
@@ -1880,8 +1863,7 @@ public:
 
     bool ex()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (token(T_LPAREN)) {
             if (ident("sp")) {
@@ -1937,8 +1919,7 @@ public:
 
     bool exx()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<EXX>(mToken);
@@ -1947,8 +1928,7 @@ public:
 
     bool halt()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<HALT>(mToken);
@@ -1957,8 +1937,7 @@ public:
 
     bool im()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (number(0)) {
             if (eol())
@@ -1980,8 +1959,7 @@ public:
 
     bool in()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -1989,7 +1967,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<IN_A_mn>(mToken, literal1);
+                                return mSection->emit<IN_A_mn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2115,8 +2093,7 @@ public:
 
     bool inc()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -2165,14 +2142,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<INC_mIXn>(mToken, literal1);
+                        return mSection->emit<INC_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<INC_mIXn>(mToken, literal1);
+                                return mSection->emit<INC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2183,7 +2160,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<INC_mIXn>(mToken, literal1);
+                                return mSection->emit<INC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2195,14 +2172,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<INC_mIYn>(mToken, literal1);
+                        return mSection->emit<INC_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<INC_mIYn>(mToken, literal1);
+                                return mSection->emit<INC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2213,7 +2190,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<INC_mIYn>(mToken, literal1);
+                                return mSection->emit<INC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2259,8 +2236,7 @@ public:
 
     bool ind()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<IND>(mToken);
@@ -2269,8 +2245,7 @@ public:
 
     bool indr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<INDR>(mToken);
@@ -2279,8 +2254,7 @@ public:
 
     bool ini()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<INI>(mToken);
@@ -2289,8 +2263,7 @@ public:
 
     bool inir()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<INIR>(mToken);
@@ -2299,19 +2272,18 @@ public:
 
     bool jp()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (wordLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<JP_nn>(mToken, literal1);
+                return mSection->emit<JP_nn>(mToken, std::move(literal1));
             return false;
         }
         if (ident("c")) {
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_C_nn>(mToken, literal1);
+                        return mSection->emit<JP_C_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2322,7 +2294,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_M_nn>(mToken, literal1);
+                        return mSection->emit<JP_M_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2333,7 +2305,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_NC_nn>(mToken, literal1);
+                        return mSection->emit<JP_NC_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2344,7 +2316,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_NZ_nn>(mToken, literal1);
+                        return mSection->emit<JP_NZ_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2355,7 +2327,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_P_nn>(mToken, literal1);
+                        return mSection->emit<JP_P_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2366,7 +2338,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_PE_nn>(mToken, literal1);
+                        return mSection->emit<JP_PE_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2377,7 +2349,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_PO_nn>(mToken, literal1);
+                        return mSection->emit<JP_PO_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2388,7 +2360,7 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<JP_Z_nn>(mToken, literal1);
+                        return mSection->emit<JP_Z_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2427,19 +2399,18 @@ public:
 
     bool jr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (byteOffset(&literal1)) {
             if (eol())
-                return mSection->emit<JR_off>(mToken, literal1);
+                return mSection->emit<JR_off>(mToken, std::move(literal1));
             return false;
         }
         if (ident("c")) {
             if (token(T_COMMA)) {
                 if (byteOffset(&literal1)) {
                     if (eol())
-                        return mSection->emit<JR_C_off>(mToken, literal1);
+                        return mSection->emit<JR_C_off>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2450,7 +2421,7 @@ public:
             if (token(T_COMMA)) {
                 if (byteOffset(&literal1)) {
                     if (eol())
-                        return mSection->emit<JR_NC_off>(mToken, literal1);
+                        return mSection->emit<JR_NC_off>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2461,7 +2432,7 @@ public:
             if (token(T_COMMA)) {
                 if (byteOffset(&literal1)) {
                     if (eol())
-                        return mSection->emit<JR_NZ_off>(mToken, literal1);
+                        return mSection->emit<JR_NZ_off>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2472,7 +2443,7 @@ public:
             if (token(T_COMMA)) {
                 if (byteOffset(&literal1)) {
                     if (eol())
-                        return mSection->emit<JR_Z_off>(mToken, literal1);
+                        return mSection->emit<JR_Z_off>(mToken, std::move(literal1));
                     return false;
                 }
                 return false;
@@ -2484,8 +2455,7 @@ public:
 
     bool ld()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -2509,7 +2479,7 @@ public:
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_A_mnn>(mToken, literal1);
+                                return mSection->emit<LD_A_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2525,14 +2495,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_A_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_A_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2543,7 +2513,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2555,14 +2525,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_A_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_A_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2573,7 +2543,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2596,7 +2566,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_A_n>(mToken, literal1);
+                        return mSection->emit<LD_A_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -2672,7 +2642,7 @@ public:
                     if (token(T_COMMA)) {
                         if (byteLiteral(&literal1)) {
                             if (eol())
-                                return mSection->emit<LD_mHL_n>(mToken, literal1);
+                                return mSection->emit<LD_mHL_n>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("a")) {
@@ -2721,42 +2691,42 @@ public:
                     if (token(T_COMMA)) {
                         if (byteLiteral(&literal2)) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_n>(mToken, literal1, literal2);
+                                return mSection->emit<LD_mIXn_n>(mToken, std::move(literal1), std::move(literal2));
                             return false;
                         }
                         if (ident("a")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_A>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_A>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("b")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_B>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_B>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("c")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_C>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_C>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("d")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_D>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_D>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("e")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_E>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_E>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("h")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_H>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_H>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("l")) {
                             if (eol())
-                                return mSection->emit<LD_mIXn_L>(mToken, literal1);
+                                return mSection->emit<LD_mIXn_L>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2769,42 +2739,42 @@ public:
                             if (token(T_COMMA)) {
                                 if (byteLiteral(&literal2)) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_n>(mToken, literal1, literal2);
+                                        return mSection->emit<LD_mIXn_n>(mToken, std::move(literal1), std::move(literal2));
                                     return false;
                                 }
                                 if (ident("a")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_A>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_A>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("b")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_B>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_B>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("c")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_C>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_C>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("d")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_D>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_D>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("e")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_E>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_E>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("h")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_H>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_H>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("l")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_L>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_L>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2821,42 +2791,42 @@ public:
                             if (token(T_COMMA)) {
                                 if (byteLiteral(&literal2)) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_n>(mToken, literal1, literal2);
+                                        return mSection->emit<LD_mIXn_n>(mToken, std::move(literal1), std::move(literal2));
                                     return false;
                                 }
                                 if (ident("a")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_A>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_A>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("b")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_B>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_B>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("c")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_C>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_C>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("d")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_D>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_D>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("e")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_E>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_E>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("h")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_H>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_H>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("l")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIXn_L>(mToken, literal1);
+                                        return mSection->emit<LD_mIXn_L>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2874,42 +2844,42 @@ public:
                     if (token(T_COMMA)) {
                         if (byteLiteral(&literal2)) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_n>(mToken, literal1, literal2);
+                                return mSection->emit<LD_mIYn_n>(mToken, std::move(literal1), std::move(literal2));
                             return false;
                         }
                         if (ident("a")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_A>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_A>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("b")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_B>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_B>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("c")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_C>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_C>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("d")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_D>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_D>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("e")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_E>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_E>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("h")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_H>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_H>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("l")) {
                             if (eol())
-                                return mSection->emit<LD_mIYn_L>(mToken, literal1);
+                                return mSection->emit<LD_mIYn_L>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -2922,42 +2892,42 @@ public:
                             if (token(T_COMMA)) {
                                 if (byteLiteral(&literal2)) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_n>(mToken, literal1, literal2);
+                                        return mSection->emit<LD_mIYn_n>(mToken, std::move(literal1), std::move(literal2));
                                     return false;
                                 }
                                 if (ident("a")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_A>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_A>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("b")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_B>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_B>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("c")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_C>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_C>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("d")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_D>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_D>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("e")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_E>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_E>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("h")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_H>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_H>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("l")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_L>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_L>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -2974,42 +2944,42 @@ public:
                             if (token(T_COMMA)) {
                                 if (byteLiteral(&literal2)) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_n>(mToken, literal1, literal2);
+                                        return mSection->emit<LD_mIYn_n>(mToken, std::move(literal1), std::move(literal2));
                                     return false;
                                 }
                                 if (ident("a")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_A>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_A>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("b")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_B>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_B>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("c")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_C>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_C>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("d")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_D>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_D>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("e")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_E>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_E>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("h")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_H>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_H>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 if (ident("l")) {
                                     if (eol())
-                                        return mSection->emit<LD_mIYn_L>(mToken, literal1);
+                                        return mSection->emit<LD_mIYn_L>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3027,37 +2997,37 @@ public:
                     if (token(T_COMMA)) {
                         if (ident("a")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_A>(mToken, literal1);
+                                return mSection->emit<LD_mnn_A>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("bc")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_BC>(mToken, literal1);
+                                return mSection->emit<LD_mnn_BC>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("de")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_DE>(mToken, literal1);
+                                return mSection->emit<LD_mnn_DE>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("hl")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_HL>(mToken, literal1);
+                                return mSection->emit<LD_mnn_HL>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("sp")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_SP>(mToken, literal1);
+                                return mSection->emit<LD_mnn_SP>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("ix")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_IX>(mToken, literal1);
+                                return mSection->emit<LD_mnn_IX>(mToken, std::move(literal1));
                             return false;
                         }
                         if (ident("iy")) {
                             if (eol())
-                                return mSection->emit<LD_mnn_IY>(mToken, literal1);
+                                return mSection->emit<LD_mnn_IY>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3072,14 +3042,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_BC_nn>(mToken, literal1);
+                        return mSection->emit<LD_BC_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_BC_mnn>(mToken, literal1);
+                                return mSection->emit<LD_BC_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3094,14 +3064,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_DE_nn>(mToken, literal1);
+                        return mSection->emit<LD_DE_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_DE_mnn>(mToken, literal1);
+                                return mSection->emit<LD_DE_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3116,14 +3086,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_HL_nn>(mToken, literal1);
+                        return mSection->emit<LD_HL_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_HL_mnn>(mToken, literal1);
+                                return mSection->emit<LD_HL_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3138,14 +3108,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_SP_nn>(mToken, literal1);
+                        return mSection->emit<LD_SP_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_SP_mnn>(mToken, literal1);
+                                return mSection->emit<LD_SP_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3186,14 +3156,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_IX_nn>(mToken, literal1);
+                        return mSection->emit<LD_IX_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_IX_mnn>(mToken, literal1);
+                                return mSection->emit<LD_IX_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3208,14 +3178,14 @@ public:
             if (token(T_COMMA)) {
                 if (wordLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_IY_nn>(mToken, literal1);
+                        return mSection->emit<LD_IY_nn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
                     if (wordLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_IY_mnn>(mToken, literal1);
+                                return mSection->emit<LD_IY_mnn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -3251,14 +3221,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_B_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_B_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_B_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_B_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3269,7 +3239,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_B_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_B_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3281,14 +3251,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_B_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_B_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_B_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_B_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3299,7 +3269,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_B_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_B_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3312,7 +3282,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_B_n>(mToken, literal1);
+                        return mSection->emit<LD_B_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3368,14 +3338,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_C_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_C_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_C_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_C_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3386,7 +3356,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_C_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_C_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3398,14 +3368,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_C_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_C_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_C_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_C_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3416,7 +3386,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_C_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_C_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3429,7 +3399,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_C_n>(mToken, literal1);
+                        return mSection->emit<LD_C_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3485,14 +3455,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_D_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_D_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_D_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_D_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3503,7 +3473,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_D_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_D_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3515,14 +3485,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_D_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_D_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_D_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_D_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3533,7 +3503,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_D_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_D_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3546,7 +3516,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_D_n>(mToken, literal1);
+                        return mSection->emit<LD_D_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3602,14 +3572,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_E_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_E_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_E_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_E_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3620,7 +3590,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_E_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_E_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3632,14 +3602,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_E_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_E_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_E_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_E_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3650,7 +3620,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_E_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_E_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3663,7 +3633,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_E_n>(mToken, literal1);
+                        return mSection->emit<LD_E_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3719,14 +3689,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_H_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_H_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_H_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_H_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3737,7 +3707,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_H_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_H_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3749,14 +3719,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_H_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_H_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_H_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_H_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3767,7 +3737,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_H_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_H_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3780,7 +3750,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_H_n>(mToken, literal1);
+                        return mSection->emit<LD_H_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3836,14 +3806,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_L_mIXn>(mToken, literal1);
+                                return mSection->emit<LD_L_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_L_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_L_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3854,7 +3824,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_L_mIXn>(mToken, literal1);
+                                        return mSection->emit<LD_L_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3866,14 +3836,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<LD_L_mIYn>(mToken, literal1);
+                                return mSection->emit<LD_L_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_L_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_L_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3884,7 +3854,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<LD_L_mIYn>(mToken, literal1);
+                                        return mSection->emit<LD_L_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -3897,7 +3867,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<LD_L_n>(mToken, literal1);
+                        return mSection->emit<LD_L_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (ident("a")) {
@@ -3944,8 +3914,7 @@ public:
 
     bool ldd()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<LDD>(mToken);
@@ -3954,8 +3923,7 @@ public:
 
     bool lddr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<LDDR>(mToken);
@@ -3964,8 +3932,7 @@ public:
 
     bool ldi()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<LDI>(mToken);
@@ -3974,8 +3941,7 @@ public:
 
     bool ldir()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<LDIR>(mToken);
@@ -3984,8 +3950,7 @@ public:
 
     bool neg()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<NEG>(mToken);
@@ -3994,8 +3959,7 @@ public:
 
     bool nop()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<NOP>(mToken);
@@ -4004,8 +3968,7 @@ public:
 
     bool or()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -4044,7 +4007,7 @@ public:
         }
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<OR_n>(mToken, literal1);
+                return mSection->emit<OR_n>(mToken, std::move(literal1));
             return false;
         }
         if (token(T_LPAREN)) {
@@ -4059,14 +4022,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<OR_mIXn>(mToken, literal1);
+                        return mSection->emit<OR_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<OR_mIXn>(mToken, literal1);
+                                return mSection->emit<OR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -4077,7 +4040,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<OR_mIXn>(mToken, literal1);
+                                return mSection->emit<OR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -4089,14 +4052,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<OR_mIYn>(mToken, literal1);
+                        return mSection->emit<OR_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<OR_mIYn>(mToken, literal1);
+                                return mSection->emit<OR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -4107,7 +4070,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<OR_mIYn>(mToken, literal1);
+                                return mSection->emit<OR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -4123,8 +4086,7 @@ public:
 
     bool otdr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<OTDR>(mToken);
@@ -4133,8 +4095,7 @@ public:
 
     bool otir()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<OTIR>(mToken);
@@ -4143,8 +4104,7 @@ public:
 
     bool out()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (token(T_LPAREN)) {
             if (byteLiteral(&literal1)) {
@@ -4152,7 +4112,7 @@ public:
                     if (token(T_COMMA)) {
                         if (ident("a")) {
                             if (eol())
-                                return mSection->emit<OUT_mn_A>(mToken, literal1);
+                                return mSection->emit<OUT_mn_A>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -4212,8 +4172,7 @@ public:
 
     bool outd()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<OUTD>(mToken);
@@ -4222,8 +4181,7 @@ public:
 
     bool outi()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<OUTI>(mToken);
@@ -4232,8 +4190,7 @@ public:
 
     bool pop()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("ix")) {
             if (eol())
@@ -4270,8 +4227,7 @@ public:
 
     bool push()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("ix")) {
             if (eol())
@@ -4308,8 +4264,7 @@ public:
 
     bool res()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (number(0)) {
             if (token(T_COMMA)) {
@@ -4360,14 +4315,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_0_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_0_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4378,7 +4333,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4390,14 +4345,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_0_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_0_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4408,7 +4363,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4472,14 +4427,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_1_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_1_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4490,7 +4445,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4502,14 +4457,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_1_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_1_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4520,7 +4475,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4584,14 +4539,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_2_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_2_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4602,7 +4557,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4614,14 +4569,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_2_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_2_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4632,7 +4587,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4696,14 +4651,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_3_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_3_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4714,7 +4669,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4726,14 +4681,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_3_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_3_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4744,7 +4699,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4808,14 +4763,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_4_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_4_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4826,7 +4781,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4838,14 +4793,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_4_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_4_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4856,7 +4811,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4920,14 +4875,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_5_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_5_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4938,7 +4893,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4950,14 +4905,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_5_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_5_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -4968,7 +4923,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5032,14 +4987,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_6_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_6_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5050,7 +5005,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5062,14 +5017,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_6_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_6_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5080,7 +5035,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5144,14 +5099,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_7_mIXn>(mToken, literal1);
+                                return mSection->emit<RES_7_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5162,7 +5117,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<RES_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5174,14 +5129,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RES_7_mIYn>(mToken, literal1);
+                                return mSection->emit<RES_7_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5192,7 +5147,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<RES_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<RES_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5212,8 +5167,7 @@ public:
 
     bool ret()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RET>(mToken);
@@ -5262,8 +5216,7 @@ public:
 
     bool reti()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RETI>(mToken);
@@ -5272,8 +5225,7 @@ public:
 
     bool retn()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RETN>(mToken);
@@ -5282,8 +5234,7 @@ public:
 
     bool rl()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -5332,14 +5283,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RL_mIXn>(mToken, literal1);
+                        return mSection->emit<RL_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RL_mIXn>(mToken, literal1);
+                                return mSection->emit<RL_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5350,7 +5301,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RL_mIXn>(mToken, literal1);
+                                return mSection->emit<RL_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5362,14 +5313,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RL_mIYn>(mToken, literal1);
+                        return mSection->emit<RL_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RL_mIYn>(mToken, literal1);
+                                return mSection->emit<RL_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5380,7 +5331,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RL_mIYn>(mToken, literal1);
+                                return mSection->emit<RL_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5396,8 +5347,7 @@ public:
 
     bool rla()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RLA>(mToken);
@@ -5406,8 +5356,7 @@ public:
 
     bool rlc()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -5456,14 +5405,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RLC_mIXn>(mToken, literal1);
+                        return mSection->emit<RLC_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RLC_mIXn>(mToken, literal1);
+                                return mSection->emit<RLC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5474,7 +5423,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RLC_mIXn>(mToken, literal1);
+                                return mSection->emit<RLC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5486,14 +5435,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RLC_mIYn>(mToken, literal1);
+                        return mSection->emit<RLC_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RLC_mIYn>(mToken, literal1);
+                                return mSection->emit<RLC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5504,7 +5453,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RLC_mIYn>(mToken, literal1);
+                                return mSection->emit<RLC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5520,8 +5469,7 @@ public:
 
     bool rlca()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RLCA>(mToken);
@@ -5530,8 +5478,7 @@ public:
 
     bool rld()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RLD>(mToken);
@@ -5540,8 +5487,7 @@ public:
 
     bool rr()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -5590,14 +5536,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RR_mIXn>(mToken, literal1);
+                        return mSection->emit<RR_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RR_mIXn>(mToken, literal1);
+                                return mSection->emit<RR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5608,7 +5554,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RR_mIXn>(mToken, literal1);
+                                return mSection->emit<RR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5620,14 +5566,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RR_mIYn>(mToken, literal1);
+                        return mSection->emit<RR_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RR_mIYn>(mToken, literal1);
+                                return mSection->emit<RR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5638,7 +5584,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RR_mIYn>(mToken, literal1);
+                                return mSection->emit<RR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5654,8 +5600,7 @@ public:
 
     bool rra()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RRA>(mToken);
@@ -5664,8 +5609,7 @@ public:
 
     bool rrc()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -5714,14 +5658,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RRC_mIXn>(mToken, literal1);
+                        return mSection->emit<RRC_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RRC_mIXn>(mToken, literal1);
+                                return mSection->emit<RRC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5732,7 +5676,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RRC_mIXn>(mToken, literal1);
+                                return mSection->emit<RRC_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5744,14 +5688,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<RRC_mIYn>(mToken, literal1);
+                        return mSection->emit<RRC_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RRC_mIYn>(mToken, literal1);
+                                return mSection->emit<RRC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5762,7 +5706,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<RRC_mIYn>(mToken, literal1);
+                                return mSection->emit<RRC_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -5778,8 +5722,7 @@ public:
 
     bool rrca()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RRCA>(mToken);
@@ -5788,8 +5731,7 @@ public:
 
     bool rrd()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<RRD>(mToken);
@@ -5798,8 +5740,7 @@ public:
 
     bool rst()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (number(0x00)) {
             if (eol())
@@ -5846,8 +5787,7 @@ public:
 
     bool sbc()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -5888,7 +5828,7 @@ public:
                 }
                 if (byteLiteral(&literal1)) {
                     if (eol())
-                        return mSection->emit<SBC_A_n>(mToken, literal1);
+                        return mSection->emit<SBC_A_n>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_LPAREN)) {
@@ -5903,14 +5843,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SBC_A_mIXn>(mToken, literal1);
+                                return mSection->emit<SBC_A_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SBC_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<SBC_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5921,7 +5861,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SBC_A_mIXn>(mToken, literal1);
+                                        return mSection->emit<SBC_A_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5933,14 +5873,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SBC_A_mIYn>(mToken, literal1);
+                                return mSection->emit<SBC_A_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SBC_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<SBC_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5951,7 +5891,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SBC_A_mIYn>(mToken, literal1);
+                                        return mSection->emit<SBC_A_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -5997,8 +5937,7 @@ public:
 
     bool scf()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (eol())
             return mSection->emit<SCF>(mToken);
@@ -6007,8 +5946,7 @@ public:
 
     bool set()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (number(0)) {
             if (token(T_COMMA)) {
@@ -6059,14 +5997,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_0_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_0_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6077,7 +6015,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_0_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_0_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6089,14 +6027,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_0_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_0_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6107,7 +6045,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_0_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_0_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6171,14 +6109,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_1_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_1_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6189,7 +6127,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_1_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_1_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6201,14 +6139,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_1_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_1_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6219,7 +6157,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_1_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_1_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6283,14 +6221,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_2_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_2_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6301,7 +6239,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_2_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_2_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6313,14 +6251,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_2_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_2_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6331,7 +6269,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_2_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_2_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6395,14 +6333,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_3_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_3_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6413,7 +6351,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_3_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_3_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6425,14 +6363,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_3_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_3_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6443,7 +6381,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_3_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_3_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6507,14 +6445,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_4_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_4_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6525,7 +6463,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_4_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_4_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6537,14 +6475,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_4_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_4_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6555,7 +6493,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_4_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_4_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6619,14 +6557,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_5_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_5_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6637,7 +6575,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_5_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_5_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6649,14 +6587,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_5_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_5_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6667,7 +6605,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_5_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_5_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6731,14 +6669,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_6_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_6_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6749,7 +6687,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_6_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_6_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6761,14 +6699,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_6_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_6_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6779,7 +6717,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_6_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_6_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6843,14 +6781,14 @@ public:
                     if (ident("ix")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_7_mIXn>(mToken, literal1);
+                                return mSection->emit<SET_7_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6861,7 +6799,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_7_mIXn>(mToken, literal1);
+                                        return mSection->emit<SET_7_mIXn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6873,14 +6811,14 @@ public:
                     if (ident("iy")) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SET_7_mIYn>(mToken, literal1);
+                                return mSection->emit<SET_7_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         if (token(T_PLUS)) {
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6891,7 +6829,7 @@ public:
                             if (byteLiteral(&literal1)) {
                                 if (token(T_RPAREN)) {
                                     if (eol())
-                                        return mSection->emit<SET_7_mIYn>(mToken, literal1);
+                                        return mSection->emit<SET_7_mIYn>(mToken, std::move(literal1));
                                     return false;
                                 }
                                 return false;
@@ -6911,8 +6849,7 @@ public:
 
     bool sla()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -6961,14 +6898,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SLA_mIXn>(mToken, literal1);
+                        return mSection->emit<SLA_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SLA_mIXn>(mToken, literal1);
+                                return mSection->emit<SLA_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -6979,7 +6916,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SLA_mIXn>(mToken, literal1);
+                                return mSection->emit<SLA_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -6991,14 +6928,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SLA_mIYn>(mToken, literal1);
+                        return mSection->emit<SLA_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SLA_mIYn>(mToken, literal1);
+                                return mSection->emit<SLA_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7009,7 +6946,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SLA_mIYn>(mToken, literal1);
+                                return mSection->emit<SLA_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7025,8 +6962,7 @@ public:
 
     bool sra()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -7075,14 +7011,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SRA_mIXn>(mToken, literal1);
+                        return mSection->emit<SRA_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRA_mIXn>(mToken, literal1);
+                                return mSection->emit<SRA_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7093,7 +7029,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRA_mIXn>(mToken, literal1);
+                                return mSection->emit<SRA_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7105,14 +7041,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SRA_mIYn>(mToken, literal1);
+                        return mSection->emit<SRA_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRA_mIYn>(mToken, literal1);
+                                return mSection->emit<SRA_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7123,7 +7059,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRA_mIYn>(mToken, literal1);
+                                return mSection->emit<SRA_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7139,8 +7075,7 @@ public:
 
     bool srl()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -7189,14 +7124,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SRL_mIXn>(mToken, literal1);
+                        return mSection->emit<SRL_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRL_mIXn>(mToken, literal1);
+                                return mSection->emit<SRL_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7207,7 +7142,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRL_mIXn>(mToken, literal1);
+                                return mSection->emit<SRL_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7219,14 +7154,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SRL_mIYn>(mToken, literal1);
+                        return mSection->emit<SRL_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRL_mIYn>(mToken, literal1);
+                                return mSection->emit<SRL_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7237,7 +7172,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SRL_mIYn>(mToken, literal1);
+                                return mSection->emit<SRL_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7253,8 +7188,7 @@ public:
 
     bool sub()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -7293,7 +7227,7 @@ public:
         }
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<SUB_n>(mToken, literal1);
+                return mSection->emit<SUB_n>(mToken, std::move(literal1));
             return false;
         }
         if (token(T_LPAREN)) {
@@ -7308,14 +7242,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SUB_mIXn>(mToken, literal1);
+                        return mSection->emit<SUB_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SUB_mIXn>(mToken, literal1);
+                                return mSection->emit<SUB_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7326,7 +7260,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SUB_mIXn>(mToken, literal1);
+                                return mSection->emit<SUB_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7338,14 +7272,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<SUB_mIYn>(mToken, literal1);
+                        return mSection->emit<SUB_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SUB_mIYn>(mToken, literal1);
+                                return mSection->emit<SUB_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7356,7 +7290,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<SUB_mIYn>(mToken, literal1);
+                                return mSection->emit<SUB_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7372,8 +7306,7 @@ public:
 
     bool xor()
     {
-        unsigned literal1, literal2;
-        (void)literal1; (void)literal2;
+        std::unique_ptr<Expression> literal1, literal2;
 
         if (ident("a")) {
             if (eol())
@@ -7412,7 +7345,7 @@ public:
         }
         if (byteLiteral(&literal1)) {
             if (eol())
-                return mSection->emit<XOR_n>(mToken, literal1);
+                return mSection->emit<XOR_n>(mToken, std::move(literal1));
             return false;
         }
         if (token(T_LPAREN)) {
@@ -7427,14 +7360,14 @@ public:
             if (ident("ix")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<XOR_mIXn>(mToken, literal1);
+                        return mSection->emit<XOR_mIXn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<XOR_mIXn>(mToken, literal1);
+                                return mSection->emit<XOR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7445,7 +7378,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<XOR_mIXn>(mToken, literal1);
+                                return mSection->emit<XOR_mIXn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7457,14 +7390,14 @@ public:
             if (ident("iy")) {
                 if (token(T_RPAREN)) {
                     if (eol())
-                        return mSection->emit<XOR_mIYn>(mToken, literal1);
+                        return mSection->emit<XOR_mIYn>(mToken, std::move(literal1));
                     return false;
                 }
                 if (token(T_PLUS)) {
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<XOR_mIYn>(mToken, literal1);
+                                return mSection->emit<XOR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;
@@ -7475,7 +7408,7 @@ public:
                     if (byteLiteral(&literal1)) {
                         if (token(T_RPAREN)) {
                             if (eol())
-                                return mSection->emit<XOR_mIYn>(mToken, literal1);
+                                return mSection->emit<XOR_mIYn>(mToken, std::move(literal1));
                             return false;
                         }
                         return false;

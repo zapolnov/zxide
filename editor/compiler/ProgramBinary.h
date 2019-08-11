@@ -17,6 +17,7 @@ public:
     size_t codeLength() const { return mCode.size(); }
 
     void emitByte(unsigned char byte);
+    void emitWord(unsigned short word);
 
 private:
     std::vector<unsigned char> mCode;

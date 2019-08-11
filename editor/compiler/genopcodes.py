@@ -53,13 +53,13 @@ class Opcode:
     def argsDecl(self):
         args = ''
         for idx in range(0, self.numLiterals):
-            args += ', unsigned literal%d' % (idx + 1)
+            args += ', std::unique_ptr<Expression> literal%d' % (idx + 1)
         return args
 
     def argsCall(self):
         args = ''
         for idx in range(0, self.numLiterals):
-            args += ', literal%d' % (idx + 1)
+            args += ', std::move(literal%d)' % (idx + 1)
         return args
 
     def codeForEmit(self):
@@ -73,14 +73,13 @@ class Opcode:
                     if '##' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    bin->emitByte(mLiteral%d & 0xFF);\n' % literalIndex
-                        code += '    bin->emitByte((mLiteral%d >> 8) & 0xFF);\n' % literalIndex
+                        code += '    bin->emitWord(mLiteral%d->evaluateWord(reporter));\n' % literalIndex
                         found = True
                         break
                     elif '#' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    bin->emitByte(mLiteral%d & 0xFF);\n' % literalIndex
+                        code += '    bin->emitByte(mLiteral%d->evaluateByte(reporter));\n' % literalIndex
                         found = True
                         break
                     else:
@@ -795,6 +794,8 @@ hdr += '#ifndef COMPILER_Z80OPCODES_H\n'
 hdr += '#define COMPILER_Z80OPCODES_H\n'
 hdr += '\n'
 hdr += '#include "ProgramOpcode.h"\n'
+hdr += '#include "Expression.h"\n'
+hdr += '#include <memory>\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
@@ -819,7 +820,7 @@ for opcode in opcodes:
     hdr += '    %s(const Token& token%s)\n' % (opcode.className, opcode.argsDecl())
     hdr += '        : ProgramOpcode(token)\n'
     for idx in range(0, opcode.numLiterals):
-        hdr += '        , mLiteral%d(literal%d)\n' % (idx + 1, idx + 1)
+        hdr += '        , mLiteral%d(std::move(literal%d))\n' % (idx + 1, idx + 1)
     hdr += '    {\n'
     hdr += '    }\n'
     hdr += '\n'
@@ -827,18 +828,18 @@ for opcode in opcodes:
     hdr += '    unsigned tstatesIfNotTaken() const override { return %d; }\n' % opcode.tstatesIfNotTaken
     hdr += '    unsigned tstatesIfTaken() const override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
-    hdr += '    void emitBinary(ProgramBinary* bin) const override;\n'
+    hdr += '    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;\n'
     hdr += '\n'
     if opcode.numLiterals > 0:
         hdr += 'private:\n'
         for idx in range(0, opcode.numLiterals):
-            hdr += '    unsigned mLiteral%d;\n' % (idx + 1)
+            hdr += '    std::unique_ptr<Expression> mLiteral%d;\n' % (idx + 1)
         hdr += '\n'
     hdr += '    Q_DISABLE_COPY(%s)\n' % opcode.className
     hdr += '};\n'
 
     src += '\n'
-    src += 'void %s::emitBinary(ProgramBinary* bin) const\n' % opcode.className
+    src += 'void %s::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const\n' % opcode.className
     src += '{\n'
     src += opcode.codeForEmit()
     src += '}\n'
@@ -958,9 +959,9 @@ src2 += '    bool token(int tok) const { return mParser->matchToken(tok); }\n'
 src2 += '    bool ident(const char* id) const { return mParser->matchIdentifier(id); }\n'
 src2 += '    bool number(quint32 value) const { return mParser->matchNumber(value); }\n'
 src2 += '\n'
-src2 += '    bool byteLiteral(unsigned* value) const { return mParser->expectByteLiteral(value); }\n'
-src2 += '    bool byteOffset(unsigned* value) const { return mParser->expectRelativeByteOffset(value); }\n'
-src2 += '    bool wordLiteral(unsigned* value) const { return mParser->expectWordLiteral(value); }\n'
+src2 += '    bool byteLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
+src2 += '    bool byteOffset(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
+src2 += '    bool wordLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
 src2 += '\n'
 src2 += 'public:\n'
 src2 += '    explicit Z80OpcodeParser(AssemblerParser* parser)\n'
@@ -975,8 +976,7 @@ for opcode, dict in opcodeMap.items():
     src2 += '\n'
     src2 += '    bool %s()\n' % opcode
     src2 += '    {\n'
-    src2 += '        unsigned literal1, literal2;\n'
-    src2 += '        (void)literal1; (void)literal2;\n'
+    src2 += '        std::unique_ptr<Expression> literal1, literal2;\n'
     src2 += '\n'
     genCode(dict, '        ')
     src2 += '    }\n'

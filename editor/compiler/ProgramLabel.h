@@ -24,7 +24,7 @@ public:
     unsigned tstatesIfTaken() const override;
 
     void resolveAddress(quint32& address) override;
-    void emitBinary(ProgramBinary* bin) const override;
+    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
 
 private:
     ProgramSection* mSection;

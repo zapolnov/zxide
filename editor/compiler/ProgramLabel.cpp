@@ -35,6 +35,6 @@ void ProgramLabel::resolveAddress(quint32& address)
     mAddress = unsigned(address);
 }
 
-void ProgramLabel::emitBinary(ProgramBinary* bin) const
+void ProgramLabel::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
 }

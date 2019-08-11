@@ -40,7 +40,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
         }
 
         for (ProgramSection* section : sections)
-            section->emitCode(binary.get());
+            section->emitCode(mReporter, binary.get());
 
         return binary;
     } catch (const LinkerError&) {

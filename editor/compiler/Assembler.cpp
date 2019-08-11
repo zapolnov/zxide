@@ -1,6 +1,7 @@
 #include "Assembler.h"
-#include "AssemblerParser.h"
 #include "AssemblerLexer.h"
+#include "AssemblerParser.h"
+#include "Expression.h"
 
 Assembler::Assembler(Program* program, IErrorReporter* reporter)
     : mProgram(program)
@@ -22,6 +23,8 @@ bool Assembler::parse(File* file, const QByteArray& fileData)
     } catch (const LexerError&) {
         return false;
     } catch (const ParserError&) {
+        return false;
+    } catch (const EvalError&) {
         return false;
     }
 }

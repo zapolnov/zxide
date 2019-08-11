@@ -43,7 +43,7 @@ public:
     }
 
     bool resolveAddresses(IErrorReporter* reporter, quint32& address) const;
-    void emitCode(ProgramBinary* binary) const;
+    void emitCode(IErrorReporter* reporter, ProgramBinary* binary) const;
 
 private:
     std::string mName;
