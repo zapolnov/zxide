@@ -35,7 +35,7 @@ void AssemblerParser::parseLine()
         std::string name = readLabelName(lastTokenId());
         label = mProgram->addLabel(lastToken(), mSection, name);
         if (!label)
-            error(tr("duplicate label '%1'").arg(name.c_str()));
+            error(tr("duplicate identifier '%1'").arg(name.c_str()));
         nextToken();
     }
 
@@ -44,13 +44,38 @@ void AssemblerParser::parseLine()
         return;
 
     // read directive / instruction
-    if (lastTokenId() != T_IDENTIFIER)
-        error(tr("expected opcode or directive"));
-    auto directive = toLower(lastTokenText());
-    if (directive == "section")
-        parseSectionDecl();
+    if (lastTokenId() == T_IDENTIFIER) {
+        auto str = toLower(lastTokenText());
+        if (parseOpcode(str))
+            return;
+        else if (str == "section") {
+            parseSectionDecl();
+            return;
+        }
+    }
+
+    // 'equ' directive handling
+
+    Token nameToken = lastToken();
+    std::string name;
+    if (lastTokenId() == T_IDENTIFIER)
+        name = nameToken.text.c_str();
+    else if (lastTokenId() == T_LOCAL_LABEL_NAME)
+        name = readLabelName(lastTokenId());
     else
-        parseOpcode();
+        error(tr("expected opcode or directive"));
+    if (nextToken() == T_IDENTIFIER && toLower(lastTokenText()) == "equ") {
+        auto expr = parseExpression(nextToken(), true);
+        if (!expr)
+            error(tr("expected expression after 'equ'"));
+        if (!mProgram->addConstant(name, std::move(expr)))
+            error(nameToken, tr("duplicate identifier '%1'").arg(name.c_str()));
+    } else {
+        if (nameToken.id == T_IDENTIFIER)
+            error(nameToken, tr("unknown opcode '%1'").arg(name.c_str()));
+        else
+            error(nameToken, tr("missing ':' after local label name"));
+    }
 }
 
 void AssemblerParser::parseSectionDecl()
@@ -99,10 +124,19 @@ void AssemblerParser::parseSectionDecl()
     return;
 }
 
-void AssemblerParser::parseOpcode()
+bool AssemblerParser::parseOpcode(const std::string& str)
 {
-    if (!parseOpcode_generated(toLower(lastTokenText())))
-        error(tr("syntax error"));
+    switch (parseOpcode_generated(str)) {
+        case OpcodeParseResult::Success:
+            return true;
+        case OpcodeParseResult::UnknownOpcode:
+            return false;
+        case OpcodeParseResult::SyntaxError:
+            break;
+    }
+
+    error(tr("syntax error"));
+    return true;
 }
 
 std::string AssemblerParser::readLabelName(int tokenId)

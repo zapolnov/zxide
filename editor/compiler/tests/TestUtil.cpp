@@ -7,22 +7,41 @@
 #include "ErrorConsumer.h"
 #include "DataBlob.h"
 
+static void assemble(IErrorReporter& errorConsumer, Program* program, const char* source)
+{
+    QByteArray fileData = source;
+    AssemblerLexer lexer(nullptr, fileData, &errorConsumer);
+    AssemblerParser parser(&lexer, program, &errorConsumer);
+    parser.parse();
+}
+
+static DataBlob link(IErrorReporter& errorConsumer, Program* program)
+{
+    Linker linker(program, &errorConsumer);
+    auto binary = linker.emitCode();
+    return (binary ? DataBlob(binary->codeBytes(), binary->codeLength()) : DataBlob());
+}
+
 DataBlob assemble(IErrorReporter& errorConsumer, const char* source)
 {
     try {
-        QByteArray fileData = source;
-        AssemblerLexer lexer(nullptr, fileData, &errorConsumer);
-
         Program program;
-        AssemblerParser parser(&lexer, &program, &errorConsumer);
-        parser.parse();
+        assemble(errorConsumer, &program, source);
+        return link(errorConsumer, &program);
+    } catch (const LexerError&) {
+        return DataBlob();
+    } catch (const ParserError&) {
+        return DataBlob();
+    }
+}
 
-        Linker linker(&program, &errorConsumer);
-        auto binary = linker.emitCode();
-        if (!binary)
-            return DataBlob();
-
-        return DataBlob(binary->codeBytes(), binary->codeLength());
+DataBlob assemble2(IErrorReporter& errorConsumer, const char* source1, const char* source2)
+{
+    try {
+        Program program;
+        assemble(errorConsumer, &program, source1);
+        assemble(errorConsumer, &program, source2);
+        return link(errorConsumer, &program);
     } catch (const LexerError&) {
         return DataBlob();
     } catch (const ParserError&) {

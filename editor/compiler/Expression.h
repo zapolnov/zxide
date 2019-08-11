@@ -5,8 +5,8 @@
 #include <string>
 #include <memory>
 
+class Program;
 class IErrorReporter;
-class ProgramSection;
 
 class EvalError
 {
@@ -20,7 +20,7 @@ public:
 
     const Token& token() const { return mToken; }
 
-    virtual bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter);
+    virtual bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter);
 
     unsigned char evaluateByte(IErrorReporter* reporter) const;
     unsigned char evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const;
@@ -56,7 +56,7 @@ public:
     explicit DollarExpression(const Token& token);
     ~DollarExpression() override;
 
-    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -73,7 +73,7 @@ public:
     IdentifierExpression(const Token& token, std::string name);
     ~IdentifierExpression() override;
 
-    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -90,7 +90,7 @@ public:
     NegateExpression(const Token& token, std::unique_ptr<Expression> operand);
     ~NegateExpression() override;
 
-    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -105,7 +105,7 @@ public:
     AddExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~AddExpression() override;
 
-    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
@@ -121,7 +121,7 @@ public:
     SubtractExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~SubtractExpression() override;
 
-    bool resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter) override;
+    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:

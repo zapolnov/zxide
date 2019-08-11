@@ -16,6 +16,10 @@ public:
     Program();
     ~Program();
 
+    bool addConstant(std::string name, std::unique_ptr<Expression> expr);
+    Expression* findConstant(const std::string& name) const;
+    bool resolveConstantValues(IErrorReporter* reporter) const;
+
     ProgramLabel* addLabel(const Token& token, ProgramSection* section, const std::string& name);
     ProgramLabel* findLabel(const std::string& name) const;
 
@@ -24,6 +28,7 @@ public:
     void forEachSection(const std::function<void(ProgramSection*)>& iterator) const;
 
 private:
+    std::map<std::string, std::unique_ptr<Expression>> mConstants;
     std::map<std::string, std::unique_ptr<ProgramSection>> mSections;
     std::map<std::string, ProgramLabel*> mLabels;
 

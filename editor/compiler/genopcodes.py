@@ -811,6 +811,7 @@ hdr += '#include <memory>\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
+src += '#include "ProgramSection.h"\n'
 src += '#include "ProgramBinary.h"\n'
 
 src2  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
@@ -866,7 +867,7 @@ for opcode in opcodes:
         src += '{\n'
         prefix = '    return '
         for idx in range(0, opcode.numLiterals):
-            src += '%smLiteral%d->resolveValues(section, address(), reporter)' % (prefix, idx + 1)
+            src += '%smLiteral%d->resolveValues(section->program(), address(), reporter)' % (prefix, idx + 1)
             prefix = '\n        && '
         src += ';\n'
         src += '}\n'
@@ -889,8 +890,9 @@ def genCode(dict, indent):
             src2 += '%s}\n' % indent
         else:
             src2 += '\n'
-            src2 += '%s    return mSection->emit<%s>(mToken%s);\n' % (indent, value.className, value.argsCall())
-    src2 += '%sreturn false;\n' % indent
+            src2 += '%s    return mSection->emit<%s>(mToken%s), AssemblerParser::OpcodeParseResult::Success;\n' % \
+                (indent, value.className, value.argsCall())
+    src2 += '%sreturn AssemblerParser::OpcodeParseResult::SyntaxError;\n' % indent
 
 def addCond(conds, what):
     for condlist in conds:
@@ -1011,28 +1013,28 @@ src2 += '    }\n'
 
 for opcode, dict in opcodeMap.items():
     src2 += '\n'
-    src2 += '    bool %s()\n' % opcode
+    src2 += '    AssemblerParser::OpcodeParseResult %s()\n' % opcode
     src2 += '    {\n'
     genCode(dict, '        ')
     src2 += '    }\n'
 
 src2 += '};\n'
 src2 += '\n'
-src2 += 'using Func = bool (Z80OpcodeParser::*)();\n'
+src2 += 'using Func = AssemblerParser::OpcodeParseResult (Z80OpcodeParser::*)();\n'
 src2 += 'static std::unordered_map<std::string, Func> opcodes = {\n'
 for opcode, dict in opcodeMap.items():
     src2 += '        { "%s", &Z80OpcodeParser::%s },\n' % (opcode, opcode)
 src2 += '    };\n'
 
 src2 += '\n'
-src2 += 'bool AssemblerParser::parseOpcode_generated(const std::string& opcode)\n'
+src2 += 'auto AssemblerParser::parseOpcode_generated(const std::string& opcode) -> OpcodeParseResult\n'
 src2 += '{\n'
 src2 += '    auto it = opcodes.find(opcode);\n'
 src2 += '    if (it != opcodes.end()) {\n'
 src2 += '        Z80OpcodeParser parser(this);\n'
 src2 += '        return (parser.*(it->second))();\n'
 src2 += '    }\n'
-src2 += '    return false;\n'
+src2 += '    return OpcodeParseResult::UnknownOpcode;\n'
 src2 += '}\n'
 
 hdr += '\n'

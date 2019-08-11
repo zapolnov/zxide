@@ -57,7 +57,7 @@ TEST_CASE("duplicate label", "[label]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate label 'label1'");
+    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'label1'");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
@@ -131,7 +131,7 @@ TEST_CASE("duplicate local label", "[label]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate label 'nonlocal@@1'");
+    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'nonlocal@@1'");
     REQUIRE(errorConsumer.lastErrorLine() == 4);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
@@ -147,7 +147,7 @@ TEST_CASE("duplicate full local label", "[label]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate label 'nonlocal@@1'");
+    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'nonlocal@@1'");
     REQUIRE(errorConsumer.lastErrorLine() == 4);
     REQUIRE(errorConsumer.errorCount() == 1);
 }

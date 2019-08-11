@@ -1,7 +1,6 @@
 #include "Expression.h"
 #include "IErrorReporter.h"
 #include "Program.h"
-#include "ProgramSection.h"
 #include "ProgramLabel.h"
 #include <QCoreApplication>
 
@@ -14,7 +13,7 @@ Expression::~Expression()
 {
 }
 
-bool Expression::resolveValues(const ProgramSection*, unsigned, IErrorReporter*)
+bool Expression::resolveValues(const Program*, unsigned, IErrorReporter*)
 {
     return true;
 }
@@ -94,7 +93,7 @@ DollarExpression::~DollarExpression()
 {
 }
 
-bool DollarExpression::resolveValues(const ProgramSection*, unsigned endAddress, IErrorReporter*)
+bool DollarExpression::resolveValues(const Program*, unsigned endAddress, IErrorReporter*)
 {
     Q_ASSERT(!mHasValue);
     mHasValue = true;
@@ -132,14 +131,21 @@ IdentifierExpression::~IdentifierExpression()
 {
 }
 
-bool IdentifierExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
+bool IdentifierExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
 {
     Q_ASSERT(!mHasValue);
 
-    auto label = section->program()->findLabel(mName);
+    auto label = program->findLabel(mName);
     if (label != nullptr) {
         Q_ASSERT(label->hasAddress());
         mValue = label->address();
+        mHasValue = true;
+        return true;
+    }
+
+    auto constant = program->findConstant(mName);
+    if (constant != nullptr) {
+        mValue = constant->evaluate(reporter);
         mHasValue = true;
         return true;
     }
@@ -151,7 +157,7 @@ bool IdentifierExpression::resolveValues(const ProgramSection* section, unsigned
 qint64 IdentifierExpression::evaluate(IErrorReporter* reporter) const
 {
     if (!mHasValue)
-        error(reporter, QCoreApplication::tr("'%1' is not allowed in this context").arg(mName.c_str()));
+        error(reporter, QCoreApplication::tr("value for '%1' is not yet calculated").arg(mName.c_str()));
 
     return mValue;
 }
@@ -168,9 +174,9 @@ NegateExpression::~NegateExpression()
 {
 }
 
-bool NegateExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
+bool NegateExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
 {
-    return mOperand->resolveValues(section, endAddress, reporter);
+    return mOperand->resolveValues(program, endAddress, reporter);
 }
 
 qint64 NegateExpression::evaluate(IErrorReporter* reporter) const
@@ -191,10 +197,10 @@ AddExpression::~AddExpression()
 {
 }
 
-bool AddExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
+bool AddExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
 {
-    return mOperand1->resolveValues(section, endAddress, reporter)
-        && mOperand2->resolveValues(section, endAddress, reporter);
+    return mOperand1->resolveValues(program, endAddress, reporter)
+        && mOperand2->resolveValues(program, endAddress, reporter);
 }
 
 qint64 AddExpression::evaluate(IErrorReporter* reporter) const
@@ -215,10 +221,10 @@ SubtractExpression::~SubtractExpression()
 {
 }
 
-bool SubtractExpression::resolveValues(const ProgramSection* section, unsigned endAddress, IErrorReporter* reporter)
+bool SubtractExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
 {
-    return mOperand1->resolveValues(section, endAddress, reporter)
-        && mOperand2->resolveValues(section, endAddress, reporter);
+    return mOperand1->resolveValues(program, endAddress, reporter)
+        && mOperand2->resolveValues(program, endAddress, reporter);
 }
 
 qint64 SubtractExpression::evaluate(IErrorReporter* reporter) const

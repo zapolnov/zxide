@@ -11,8 +11,10 @@ add_sources(CompilerTests
     3rdparty/catch.hpp
     DataBlob.cpp
     DataBlob.h
+    EquTests.cpp
     ErrorConsumer.cpp
     ErrorConsumer.h
+    ErrorTests.cpp
     ExpressionTests.cpp
     LabelTests.cpp
     OpcodeTests.cpp

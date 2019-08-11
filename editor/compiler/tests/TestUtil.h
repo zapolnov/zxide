@@ -5,5 +5,6 @@ class DataBlob;
 class IErrorReporter;
 
 DataBlob assemble(IErrorReporter& errorConsumer, const char* source);
+DataBlob assemble2(IErrorReporter& errorConsumer, const char* source1, const char* source2);
 
 #endif

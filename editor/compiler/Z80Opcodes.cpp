@@ -1,5 +1,6 @@
 // THIS IS A GENERATED FILE. DO NOT EDIT!
 #include "Z80Opcodes.h"
+#include "ProgramSection.h"
 #include "ProgramBinary.h"
 
 void ADC_A_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -45,7 +46,7 @@ void ADC_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADC_A_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADC_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -62,7 +63,7 @@ void ADC_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADC_A_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -74,7 +75,7 @@ void ADC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADC_A_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADC_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -144,7 +145,7 @@ void ADD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADD_A_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADD_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -161,7 +162,7 @@ void ADD_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADD_A_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -173,7 +174,7 @@ void ADD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool ADD_A_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void ADD_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -287,7 +288,7 @@ void AND_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool AND_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void AND_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -304,7 +305,7 @@ void AND_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool AND_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void AND_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -316,7 +317,7 @@ void AND_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool AND_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_0_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -377,7 +378,7 @@ void BIT_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_0_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -390,7 +391,7 @@ void BIT_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_1_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -403,7 +404,7 @@ void BIT_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_2_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -416,7 +417,7 @@ void BIT_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_3_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -429,7 +430,7 @@ void BIT_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_4_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -442,7 +443,7 @@ void BIT_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_5_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -455,7 +456,7 @@ void BIT_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_6_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -468,7 +469,7 @@ void BIT_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_7_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -481,7 +482,7 @@ void BIT_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_0_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -494,7 +495,7 @@ void BIT_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_1_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -507,7 +508,7 @@ void BIT_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_2_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -520,7 +521,7 @@ void BIT_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_3_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -533,7 +534,7 @@ void BIT_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_4_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -546,7 +547,7 @@ void BIT_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_5_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -559,7 +560,7 @@ void BIT_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_6_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -572,7 +573,7 @@ void BIT_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool BIT_7_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void BIT_0_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -919,7 +920,7 @@ void CALL_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -930,7 +931,7 @@ void CALL_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_C_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -941,7 +942,7 @@ void CALL_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_M_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -952,7 +953,7 @@ void CALL_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_NC_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -963,7 +964,7 @@ void CALL_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_NZ_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -974,7 +975,7 @@ void CALL_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_P_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -985,7 +986,7 @@ void CALL_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_PE_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -996,7 +997,7 @@ void CALL_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_PO_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CALL_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1007,7 +1008,7 @@ void CALL_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CALL_Z_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CCF::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1058,7 +1059,7 @@ void CP_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CP_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CP_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1075,7 +1076,7 @@ void CP_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CP_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CP_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1087,7 +1088,7 @@ void CP_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool CP_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void CPD::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1173,7 +1174,7 @@ void DEC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool DEC_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void DEC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1185,7 +1186,7 @@ void DEC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool DEC_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void DEC_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1234,7 +1235,7 @@ void DJNZ_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool DJNZ_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void EI::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1305,7 +1306,7 @@ void IN_A_mn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool IN_A_mn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void IN_A_mC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1399,7 +1400,7 @@ void INC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool INC_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void INC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1411,7 +1412,7 @@ void INC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool INC_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void INC_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1478,7 +1479,7 @@ void JP_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1489,7 +1490,7 @@ void JP_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_C_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1500,7 +1501,7 @@ void JP_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_M_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1511,7 +1512,7 @@ void JP_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_NC_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1522,7 +1523,7 @@ void JP_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_NZ_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1533,7 +1534,7 @@ void JP_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_P_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1544,7 +1545,7 @@ void JP_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_PE_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1555,7 +1556,7 @@ void JP_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_PO_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1566,7 +1567,7 @@ void JP_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JP_Z_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JP_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1595,7 +1596,7 @@ void JR_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JR_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JR_C_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1607,7 +1608,7 @@ void JR_C_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JR_C_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JR_NC_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1619,7 +1620,7 @@ void JR_NC_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JR_NC_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JR_NZ_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1631,7 +1632,7 @@ void JR_NZ_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JR_NZ_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void JR_Z_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1643,7 +1644,7 @@ void JR_Z_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool JR_Z_off::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_A_mBC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1670,7 +1671,7 @@ void LD_A_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_A_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_A_R::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1697,7 +1698,7 @@ void LD_mHL_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mHL_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1710,8 +1711,8 @@ void LD_mIXn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter)
-        && mLiteral2->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter)
+        && mLiteral2->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1724,8 +1725,8 @@ void LD_mIYn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter)
-        && mLiteral2->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter)
+        && mLiteral2->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1736,7 +1737,7 @@ void LD_mnn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_A::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1748,7 +1749,7 @@ void LD_mnn_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_BC::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_DE::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1760,7 +1761,7 @@ void LD_mnn_DE::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_DE::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_HL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1771,7 +1772,7 @@ void LD_mnn_HL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_HL::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_SP::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1783,7 +1784,7 @@ void LD_mnn_SP::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_SP::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1795,7 +1796,7 @@ void LD_mnn_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_IX::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mnn_IY::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1807,7 +1808,7 @@ void LD_mnn_IY::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mnn_IY::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_BC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1818,7 +1819,7 @@ void LD_BC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_BC_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_DE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1829,7 +1830,7 @@ void LD_DE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_DE_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_HL_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1840,7 +1841,7 @@ void LD_HL_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_HL_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_SP_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1851,7 +1852,7 @@ void LD_SP_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_SP_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_BC_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1863,7 +1864,7 @@ void LD_BC_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_BC_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_DE_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1875,7 +1876,7 @@ void LD_DE_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_DE_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_HL_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1886,7 +1887,7 @@ void LD_HL_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_HL_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_SP_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1898,7 +1899,7 @@ void LD_SP_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_SP_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mHL_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1945,7 +1946,7 @@ void LD_mIXn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_A::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1957,7 +1958,7 @@ void LD_mIXn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_B::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1969,7 +1970,7 @@ void LD_mIXn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_C::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1981,7 +1982,7 @@ void LD_mIXn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_D::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1993,7 +1994,7 @@ void LD_mIXn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_E::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2005,7 +2006,7 @@ void LD_mIXn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_H::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIXn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2017,7 +2018,7 @@ void LD_mIXn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIXn_L::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2029,7 +2030,7 @@ void LD_mIYn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_A::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2041,7 +2042,7 @@ void LD_mIYn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_B::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2053,7 +2054,7 @@ void LD_mIYn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_C::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2065,7 +2066,7 @@ void LD_mIYn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_D::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2077,7 +2078,7 @@ void LD_mIYn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_E::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2089,7 +2090,7 @@ void LD_mIYn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_H::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_mIYn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2101,7 +2102,7 @@ void LD_mIYn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_mIYn_L::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_I_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2119,7 +2120,7 @@ void LD_IX_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_IX_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_IX_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2131,7 +2132,7 @@ void LD_IX_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_IX_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_IY_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2143,7 +2144,7 @@ void LD_IY_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_IY_nn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_IY_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2155,7 +2156,7 @@ void LD_IY_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_IY_mnn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_R_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2208,7 +2209,7 @@ void LD_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_A_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_B_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2220,7 +2221,7 @@ void LD_B_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_B_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_C_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2232,7 +2233,7 @@ void LD_C_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_C_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_D_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2244,7 +2245,7 @@ void LD_D_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_D_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_E_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2256,7 +2257,7 @@ void LD_E_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_E_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_H_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2268,7 +2269,7 @@ void LD_H_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_H_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_L_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2280,7 +2281,7 @@ void LD_L_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_L_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2292,7 +2293,7 @@ void LD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_A_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_B_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2304,7 +2305,7 @@ void LD_B_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_B_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_C_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2316,7 +2317,7 @@ void LD_C_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_C_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_D_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2328,7 +2329,7 @@ void LD_D_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_D_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_E_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2340,7 +2341,7 @@ void LD_E_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_E_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_H_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2352,7 +2353,7 @@ void LD_H_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_H_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_L_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2364,7 +2365,7 @@ void LD_L_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_L_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2375,7 +2376,7 @@ void LD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_A_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_B_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2386,7 +2387,7 @@ void LD_B_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_B_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_C_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2397,7 +2398,7 @@ void LD_C_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_C_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_D_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2408,7 +2409,7 @@ void LD_D_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_D_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_E_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2419,7 +2420,7 @@ void LD_E_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_E_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_H_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2430,7 +2431,7 @@ void LD_H_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_H_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_L_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2441,7 +2442,7 @@ void LD_L_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool LD_L_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void LD_A_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2784,7 +2785,7 @@ void OR_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool OR_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void OR_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2801,7 +2802,7 @@ void OR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool OR_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void OR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2813,7 +2814,7 @@ void OR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool OR_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void OTDR::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2836,7 +2837,7 @@ void OUT_mn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool OUT_mn_A::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void OUT_mC_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3351,7 +3352,7 @@ void RES_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_0_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3364,7 +3365,7 @@ void RES_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_1_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3377,7 +3378,7 @@ void RES_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_2_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3390,7 +3391,7 @@ void RES_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_3_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3403,7 +3404,7 @@ void RES_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_4_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3416,7 +3417,7 @@ void RES_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_5_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3429,7 +3430,7 @@ void RES_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_6_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3442,7 +3443,7 @@ void RES_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_7_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3455,7 +3456,7 @@ void RES_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_0_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3468,7 +3469,7 @@ void RES_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_1_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3481,7 +3482,7 @@ void RES_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_2_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3494,7 +3495,7 @@ void RES_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_3_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3507,7 +3508,7 @@ void RES_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_4_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3520,7 +3521,7 @@ void RES_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_5_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3533,7 +3534,7 @@ void RES_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_6_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RES_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3546,7 +3547,7 @@ void RES_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RES_7_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RET::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3664,7 +3665,7 @@ void RL_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RL_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3677,7 +3678,7 @@ void RL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RL_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RLA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3743,7 +3744,7 @@ void RLC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RLC_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RLC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3756,7 +3757,7 @@ void RLC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RLC_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RLCA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3828,7 +3829,7 @@ void RR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RR_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3841,7 +3842,7 @@ void RR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RR_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RRA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3907,7 +3908,7 @@ void RRC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RRC_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RRC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3920,7 +3921,7 @@ void RRC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool RRC_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void RRCA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4017,7 +4018,7 @@ void SBC_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SBC_A_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SBC_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4034,7 +4035,7 @@ void SBC_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SBC_A_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SBC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4046,7 +4047,7 @@ void SBC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SBC_A_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SBC_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4472,7 +4473,7 @@ void SET_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_0_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4485,7 +4486,7 @@ void SET_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_1_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4498,7 +4499,7 @@ void SET_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_2_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4511,7 +4512,7 @@ void SET_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_3_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4524,7 +4525,7 @@ void SET_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_4_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4537,7 +4538,7 @@ void SET_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_5_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4550,7 +4551,7 @@ void SET_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_6_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4563,7 +4564,7 @@ void SET_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_7_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4576,7 +4577,7 @@ void SET_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_0_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4589,7 +4590,7 @@ void SET_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_1_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4602,7 +4603,7 @@ void SET_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_2_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4615,7 +4616,7 @@ void SET_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_3_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4628,7 +4629,7 @@ void SET_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_4_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4641,7 +4642,7 @@ void SET_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_5_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4654,7 +4655,7 @@ void SET_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_6_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SET_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4667,7 +4668,7 @@ void SET_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SET_7_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SLA_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4728,7 +4729,7 @@ void SLA_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SLA_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SLA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4741,7 +4742,7 @@ void SLA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SLA_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SRA_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4802,7 +4803,7 @@ void SRA_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SRA_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SRA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4815,7 +4816,7 @@ void SRA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SRA_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SRL_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4876,7 +4877,7 @@ void SRL_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SRL_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SRL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4889,7 +4890,7 @@ void SRL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SRL_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SUB_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4935,7 +4936,7 @@ void SUB_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SUB_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SUB_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4952,7 +4953,7 @@ void SUB_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SUB_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void SUB_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4964,7 +4965,7 @@ void SUB_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool SUB_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void XOR_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -5010,7 +5011,7 @@ void XOR_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool XOR_n::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void XOR_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -5027,7 +5028,7 @@ void XOR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool XOR_mIXn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }
 
 void XOR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -5039,5 +5040,5 @@ void XOR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 
 bool XOR_mIYn::resolveValues(const ProgramSection* section, IErrorReporter* reporter)
 {
-    return mLiteral1->resolveValues(section, address(), reporter);
+    return mLiteral1->resolveValues(section->program(), address(), reporter);
 }

@@ -42,6 +42,8 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
         }
 
         // Resolve values in expressions (as a separate pass as they may depend on label addresses)
+        if (!mProgram->resolveConstantValues(mReporter))
+            throw LinkerError();
         for (ProgramSection* section : sections) {
             if (!section->resolveValues(mReporter))
                 throw LinkerError();
