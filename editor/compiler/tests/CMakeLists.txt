@@ -1,6 +1,6 @@
 
 include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}/.."
+    "${CMAKE_CURRENT_SOURCE_DIR}"
     )
 
 qt_add_executable(CompilerTests USES Core)
@@ -9,16 +9,16 @@ set_target_properties(CompilerTests PROPERTIES FOLDER "Compiler" WIN32_EXECUTABL
 
 add_sources(CompilerTests
     3rdparty/catch.hpp
-    DataBlob.cpp
-    DataBlob.h
+    helpers/DataBlob.cpp
+    helpers/DataBlob.h
+    helpers/ErrorConsumer.cpp
+    helpers/ErrorConsumer.h
+    helpers/TestUtil.cpp
+    helpers/TestUtil.h
+    helpers/main.cpp
     EquTests.cpp
-    ErrorConsumer.cpp
-    ErrorConsumer.h
     ErrorTests.cpp
-    ExpressionTests.cpp
+    ExprTests.cpp
     LabelTests.cpp
     OpcodeTests.cpp
-    TestUtil.cpp
-    TestUtil.h
-    main.cpp
     )

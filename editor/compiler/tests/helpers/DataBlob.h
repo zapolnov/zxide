@@ -1,5 +1,5 @@
-#ifndef COMPILER_TESTS_DATABLOB_H
-#define COMPILER_TESTS_DATABLOB_H
+#ifndef COMPILER_TESTS_HELPERS_DATABLOB_H
+#define COMPILER_TESTS_HELPERS_DATABLOB_H
 
 #include <string>
 #include <ostream>

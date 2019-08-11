@@ -1,7 +1,7 @@
 #include "3rdparty/catch.hpp"
-#include "DataBlob.h"
-#include "ErrorConsumer.h"
-#include "TestUtil.h"
+#include "helpers/DataBlob.h"
+#include "helpers/ErrorConsumer.h"
+#include "helpers/TestUtil.h"
 
 TEST_CASE("forward label", "[labels]")
 {
