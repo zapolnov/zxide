@@ -410,3 +410,156 @@ TEST_CASE("parentheses", "[expr]")
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
+
+TEST_CASE("shifts", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, 1<<0\n"
+        "ld hl, 1<<1\n"
+        "ld hl, 1<<15\n"
+        "ld hl, 0<<16\n"
+        "ld hl, 0xab<<8\n"
+        "ld hl, 0x7fff<<1\n"
+        "ld hl, 0x7fff<<1>>1\n"
+        "ld a, 1<<0\n"
+        "ld a, 1<<1\n"
+        "ld a, 1<<7\n"
+        "ld a, 0<<8\n"
+        "ld a, 1<<1<<1\n"
+        "ld a, 1<<1+2\n"
+        "ld a, +(1<<1)+2\n"
+        "ld a, 2<<~0xfc\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x02,
+        0x00,
+        0x21,
+        0x00,
+        0x80,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x00,
+        0xab,
+        0x21,
+        0xfe,
+        0xff,
+        0x21,
+        0xff,
+        0x7f,
+        0x3e,
+        0x01,
+        0x3e,
+        0x02,
+        0x3e,
+        0x80,
+        0x3e,
+        0x00,
+        0x3e,
+        0x04,
+        0x3e,
+        0x08,
+        0x3e,
+        0x04,
+        0x3e,
+        0x10,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("8 bit left shift overflow", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld a, 1<<8\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "value 256 (0x100) does not fit into a byte");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("16 bit left shift overflow", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, 1<<16\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "value 65536 (0x10000) does not fit into a word");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("negative left shift counter", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld a, 1<<(7-8)\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "negative shift count for operator '<<'");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("negative right shift counter", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld a, 1>>(7-8)\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "negative shift count for operator '>>'");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("large left shift counter", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld a, 1<<65\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "shift count is too large for operator '<<'");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("large right shift counter", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld a, 1>>65\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "shift count is too large for operator '>>'");
+    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}

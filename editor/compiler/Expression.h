@@ -191,4 +191,34 @@ private:
     Q_DISABLE_COPY(RemainderExpression)
 };
 
+class ShiftLeftExpression : public Expression
+{
+public:
+    ShiftLeftExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~ShiftLeftExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(ShiftLeftExpression)
+};
+
+class ShiftRightExpression : public Expression
+{
+public:
+    ShiftRightExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~ShiftRightExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(ShiftRightExpression)
+};
+
 #endif

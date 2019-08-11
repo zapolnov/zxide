@@ -178,9 +178,31 @@ std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId
     return expr;
 }
 
+std::unique_ptr<Expression> AssemblerParser::parseShiftExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseAdditionExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_SHL || lastTokenId() == T_SHR) {
+        Token token = lastToken();
+
+        auto op2 = parseAdditionExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        switch (token.id) {
+            case T_SHL: expr.reset(new ShiftLeftExpression(token, std::move(expr), std::move(op2))); break;
+            case T_SHR: expr.reset(new ShiftRightExpression(token, std::move(expr), std::move(op2))); break;
+        }
+    }
+
+    return expr;
+}
+
 std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool unambiguous)
 {
-    return parseAdditionExpression(tokenId, unambiguous);
+    return parseShiftExpression(tokenId, unambiguous);
 }
 
 bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool unambiguous)

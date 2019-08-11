@@ -308,3 +308,71 @@ Value RemainderExpression::evaluate(ExprEvalContext& context) const
     Value b = context.evaluate(mOperand2);
     return smartEvaluate<false>([](qint64 a, qint64 b){ return a % b; }, a, b);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ShiftLeftExpression::ShiftLeftExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+ShiftLeftExpression::~ShiftLeftExpression()
+{
+}
+
+Value ShiftLeftExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+
+    if (b.number < 0) {
+        b.truncateToSignificantBits();
+        if (b.number < 0)
+            error(context, QCoreApplication::tr("negative shift count for operator '<<'"));
+    }
+
+    if (b.number > 64) {
+        b.truncateToSignificantBits();
+        if (b.number > 64)
+            error(context, QCoreApplication::tr("shift count is too large for operator '<<'"));
+    }
+
+    return smartEvaluate<false>([](qint64 a, qint64 b){ return a << b; }, a, b);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ShiftRightExpression::ShiftRightExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+ShiftRightExpression::~ShiftRightExpression()
+{
+}
+
+Value ShiftRightExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+
+    if (b.number < 0) {
+        b.truncateToSignificantBits();
+        if (b.number < 0)
+            error(context, QCoreApplication::tr("negative shift count for operator '>>'"));
+    }
+
+    if (b.number > 64) {
+        b.truncateToSignificantBits();
+        if (b.number > 64)
+            error(context, QCoreApplication::tr("shift count is too large for operator '>>'"));
+    }
+
+    return smartEvaluate<false>([](qint64 a, qint64 b){ return a >> b; }, a, b);
+}

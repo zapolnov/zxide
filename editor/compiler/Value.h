@@ -30,6 +30,7 @@ struct Value
 
     void truncateTo8Bit();
     void truncateTo16Bit();
+    void truncateToSignificantBits();
 
     static SignificantBits significantBitsForNumber(qint64 n);
     static SignificantBits significantBitsForNumber16(qint64 n);

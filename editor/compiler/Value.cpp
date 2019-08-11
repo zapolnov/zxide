@@ -44,6 +44,14 @@ void Value::truncateTo16Bit()
         number = qint64(quint16(number & 0xffff));
 }
 
+void Value::truncateToSignificantBits()
+{
+    switch (bits) {
+        case SignificantBits::NoMoreThan8: truncateTo8Bit(); return;
+        case SignificantBits::NoMoreThan16: truncateTo16Bit(); return;
+    }
+}
+
 SignificantBits Value::significantBitsForNumber(qint64 n)
 {
     if (n >= -128 && n < 256)
