@@ -915,10 +915,12 @@ for opcode in opcodes:
         else:
             addCond(conds, 'token(T_COMMA)')
 
-        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', "af'" ]:
+        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af' ]:
             addCond(conds, 'ident("%s")' % op)
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
             addCond(conds, 'ident("%s")' % op)
+        elif op == "af'":
+            addCond(conds, 'token(T_AF_SHADOW)')
         elif op in [ '0', '1', '2', '3', '4', '5', '6', '7' ]:
             addCond(conds, 'byteConstant()')
             addCond(conds, 'mByteConstant == %s' % op)

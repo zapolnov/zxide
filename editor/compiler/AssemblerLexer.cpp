@@ -335,6 +335,7 @@ int AssemblerLexer::readToken()
                         && tolower(mToken.text[1]) == 'f') {
                     ++mSource;
                     mToken.text += '\'';
+                    return T_AF_SHADOW;
                 } else if (*mSource == ':') {
                     ++mSource;
                     return T_LABEL;

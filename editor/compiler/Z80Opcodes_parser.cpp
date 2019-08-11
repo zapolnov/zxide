@@ -1867,7 +1867,7 @@ public:
         }
         if (ident("af")) {
             if (token(T_COMMA)) {
-                if (ident("af'")) {
+                if (token(T_AF_SHADOW)) {
                     if (eol())
                         return mSection->emit<EX_AF_AFs>(mToken);
                     return false;

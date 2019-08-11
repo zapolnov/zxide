@@ -16,6 +16,7 @@ enum TokenID
     T_LABEL,
     T_LOCAL_LABEL,
     T_LOCAL_LABEL_NAME,
+    T_AF_SHADOW, // "af'"
     T_AT,
     T_COMMA,
     T_QUESTION,

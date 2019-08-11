@@ -22,7 +22,6 @@ static std::unordered_set<std::string> registerNames = {
         "ix",
         "iy",
         "af",
-        "af'",
     };
 
 static std::unordered_set<std::string> conditionNames = {
