@@ -13,6 +13,7 @@ add_sources(CompilerTests
     DataBlob.h
     ErrorConsumer.cpp
     ErrorConsumer.h
+    ExpressionTests.cpp
     OpcodeTests.cpp
     TestUtil.cpp
     TestUtil.h
