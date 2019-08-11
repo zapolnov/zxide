@@ -777,6 +777,24 @@ src += '#include "DataBlob.h"\n'
 src += '#include "ErrorConsumer.h"\n'
 src += '#include "TestUtil.h"\n'
 
+def formatOpcode(opcode, i):
+    global asm1, str2
+    if opcode == '(ix+#)' and i == 0:
+        asm1 += '(ix)'
+        str2 += '(ix)'
+    elif opcode == '(ix+#)' and i > 127:
+        asm1 += '(ix%d)' % (127 - i)
+        str2 += '(ix%d)' % (127 - i)
+    elif opcode == '(iy+#)' and i == 0:
+        asm1 += '(iy)'
+        str2 += '(iy)'
+    elif opcode == '(iy+#)' and i > 127:
+        asm1 += '(iy%d)' % (127 - i)
+        str2 += '(iy%d)' % (127 - i)
+    else:
+        asm1 += opcode.replace('##', '%d' % i).replace('$+#', '$%+d' % (129 - i)).replace('#', '%d' % i)
+        str2 += opcode.replace('##', '%d' % i).replace('$+#', '%d' % (129 - i)).replace('#', '%d' % i)
+
 for opcode in opcodes:
     opcode_name = opcode[0]
     if len(opcode) > 1:
@@ -806,11 +824,13 @@ for opcode in opcodes:
             asm1 += opcode[0]
             str2  = opcode[0]
             if len(opcode) > 1:
-                asm1 += ' ' + opcode[1].replace('##', '%d' % i).replace('$+#', '$%+d' % (129 - i)).replace('#', '%d' % i)
-                str2 += ' ' + opcode[1].replace('##', '%d' % i).replace('$+#', '%d' % (129 - i)).replace('#', '%d' % i)
+                asm1 += ' '
+                str2 += ' '
+                formatOpcode(opcode[1], i)
             if len(opcode) > 2:
-                asm1 += ', ' + opcode[2].replace('##', '%d' % j).replace('$+#', '$%+d' % (129 - j)).replace('#', '%d' % j)
-                str2 += ', ' + opcode[2].replace('##', '%d' % j).replace('$+#', '%d' % (129 - j)).replace('#', '%d' % j)
+                asm1 += ', '
+                str2 += ', '
+                formatOpcode(opcode[2], j)
             asm1 += '\n'
             asm2.append(str2)
 

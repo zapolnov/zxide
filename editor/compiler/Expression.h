@@ -2,6 +2,7 @@
 #define COMPILER_EXPRESSION_H
 
 #include "AssemblerToken.h"
+#include <memory>
 
 class IErrorReporter;
 
@@ -42,6 +43,20 @@ private:
     qint64 mValue;
 
     Q_DISABLE_COPY(ConstantExpression)
+};
+
+class NegateExpression : public Expression
+{
+public:
+    NegateExpression(const Token& token, std::unique_ptr<Expression> operand);
+    ~NegateExpression() override;
+
+    qint64 evaluate(IErrorReporter* reporter) const override;
+
+private:
+    std::unique_ptr<Expression> mOperand;
+
+    Q_DISABLE_COPY(NegateExpression)
 };
 
 #endif

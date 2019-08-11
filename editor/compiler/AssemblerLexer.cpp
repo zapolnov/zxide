@@ -80,13 +80,38 @@ AssemblerLexer::AssemblerLexer(File* file, const QByteArray& fileData, IErrorRep
     : mReporter(reporter)
     , mFile(file)
     , mSource(fileData.constData())
+    , mSavedSource(nullptr)
     , mEnd(mSource + fileData.length())
     , mLine(1)
+    , mSavedLine(1)
 {
 }
 
 AssemblerLexer::~AssemblerLexer()
 {
+}
+
+void AssemblerLexer::save()
+{
+    Q_ASSERT(mSavedSource == nullptr);
+    mSavedSource = mSource;
+    mSavedLine = mLine;
+    mSavedToken = mToken;
+}
+
+void AssemblerLexer::restore()
+{
+    Q_ASSERT(mSavedSource != nullptr);
+    mSource = mSavedSource;
+    mLine = mSavedLine;
+    mToken = mSavedToken;
+    mSavedSource = nullptr;
+}
+
+void AssemblerLexer::forget()
+{
+    Q_ASSERT(mSavedSource != nullptr);
+    mSavedSource = nullptr;
 }
 
 const Token& AssemblerLexer::nextToken()

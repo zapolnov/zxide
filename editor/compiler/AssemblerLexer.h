@@ -19,6 +19,10 @@ public:
     explicit AssemblerLexer(File* file, const QByteArray& fileData, IErrorReporter* reporter);
     virtual ~AssemblerLexer();
 
+    void save();
+    void restore();
+    void forget();
+
     const Token& nextToken();
     const Token& lastToken() const { return mToken; }
 
@@ -26,9 +30,12 @@ private:
     IErrorReporter* mReporter;
     File* mFile;
     const char* mSource;
+    const char* mSavedSource;
     const char* mEnd;
     int mLine;
+    int mSavedLine;
     Token mToken;
+    Token mSavedToken;
 
     int readToken();
 

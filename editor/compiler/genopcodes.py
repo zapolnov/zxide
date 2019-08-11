@@ -59,7 +59,7 @@ class Opcode:
     def argsCall(self):
         args = ''
         for idx in range(0, self.numLiterals):
-            args += ', std::move(literal%d)' % (idx + 1)
+            args += ', std::move(mLiteral%d)' % (idx + 1)
         return args
 
     def codeForEmit(self):
@@ -822,6 +822,8 @@ for opcode in opcodes:
     for idx in range(0, opcode.numLiterals):
         hdr += '        , mLiteral%d(std::move(literal%d))\n' % (idx + 1, idx + 1)
     hdr += '    {\n'
+    for idx in range(0, opcode.numLiterals):
+        hdr += '        Q_ASSERT(mLiteral%d != nullptr);\n' % (idx + 1)
     hdr += '    }\n'
     hdr += '\n'
     hdr += '    unsigned lengthInBytes() const override { return %d; }\n' % opcode.lengthInBytes
@@ -893,9 +895,11 @@ for opcode in opcodes:
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
             addCond(conds, 'ident("%s")' % op)
         elif op in [ '0', '1', '2', '3', '4', '5', '6', '7' ]:
-            addCond(conds, 'number(%s)' % op)
+            addCond(conds, 'byteConstant()')
+            addCond(conds, 'mByteConstant == %s' % op)
         elif op in [ '00', '08', '10', '18', '20', '28', '30', '38' ]:
-            addCond(conds, 'number(0x%s)' % op)
+            addCond(conds, 'byteConstant()')
+            addCond(conds, 'mByteConstant == 0x%s' % op)
         elif op in [ '(bc)', '(de)', '(hl)', '(ix)', '(iy)', '(sp)' ]:
             addCond(conds, 'token(T_LPAREN)')
             addCond(conds, 'ident("%s")' % op[1:3])
@@ -906,12 +910,12 @@ for opcode in opcodes:
             orig = conds[:]
             alt1 = forkConds(conds, orig)
             alt2 = forkConds(conds, orig)
-            addCond(orig, 'token(T_RPAREN)')
+            addCond(orig, '(mLiteral%d = zero()), token(T_RPAREN)' % literalIndex)
             addCond(alt1, 'token(T_PLUS)')
-            addCond(alt1, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(alt1, 'byteLiteral(&mLiteral%d)' % literalIndex)
             addCond(alt1, 'token(T_RPAREN)')
-            addCond(alt2, 'token(T_MINUS)')
-            addCond(alt2, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(alt2, '(mMinusToken = mToken), token(T_MINUS)')
+            addCond(alt2, 'byteLiteralNegative(&mLiteral%d)' % literalIndex)
             addCond(alt2, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '(c)':
@@ -920,22 +924,22 @@ for opcode in opcodes:
             addCond(conds, 'token(T_RPAREN)')
         elif op == '(#)':
             addCond(conds, 'token(T_LPAREN)')
-            addCond(conds, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'byteLiteral(&mLiteral%d)' % literalIndex)
             addCond(conds, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '(##)':
             addCond(conds, 'token(T_LPAREN)')
-            addCond(conds, 'wordLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'wordLiteral(&mLiteral%d)' % literalIndex)
             addCond(conds, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '#':
-            addCond(conds, 'byteLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'byteLiteral(&mLiteral%d)' % literalIndex)
             literalIndex += 1
         elif op == '##':
-            addCond(conds, 'wordLiteral(&literal%d)' % literalIndex)
+            addCond(conds, 'wordLiteral(&mLiteral%d)' % literalIndex)
             literalIndex += 1
         elif op == 'R#':
-            addCond(conds, 'byteOffset(&literal%d)' % literalIndex)
+            addCond(conds, 'byteOffset(&mLiteral%d)' % literalIndex)
             literalIndex += 1
         else:
             raise Exception('Unknown operand "%s"' % op)
@@ -953,15 +957,21 @@ src2 += 'private:\n'
 src2 += '    AssemblerParser* mParser;\n'
 src2 += '    ProgramSection* mSection;\n'
 src2 += '    const Token& mToken;\n'
+src2 += '    Token mMinusToken;\n'
+src2 += '    std::unique_ptr<Expression> mLiteral1;\n'
+src2 += '    std::unique_ptr<Expression> mLiteral2;\n'
+src2 += '    unsigned char mByteConstant;\n'
 src2 += '\n'
 src2 += '    bool eol() const { return mParser->matchEol(); }\n'
 src2 += '    bool token(int tok) const { return mParser->matchToken(tok); }\n'
 src2 += '    bool ident(const char* id) const { return mParser->matchIdentifier(id); }\n'
-src2 += '    bool number(quint32 value) const { return mParser->matchNumber(value); }\n'
+src2 += '    bool byteConstant() { return mParser->matchByte(&mByteConstant); }\n'
+src2 += '    std::unique_ptr<Expression> zero() { return std::make_unique<ConstantExpression>(mParser->lastToken(), 0); }\n'
 src2 += '\n'
-src2 += '    bool byteLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
-src2 += '    bool byteOffset(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
-src2 += '    bool wordLiteral(std::unique_ptr<Expression>* out) const { return mParser->parseExpression(out); }\n'
+src2 += '    bool byteLiteral(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
+src2 += '    bool byteLiteralNegative(std::unique_ptr<Expression>* out) const { return mParser->matchExpressionNegative(mMinusToken, out); }\n'
+src2 += '    bool byteOffset(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
+src2 += '    bool wordLiteral(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
 src2 += '\n'
 src2 += 'public:\n'
 src2 += '    explicit Z80OpcodeParser(AssemblerParser* parser)\n'
@@ -976,8 +986,6 @@ for opcode, dict in opcodeMap.items():
     src2 += '\n'
     src2 += '    bool %s()\n' % opcode
     src2 += '    {\n'
-    src2 += '        std::unique_ptr<Expression> literal1, literal2;\n'
-    src2 += '\n'
     genCode(dict, '        ')
     src2 += '    }\n'
 

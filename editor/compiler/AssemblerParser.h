@@ -41,7 +41,7 @@ private:
     std::string readLabelName();
 
     quint32 parseNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
-    bool parseExpression(std::unique_ptr<Expression>* out); // in ExpressionParser.cpp
+    bool parseExpression(int tokenId, std::unique_ptr<Expression>* out); // in ExpressionParser.cpp
 
     std::string expectIdentifier(int tokenId);
     void expectComma(int tokenId);
@@ -50,7 +50,10 @@ private:
     bool matchEol();
     bool matchToken(int token);
     bool matchIdentifier(const char* ident);
-    bool matchNumber(quint32 value);
+    bool matchExpression(std::unique_ptr<Expression>* out);
+    bool matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out);
+    bool matchByte(unsigned char* out);
+    bool matchWord(unsigned short* out);
 
     int nextToken() const;
     const Token& lastToken() const;

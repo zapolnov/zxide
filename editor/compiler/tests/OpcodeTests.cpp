@@ -27,16 +27,16 @@ TEST_CASE("adc a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "adc a, (ix+170)\n"
+        "adc a, (ix-43)\n"
         "adc a, (ix+85)\n"
-        "adc a, (ix+0)\n"
-        "adc a, (ix+255)\n"
+        "adc a, (ix)\n"
+        "adc a, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x8e,
-        0xaa,
+        0xd5,
         0xdd,
         0x8e,
         0x55,
@@ -45,7 +45,7 @@ TEST_CASE("adc a, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x8e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -60,16 +60,16 @@ TEST_CASE("adc a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "adc a, (iy+170)\n"
+        "adc a, (iy-43)\n"
         "adc a, (iy+85)\n"
-        "adc a, (iy+0)\n"
-        "adc a, (iy+255)\n"
+        "adc a, (iy)\n"
+        "adc a, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x8e,
-        0xaa,
+        0xd5,
         0xfd,
         0x8e,
         0x55,
@@ -78,7 +78,7 @@ TEST_CASE("adc a, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x8e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -354,16 +354,16 @@ TEST_CASE("add a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "add a, (ix+170)\n"
+        "add a, (ix-43)\n"
         "add a, (ix+85)\n"
-        "add a, (ix+0)\n"
-        "add a, (ix+255)\n"
+        "add a, (ix)\n"
+        "add a, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x86,
-        0xaa,
+        0xd5,
         0xdd,
         0x86,
         0x55,
@@ -372,7 +372,7 @@ TEST_CASE("add a, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x86,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -387,16 +387,16 @@ TEST_CASE("add a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "add a, (iy+170)\n"
+        "add a, (iy-43)\n"
         "add a, (iy+85)\n"
-        "add a, (iy+0)\n"
-        "add a, (iy+255)\n"
+        "add a, (iy)\n"
+        "add a, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x86,
-        0xaa,
+        0xd5,
         0xfd,
         0x86,
         0x55,
@@ -405,7 +405,7 @@ TEST_CASE("add a, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x86,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -837,16 +837,16 @@ TEST_CASE("and (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "and (ix+170)\n"
+        "and (ix-43)\n"
         "and (ix+85)\n"
-        "and (ix+0)\n"
-        "and (ix+255)\n"
+        "and (ix)\n"
+        "and (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xa6,
-        0xaa,
+        0xd5,
         0xdd,
         0xa6,
         0x55,
@@ -855,7 +855,7 @@ TEST_CASE("and (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0xa6,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -870,16 +870,16 @@ TEST_CASE("and (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "and (iy+170)\n"
+        "and (iy-43)\n"
         "and (iy+85)\n"
-        "and (iy+0)\n"
-        "and (iy+255)\n"
+        "and (iy)\n"
+        "and (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xa6,
-        0xaa,
+        0xd5,
         0xfd,
         0xa6,
         0x55,
@@ -888,7 +888,7 @@ TEST_CASE("and (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0xa6,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -1085,16 +1085,16 @@ TEST_CASE("bit 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 0, (ix+170)\n"
+        "bit 0, (ix-43)\n"
         "bit 0, (ix+85)\n"
-        "bit 0, (ix+0)\n"
-        "bit 0, (ix+255)\n"
+        "bit 0, (ix)\n"
+        "bit 0, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x46,
         0xdd,
         0xcb,
@@ -1106,7 +1106,7 @@ TEST_CASE("bit 0, (ix+#)", "[opcodes]")
         0x46,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x46,
         };
 
@@ -1122,16 +1122,16 @@ TEST_CASE("bit 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 0, (iy+170)\n"
+        "bit 0, (iy-43)\n"
         "bit 0, (iy+85)\n"
-        "bit 0, (iy+0)\n"
-        "bit 0, (iy+255)\n"
+        "bit 0, (iy)\n"
+        "bit 0, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x46,
         0xfd,
         0xcb,
@@ -1143,7 +1143,7 @@ TEST_CASE("bit 0, (iy+#)", "[opcodes]")
         0x46,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x46,
         };
 
@@ -1319,16 +1319,16 @@ TEST_CASE("bit 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 1, (ix+170)\n"
+        "bit 1, (ix-43)\n"
         "bit 1, (ix+85)\n"
-        "bit 1, (ix+0)\n"
-        "bit 1, (ix+255)\n"
+        "bit 1, (ix)\n"
+        "bit 1, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x4e,
         0xdd,
         0xcb,
@@ -1340,7 +1340,7 @@ TEST_CASE("bit 1, (ix+#)", "[opcodes]")
         0x4e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x4e,
         };
 
@@ -1356,16 +1356,16 @@ TEST_CASE("bit 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 1, (iy+170)\n"
+        "bit 1, (iy-43)\n"
         "bit 1, (iy+85)\n"
-        "bit 1, (iy+0)\n"
-        "bit 1, (iy+255)\n"
+        "bit 1, (iy)\n"
+        "bit 1, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x4e,
         0xfd,
         0xcb,
@@ -1377,7 +1377,7 @@ TEST_CASE("bit 1, (iy+#)", "[opcodes]")
         0x4e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x4e,
         };
 
@@ -1553,16 +1553,16 @@ TEST_CASE("bit 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 2, (ix+170)\n"
+        "bit 2, (ix-43)\n"
         "bit 2, (ix+85)\n"
-        "bit 2, (ix+0)\n"
-        "bit 2, (ix+255)\n"
+        "bit 2, (ix)\n"
+        "bit 2, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x56,
         0xdd,
         0xcb,
@@ -1574,7 +1574,7 @@ TEST_CASE("bit 2, (ix+#)", "[opcodes]")
         0x56,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x56,
         };
 
@@ -1590,16 +1590,16 @@ TEST_CASE("bit 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 2, (iy+170)\n"
+        "bit 2, (iy-43)\n"
         "bit 2, (iy+85)\n"
-        "bit 2, (iy+0)\n"
-        "bit 2, (iy+255)\n"
+        "bit 2, (iy)\n"
+        "bit 2, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x56,
         0xfd,
         0xcb,
@@ -1611,7 +1611,7 @@ TEST_CASE("bit 2, (iy+#)", "[opcodes]")
         0x56,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x56,
         };
 
@@ -1787,16 +1787,16 @@ TEST_CASE("bit 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 3, (ix+170)\n"
+        "bit 3, (ix-43)\n"
         "bit 3, (ix+85)\n"
-        "bit 3, (ix+0)\n"
-        "bit 3, (ix+255)\n"
+        "bit 3, (ix)\n"
+        "bit 3, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x5e,
         0xdd,
         0xcb,
@@ -1808,7 +1808,7 @@ TEST_CASE("bit 3, (ix+#)", "[opcodes]")
         0x5e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x5e,
         };
 
@@ -1824,16 +1824,16 @@ TEST_CASE("bit 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 3, (iy+170)\n"
+        "bit 3, (iy-43)\n"
         "bit 3, (iy+85)\n"
-        "bit 3, (iy+0)\n"
-        "bit 3, (iy+255)\n"
+        "bit 3, (iy)\n"
+        "bit 3, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x5e,
         0xfd,
         0xcb,
@@ -1845,7 +1845,7 @@ TEST_CASE("bit 3, (iy+#)", "[opcodes]")
         0x5e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x5e,
         };
 
@@ -2021,16 +2021,16 @@ TEST_CASE("bit 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 4, (ix+170)\n"
+        "bit 4, (ix-43)\n"
         "bit 4, (ix+85)\n"
-        "bit 4, (ix+0)\n"
-        "bit 4, (ix+255)\n"
+        "bit 4, (ix)\n"
+        "bit 4, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x66,
         0xdd,
         0xcb,
@@ -2042,7 +2042,7 @@ TEST_CASE("bit 4, (ix+#)", "[opcodes]")
         0x66,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x66,
         };
 
@@ -2058,16 +2058,16 @@ TEST_CASE("bit 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 4, (iy+170)\n"
+        "bit 4, (iy-43)\n"
         "bit 4, (iy+85)\n"
-        "bit 4, (iy+0)\n"
-        "bit 4, (iy+255)\n"
+        "bit 4, (iy)\n"
+        "bit 4, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x66,
         0xfd,
         0xcb,
@@ -2079,7 +2079,7 @@ TEST_CASE("bit 4, (iy+#)", "[opcodes]")
         0x66,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x66,
         };
 
@@ -2255,16 +2255,16 @@ TEST_CASE("bit 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 5, (ix+170)\n"
+        "bit 5, (ix-43)\n"
         "bit 5, (ix+85)\n"
-        "bit 5, (ix+0)\n"
-        "bit 5, (ix+255)\n"
+        "bit 5, (ix)\n"
+        "bit 5, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x6e,
         0xdd,
         0xcb,
@@ -2276,7 +2276,7 @@ TEST_CASE("bit 5, (ix+#)", "[opcodes]")
         0x6e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x6e,
         };
 
@@ -2292,16 +2292,16 @@ TEST_CASE("bit 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 5, (iy+170)\n"
+        "bit 5, (iy-43)\n"
         "bit 5, (iy+85)\n"
-        "bit 5, (iy+0)\n"
-        "bit 5, (iy+255)\n"
+        "bit 5, (iy)\n"
+        "bit 5, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x6e,
         0xfd,
         0xcb,
@@ -2313,7 +2313,7 @@ TEST_CASE("bit 5, (iy+#)", "[opcodes]")
         0x6e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x6e,
         };
 
@@ -2489,16 +2489,16 @@ TEST_CASE("bit 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 6, (ix+170)\n"
+        "bit 6, (ix-43)\n"
         "bit 6, (ix+85)\n"
-        "bit 6, (ix+0)\n"
-        "bit 6, (ix+255)\n"
+        "bit 6, (ix)\n"
+        "bit 6, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x76,
         0xdd,
         0xcb,
@@ -2510,7 +2510,7 @@ TEST_CASE("bit 6, (ix+#)", "[opcodes]")
         0x76,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x76,
         };
 
@@ -2526,16 +2526,16 @@ TEST_CASE("bit 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 6, (iy+170)\n"
+        "bit 6, (iy-43)\n"
         "bit 6, (iy+85)\n"
-        "bit 6, (iy+0)\n"
-        "bit 6, (iy+255)\n"
+        "bit 6, (iy)\n"
+        "bit 6, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x76,
         0xfd,
         0xcb,
@@ -2547,7 +2547,7 @@ TEST_CASE("bit 6, (iy+#)", "[opcodes]")
         0x76,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x76,
         };
 
@@ -2723,16 +2723,16 @@ TEST_CASE("bit 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 7, (ix+170)\n"
+        "bit 7, (ix-43)\n"
         "bit 7, (ix+85)\n"
-        "bit 7, (ix+0)\n"
-        "bit 7, (ix+255)\n"
+        "bit 7, (ix)\n"
+        "bit 7, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x7e,
         0xdd,
         0xcb,
@@ -2744,7 +2744,7 @@ TEST_CASE("bit 7, (ix+#)", "[opcodes]")
         0x7e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x7e,
         };
 
@@ -2760,16 +2760,16 @@ TEST_CASE("bit 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "bit 7, (iy+170)\n"
+        "bit 7, (iy-43)\n"
         "bit 7, (iy+85)\n"
-        "bit 7, (iy+0)\n"
-        "bit 7, (iy+255)\n"
+        "bit 7, (iy)\n"
+        "bit 7, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x7e,
         0xfd,
         0xcb,
@@ -2781,7 +2781,7 @@ TEST_CASE("bit 7, (iy+#)", "[opcodes]")
         0x7e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x7e,
         };
 
@@ -3272,16 +3272,16 @@ TEST_CASE("cp (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "cp (ix+170)\n"
+        "cp (ix-43)\n"
         "cp (ix+85)\n"
-        "cp (ix+0)\n"
-        "cp (ix+255)\n"
+        "cp (ix)\n"
+        "cp (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xbe,
-        0xaa,
+        0xd5,
         0xdd,
         0xbe,
         0x55,
@@ -3290,7 +3290,7 @@ TEST_CASE("cp (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0xbe,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -3305,16 +3305,16 @@ TEST_CASE("cp (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "cp (iy+170)\n"
+        "cp (iy-43)\n"
         "cp (iy+85)\n"
-        "cp (iy+0)\n"
-        "cp (iy+255)\n"
+        "cp (iy)\n"
+        "cp (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xbe,
-        0xaa,
+        0xd5,
         0xfd,
         0xbe,
         0x55,
@@ -3323,7 +3323,7 @@ TEST_CASE("cp (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0xbe,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -3637,16 +3637,16 @@ TEST_CASE("dec (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "dec (ix+170)\n"
+        "dec (ix-43)\n"
         "dec (ix+85)\n"
-        "dec (ix+0)\n"
-        "dec (ix+255)\n"
+        "dec (ix)\n"
+        "dec (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x35,
-        0xaa,
+        0xd5,
         0xdd,
         0x35,
         0x55,
@@ -3655,7 +3655,7 @@ TEST_CASE("dec (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x35,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -3670,16 +3670,16 @@ TEST_CASE("dec (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "dec (iy+170)\n"
+        "dec (iy-43)\n"
         "dec (iy+85)\n"
-        "dec (iy+0)\n"
-        "dec (iy+255)\n"
+        "dec (iy)\n"
+        "dec (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x35,
-        0xaa,
+        0xd5,
         0xfd,
         0x35,
         0x55,
@@ -3688,7 +3688,7 @@ TEST_CASE("dec (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x35,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -4402,16 +4402,16 @@ TEST_CASE("inc (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "inc (ix+170)\n"
+        "inc (ix-43)\n"
         "inc (ix+85)\n"
-        "inc (ix+0)\n"
-        "inc (ix+255)\n"
+        "inc (ix)\n"
+        "inc (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x34,
-        0xaa,
+        0xd5,
         0xdd,
         0x34,
         0x55,
@@ -4420,7 +4420,7 @@ TEST_CASE("inc (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x34,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -4435,16 +4435,16 @@ TEST_CASE("inc (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "inc (iy+170)\n"
+        "inc (iy-43)\n"
         "inc (iy+85)\n"
-        "inc (iy+0)\n"
-        "inc (iy+255)\n"
+        "inc (iy)\n"
+        "inc (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x34,
-        0xaa,
+        0xd5,
         0xfd,
         0x34,
         0x55,
@@ -4453,7 +4453,7 @@ TEST_CASE("inc (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x34,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5498,16 +5498,16 @@ TEST_CASE("ld (ix+#), a", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), a\n"
+        "ld (ix-43), a\n"
         "ld (ix+85), a\n"
-        "ld (ix+0), a\n"
-        "ld (ix+255), a\n"
+        "ld (ix), a\n"
+        "ld (ix-128), a\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x77,
-        0xaa,
+        0xd5,
         0xdd,
         0x77,
         0x55,
@@ -5516,7 +5516,7 @@ TEST_CASE("ld (ix+#), a", "[opcodes]")
         0x00,
         0xdd,
         0x77,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5531,16 +5531,16 @@ TEST_CASE("ld (ix+#), b", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), b\n"
+        "ld (ix-43), b\n"
         "ld (ix+85), b\n"
-        "ld (ix+0), b\n"
-        "ld (ix+255), b\n"
+        "ld (ix), b\n"
+        "ld (ix-128), b\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x70,
-        0xaa,
+        0xd5,
         0xdd,
         0x70,
         0x55,
@@ -5549,7 +5549,7 @@ TEST_CASE("ld (ix+#), b", "[opcodes]")
         0x00,
         0xdd,
         0x70,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5564,16 +5564,16 @@ TEST_CASE("ld (ix+#), c", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), c\n"
+        "ld (ix-43), c\n"
         "ld (ix+85), c\n"
-        "ld (ix+0), c\n"
-        "ld (ix+255), c\n"
+        "ld (ix), c\n"
+        "ld (ix-128), c\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x71,
-        0xaa,
+        0xd5,
         0xdd,
         0x71,
         0x55,
@@ -5582,7 +5582,7 @@ TEST_CASE("ld (ix+#), c", "[opcodes]")
         0x00,
         0xdd,
         0x71,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5597,16 +5597,16 @@ TEST_CASE("ld (ix+#), d", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), d\n"
+        "ld (ix-43), d\n"
         "ld (ix+85), d\n"
-        "ld (ix+0), d\n"
-        "ld (ix+255), d\n"
+        "ld (ix), d\n"
+        "ld (ix-128), d\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x72,
-        0xaa,
+        0xd5,
         0xdd,
         0x72,
         0x55,
@@ -5615,7 +5615,7 @@ TEST_CASE("ld (ix+#), d", "[opcodes]")
         0x00,
         0xdd,
         0x72,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5630,16 +5630,16 @@ TEST_CASE("ld (ix+#), e", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), e\n"
+        "ld (ix-43), e\n"
         "ld (ix+85), e\n"
-        "ld (ix+0), e\n"
-        "ld (ix+255), e\n"
+        "ld (ix), e\n"
+        "ld (ix-128), e\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x73,
-        0xaa,
+        0xd5,
         0xdd,
         0x73,
         0x55,
@@ -5648,7 +5648,7 @@ TEST_CASE("ld (ix+#), e", "[opcodes]")
         0x00,
         0xdd,
         0x73,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5663,16 +5663,16 @@ TEST_CASE("ld (ix+#), h", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), h\n"
+        "ld (ix-43), h\n"
         "ld (ix+85), h\n"
-        "ld (ix+0), h\n"
-        "ld (ix+255), h\n"
+        "ld (ix), h\n"
+        "ld (ix-128), h\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x74,
-        0xaa,
+        0xd5,
         0xdd,
         0x74,
         0x55,
@@ -5681,7 +5681,7 @@ TEST_CASE("ld (ix+#), h", "[opcodes]")
         0x00,
         0xdd,
         0x74,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5696,16 +5696,16 @@ TEST_CASE("ld (ix+#), l", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), l\n"
+        "ld (ix-43), l\n"
         "ld (ix+85), l\n"
-        "ld (ix+0), l\n"
-        "ld (ix+255), l\n"
+        "ld (ix), l\n"
+        "ld (ix-128), l\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x75,
-        0xaa,
+        0xd5,
         0xdd,
         0x75,
         0x55,
@@ -5714,7 +5714,7 @@ TEST_CASE("ld (ix+#), l", "[opcodes]")
         0x00,
         0xdd,
         0x75,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5729,40 +5729,40 @@ TEST_CASE("ld (ix+#), #", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (ix+170), 170\n"
-        "ld (ix+170), 85\n"
-        "ld (ix+170), 0\n"
-        "ld (ix+170), 255\n"
+        "ld (ix-43), 170\n"
+        "ld (ix-43), 85\n"
+        "ld (ix-43), 0\n"
+        "ld (ix-43), 255\n"
         "ld (ix+85), 170\n"
         "ld (ix+85), 85\n"
         "ld (ix+85), 0\n"
         "ld (ix+85), 255\n"
-        "ld (ix+0), 170\n"
-        "ld (ix+0), 85\n"
-        "ld (ix+0), 0\n"
-        "ld (ix+0), 255\n"
-        "ld (ix+255), 170\n"
-        "ld (ix+255), 85\n"
-        "ld (ix+255), 0\n"
-        "ld (ix+255), 255\n"
+        "ld (ix), 170\n"
+        "ld (ix), 85\n"
+        "ld (ix), 0\n"
+        "ld (ix), 255\n"
+        "ld (ix-128), 170\n"
+        "ld (ix-128), 85\n"
+        "ld (ix-128), 0\n"
+        "ld (ix-128), 255\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x36,
-        0xaa,
+        0xd5,
         0xaa,
         0xdd,
         0x36,
-        0xaa,
+        0xd5,
         0x55,
         0xdd,
         0x36,
-        0xaa,
+        0xd5,
         0x00,
         0xdd,
         0x36,
-        0xaa,
+        0xd5,
         0xff,
         0xdd,
         0x36,
@@ -5798,19 +5798,19 @@ TEST_CASE("ld (ix+#), #", "[opcodes]")
         0xff,
         0xdd,
         0x36,
-        0xff,
+        0x80,
         0xaa,
         0xdd,
         0x36,
-        0xff,
+        0x80,
         0x55,
         0xdd,
         0x36,
-        0xff,
+        0x80,
         0x00,
         0xdd,
         0x36,
-        0xff,
+        0x80,
         0xff,
         };
 
@@ -5826,16 +5826,16 @@ TEST_CASE("ld (iy+#), a", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), a\n"
+        "ld (iy-43), a\n"
         "ld (iy+85), a\n"
-        "ld (iy+0), a\n"
-        "ld (iy+255), a\n"
+        "ld (iy), a\n"
+        "ld (iy-128), a\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x77,
-        0xaa,
+        0xd5,
         0xfd,
         0x77,
         0x55,
@@ -5844,7 +5844,7 @@ TEST_CASE("ld (iy+#), a", "[opcodes]")
         0x00,
         0xfd,
         0x77,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5859,16 +5859,16 @@ TEST_CASE("ld (iy+#), b", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), b\n"
+        "ld (iy-43), b\n"
         "ld (iy+85), b\n"
-        "ld (iy+0), b\n"
-        "ld (iy+255), b\n"
+        "ld (iy), b\n"
+        "ld (iy-128), b\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x70,
-        0xaa,
+        0xd5,
         0xfd,
         0x70,
         0x55,
@@ -5877,7 +5877,7 @@ TEST_CASE("ld (iy+#), b", "[opcodes]")
         0x00,
         0xfd,
         0x70,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5892,16 +5892,16 @@ TEST_CASE("ld (iy+#), c", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), c\n"
+        "ld (iy-43), c\n"
         "ld (iy+85), c\n"
-        "ld (iy+0), c\n"
-        "ld (iy+255), c\n"
+        "ld (iy), c\n"
+        "ld (iy-128), c\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x71,
-        0xaa,
+        0xd5,
         0xfd,
         0x71,
         0x55,
@@ -5910,7 +5910,7 @@ TEST_CASE("ld (iy+#), c", "[opcodes]")
         0x00,
         0xfd,
         0x71,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5925,16 +5925,16 @@ TEST_CASE("ld (iy+#), d", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), d\n"
+        "ld (iy-43), d\n"
         "ld (iy+85), d\n"
-        "ld (iy+0), d\n"
-        "ld (iy+255), d\n"
+        "ld (iy), d\n"
+        "ld (iy-128), d\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x72,
-        0xaa,
+        0xd5,
         0xfd,
         0x72,
         0x55,
@@ -5943,7 +5943,7 @@ TEST_CASE("ld (iy+#), d", "[opcodes]")
         0x00,
         0xfd,
         0x72,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5958,16 +5958,16 @@ TEST_CASE("ld (iy+#), e", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), e\n"
+        "ld (iy-43), e\n"
         "ld (iy+85), e\n"
-        "ld (iy+0), e\n"
-        "ld (iy+255), e\n"
+        "ld (iy), e\n"
+        "ld (iy-128), e\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x73,
-        0xaa,
+        0xd5,
         0xfd,
         0x73,
         0x55,
@@ -5976,7 +5976,7 @@ TEST_CASE("ld (iy+#), e", "[opcodes]")
         0x00,
         0xfd,
         0x73,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -5991,16 +5991,16 @@ TEST_CASE("ld (iy+#), h", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), h\n"
+        "ld (iy-43), h\n"
         "ld (iy+85), h\n"
-        "ld (iy+0), h\n"
-        "ld (iy+255), h\n"
+        "ld (iy), h\n"
+        "ld (iy-128), h\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x74,
-        0xaa,
+        0xd5,
         0xfd,
         0x74,
         0x55,
@@ -6009,7 +6009,7 @@ TEST_CASE("ld (iy+#), h", "[opcodes]")
         0x00,
         0xfd,
         0x74,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -6024,16 +6024,16 @@ TEST_CASE("ld (iy+#), l", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), l\n"
+        "ld (iy-43), l\n"
         "ld (iy+85), l\n"
-        "ld (iy+0), l\n"
-        "ld (iy+255), l\n"
+        "ld (iy), l\n"
+        "ld (iy-128), l\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x75,
-        0xaa,
+        0xd5,
         0xfd,
         0x75,
         0x55,
@@ -6042,7 +6042,7 @@ TEST_CASE("ld (iy+#), l", "[opcodes]")
         0x00,
         0xfd,
         0x75,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -6057,40 +6057,40 @@ TEST_CASE("ld (iy+#), #", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld (iy+170), 170\n"
-        "ld (iy+170), 85\n"
-        "ld (iy+170), 0\n"
-        "ld (iy+170), 255\n"
+        "ld (iy-43), 170\n"
+        "ld (iy-43), 85\n"
+        "ld (iy-43), 0\n"
+        "ld (iy-43), 255\n"
         "ld (iy+85), 170\n"
         "ld (iy+85), 85\n"
         "ld (iy+85), 0\n"
         "ld (iy+85), 255\n"
-        "ld (iy+0), 170\n"
-        "ld (iy+0), 85\n"
-        "ld (iy+0), 0\n"
-        "ld (iy+0), 255\n"
-        "ld (iy+255), 170\n"
-        "ld (iy+255), 85\n"
-        "ld (iy+255), 0\n"
-        "ld (iy+255), 255\n"
+        "ld (iy), 170\n"
+        "ld (iy), 85\n"
+        "ld (iy), 0\n"
+        "ld (iy), 255\n"
+        "ld (iy-128), 170\n"
+        "ld (iy-128), 85\n"
+        "ld (iy-128), 0\n"
+        "ld (iy-128), 255\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x36,
-        0xaa,
+        0xd5,
         0xaa,
         0xfd,
         0x36,
-        0xaa,
+        0xd5,
         0x55,
         0xfd,
         0x36,
-        0xaa,
+        0xd5,
         0x00,
         0xfd,
         0x36,
-        0xaa,
+        0xd5,
         0xff,
         0xfd,
         0x36,
@@ -6126,19 +6126,19 @@ TEST_CASE("ld (iy+#), #", "[opcodes]")
         0xff,
         0xfd,
         0x36,
-        0xff,
+        0x80,
         0xaa,
         0xfd,
         0x36,
-        0xff,
+        0x80,
         0x55,
         0xfd,
         0x36,
-        0xff,
+        0x80,
         0x00,
         0xfd,
         0x36,
-        0xff,
+        0x80,
         0xff,
         };
 
@@ -6462,16 +6462,16 @@ TEST_CASE("ld a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld a, (ix+170)\n"
+        "ld a, (ix-43)\n"
         "ld a, (ix+85)\n"
-        "ld a, (ix+0)\n"
-        "ld a, (ix+255)\n"
+        "ld a, (ix)\n"
+        "ld a, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x7e,
-        0xaa,
+        0xd5,
         0xdd,
         0x7e,
         0x55,
@@ -6480,7 +6480,7 @@ TEST_CASE("ld a, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x7e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -6495,16 +6495,16 @@ TEST_CASE("ld a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld a, (iy+170)\n"
+        "ld a, (iy-43)\n"
         "ld a, (iy+85)\n"
-        "ld a, (iy+0)\n"
-        "ld a, (iy+255)\n"
+        "ld a, (iy)\n"
+        "ld a, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x7e,
-        0xaa,
+        0xd5,
         0xfd,
         0x7e,
         0x55,
@@ -6513,7 +6513,7 @@ TEST_CASE("ld a, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x7e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -6782,16 +6782,16 @@ TEST_CASE("ld b, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld b, (ix+170)\n"
+        "ld b, (ix-43)\n"
         "ld b, (ix+85)\n"
-        "ld b, (ix+0)\n"
-        "ld b, (ix+255)\n"
+        "ld b, (ix)\n"
+        "ld b, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x46,
-        0xaa,
+        0xd5,
         0xdd,
         0x46,
         0x55,
@@ -6800,7 +6800,7 @@ TEST_CASE("ld b, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x46,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -6815,16 +6815,16 @@ TEST_CASE("ld b, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld b, (iy+170)\n"
+        "ld b, (iy-43)\n"
         "ld b, (iy+85)\n"
-        "ld b, (iy+0)\n"
-        "ld b, (iy+255)\n"
+        "ld b, (iy)\n"
+        "ld b, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x46,
-        0xaa,
+        0xd5,
         0xfd,
         0x46,
         0x55,
@@ -6833,7 +6833,7 @@ TEST_CASE("ld b, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x46,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7099,16 +7099,16 @@ TEST_CASE("ld c, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld c, (ix+170)\n"
+        "ld c, (ix-43)\n"
         "ld c, (ix+85)\n"
-        "ld c, (ix+0)\n"
-        "ld c, (ix+255)\n"
+        "ld c, (ix)\n"
+        "ld c, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x4e,
-        0xaa,
+        0xd5,
         0xdd,
         0x4e,
         0x55,
@@ -7117,7 +7117,7 @@ TEST_CASE("ld c, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x4e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7132,16 +7132,16 @@ TEST_CASE("ld c, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld c, (iy+170)\n"
+        "ld c, (iy-43)\n"
         "ld c, (iy+85)\n"
-        "ld c, (iy+0)\n"
-        "ld c, (iy+255)\n"
+        "ld c, (iy)\n"
+        "ld c, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x4e,
-        0xaa,
+        0xd5,
         0xfd,
         0x4e,
         0x55,
@@ -7150,7 +7150,7 @@ TEST_CASE("ld c, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x4e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7346,16 +7346,16 @@ TEST_CASE("ld d, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld d, (ix+170)\n"
+        "ld d, (ix-43)\n"
         "ld d, (ix+85)\n"
-        "ld d, (ix+0)\n"
-        "ld d, (ix+255)\n"
+        "ld d, (ix)\n"
+        "ld d, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x56,
-        0xaa,
+        0xd5,
         0xdd,
         0x56,
         0x55,
@@ -7364,7 +7364,7 @@ TEST_CASE("ld d, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x56,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7379,16 +7379,16 @@ TEST_CASE("ld d, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld d, (iy+170)\n"
+        "ld d, (iy-43)\n"
         "ld d, (iy+85)\n"
-        "ld d, (iy+0)\n"
-        "ld d, (iy+255)\n"
+        "ld d, (iy)\n"
+        "ld d, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x56,
-        0xaa,
+        0xd5,
         0xfd,
         0x56,
         0x55,
@@ -7397,7 +7397,7 @@ TEST_CASE("ld d, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x56,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7663,16 +7663,16 @@ TEST_CASE("ld e, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld e, (ix+170)\n"
+        "ld e, (ix-43)\n"
         "ld e, (ix+85)\n"
-        "ld e, (ix+0)\n"
-        "ld e, (ix+255)\n"
+        "ld e, (ix)\n"
+        "ld e, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x5e,
-        0xaa,
+        0xd5,
         0xdd,
         0x5e,
         0x55,
@@ -7681,7 +7681,7 @@ TEST_CASE("ld e, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x5e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7696,16 +7696,16 @@ TEST_CASE("ld e, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld e, (iy+170)\n"
+        "ld e, (iy-43)\n"
         "ld e, (iy+85)\n"
-        "ld e, (iy+0)\n"
-        "ld e, (iy+255)\n"
+        "ld e, (iy)\n"
+        "ld e, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x5e,
-        0xaa,
+        0xd5,
         0xfd,
         0x5e,
         0x55,
@@ -7714,7 +7714,7 @@ TEST_CASE("ld e, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x5e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7910,16 +7910,16 @@ TEST_CASE("ld h, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld h, (ix+170)\n"
+        "ld h, (ix-43)\n"
         "ld h, (ix+85)\n"
-        "ld h, (ix+0)\n"
-        "ld h, (ix+255)\n"
+        "ld h, (ix)\n"
+        "ld h, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x66,
-        0xaa,
+        0xd5,
         0xdd,
         0x66,
         0x55,
@@ -7928,7 +7928,7 @@ TEST_CASE("ld h, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x66,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -7943,16 +7943,16 @@ TEST_CASE("ld h, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld h, (iy+170)\n"
+        "ld h, (iy-43)\n"
         "ld h, (iy+85)\n"
-        "ld h, (iy+0)\n"
-        "ld h, (iy+255)\n"
+        "ld h, (iy)\n"
+        "ld h, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x66,
-        0xaa,
+        0xd5,
         0xfd,
         0x66,
         0x55,
@@ -7961,7 +7961,7 @@ TEST_CASE("ld h, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x66,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -8391,16 +8391,16 @@ TEST_CASE("ld l, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld l, (ix+170)\n"
+        "ld l, (ix-43)\n"
         "ld l, (ix+85)\n"
-        "ld l, (ix+0)\n"
-        "ld l, (ix+255)\n"
+        "ld l, (ix)\n"
+        "ld l, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x6e,
-        0xaa,
+        0xd5,
         0xdd,
         0x6e,
         0x55,
@@ -8409,7 +8409,7 @@ TEST_CASE("ld l, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x6e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -8424,16 +8424,16 @@ TEST_CASE("ld l, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "ld l, (iy+170)\n"
+        "ld l, (iy-43)\n"
         "ld l, (iy+85)\n"
-        "ld l, (iy+0)\n"
-        "ld l, (iy+255)\n"
+        "ld l, (iy)\n"
+        "ld l, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x6e,
-        0xaa,
+        0xd5,
         0xfd,
         0x6e,
         0x55,
@@ -8442,7 +8442,7 @@ TEST_CASE("ld l, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x6e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -8906,16 +8906,16 @@ TEST_CASE("or (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "or (ix+170)\n"
+        "or (ix-43)\n"
         "or (ix+85)\n"
-        "or (ix+0)\n"
-        "or (ix+255)\n"
+        "or (ix)\n"
+        "or (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xb6,
-        0xaa,
+        0xd5,
         0xdd,
         0xb6,
         0x55,
@@ -8924,7 +8924,7 @@ TEST_CASE("or (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0xb6,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -8939,16 +8939,16 @@ TEST_CASE("or (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "or (iy+170)\n"
+        "or (iy-43)\n"
         "or (iy+85)\n"
-        "or (iy+0)\n"
-        "or (iy+255)\n"
+        "or (iy)\n"
+        "or (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xb6,
-        0xaa,
+        0xd5,
         0xfd,
         0xb6,
         0x55,
@@ -8957,7 +8957,7 @@ TEST_CASE("or (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0xb6,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -9635,16 +9635,16 @@ TEST_CASE("res 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 0, (ix+170)\n"
+        "res 0, (ix-43)\n"
         "res 0, (ix+85)\n"
-        "res 0, (ix+0)\n"
-        "res 0, (ix+255)\n"
+        "res 0, (ix)\n"
+        "res 0, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x86,
         0xdd,
         0xcb,
@@ -9656,7 +9656,7 @@ TEST_CASE("res 0, (ix+#)", "[opcodes]")
         0x86,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x86,
         };
 
@@ -9672,16 +9672,16 @@ TEST_CASE("res 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 0, (iy+170)\n"
+        "res 0, (iy-43)\n"
         "res 0, (iy+85)\n"
-        "res 0, (iy+0)\n"
-        "res 0, (iy+255)\n"
+        "res 0, (iy)\n"
+        "res 0, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x86,
         0xfd,
         0xcb,
@@ -9693,7 +9693,7 @@ TEST_CASE("res 0, (iy+#)", "[opcodes]")
         0x86,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x86,
         };
 
@@ -9869,16 +9869,16 @@ TEST_CASE("res 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 1, (ix+170)\n"
+        "res 1, (ix-43)\n"
         "res 1, (ix+85)\n"
-        "res 1, (ix+0)\n"
-        "res 1, (ix+255)\n"
+        "res 1, (ix)\n"
+        "res 1, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x8e,
         0xdd,
         0xcb,
@@ -9890,7 +9890,7 @@ TEST_CASE("res 1, (ix+#)", "[opcodes]")
         0x8e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x8e,
         };
 
@@ -9906,16 +9906,16 @@ TEST_CASE("res 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 1, (iy+170)\n"
+        "res 1, (iy-43)\n"
         "res 1, (iy+85)\n"
-        "res 1, (iy+0)\n"
-        "res 1, (iy+255)\n"
+        "res 1, (iy)\n"
+        "res 1, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x8e,
         0xfd,
         0xcb,
@@ -9927,7 +9927,7 @@ TEST_CASE("res 1, (iy+#)", "[opcodes]")
         0x8e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x8e,
         };
 
@@ -10103,16 +10103,16 @@ TEST_CASE("res 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 2, (ix+170)\n"
+        "res 2, (ix-43)\n"
         "res 2, (ix+85)\n"
-        "res 2, (ix+0)\n"
-        "res 2, (ix+255)\n"
+        "res 2, (ix)\n"
+        "res 2, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x96,
         0xdd,
         0xcb,
@@ -10124,7 +10124,7 @@ TEST_CASE("res 2, (ix+#)", "[opcodes]")
         0x96,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x96,
         };
 
@@ -10140,16 +10140,16 @@ TEST_CASE("res 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 2, (iy+170)\n"
+        "res 2, (iy-43)\n"
         "res 2, (iy+85)\n"
-        "res 2, (iy+0)\n"
-        "res 2, (iy+255)\n"
+        "res 2, (iy)\n"
+        "res 2, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x96,
         0xfd,
         0xcb,
@@ -10161,7 +10161,7 @@ TEST_CASE("res 2, (iy+#)", "[opcodes]")
         0x96,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x96,
         };
 
@@ -10337,16 +10337,16 @@ TEST_CASE("res 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 3, (ix+170)\n"
+        "res 3, (ix-43)\n"
         "res 3, (ix+85)\n"
-        "res 3, (ix+0)\n"
-        "res 3, (ix+255)\n"
+        "res 3, (ix)\n"
+        "res 3, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x9e,
         0xdd,
         0xcb,
@@ -10358,7 +10358,7 @@ TEST_CASE("res 3, (ix+#)", "[opcodes]")
         0x9e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x9e,
         };
 
@@ -10374,16 +10374,16 @@ TEST_CASE("res 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 3, (iy+170)\n"
+        "res 3, (iy-43)\n"
         "res 3, (iy+85)\n"
-        "res 3, (iy+0)\n"
-        "res 3, (iy+255)\n"
+        "res 3, (iy)\n"
+        "res 3, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x9e,
         0xfd,
         0xcb,
@@ -10395,7 +10395,7 @@ TEST_CASE("res 3, (iy+#)", "[opcodes]")
         0x9e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x9e,
         };
 
@@ -10571,16 +10571,16 @@ TEST_CASE("res 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 4, (ix+170)\n"
+        "res 4, (ix-43)\n"
         "res 4, (ix+85)\n"
-        "res 4, (ix+0)\n"
-        "res 4, (ix+255)\n"
+        "res 4, (ix)\n"
+        "res 4, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xa6,
         0xdd,
         0xcb,
@@ -10592,7 +10592,7 @@ TEST_CASE("res 4, (ix+#)", "[opcodes]")
         0xa6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xa6,
         };
 
@@ -10608,16 +10608,16 @@ TEST_CASE("res 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 4, (iy+170)\n"
+        "res 4, (iy-43)\n"
         "res 4, (iy+85)\n"
-        "res 4, (iy+0)\n"
-        "res 4, (iy+255)\n"
+        "res 4, (iy)\n"
+        "res 4, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xa6,
         0xfd,
         0xcb,
@@ -10629,7 +10629,7 @@ TEST_CASE("res 4, (iy+#)", "[opcodes]")
         0xa6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xa6,
         };
 
@@ -10805,16 +10805,16 @@ TEST_CASE("res 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 5, (ix+170)\n"
+        "res 5, (ix-43)\n"
         "res 5, (ix+85)\n"
-        "res 5, (ix+0)\n"
-        "res 5, (ix+255)\n"
+        "res 5, (ix)\n"
+        "res 5, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xae,
         0xdd,
         0xcb,
@@ -10826,7 +10826,7 @@ TEST_CASE("res 5, (ix+#)", "[opcodes]")
         0xae,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xae,
         };
 
@@ -10842,16 +10842,16 @@ TEST_CASE("res 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 5, (iy+170)\n"
+        "res 5, (iy-43)\n"
         "res 5, (iy+85)\n"
-        "res 5, (iy+0)\n"
-        "res 5, (iy+255)\n"
+        "res 5, (iy)\n"
+        "res 5, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xae,
         0xfd,
         0xcb,
@@ -10863,7 +10863,7 @@ TEST_CASE("res 5, (iy+#)", "[opcodes]")
         0xae,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xae,
         };
 
@@ -11039,16 +11039,16 @@ TEST_CASE("res 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 6, (ix+170)\n"
+        "res 6, (ix-43)\n"
         "res 6, (ix+85)\n"
-        "res 6, (ix+0)\n"
-        "res 6, (ix+255)\n"
+        "res 6, (ix)\n"
+        "res 6, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xb6,
         0xdd,
         0xcb,
@@ -11060,7 +11060,7 @@ TEST_CASE("res 6, (ix+#)", "[opcodes]")
         0xb6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xb6,
         };
 
@@ -11076,16 +11076,16 @@ TEST_CASE("res 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 6, (iy+170)\n"
+        "res 6, (iy-43)\n"
         "res 6, (iy+85)\n"
-        "res 6, (iy+0)\n"
-        "res 6, (iy+255)\n"
+        "res 6, (iy)\n"
+        "res 6, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xb6,
         0xfd,
         0xcb,
@@ -11097,7 +11097,7 @@ TEST_CASE("res 6, (iy+#)", "[opcodes]")
         0xb6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xb6,
         };
 
@@ -11273,16 +11273,16 @@ TEST_CASE("res 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 7, (ix+170)\n"
+        "res 7, (ix-43)\n"
         "res 7, (ix+85)\n"
-        "res 7, (ix+0)\n"
-        "res 7, (ix+255)\n"
+        "res 7, (ix)\n"
+        "res 7, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xbe,
         0xdd,
         0xcb,
@@ -11294,7 +11294,7 @@ TEST_CASE("res 7, (ix+#)", "[opcodes]")
         0xbe,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xbe,
         };
 
@@ -11310,16 +11310,16 @@ TEST_CASE("res 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "res 7, (iy+170)\n"
+        "res 7, (iy-43)\n"
         "res 7, (iy+85)\n"
-        "res 7, (iy+0)\n"
-        "res 7, (iy+255)\n"
+        "res 7, (iy)\n"
+        "res 7, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xbe,
         0xfd,
         0xcb,
@@ -11331,7 +11331,7 @@ TEST_CASE("res 7, (iy+#)", "[opcodes]")
         0xbe,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xbe,
         };
 
@@ -11718,16 +11718,16 @@ TEST_CASE("rl (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rl (ix+170)\n"
+        "rl (ix-43)\n"
         "rl (ix+85)\n"
-        "rl (ix+0)\n"
-        "rl (ix+255)\n"
+        "rl (ix)\n"
+        "rl (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x16,
         0xdd,
         0xcb,
@@ -11739,7 +11739,7 @@ TEST_CASE("rl (ix+#)", "[opcodes]")
         0x16,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x16,
         };
 
@@ -11755,16 +11755,16 @@ TEST_CASE("rl (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rl (iy+170)\n"
+        "rl (iy-43)\n"
         "rl (iy+85)\n"
-        "rl (iy+0)\n"
-        "rl (iy+255)\n"
+        "rl (iy)\n"
+        "rl (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x16,
         0xfd,
         0xcb,
@@ -11776,7 +11776,7 @@ TEST_CASE("rl (iy+#)", "[opcodes]")
         0x16,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x16,
         };
 
@@ -11971,16 +11971,16 @@ TEST_CASE("rlc (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rlc (ix+170)\n"
+        "rlc (ix-43)\n"
         "rlc (ix+85)\n"
-        "rlc (ix+0)\n"
-        "rlc (ix+255)\n"
+        "rlc (ix)\n"
+        "rlc (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x06,
         0xdd,
         0xcb,
@@ -11992,7 +11992,7 @@ TEST_CASE("rlc (ix+#)", "[opcodes]")
         0x06,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x06,
         };
 
@@ -12008,16 +12008,16 @@ TEST_CASE("rlc (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rlc (iy+170)\n"
+        "rlc (iy-43)\n"
         "rlc (iy+85)\n"
-        "rlc (iy+0)\n"
-        "rlc (iy+255)\n"
+        "rlc (iy)\n"
+        "rlc (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x06,
         0xfd,
         0xcb,
@@ -12029,7 +12029,7 @@ TEST_CASE("rlc (iy+#)", "[opcodes]")
         0x06,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x06,
         };
 
@@ -12244,16 +12244,16 @@ TEST_CASE("rr (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rr (ix+170)\n"
+        "rr (ix-43)\n"
         "rr (ix+85)\n"
-        "rr (ix+0)\n"
-        "rr (ix+255)\n"
+        "rr (ix)\n"
+        "rr (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x1e,
         0xdd,
         0xcb,
@@ -12265,7 +12265,7 @@ TEST_CASE("rr (ix+#)", "[opcodes]")
         0x1e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x1e,
         };
 
@@ -12281,16 +12281,16 @@ TEST_CASE("rr (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rr (iy+170)\n"
+        "rr (iy-43)\n"
         "rr (iy+85)\n"
-        "rr (iy+0)\n"
-        "rr (iy+255)\n"
+        "rr (iy)\n"
+        "rr (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x1e,
         0xfd,
         0xcb,
@@ -12302,7 +12302,7 @@ TEST_CASE("rr (iy+#)", "[opcodes]")
         0x1e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x1e,
         };
 
@@ -12497,16 +12497,16 @@ TEST_CASE("rrc (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rrc (ix+170)\n"
+        "rrc (ix-43)\n"
         "rrc (ix+85)\n"
-        "rrc (ix+0)\n"
-        "rrc (ix+255)\n"
+        "rrc (ix)\n"
+        "rrc (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x0e,
         0xdd,
         0xcb,
@@ -12518,7 +12518,7 @@ TEST_CASE("rrc (ix+#)", "[opcodes]")
         0x0e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x0e,
         };
 
@@ -12534,16 +12534,16 @@ TEST_CASE("rrc (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "rrc (iy+170)\n"
+        "rrc (iy-43)\n"
         "rrc (iy+85)\n"
-        "rrc (iy+0)\n"
-        "rrc (iy+255)\n"
+        "rrc (iy)\n"
+        "rrc (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x0e,
         0xfd,
         0xcb,
@@ -12555,7 +12555,7 @@ TEST_CASE("rrc (iy+#)", "[opcodes]")
         0x0e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x0e,
         };
 
@@ -12950,16 +12950,16 @@ TEST_CASE("sbc a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sbc a, (ix+170)\n"
+        "sbc a, (ix-43)\n"
         "sbc a, (ix+85)\n"
-        "sbc a, (ix+0)\n"
-        "sbc a, (ix+255)\n"
+        "sbc a, (ix)\n"
+        "sbc a, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x9e,
-        0xaa,
+        0xd5,
         0xdd,
         0x9e,
         0x55,
@@ -12968,7 +12968,7 @@ TEST_CASE("sbc a, (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x9e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -12983,16 +12983,16 @@ TEST_CASE("sbc a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sbc a, (iy+170)\n"
+        "sbc a, (iy-43)\n"
         "sbc a, (iy+85)\n"
-        "sbc a, (iy+0)\n"
-        "sbc a, (iy+255)\n"
+        "sbc a, (iy)\n"
+        "sbc a, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x9e,
-        0xaa,
+        0xd5,
         0xfd,
         0x9e,
         0x55,
@@ -13001,7 +13001,7 @@ TEST_CASE("sbc a, (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x9e,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -13268,16 +13268,16 @@ TEST_CASE("set 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 0, (ix+170)\n"
+        "set 0, (ix-43)\n"
         "set 0, (ix+85)\n"
-        "set 0, (ix+0)\n"
-        "set 0, (ix+255)\n"
+        "set 0, (ix)\n"
+        "set 0, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xc6,
         0xdd,
         0xcb,
@@ -13289,7 +13289,7 @@ TEST_CASE("set 0, (ix+#)", "[opcodes]")
         0xc6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xc6,
         };
 
@@ -13305,16 +13305,16 @@ TEST_CASE("set 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 0, (iy+170)\n"
+        "set 0, (iy-43)\n"
         "set 0, (iy+85)\n"
-        "set 0, (iy+0)\n"
-        "set 0, (iy+255)\n"
+        "set 0, (iy)\n"
+        "set 0, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xc6,
         0xfd,
         0xcb,
@@ -13326,7 +13326,7 @@ TEST_CASE("set 0, (iy+#)", "[opcodes]")
         0xc6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xc6,
         };
 
@@ -13502,16 +13502,16 @@ TEST_CASE("set 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 1, (ix+170)\n"
+        "set 1, (ix-43)\n"
         "set 1, (ix+85)\n"
-        "set 1, (ix+0)\n"
-        "set 1, (ix+255)\n"
+        "set 1, (ix)\n"
+        "set 1, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xce,
         0xdd,
         0xcb,
@@ -13523,7 +13523,7 @@ TEST_CASE("set 1, (ix+#)", "[opcodes]")
         0xce,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xce,
         };
 
@@ -13539,16 +13539,16 @@ TEST_CASE("set 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 1, (iy+170)\n"
+        "set 1, (iy-43)\n"
         "set 1, (iy+85)\n"
-        "set 1, (iy+0)\n"
-        "set 1, (iy+255)\n"
+        "set 1, (iy)\n"
+        "set 1, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xce,
         0xfd,
         0xcb,
@@ -13560,7 +13560,7 @@ TEST_CASE("set 1, (iy+#)", "[opcodes]")
         0xce,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xce,
         };
 
@@ -13736,16 +13736,16 @@ TEST_CASE("set 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 2, (ix+170)\n"
+        "set 2, (ix-43)\n"
         "set 2, (ix+85)\n"
-        "set 2, (ix+0)\n"
-        "set 2, (ix+255)\n"
+        "set 2, (ix)\n"
+        "set 2, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xd6,
         0xdd,
         0xcb,
@@ -13757,7 +13757,7 @@ TEST_CASE("set 2, (ix+#)", "[opcodes]")
         0xd6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xd6,
         };
 
@@ -13773,16 +13773,16 @@ TEST_CASE("set 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 2, (iy+170)\n"
+        "set 2, (iy-43)\n"
         "set 2, (iy+85)\n"
-        "set 2, (iy+0)\n"
-        "set 2, (iy+255)\n"
+        "set 2, (iy)\n"
+        "set 2, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xd6,
         0xfd,
         0xcb,
@@ -13794,7 +13794,7 @@ TEST_CASE("set 2, (iy+#)", "[opcodes]")
         0xd6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xd6,
         };
 
@@ -13970,16 +13970,16 @@ TEST_CASE("set 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 3, (ix+170)\n"
+        "set 3, (ix-43)\n"
         "set 3, (ix+85)\n"
-        "set 3, (ix+0)\n"
-        "set 3, (ix+255)\n"
+        "set 3, (ix)\n"
+        "set 3, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xde,
         0xdd,
         0xcb,
@@ -13991,7 +13991,7 @@ TEST_CASE("set 3, (ix+#)", "[opcodes]")
         0xde,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xde,
         };
 
@@ -14007,16 +14007,16 @@ TEST_CASE("set 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 3, (iy+170)\n"
+        "set 3, (iy-43)\n"
         "set 3, (iy+85)\n"
-        "set 3, (iy+0)\n"
-        "set 3, (iy+255)\n"
+        "set 3, (iy)\n"
+        "set 3, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xde,
         0xfd,
         0xcb,
@@ -14028,7 +14028,7 @@ TEST_CASE("set 3, (iy+#)", "[opcodes]")
         0xde,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xde,
         };
 
@@ -14204,16 +14204,16 @@ TEST_CASE("set 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 4, (ix+170)\n"
+        "set 4, (ix-43)\n"
         "set 4, (ix+85)\n"
-        "set 4, (ix+0)\n"
-        "set 4, (ix+255)\n"
+        "set 4, (ix)\n"
+        "set 4, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xe6,
         0xdd,
         0xcb,
@@ -14225,7 +14225,7 @@ TEST_CASE("set 4, (ix+#)", "[opcodes]")
         0xe6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xe6,
         };
 
@@ -14241,16 +14241,16 @@ TEST_CASE("set 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 4, (iy+170)\n"
+        "set 4, (iy-43)\n"
         "set 4, (iy+85)\n"
-        "set 4, (iy+0)\n"
-        "set 4, (iy+255)\n"
+        "set 4, (iy)\n"
+        "set 4, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xe6,
         0xfd,
         0xcb,
@@ -14262,7 +14262,7 @@ TEST_CASE("set 4, (iy+#)", "[opcodes]")
         0xe6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xe6,
         };
 
@@ -14438,16 +14438,16 @@ TEST_CASE("set 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 5, (ix+170)\n"
+        "set 5, (ix-43)\n"
         "set 5, (ix+85)\n"
-        "set 5, (ix+0)\n"
-        "set 5, (ix+255)\n"
+        "set 5, (ix)\n"
+        "set 5, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xee,
         0xdd,
         0xcb,
@@ -14459,7 +14459,7 @@ TEST_CASE("set 5, (ix+#)", "[opcodes]")
         0xee,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xee,
         };
 
@@ -14475,16 +14475,16 @@ TEST_CASE("set 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 5, (iy+170)\n"
+        "set 5, (iy-43)\n"
         "set 5, (iy+85)\n"
-        "set 5, (iy+0)\n"
-        "set 5, (iy+255)\n"
+        "set 5, (iy)\n"
+        "set 5, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xee,
         0xfd,
         0xcb,
@@ -14496,7 +14496,7 @@ TEST_CASE("set 5, (iy+#)", "[opcodes]")
         0xee,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xee,
         };
 
@@ -14672,16 +14672,16 @@ TEST_CASE("set 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 6, (ix+170)\n"
+        "set 6, (ix-43)\n"
         "set 6, (ix+85)\n"
-        "set 6, (ix+0)\n"
-        "set 6, (ix+255)\n"
+        "set 6, (ix)\n"
+        "set 6, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xf6,
         0xdd,
         0xcb,
@@ -14693,7 +14693,7 @@ TEST_CASE("set 6, (ix+#)", "[opcodes]")
         0xf6,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xf6,
         };
 
@@ -14709,16 +14709,16 @@ TEST_CASE("set 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 6, (iy+170)\n"
+        "set 6, (iy-43)\n"
         "set 6, (iy+85)\n"
-        "set 6, (iy+0)\n"
-        "set 6, (iy+255)\n"
+        "set 6, (iy)\n"
+        "set 6, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xf6,
         0xfd,
         0xcb,
@@ -14730,7 +14730,7 @@ TEST_CASE("set 6, (iy+#)", "[opcodes]")
         0xf6,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xf6,
         };
 
@@ -14906,16 +14906,16 @@ TEST_CASE("set 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 7, (ix+170)\n"
+        "set 7, (ix-43)\n"
         "set 7, (ix+85)\n"
-        "set 7, (ix+0)\n"
-        "set 7, (ix+255)\n"
+        "set 7, (ix)\n"
+        "set 7, (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0xfe,
         0xdd,
         0xcb,
@@ -14927,7 +14927,7 @@ TEST_CASE("set 7, (ix+#)", "[opcodes]")
         0xfe,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0xfe,
         };
 
@@ -14943,16 +14943,16 @@ TEST_CASE("set 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "set 7, (iy+170)\n"
+        "set 7, (iy-43)\n"
         "set 7, (iy+85)\n"
-        "set 7, (iy+0)\n"
-        "set 7, (iy+255)\n"
+        "set 7, (iy)\n"
+        "set 7, (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0xfe,
         0xfd,
         0xcb,
@@ -14964,7 +14964,7 @@ TEST_CASE("set 7, (iy+#)", "[opcodes]")
         0xfe,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0xfe,
         };
 
@@ -15140,16 +15140,16 @@ TEST_CASE("sla (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sla (ix+170)\n"
+        "sla (ix-43)\n"
         "sla (ix+85)\n"
-        "sla (ix+0)\n"
-        "sla (ix+255)\n"
+        "sla (ix)\n"
+        "sla (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x26,
         0xdd,
         0xcb,
@@ -15161,7 +15161,7 @@ TEST_CASE("sla (ix+#)", "[opcodes]")
         0x26,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x26,
         };
 
@@ -15177,16 +15177,16 @@ TEST_CASE("sla (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sla (iy+170)\n"
+        "sla (iy-43)\n"
         "sla (iy+85)\n"
-        "sla (iy+0)\n"
-        "sla (iy+255)\n"
+        "sla (iy)\n"
+        "sla (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x26,
         0xfd,
         0xcb,
@@ -15198,7 +15198,7 @@ TEST_CASE("sla (iy+#)", "[opcodes]")
         0x26,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x26,
         };
 
@@ -15374,16 +15374,16 @@ TEST_CASE("sra (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sra (ix+170)\n"
+        "sra (ix-43)\n"
         "sra (ix+85)\n"
-        "sra (ix+0)\n"
-        "sra (ix+255)\n"
+        "sra (ix)\n"
+        "sra (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x2e,
         0xdd,
         0xcb,
@@ -15395,7 +15395,7 @@ TEST_CASE("sra (ix+#)", "[opcodes]")
         0x2e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x2e,
         };
 
@@ -15411,16 +15411,16 @@ TEST_CASE("sra (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sra (iy+170)\n"
+        "sra (iy-43)\n"
         "sra (iy+85)\n"
-        "sra (iy+0)\n"
-        "sra (iy+255)\n"
+        "sra (iy)\n"
+        "sra (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x2e,
         0xfd,
         0xcb,
@@ -15432,7 +15432,7 @@ TEST_CASE("sra (iy+#)", "[opcodes]")
         0x2e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x2e,
         };
 
@@ -15608,16 +15608,16 @@ TEST_CASE("srl (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "srl (ix+170)\n"
+        "srl (ix-43)\n"
         "srl (ix+85)\n"
-        "srl (ix+0)\n"
-        "srl (ix+255)\n"
+        "srl (ix)\n"
+        "srl (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xcb,
-        0xaa,
+        0xd5,
         0x3e,
         0xdd,
         0xcb,
@@ -15629,7 +15629,7 @@ TEST_CASE("srl (ix+#)", "[opcodes]")
         0x3e,
         0xdd,
         0xcb,
-        0xff,
+        0x80,
         0x3e,
         };
 
@@ -15645,16 +15645,16 @@ TEST_CASE("srl (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "srl (iy+170)\n"
+        "srl (iy-43)\n"
         "srl (iy+85)\n"
-        "srl (iy+0)\n"
-        "srl (iy+255)\n"
+        "srl (iy)\n"
+        "srl (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xcb,
-        0xaa,
+        0xd5,
         0x3e,
         0xfd,
         0xcb,
@@ -15666,7 +15666,7 @@ TEST_CASE("srl (iy+#)", "[opcodes]")
         0x3e,
         0xfd,
         0xcb,
-        0xff,
+        0x80,
         0x3e,
         };
 
@@ -15841,16 +15841,16 @@ TEST_CASE("sub (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sub (ix+170)\n"
+        "sub (ix-43)\n"
         "sub (ix+85)\n"
-        "sub (ix+0)\n"
-        "sub (ix+255)\n"
+        "sub (ix)\n"
+        "sub (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0x96,
-        0xaa,
+        0xd5,
         0xdd,
         0x96,
         0x55,
@@ -15859,7 +15859,7 @@ TEST_CASE("sub (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0x96,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -15874,16 +15874,16 @@ TEST_CASE("sub (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "sub (iy+170)\n"
+        "sub (iy-43)\n"
         "sub (iy+85)\n"
-        "sub (iy+0)\n"
-        "sub (iy+255)\n"
+        "sub (iy)\n"
+        "sub (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0x96,
-        0xaa,
+        0xd5,
         0xfd,
         0x96,
         0x55,
@@ -15892,7 +15892,7 @@ TEST_CASE("sub (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0x96,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -16088,16 +16088,16 @@ TEST_CASE("xor (ix+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "xor (ix+170)\n"
+        "xor (ix-43)\n"
         "xor (ix+85)\n"
-        "xor (ix+0)\n"
-        "xor (ix+255)\n"
+        "xor (ix)\n"
+        "xor (ix-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xdd,
         0xae,
-        0xaa,
+        0xd5,
         0xdd,
         0xae,
         0x55,
@@ -16106,7 +16106,7 @@ TEST_CASE("xor (ix+#)", "[opcodes]")
         0x00,
         0xdd,
         0xae,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;
@@ -16121,16 +16121,16 @@ TEST_CASE("xor (iy+#)", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "xor (iy+170)\n"
+        "xor (iy-43)\n"
         "xor (iy+85)\n"
-        "xor (iy+0)\n"
-        "xor (iy+255)\n"
+        "xor (iy)\n"
+        "xor (iy-128)\n"
         ;
 
     static const unsigned char binary[] = {
         0xfd,
         0xae,
-        0xaa,
+        0xd5,
         0xfd,
         0xae,
         0x55,
@@ -16139,7 +16139,7 @@ TEST_CASE("xor (iy+#)", "[opcodes]")
         0x00,
         0xfd,
         0xae,
-        0xff,
+        0x80,
         };
 
     ErrorConsumer errorConsumer;

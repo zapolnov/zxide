@@ -59,3 +59,20 @@ qint64 ConstantExpression::evaluate(IErrorReporter* reporter) const
 {
     return mValue;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+NegateExpression::NegateExpression(const Token& token, std::unique_ptr<Expression> operand)
+    : Expression(token)
+    , mOperand(std::move(operand))
+{
+}
+
+NegateExpression::~NegateExpression()
+{
+}
+
+qint64 NegateExpression::evaluate(IErrorReporter* reporter) const
+{
+    return -mOperand->evaluate(reporter);
+}

@@ -133,7 +133,7 @@ std::string AssemblerParser::readLabelName()
 quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
 {
     std::unique_ptr<Expression> expr;
-    if (!parseExpression(&expr))
+    if (!parseExpression(tokenId, &expr))
         error(tr("expected expression"));
 
     qint64 number = expr->evaluate(mReporter);
@@ -185,12 +185,40 @@ bool AssemblerParser::matchIdentifier(const char* ident)
     return true;
 }
 
-bool AssemblerParser::matchNumber(quint32 value)
+bool AssemblerParser::matchExpression(std::unique_ptr<Expression>* out)
 {
-    // FIXME: expressions
-    if (lastTokenId() != T_NUMBER || lastToken().number != value)
+    mLexer->save();
+    if (parseExpression(lastTokenId(), out)) {
+        mLexer->forget();
+        return true;
+    }
+    mLexer->restore();
+    return false;
+}
+
+bool AssemblerParser::matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out)
+{
+    if (!matchExpression(out))
         return false;
-    nextToken();
+    out->reset(new NegateExpression(minusToken, std::move(*out)));
+    return true;
+}
+
+bool AssemblerParser::matchByte(unsigned char* out)
+{
+    std::unique_ptr<Expression> expr;
+    if (!matchExpression(&expr))
+        return false;
+    *out = expr->evaluateByte(mReporter);
+    return true;
+}
+
+bool AssemblerParser::matchWord(unsigned short* out)
+{
+    std::unique_ptr<Expression> expr;
+    if (!matchExpression(&expr))
+        return false;
+    *out = expr->evaluateWord(mReporter);
     return true;
 }
 

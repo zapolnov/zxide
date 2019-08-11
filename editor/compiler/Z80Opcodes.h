@@ -132,6 +132,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -170,6 +171,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -191,6 +193,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -399,6 +402,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -437,6 +441,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -458,6 +463,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -802,6 +808,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -840,6 +847,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -861,6 +869,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -1018,6 +1027,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1039,6 +1049,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1060,6 +1071,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1081,6 +1093,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1102,6 +1115,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1123,6 +1137,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1144,6 +1159,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1165,6 +1181,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1186,6 +1203,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1207,6 +1225,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1228,6 +1247,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1249,6 +1269,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1270,6 +1291,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1291,6 +1313,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1312,6 +1335,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -1333,6 +1357,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -2306,6 +2331,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2327,6 +2353,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2348,6 +2375,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2369,6 +2397,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2390,6 +2419,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2411,6 +2441,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2432,6 +2463,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2453,6 +2485,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2474,6 +2507,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2631,6 +2665,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -2669,6 +2704,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2690,6 +2726,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2949,6 +2986,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -2970,6 +3008,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3110,6 +3149,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -3318,6 +3358,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -3594,6 +3635,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3615,6 +3657,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3806,6 +3849,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3827,6 +3871,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3848,6 +3893,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3869,6 +3915,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3890,6 +3937,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3911,6 +3959,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3932,6 +3981,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3953,6 +4003,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -3974,6 +4025,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4046,6 +4098,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4067,6 +4120,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4088,6 +4142,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4109,6 +4164,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4130,6 +4186,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4202,6 +4259,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4274,6 +4332,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -4296,6 +4355,8 @@ public:
         , mLiteral1(std::move(literal1))
         , mLiteral2(std::move(literal2))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
+        Q_ASSERT(mLiteral2 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4319,6 +4380,8 @@ public:
         , mLiteral1(std::move(literal1))
         , mLiteral2(std::move(literal2))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
+        Q_ASSERT(mLiteral2 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4341,6 +4404,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4362,6 +4426,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4383,6 +4448,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4404,6 +4470,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4425,6 +4492,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4446,6 +4514,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4467,6 +4536,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4488,6 +4558,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4509,6 +4580,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4530,6 +4602,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4551,6 +4624,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4572,6 +4646,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4593,6 +4668,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4614,6 +4690,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4635,6 +4712,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -4775,6 +4853,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4796,6 +4875,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4817,6 +4897,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4838,6 +4919,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4859,6 +4941,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4880,6 +4963,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4901,6 +4985,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4922,6 +5007,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4943,6 +5029,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4964,6 +5051,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -4985,6 +5073,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5006,6 +5095,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5027,6 +5117,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5048,6 +5139,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5086,6 +5178,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -5107,6 +5200,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -5128,6 +5222,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -5149,6 +5244,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -5306,6 +5402,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5327,6 +5424,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5348,6 +5446,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5369,6 +5468,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5390,6 +5490,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5411,6 +5512,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5432,6 +5534,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5453,6 +5556,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5474,6 +5578,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5495,6 +5600,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5516,6 +5622,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5537,6 +5644,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5558,6 +5666,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5579,6 +5688,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -5600,6 +5710,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5621,6 +5732,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5642,6 +5754,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5663,6 +5776,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5684,6 +5798,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5705,6 +5820,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -5726,6 +5842,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -6852,6 +6969,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -6890,6 +7008,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -6911,6 +7030,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -6966,6 +7086,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -8432,6 +8553,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8453,6 +8575,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8474,6 +8597,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8495,6 +8619,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8516,6 +8641,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8537,6 +8663,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8558,6 +8685,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8579,6 +8707,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8600,6 +8729,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8621,6 +8751,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8642,6 +8773,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8663,6 +8795,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8684,6 +8817,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8705,6 +8839,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8726,6 +8861,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -8747,6 +8883,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9091,6 +9228,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9112,6 +9250,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9286,6 +9425,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9307,6 +9447,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9498,6 +9639,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9519,6 +9661,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9693,6 +9836,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -9714,6 +9858,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -10024,6 +10169,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -10062,6 +10208,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -10083,6 +10230,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -11277,6 +11425,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11298,6 +11447,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11319,6 +11469,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11340,6 +11491,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11361,6 +11513,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11382,6 +11535,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11403,6 +11557,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11424,6 +11579,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11445,6 +11601,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11466,6 +11623,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11487,6 +11645,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11508,6 +11667,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11529,6 +11689,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11550,6 +11711,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11571,6 +11733,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11592,6 +11755,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11749,6 +11913,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11770,6 +11935,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11927,6 +12093,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -11948,6 +12115,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -12105,6 +12273,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -12126,6 +12295,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 4; }
@@ -12266,6 +12436,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -12304,6 +12475,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -12325,6 +12497,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -12465,6 +12638,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 2; }
@@ -12503,6 +12677,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
@@ -12524,6 +12699,7 @@ public:
         : ProgramOpcode(token)
         , mLiteral1(std::move(literal1))
     {
+        Q_ASSERT(mLiteral1 != nullptr);
     }
 
     unsigned lengthInBytes() const override { return 3; }
