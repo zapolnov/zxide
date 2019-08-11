@@ -1,9 +1,9 @@
 #ifndef COMPILER_EXPREVALCONTEXT_H
 #define COMPILER_EXPREVALCONTEXT_H
 
-#include <QtGlobal>
-#include <memory>
+#include "Value.h"
 #include <unordered_set>
+#include <memory>
 
 struct Token;
 class Program;
@@ -27,7 +27,7 @@ public:
     unsigned char evaluateByte(const std::unique_ptr<Expression>& expr);
     unsigned char evaluateByteOffset(const std::unique_ptr<Expression>& expr);
     unsigned short evaluateWord(const std::unique_ptr<Expression>& expr);
-    qint64 evaluate(const std::unique_ptr<Expression>& expr);
+    Value evaluate(const std::unique_ptr<Expression>& expr);
 
 private:
     const Program* mProgram;

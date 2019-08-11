@@ -112,21 +112,60 @@ std::unique_ptr<Expression> AssemblerParser::parseUnaryExpression(int tokenId, b
 
         case T_PLUS:
             return parseAtomicExpression(nextToken(), true);
+
+        case T_EXCLAMATION: {
+            Token token = lastToken();
+            auto operand = parseAtomicExpression(nextToken(), true);
+            if (!operand)
+                return nullptr;
+            return std::unique_ptr<Expression>{new LogicNotExpression(token, std::move(operand))};
+        }
+
+        case T_TILDE: {
+            Token token = lastToken();
+            auto operand = parseAtomicExpression(nextToken(), true);
+            if (!operand)
+                return nullptr;
+            return std::unique_ptr<Expression>{new BitwiseNotExpression(token, std::move(operand))};
+        }
     }
 
     return parseAtomicExpression(tokenId, unambiguous);
 }
 
-std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId, bool unambiguous)
+std::unique_ptr<Expression> AssemblerParser::parseMultiplicationExpression(int tokenId, bool unambiguous)
 {
     auto expr = parseUnaryExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_ASTERISK || lastTokenId() == T_SLASH || lastTokenId() == T_PERCENT) {
+        Token token = lastToken();
+
+        auto op2 = parseUnaryExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        switch (token.id) {
+            case T_ASTERISK: expr.reset(new MultiplyExpression(token, std::move(expr), std::move(op2))); break;
+            case T_SLASH: expr.reset(new DivideExpression(token, std::move(expr), std::move(op2))); break;
+            case T_PERCENT: expr.reset(new RemainderExpression(token, std::move(expr), std::move(op2))); break;
+        }
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseMultiplicationExpression(tokenId, unambiguous);
     if (!expr)
         return nullptr;
 
     while (lastTokenId() == T_PLUS || lastTokenId() == T_MINUS) {
         Token token = lastToken();
 
-        auto op2 = parseUnaryExpression(nextToken(), true);
+        auto op2 = parseMultiplicationExpression(nextToken(), true);
         if (!op2)
             return nullptr;
 

@@ -1,6 +1,7 @@
 #ifndef COMPILER_EXPRESSION_H
 #define COMPILER_EXPRESSION_H
 
+#include "Value.h"
 #include "AssemblerToken.h"
 #include <string>
 #include <memory>
@@ -26,7 +27,7 @@ protected:
 private:
     Token mToken;
 
-    virtual qint64 evaluate(ExprEvalContext& context) const = 0;
+    virtual Value evaluate(ExprEvalContext& context) const = 0;
 
     Q_DISABLE_COPY(Expression)
     friend class ExprEvalContext;
@@ -41,7 +42,7 @@ public:
 private:
     qint64 mValue;
 
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(ConstantExpression)
 };
@@ -53,7 +54,7 @@ public:
     ~DollarExpression() override;
 
 private:
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(DollarExpression)
 };
@@ -68,7 +69,7 @@ public:
 private:
     std::string mName;
 
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(IdentifierExpression)
 };
@@ -82,9 +83,37 @@ public:
 private:
     std::unique_ptr<Expression> mOperand;
 
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(NegateExpression)
+};
+
+class BitwiseNotExpression : public Expression
+{
+public:
+    BitwiseNotExpression(const Token& token, std::unique_ptr<Expression> operand);
+    ~BitwiseNotExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(BitwiseNotExpression)
+};
+
+class LogicNotExpression : public Expression
+{
+public:
+    LogicNotExpression(const Token& token, std::unique_ptr<Expression> operand);
+    ~LogicNotExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LogicNotExpression)
 };
 
 class AddExpression : public Expression
@@ -97,7 +126,7 @@ private:
     std::unique_ptr<Expression> mOperand1;
     std::unique_ptr<Expression> mOperand2;
 
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(AddExpression)
 };
@@ -112,9 +141,54 @@ private:
     std::unique_ptr<Expression> mOperand1;
     std::unique_ptr<Expression> mOperand2;
 
-    qint64 evaluate(ExprEvalContext& context) const override;
+    Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(SubtractExpression)
+};
+
+class MultiplyExpression : public Expression
+{
+public:
+    MultiplyExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~MultiplyExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(MultiplyExpression)
+};
+
+class DivideExpression : public Expression
+{
+public:
+    DivideExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~DivideExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(DivideExpression)
+};
+
+class RemainderExpression : public Expression
+{
+public:
+    RemainderExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~RemainderExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(RemainderExpression)
 };
 
 #endif

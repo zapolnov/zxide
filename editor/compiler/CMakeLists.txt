@@ -41,6 +41,8 @@ qt_add_sources(Compiler
         ProgramSection.h
         Util.cpp
         Util.h
+        Value.cpp
+        Value.h
         Z80Opcodes.cpp
         Z80Opcodes_parser.cpp
         Z80Opcodes.h

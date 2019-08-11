@@ -173,13 +173,13 @@ quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
         error(mExpressionError);
 
     ExprEvalContext context(mProgram, mReporter);
-    qint64 number = context.evaluate(expr);
-    if (number < qint64(min) || number > qint64(max)) {
+    Value value = context.evaluate(expr);
+    if (value.number < qint64(min) || value.number > qint64(max)) {
         error(tr("numeric value 0x%1 is out of range (valid range is 0x%2..0x%3 inclusive)")
-            .arg(number, 0, 16).arg(min, 0, 16).arg(max, 0, 16));
+            .arg(value.number, 0, 16).arg(min, 0, 16).arg(max, 0, 16));
     }
 
-    return quint32(number);
+    return quint32(value.number);
 }
 
 std::string AssemblerParser::expectIdentifier(int tokenId)
