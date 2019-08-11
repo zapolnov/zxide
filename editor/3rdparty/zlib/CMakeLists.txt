@@ -1,6 +1,6 @@
 
 add_library(ZLib STATIC ${src})
-set_target_properties(ZLib PROPERTIES FOLDER "ThirdParty")
+set_target_properties(ZLib PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "Z")
 
 add_sources(ZLib
     adler32.c
