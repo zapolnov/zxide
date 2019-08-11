@@ -1,6 +1,5 @@
 
 include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}/libaudiofile"
     "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
@@ -14,17 +13,11 @@ test_big_endian(WORDS_BIGENDIAN)
 check_include_file("unistd.h" HAVE_UNISTD_H)
 set(config_h "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 configure_file(config.h.in "${config_h}")
-
-add_library(LibAudioFile SHARED "${config_h}")
 source_group("Generated Files" FILES "${config_h}")
 
-set_target_properties(LibAudioFile PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-    PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/PDB"
-    FOLDER "ThirdParty"
-    OUTPUT_NAME "AudioFile"
-    )
+add_library(LibAudioFile STATIC "${config_h}")
+target_include_directories(LibAudioFile PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/libaudiofile")
+set_target_properties(LibAudioFile PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "AudioFile")
 
 add_sources(LibAudioFile
     libaudiofile/alac/ALACAudioTypes.h

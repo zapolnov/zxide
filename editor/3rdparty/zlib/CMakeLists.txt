@@ -1,6 +1,7 @@
 
 add_library(ZLib STATIC ${src})
 set_target_properties(ZLib PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "Z")
+target_include_directories(ZLib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_sources(ZLib
     adler32.c

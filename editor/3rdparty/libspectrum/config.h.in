@@ -1,0 +1,21 @@
+
+#define VERSION "1.4.4"
+
+#cmakedefine WORDS_BIGENDIAN 1
+
+#define HAVE_ZLIB_H 1
+#define HAVE_LIBBZ2 1
+#define HAVE_LIB_AUDIOFILE 1
+
+#cmakedefine HAVE_STDATOMIC_H 1
+#cmakedefine HAVE_GCRYPT_H 1
+#cmakedefine HAVE_STRINGS_H 1
+#cmakedefine HAVE_UNISTD_H 1
+
+#cmakedefine HAVE_STRCASECMP 1
+#cmakedefine HAVE_STRNCASECMP 1
+#cmakedefine HAVE__STRICMP 1
+#cmakedefine HAVE__STRNICMP 1
+
+#cmakedefine HAVE_SNPRINTF 1
+#cmakedefine HAVE__SNPRINTF 1
