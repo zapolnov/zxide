@@ -56,6 +56,12 @@ private:
     std::unique_ptr<Expression> parseShiftExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
     std::unique_ptr<Expression> parseRelationalExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
     std::unique_ptr<Expression> parseEqualityExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseBitwiseAndExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseBitwiseXorExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseBitwiseOrExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseLogicalAndExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseLogicalOrExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
+    std::unique_ptr<Expression> parseConditionalExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
     std::unique_ptr<Expression> parseExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp
     bool tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool unambiguous); // in ExpressionParser.cpp
 

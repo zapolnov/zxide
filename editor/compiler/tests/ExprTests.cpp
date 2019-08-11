@@ -728,3 +728,145 @@ TEST_CASE("relational operators", "[expr]")
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
+
+TEST_CASE("bitwise operators", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, 2|8\n"
+        "ld hl, 0x2148|0x8421\n"
+        "ld hl, 3&1\n"
+        "ld hl, 1&3\n"
+        "ld hl, 8|1&3\n"
+        "ld hl, 1^1\n"
+        "ld hl, 1^0\n"
+        "ld a, 0^1\n"
+        "ld a, 0xff^0xaa\n"
+        "ld a, 5&~3\n"
+        "ld a, ~3|1\n"
+        "ld hl, ~3|1\n"
+        "ld a, -1^1\n"
+        "ld hl, -1^1\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x21,
+        0x0a,
+        0x00,
+        0x21,
+        0x69,
+        0xa5,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x09,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x55,
+        0x3e,
+        0x04,
+        0x3e,
+        0xfd,
+        0x21,
+        0xfd,
+        0xff,
+        0x3e,
+        0xfe,
+        0x21,
+        0xfe,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("logical operators", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, 1||1\n"
+        "ld hl, 1||0\n"
+        "ld hl, 0||0\n"
+        "ld hl, 2&&1\n"
+        "ld hl, 2&&0\n"
+        "ld a, 1&&-3||0\n"
+        "ld a, -4||-5&&3\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("conditional operator", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, +(0?4:12)\n"
+        "ld hl, +(1?7:11)\n"
+        "ld a, +(5<8?3:9)\n"
+        "ld a, +(0>-3?15:2)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x21,
+        0x0c,
+        0x00,
+        0x21,
+        0x07,
+        0x00,
+        0x3e,
+        0x03,
+        0x3e,
+        0x0f,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}

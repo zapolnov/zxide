@@ -502,3 +502,138 @@ Value NotEqualExpression::evaluate(ExprEvalContext& context) const
     Value b = context.evaluate(mOperand2);
     return Value(a.number != b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BitwiseAndExpression::BitwiseAndExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+BitwiseAndExpression::~BitwiseAndExpression()
+{
+}
+
+Value BitwiseAndExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    auto bits = (a.bits > b.bits ? a.bits : b.bits);
+    auto sign = (a.sign == Sign::Signed || b.sign == Sign::Signed ? Sign::Signed : Sign::Unsigned);
+    return Value(a.number & b.number, sign, bits);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BitwiseOrExpression::BitwiseOrExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+BitwiseOrExpression::~BitwiseOrExpression()
+{
+}
+
+Value BitwiseOrExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    auto bits = (a.bits > b.bits ? a.bits : b.bits);
+    auto sign = (a.sign == Sign::Signed || b.sign == Sign::Signed ? Sign::Signed : Sign::Unsigned);
+    return Value(a.number | b.number, sign, bits);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BitwiseXorExpression::BitwiseXorExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+BitwiseXorExpression::~BitwiseXorExpression()
+{
+}
+
+Value BitwiseXorExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    auto bits = (a.bits > b.bits ? a.bits : b.bits);
+    auto sign = (a.sign == Sign::Signed || b.sign == Sign::Signed ? Sign::Signed : Sign::Unsigned);
+    return Value(a.number ^ b.number, sign, bits);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LogicalAndExpression::LogicalAndExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+LogicalAndExpression::~LogicalAndExpression()
+{
+}
+
+Value LogicalAndExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number && b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LogicalOrExpression::LogicalOrExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+LogicalOrExpression::~LogicalOrExpression()
+{
+}
+
+Value LogicalOrExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number || b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ConditionalExpression::ConditionalExpression(const Token& token,
+        std::unique_ptr<Expression> cond, std::unique_ptr<Expression> opThen, std::unique_ptr<Expression> opElse)
+    : Expression(token)
+    , mCondition(std::move(cond))
+    , mThen(std::move(opThen))
+    , mElse(std::move(opElse))
+{
+}
+
+ConditionalExpression::~ConditionalExpression()
+{
+}
+
+Value ConditionalExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mCondition);
+    if (a.number != 0)
+        return context.evaluate(mThen);
+    else
+        return context.evaluate(mElse);
+}

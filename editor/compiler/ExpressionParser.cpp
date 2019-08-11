@@ -247,9 +247,132 @@ std::unique_ptr<Expression> AssemblerParser::parseEqualityExpression(int tokenId
     return expr;
 }
 
+std::unique_ptr<Expression> AssemblerParser::parseBitwiseAndExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseEqualityExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_AMPERSAND) {
+        Token token = lastToken();
+
+        auto op2 = parseEqualityExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        expr.reset(new BitwiseAndExpression(token, std::move(expr), std::move(op2)));
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseBitwiseXorExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseBitwiseAndExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_CARET) {
+        Token token = lastToken();
+
+        auto op2 = parseBitwiseAndExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        expr.reset(new BitwiseXorExpression(token, std::move(expr), std::move(op2)));
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseBitwiseOrExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseBitwiseXorExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_VERTICALBAR) {
+        Token token = lastToken();
+
+        auto op2 = parseBitwiseXorExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        expr.reset(new BitwiseOrExpression(token, std::move(expr), std::move(op2)));
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseLogicalAndExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseBitwiseOrExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_LOGIC_AND) {
+        Token token = lastToken();
+
+        auto op2 = parseBitwiseOrExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        expr.reset(new LogicalAndExpression(token, std::move(expr), std::move(op2)));
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseLogicalOrExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseLogicalAndExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_LOGIC_OR) {
+        Token token = lastToken();
+
+        auto op2 = parseLogicalAndExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        expr.reset(new LogicalOrExpression(token, std::move(expr), std::move(op2)));
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseConditionalExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseLogicalOrExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    if (lastTokenId() == T_QUESTION) {
+        Token token = lastToken();
+
+        auto opThen = parseExpression(nextToken(), true);
+        if (!opThen)
+            return nullptr;
+
+        if (lastTokenId() != T_COLON) {
+            mExpressionError = tr("expected ':'");
+            return nullptr;
+        }
+
+        auto opElse = parseConditionalExpression(nextToken(), true);
+        if (!opElse)
+            return nullptr;
+
+        expr.reset(new ConditionalExpression(token, std::move(expr), std::move(opThen), std::move(opElse)));
+    }
+
+    return expr;
+}
+
 std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool unambiguous)
 {
-    return parseEqualityExpression(tokenId, unambiguous);
+    return parseConditionalExpression(tokenId, unambiguous);
 }
 
 bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool unambiguous)

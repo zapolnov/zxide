@@ -311,4 +311,96 @@ private:
     Q_DISABLE_COPY(NotEqualExpression)
 };
 
+class BitwiseAndExpression : public Expression
+{
+public:
+    BitwiseAndExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~BitwiseAndExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(BitwiseAndExpression)
+};
+
+class BitwiseOrExpression : public Expression
+{
+public:
+    BitwiseOrExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~BitwiseOrExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(BitwiseOrExpression)
+};
+
+class BitwiseXorExpression : public Expression
+{
+public:
+    BitwiseXorExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~BitwiseXorExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(BitwiseXorExpression)
+};
+
+class LogicalAndExpression : public Expression
+{
+public:
+    LogicalAndExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~LogicalAndExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LogicalAndExpression)
+};
+
+class LogicalOrExpression : public Expression
+{
+public:
+    LogicalOrExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~LogicalOrExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LogicalOrExpression)
+};
+
+class ConditionalExpression : public Expression
+{
+public:
+    ConditionalExpression(const Token& token,
+        std::unique_ptr<Expression> cond, std::unique_ptr<Expression> opThen, std::unique_ptr<Expression> opElse);
+    ~ConditionalExpression() override;
+
+private:
+    std::unique_ptr<Expression> mCondition;
+    std::unique_ptr<Expression> mThen;
+    std::unique_ptr<Expression> mElse;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(ConditionalExpression)
+};
+
 #endif
