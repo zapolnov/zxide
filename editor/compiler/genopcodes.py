@@ -66,10 +66,22 @@ class Opcode:
         code = ''
         literalIndex = 0
         i = 0
+
+        for op in self.operands:
+            if op == 'R#':
+                code += '    unsigned addr = bin->endAddress() + lengthInBytes();\n'
+                break
+
         for byte in self.bytes:
             if byte == '#':
                 found = False
                 while i < len(self.operands):
+                    if self.operands[i] == 'R#':
+                        i += 1
+                        literalIndex += 1
+                        code += '    bin->emitByte(mLiteral%d->evaluateByteOffset(reporter, addr));\n' % literalIndex
+                        found = True
+                        break
                     if '##' in self.operands[i]:
                         i += 1
                         literalIndex += 1
@@ -264,7 +276,7 @@ opcodes = [
         Opcode( 'dec', [                  'hl' ], [ 0x2B                   ],  6),
         Opcode( 'dec', [                  'sp' ], [ 0x3B                   ],  6),
         Opcode(  'di', [                       ], [ 0xF3                   ],  4),
-        Opcode('djnz', [                   '#' ], [ 0x10, '#'              ], [ 8, 13 ]),
+        Opcode('djnz', [                  'R#' ], [ 0x10, '#'              ], [ 8, 13 ]),
         Opcode(  'ei', [                       ], [ 0xFB                   ],  4),
         Opcode(  'ex', [     '(sp)',      'hl' ], [ 0xE3                   ], 19),
         Opcode(  'ex', [     '(sp)',      'ix' ], [ 0xDD, 0xE3             ], 23),
@@ -814,7 +826,7 @@ src2 += '#endif\n'
 
 for opcode in opcodes:
     hdr += '\n'
-    hdr += 'class %s : public ProgramOpcode\n' % opcode.className
+    hdr += 'class %s final : public ProgramOpcode\n' % opcode.className
     hdr += '{\n'
     hdr += 'public:\n'
     hdr += '    %s(const Token& token%s)\n' % (opcode.className, opcode.argsDecl())
@@ -826,14 +838,14 @@ for opcode in opcodes:
         hdr += '        Q_ASSERT(mLiteral%d != nullptr);\n' % (idx + 1)
     hdr += '    }\n'
     hdr += '\n'
-    hdr += '    unsigned lengthInBytes() const override { return %d; }\n' % opcode.lengthInBytes
-    hdr += '    unsigned tstatesIfNotTaken() const override { return %d; }\n' % opcode.tstatesIfNotTaken
-    hdr += '    unsigned tstatesIfTaken() const override { return %d; }\n' % opcode.tstatesIfTaken
+    hdr += '    unsigned lengthInBytes() const final override { return %d; }\n' % opcode.lengthInBytes
+    hdr += '    unsigned tstatesIfNotTaken() const final override { return %d; }\n' % opcode.tstatesIfNotTaken
+    hdr += '    unsigned tstatesIfTaken() const final override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
-    hdr += '    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;\n'
+    hdr += '    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;\n'
     hdr += '\n'
     if opcode.numLiterals > 0:
-        hdr += '    void resolveAddress(const ProgramSection* section, quint32& address) override;\n'
+        hdr += '    void resolveAddress(const ProgramSection* section, quint32& address) final override;\n'
         hdr += '\n'
         hdr += 'private:\n'
         for idx in range(0, opcode.numLiterals):
@@ -852,9 +864,9 @@ for opcode in opcodes:
         src += '\n'
         src += 'void %s::resolveAddress(const ProgramSection* section, quint32& address)\n' % opcode.className
         src += '{\n'
-        src += '    ProgramOpcode::resolveAddress(section, address);\n'
         for idx in range(0, opcode.numLiterals):
             src += '    mLiteral%d->resolveAddresses(section, address);\n' % (idx + 1)
+        src += '    ProgramOpcode::resolveAddress(section, address);\n'
         src += '}\n'
 
 def getDict(dict, key):

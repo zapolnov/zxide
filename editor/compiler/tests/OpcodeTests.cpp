@@ -7,7 +7,7 @@
 TEST_CASE("adc a, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, (hl)\n"
         ;
 
@@ -26,7 +26,7 @@ TEST_CASE("adc a, (hl)", "[opcodes]")
 TEST_CASE("adc a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, (ix-43)\n"
         "adc a, (ix+85)\n"
         "adc a, (ix)\n"
@@ -59,7 +59,7 @@ TEST_CASE("adc a, (ix+#)", "[opcodes]")
 TEST_CASE("adc a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, (iy-43)\n"
         "adc a, (iy+85)\n"
         "adc a, (iy)\n"
@@ -92,7 +92,7 @@ TEST_CASE("adc a, (iy+#)", "[opcodes]")
 TEST_CASE("adc a, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, a\n"
         ;
 
@@ -111,7 +111,7 @@ TEST_CASE("adc a, a", "[opcodes]")
 TEST_CASE("adc a, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, b\n"
         ;
 
@@ -130,7 +130,7 @@ TEST_CASE("adc a, b", "[opcodes]")
 TEST_CASE("adc a, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, c\n"
         ;
 
@@ -149,7 +149,7 @@ TEST_CASE("adc a, c", "[opcodes]")
 TEST_CASE("adc a, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, d\n"
         ;
 
@@ -168,7 +168,7 @@ TEST_CASE("adc a, d", "[opcodes]")
 TEST_CASE("adc a, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, e\n"
         ;
 
@@ -187,7 +187,7 @@ TEST_CASE("adc a, e", "[opcodes]")
 TEST_CASE("adc a, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, h\n"
         ;
 
@@ -206,7 +206,7 @@ TEST_CASE("adc a, h", "[opcodes]")
 TEST_CASE("adc a, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, l\n"
         ;
 
@@ -225,7 +225,7 @@ TEST_CASE("adc a, l", "[opcodes]")
 TEST_CASE("adc a, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc a, 170\n"
         "adc a, 85\n"
         "adc a, 0\n"
@@ -254,7 +254,7 @@ TEST_CASE("adc a, #", "[opcodes]")
 TEST_CASE("adc hl, bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc hl, bc\n"
         ;
 
@@ -274,7 +274,7 @@ TEST_CASE("adc hl, bc", "[opcodes]")
 TEST_CASE("adc hl, de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc hl, de\n"
         ;
 
@@ -294,7 +294,7 @@ TEST_CASE("adc hl, de", "[opcodes]")
 TEST_CASE("adc hl, hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc hl, hl\n"
         ;
 
@@ -314,7 +314,7 @@ TEST_CASE("adc hl, hl", "[opcodes]")
 TEST_CASE("adc hl, sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "adc hl, sp\n"
         ;
 
@@ -334,7 +334,7 @@ TEST_CASE("adc hl, sp", "[opcodes]")
 TEST_CASE("add a, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, (hl)\n"
         ;
 
@@ -353,7 +353,7 @@ TEST_CASE("add a, (hl)", "[opcodes]")
 TEST_CASE("add a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, (ix-43)\n"
         "add a, (ix+85)\n"
         "add a, (ix)\n"
@@ -386,7 +386,7 @@ TEST_CASE("add a, (ix+#)", "[opcodes]")
 TEST_CASE("add a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, (iy-43)\n"
         "add a, (iy+85)\n"
         "add a, (iy)\n"
@@ -419,7 +419,7 @@ TEST_CASE("add a, (iy+#)", "[opcodes]")
 TEST_CASE("add a, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, a\n"
         ;
 
@@ -438,7 +438,7 @@ TEST_CASE("add a, a", "[opcodes]")
 TEST_CASE("add a, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, b\n"
         ;
 
@@ -457,7 +457,7 @@ TEST_CASE("add a, b", "[opcodes]")
 TEST_CASE("add a, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, c\n"
         ;
 
@@ -476,7 +476,7 @@ TEST_CASE("add a, c", "[opcodes]")
 TEST_CASE("add a, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, d\n"
         ;
 
@@ -495,7 +495,7 @@ TEST_CASE("add a, d", "[opcodes]")
 TEST_CASE("add a, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, e\n"
         ;
 
@@ -514,7 +514,7 @@ TEST_CASE("add a, e", "[opcodes]")
 TEST_CASE("add a, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, h\n"
         ;
 
@@ -533,7 +533,7 @@ TEST_CASE("add a, h", "[opcodes]")
 TEST_CASE("add a, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, l\n"
         ;
 
@@ -552,7 +552,7 @@ TEST_CASE("add a, l", "[opcodes]")
 TEST_CASE("add a, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add a, 170\n"
         "add a, 85\n"
         "add a, 0\n"
@@ -581,7 +581,7 @@ TEST_CASE("add a, #", "[opcodes]")
 TEST_CASE("add hl, bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add hl, bc\n"
         ;
 
@@ -600,7 +600,7 @@ TEST_CASE("add hl, bc", "[opcodes]")
 TEST_CASE("add hl, de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add hl, de\n"
         ;
 
@@ -619,7 +619,7 @@ TEST_CASE("add hl, de", "[opcodes]")
 TEST_CASE("add hl, hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add hl, hl\n"
         ;
 
@@ -638,7 +638,7 @@ TEST_CASE("add hl, hl", "[opcodes]")
 TEST_CASE("add hl, sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add hl, sp\n"
         ;
 
@@ -657,7 +657,7 @@ TEST_CASE("add hl, sp", "[opcodes]")
 TEST_CASE("add ix, bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add ix, bc\n"
         ;
 
@@ -677,7 +677,7 @@ TEST_CASE("add ix, bc", "[opcodes]")
 TEST_CASE("add ix, de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add ix, de\n"
         ;
 
@@ -697,7 +697,7 @@ TEST_CASE("add ix, de", "[opcodes]")
 TEST_CASE("add ix, ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add ix, ix\n"
         ;
 
@@ -717,7 +717,7 @@ TEST_CASE("add ix, ix", "[opcodes]")
 TEST_CASE("add ix, sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add ix, sp\n"
         ;
 
@@ -737,7 +737,7 @@ TEST_CASE("add ix, sp", "[opcodes]")
 TEST_CASE("add iy, bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add iy, bc\n"
         ;
 
@@ -757,7 +757,7 @@ TEST_CASE("add iy, bc", "[opcodes]")
 TEST_CASE("add iy, de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add iy, de\n"
         ;
 
@@ -777,7 +777,7 @@ TEST_CASE("add iy, de", "[opcodes]")
 TEST_CASE("add iy, iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add iy, iy\n"
         ;
 
@@ -797,7 +797,7 @@ TEST_CASE("add iy, iy", "[opcodes]")
 TEST_CASE("add iy, sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "add iy, sp\n"
         ;
 
@@ -817,7 +817,7 @@ TEST_CASE("add iy, sp", "[opcodes]")
 TEST_CASE("and (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and (hl)\n"
         ;
 
@@ -836,7 +836,7 @@ TEST_CASE("and (hl)", "[opcodes]")
 TEST_CASE("and (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and (ix-43)\n"
         "and (ix+85)\n"
         "and (ix)\n"
@@ -869,7 +869,7 @@ TEST_CASE("and (ix+#)", "[opcodes]")
 TEST_CASE("and (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and (iy-43)\n"
         "and (iy+85)\n"
         "and (iy)\n"
@@ -902,7 +902,7 @@ TEST_CASE("and (iy+#)", "[opcodes]")
 TEST_CASE("and a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and a\n"
         ;
 
@@ -921,7 +921,7 @@ TEST_CASE("and a", "[opcodes]")
 TEST_CASE("and b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and b\n"
         ;
 
@@ -940,7 +940,7 @@ TEST_CASE("and b", "[opcodes]")
 TEST_CASE("and c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and c\n"
         ;
 
@@ -959,7 +959,7 @@ TEST_CASE("and c", "[opcodes]")
 TEST_CASE("and d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and d\n"
         ;
 
@@ -978,7 +978,7 @@ TEST_CASE("and d", "[opcodes]")
 TEST_CASE("and e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and e\n"
         ;
 
@@ -997,7 +997,7 @@ TEST_CASE("and e", "[opcodes]")
 TEST_CASE("and h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and h\n"
         ;
 
@@ -1016,7 +1016,7 @@ TEST_CASE("and h", "[opcodes]")
 TEST_CASE("and l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and l\n"
         ;
 
@@ -1035,7 +1035,7 @@ TEST_CASE("and l", "[opcodes]")
 TEST_CASE("and #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "and 170\n"
         "and 85\n"
         "and 0\n"
@@ -1064,7 +1064,7 @@ TEST_CASE("and #", "[opcodes]")
 TEST_CASE("bit 0, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, (hl)\n"
         ;
 
@@ -1084,7 +1084,7 @@ TEST_CASE("bit 0, (hl)", "[opcodes]")
 TEST_CASE("bit 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, (ix-43)\n"
         "bit 0, (ix+85)\n"
         "bit 0, (ix)\n"
@@ -1121,7 +1121,7 @@ TEST_CASE("bit 0, (ix+#)", "[opcodes]")
 TEST_CASE("bit 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, (iy-43)\n"
         "bit 0, (iy+85)\n"
         "bit 0, (iy)\n"
@@ -1158,7 +1158,7 @@ TEST_CASE("bit 0, (iy+#)", "[opcodes]")
 TEST_CASE("bit 0, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, a\n"
         ;
 
@@ -1178,7 +1178,7 @@ TEST_CASE("bit 0, a", "[opcodes]")
 TEST_CASE("bit 0, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, b\n"
         ;
 
@@ -1198,7 +1198,7 @@ TEST_CASE("bit 0, b", "[opcodes]")
 TEST_CASE("bit 0, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, c\n"
         ;
 
@@ -1218,7 +1218,7 @@ TEST_CASE("bit 0, c", "[opcodes]")
 TEST_CASE("bit 0, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, d\n"
         ;
 
@@ -1238,7 +1238,7 @@ TEST_CASE("bit 0, d", "[opcodes]")
 TEST_CASE("bit 0, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, e\n"
         ;
 
@@ -1258,7 +1258,7 @@ TEST_CASE("bit 0, e", "[opcodes]")
 TEST_CASE("bit 0, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, h\n"
         ;
 
@@ -1278,7 +1278,7 @@ TEST_CASE("bit 0, h", "[opcodes]")
 TEST_CASE("bit 0, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 0, l\n"
         ;
 
@@ -1298,7 +1298,7 @@ TEST_CASE("bit 0, l", "[opcodes]")
 TEST_CASE("bit 1, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, (hl)\n"
         ;
 
@@ -1318,7 +1318,7 @@ TEST_CASE("bit 1, (hl)", "[opcodes]")
 TEST_CASE("bit 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, (ix-43)\n"
         "bit 1, (ix+85)\n"
         "bit 1, (ix)\n"
@@ -1355,7 +1355,7 @@ TEST_CASE("bit 1, (ix+#)", "[opcodes]")
 TEST_CASE("bit 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, (iy-43)\n"
         "bit 1, (iy+85)\n"
         "bit 1, (iy)\n"
@@ -1392,7 +1392,7 @@ TEST_CASE("bit 1, (iy+#)", "[opcodes]")
 TEST_CASE("bit 1, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, a\n"
         ;
 
@@ -1412,7 +1412,7 @@ TEST_CASE("bit 1, a", "[opcodes]")
 TEST_CASE("bit 1, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, b\n"
         ;
 
@@ -1432,7 +1432,7 @@ TEST_CASE("bit 1, b", "[opcodes]")
 TEST_CASE("bit 1, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, c\n"
         ;
 
@@ -1452,7 +1452,7 @@ TEST_CASE("bit 1, c", "[opcodes]")
 TEST_CASE("bit 1, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, d\n"
         ;
 
@@ -1472,7 +1472,7 @@ TEST_CASE("bit 1, d", "[opcodes]")
 TEST_CASE("bit 1, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, e\n"
         ;
 
@@ -1492,7 +1492,7 @@ TEST_CASE("bit 1, e", "[opcodes]")
 TEST_CASE("bit 1, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, h\n"
         ;
 
@@ -1512,7 +1512,7 @@ TEST_CASE("bit 1, h", "[opcodes]")
 TEST_CASE("bit 1, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 1, l\n"
         ;
 
@@ -1532,7 +1532,7 @@ TEST_CASE("bit 1, l", "[opcodes]")
 TEST_CASE("bit 2, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, (hl)\n"
         ;
 
@@ -1552,7 +1552,7 @@ TEST_CASE("bit 2, (hl)", "[opcodes]")
 TEST_CASE("bit 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, (ix-43)\n"
         "bit 2, (ix+85)\n"
         "bit 2, (ix)\n"
@@ -1589,7 +1589,7 @@ TEST_CASE("bit 2, (ix+#)", "[opcodes]")
 TEST_CASE("bit 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, (iy-43)\n"
         "bit 2, (iy+85)\n"
         "bit 2, (iy)\n"
@@ -1626,7 +1626,7 @@ TEST_CASE("bit 2, (iy+#)", "[opcodes]")
 TEST_CASE("bit 2, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, a\n"
         ;
 
@@ -1646,7 +1646,7 @@ TEST_CASE("bit 2, a", "[opcodes]")
 TEST_CASE("bit 2, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, b\n"
         ;
 
@@ -1666,7 +1666,7 @@ TEST_CASE("bit 2, b", "[opcodes]")
 TEST_CASE("bit 2, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, c\n"
         ;
 
@@ -1686,7 +1686,7 @@ TEST_CASE("bit 2, c", "[opcodes]")
 TEST_CASE("bit 2, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, d\n"
         ;
 
@@ -1706,7 +1706,7 @@ TEST_CASE("bit 2, d", "[opcodes]")
 TEST_CASE("bit 2, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, e\n"
         ;
 
@@ -1726,7 +1726,7 @@ TEST_CASE("bit 2, e", "[opcodes]")
 TEST_CASE("bit 2, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, h\n"
         ;
 
@@ -1746,7 +1746,7 @@ TEST_CASE("bit 2, h", "[opcodes]")
 TEST_CASE("bit 2, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 2, l\n"
         ;
 
@@ -1766,7 +1766,7 @@ TEST_CASE("bit 2, l", "[opcodes]")
 TEST_CASE("bit 3, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, (hl)\n"
         ;
 
@@ -1786,7 +1786,7 @@ TEST_CASE("bit 3, (hl)", "[opcodes]")
 TEST_CASE("bit 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, (ix-43)\n"
         "bit 3, (ix+85)\n"
         "bit 3, (ix)\n"
@@ -1823,7 +1823,7 @@ TEST_CASE("bit 3, (ix+#)", "[opcodes]")
 TEST_CASE("bit 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, (iy-43)\n"
         "bit 3, (iy+85)\n"
         "bit 3, (iy)\n"
@@ -1860,7 +1860,7 @@ TEST_CASE("bit 3, (iy+#)", "[opcodes]")
 TEST_CASE("bit 3, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, a\n"
         ;
 
@@ -1880,7 +1880,7 @@ TEST_CASE("bit 3, a", "[opcodes]")
 TEST_CASE("bit 3, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, b\n"
         ;
 
@@ -1900,7 +1900,7 @@ TEST_CASE("bit 3, b", "[opcodes]")
 TEST_CASE("bit 3, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, c\n"
         ;
 
@@ -1920,7 +1920,7 @@ TEST_CASE("bit 3, c", "[opcodes]")
 TEST_CASE("bit 3, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, d\n"
         ;
 
@@ -1940,7 +1940,7 @@ TEST_CASE("bit 3, d", "[opcodes]")
 TEST_CASE("bit 3, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, e\n"
         ;
 
@@ -1960,7 +1960,7 @@ TEST_CASE("bit 3, e", "[opcodes]")
 TEST_CASE("bit 3, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, h\n"
         ;
 
@@ -1980,7 +1980,7 @@ TEST_CASE("bit 3, h", "[opcodes]")
 TEST_CASE("bit 3, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 3, l\n"
         ;
 
@@ -2000,7 +2000,7 @@ TEST_CASE("bit 3, l", "[opcodes]")
 TEST_CASE("bit 4, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, (hl)\n"
         ;
 
@@ -2020,7 +2020,7 @@ TEST_CASE("bit 4, (hl)", "[opcodes]")
 TEST_CASE("bit 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, (ix-43)\n"
         "bit 4, (ix+85)\n"
         "bit 4, (ix)\n"
@@ -2057,7 +2057,7 @@ TEST_CASE("bit 4, (ix+#)", "[opcodes]")
 TEST_CASE("bit 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, (iy-43)\n"
         "bit 4, (iy+85)\n"
         "bit 4, (iy)\n"
@@ -2094,7 +2094,7 @@ TEST_CASE("bit 4, (iy+#)", "[opcodes]")
 TEST_CASE("bit 4, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, a\n"
         ;
 
@@ -2114,7 +2114,7 @@ TEST_CASE("bit 4, a", "[opcodes]")
 TEST_CASE("bit 4, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, b\n"
         ;
 
@@ -2134,7 +2134,7 @@ TEST_CASE("bit 4, b", "[opcodes]")
 TEST_CASE("bit 4, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, c\n"
         ;
 
@@ -2154,7 +2154,7 @@ TEST_CASE("bit 4, c", "[opcodes]")
 TEST_CASE("bit 4, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, d\n"
         ;
 
@@ -2174,7 +2174,7 @@ TEST_CASE("bit 4, d", "[opcodes]")
 TEST_CASE("bit 4, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, e\n"
         ;
 
@@ -2194,7 +2194,7 @@ TEST_CASE("bit 4, e", "[opcodes]")
 TEST_CASE("bit 4, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, h\n"
         ;
 
@@ -2214,7 +2214,7 @@ TEST_CASE("bit 4, h", "[opcodes]")
 TEST_CASE("bit 4, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 4, l\n"
         ;
 
@@ -2234,7 +2234,7 @@ TEST_CASE("bit 4, l", "[opcodes]")
 TEST_CASE("bit 5, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, (hl)\n"
         ;
 
@@ -2254,7 +2254,7 @@ TEST_CASE("bit 5, (hl)", "[opcodes]")
 TEST_CASE("bit 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, (ix-43)\n"
         "bit 5, (ix+85)\n"
         "bit 5, (ix)\n"
@@ -2291,7 +2291,7 @@ TEST_CASE("bit 5, (ix+#)", "[opcodes]")
 TEST_CASE("bit 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, (iy-43)\n"
         "bit 5, (iy+85)\n"
         "bit 5, (iy)\n"
@@ -2328,7 +2328,7 @@ TEST_CASE("bit 5, (iy+#)", "[opcodes]")
 TEST_CASE("bit 5, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, a\n"
         ;
 
@@ -2348,7 +2348,7 @@ TEST_CASE("bit 5, a", "[opcodes]")
 TEST_CASE("bit 5, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, b\n"
         ;
 
@@ -2368,7 +2368,7 @@ TEST_CASE("bit 5, b", "[opcodes]")
 TEST_CASE("bit 5, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, c\n"
         ;
 
@@ -2388,7 +2388,7 @@ TEST_CASE("bit 5, c", "[opcodes]")
 TEST_CASE("bit 5, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, d\n"
         ;
 
@@ -2408,7 +2408,7 @@ TEST_CASE("bit 5, d", "[opcodes]")
 TEST_CASE("bit 5, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, e\n"
         ;
 
@@ -2428,7 +2428,7 @@ TEST_CASE("bit 5, e", "[opcodes]")
 TEST_CASE("bit 5, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, h\n"
         ;
 
@@ -2448,7 +2448,7 @@ TEST_CASE("bit 5, h", "[opcodes]")
 TEST_CASE("bit 5, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 5, l\n"
         ;
 
@@ -2468,7 +2468,7 @@ TEST_CASE("bit 5, l", "[opcodes]")
 TEST_CASE("bit 6, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, (hl)\n"
         ;
 
@@ -2488,7 +2488,7 @@ TEST_CASE("bit 6, (hl)", "[opcodes]")
 TEST_CASE("bit 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, (ix-43)\n"
         "bit 6, (ix+85)\n"
         "bit 6, (ix)\n"
@@ -2525,7 +2525,7 @@ TEST_CASE("bit 6, (ix+#)", "[opcodes]")
 TEST_CASE("bit 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, (iy-43)\n"
         "bit 6, (iy+85)\n"
         "bit 6, (iy)\n"
@@ -2562,7 +2562,7 @@ TEST_CASE("bit 6, (iy+#)", "[opcodes]")
 TEST_CASE("bit 6, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, a\n"
         ;
 
@@ -2582,7 +2582,7 @@ TEST_CASE("bit 6, a", "[opcodes]")
 TEST_CASE("bit 6, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, b\n"
         ;
 
@@ -2602,7 +2602,7 @@ TEST_CASE("bit 6, b", "[opcodes]")
 TEST_CASE("bit 6, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, c\n"
         ;
 
@@ -2622,7 +2622,7 @@ TEST_CASE("bit 6, c", "[opcodes]")
 TEST_CASE("bit 6, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, d\n"
         ;
 
@@ -2642,7 +2642,7 @@ TEST_CASE("bit 6, d", "[opcodes]")
 TEST_CASE("bit 6, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, e\n"
         ;
 
@@ -2662,7 +2662,7 @@ TEST_CASE("bit 6, e", "[opcodes]")
 TEST_CASE("bit 6, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, h\n"
         ;
 
@@ -2682,7 +2682,7 @@ TEST_CASE("bit 6, h", "[opcodes]")
 TEST_CASE("bit 6, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 6, l\n"
         ;
 
@@ -2702,7 +2702,7 @@ TEST_CASE("bit 6, l", "[opcodes]")
 TEST_CASE("bit 7, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, (hl)\n"
         ;
 
@@ -2722,7 +2722,7 @@ TEST_CASE("bit 7, (hl)", "[opcodes]")
 TEST_CASE("bit 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, (ix-43)\n"
         "bit 7, (ix+85)\n"
         "bit 7, (ix)\n"
@@ -2759,7 +2759,7 @@ TEST_CASE("bit 7, (ix+#)", "[opcodes]")
 TEST_CASE("bit 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, (iy-43)\n"
         "bit 7, (iy+85)\n"
         "bit 7, (iy)\n"
@@ -2796,7 +2796,7 @@ TEST_CASE("bit 7, (iy+#)", "[opcodes]")
 TEST_CASE("bit 7, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, a\n"
         ;
 
@@ -2816,7 +2816,7 @@ TEST_CASE("bit 7, a", "[opcodes]")
 TEST_CASE("bit 7, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, b\n"
         ;
 
@@ -2836,7 +2836,7 @@ TEST_CASE("bit 7, b", "[opcodes]")
 TEST_CASE("bit 7, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, c\n"
         ;
 
@@ -2856,7 +2856,7 @@ TEST_CASE("bit 7, c", "[opcodes]")
 TEST_CASE("bit 7, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, d\n"
         ;
 
@@ -2876,7 +2876,7 @@ TEST_CASE("bit 7, d", "[opcodes]")
 TEST_CASE("bit 7, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, e\n"
         ;
 
@@ -2896,7 +2896,7 @@ TEST_CASE("bit 7, e", "[opcodes]")
 TEST_CASE("bit 7, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, h\n"
         ;
 
@@ -2916,7 +2916,7 @@ TEST_CASE("bit 7, h", "[opcodes]")
 TEST_CASE("bit 7, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "bit 7, l\n"
         ;
 
@@ -2936,7 +2936,7 @@ TEST_CASE("bit 7, l", "[opcodes]")
 TEST_CASE("call ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call 4660\n"
         "call 16945\n"
         "call 0\n"
@@ -2969,7 +2969,7 @@ TEST_CASE("call ##", "[opcodes]")
 TEST_CASE("call c, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call c, 4660\n"
         "call c, 16945\n"
         "call c, 0\n"
@@ -3002,7 +3002,7 @@ TEST_CASE("call c, ##", "[opcodes]")
 TEST_CASE("call m, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call m, 4660\n"
         "call m, 16945\n"
         "call m, 0\n"
@@ -3035,7 +3035,7 @@ TEST_CASE("call m, ##", "[opcodes]")
 TEST_CASE("call nc, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call nc, 4660\n"
         "call nc, 16945\n"
         "call nc, 0\n"
@@ -3068,7 +3068,7 @@ TEST_CASE("call nc, ##", "[opcodes]")
 TEST_CASE("call nz, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call nz, 4660\n"
         "call nz, 16945\n"
         "call nz, 0\n"
@@ -3101,7 +3101,7 @@ TEST_CASE("call nz, ##", "[opcodes]")
 TEST_CASE("call p, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call p, 4660\n"
         "call p, 16945\n"
         "call p, 0\n"
@@ -3134,7 +3134,7 @@ TEST_CASE("call p, ##", "[opcodes]")
 TEST_CASE("call pe, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call pe, 4660\n"
         "call pe, 16945\n"
         "call pe, 0\n"
@@ -3167,7 +3167,7 @@ TEST_CASE("call pe, ##", "[opcodes]")
 TEST_CASE("call po, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call po, 4660\n"
         "call po, 16945\n"
         "call po, 0\n"
@@ -3200,7 +3200,7 @@ TEST_CASE("call po, ##", "[opcodes]")
 TEST_CASE("call z, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "call z, 4660\n"
         "call z, 16945\n"
         "call z, 0\n"
@@ -3233,7 +3233,7 @@ TEST_CASE("call z, ##", "[opcodes]")
 TEST_CASE("ccf", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ccf\n"
         ;
 
@@ -3252,7 +3252,7 @@ TEST_CASE("ccf", "[opcodes]")
 TEST_CASE("cp (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp (hl)\n"
         ;
 
@@ -3271,7 +3271,7 @@ TEST_CASE("cp (hl)", "[opcodes]")
 TEST_CASE("cp (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp (ix-43)\n"
         "cp (ix+85)\n"
         "cp (ix)\n"
@@ -3304,7 +3304,7 @@ TEST_CASE("cp (ix+#)", "[opcodes]")
 TEST_CASE("cp (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp (iy-43)\n"
         "cp (iy+85)\n"
         "cp (iy)\n"
@@ -3337,7 +3337,7 @@ TEST_CASE("cp (iy+#)", "[opcodes]")
 TEST_CASE("cp a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp a\n"
         ;
 
@@ -3356,7 +3356,7 @@ TEST_CASE("cp a", "[opcodes]")
 TEST_CASE("cp b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp b\n"
         ;
 
@@ -3375,7 +3375,7 @@ TEST_CASE("cp b", "[opcodes]")
 TEST_CASE("cp c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp c\n"
         ;
 
@@ -3394,7 +3394,7 @@ TEST_CASE("cp c", "[opcodes]")
 TEST_CASE("cp d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp d\n"
         ;
 
@@ -3413,7 +3413,7 @@ TEST_CASE("cp d", "[opcodes]")
 TEST_CASE("cp e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp e\n"
         ;
 
@@ -3432,7 +3432,7 @@ TEST_CASE("cp e", "[opcodes]")
 TEST_CASE("cp h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp h\n"
         ;
 
@@ -3451,7 +3451,7 @@ TEST_CASE("cp h", "[opcodes]")
 TEST_CASE("cp l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp l\n"
         ;
 
@@ -3470,7 +3470,7 @@ TEST_CASE("cp l", "[opcodes]")
 TEST_CASE("cp #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cp 170\n"
         "cp 85\n"
         "cp 0\n"
@@ -3499,7 +3499,7 @@ TEST_CASE("cp #", "[opcodes]")
 TEST_CASE("cpd", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cpd\n"
         ;
 
@@ -3519,7 +3519,7 @@ TEST_CASE("cpd", "[opcodes]")
 TEST_CASE("cpdr", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cpdr\n"
         ;
 
@@ -3539,7 +3539,7 @@ TEST_CASE("cpdr", "[opcodes]")
 TEST_CASE("cpir", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cpir\n"
         ;
 
@@ -3559,7 +3559,7 @@ TEST_CASE("cpir", "[opcodes]")
 TEST_CASE("cpi", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cpi\n"
         ;
 
@@ -3579,7 +3579,7 @@ TEST_CASE("cpi", "[opcodes]")
 TEST_CASE("cpl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "cpl\n"
         ;
 
@@ -3598,7 +3598,7 @@ TEST_CASE("cpl", "[opcodes]")
 TEST_CASE("daa", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "daa\n"
         ;
 
@@ -3617,7 +3617,7 @@ TEST_CASE("daa", "[opcodes]")
 TEST_CASE("dec (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec (hl)\n"
         ;
 
@@ -3636,7 +3636,7 @@ TEST_CASE("dec (hl)", "[opcodes]")
 TEST_CASE("dec (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec (ix-43)\n"
         "dec (ix+85)\n"
         "dec (ix)\n"
@@ -3669,7 +3669,7 @@ TEST_CASE("dec (ix+#)", "[opcodes]")
 TEST_CASE("dec (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec (iy-43)\n"
         "dec (iy+85)\n"
         "dec (iy)\n"
@@ -3702,7 +3702,7 @@ TEST_CASE("dec (iy+#)", "[opcodes]")
 TEST_CASE("dec a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec a\n"
         ;
 
@@ -3721,7 +3721,7 @@ TEST_CASE("dec a", "[opcodes]")
 TEST_CASE("dec b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec b\n"
         ;
 
@@ -3740,7 +3740,7 @@ TEST_CASE("dec b", "[opcodes]")
 TEST_CASE("dec bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec bc\n"
         ;
 
@@ -3759,7 +3759,7 @@ TEST_CASE("dec bc", "[opcodes]")
 TEST_CASE("dec c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec c\n"
         ;
 
@@ -3778,7 +3778,7 @@ TEST_CASE("dec c", "[opcodes]")
 TEST_CASE("dec d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec d\n"
         ;
 
@@ -3797,7 +3797,7 @@ TEST_CASE("dec d", "[opcodes]")
 TEST_CASE("dec de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec de\n"
         ;
 
@@ -3816,7 +3816,7 @@ TEST_CASE("dec de", "[opcodes]")
 TEST_CASE("dec e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec e\n"
         ;
 
@@ -3835,7 +3835,7 @@ TEST_CASE("dec e", "[opcodes]")
 TEST_CASE("dec h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec h\n"
         ;
 
@@ -3854,7 +3854,7 @@ TEST_CASE("dec h", "[opcodes]")
 TEST_CASE("dec hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec hl\n"
         ;
 
@@ -3873,7 +3873,7 @@ TEST_CASE("dec hl", "[opcodes]")
 TEST_CASE("dec ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec ix\n"
         ;
 
@@ -3893,7 +3893,7 @@ TEST_CASE("dec ix", "[opcodes]")
 TEST_CASE("dec iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec iy\n"
         ;
 
@@ -3913,7 +3913,7 @@ TEST_CASE("dec iy", "[opcodes]")
 TEST_CASE("dec l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec l\n"
         ;
 
@@ -3932,7 +3932,7 @@ TEST_CASE("dec l", "[opcodes]")
 TEST_CASE("dec sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "dec sp\n"
         ;
 
@@ -3951,7 +3951,7 @@ TEST_CASE("dec sp", "[opcodes]")
 TEST_CASE("di", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "di\n"
         ;
 
@@ -3970,7 +3970,7 @@ TEST_CASE("di", "[opcodes]")
 TEST_CASE("djnz $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "djnz $-41\n"
         "djnz $+44\n"
         "djnz $+129\n"
@@ -3999,7 +3999,7 @@ TEST_CASE("djnz $+#", "[opcodes]")
 TEST_CASE("ei", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ei\n"
         ;
 
@@ -4018,7 +4018,7 @@ TEST_CASE("ei", "[opcodes]")
 TEST_CASE("ex (sp), hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ex (sp), hl\n"
         ;
 
@@ -4037,7 +4037,7 @@ TEST_CASE("ex (sp), hl", "[opcodes]")
 TEST_CASE("ex (sp), ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ex (sp), ix\n"
         ;
 
@@ -4057,7 +4057,7 @@ TEST_CASE("ex (sp), ix", "[opcodes]")
 TEST_CASE("ex (sp), iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ex (sp), iy\n"
         ;
 
@@ -4077,7 +4077,7 @@ TEST_CASE("ex (sp), iy", "[opcodes]")
 TEST_CASE("ex af, af'", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ex af, af'\n"
         ;
 
@@ -4096,7 +4096,7 @@ TEST_CASE("ex af, af'", "[opcodes]")
 TEST_CASE("ex de, hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ex de, hl\n"
         ;
 
@@ -4115,7 +4115,7 @@ TEST_CASE("ex de, hl", "[opcodes]")
 TEST_CASE("exx", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "exx\n"
         ;
 
@@ -4134,7 +4134,7 @@ TEST_CASE("exx", "[opcodes]")
 TEST_CASE("halt", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "halt\n"
         ;
 
@@ -4153,7 +4153,7 @@ TEST_CASE("halt", "[opcodes]")
 TEST_CASE("im 0", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "im 0\n"
         ;
 
@@ -4173,7 +4173,7 @@ TEST_CASE("im 0", "[opcodes]")
 TEST_CASE("im 1", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "im 1\n"
         ;
 
@@ -4193,7 +4193,7 @@ TEST_CASE("im 1", "[opcodes]")
 TEST_CASE("im 2", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "im 2\n"
         ;
 
@@ -4213,7 +4213,7 @@ TEST_CASE("im 2", "[opcodes]")
 TEST_CASE("in a, (#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in a, (170)\n"
         "in a, (85)\n"
         "in a, (0)\n"
@@ -4242,7 +4242,7 @@ TEST_CASE("in a, (#)", "[opcodes]")
 TEST_CASE("in a, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in a, (c)\n"
         ;
 
@@ -4262,7 +4262,7 @@ TEST_CASE("in a, (c)", "[opcodes]")
 TEST_CASE("in b, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in b, (c)\n"
         ;
 
@@ -4282,7 +4282,7 @@ TEST_CASE("in b, (c)", "[opcodes]")
 TEST_CASE("in c, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in c, (c)\n"
         ;
 
@@ -4302,7 +4302,7 @@ TEST_CASE("in c, (c)", "[opcodes]")
 TEST_CASE("in d, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in d, (c)\n"
         ;
 
@@ -4322,7 +4322,7 @@ TEST_CASE("in d, (c)", "[opcodes]")
 TEST_CASE("in e, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in e, (c)\n"
         ;
 
@@ -4342,7 +4342,7 @@ TEST_CASE("in e, (c)", "[opcodes]")
 TEST_CASE("in h, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in h, (c)\n"
         ;
 
@@ -4362,7 +4362,7 @@ TEST_CASE("in h, (c)", "[opcodes]")
 TEST_CASE("in l, (c)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "in l, (c)\n"
         ;
 
@@ -4382,7 +4382,7 @@ TEST_CASE("in l, (c)", "[opcodes]")
 TEST_CASE("inc (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc (hl)\n"
         ;
 
@@ -4401,7 +4401,7 @@ TEST_CASE("inc (hl)", "[opcodes]")
 TEST_CASE("inc (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc (ix-43)\n"
         "inc (ix+85)\n"
         "inc (ix)\n"
@@ -4434,7 +4434,7 @@ TEST_CASE("inc (ix+#)", "[opcodes]")
 TEST_CASE("inc (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc (iy-43)\n"
         "inc (iy+85)\n"
         "inc (iy)\n"
@@ -4467,7 +4467,7 @@ TEST_CASE("inc (iy+#)", "[opcodes]")
 TEST_CASE("inc a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc a\n"
         ;
 
@@ -4486,7 +4486,7 @@ TEST_CASE("inc a", "[opcodes]")
 TEST_CASE("inc b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc b\n"
         ;
 
@@ -4505,7 +4505,7 @@ TEST_CASE("inc b", "[opcodes]")
 TEST_CASE("inc bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc bc\n"
         ;
 
@@ -4524,7 +4524,7 @@ TEST_CASE("inc bc", "[opcodes]")
 TEST_CASE("inc c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc c\n"
         ;
 
@@ -4543,7 +4543,7 @@ TEST_CASE("inc c", "[opcodes]")
 TEST_CASE("inc d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc d\n"
         ;
 
@@ -4562,7 +4562,7 @@ TEST_CASE("inc d", "[opcodes]")
 TEST_CASE("inc de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc de\n"
         ;
 
@@ -4581,7 +4581,7 @@ TEST_CASE("inc de", "[opcodes]")
 TEST_CASE("inc e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc e\n"
         ;
 
@@ -4600,7 +4600,7 @@ TEST_CASE("inc e", "[opcodes]")
 TEST_CASE("inc h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc h\n"
         ;
 
@@ -4619,7 +4619,7 @@ TEST_CASE("inc h", "[opcodes]")
 TEST_CASE("inc hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc hl\n"
         ;
 
@@ -4638,7 +4638,7 @@ TEST_CASE("inc hl", "[opcodes]")
 TEST_CASE("inc ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc ix\n"
         ;
 
@@ -4658,7 +4658,7 @@ TEST_CASE("inc ix", "[opcodes]")
 TEST_CASE("inc iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc iy\n"
         ;
 
@@ -4678,7 +4678,7 @@ TEST_CASE("inc iy", "[opcodes]")
 TEST_CASE("inc l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc l\n"
         ;
 
@@ -4697,7 +4697,7 @@ TEST_CASE("inc l", "[opcodes]")
 TEST_CASE("inc sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inc sp\n"
         ;
 
@@ -4716,7 +4716,7 @@ TEST_CASE("inc sp", "[opcodes]")
 TEST_CASE("ind", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ind\n"
         ;
 
@@ -4736,7 +4736,7 @@ TEST_CASE("ind", "[opcodes]")
 TEST_CASE("indr", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "indr\n"
         ;
 
@@ -4756,7 +4756,7 @@ TEST_CASE("indr", "[opcodes]")
 TEST_CASE("ini", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ini\n"
         ;
 
@@ -4776,7 +4776,7 @@ TEST_CASE("ini", "[opcodes]")
 TEST_CASE("inir", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "inir\n"
         ;
 
@@ -4796,7 +4796,7 @@ TEST_CASE("inir", "[opcodes]")
 TEST_CASE("jp ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp 4660\n"
         "jp 16945\n"
         "jp 0\n"
@@ -4829,7 +4829,7 @@ TEST_CASE("jp ##", "[opcodes]")
 TEST_CASE("jp c, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp c, 4660\n"
         "jp c, 16945\n"
         "jp c, 0\n"
@@ -4862,7 +4862,7 @@ TEST_CASE("jp c, ##", "[opcodes]")
 TEST_CASE("jp m, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp m, 4660\n"
         "jp m, 16945\n"
         "jp m, 0\n"
@@ -4895,7 +4895,7 @@ TEST_CASE("jp m, ##", "[opcodes]")
 TEST_CASE("jp nc, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp nc, 4660\n"
         "jp nc, 16945\n"
         "jp nc, 0\n"
@@ -4928,7 +4928,7 @@ TEST_CASE("jp nc, ##", "[opcodes]")
 TEST_CASE("jp nz, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp nz, 4660\n"
         "jp nz, 16945\n"
         "jp nz, 0\n"
@@ -4961,7 +4961,7 @@ TEST_CASE("jp nz, ##", "[opcodes]")
 TEST_CASE("jp p, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp p, 4660\n"
         "jp p, 16945\n"
         "jp p, 0\n"
@@ -4994,7 +4994,7 @@ TEST_CASE("jp p, ##", "[opcodes]")
 TEST_CASE("jp pe, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp pe, 4660\n"
         "jp pe, 16945\n"
         "jp pe, 0\n"
@@ -5027,7 +5027,7 @@ TEST_CASE("jp pe, ##", "[opcodes]")
 TEST_CASE("jp po, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp po, 4660\n"
         "jp po, 16945\n"
         "jp po, 0\n"
@@ -5060,7 +5060,7 @@ TEST_CASE("jp po, ##", "[opcodes]")
 TEST_CASE("jp z, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp z, 4660\n"
         "jp z, 16945\n"
         "jp z, 0\n"
@@ -5093,7 +5093,7 @@ TEST_CASE("jp z, ##", "[opcodes]")
 TEST_CASE("jp (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp (hl)\n"
         ;
 
@@ -5112,7 +5112,7 @@ TEST_CASE("jp (hl)", "[opcodes]")
 TEST_CASE("jp (ix)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp (ix)\n"
         ;
 
@@ -5132,7 +5132,7 @@ TEST_CASE("jp (ix)", "[opcodes]")
 TEST_CASE("jp (iy)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jp (iy)\n"
         ;
 
@@ -5152,7 +5152,7 @@ TEST_CASE("jp (iy)", "[opcodes]")
 TEST_CASE("jr c, $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jr c, $-41\n"
         "jr c, $+44\n"
         "jr c, $+129\n"
@@ -5181,7 +5181,7 @@ TEST_CASE("jr c, $+#", "[opcodes]")
 TEST_CASE("jr nc, $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jr nc, $-41\n"
         "jr nc, $+44\n"
         "jr nc, $+129\n"
@@ -5210,7 +5210,7 @@ TEST_CASE("jr nc, $+#", "[opcodes]")
 TEST_CASE("jr nz, $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jr nz, $-41\n"
         "jr nz, $+44\n"
         "jr nz, $+129\n"
@@ -5239,7 +5239,7 @@ TEST_CASE("jr nz, $+#", "[opcodes]")
 TEST_CASE("jr z, $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jr z, $-41\n"
         "jr z, $+44\n"
         "jr z, $+129\n"
@@ -5268,7 +5268,7 @@ TEST_CASE("jr z, $+#", "[opcodes]")
 TEST_CASE("jr $+#", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "jr $-41\n"
         "jr $+44\n"
         "jr $+129\n"
@@ -5297,7 +5297,7 @@ TEST_CASE("jr $+#", "[opcodes]")
 TEST_CASE("ld (bc), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (bc), a\n"
         ;
 
@@ -5316,7 +5316,7 @@ TEST_CASE("ld (bc), a", "[opcodes]")
 TEST_CASE("ld (de), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (de), a\n"
         ;
 
@@ -5335,7 +5335,7 @@ TEST_CASE("ld (de), a", "[opcodes]")
 TEST_CASE("ld (hl), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), a\n"
         ;
 
@@ -5354,7 +5354,7 @@ TEST_CASE("ld (hl), a", "[opcodes]")
 TEST_CASE("ld (hl), b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), b\n"
         ;
 
@@ -5373,7 +5373,7 @@ TEST_CASE("ld (hl), b", "[opcodes]")
 TEST_CASE("ld (hl), c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), c\n"
         ;
 
@@ -5392,7 +5392,7 @@ TEST_CASE("ld (hl), c", "[opcodes]")
 TEST_CASE("ld (hl), d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), d\n"
         ;
 
@@ -5411,7 +5411,7 @@ TEST_CASE("ld (hl), d", "[opcodes]")
 TEST_CASE("ld (hl), e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), e\n"
         ;
 
@@ -5430,7 +5430,7 @@ TEST_CASE("ld (hl), e", "[opcodes]")
 TEST_CASE("ld (hl), h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), h\n"
         ;
 
@@ -5449,7 +5449,7 @@ TEST_CASE("ld (hl), h", "[opcodes]")
 TEST_CASE("ld (hl), l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), l\n"
         ;
 
@@ -5468,7 +5468,7 @@ TEST_CASE("ld (hl), l", "[opcodes]")
 TEST_CASE("ld (hl), #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (hl), 170\n"
         "ld (hl), 85\n"
         "ld (hl), 0\n"
@@ -5497,7 +5497,7 @@ TEST_CASE("ld (hl), #", "[opcodes]")
 TEST_CASE("ld (ix+#), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), a\n"
         "ld (ix+85), a\n"
         "ld (ix), a\n"
@@ -5530,7 +5530,7 @@ TEST_CASE("ld (ix+#), a", "[opcodes]")
 TEST_CASE("ld (ix+#), b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), b\n"
         "ld (ix+85), b\n"
         "ld (ix), b\n"
@@ -5563,7 +5563,7 @@ TEST_CASE("ld (ix+#), b", "[opcodes]")
 TEST_CASE("ld (ix+#), c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), c\n"
         "ld (ix+85), c\n"
         "ld (ix), c\n"
@@ -5596,7 +5596,7 @@ TEST_CASE("ld (ix+#), c", "[opcodes]")
 TEST_CASE("ld (ix+#), d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), d\n"
         "ld (ix+85), d\n"
         "ld (ix), d\n"
@@ -5629,7 +5629,7 @@ TEST_CASE("ld (ix+#), d", "[opcodes]")
 TEST_CASE("ld (ix+#), e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), e\n"
         "ld (ix+85), e\n"
         "ld (ix), e\n"
@@ -5662,7 +5662,7 @@ TEST_CASE("ld (ix+#), e", "[opcodes]")
 TEST_CASE("ld (ix+#), h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), h\n"
         "ld (ix+85), h\n"
         "ld (ix), h\n"
@@ -5695,7 +5695,7 @@ TEST_CASE("ld (ix+#), h", "[opcodes]")
 TEST_CASE("ld (ix+#), l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), l\n"
         "ld (ix+85), l\n"
         "ld (ix), l\n"
@@ -5728,7 +5728,7 @@ TEST_CASE("ld (ix+#), l", "[opcodes]")
 TEST_CASE("ld (ix+#), #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (ix-43), 170\n"
         "ld (ix-43), 85\n"
         "ld (ix-43), 0\n"
@@ -5825,7 +5825,7 @@ TEST_CASE("ld (ix+#), #", "[opcodes]")
 TEST_CASE("ld (iy+#), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), a\n"
         "ld (iy+85), a\n"
         "ld (iy), a\n"
@@ -5858,7 +5858,7 @@ TEST_CASE("ld (iy+#), a", "[opcodes]")
 TEST_CASE("ld (iy+#), b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), b\n"
         "ld (iy+85), b\n"
         "ld (iy), b\n"
@@ -5891,7 +5891,7 @@ TEST_CASE("ld (iy+#), b", "[opcodes]")
 TEST_CASE("ld (iy+#), c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), c\n"
         "ld (iy+85), c\n"
         "ld (iy), c\n"
@@ -5924,7 +5924,7 @@ TEST_CASE("ld (iy+#), c", "[opcodes]")
 TEST_CASE("ld (iy+#), d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), d\n"
         "ld (iy+85), d\n"
         "ld (iy), d\n"
@@ -5957,7 +5957,7 @@ TEST_CASE("ld (iy+#), d", "[opcodes]")
 TEST_CASE("ld (iy+#), e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), e\n"
         "ld (iy+85), e\n"
         "ld (iy), e\n"
@@ -5990,7 +5990,7 @@ TEST_CASE("ld (iy+#), e", "[opcodes]")
 TEST_CASE("ld (iy+#), h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), h\n"
         "ld (iy+85), h\n"
         "ld (iy), h\n"
@@ -6023,7 +6023,7 @@ TEST_CASE("ld (iy+#), h", "[opcodes]")
 TEST_CASE("ld (iy+#), l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), l\n"
         "ld (iy+85), l\n"
         "ld (iy), l\n"
@@ -6056,7 +6056,7 @@ TEST_CASE("ld (iy+#), l", "[opcodes]")
 TEST_CASE("ld (iy+#), #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (iy-43), 170\n"
         "ld (iy-43), 85\n"
         "ld (iy-43), 0\n"
@@ -6153,7 +6153,7 @@ TEST_CASE("ld (iy+#), #", "[opcodes]")
 TEST_CASE("ld (##), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), a\n"
         "ld (16945), a\n"
         "ld (0), a\n"
@@ -6186,7 +6186,7 @@ TEST_CASE("ld (##), a", "[opcodes]")
 TEST_CASE("ld (##), bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), bc\n"
         "ld (16945), bc\n"
         "ld (0), bc\n"
@@ -6223,7 +6223,7 @@ TEST_CASE("ld (##), bc", "[opcodes]")
 TEST_CASE("ld (##), de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), de\n"
         "ld (16945), de\n"
         "ld (0), de\n"
@@ -6260,7 +6260,7 @@ TEST_CASE("ld (##), de", "[opcodes]")
 TEST_CASE("ld (##), hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), hl\n"
         "ld (16945), hl\n"
         "ld (0), hl\n"
@@ -6293,7 +6293,7 @@ TEST_CASE("ld (##), hl", "[opcodes]")
 TEST_CASE("ld (##), ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), ix\n"
         "ld (16945), ix\n"
         "ld (0), ix\n"
@@ -6330,7 +6330,7 @@ TEST_CASE("ld (##), ix", "[opcodes]")
 TEST_CASE("ld (##), iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), iy\n"
         "ld (16945), iy\n"
         "ld (0), iy\n"
@@ -6367,7 +6367,7 @@ TEST_CASE("ld (##), iy", "[opcodes]")
 TEST_CASE("ld (##), sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld (4660), sp\n"
         "ld (16945), sp\n"
         "ld (0), sp\n"
@@ -6404,7 +6404,7 @@ TEST_CASE("ld (##), sp", "[opcodes]")
 TEST_CASE("ld a, (bc)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (bc)\n"
         ;
 
@@ -6423,7 +6423,7 @@ TEST_CASE("ld a, (bc)", "[opcodes]")
 TEST_CASE("ld a, (de)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (de)\n"
         ;
 
@@ -6442,7 +6442,7 @@ TEST_CASE("ld a, (de)", "[opcodes]")
 TEST_CASE("ld a, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (hl)\n"
         ;
 
@@ -6461,7 +6461,7 @@ TEST_CASE("ld a, (hl)", "[opcodes]")
 TEST_CASE("ld a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (ix-43)\n"
         "ld a, (ix+85)\n"
         "ld a, (ix)\n"
@@ -6494,7 +6494,7 @@ TEST_CASE("ld a, (ix+#)", "[opcodes]")
 TEST_CASE("ld a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (iy-43)\n"
         "ld a, (iy+85)\n"
         "ld a, (iy)\n"
@@ -6527,7 +6527,7 @@ TEST_CASE("ld a, (iy+#)", "[opcodes]")
 TEST_CASE("ld a, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, (4660)\n"
         "ld a, (16945)\n"
         "ld a, (0)\n"
@@ -6560,7 +6560,7 @@ TEST_CASE("ld a, (##)", "[opcodes]")
 TEST_CASE("ld a, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, a\n"
         ;
 
@@ -6579,7 +6579,7 @@ TEST_CASE("ld a, a", "[opcodes]")
 TEST_CASE("ld a, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, b\n"
         ;
 
@@ -6598,7 +6598,7 @@ TEST_CASE("ld a, b", "[opcodes]")
 TEST_CASE("ld a, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, c\n"
         ;
 
@@ -6617,7 +6617,7 @@ TEST_CASE("ld a, c", "[opcodes]")
 TEST_CASE("ld a, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, d\n"
         ;
 
@@ -6636,7 +6636,7 @@ TEST_CASE("ld a, d", "[opcodes]")
 TEST_CASE("ld a, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, e\n"
         ;
 
@@ -6655,7 +6655,7 @@ TEST_CASE("ld a, e", "[opcodes]")
 TEST_CASE("ld a, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, h\n"
         ;
 
@@ -6674,7 +6674,7 @@ TEST_CASE("ld a, h", "[opcodes]")
 TEST_CASE("ld a, i", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, i\n"
         ;
 
@@ -6694,7 +6694,7 @@ TEST_CASE("ld a, i", "[opcodes]")
 TEST_CASE("ld a, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, l\n"
         ;
 
@@ -6713,7 +6713,7 @@ TEST_CASE("ld a, l", "[opcodes]")
 TEST_CASE("ld a, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, 170\n"
         "ld a, 85\n"
         "ld a, 0\n"
@@ -6742,7 +6742,7 @@ TEST_CASE("ld a, #", "[opcodes]")
 TEST_CASE("ld a, r", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld a, r\n"
         ;
 
@@ -6762,7 +6762,7 @@ TEST_CASE("ld a, r", "[opcodes]")
 TEST_CASE("ld b, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, (hl)\n"
         ;
 
@@ -6781,7 +6781,7 @@ TEST_CASE("ld b, (hl)", "[opcodes]")
 TEST_CASE("ld b, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, (ix-43)\n"
         "ld b, (ix+85)\n"
         "ld b, (ix)\n"
@@ -6814,7 +6814,7 @@ TEST_CASE("ld b, (ix+#)", "[opcodes]")
 TEST_CASE("ld b, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, (iy-43)\n"
         "ld b, (iy+85)\n"
         "ld b, (iy)\n"
@@ -6847,7 +6847,7 @@ TEST_CASE("ld b, (iy+#)", "[opcodes]")
 TEST_CASE("ld b, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, a\n"
         ;
 
@@ -6866,7 +6866,7 @@ TEST_CASE("ld b, a", "[opcodes]")
 TEST_CASE("ld b, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, b\n"
         ;
 
@@ -6885,7 +6885,7 @@ TEST_CASE("ld b, b", "[opcodes]")
 TEST_CASE("ld b, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, c\n"
         ;
 
@@ -6904,7 +6904,7 @@ TEST_CASE("ld b, c", "[opcodes]")
 TEST_CASE("ld b, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, d\n"
         ;
 
@@ -6923,7 +6923,7 @@ TEST_CASE("ld b, d", "[opcodes]")
 TEST_CASE("ld b, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, e\n"
         ;
 
@@ -6942,7 +6942,7 @@ TEST_CASE("ld b, e", "[opcodes]")
 TEST_CASE("ld b, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, h\n"
         ;
 
@@ -6961,7 +6961,7 @@ TEST_CASE("ld b, h", "[opcodes]")
 TEST_CASE("ld b, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, l\n"
         ;
 
@@ -6980,7 +6980,7 @@ TEST_CASE("ld b, l", "[opcodes]")
 TEST_CASE("ld b, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld b, 170\n"
         "ld b, 85\n"
         "ld b, 0\n"
@@ -7009,7 +7009,7 @@ TEST_CASE("ld b, #", "[opcodes]")
 TEST_CASE("ld bc, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld bc, (4660)\n"
         "ld bc, (16945)\n"
         "ld bc, (0)\n"
@@ -7046,7 +7046,7 @@ TEST_CASE("ld bc, (##)", "[opcodes]")
 TEST_CASE("ld bc, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld bc, 4660\n"
         "ld bc, 16945\n"
         "ld bc, 0\n"
@@ -7079,7 +7079,7 @@ TEST_CASE("ld bc, ##", "[opcodes]")
 TEST_CASE("ld c, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, (hl)\n"
         ;
 
@@ -7098,7 +7098,7 @@ TEST_CASE("ld c, (hl)", "[opcodes]")
 TEST_CASE("ld c, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, (ix-43)\n"
         "ld c, (ix+85)\n"
         "ld c, (ix)\n"
@@ -7131,7 +7131,7 @@ TEST_CASE("ld c, (ix+#)", "[opcodes]")
 TEST_CASE("ld c, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, (iy-43)\n"
         "ld c, (iy+85)\n"
         "ld c, (iy)\n"
@@ -7164,7 +7164,7 @@ TEST_CASE("ld c, (iy+#)", "[opcodes]")
 TEST_CASE("ld c, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, a\n"
         ;
 
@@ -7183,7 +7183,7 @@ TEST_CASE("ld c, a", "[opcodes]")
 TEST_CASE("ld c, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, b\n"
         ;
 
@@ -7202,7 +7202,7 @@ TEST_CASE("ld c, b", "[opcodes]")
 TEST_CASE("ld c, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, c\n"
         ;
 
@@ -7221,7 +7221,7 @@ TEST_CASE("ld c, c", "[opcodes]")
 TEST_CASE("ld c, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, d\n"
         ;
 
@@ -7240,7 +7240,7 @@ TEST_CASE("ld c, d", "[opcodes]")
 TEST_CASE("ld c, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, e\n"
         ;
 
@@ -7259,7 +7259,7 @@ TEST_CASE("ld c, e", "[opcodes]")
 TEST_CASE("ld c, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, h\n"
         ;
 
@@ -7278,7 +7278,7 @@ TEST_CASE("ld c, h", "[opcodes]")
 TEST_CASE("ld c, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, l\n"
         ;
 
@@ -7297,7 +7297,7 @@ TEST_CASE("ld c, l", "[opcodes]")
 TEST_CASE("ld c, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld c, 170\n"
         "ld c, 85\n"
         "ld c, 0\n"
@@ -7326,7 +7326,7 @@ TEST_CASE("ld c, #", "[opcodes]")
 TEST_CASE("ld d, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, (hl)\n"
         ;
 
@@ -7345,7 +7345,7 @@ TEST_CASE("ld d, (hl)", "[opcodes]")
 TEST_CASE("ld d, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, (ix-43)\n"
         "ld d, (ix+85)\n"
         "ld d, (ix)\n"
@@ -7378,7 +7378,7 @@ TEST_CASE("ld d, (ix+#)", "[opcodes]")
 TEST_CASE("ld d, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, (iy-43)\n"
         "ld d, (iy+85)\n"
         "ld d, (iy)\n"
@@ -7411,7 +7411,7 @@ TEST_CASE("ld d, (iy+#)", "[opcodes]")
 TEST_CASE("ld d, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, a\n"
         ;
 
@@ -7430,7 +7430,7 @@ TEST_CASE("ld d, a", "[opcodes]")
 TEST_CASE("ld d, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, b\n"
         ;
 
@@ -7449,7 +7449,7 @@ TEST_CASE("ld d, b", "[opcodes]")
 TEST_CASE("ld d, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, c\n"
         ;
 
@@ -7468,7 +7468,7 @@ TEST_CASE("ld d, c", "[opcodes]")
 TEST_CASE("ld d, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, d\n"
         ;
 
@@ -7487,7 +7487,7 @@ TEST_CASE("ld d, d", "[opcodes]")
 TEST_CASE("ld d, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, e\n"
         ;
 
@@ -7506,7 +7506,7 @@ TEST_CASE("ld d, e", "[opcodes]")
 TEST_CASE("ld d, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, h\n"
         ;
 
@@ -7525,7 +7525,7 @@ TEST_CASE("ld d, h", "[opcodes]")
 TEST_CASE("ld d, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, l\n"
         ;
 
@@ -7544,7 +7544,7 @@ TEST_CASE("ld d, l", "[opcodes]")
 TEST_CASE("ld d, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld d, 170\n"
         "ld d, 85\n"
         "ld d, 0\n"
@@ -7573,7 +7573,7 @@ TEST_CASE("ld d, #", "[opcodes]")
 TEST_CASE("ld de, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld de, (4660)\n"
         "ld de, (16945)\n"
         "ld de, (0)\n"
@@ -7610,7 +7610,7 @@ TEST_CASE("ld de, (##)", "[opcodes]")
 TEST_CASE("ld de, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld de, 4660\n"
         "ld de, 16945\n"
         "ld de, 0\n"
@@ -7643,7 +7643,7 @@ TEST_CASE("ld de, ##", "[opcodes]")
 TEST_CASE("ld e, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, (hl)\n"
         ;
 
@@ -7662,7 +7662,7 @@ TEST_CASE("ld e, (hl)", "[opcodes]")
 TEST_CASE("ld e, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, (ix-43)\n"
         "ld e, (ix+85)\n"
         "ld e, (ix)\n"
@@ -7695,7 +7695,7 @@ TEST_CASE("ld e, (ix+#)", "[opcodes]")
 TEST_CASE("ld e, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, (iy-43)\n"
         "ld e, (iy+85)\n"
         "ld e, (iy)\n"
@@ -7728,7 +7728,7 @@ TEST_CASE("ld e, (iy+#)", "[opcodes]")
 TEST_CASE("ld e, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, a\n"
         ;
 
@@ -7747,7 +7747,7 @@ TEST_CASE("ld e, a", "[opcodes]")
 TEST_CASE("ld e, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, b\n"
         ;
 
@@ -7766,7 +7766,7 @@ TEST_CASE("ld e, b", "[opcodes]")
 TEST_CASE("ld e, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, c\n"
         ;
 
@@ -7785,7 +7785,7 @@ TEST_CASE("ld e, c", "[opcodes]")
 TEST_CASE("ld e, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, d\n"
         ;
 
@@ -7804,7 +7804,7 @@ TEST_CASE("ld e, d", "[opcodes]")
 TEST_CASE("ld e, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, e\n"
         ;
 
@@ -7823,7 +7823,7 @@ TEST_CASE("ld e, e", "[opcodes]")
 TEST_CASE("ld e, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, h\n"
         ;
 
@@ -7842,7 +7842,7 @@ TEST_CASE("ld e, h", "[opcodes]")
 TEST_CASE("ld e, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, l\n"
         ;
 
@@ -7861,7 +7861,7 @@ TEST_CASE("ld e, l", "[opcodes]")
 TEST_CASE("ld e, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld e, 170\n"
         "ld e, 85\n"
         "ld e, 0\n"
@@ -7890,7 +7890,7 @@ TEST_CASE("ld e, #", "[opcodes]")
 TEST_CASE("ld h, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, (hl)\n"
         ;
 
@@ -7909,7 +7909,7 @@ TEST_CASE("ld h, (hl)", "[opcodes]")
 TEST_CASE("ld h, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, (ix-43)\n"
         "ld h, (ix+85)\n"
         "ld h, (ix)\n"
@@ -7942,7 +7942,7 @@ TEST_CASE("ld h, (ix+#)", "[opcodes]")
 TEST_CASE("ld h, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, (iy-43)\n"
         "ld h, (iy+85)\n"
         "ld h, (iy)\n"
@@ -7975,7 +7975,7 @@ TEST_CASE("ld h, (iy+#)", "[opcodes]")
 TEST_CASE("ld h, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, a\n"
         ;
 
@@ -7994,7 +7994,7 @@ TEST_CASE("ld h, a", "[opcodes]")
 TEST_CASE("ld h, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, b\n"
         ;
 
@@ -8013,7 +8013,7 @@ TEST_CASE("ld h, b", "[opcodes]")
 TEST_CASE("ld h, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, c\n"
         ;
 
@@ -8032,7 +8032,7 @@ TEST_CASE("ld h, c", "[opcodes]")
 TEST_CASE("ld h, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, d\n"
         ;
 
@@ -8051,7 +8051,7 @@ TEST_CASE("ld h, d", "[opcodes]")
 TEST_CASE("ld h, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, e\n"
         ;
 
@@ -8070,7 +8070,7 @@ TEST_CASE("ld h, e", "[opcodes]")
 TEST_CASE("ld h, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, h\n"
         ;
 
@@ -8089,7 +8089,7 @@ TEST_CASE("ld h, h", "[opcodes]")
 TEST_CASE("ld h, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, l\n"
         ;
 
@@ -8108,7 +8108,7 @@ TEST_CASE("ld h, l", "[opcodes]")
 TEST_CASE("ld h, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld h, 170\n"
         "ld h, 85\n"
         "ld h, 0\n"
@@ -8137,7 +8137,7 @@ TEST_CASE("ld h, #", "[opcodes]")
 TEST_CASE("ld hl, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld hl, (4660)\n"
         "ld hl, (16945)\n"
         "ld hl, (0)\n"
@@ -8170,7 +8170,7 @@ TEST_CASE("ld hl, (##)", "[opcodes]")
 TEST_CASE("ld hl, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld hl, 4660\n"
         "ld hl, 16945\n"
         "ld hl, 0\n"
@@ -8203,7 +8203,7 @@ TEST_CASE("ld hl, ##", "[opcodes]")
 TEST_CASE("ld i, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld i, a\n"
         ;
 
@@ -8223,7 +8223,7 @@ TEST_CASE("ld i, a", "[opcodes]")
 TEST_CASE("ld ix, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld ix, (4660)\n"
         "ld ix, (16945)\n"
         "ld ix, (0)\n"
@@ -8260,7 +8260,7 @@ TEST_CASE("ld ix, (##)", "[opcodes]")
 TEST_CASE("ld ix, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld ix, 4660\n"
         "ld ix, 16945\n"
         "ld ix, 0\n"
@@ -8297,7 +8297,7 @@ TEST_CASE("ld ix, ##", "[opcodes]")
 TEST_CASE("ld iy, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld iy, (4660)\n"
         "ld iy, (16945)\n"
         "ld iy, (0)\n"
@@ -8334,7 +8334,7 @@ TEST_CASE("ld iy, (##)", "[opcodes]")
 TEST_CASE("ld iy, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld iy, 4660\n"
         "ld iy, 16945\n"
         "ld iy, 0\n"
@@ -8371,7 +8371,7 @@ TEST_CASE("ld iy, ##", "[opcodes]")
 TEST_CASE("ld l, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, (hl)\n"
         ;
 
@@ -8390,7 +8390,7 @@ TEST_CASE("ld l, (hl)", "[opcodes]")
 TEST_CASE("ld l, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, (ix-43)\n"
         "ld l, (ix+85)\n"
         "ld l, (ix)\n"
@@ -8423,7 +8423,7 @@ TEST_CASE("ld l, (ix+#)", "[opcodes]")
 TEST_CASE("ld l, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, (iy-43)\n"
         "ld l, (iy+85)\n"
         "ld l, (iy)\n"
@@ -8456,7 +8456,7 @@ TEST_CASE("ld l, (iy+#)", "[opcodes]")
 TEST_CASE("ld l, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, a\n"
         ;
 
@@ -8475,7 +8475,7 @@ TEST_CASE("ld l, a", "[opcodes]")
 TEST_CASE("ld l, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, b\n"
         ;
 
@@ -8494,7 +8494,7 @@ TEST_CASE("ld l, b", "[opcodes]")
 TEST_CASE("ld l, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, c\n"
         ;
 
@@ -8513,7 +8513,7 @@ TEST_CASE("ld l, c", "[opcodes]")
 TEST_CASE("ld l, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, d\n"
         ;
 
@@ -8532,7 +8532,7 @@ TEST_CASE("ld l, d", "[opcodes]")
 TEST_CASE("ld l, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, e\n"
         ;
 
@@ -8551,7 +8551,7 @@ TEST_CASE("ld l, e", "[opcodes]")
 TEST_CASE("ld l, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, h\n"
         ;
 
@@ -8570,7 +8570,7 @@ TEST_CASE("ld l, h", "[opcodes]")
 TEST_CASE("ld l, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, l\n"
         ;
 
@@ -8589,7 +8589,7 @@ TEST_CASE("ld l, l", "[opcodes]")
 TEST_CASE("ld l, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld l, 170\n"
         "ld l, 85\n"
         "ld l, 0\n"
@@ -8618,7 +8618,7 @@ TEST_CASE("ld l, #", "[opcodes]")
 TEST_CASE("ld r, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld r, a\n"
         ;
 
@@ -8638,7 +8638,7 @@ TEST_CASE("ld r, a", "[opcodes]")
 TEST_CASE("ld sp, (##)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld sp, (4660)\n"
         "ld sp, (16945)\n"
         "ld sp, (0)\n"
@@ -8675,7 +8675,7 @@ TEST_CASE("ld sp, (##)", "[opcodes]")
 TEST_CASE("ld sp, hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld sp, hl\n"
         ;
 
@@ -8694,7 +8694,7 @@ TEST_CASE("ld sp, hl", "[opcodes]")
 TEST_CASE("ld sp, ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld sp, ix\n"
         ;
 
@@ -8714,7 +8714,7 @@ TEST_CASE("ld sp, ix", "[opcodes]")
 TEST_CASE("ld sp, iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld sp, iy\n"
         ;
 
@@ -8734,7 +8734,7 @@ TEST_CASE("ld sp, iy", "[opcodes]")
 TEST_CASE("ld sp, ##", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ld sp, 4660\n"
         "ld sp, 16945\n"
         "ld sp, 0\n"
@@ -8764,10 +8764,94 @@ TEST_CASE("ld sp, ##", "[opcodes]")
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("ld sp, $", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld sp, $\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x31,
+        0x34,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("ld sp, $+1", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld sp, $+1\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x31,
+        0x35,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("ld sp, $-1", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld sp, $-1\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x31,
+        0x33,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("ld sp, $-0x1235", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld sp, $-0x1235\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x31,
+        0xff,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
 TEST_CASE("ldd", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ldd\n"
         ;
 
@@ -8787,7 +8871,7 @@ TEST_CASE("ldd", "[opcodes]")
 TEST_CASE("lddr", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "lddr\n"
         ;
 
@@ -8807,7 +8891,7 @@ TEST_CASE("lddr", "[opcodes]")
 TEST_CASE("ldi", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ldi\n"
         ;
 
@@ -8827,7 +8911,7 @@ TEST_CASE("ldi", "[opcodes]")
 TEST_CASE("ldir", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ldir\n"
         ;
 
@@ -8847,7 +8931,7 @@ TEST_CASE("ldir", "[opcodes]")
 TEST_CASE("neg", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "neg\n"
         ;
 
@@ -8867,7 +8951,7 @@ TEST_CASE("neg", "[opcodes]")
 TEST_CASE("nop", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "nop\n"
         ;
 
@@ -8886,7 +8970,7 @@ TEST_CASE("nop", "[opcodes]")
 TEST_CASE("or (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or (hl)\n"
         ;
 
@@ -8905,7 +8989,7 @@ TEST_CASE("or (hl)", "[opcodes]")
 TEST_CASE("or (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or (ix-43)\n"
         "or (ix+85)\n"
         "or (ix)\n"
@@ -8938,7 +9022,7 @@ TEST_CASE("or (ix+#)", "[opcodes]")
 TEST_CASE("or (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or (iy-43)\n"
         "or (iy+85)\n"
         "or (iy)\n"
@@ -8971,7 +9055,7 @@ TEST_CASE("or (iy+#)", "[opcodes]")
 TEST_CASE("or a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or a\n"
         ;
 
@@ -8990,7 +9074,7 @@ TEST_CASE("or a", "[opcodes]")
 TEST_CASE("or b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or b\n"
         ;
 
@@ -9009,7 +9093,7 @@ TEST_CASE("or b", "[opcodes]")
 TEST_CASE("or c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or c\n"
         ;
 
@@ -9028,7 +9112,7 @@ TEST_CASE("or c", "[opcodes]")
 TEST_CASE("or d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or d\n"
         ;
 
@@ -9047,7 +9131,7 @@ TEST_CASE("or d", "[opcodes]")
 TEST_CASE("or e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or e\n"
         ;
 
@@ -9066,7 +9150,7 @@ TEST_CASE("or e", "[opcodes]")
 TEST_CASE("or h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or h\n"
         ;
 
@@ -9085,7 +9169,7 @@ TEST_CASE("or h", "[opcodes]")
 TEST_CASE("or l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or l\n"
         ;
 
@@ -9104,7 +9188,7 @@ TEST_CASE("or l", "[opcodes]")
 TEST_CASE("or #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "or 170\n"
         "or 85\n"
         "or 0\n"
@@ -9133,7 +9217,7 @@ TEST_CASE("or #", "[opcodes]")
 TEST_CASE("otdr", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "otdr\n"
         ;
 
@@ -9153,7 +9237,7 @@ TEST_CASE("otdr", "[opcodes]")
 TEST_CASE("otir", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "otir\n"
         ;
 
@@ -9173,7 +9257,7 @@ TEST_CASE("otir", "[opcodes]")
 TEST_CASE("out (c), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), a\n"
         ;
 
@@ -9193,7 +9277,7 @@ TEST_CASE("out (c), a", "[opcodes]")
 TEST_CASE("out (c), b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), b\n"
         ;
 
@@ -9213,7 +9297,7 @@ TEST_CASE("out (c), b", "[opcodes]")
 TEST_CASE("out (c), c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), c\n"
         ;
 
@@ -9233,7 +9317,7 @@ TEST_CASE("out (c), c", "[opcodes]")
 TEST_CASE("out (c), d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), d\n"
         ;
 
@@ -9253,7 +9337,7 @@ TEST_CASE("out (c), d", "[opcodes]")
 TEST_CASE("out (c), e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), e\n"
         ;
 
@@ -9273,7 +9357,7 @@ TEST_CASE("out (c), e", "[opcodes]")
 TEST_CASE("out (c), h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), h\n"
         ;
 
@@ -9293,7 +9377,7 @@ TEST_CASE("out (c), h", "[opcodes]")
 TEST_CASE("out (c), l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (c), l\n"
         ;
 
@@ -9313,7 +9397,7 @@ TEST_CASE("out (c), l", "[opcodes]")
 TEST_CASE("out (#), a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "out (170), a\n"
         "out (85), a\n"
         "out (0), a\n"
@@ -9342,7 +9426,7 @@ TEST_CASE("out (#), a", "[opcodes]")
 TEST_CASE("outd", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "outd\n"
         ;
 
@@ -9362,7 +9446,7 @@ TEST_CASE("outd", "[opcodes]")
 TEST_CASE("outi", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "outi\n"
         ;
 
@@ -9382,7 +9466,7 @@ TEST_CASE("outi", "[opcodes]")
 TEST_CASE("pop af", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop af\n"
         ;
 
@@ -9401,7 +9485,7 @@ TEST_CASE("pop af", "[opcodes]")
 TEST_CASE("pop bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop bc\n"
         ;
 
@@ -9420,7 +9504,7 @@ TEST_CASE("pop bc", "[opcodes]")
 TEST_CASE("pop de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop de\n"
         ;
 
@@ -9439,7 +9523,7 @@ TEST_CASE("pop de", "[opcodes]")
 TEST_CASE("pop hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop hl\n"
         ;
 
@@ -9458,7 +9542,7 @@ TEST_CASE("pop hl", "[opcodes]")
 TEST_CASE("pop ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop ix\n"
         ;
 
@@ -9478,7 +9562,7 @@ TEST_CASE("pop ix", "[opcodes]")
 TEST_CASE("pop iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "pop iy\n"
         ;
 
@@ -9498,7 +9582,7 @@ TEST_CASE("pop iy", "[opcodes]")
 TEST_CASE("push af", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push af\n"
         ;
 
@@ -9517,7 +9601,7 @@ TEST_CASE("push af", "[opcodes]")
 TEST_CASE("push bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push bc\n"
         ;
 
@@ -9536,7 +9620,7 @@ TEST_CASE("push bc", "[opcodes]")
 TEST_CASE("push de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push de\n"
         ;
 
@@ -9555,7 +9639,7 @@ TEST_CASE("push de", "[opcodes]")
 TEST_CASE("push hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push hl\n"
         ;
 
@@ -9574,7 +9658,7 @@ TEST_CASE("push hl", "[opcodes]")
 TEST_CASE("push ix", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push ix\n"
         ;
 
@@ -9594,7 +9678,7 @@ TEST_CASE("push ix", "[opcodes]")
 TEST_CASE("push iy", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "push iy\n"
         ;
 
@@ -9614,7 +9698,7 @@ TEST_CASE("push iy", "[opcodes]")
 TEST_CASE("res 0, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, (hl)\n"
         ;
 
@@ -9634,7 +9718,7 @@ TEST_CASE("res 0, (hl)", "[opcodes]")
 TEST_CASE("res 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, (ix-43)\n"
         "res 0, (ix+85)\n"
         "res 0, (ix)\n"
@@ -9671,7 +9755,7 @@ TEST_CASE("res 0, (ix+#)", "[opcodes]")
 TEST_CASE("res 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, (iy-43)\n"
         "res 0, (iy+85)\n"
         "res 0, (iy)\n"
@@ -9708,7 +9792,7 @@ TEST_CASE("res 0, (iy+#)", "[opcodes]")
 TEST_CASE("res 0, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, a\n"
         ;
 
@@ -9728,7 +9812,7 @@ TEST_CASE("res 0, a", "[opcodes]")
 TEST_CASE("res 0, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, b\n"
         ;
 
@@ -9748,7 +9832,7 @@ TEST_CASE("res 0, b", "[opcodes]")
 TEST_CASE("res 0, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, c\n"
         ;
 
@@ -9768,7 +9852,7 @@ TEST_CASE("res 0, c", "[opcodes]")
 TEST_CASE("res 0, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, d\n"
         ;
 
@@ -9788,7 +9872,7 @@ TEST_CASE("res 0, d", "[opcodes]")
 TEST_CASE("res 0, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, e\n"
         ;
 
@@ -9808,7 +9892,7 @@ TEST_CASE("res 0, e", "[opcodes]")
 TEST_CASE("res 0, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, h\n"
         ;
 
@@ -9828,7 +9912,7 @@ TEST_CASE("res 0, h", "[opcodes]")
 TEST_CASE("res 0, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 0, l\n"
         ;
 
@@ -9848,7 +9932,7 @@ TEST_CASE("res 0, l", "[opcodes]")
 TEST_CASE("res 1, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, (hl)\n"
         ;
 
@@ -9868,7 +9952,7 @@ TEST_CASE("res 1, (hl)", "[opcodes]")
 TEST_CASE("res 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, (ix-43)\n"
         "res 1, (ix+85)\n"
         "res 1, (ix)\n"
@@ -9905,7 +9989,7 @@ TEST_CASE("res 1, (ix+#)", "[opcodes]")
 TEST_CASE("res 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, (iy-43)\n"
         "res 1, (iy+85)\n"
         "res 1, (iy)\n"
@@ -9942,7 +10026,7 @@ TEST_CASE("res 1, (iy+#)", "[opcodes]")
 TEST_CASE("res 1, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, a\n"
         ;
 
@@ -9962,7 +10046,7 @@ TEST_CASE("res 1, a", "[opcodes]")
 TEST_CASE("res 1, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, b\n"
         ;
 
@@ -9982,7 +10066,7 @@ TEST_CASE("res 1, b", "[opcodes]")
 TEST_CASE("res 1, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, c\n"
         ;
 
@@ -10002,7 +10086,7 @@ TEST_CASE("res 1, c", "[opcodes]")
 TEST_CASE("res 1, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, d\n"
         ;
 
@@ -10022,7 +10106,7 @@ TEST_CASE("res 1, d", "[opcodes]")
 TEST_CASE("res 1, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, e\n"
         ;
 
@@ -10042,7 +10126,7 @@ TEST_CASE("res 1, e", "[opcodes]")
 TEST_CASE("res 1, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, h\n"
         ;
 
@@ -10062,7 +10146,7 @@ TEST_CASE("res 1, h", "[opcodes]")
 TEST_CASE("res 1, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 1, l\n"
         ;
 
@@ -10082,7 +10166,7 @@ TEST_CASE("res 1, l", "[opcodes]")
 TEST_CASE("res 2, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, (hl)\n"
         ;
 
@@ -10102,7 +10186,7 @@ TEST_CASE("res 2, (hl)", "[opcodes]")
 TEST_CASE("res 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, (ix-43)\n"
         "res 2, (ix+85)\n"
         "res 2, (ix)\n"
@@ -10139,7 +10223,7 @@ TEST_CASE("res 2, (ix+#)", "[opcodes]")
 TEST_CASE("res 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, (iy-43)\n"
         "res 2, (iy+85)\n"
         "res 2, (iy)\n"
@@ -10176,7 +10260,7 @@ TEST_CASE("res 2, (iy+#)", "[opcodes]")
 TEST_CASE("res 2, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, a\n"
         ;
 
@@ -10196,7 +10280,7 @@ TEST_CASE("res 2, a", "[opcodes]")
 TEST_CASE("res 2, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, b\n"
         ;
 
@@ -10216,7 +10300,7 @@ TEST_CASE("res 2, b", "[opcodes]")
 TEST_CASE("res 2, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, c\n"
         ;
 
@@ -10236,7 +10320,7 @@ TEST_CASE("res 2, c", "[opcodes]")
 TEST_CASE("res 2, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, d\n"
         ;
 
@@ -10256,7 +10340,7 @@ TEST_CASE("res 2, d", "[opcodes]")
 TEST_CASE("res 2, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, e\n"
         ;
 
@@ -10276,7 +10360,7 @@ TEST_CASE("res 2, e", "[opcodes]")
 TEST_CASE("res 2, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, h\n"
         ;
 
@@ -10296,7 +10380,7 @@ TEST_CASE("res 2, h", "[opcodes]")
 TEST_CASE("res 2, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 2, l\n"
         ;
 
@@ -10316,7 +10400,7 @@ TEST_CASE("res 2, l", "[opcodes]")
 TEST_CASE("res 3, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, (hl)\n"
         ;
 
@@ -10336,7 +10420,7 @@ TEST_CASE("res 3, (hl)", "[opcodes]")
 TEST_CASE("res 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, (ix-43)\n"
         "res 3, (ix+85)\n"
         "res 3, (ix)\n"
@@ -10373,7 +10457,7 @@ TEST_CASE("res 3, (ix+#)", "[opcodes]")
 TEST_CASE("res 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, (iy-43)\n"
         "res 3, (iy+85)\n"
         "res 3, (iy)\n"
@@ -10410,7 +10494,7 @@ TEST_CASE("res 3, (iy+#)", "[opcodes]")
 TEST_CASE("res 3, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, a\n"
         ;
 
@@ -10430,7 +10514,7 @@ TEST_CASE("res 3, a", "[opcodes]")
 TEST_CASE("res 3, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, b\n"
         ;
 
@@ -10450,7 +10534,7 @@ TEST_CASE("res 3, b", "[opcodes]")
 TEST_CASE("res 3, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, c\n"
         ;
 
@@ -10470,7 +10554,7 @@ TEST_CASE("res 3, c", "[opcodes]")
 TEST_CASE("res 3, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, d\n"
         ;
 
@@ -10490,7 +10574,7 @@ TEST_CASE("res 3, d", "[opcodes]")
 TEST_CASE("res 3, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, e\n"
         ;
 
@@ -10510,7 +10594,7 @@ TEST_CASE("res 3, e", "[opcodes]")
 TEST_CASE("res 3, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, h\n"
         ;
 
@@ -10530,7 +10614,7 @@ TEST_CASE("res 3, h", "[opcodes]")
 TEST_CASE("res 3, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 3, l\n"
         ;
 
@@ -10550,7 +10634,7 @@ TEST_CASE("res 3, l", "[opcodes]")
 TEST_CASE("res 4, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, (hl)\n"
         ;
 
@@ -10570,7 +10654,7 @@ TEST_CASE("res 4, (hl)", "[opcodes]")
 TEST_CASE("res 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, (ix-43)\n"
         "res 4, (ix+85)\n"
         "res 4, (ix)\n"
@@ -10607,7 +10691,7 @@ TEST_CASE("res 4, (ix+#)", "[opcodes]")
 TEST_CASE("res 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, (iy-43)\n"
         "res 4, (iy+85)\n"
         "res 4, (iy)\n"
@@ -10644,7 +10728,7 @@ TEST_CASE("res 4, (iy+#)", "[opcodes]")
 TEST_CASE("res 4, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, a\n"
         ;
 
@@ -10664,7 +10748,7 @@ TEST_CASE("res 4, a", "[opcodes]")
 TEST_CASE("res 4, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, b\n"
         ;
 
@@ -10684,7 +10768,7 @@ TEST_CASE("res 4, b", "[opcodes]")
 TEST_CASE("res 4, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, c\n"
         ;
 
@@ -10704,7 +10788,7 @@ TEST_CASE("res 4, c", "[opcodes]")
 TEST_CASE("res 4, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, d\n"
         ;
 
@@ -10724,7 +10808,7 @@ TEST_CASE("res 4, d", "[opcodes]")
 TEST_CASE("res 4, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, e\n"
         ;
 
@@ -10744,7 +10828,7 @@ TEST_CASE("res 4, e", "[opcodes]")
 TEST_CASE("res 4, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, h\n"
         ;
 
@@ -10764,7 +10848,7 @@ TEST_CASE("res 4, h", "[opcodes]")
 TEST_CASE("res 4, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 4, l\n"
         ;
 
@@ -10784,7 +10868,7 @@ TEST_CASE("res 4, l", "[opcodes]")
 TEST_CASE("res 5, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, (hl)\n"
         ;
 
@@ -10804,7 +10888,7 @@ TEST_CASE("res 5, (hl)", "[opcodes]")
 TEST_CASE("res 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, (ix-43)\n"
         "res 5, (ix+85)\n"
         "res 5, (ix)\n"
@@ -10841,7 +10925,7 @@ TEST_CASE("res 5, (ix+#)", "[opcodes]")
 TEST_CASE("res 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, (iy-43)\n"
         "res 5, (iy+85)\n"
         "res 5, (iy)\n"
@@ -10878,7 +10962,7 @@ TEST_CASE("res 5, (iy+#)", "[opcodes]")
 TEST_CASE("res 5, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, a\n"
         ;
 
@@ -10898,7 +10982,7 @@ TEST_CASE("res 5, a", "[opcodes]")
 TEST_CASE("res 5, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, b\n"
         ;
 
@@ -10918,7 +11002,7 @@ TEST_CASE("res 5, b", "[opcodes]")
 TEST_CASE("res 5, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, c\n"
         ;
 
@@ -10938,7 +11022,7 @@ TEST_CASE("res 5, c", "[opcodes]")
 TEST_CASE("res 5, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, d\n"
         ;
 
@@ -10958,7 +11042,7 @@ TEST_CASE("res 5, d", "[opcodes]")
 TEST_CASE("res 5, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, e\n"
         ;
 
@@ -10978,7 +11062,7 @@ TEST_CASE("res 5, e", "[opcodes]")
 TEST_CASE("res 5, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, h\n"
         ;
 
@@ -10998,7 +11082,7 @@ TEST_CASE("res 5, h", "[opcodes]")
 TEST_CASE("res 5, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 5, l\n"
         ;
 
@@ -11018,7 +11102,7 @@ TEST_CASE("res 5, l", "[opcodes]")
 TEST_CASE("res 6, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, (hl)\n"
         ;
 
@@ -11038,7 +11122,7 @@ TEST_CASE("res 6, (hl)", "[opcodes]")
 TEST_CASE("res 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, (ix-43)\n"
         "res 6, (ix+85)\n"
         "res 6, (ix)\n"
@@ -11075,7 +11159,7 @@ TEST_CASE("res 6, (ix+#)", "[opcodes]")
 TEST_CASE("res 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, (iy-43)\n"
         "res 6, (iy+85)\n"
         "res 6, (iy)\n"
@@ -11112,7 +11196,7 @@ TEST_CASE("res 6, (iy+#)", "[opcodes]")
 TEST_CASE("res 6, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, a\n"
         ;
 
@@ -11132,7 +11216,7 @@ TEST_CASE("res 6, a", "[opcodes]")
 TEST_CASE("res 6, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, b\n"
         ;
 
@@ -11152,7 +11236,7 @@ TEST_CASE("res 6, b", "[opcodes]")
 TEST_CASE("res 6, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, c\n"
         ;
 
@@ -11172,7 +11256,7 @@ TEST_CASE("res 6, c", "[opcodes]")
 TEST_CASE("res 6, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, d\n"
         ;
 
@@ -11192,7 +11276,7 @@ TEST_CASE("res 6, d", "[opcodes]")
 TEST_CASE("res 6, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, e\n"
         ;
 
@@ -11212,7 +11296,7 @@ TEST_CASE("res 6, e", "[opcodes]")
 TEST_CASE("res 6, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, h\n"
         ;
 
@@ -11232,7 +11316,7 @@ TEST_CASE("res 6, h", "[opcodes]")
 TEST_CASE("res 6, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 6, l\n"
         ;
 
@@ -11252,7 +11336,7 @@ TEST_CASE("res 6, l", "[opcodes]")
 TEST_CASE("res 7, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, (hl)\n"
         ;
 
@@ -11272,7 +11356,7 @@ TEST_CASE("res 7, (hl)", "[opcodes]")
 TEST_CASE("res 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, (ix-43)\n"
         "res 7, (ix+85)\n"
         "res 7, (ix)\n"
@@ -11309,7 +11393,7 @@ TEST_CASE("res 7, (ix+#)", "[opcodes]")
 TEST_CASE("res 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, (iy-43)\n"
         "res 7, (iy+85)\n"
         "res 7, (iy)\n"
@@ -11346,7 +11430,7 @@ TEST_CASE("res 7, (iy+#)", "[opcodes]")
 TEST_CASE("res 7, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, a\n"
         ;
 
@@ -11366,7 +11450,7 @@ TEST_CASE("res 7, a", "[opcodes]")
 TEST_CASE("res 7, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, b\n"
         ;
 
@@ -11386,7 +11470,7 @@ TEST_CASE("res 7, b", "[opcodes]")
 TEST_CASE("res 7, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, c\n"
         ;
 
@@ -11406,7 +11490,7 @@ TEST_CASE("res 7, c", "[opcodes]")
 TEST_CASE("res 7, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, d\n"
         ;
 
@@ -11426,7 +11510,7 @@ TEST_CASE("res 7, d", "[opcodes]")
 TEST_CASE("res 7, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, e\n"
         ;
 
@@ -11446,7 +11530,7 @@ TEST_CASE("res 7, e", "[opcodes]")
 TEST_CASE("res 7, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, h\n"
         ;
 
@@ -11466,7 +11550,7 @@ TEST_CASE("res 7, h", "[opcodes]")
 TEST_CASE("res 7, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "res 7, l\n"
         ;
 
@@ -11486,7 +11570,7 @@ TEST_CASE("res 7, l", "[opcodes]")
 TEST_CASE("ret", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret\n"
         ;
 
@@ -11505,7 +11589,7 @@ TEST_CASE("ret", "[opcodes]")
 TEST_CASE("ret c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret c\n"
         ;
 
@@ -11524,7 +11608,7 @@ TEST_CASE("ret c", "[opcodes]")
 TEST_CASE("ret m", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret m\n"
         ;
 
@@ -11543,7 +11627,7 @@ TEST_CASE("ret m", "[opcodes]")
 TEST_CASE("ret nc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret nc\n"
         ;
 
@@ -11562,7 +11646,7 @@ TEST_CASE("ret nc", "[opcodes]")
 TEST_CASE("ret nz", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret nz\n"
         ;
 
@@ -11581,7 +11665,7 @@ TEST_CASE("ret nz", "[opcodes]")
 TEST_CASE("ret p", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret p\n"
         ;
 
@@ -11600,7 +11684,7 @@ TEST_CASE("ret p", "[opcodes]")
 TEST_CASE("ret pe", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret pe\n"
         ;
 
@@ -11619,7 +11703,7 @@ TEST_CASE("ret pe", "[opcodes]")
 TEST_CASE("ret po", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret po\n"
         ;
 
@@ -11638,7 +11722,7 @@ TEST_CASE("ret po", "[opcodes]")
 TEST_CASE("ret z", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "ret z\n"
         ;
 
@@ -11657,7 +11741,7 @@ TEST_CASE("ret z", "[opcodes]")
 TEST_CASE("reti", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "reti\n"
         ;
 
@@ -11677,7 +11761,7 @@ TEST_CASE("reti", "[opcodes]")
 TEST_CASE("retn", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "retn\n"
         ;
 
@@ -11697,7 +11781,7 @@ TEST_CASE("retn", "[opcodes]")
 TEST_CASE("rl (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl (hl)\n"
         ;
 
@@ -11717,7 +11801,7 @@ TEST_CASE("rl (hl)", "[opcodes]")
 TEST_CASE("rl (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl (ix-43)\n"
         "rl (ix+85)\n"
         "rl (ix)\n"
@@ -11754,7 +11838,7 @@ TEST_CASE("rl (ix+#)", "[opcodes]")
 TEST_CASE("rl (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl (iy-43)\n"
         "rl (iy+85)\n"
         "rl (iy)\n"
@@ -11791,7 +11875,7 @@ TEST_CASE("rl (iy+#)", "[opcodes]")
 TEST_CASE("rl a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl a\n"
         ;
 
@@ -11811,7 +11895,7 @@ TEST_CASE("rl a", "[opcodes]")
 TEST_CASE("rl b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl b\n"
         ;
 
@@ -11831,7 +11915,7 @@ TEST_CASE("rl b", "[opcodes]")
 TEST_CASE("rl c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl c\n"
         ;
 
@@ -11851,7 +11935,7 @@ TEST_CASE("rl c", "[opcodes]")
 TEST_CASE("rl d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl d\n"
         ;
 
@@ -11871,7 +11955,7 @@ TEST_CASE("rl d", "[opcodes]")
 TEST_CASE("rl e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl e\n"
         ;
 
@@ -11891,7 +11975,7 @@ TEST_CASE("rl e", "[opcodes]")
 TEST_CASE("rl h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl h\n"
         ;
 
@@ -11911,7 +11995,7 @@ TEST_CASE("rl h", "[opcodes]")
 TEST_CASE("rl l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rl l\n"
         ;
 
@@ -11931,7 +12015,7 @@ TEST_CASE("rl l", "[opcodes]")
 TEST_CASE("rla", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rla\n"
         ;
 
@@ -11950,7 +12034,7 @@ TEST_CASE("rla", "[opcodes]")
 TEST_CASE("rlc (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc (hl)\n"
         ;
 
@@ -11970,7 +12054,7 @@ TEST_CASE("rlc (hl)", "[opcodes]")
 TEST_CASE("rlc (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc (ix-43)\n"
         "rlc (ix+85)\n"
         "rlc (ix)\n"
@@ -12007,7 +12091,7 @@ TEST_CASE("rlc (ix+#)", "[opcodes]")
 TEST_CASE("rlc (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc (iy-43)\n"
         "rlc (iy+85)\n"
         "rlc (iy)\n"
@@ -12044,7 +12128,7 @@ TEST_CASE("rlc (iy+#)", "[opcodes]")
 TEST_CASE("rlc a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc a\n"
         ;
 
@@ -12064,7 +12148,7 @@ TEST_CASE("rlc a", "[opcodes]")
 TEST_CASE("rlc b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc b\n"
         ;
 
@@ -12084,7 +12168,7 @@ TEST_CASE("rlc b", "[opcodes]")
 TEST_CASE("rlc c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc c\n"
         ;
 
@@ -12104,7 +12188,7 @@ TEST_CASE("rlc c", "[opcodes]")
 TEST_CASE("rlc d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc d\n"
         ;
 
@@ -12124,7 +12208,7 @@ TEST_CASE("rlc d", "[opcodes]")
 TEST_CASE("rlc e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc e\n"
         ;
 
@@ -12144,7 +12228,7 @@ TEST_CASE("rlc e", "[opcodes]")
 TEST_CASE("rlc h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc h\n"
         ;
 
@@ -12164,7 +12248,7 @@ TEST_CASE("rlc h", "[opcodes]")
 TEST_CASE("rlc l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlc l\n"
         ;
 
@@ -12184,7 +12268,7 @@ TEST_CASE("rlc l", "[opcodes]")
 TEST_CASE("rlca", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rlca\n"
         ;
 
@@ -12203,7 +12287,7 @@ TEST_CASE("rlca", "[opcodes]")
 TEST_CASE("rld", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rld\n"
         ;
 
@@ -12223,7 +12307,7 @@ TEST_CASE("rld", "[opcodes]")
 TEST_CASE("rr (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr (hl)\n"
         ;
 
@@ -12243,7 +12327,7 @@ TEST_CASE("rr (hl)", "[opcodes]")
 TEST_CASE("rr (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr (ix-43)\n"
         "rr (ix+85)\n"
         "rr (ix)\n"
@@ -12280,7 +12364,7 @@ TEST_CASE("rr (ix+#)", "[opcodes]")
 TEST_CASE("rr (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr (iy-43)\n"
         "rr (iy+85)\n"
         "rr (iy)\n"
@@ -12317,7 +12401,7 @@ TEST_CASE("rr (iy+#)", "[opcodes]")
 TEST_CASE("rr a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr a\n"
         ;
 
@@ -12337,7 +12421,7 @@ TEST_CASE("rr a", "[opcodes]")
 TEST_CASE("rr b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr b\n"
         ;
 
@@ -12357,7 +12441,7 @@ TEST_CASE("rr b", "[opcodes]")
 TEST_CASE("rr c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr c\n"
         ;
 
@@ -12377,7 +12461,7 @@ TEST_CASE("rr c", "[opcodes]")
 TEST_CASE("rr d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr d\n"
         ;
 
@@ -12397,7 +12481,7 @@ TEST_CASE("rr d", "[opcodes]")
 TEST_CASE("rr e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr e\n"
         ;
 
@@ -12417,7 +12501,7 @@ TEST_CASE("rr e", "[opcodes]")
 TEST_CASE("rr h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr h\n"
         ;
 
@@ -12437,7 +12521,7 @@ TEST_CASE("rr h", "[opcodes]")
 TEST_CASE("rr l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rr l\n"
         ;
 
@@ -12457,7 +12541,7 @@ TEST_CASE("rr l", "[opcodes]")
 TEST_CASE("rra", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rra\n"
         ;
 
@@ -12476,7 +12560,7 @@ TEST_CASE("rra", "[opcodes]")
 TEST_CASE("rrc (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc (hl)\n"
         ;
 
@@ -12496,7 +12580,7 @@ TEST_CASE("rrc (hl)", "[opcodes]")
 TEST_CASE("rrc (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc (ix-43)\n"
         "rrc (ix+85)\n"
         "rrc (ix)\n"
@@ -12533,7 +12617,7 @@ TEST_CASE("rrc (ix+#)", "[opcodes]")
 TEST_CASE("rrc (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc (iy-43)\n"
         "rrc (iy+85)\n"
         "rrc (iy)\n"
@@ -12570,7 +12654,7 @@ TEST_CASE("rrc (iy+#)", "[opcodes]")
 TEST_CASE("rrc a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc a\n"
         ;
 
@@ -12590,7 +12674,7 @@ TEST_CASE("rrc a", "[opcodes]")
 TEST_CASE("rrc b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc b\n"
         ;
 
@@ -12610,7 +12694,7 @@ TEST_CASE("rrc b", "[opcodes]")
 TEST_CASE("rrc c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc c\n"
         ;
 
@@ -12630,7 +12714,7 @@ TEST_CASE("rrc c", "[opcodes]")
 TEST_CASE("rrc d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc d\n"
         ;
 
@@ -12650,7 +12734,7 @@ TEST_CASE("rrc d", "[opcodes]")
 TEST_CASE("rrc e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc e\n"
         ;
 
@@ -12670,7 +12754,7 @@ TEST_CASE("rrc e", "[opcodes]")
 TEST_CASE("rrc h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc h\n"
         ;
 
@@ -12690,7 +12774,7 @@ TEST_CASE("rrc h", "[opcodes]")
 TEST_CASE("rrc l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrc l\n"
         ;
 
@@ -12710,7 +12794,7 @@ TEST_CASE("rrc l", "[opcodes]")
 TEST_CASE("rrca", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrca\n"
         ;
 
@@ -12729,7 +12813,7 @@ TEST_CASE("rrca", "[opcodes]")
 TEST_CASE("rrd", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rrd\n"
         ;
 
@@ -12749,7 +12833,7 @@ TEST_CASE("rrd", "[opcodes]")
 TEST_CASE("rst 0", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 0\n"
         ;
 
@@ -12768,7 +12852,7 @@ TEST_CASE("rst 0", "[opcodes]")
 TEST_CASE("rst 8", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 8\n"
         ;
 
@@ -12787,7 +12871,7 @@ TEST_CASE("rst 8", "[opcodes]")
 TEST_CASE("rst 16", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 16\n"
         ;
 
@@ -12806,7 +12890,7 @@ TEST_CASE("rst 16", "[opcodes]")
 TEST_CASE("rst 24", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 24\n"
         ;
 
@@ -12825,7 +12909,7 @@ TEST_CASE("rst 24", "[opcodes]")
 TEST_CASE("rst 32", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 32\n"
         ;
 
@@ -12844,7 +12928,7 @@ TEST_CASE("rst 32", "[opcodes]")
 TEST_CASE("rst 40", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 40\n"
         ;
 
@@ -12863,7 +12947,7 @@ TEST_CASE("rst 40", "[opcodes]")
 TEST_CASE("rst 48", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 48\n"
         ;
 
@@ -12882,7 +12966,7 @@ TEST_CASE("rst 48", "[opcodes]")
 TEST_CASE("rst 56", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "rst 56\n"
         ;
 
@@ -12901,7 +12985,7 @@ TEST_CASE("rst 56", "[opcodes]")
 TEST_CASE("sbc a, #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, 170\n"
         "sbc a, 85\n"
         "sbc a, 0\n"
@@ -12930,7 +13014,7 @@ TEST_CASE("sbc a, #", "[opcodes]")
 TEST_CASE("sbc a, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, (hl)\n"
         ;
 
@@ -12949,7 +13033,7 @@ TEST_CASE("sbc a, (hl)", "[opcodes]")
 TEST_CASE("sbc a, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, (ix-43)\n"
         "sbc a, (ix+85)\n"
         "sbc a, (ix)\n"
@@ -12982,7 +13066,7 @@ TEST_CASE("sbc a, (ix+#)", "[opcodes]")
 TEST_CASE("sbc a, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, (iy-43)\n"
         "sbc a, (iy+85)\n"
         "sbc a, (iy)\n"
@@ -13015,7 +13099,7 @@ TEST_CASE("sbc a, (iy+#)", "[opcodes]")
 TEST_CASE("sbc a, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, a\n"
         ;
 
@@ -13034,7 +13118,7 @@ TEST_CASE("sbc a, a", "[opcodes]")
 TEST_CASE("sbc a, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, b\n"
         ;
 
@@ -13053,7 +13137,7 @@ TEST_CASE("sbc a, b", "[opcodes]")
 TEST_CASE("sbc a, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, c\n"
         ;
 
@@ -13072,7 +13156,7 @@ TEST_CASE("sbc a, c", "[opcodes]")
 TEST_CASE("sbc a, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, d\n"
         ;
 
@@ -13091,7 +13175,7 @@ TEST_CASE("sbc a, d", "[opcodes]")
 TEST_CASE("sbc a, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, e\n"
         ;
 
@@ -13110,7 +13194,7 @@ TEST_CASE("sbc a, e", "[opcodes]")
 TEST_CASE("sbc a, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, h\n"
         ;
 
@@ -13129,7 +13213,7 @@ TEST_CASE("sbc a, h", "[opcodes]")
 TEST_CASE("sbc a, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc a, l\n"
         ;
 
@@ -13148,7 +13232,7 @@ TEST_CASE("sbc a, l", "[opcodes]")
 TEST_CASE("sbc hl, bc", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc hl, bc\n"
         ;
 
@@ -13168,7 +13252,7 @@ TEST_CASE("sbc hl, bc", "[opcodes]")
 TEST_CASE("sbc hl, de", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc hl, de\n"
         ;
 
@@ -13188,7 +13272,7 @@ TEST_CASE("sbc hl, de", "[opcodes]")
 TEST_CASE("sbc hl, hl", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc hl, hl\n"
         ;
 
@@ -13208,7 +13292,7 @@ TEST_CASE("sbc hl, hl", "[opcodes]")
 TEST_CASE("sbc hl, sp", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sbc hl, sp\n"
         ;
 
@@ -13228,7 +13312,7 @@ TEST_CASE("sbc hl, sp", "[opcodes]")
 TEST_CASE("scf", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "scf\n"
         ;
 
@@ -13247,7 +13331,7 @@ TEST_CASE("scf", "[opcodes]")
 TEST_CASE("set 0, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, (hl)\n"
         ;
 
@@ -13267,7 +13351,7 @@ TEST_CASE("set 0, (hl)", "[opcodes]")
 TEST_CASE("set 0, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, (ix-43)\n"
         "set 0, (ix+85)\n"
         "set 0, (ix)\n"
@@ -13304,7 +13388,7 @@ TEST_CASE("set 0, (ix+#)", "[opcodes]")
 TEST_CASE("set 0, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, (iy-43)\n"
         "set 0, (iy+85)\n"
         "set 0, (iy)\n"
@@ -13341,7 +13425,7 @@ TEST_CASE("set 0, (iy+#)", "[opcodes]")
 TEST_CASE("set 0, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, a\n"
         ;
 
@@ -13361,7 +13445,7 @@ TEST_CASE("set 0, a", "[opcodes]")
 TEST_CASE("set 0, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, b\n"
         ;
 
@@ -13381,7 +13465,7 @@ TEST_CASE("set 0, b", "[opcodes]")
 TEST_CASE("set 0, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, c\n"
         ;
 
@@ -13401,7 +13485,7 @@ TEST_CASE("set 0, c", "[opcodes]")
 TEST_CASE("set 0, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, d\n"
         ;
 
@@ -13421,7 +13505,7 @@ TEST_CASE("set 0, d", "[opcodes]")
 TEST_CASE("set 0, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, e\n"
         ;
 
@@ -13441,7 +13525,7 @@ TEST_CASE("set 0, e", "[opcodes]")
 TEST_CASE("set 0, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, h\n"
         ;
 
@@ -13461,7 +13545,7 @@ TEST_CASE("set 0, h", "[opcodes]")
 TEST_CASE("set 0, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 0, l\n"
         ;
 
@@ -13481,7 +13565,7 @@ TEST_CASE("set 0, l", "[opcodes]")
 TEST_CASE("set 1, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, (hl)\n"
         ;
 
@@ -13501,7 +13585,7 @@ TEST_CASE("set 1, (hl)", "[opcodes]")
 TEST_CASE("set 1, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, (ix-43)\n"
         "set 1, (ix+85)\n"
         "set 1, (ix)\n"
@@ -13538,7 +13622,7 @@ TEST_CASE("set 1, (ix+#)", "[opcodes]")
 TEST_CASE("set 1, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, (iy-43)\n"
         "set 1, (iy+85)\n"
         "set 1, (iy)\n"
@@ -13575,7 +13659,7 @@ TEST_CASE("set 1, (iy+#)", "[opcodes]")
 TEST_CASE("set 1, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, a\n"
         ;
 
@@ -13595,7 +13679,7 @@ TEST_CASE("set 1, a", "[opcodes]")
 TEST_CASE("set 1, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, b\n"
         ;
 
@@ -13615,7 +13699,7 @@ TEST_CASE("set 1, b", "[opcodes]")
 TEST_CASE("set 1, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, c\n"
         ;
 
@@ -13635,7 +13719,7 @@ TEST_CASE("set 1, c", "[opcodes]")
 TEST_CASE("set 1, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, d\n"
         ;
 
@@ -13655,7 +13739,7 @@ TEST_CASE("set 1, d", "[opcodes]")
 TEST_CASE("set 1, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, e\n"
         ;
 
@@ -13675,7 +13759,7 @@ TEST_CASE("set 1, e", "[opcodes]")
 TEST_CASE("set 1, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, h\n"
         ;
 
@@ -13695,7 +13779,7 @@ TEST_CASE("set 1, h", "[opcodes]")
 TEST_CASE("set 1, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 1, l\n"
         ;
 
@@ -13715,7 +13799,7 @@ TEST_CASE("set 1, l", "[opcodes]")
 TEST_CASE("set 2, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, (hl)\n"
         ;
 
@@ -13735,7 +13819,7 @@ TEST_CASE("set 2, (hl)", "[opcodes]")
 TEST_CASE("set 2, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, (ix-43)\n"
         "set 2, (ix+85)\n"
         "set 2, (ix)\n"
@@ -13772,7 +13856,7 @@ TEST_CASE("set 2, (ix+#)", "[opcodes]")
 TEST_CASE("set 2, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, (iy-43)\n"
         "set 2, (iy+85)\n"
         "set 2, (iy)\n"
@@ -13809,7 +13893,7 @@ TEST_CASE("set 2, (iy+#)", "[opcodes]")
 TEST_CASE("set 2, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, a\n"
         ;
 
@@ -13829,7 +13913,7 @@ TEST_CASE("set 2, a", "[opcodes]")
 TEST_CASE("set 2, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, b\n"
         ;
 
@@ -13849,7 +13933,7 @@ TEST_CASE("set 2, b", "[opcodes]")
 TEST_CASE("set 2, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, c\n"
         ;
 
@@ -13869,7 +13953,7 @@ TEST_CASE("set 2, c", "[opcodes]")
 TEST_CASE("set 2, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, d\n"
         ;
 
@@ -13889,7 +13973,7 @@ TEST_CASE("set 2, d", "[opcodes]")
 TEST_CASE("set 2, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, e\n"
         ;
 
@@ -13909,7 +13993,7 @@ TEST_CASE("set 2, e", "[opcodes]")
 TEST_CASE("set 2, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, h\n"
         ;
 
@@ -13929,7 +14013,7 @@ TEST_CASE("set 2, h", "[opcodes]")
 TEST_CASE("set 2, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 2, l\n"
         ;
 
@@ -13949,7 +14033,7 @@ TEST_CASE("set 2, l", "[opcodes]")
 TEST_CASE("set 3, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, (hl)\n"
         ;
 
@@ -13969,7 +14053,7 @@ TEST_CASE("set 3, (hl)", "[opcodes]")
 TEST_CASE("set 3, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, (ix-43)\n"
         "set 3, (ix+85)\n"
         "set 3, (ix)\n"
@@ -14006,7 +14090,7 @@ TEST_CASE("set 3, (ix+#)", "[opcodes]")
 TEST_CASE("set 3, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, (iy-43)\n"
         "set 3, (iy+85)\n"
         "set 3, (iy)\n"
@@ -14043,7 +14127,7 @@ TEST_CASE("set 3, (iy+#)", "[opcodes]")
 TEST_CASE("set 3, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, a\n"
         ;
 
@@ -14063,7 +14147,7 @@ TEST_CASE("set 3, a", "[opcodes]")
 TEST_CASE("set 3, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, b\n"
         ;
 
@@ -14083,7 +14167,7 @@ TEST_CASE("set 3, b", "[opcodes]")
 TEST_CASE("set 3, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, c\n"
         ;
 
@@ -14103,7 +14187,7 @@ TEST_CASE("set 3, c", "[opcodes]")
 TEST_CASE("set 3, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, d\n"
         ;
 
@@ -14123,7 +14207,7 @@ TEST_CASE("set 3, d", "[opcodes]")
 TEST_CASE("set 3, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, e\n"
         ;
 
@@ -14143,7 +14227,7 @@ TEST_CASE("set 3, e", "[opcodes]")
 TEST_CASE("set 3, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, h\n"
         ;
 
@@ -14163,7 +14247,7 @@ TEST_CASE("set 3, h", "[opcodes]")
 TEST_CASE("set 3, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 3, l\n"
         ;
 
@@ -14183,7 +14267,7 @@ TEST_CASE("set 3, l", "[opcodes]")
 TEST_CASE("set 4, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, (hl)\n"
         ;
 
@@ -14203,7 +14287,7 @@ TEST_CASE("set 4, (hl)", "[opcodes]")
 TEST_CASE("set 4, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, (ix-43)\n"
         "set 4, (ix+85)\n"
         "set 4, (ix)\n"
@@ -14240,7 +14324,7 @@ TEST_CASE("set 4, (ix+#)", "[opcodes]")
 TEST_CASE("set 4, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, (iy-43)\n"
         "set 4, (iy+85)\n"
         "set 4, (iy)\n"
@@ -14277,7 +14361,7 @@ TEST_CASE("set 4, (iy+#)", "[opcodes]")
 TEST_CASE("set 4, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, a\n"
         ;
 
@@ -14297,7 +14381,7 @@ TEST_CASE("set 4, a", "[opcodes]")
 TEST_CASE("set 4, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, b\n"
         ;
 
@@ -14317,7 +14401,7 @@ TEST_CASE("set 4, b", "[opcodes]")
 TEST_CASE("set 4, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, c\n"
         ;
 
@@ -14337,7 +14421,7 @@ TEST_CASE("set 4, c", "[opcodes]")
 TEST_CASE("set 4, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, d\n"
         ;
 
@@ -14357,7 +14441,7 @@ TEST_CASE("set 4, d", "[opcodes]")
 TEST_CASE("set 4, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, e\n"
         ;
 
@@ -14377,7 +14461,7 @@ TEST_CASE("set 4, e", "[opcodes]")
 TEST_CASE("set 4, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, h\n"
         ;
 
@@ -14397,7 +14481,7 @@ TEST_CASE("set 4, h", "[opcodes]")
 TEST_CASE("set 4, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 4, l\n"
         ;
 
@@ -14417,7 +14501,7 @@ TEST_CASE("set 4, l", "[opcodes]")
 TEST_CASE("set 5, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, (hl)\n"
         ;
 
@@ -14437,7 +14521,7 @@ TEST_CASE("set 5, (hl)", "[opcodes]")
 TEST_CASE("set 5, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, (ix-43)\n"
         "set 5, (ix+85)\n"
         "set 5, (ix)\n"
@@ -14474,7 +14558,7 @@ TEST_CASE("set 5, (ix+#)", "[opcodes]")
 TEST_CASE("set 5, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, (iy-43)\n"
         "set 5, (iy+85)\n"
         "set 5, (iy)\n"
@@ -14511,7 +14595,7 @@ TEST_CASE("set 5, (iy+#)", "[opcodes]")
 TEST_CASE("set 5, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, a\n"
         ;
 
@@ -14531,7 +14615,7 @@ TEST_CASE("set 5, a", "[opcodes]")
 TEST_CASE("set 5, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, b\n"
         ;
 
@@ -14551,7 +14635,7 @@ TEST_CASE("set 5, b", "[opcodes]")
 TEST_CASE("set 5, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, c\n"
         ;
 
@@ -14571,7 +14655,7 @@ TEST_CASE("set 5, c", "[opcodes]")
 TEST_CASE("set 5, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, d\n"
         ;
 
@@ -14591,7 +14675,7 @@ TEST_CASE("set 5, d", "[opcodes]")
 TEST_CASE("set 5, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, e\n"
         ;
 
@@ -14611,7 +14695,7 @@ TEST_CASE("set 5, e", "[opcodes]")
 TEST_CASE("set 5, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, h\n"
         ;
 
@@ -14631,7 +14715,7 @@ TEST_CASE("set 5, h", "[opcodes]")
 TEST_CASE("set 5, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 5, l\n"
         ;
 
@@ -14651,7 +14735,7 @@ TEST_CASE("set 5, l", "[opcodes]")
 TEST_CASE("set 6, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, (hl)\n"
         ;
 
@@ -14671,7 +14755,7 @@ TEST_CASE("set 6, (hl)", "[opcodes]")
 TEST_CASE("set 6, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, (ix-43)\n"
         "set 6, (ix+85)\n"
         "set 6, (ix)\n"
@@ -14708,7 +14792,7 @@ TEST_CASE("set 6, (ix+#)", "[opcodes]")
 TEST_CASE("set 6, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, (iy-43)\n"
         "set 6, (iy+85)\n"
         "set 6, (iy)\n"
@@ -14745,7 +14829,7 @@ TEST_CASE("set 6, (iy+#)", "[opcodes]")
 TEST_CASE("set 6, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, a\n"
         ;
 
@@ -14765,7 +14849,7 @@ TEST_CASE("set 6, a", "[opcodes]")
 TEST_CASE("set 6, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, b\n"
         ;
 
@@ -14785,7 +14869,7 @@ TEST_CASE("set 6, b", "[opcodes]")
 TEST_CASE("set 6, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, c\n"
         ;
 
@@ -14805,7 +14889,7 @@ TEST_CASE("set 6, c", "[opcodes]")
 TEST_CASE("set 6, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, d\n"
         ;
 
@@ -14825,7 +14909,7 @@ TEST_CASE("set 6, d", "[opcodes]")
 TEST_CASE("set 6, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, e\n"
         ;
 
@@ -14845,7 +14929,7 @@ TEST_CASE("set 6, e", "[opcodes]")
 TEST_CASE("set 6, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, h\n"
         ;
 
@@ -14865,7 +14949,7 @@ TEST_CASE("set 6, h", "[opcodes]")
 TEST_CASE("set 6, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 6, l\n"
         ;
 
@@ -14885,7 +14969,7 @@ TEST_CASE("set 6, l", "[opcodes]")
 TEST_CASE("set 7, (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, (hl)\n"
         ;
 
@@ -14905,7 +14989,7 @@ TEST_CASE("set 7, (hl)", "[opcodes]")
 TEST_CASE("set 7, (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, (ix-43)\n"
         "set 7, (ix+85)\n"
         "set 7, (ix)\n"
@@ -14942,7 +15026,7 @@ TEST_CASE("set 7, (ix+#)", "[opcodes]")
 TEST_CASE("set 7, (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, (iy-43)\n"
         "set 7, (iy+85)\n"
         "set 7, (iy)\n"
@@ -14979,7 +15063,7 @@ TEST_CASE("set 7, (iy+#)", "[opcodes]")
 TEST_CASE("set 7, a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, a\n"
         ;
 
@@ -14999,7 +15083,7 @@ TEST_CASE("set 7, a", "[opcodes]")
 TEST_CASE("set 7, b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, b\n"
         ;
 
@@ -15019,7 +15103,7 @@ TEST_CASE("set 7, b", "[opcodes]")
 TEST_CASE("set 7, c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, c\n"
         ;
 
@@ -15039,7 +15123,7 @@ TEST_CASE("set 7, c", "[opcodes]")
 TEST_CASE("set 7, d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, d\n"
         ;
 
@@ -15059,7 +15143,7 @@ TEST_CASE("set 7, d", "[opcodes]")
 TEST_CASE("set 7, e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, e\n"
         ;
 
@@ -15079,7 +15163,7 @@ TEST_CASE("set 7, e", "[opcodes]")
 TEST_CASE("set 7, h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, h\n"
         ;
 
@@ -15099,7 +15183,7 @@ TEST_CASE("set 7, h", "[opcodes]")
 TEST_CASE("set 7, l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "set 7, l\n"
         ;
 
@@ -15119,7 +15203,7 @@ TEST_CASE("set 7, l", "[opcodes]")
 TEST_CASE("sla (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla (hl)\n"
         ;
 
@@ -15139,7 +15223,7 @@ TEST_CASE("sla (hl)", "[opcodes]")
 TEST_CASE("sla (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla (ix-43)\n"
         "sla (ix+85)\n"
         "sla (ix)\n"
@@ -15176,7 +15260,7 @@ TEST_CASE("sla (ix+#)", "[opcodes]")
 TEST_CASE("sla (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla (iy-43)\n"
         "sla (iy+85)\n"
         "sla (iy)\n"
@@ -15213,7 +15297,7 @@ TEST_CASE("sla (iy+#)", "[opcodes]")
 TEST_CASE("sla a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla a\n"
         ;
 
@@ -15233,7 +15317,7 @@ TEST_CASE("sla a", "[opcodes]")
 TEST_CASE("sla b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla b\n"
         ;
 
@@ -15253,7 +15337,7 @@ TEST_CASE("sla b", "[opcodes]")
 TEST_CASE("sla c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla c\n"
         ;
 
@@ -15273,7 +15357,7 @@ TEST_CASE("sla c", "[opcodes]")
 TEST_CASE("sla d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla d\n"
         ;
 
@@ -15293,7 +15377,7 @@ TEST_CASE("sla d", "[opcodes]")
 TEST_CASE("sla e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla e\n"
         ;
 
@@ -15313,7 +15397,7 @@ TEST_CASE("sla e", "[opcodes]")
 TEST_CASE("sla h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla h\n"
         ;
 
@@ -15333,7 +15417,7 @@ TEST_CASE("sla h", "[opcodes]")
 TEST_CASE("sla l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sla l\n"
         ;
 
@@ -15353,7 +15437,7 @@ TEST_CASE("sla l", "[opcodes]")
 TEST_CASE("sra (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra (hl)\n"
         ;
 
@@ -15373,7 +15457,7 @@ TEST_CASE("sra (hl)", "[opcodes]")
 TEST_CASE("sra (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra (ix-43)\n"
         "sra (ix+85)\n"
         "sra (ix)\n"
@@ -15410,7 +15494,7 @@ TEST_CASE("sra (ix+#)", "[opcodes]")
 TEST_CASE("sra (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra (iy-43)\n"
         "sra (iy+85)\n"
         "sra (iy)\n"
@@ -15447,7 +15531,7 @@ TEST_CASE("sra (iy+#)", "[opcodes]")
 TEST_CASE("sra a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra a\n"
         ;
 
@@ -15467,7 +15551,7 @@ TEST_CASE("sra a", "[opcodes]")
 TEST_CASE("sra b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra b\n"
         ;
 
@@ -15487,7 +15571,7 @@ TEST_CASE("sra b", "[opcodes]")
 TEST_CASE("sra c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra c\n"
         ;
 
@@ -15507,7 +15591,7 @@ TEST_CASE("sra c", "[opcodes]")
 TEST_CASE("sra d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra d\n"
         ;
 
@@ -15527,7 +15611,7 @@ TEST_CASE("sra d", "[opcodes]")
 TEST_CASE("sra e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra e\n"
         ;
 
@@ -15547,7 +15631,7 @@ TEST_CASE("sra e", "[opcodes]")
 TEST_CASE("sra h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra h\n"
         ;
 
@@ -15567,7 +15651,7 @@ TEST_CASE("sra h", "[opcodes]")
 TEST_CASE("sra l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sra l\n"
         ;
 
@@ -15587,7 +15671,7 @@ TEST_CASE("sra l", "[opcodes]")
 TEST_CASE("srl (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl (hl)\n"
         ;
 
@@ -15607,7 +15691,7 @@ TEST_CASE("srl (hl)", "[opcodes]")
 TEST_CASE("srl (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl (ix-43)\n"
         "srl (ix+85)\n"
         "srl (ix)\n"
@@ -15644,7 +15728,7 @@ TEST_CASE("srl (ix+#)", "[opcodes]")
 TEST_CASE("srl (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl (iy-43)\n"
         "srl (iy+85)\n"
         "srl (iy)\n"
@@ -15681,7 +15765,7 @@ TEST_CASE("srl (iy+#)", "[opcodes]")
 TEST_CASE("srl a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl a\n"
         ;
 
@@ -15701,7 +15785,7 @@ TEST_CASE("srl a", "[opcodes]")
 TEST_CASE("srl b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl b\n"
         ;
 
@@ -15721,7 +15805,7 @@ TEST_CASE("srl b", "[opcodes]")
 TEST_CASE("srl c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl c\n"
         ;
 
@@ -15741,7 +15825,7 @@ TEST_CASE("srl c", "[opcodes]")
 TEST_CASE("srl d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl d\n"
         ;
 
@@ -15761,7 +15845,7 @@ TEST_CASE("srl d", "[opcodes]")
 TEST_CASE("srl e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl e\n"
         ;
 
@@ -15781,7 +15865,7 @@ TEST_CASE("srl e", "[opcodes]")
 TEST_CASE("srl h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl h\n"
         ;
 
@@ -15801,7 +15885,7 @@ TEST_CASE("srl h", "[opcodes]")
 TEST_CASE("srl l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "srl l\n"
         ;
 
@@ -15821,7 +15905,7 @@ TEST_CASE("srl l", "[opcodes]")
 TEST_CASE("sub (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub (hl)\n"
         ;
 
@@ -15840,7 +15924,7 @@ TEST_CASE("sub (hl)", "[opcodes]")
 TEST_CASE("sub (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub (ix-43)\n"
         "sub (ix+85)\n"
         "sub (ix)\n"
@@ -15873,7 +15957,7 @@ TEST_CASE("sub (ix+#)", "[opcodes]")
 TEST_CASE("sub (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub (iy-43)\n"
         "sub (iy+85)\n"
         "sub (iy)\n"
@@ -15906,7 +15990,7 @@ TEST_CASE("sub (iy+#)", "[opcodes]")
 TEST_CASE("sub a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub a\n"
         ;
 
@@ -15925,7 +16009,7 @@ TEST_CASE("sub a", "[opcodes]")
 TEST_CASE("sub b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub b\n"
         ;
 
@@ -15944,7 +16028,7 @@ TEST_CASE("sub b", "[opcodes]")
 TEST_CASE("sub c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub c\n"
         ;
 
@@ -15963,7 +16047,7 @@ TEST_CASE("sub c", "[opcodes]")
 TEST_CASE("sub d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub d\n"
         ;
 
@@ -15982,7 +16066,7 @@ TEST_CASE("sub d", "[opcodes]")
 TEST_CASE("sub e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub e\n"
         ;
 
@@ -16001,7 +16085,7 @@ TEST_CASE("sub e", "[opcodes]")
 TEST_CASE("sub h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub h\n"
         ;
 
@@ -16020,7 +16104,7 @@ TEST_CASE("sub h", "[opcodes]")
 TEST_CASE("sub l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub l\n"
         ;
 
@@ -16039,7 +16123,7 @@ TEST_CASE("sub l", "[opcodes]")
 TEST_CASE("sub #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "sub 170\n"
         "sub 85\n"
         "sub 0\n"
@@ -16068,7 +16152,7 @@ TEST_CASE("sub #", "[opcodes]")
 TEST_CASE("xor (hl)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor (hl)\n"
         ;
 
@@ -16087,7 +16171,7 @@ TEST_CASE("xor (hl)", "[opcodes]")
 TEST_CASE("xor (ix+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor (ix-43)\n"
         "xor (ix+85)\n"
         "xor (ix)\n"
@@ -16120,7 +16204,7 @@ TEST_CASE("xor (ix+#)", "[opcodes]")
 TEST_CASE("xor (iy+#)", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor (iy-43)\n"
         "xor (iy+85)\n"
         "xor (iy)\n"
@@ -16153,7 +16237,7 @@ TEST_CASE("xor (iy+#)", "[opcodes]")
 TEST_CASE("xor a", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor a\n"
         ;
 
@@ -16172,7 +16256,7 @@ TEST_CASE("xor a", "[opcodes]")
 TEST_CASE("xor b", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor b\n"
         ;
 
@@ -16191,7 +16275,7 @@ TEST_CASE("xor b", "[opcodes]")
 TEST_CASE("xor c", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor c\n"
         ;
 
@@ -16210,7 +16294,7 @@ TEST_CASE("xor c", "[opcodes]")
 TEST_CASE("xor d", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor d\n"
         ;
 
@@ -16229,7 +16313,7 @@ TEST_CASE("xor d", "[opcodes]")
 TEST_CASE("xor e", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor e\n"
         ;
 
@@ -16248,7 +16332,7 @@ TEST_CASE("xor e", "[opcodes]")
 TEST_CASE("xor h", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor h\n"
         ;
 
@@ -16267,7 +16351,7 @@ TEST_CASE("xor h", "[opcodes]")
 TEST_CASE("xor l", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor l\n"
         ;
 
@@ -16286,7 +16370,7 @@ TEST_CASE("xor l", "[opcodes]")
 TEST_CASE("xor #", "[opcodes]")
 {
     static const char source[] =
-        "section main [base 0x100]\n"
+        "section main [base 0x1234]\n"
         "xor 170\n"
         "xor 85\n"
         "xor 0\n"

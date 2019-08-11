@@ -395,6 +395,10 @@ opcodes = [
         [ 'ld', 'sp', 'ix' ],
         [ 'ld', 'sp', 'iy' ],
         [ 'ld', 'sp', '##' ],
+        [ 'ld', 'sp', '$' ],    # ensure that $ is handled correctly
+        [ 'ld', 'sp', '$+1' ],  # ensure that $ is handled correctly
+        [ 'ld', 'sp', '$-1' ],  # ensure that $ is handled correctly
+        [ 'ld', 'sp', '$-0x1235' ],  # ensure that overflow is handled correctly
 
         [ 'ldd' ],
 
@@ -805,8 +809,8 @@ for opcode in opcodes:
     if len(opcode) > 2:
         opcode_name += ', ' + opcode[2]
 
-    asm1 = 'org 100h\n'
-    asm2 = [ 'section main [base 0x100]' ]
+    asm1 = 'org 1234h\n'
+    asm2 = [ 'section main [base 0x1234]' ]
 
     values1 = [ 0 ]
     if len(opcode) > 1:

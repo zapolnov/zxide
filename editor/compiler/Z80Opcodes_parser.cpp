@@ -1821,9 +1821,9 @@ public:
 
     bool djnz()
     {
-        if (byteLiteral(&mLiteral1)) {
+        if (byteOffset(&mLiteral1)) {
             if (eol())
-                return mSection->emit<DJNZ_n>(mToken, std::move(mLiteral1));
+                return mSection->emit<DJNZ_off>(mToken, std::move(mLiteral1));
             return false;
         }
         return false;

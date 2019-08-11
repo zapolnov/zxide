@@ -22,6 +22,7 @@ public:
     virtual void resolveAddresses(const ProgramSection* section, unsigned endAddress);
 
     unsigned char evaluateByte(IErrorReporter* reporter) const;
+    unsigned char evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const;
     unsigned short evaluateWord(IErrorReporter* reporter) const;
     virtual qint64 evaluate(IErrorReporter* reporter) const = 0;
 

@@ -28,6 +28,19 @@ unsigned char Expression::evaluateByte(IErrorReporter* reporter) const
         return (unsigned char)(char)value;
 }
 
+unsigned char Expression::evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const
+{
+    qint64 value = evaluate(reporter) - baseAddress;
+
+    if (value < -128 || value > 255)
+        error(reporter, QCoreApplication::tr("value %1 does not fit into a byte").arg(value));
+
+    if (value >= 0)
+        return (unsigned char)value;
+    else
+        return (unsigned char)(char)value;
+}
+
 unsigned short Expression::evaluateWord(IErrorReporter* reporter) const
 {
     qint64 value = evaluate(reporter);
