@@ -1000,7 +1000,7 @@ src2 += '    }\n'
 
 for opcode, dict in opcodeMap.items():
     src2 += '\n'
-    src2 += '    AssemblerParser::OpcodeParseResult %s()\n' % opcode
+    src2 += '    AssemblerParser::OpcodeParseResult opcode_%s()\n' % opcode
     src2 += '    {\n'
     genCode(dict, '        ')
     src2 += '    }\n'
@@ -1010,7 +1010,7 @@ src2 += '\n'
 src2 += 'using Func = AssemblerParser::OpcodeParseResult (Z80OpcodeParser::*)();\n'
 src2 += 'static std::unordered_map<std::string, Func> opcodes = {\n'
 for opcode, dict in opcodeMap.items():
-    src2 += '        { "%s", &Z80OpcodeParser::%s },\n' % (opcode, opcode)
+    src2 += '        { "%s", &Z80OpcodeParser::opcode_%s },\n' % (opcode, opcode)
 src2 += '    };\n'
 
 src2 += '\n'

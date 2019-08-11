@@ -40,7 +40,7 @@ public:
         mParser->nextToken();
     }
 
-    AssemblerParser::OpcodeParseResult adc()
+    AssemblerParser::OpcodeParseResult opcode_adc()
     {
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -188,7 +188,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult add()
+    AssemblerParser::OpcodeParseResult opcode_add()
     {
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -388,7 +388,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult and()
+    AssemblerParser::OpcodeParseResult opcode_and()
     {
         if (ident("a")) {
             if (eol())
@@ -504,7 +504,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult bit()
+    AssemblerParser::OpcodeParseResult opcode_bit()
     {
         if (byteConstant()) {
             if (mByteConstant == 0) {
@@ -1408,7 +1408,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult call()
+    AssemblerParser::OpcodeParseResult opcode_call()
     {
         if (wordLiteral(&mLiteral1)) {
             if (eol())
@@ -1506,14 +1506,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ccf()
+    AssemblerParser::OpcodeParseResult opcode_ccf()
     {
         if (eol())
             return mSection->emit<CCF>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cp()
+    AssemblerParser::OpcodeParseResult opcode_cp()
     {
         if (ident("a")) {
             if (eol())
@@ -1629,49 +1629,49 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cpd()
+    AssemblerParser::OpcodeParseResult opcode_cpd()
     {
         if (eol())
             return mSection->emit<CPD>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cpdr()
+    AssemblerParser::OpcodeParseResult opcode_cpdr()
     {
         if (eol())
             return mSection->emit<CPDR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cpi()
+    AssemblerParser::OpcodeParseResult opcode_cpi()
     {
         if (eol())
             return mSection->emit<CPI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cpir()
+    AssemblerParser::OpcodeParseResult opcode_cpir()
     {
         if (eol())
             return mSection->emit<CPIR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult cpl()
+    AssemblerParser::OpcodeParseResult opcode_cpl()
     {
         if (eol())
             return mSection->emit<CPL>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult daa()
+    AssemblerParser::OpcodeParseResult opcode_daa()
     {
         if (eol())
             return mSection->emit<DAA>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult dec()
+    AssemblerParser::OpcodeParseResult opcode_dec()
     {
         if (ident("a")) {
             if (eol())
@@ -1812,14 +1812,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult di()
+    AssemblerParser::OpcodeParseResult opcode_di()
     {
         if (eol())
             return mSection->emit<DI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult djnz()
+    AssemblerParser::OpcodeParseResult opcode_djnz()
     {
         if (byteOffset(&mLiteral1)) {
             if (eol())
@@ -1829,14 +1829,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ei()
+    AssemblerParser::OpcodeParseResult opcode_ei()
     {
         if (eol())
             return mSection->emit<EI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ex()
+    AssemblerParser::OpcodeParseResult opcode_ex()
     {
         if (token(T_LPAREN)) {
             if (ident("sp")) {
@@ -1890,21 +1890,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult exx()
+    AssemblerParser::OpcodeParseResult opcode_exx()
     {
         if (eol())
             return mSection->emit<EXX>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult halt()
+    AssemblerParser::OpcodeParseResult opcode_halt()
     {
         if (eol())
             return mSection->emit<HALT>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult im()
+    AssemblerParser::OpcodeParseResult opcode_im()
     {
         if (byteConstant()) {
             if (mByteConstant == 0) {
@@ -1927,7 +1927,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult in()
+    AssemblerParser::OpcodeParseResult opcode_in()
     {
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -2059,7 +2059,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult inc()
+    AssemblerParser::OpcodeParseResult opcode_inc()
     {
         if (ident("a")) {
             if (eol())
@@ -2200,35 +2200,35 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ind()
+    AssemblerParser::OpcodeParseResult opcode_ind()
     {
         if (eol())
             return mSection->emit<IND>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult indr()
+    AssemblerParser::OpcodeParseResult opcode_indr()
     {
         if (eol())
             return mSection->emit<INDR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ini()
+    AssemblerParser::OpcodeParseResult opcode_ini()
     {
         if (eol())
             return mSection->emit<INI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult inir()
+    AssemblerParser::OpcodeParseResult opcode_inir()
     {
         if (eol())
             return mSection->emit<INIR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult jp()
+    AssemblerParser::OpcodeParseResult opcode_jp()
     {
         if (wordLiteral(&mLiteral1)) {
             if (eol())
@@ -2353,7 +2353,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult jr()
+    AssemblerParser::OpcodeParseResult opcode_jr()
     {
         if (byteOffset(&mLiteral1)) {
             if (eol())
@@ -2407,7 +2407,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ld()
+    AssemblerParser::OpcodeParseResult opcode_ld()
     {
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -3864,49 +3864,49 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ldd()
+    AssemblerParser::OpcodeParseResult opcode_ldd()
     {
         if (eol())
             return mSection->emit<LDD>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult lddr()
+    AssemblerParser::OpcodeParseResult opcode_lddr()
     {
         if (eol())
             return mSection->emit<LDDR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ldi()
+    AssemblerParser::OpcodeParseResult opcode_ldi()
     {
         if (eol())
             return mSection->emit<LDI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ldir()
+    AssemblerParser::OpcodeParseResult opcode_ldir()
     {
         if (eol())
             return mSection->emit<LDIR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult neg()
+    AssemblerParser::OpcodeParseResult opcode_neg()
     {
         if (eol())
             return mSection->emit<NEG>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult nop()
+    AssemblerParser::OpcodeParseResult opcode_nop()
     {
         if (eol())
             return mSection->emit<NOP>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult or()
+    AssemblerParser::OpcodeParseResult opcode_or()
     {
         if (ident("a")) {
             if (eol())
@@ -4022,21 +4022,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult otdr()
+    AssemblerParser::OpcodeParseResult opcode_otdr()
     {
         if (eol())
             return mSection->emit<OTDR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult otir()
+    AssemblerParser::OpcodeParseResult opcode_otir()
     {
         if (eol())
             return mSection->emit<OTIR>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult out()
+    AssemblerParser::OpcodeParseResult opcode_out()
     {
         if (token(T_LPAREN)) {
             if (byteLiteral(&mLiteral1)) {
@@ -4102,21 +4102,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult outd()
+    AssemblerParser::OpcodeParseResult opcode_outd()
     {
         if (eol())
             return mSection->emit<OUTD>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult outi()
+    AssemblerParser::OpcodeParseResult opcode_outi()
     {
         if (eol())
             return mSection->emit<OUTI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult pop()
+    AssemblerParser::OpcodeParseResult opcode_pop()
     {
         if (ident("ix")) {
             if (eol())
@@ -4151,7 +4151,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult push()
+    AssemblerParser::OpcodeParseResult opcode_push()
     {
         if (ident("ix")) {
             if (eol())
@@ -4186,7 +4186,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult res()
+    AssemblerParser::OpcodeParseResult opcode_res()
     {
         if (byteConstant()) {
             if (mByteConstant == 0) {
@@ -5090,7 +5090,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult ret()
+    AssemblerParser::OpcodeParseResult opcode_ret()
     {
         if (eol())
             return mSection->emit<RET>(mToken), AssemblerParser::OpcodeParseResult::Success;
@@ -5137,21 +5137,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult reti()
+    AssemblerParser::OpcodeParseResult opcode_reti()
     {
         if (eol())
             return mSection->emit<RETI>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult retn()
+    AssemblerParser::OpcodeParseResult opcode_retn()
     {
         if (eol())
             return mSection->emit<RETN>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rl()
+    AssemblerParser::OpcodeParseResult opcode_rl()
     {
         if (ident("a")) {
             if (eol())
@@ -5262,14 +5262,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rla()
+    AssemblerParser::OpcodeParseResult opcode_rla()
     {
         if (eol())
             return mSection->emit<RLA>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rlc()
+    AssemblerParser::OpcodeParseResult opcode_rlc()
     {
         if (ident("a")) {
             if (eol())
@@ -5380,21 +5380,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rlca()
+    AssemblerParser::OpcodeParseResult opcode_rlca()
     {
         if (eol())
             return mSection->emit<RLCA>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rld()
+    AssemblerParser::OpcodeParseResult opcode_rld()
     {
         if (eol())
             return mSection->emit<RLD>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rr()
+    AssemblerParser::OpcodeParseResult opcode_rr()
     {
         if (ident("a")) {
             if (eol())
@@ -5505,14 +5505,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rra()
+    AssemblerParser::OpcodeParseResult opcode_rra()
     {
         if (eol())
             return mSection->emit<RRA>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rrc()
+    AssemblerParser::OpcodeParseResult opcode_rrc()
     {
         if (ident("a")) {
             if (eol())
@@ -5623,21 +5623,21 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rrca()
+    AssemblerParser::OpcodeParseResult opcode_rrca()
     {
         if (eol())
             return mSection->emit<RRCA>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rrd()
+    AssemblerParser::OpcodeParseResult opcode_rrd()
     {
         if (eol())
             return mSection->emit<RRD>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult rst()
+    AssemblerParser::OpcodeParseResult opcode_rst()
     {
         if (byteConstant()) {
             if (mByteConstant == 0x00) {
@@ -5685,7 +5685,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult sbc()
+    AssemblerParser::OpcodeParseResult opcode_sbc()
     {
         if (ident("a")) {
             if (token(T_COMMA)) {
@@ -5833,14 +5833,14 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult scf()
+    AssemblerParser::OpcodeParseResult opcode_scf()
     {
         if (eol())
             return mSection->emit<SCF>(mToken), AssemblerParser::OpcodeParseResult::Success;
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult set()
+    AssemblerParser::OpcodeParseResult opcode_set()
     {
         if (byteConstant()) {
             if (mByteConstant == 0) {
@@ -6744,7 +6744,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult sla()
+    AssemblerParser::OpcodeParseResult opcode_sla()
     {
         if (ident("a")) {
             if (eol())
@@ -6855,7 +6855,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult sra()
+    AssemblerParser::OpcodeParseResult opcode_sra()
     {
         if (ident("a")) {
             if (eol())
@@ -6966,7 +6966,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult srl()
+    AssemblerParser::OpcodeParseResult opcode_srl()
     {
         if (ident("a")) {
             if (eol())
@@ -7077,7 +7077,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult sub()
+    AssemblerParser::OpcodeParseResult opcode_sub()
     {
         if (ident("a")) {
             if (eol())
@@ -7193,7 +7193,7 @@ public:
         return AssemblerParser::OpcodeParseResult::SyntaxError;
     }
 
-    AssemblerParser::OpcodeParseResult xor()
+    AssemblerParser::OpcodeParseResult opcode_xor()
     {
         if (ident("a")) {
             if (eol())
@@ -7312,73 +7312,73 @@ public:
 
 using Func = AssemblerParser::OpcodeParseResult (Z80OpcodeParser::*)();
 static std::unordered_map<std::string, Func> opcodes = {
-        { "adc", &Z80OpcodeParser::adc },
-        { "add", &Z80OpcodeParser::add },
-        { "and", &Z80OpcodeParser::and },
-        { "bit", &Z80OpcodeParser::bit },
-        { "call", &Z80OpcodeParser::call },
-        { "ccf", &Z80OpcodeParser::ccf },
-        { "cp", &Z80OpcodeParser::cp },
-        { "cpd", &Z80OpcodeParser::cpd },
-        { "cpdr", &Z80OpcodeParser::cpdr },
-        { "cpi", &Z80OpcodeParser::cpi },
-        { "cpir", &Z80OpcodeParser::cpir },
-        { "cpl", &Z80OpcodeParser::cpl },
-        { "daa", &Z80OpcodeParser::daa },
-        { "dec", &Z80OpcodeParser::dec },
-        { "di", &Z80OpcodeParser::di },
-        { "djnz", &Z80OpcodeParser::djnz },
-        { "ei", &Z80OpcodeParser::ei },
-        { "ex", &Z80OpcodeParser::ex },
-        { "exx", &Z80OpcodeParser::exx },
-        { "halt", &Z80OpcodeParser::halt },
-        { "im", &Z80OpcodeParser::im },
-        { "in", &Z80OpcodeParser::in },
-        { "inc", &Z80OpcodeParser::inc },
-        { "ind", &Z80OpcodeParser::ind },
-        { "indr", &Z80OpcodeParser::indr },
-        { "ini", &Z80OpcodeParser::ini },
-        { "inir", &Z80OpcodeParser::inir },
-        { "jp", &Z80OpcodeParser::jp },
-        { "jr", &Z80OpcodeParser::jr },
-        { "ld", &Z80OpcodeParser::ld },
-        { "ldd", &Z80OpcodeParser::ldd },
-        { "lddr", &Z80OpcodeParser::lddr },
-        { "ldi", &Z80OpcodeParser::ldi },
-        { "ldir", &Z80OpcodeParser::ldir },
-        { "neg", &Z80OpcodeParser::neg },
-        { "nop", &Z80OpcodeParser::nop },
-        { "or", &Z80OpcodeParser::or },
-        { "otdr", &Z80OpcodeParser::otdr },
-        { "otir", &Z80OpcodeParser::otir },
-        { "out", &Z80OpcodeParser::out },
-        { "outd", &Z80OpcodeParser::outd },
-        { "outi", &Z80OpcodeParser::outi },
-        { "pop", &Z80OpcodeParser::pop },
-        { "push", &Z80OpcodeParser::push },
-        { "res", &Z80OpcodeParser::res },
-        { "ret", &Z80OpcodeParser::ret },
-        { "reti", &Z80OpcodeParser::reti },
-        { "retn", &Z80OpcodeParser::retn },
-        { "rl", &Z80OpcodeParser::rl },
-        { "rla", &Z80OpcodeParser::rla },
-        { "rlc", &Z80OpcodeParser::rlc },
-        { "rlca", &Z80OpcodeParser::rlca },
-        { "rld", &Z80OpcodeParser::rld },
-        { "rr", &Z80OpcodeParser::rr },
-        { "rra", &Z80OpcodeParser::rra },
-        { "rrc", &Z80OpcodeParser::rrc },
-        { "rrca", &Z80OpcodeParser::rrca },
-        { "rrd", &Z80OpcodeParser::rrd },
-        { "rst", &Z80OpcodeParser::rst },
-        { "sbc", &Z80OpcodeParser::sbc },
-        { "scf", &Z80OpcodeParser::scf },
-        { "set", &Z80OpcodeParser::set },
-        { "sla", &Z80OpcodeParser::sla },
-        { "sra", &Z80OpcodeParser::sra },
-        { "srl", &Z80OpcodeParser::srl },
-        { "sub", &Z80OpcodeParser::sub },
-        { "xor", &Z80OpcodeParser::xor },
+        { "adc", &Z80OpcodeParser::opcode_adc },
+        { "add", &Z80OpcodeParser::opcode_add },
+        { "and", &Z80OpcodeParser::opcode_and },
+        { "bit", &Z80OpcodeParser::opcode_bit },
+        { "call", &Z80OpcodeParser::opcode_call },
+        { "ccf", &Z80OpcodeParser::opcode_ccf },
+        { "cp", &Z80OpcodeParser::opcode_cp },
+        { "cpd", &Z80OpcodeParser::opcode_cpd },
+        { "cpdr", &Z80OpcodeParser::opcode_cpdr },
+        { "cpi", &Z80OpcodeParser::opcode_cpi },
+        { "cpir", &Z80OpcodeParser::opcode_cpir },
+        { "cpl", &Z80OpcodeParser::opcode_cpl },
+        { "daa", &Z80OpcodeParser::opcode_daa },
+        { "dec", &Z80OpcodeParser::opcode_dec },
+        { "di", &Z80OpcodeParser::opcode_di },
+        { "djnz", &Z80OpcodeParser::opcode_djnz },
+        { "ei", &Z80OpcodeParser::opcode_ei },
+        { "ex", &Z80OpcodeParser::opcode_ex },
+        { "exx", &Z80OpcodeParser::opcode_exx },
+        { "halt", &Z80OpcodeParser::opcode_halt },
+        { "im", &Z80OpcodeParser::opcode_im },
+        { "in", &Z80OpcodeParser::opcode_in },
+        { "inc", &Z80OpcodeParser::opcode_inc },
+        { "ind", &Z80OpcodeParser::opcode_ind },
+        { "indr", &Z80OpcodeParser::opcode_indr },
+        { "ini", &Z80OpcodeParser::opcode_ini },
+        { "inir", &Z80OpcodeParser::opcode_inir },
+        { "jp", &Z80OpcodeParser::opcode_jp },
+        { "jr", &Z80OpcodeParser::opcode_jr },
+        { "ld", &Z80OpcodeParser::opcode_ld },
+        { "ldd", &Z80OpcodeParser::opcode_ldd },
+        { "lddr", &Z80OpcodeParser::opcode_lddr },
+        { "ldi", &Z80OpcodeParser::opcode_ldi },
+        { "ldir", &Z80OpcodeParser::opcode_ldir },
+        { "neg", &Z80OpcodeParser::opcode_neg },
+        { "nop", &Z80OpcodeParser::opcode_nop },
+        { "or", &Z80OpcodeParser::opcode_or },
+        { "otdr", &Z80OpcodeParser::opcode_otdr },
+        { "otir", &Z80OpcodeParser::opcode_otir },
+        { "out", &Z80OpcodeParser::opcode_out },
+        { "outd", &Z80OpcodeParser::opcode_outd },
+        { "outi", &Z80OpcodeParser::opcode_outi },
+        { "pop", &Z80OpcodeParser::opcode_pop },
+        { "push", &Z80OpcodeParser::opcode_push },
+        { "res", &Z80OpcodeParser::opcode_res },
+        { "ret", &Z80OpcodeParser::opcode_ret },
+        { "reti", &Z80OpcodeParser::opcode_reti },
+        { "retn", &Z80OpcodeParser::opcode_retn },
+        { "rl", &Z80OpcodeParser::opcode_rl },
+        { "rla", &Z80OpcodeParser::opcode_rla },
+        { "rlc", &Z80OpcodeParser::opcode_rlc },
+        { "rlca", &Z80OpcodeParser::opcode_rlca },
+        { "rld", &Z80OpcodeParser::opcode_rld },
+        { "rr", &Z80OpcodeParser::opcode_rr },
+        { "rra", &Z80OpcodeParser::opcode_rra },
+        { "rrc", &Z80OpcodeParser::opcode_rrc },
+        { "rrca", &Z80OpcodeParser::opcode_rrca },
+        { "rrd", &Z80OpcodeParser::opcode_rrd },
+        { "rst", &Z80OpcodeParser::opcode_rst },
+        { "sbc", &Z80OpcodeParser::opcode_sbc },
+        { "scf", &Z80OpcodeParser::opcode_scf },
+        { "set", &Z80OpcodeParser::opcode_set },
+        { "sla", &Z80OpcodeParser::opcode_sla },
+        { "sra", &Z80OpcodeParser::opcode_sra },
+        { "srl", &Z80OpcodeParser::opcode_srl },
+        { "sub", &Z80OpcodeParser::opcode_sub },
+        { "xor", &Z80OpcodeParser::opcode_xor },
     };
 
 auto AssemblerParser::parseOpcode_generated(const std::string& opcode) -> OpcodeParseResult
