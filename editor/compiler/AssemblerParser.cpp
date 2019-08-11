@@ -95,18 +95,18 @@ void AssemblerParser::parseSectionDecl()
                 }
                 if (mSection->hasBase() && (mSection->base() % alignment) != 0) {
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(mSection->nameCStr()).arg(mSection->base(), 0, 10).arg(alignment));
+                        .arg(mSection->nameCStr()).arg(mSection->base(), 0, 16).arg(alignment));
                 }
                 mSection->setAlignment(alignment);
             } else if (param == "base") {
                 auto base = (unsigned)parseNumber(nextToken());
                 if (mSection->hasBase() && mSection->base() != base) {
-                    error(tr("conflicting base address for section '%1' (%2 != %3)")
-                        .arg(mSection->nameCStr()).arg(base).arg(mSection->base()));
+                    error(tr("conflicting base address for section '%1' (0x%2 != 0x%3)")
+                        .arg(mSection->nameCStr()).arg(base, 0, 16).arg(mSection->base(), 0, 16));
                 }
                 if (mSection->hasAlignment() && (base % mSection->alignment()) != 0) {
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(mSection->nameCStr()).arg(base, 0, 10).arg(mSection->alignment()));
+                        .arg(mSection->nameCStr()).arg(base, 0, 16).arg(mSection->alignment()));
                 }
                 mSection->setBase(base);
             } else

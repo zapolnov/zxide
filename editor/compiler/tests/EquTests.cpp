@@ -403,3 +403,47 @@ TEST_CASE("ensure unused equs are validated", "[equ]")
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
+
+TEST_CASE("equ in bit instruction", "[equ]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "mybit equ 4-3\n"
+        "offs equ (40+3)\n"
+        "bit mybit, (ix-offs)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xcb,
+        0xd5,
+        0x4e,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("equ in rst instruction", "[equ]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "addr equ 10+6\n"
+        "rst addr\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xd7,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
