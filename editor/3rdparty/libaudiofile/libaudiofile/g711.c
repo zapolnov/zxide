@@ -130,7 +130,7 @@ _af_linear2alaw(pcm_val)
 	}
 
 	/* Convert the scaled magnitude to segment number. */
-	seg = search(pcm_val, seg_end, 8);
+	seg = search(pcm_val, (short*)seg_end, 8);
 
 	/* Combine the sign, segment, and quantization bits. */
 
@@ -224,7 +224,7 @@ unsigned char _af_linear2ulaw (int pcm_val)
 	}
 
 	/* Convert the scaled magnitude to segment number. */
-	seg = search(pcm_val, seg_end, 8);
+	seg = search(pcm_val, (short*)seg_end, 8);
 
 	/*
 	 * Combine the sign, segment, quantization bits;
