@@ -3,7 +3,7 @@
 #include "ErrorConsumer.h"
 #include "TestUtil.h"
 
-TEST_CASE("forward label", "[expr]")
+TEST_CASE("forward label", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -25,7 +25,7 @@ TEST_CASE("forward label", "[expr]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("backward label", "[expr]")
+TEST_CASE("backward label", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -47,7 +47,7 @@ TEST_CASE("backward label", "[expr]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("duplicate label", "[label]")
+TEST_CASE("duplicate label", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -62,7 +62,7 @@ TEST_CASE("duplicate label", "[label]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("local labels", "[label]")
+TEST_CASE("local labels", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -120,7 +120,7 @@ TEST_CASE("local labels", "[label]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("duplicate local label", "[label]")
+TEST_CASE("duplicate local label", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -136,7 +136,7 @@ TEST_CASE("duplicate local label", "[label]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("duplicate full local label", "[label]")
+TEST_CASE("duplicate full local label", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -152,7 +152,7 @@ TEST_CASE("duplicate full local label", "[label]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("local without global", "[label]")
+TEST_CASE("local without global", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -166,7 +166,7 @@ TEST_CASE("local without global", "[label]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("label arithmetics", "[expr]")
+TEST_CASE("label arithmetics", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -186,6 +186,90 @@ TEST_CASE("label arithmetics", "[expr]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("orphan local label", "[labels]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "nonlocal: nop\n"
+        "@@1\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "missing ':' after local label name");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("ld a, (label)", "[labels]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "label:\n"
+        "ld a, (label)\n"
+        "ld a, (label+4)\n"
+        "ld a, (label-(1+1))\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x3a,
+        0x34,
+        0x12,
+        0x3a,
+        0x38,
+        0x12,
+        0x3a,
+        0x32,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("reference labels between multiple files", "[labels]")
+{
+    static const char source1[] =
+        "section sec1 [base 0x1230]\n"
+        "label1:\n"
+        "ld a, (label1)\n"
+        "ld a, (label2)\n"
+        ;
+
+    static const char source2[] =
+        "section sec2 [base 0x1236]\n"
+        "label2:\n"
+        "ld a, (label2)\n"
+        "ld a, (label1)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x3a,
+        0x30,
+        0x12,
+        0x3a,
+        0x36,
+        0x12,
+        0x3a,
+        0x36,
+        0x12,
+        0x3a,
+        0x30,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble2(errorConsumer, source1, source2);
     DataBlob expected(binary, sizeof(binary));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
