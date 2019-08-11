@@ -200,9 +200,56 @@ std::unique_ptr<Expression> AssemblerParser::parseShiftExpression(int tokenId, b
     return expr;
 }
 
+std::unique_ptr<Expression> AssemblerParser::parseRelationalExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseShiftExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_LESS || lastTokenId() == T_LESS_EQUAL
+            || lastTokenId() == T_GREATER || lastTokenId() == T_GREATER_EQUAL) {
+        Token token = lastToken();
+
+        auto op2 = parseShiftExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        switch (token.id) {
+            case T_LESS: expr.reset(new LessExpression(token, std::move(expr), std::move(op2))); break;
+            case T_LESS_EQUAL: expr.reset(new LessEqualExpression(token, std::move(expr), std::move(op2))); break;
+            case T_GREATER: expr.reset(new GreaterExpression(token, std::move(expr), std::move(op2))); break;
+            case T_GREATER_EQUAL: expr.reset(new GreaterEqualExpression(token, std::move(expr), std::move(op2))); break;
+        }
+    }
+
+    return expr;
+}
+
+std::unique_ptr<Expression> AssemblerParser::parseEqualityExpression(int tokenId, bool unambiguous)
+{
+    auto expr = parseRelationalExpression(tokenId, unambiguous);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_EQUAL || lastTokenId() == T_NOT_EQUAL) {
+        Token token = lastToken();
+
+        auto op2 = parseRelationalExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        switch (token.id) {
+            case T_EQUAL: expr.reset(new EqualExpression(token, std::move(expr), std::move(op2))); break;
+            case T_NOT_EQUAL: expr.reset(new NotEqualExpression(token, std::move(expr), std::move(op2))); break;
+        }
+    }
+
+    return expr;
+}
+
 std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool unambiguous)
 {
-    return parseShiftExpression(tokenId, unambiguous);
+    return parseEqualityExpression(tokenId, unambiguous);
 }
 
 bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool unambiguous)

@@ -376,3 +376,129 @@ Value ShiftRightExpression::evaluate(ExprEvalContext& context) const
 
     return smartEvaluate<false>([](qint64 a, qint64 b){ return a >> b; }, a, b);
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LessExpression::LessExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+LessExpression::~LessExpression()
+{
+}
+
+Value LessExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number < b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LessEqualExpression::LessEqualExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+LessEqualExpression::~LessEqualExpression()
+{
+}
+
+Value LessEqualExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number <= b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GreaterExpression::GreaterExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+GreaterExpression::~GreaterExpression()
+{
+}
+
+Value GreaterExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number > b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GreaterEqualExpression::GreaterEqualExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+GreaterEqualExpression::~GreaterEqualExpression()
+{
+}
+
+Value GreaterEqualExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number >= b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+EqualExpression::EqualExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+EqualExpression::~EqualExpression()
+{
+}
+
+Value EqualExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number == b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+NotEqualExpression::NotEqualExpression(const Token& token,
+        std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+NotEqualExpression::~NotEqualExpression()
+{
+}
+
+Value NotEqualExpression::evaluate(ExprEvalContext& context) const
+{
+    Value a = context.evaluate(mOperand1);
+    Value b = context.evaluate(mOperand2);
+    return Value(a.number != b.number ? 1 : 0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}

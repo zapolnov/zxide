@@ -221,4 +221,94 @@ private:
     Q_DISABLE_COPY(ShiftRightExpression)
 };
 
+class LessExpression : public Expression
+{
+public:
+    LessExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~LessExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LessExpression)
+};
+
+class LessEqualExpression : public Expression
+{
+public:
+    LessEqualExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~LessEqualExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LessEqualExpression)
+};
+
+class GreaterExpression : public Expression
+{
+public:
+    GreaterExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~GreaterExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(GreaterExpression)
+};
+
+class GreaterEqualExpression : public Expression
+{
+public:
+    GreaterEqualExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~GreaterEqualExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(GreaterEqualExpression)
+};
+
+class EqualExpression : public Expression
+{
+public:
+    EqualExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~EqualExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(EqualExpression)
+};
+
+class NotEqualExpression : public Expression
+{
+public:
+    NotEqualExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~NotEqualExpression() override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(NotEqualExpression)
+};
+
 #endif

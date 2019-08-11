@@ -563,3 +563,168 @@ TEST_CASE("large right shift counter", "[expr]")
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
+
+TEST_CASE("relational operators", "[expr]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "ld hl, 1==1\n"
+        "ld hl, 1==2\n"
+        "ld hl, 1!=1\n"
+        "ld hl, 1!=2\n"
+        "ld hl, 1<2\n"
+        "ld hl, 2<1\n"
+        "ld hl, -1<2\n"
+        "ld a, -2<1\n"
+        "ld a, 1<-2\n"
+        "ld a, 2<-1\n"
+        "ld a, 1<=2\n"
+        "ld a, 2<=1\n"
+        "ld a, 1<=1\n"
+        "ld a, -1<=2\n"
+        "ld a, -2<=1\n"
+        "ld a, -1<=-1\n"
+        "ld a, 1<1\n"
+        "ld a, 1>1\n"
+        "ld a, 1>2\n"
+        "ld a, 2>1\n"
+        "ld a, -1>-1\n"
+        "ld a, -1>-2\n"
+        "ld a, -2>-1\n"
+        "ld a, -1>1\n"
+        "ld a, -1>2\n"
+        "ld a, -2>1\n"
+        "ld a, 1>-1\n"
+        "ld a, 1>-2\n"
+        "ld a, 2>-1\n"
+        "ld a, 1>=1\n"
+        "ld a, 1>=2\n"
+        "ld a, 2>=1\n"
+        "ld a, -1>=-1\n"
+        "ld a, -1>=-2\n"
+        "ld a, -2>=-1\n"
+        "ld a, -1>=1\n"
+        "ld a, -1>=2\n"
+        "ld a, -2>=1\n"
+        "ld a, 1>=-1\n"
+        "ld a, 1>=-2\n"
+        "ld a, 2>=-1\n"
+        "ld a, 2>1<3\n"
+        "ld a, 2>1>=1\n"
+        "ld a, 2<1>=1==0\n"
+        "ld a, 2>1>=1==0\n"
+        "ld a, 2<1>=1!=0\n"
+        "ld a, 2>1>=1!=0\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x21,
+        0x00,
+        0x00,
+        0x21,
+        0x01,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x01,
+        0x3e,
+        0x00,
+        0x3e,
+        0x00,
+        0x3e,
+        0x01,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
