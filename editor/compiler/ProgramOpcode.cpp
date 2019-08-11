@@ -2,8 +2,7 @@
 #include "AssemblerToken.h"
 
 ProgramOpcode::ProgramOpcode(const Token& token)
-    : mFile(token.file)
-    , mLine(token.line)
+    : mToken(token)
     , mAddress(-1)
 {
 }
@@ -16,9 +15,4 @@ void ProgramOpcode::resolveAddress(const ProgramSection*, quint32& address)
 {
     mAddress = qint32(address);
     address += lengthInBytes();
-}
-
-bool ProgramOpcode::resolveValues(const ProgramSection*, IErrorReporter*)
-{
-    return true;
 }

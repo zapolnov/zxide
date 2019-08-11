@@ -3,6 +3,7 @@
 #include "IErrorReporter.h"
 #include "Z80Opcodes.h"
 #include "Expression.h"
+#include "ExprEvalContext.h"
 #include "Util.h"
 #include "Program.h"
 #include <sstream>
@@ -171,7 +172,8 @@ quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
     if (!expr)
         error(mExpressionError);
 
-    qint64 number = expr->evaluate(mReporter);
+    ExprEvalContext context(mProgram, mReporter);
+    qint64 number = context.evaluate(expr);
     if (number < qint64(min) || number > qint64(max)) {
         error(tr("numeric value 0x%1 is out of range (valid range is 0x%2..0x%3 inclusive)")
             .arg(number, 0, 16).arg(min, 0, 16).arg(max, 0, 16));
@@ -238,16 +240,10 @@ bool AssemblerParser::matchByte(unsigned char* out)
     std::unique_ptr<Expression> expr;
     if (!matchExpression(&expr))
         return false;
-    *out = expr->evaluateByte(mReporter);
-    return true;
-}
 
-bool AssemblerParser::matchWord(unsigned short* out)
-{
-    std::unique_ptr<Expression> expr;
-    if (!matchExpression(&expr))
-        return false;
-    *out = expr->evaluateWord(mReporter);
+    ExprEvalContext context(mProgram, mReporter);
+    *out = context.evaluateByte(expr);
+
     return true;
 }
 

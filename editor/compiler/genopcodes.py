@@ -67,10 +67,9 @@ class Opcode:
         literalIndex = 0
         i = 0
 
-        for op in self.operands:
-            if op == 'R#':
-                code += '    unsigned addr = bin->endAddress() + lengthInBytes();\n'
-                break
+        if self.numLiterals > 0:
+            for j in range(0, self.numLiterals):
+                code += '    ExprEvalContext context%d(program, reporter, this);\n' % (j + 1)
 
         for byte in self.bytes:
             if byte == '#':
@@ -79,19 +78,19 @@ class Opcode:
                     if self.operands[i] == 'R#':
                         i += 1
                         literalIndex += 1
-                        code += '    bin->emitByte(mLiteral%d->evaluateByteOffset(reporter, addr));\n' % literalIndex
+                        code += '    binary->emitByte(context%d.evaluateByteOffset(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
-                    if '##' in self.operands[i]:
+                    elif '##' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    bin->emitWord(mLiteral%d->evaluateWord(reporter));\n' % literalIndex
+                        code += '    binary->emitWord(context%d.evaluateWord(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
                     elif '#' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    bin->emitByte(mLiteral%d->evaluateByte(reporter));\n' % literalIndex
+                        code += '    binary->emitByte(context%d.evaluateByte(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
                     else:
@@ -99,7 +98,7 @@ class Opcode:
                 if not found:
                     raise Exception('Invalid operand')
             else:
-                code += '    bin->emitByte(0x%02X);\n' % byte
+                code += '    binary->emitByte(0x%02X);\n' % byte
         return code
 
 opcodes = [
@@ -813,6 +812,7 @@ src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
 src += '#include "ProgramSection.h"\n'
 src += '#include "ProgramBinary.h"\n'
+src += '#include "ExprEvalContext.h"\n'
 
 src2  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src2 += '#include "Z80Opcodes.h"\n'
@@ -843,11 +843,9 @@ for opcode in opcodes:
     hdr += '    unsigned tstatesIfNotTaken() const final override { return %d; }\n' % opcode.tstatesIfNotTaken
     hdr += '    unsigned tstatesIfTaken() const final override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
-    hdr += '    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const final override;\n'
+    hdr += '    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;\n'
     hdr += '\n'
     if opcode.numLiterals > 0:
-        hdr += '    bool resolveValues(const ProgramSection* section, IErrorReporter* reporter) final override;\n'
-        hdr += '\n'
         hdr += 'private:\n'
         for idx in range(0, opcode.numLiterals):
             hdr += '    std::unique_ptr<Expression> mLiteral%d;\n' % (idx + 1)
@@ -856,21 +854,10 @@ for opcode in opcodes:
     hdr += '};\n'
 
     src += '\n'
-    src += 'void %s::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const\n' % opcode.className
+    src += 'void %s::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const\n' % opcode.className
     src += '{\n'
     src += opcode.codeForEmit()
     src += '}\n'
-
-    if opcode.numLiterals > 0:
-        src += '\n'
-        src += 'bool %s::resolveValues(const ProgramSection* section, IErrorReporter* reporter)\n' % opcode.className
-        src += '{\n'
-        prefix = '    return '
-        for idx in range(0, opcode.numLiterals):
-            src += '%smLiteral%d->resolveValues(section->program(), address(), reporter)' % (prefix, idx + 1)
-            prefix = '\n        && '
-        src += ';\n'
-        src += '}\n'
 
 def getDict(dict, key):
     if key in dict:

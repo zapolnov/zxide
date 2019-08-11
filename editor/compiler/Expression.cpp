@@ -1,4 +1,5 @@
 #include "Expression.h"
+#include "ExprEvalContext.h"
 #include "IErrorReporter.h"
 #include "Program.h"
 #include "ProgramLabel.h"
@@ -13,53 +14,9 @@ Expression::~Expression()
 {
 }
 
-bool Expression::resolveValues(const Program*, unsigned, IErrorReporter*)
+void Expression::error(ExprEvalContext& context, const QString& message) const
 {
-    return true;
-}
-
-unsigned char Expression::evaluateByte(IErrorReporter* reporter) const
-{
-    qint64 value = evaluate(reporter);
-
-    if (value < -128 || value > 255)
-        error(reporter, QCoreApplication::tr("value %1 does not fit into a byte").arg(value));
-
-    if (value >= 0)
-        return (unsigned char)value;
-    else
-        return (unsigned char)(char)value;
-}
-
-unsigned char Expression::evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const
-{
-    qint64 value = evaluate(reporter) - baseAddress;
-
-    if (value < -128 || value > 255)
-        error(reporter, QCoreApplication::tr("value %1 does not fit into a byte").arg(value));
-
-    if (value >= 0)
-        return (unsigned char)value;
-    else
-        return (unsigned char)(char)value;
-}
-
-unsigned short Expression::evaluateWord(IErrorReporter* reporter) const
-{
-    qint64 value = evaluate(reporter);
-
-    if (value < -32768 || value > 65535)
-        error(reporter, QCoreApplication::tr("value %1 does not fit into a word").arg(value));
-
-    if (value >= 0)
-        return (unsigned short)value;
-    else
-        return (unsigned short)(short)value;
-}
-
-void Expression::error(IErrorReporter* reporter, const QString& message) const
-{
-    reporter->error(mToken.file, mToken.line, message);
+    context.errorReporter()->error(mToken.file, mToken.line, message);
     throw EvalError();
 }
 
@@ -75,7 +32,7 @@ ConstantExpression::~ConstantExpression()
 {
 }
 
-qint64 ConstantExpression::evaluate(IErrorReporter* reporter) const
+qint64 ConstantExpression::evaluate(ExprEvalContext&) const
 {
     return mValue;
 }
@@ -84,8 +41,6 @@ qint64 ConstantExpression::evaluate(IErrorReporter* reporter) const
 
 DollarExpression::DollarExpression(const Token& token)
     : Expression(token)
-    , mAddress(0)
-    , mHasValue(false)
 {
 }
 
@@ -93,20 +48,9 @@ DollarExpression::~DollarExpression()
 {
 }
 
-bool DollarExpression::resolveValues(const Program*, unsigned endAddress, IErrorReporter*)
+qint64 DollarExpression::evaluate(ExprEvalContext& context) const
 {
-    Q_ASSERT(!mHasValue);
-    mHasValue = true;
-    mAddress = endAddress;
-    return true;
-}
-
-qint64 DollarExpression::evaluate(IErrorReporter* reporter) const
-{
-    if (!mHasValue)
-        error(reporter, QCoreApplication::tr("'$' is not allowed in this context"));
-
-    return mAddress;
+    return context.baseAddress(token());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,16 +58,12 @@ qint64 DollarExpression::evaluate(IErrorReporter* reporter) const
 IdentifierExpression::IdentifierExpression(const Token& token)
     : Expression(token)
     , mName(token.text)
-    , mValue(0)
-    , mHasValue(false)
 {
 }
 
 IdentifierExpression::IdentifierExpression(const Token& token, std::string name)
     : Expression(token)
     , mName(std::move(name))
-    , mValue(0)
-    , mHasValue(false)
 {
 }
 
@@ -131,35 +71,21 @@ IdentifierExpression::~IdentifierExpression()
 {
 }
 
-bool IdentifierExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
+qint64 IdentifierExpression::evaluate(ExprEvalContext& context) const
 {
-    Q_ASSERT(!mHasValue);
-
-    auto label = program->findLabel(mName);
+    auto label = context.program()->findLabel(mName);
     if (label != nullptr) {
-        Q_ASSERT(label->hasAddress());
-        mValue = label->address();
-        mHasValue = true;
-        return true;
+        if (!label->hasAddress())
+            error(context, QCoreApplication::tr("value for '%1' is not available in this context").arg(mName.c_str()));
+        return label->address();
     }
 
-    auto constant = program->findConstant(mName);
-    if (constant != nullptr) {
-        mValue = constant->evaluate(reporter);
-        mHasValue = true;
-        return true;
-    }
+    const auto& constant = context.program()->findConstant(mName);
+    if (constant != nullptr)
+        return context.evaluate(constant);
 
-    error(reporter, QCoreApplication::tr("use of undeclared identifier '%1'").arg(mName.c_str()));
-    return false;
-}
-
-qint64 IdentifierExpression::evaluate(IErrorReporter* reporter) const
-{
-    if (!mHasValue)
-        error(reporter, QCoreApplication::tr("value for '%1' is not yet calculated").arg(mName.c_str()));
-
-    return mValue;
+    error(context, QCoreApplication::tr("use of undeclared identifier '%1'").arg(mName.c_str()));
+    return 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,14 +100,9 @@ NegateExpression::~NegateExpression()
 {
 }
 
-bool NegateExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
+qint64 NegateExpression::evaluate(ExprEvalContext& context) const
 {
-    return mOperand->resolveValues(program, endAddress, reporter);
-}
-
-qint64 NegateExpression::evaluate(IErrorReporter* reporter) const
-{
-    return -mOperand->evaluate(reporter);
+    return -context.evaluate(mOperand);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,15 +118,9 @@ AddExpression::~AddExpression()
 {
 }
 
-bool AddExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
+qint64 AddExpression::evaluate(ExprEvalContext& context) const
 {
-    return mOperand1->resolveValues(program, endAddress, reporter)
-        && mOperand2->resolveValues(program, endAddress, reporter);
-}
-
-qint64 AddExpression::evaluate(IErrorReporter* reporter) const
-{
-    return mOperand1->evaluate(reporter) + mOperand2->evaluate(reporter);
+    return context.evaluate(mOperand1) + context.evaluate(mOperand2);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,13 +136,7 @@ SubtractExpression::~SubtractExpression()
 {
 }
 
-bool SubtractExpression::resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter)
+qint64 SubtractExpression::evaluate(ExprEvalContext& context) const
 {
-    return mOperand1->resolveValues(program, endAddress, reporter)
-        && mOperand2->resolveValues(program, endAddress, reporter);
-}
-
-qint64 SubtractExpression::evaluate(IErrorReporter* reporter) const
-{
-    return mOperand1->evaluate(reporter) - mOperand2->evaluate(reporter);
+    return context.evaluate(mOperand1) - context.evaluate(mOperand2);
 }

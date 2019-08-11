@@ -41,17 +41,12 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 throw LinkerError();
         }
 
-        // Resolve values in expressions (as a separate pass as they may depend on label addresses)
-        if (!mProgram->resolveConstantValues(mReporter))
-            throw LinkerError();
-        for (ProgramSection* section : sections) {
-            if (!section->resolveValues(mReporter))
-                throw LinkerError();
-        }
-
         // Emit code
         for (ProgramSection* section : sections)
-            section->emitCode(mReporter, binary.get());
+            section->emitCode(mProgram, binary.get(), mReporter);
+
+        // Ensure that all EQUs are validated
+        mProgram->validateConstants(mReporter);
 
         return binary;
     } catch (const EvalError&) {

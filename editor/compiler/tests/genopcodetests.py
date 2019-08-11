@@ -777,9 +777,9 @@ operands16 = [ 0x1234, 0x4231, 0x0000, 0xFFFF ]
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "3rdparty/catch.hpp"\n'
-src += '#include "DataBlob.h"\n'
-src += '#include "ErrorConsumer.h"\n'
-src += '#include "TestUtil.h"\n'
+src += '#include "helpers/DataBlob.h"\n'
+src += '#include "helpers/ErrorConsumer.h"\n'
+src += '#include "helpers/TestUtil.h"\n'
 
 def formatOpcode(opcode, i):
     global asm1, str2

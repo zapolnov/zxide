@@ -24,6 +24,8 @@ qt_add_sources(Compiler
         Expression.cpp
         Expression.h
         ExpressionParser.cpp
+        ExprEvalContext.cpp
+        ExprEvalContext.h
         IErrorReporter.h
         Linker.cpp
         Linker.h

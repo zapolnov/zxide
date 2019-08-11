@@ -46,8 +46,7 @@ public:
     }
 
     bool resolveAddresses(IErrorReporter* reporter, quint32& address) const;
-    bool resolveValues(IErrorReporter* reporter) const;
-    void emitCode(IErrorReporter* reporter, ProgramBinary* binary) const;
+    void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const;
 
 private:
     Program* mProgram;

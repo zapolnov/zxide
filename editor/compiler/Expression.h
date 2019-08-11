@@ -6,7 +6,7 @@
 #include <memory>
 
 class Program;
-class IErrorReporter;
+class ExprEvalContext;
 
 class EvalError
 {
@@ -20,20 +20,16 @@ public:
 
     const Token& token() const { return mToken; }
 
-    virtual bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter);
-
-    unsigned char evaluateByte(IErrorReporter* reporter) const;
-    unsigned char evaluateByteOffset(IErrorReporter* reporter, unsigned baseAddress) const;
-    unsigned short evaluateWord(IErrorReporter* reporter) const;
-    virtual qint64 evaluate(IErrorReporter* reporter) const = 0;
-
 protected:
-    void error(IErrorReporter* reporter, const QString& message) const;
+    void error(ExprEvalContext& context, const QString& message) const;
 
 private:
     Token mToken;
 
+    virtual qint64 evaluate(ExprEvalContext& context) const = 0;
+
     Q_DISABLE_COPY(Expression)
+    friend class ExprEvalContext;
 };
 
 class ConstantExpression : public Expression
@@ -42,10 +38,10 @@ public:
     ConstantExpression(const Token& token, qint64 value);
     ~ConstantExpression() override;
 
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
     qint64 mValue;
+
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(ConstantExpression)
 };
@@ -56,12 +52,8 @@ public:
     explicit DollarExpression(const Token& token);
     ~DollarExpression() override;
 
-    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
-    unsigned short mAddress;
-    bool mHasValue;
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(DollarExpression)
 };
@@ -73,13 +65,10 @@ public:
     IdentifierExpression(const Token& token, std::string name);
     ~IdentifierExpression() override;
 
-    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
     std::string mName;
-    qint64 mValue;
-    bool mHasValue;
+
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(IdentifierExpression)
 };
@@ -90,11 +79,10 @@ public:
     NegateExpression(const Token& token, std::unique_ptr<Expression> operand);
     ~NegateExpression() override;
 
-    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
     std::unique_ptr<Expression> mOperand;
+
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(NegateExpression)
 };
@@ -105,12 +93,11 @@ public:
     AddExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~AddExpression() override;
 
-    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
     std::unique_ptr<Expression> mOperand1;
     std::unique_ptr<Expression> mOperand2;
+
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(AddExpression)
 };
@@ -121,12 +108,11 @@ public:
     SubtractExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
     ~SubtractExpression() override;
 
-    bool resolveValues(const Program* program, unsigned endAddress, IErrorReporter* reporter) override;
-    qint64 evaluate(IErrorReporter* reporter) const override;
-
 private:
     std::unique_ptr<Expression> mOperand1;
     std::unique_ptr<Expression> mOperand2;
+
+    qint64 evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(SubtractExpression)
 };

@@ -65,7 +65,6 @@ private:
     bool matchExpression(std::unique_ptr<Expression>* out);
     bool matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out);
     bool matchByte(unsigned char* out);
-    bool matchWord(unsigned short* out);
 
     int nextToken() const;
     const Token& lastToken() const;

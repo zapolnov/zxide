@@ -8,6 +8,7 @@
 #include <memory>
 
 struct Token;
+class IErrorReporter;
 class Expression;
 
 class Program
@@ -17,8 +18,8 @@ public:
     ~Program();
 
     bool addConstant(std::string name, std::unique_ptr<Expression> expr);
-    Expression* findConstant(const std::string& name) const;
-    bool resolveConstantValues(IErrorReporter* reporter) const;
+    const std::unique_ptr<Expression>& findConstant(const std::string& name) const;
+    void validateConstants(IErrorReporter* reporter) const;
 
     ProgramLabel* addLabel(const Token& token, ProgramSection* section, const std::string& name);
     ProgramLabel* findLabel(const std::string& name) const;

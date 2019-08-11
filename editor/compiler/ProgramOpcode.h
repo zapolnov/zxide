@@ -1,18 +1,18 @@
 #ifndef COMPILER_PROGRAMOPCODE_H
 #define COMPILER_PROGRAMOPCODE_H
 
-#include <QtGlobal>
+#include "AssemblerToken.h"
 #include <vector>
 
 #ifdef emit
 #undef emit
 #endif
 
-struct Token;
 class File;
 class IErrorReporter;
 class ProgramBinary;
 class ProgramSection;
+class Program;
 
 class ProgramOpcode
 {
@@ -20,8 +20,7 @@ public:
     explicit ProgramOpcode(const Token& token);
     virtual ~ProgramOpcode();
 
-    File* file() const { return mFile; }
-    int line() const { return mLine; }
+    const Token& token() const { return mToken; }
     unsigned address() const { Q_ASSERT(mAddress >= 0); return unsigned(mAddress); }
 
     virtual unsigned lengthInBytes() const = 0;
@@ -29,12 +28,10 @@ public:
     virtual unsigned tstatesIfTaken() const = 0;
 
     virtual void resolveAddress(const ProgramSection* section, quint32& address);
-    virtual bool resolveValues(const ProgramSection* section, IErrorReporter* reporter);
-    virtual void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const = 0;
+    virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
 private:
-    File* mFile;
-    int mLine;
+    Token mToken;
     qint32 mAddress;
 
     Q_DISABLE_COPY(ProgramOpcode)

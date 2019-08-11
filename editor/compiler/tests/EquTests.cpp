@@ -266,6 +266,65 @@ TEST_CASE("reference equ between multiple files", "[equ]")
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("labels in equ", "[equ]")
+{
+    static const char source1[] =
+        "section sec1 [base 0x1230]\n"
+        "equ1 equ label1\n"
+        "equ2 equ label2+1\n"
+        "label1:"
+        "ld a, (equ1)\n"
+        "ld a, (equ2)\n"
+        "ld a, (equ3)\n"
+        "ld a, (equ4)\n"
+        ;
+
+    static const char source2[] =
+        "section sec2 [base 0x123c]\n"
+        "equ3 equ label1\n"
+        "equ4 equ label2\n"
+        "label2:"
+        "ld a, (equ1)\n"
+        "ld a, (equ2)\n"
+        "ld a, (equ3)\n"
+        "ld a, (equ4)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x3a,
+        0x30,
+        0x12,
+        0x3a,
+        0x3d,
+        0x12,
+        0x3a,
+        0x30,
+        0x12,
+        0x3a,
+        0x3c,
+        0x12,
+        0x3a,
+        0x30,
+        0x12,
+        0x3a,
+        0x3d,
+        0x12,
+        0x3a,
+        0x30,
+        0x12,
+        0x3a,
+        0x3c,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble2(errorConsumer, source1, source2);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
 TEST_CASE("circular reference", "[equ]")
 {
     static const char source[] =
@@ -276,7 +335,71 @@ TEST_CASE("circular reference", "[equ]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "circular reference");
+    REQUIRE(errorConsumer.lastErrorMessage() == "hit circular dependency while evaluating expression");
+    REQUIRE(errorConsumer.lastErrorLine() > 1);
+    REQUIRE(errorConsumer.lastErrorLine() <= 3);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("deeper circular reference", "[equ]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ y\n"
+        "y equ z+4\n"
+        "z equ 12-w+5\n"
+        "w equ 3+x\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "hit circular dependency while evaluating expression");
+    REQUIRE(errorConsumer.lastErrorLine() > 1);
+    REQUIRE(errorConsumer.lastErrorLine() <= 5);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("'$' in equ", "[equ]")
+{
+    static const char source[] =
+        "section sec1 [base 0x1234]\n"
+        "equ1 equ $\n"
+        "equ2 equ $-2\n"
+        "ld a, (equ1)\n"
+        "ld a, (equ2)\n"
+        "ld a, (equ1)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x3a,
+        0x34,
+        0x12,
+        0x3a,
+        0x35,
+        0x12,
+        0x3a,
+        0x3a,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("ensure unused equs are validated", "[equ]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ y+4\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "use of undeclared identifier 'y'");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }

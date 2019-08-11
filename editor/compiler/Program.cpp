@@ -1,6 +1,10 @@
 #include "Program.h"
 #include "ProgramLabel.h"
 #include "Expression.h"
+#include "ExprEvalContext.h"
+#include "Z80Opcodes.h"
+
+static const std::unique_ptr<Expression> nullExpression;
 
 Program::Program()
 {
@@ -23,19 +27,23 @@ bool Program::addConstant(std::string name, std::unique_ptr<Expression> expr)
     return true;
 }
 
-Expression* Program::findConstant(const std::string& name) const
+const std::unique_ptr<Expression>& Program::findConstant(const std::string& name) const
 {
     auto it = mConstants.find(name);
-    return (it != mConstants.end() ? it->second.get() : nullptr);
+    return (it != mConstants.end() ? it->second : nullExpression);
 }
 
-bool Program::resolveConstantValues(IErrorReporter* reporter) const
+void Program::validateConstants(IErrorReporter* reporter) const
 {
     for (const auto& it : mConstants) {
-        if (!it.second->resolveValues(this, 0, reporter)) // FIXME
-            return false;
+        // Provide a dummy NOP instruction to the evaluation context to allow evaluation of '$' operands
+        NOP nop(it.second->token());
+        quint32 address = 0x8000;
+        nop.resolveAddress(nullptr, address);
+
+        ExprEvalContext context(this, reporter, &nop);
+        context.evaluate(it.second);
     }
-    return true;
 }
 
 ProgramLabel* Program::addLabel(const Token& token, ProgramSection* section, const std::string& name)

@@ -6,6 +6,7 @@
 
 class ProgramBinary;
 class ProgramSection;
+class Program;
 
 class ProgramLabel : public ProgramOpcode
 {
@@ -24,7 +25,7 @@ public:
     unsigned tstatesIfTaken() const override;
 
     void resolveAddress(const ProgramSection* section, quint32& address) override;
-    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
     ProgramSection* mSection;
