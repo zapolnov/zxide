@@ -2,6 +2,7 @@
 #include "Program.h"
 #include "ProgramSection.h"
 #include "ProgramBinary.h"
+#include "Expression.h"
 #include "IErrorReporter.h"
 
 namespace
@@ -43,6 +44,8 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
             section->emitCode(mReporter, binary.get());
 
         return binary;
+    } catch (const EvalError&) {
+        return {};
     } catch (const LinkerError&) {
         return {};
     }

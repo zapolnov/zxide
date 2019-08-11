@@ -60,9 +60,31 @@ std::unique_ptr<Expression> AssemblerParser::parseUnaryExpression(int tokenId, b
     return parseAtomicExpression(tokenId, allowParen);
 }
 
+std::unique_ptr<Expression> AssemblerParser::parseAdditionExpression(int tokenId, bool allowParen)
+{
+    auto expr = parseUnaryExpression(tokenId, allowParen);
+    if (!expr)
+        return nullptr;
+
+    while (lastTokenId() == T_PLUS || lastTokenId() == T_MINUS) {
+        Token token = lastToken();
+
+        auto op2 = parseUnaryExpression(nextToken(), true);
+        if (!op2)
+            return nullptr;
+
+        switch (token.id) {
+            case T_PLUS: expr.reset(new AddExpression(token, std::move(expr), std::move(op2))); break;
+            case T_MINUS: expr.reset(new SubtractExpression(token, std::move(expr), std::move(op2))); break;
+        }
+    }
+
+    return expr;
+}
+
 std::unique_ptr<Expression> AssemblerParser::parseExpression(int tokenId, bool allowParen)
 {
-    return parseUnaryExpression(tokenId, allowParen);
+    return parseAdditionExpression(tokenId, allowParen);
 }
 
 bool AssemblerParser::tryParseExpression(int tokenId, std::unique_ptr<Expression>* out, bool allowParen)

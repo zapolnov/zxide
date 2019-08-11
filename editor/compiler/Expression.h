@@ -70,12 +70,45 @@ public:
     NegateExpression(const Token& token, std::unique_ptr<Expression> operand);
     ~NegateExpression() override;
 
+    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
     qint64 evaluate(IErrorReporter* reporter) const override;
 
 private:
     std::unique_ptr<Expression> mOperand;
 
     Q_DISABLE_COPY(NegateExpression)
+};
+
+class AddExpression : public Expression
+{
+public:
+    AddExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~AddExpression() override;
+
+    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    qint64 evaluate(IErrorReporter* reporter) const override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Q_DISABLE_COPY(AddExpression)
+};
+
+class SubtractExpression : public Expression
+{
+public:
+    SubtractExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2);
+    ~SubtractExpression() override;
+
+    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    qint64 evaluate(IErrorReporter* reporter) const override;
+
+private:
+    std::unique_ptr<Expression> mOperand1;
+    std::unique_ptr<Expression> mOperand2;
+
+    Q_DISABLE_COPY(SubtractExpression)
 };
 
 #endif

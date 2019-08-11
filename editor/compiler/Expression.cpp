@@ -104,7 +104,60 @@ NegateExpression::~NegateExpression()
 {
 }
 
+void NegateExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+{
+    mOperand->resolveAddresses(section, endAddress);
+}
+
 qint64 NegateExpression::evaluate(IErrorReporter* reporter) const
 {
     return -mOperand->evaluate(reporter);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+AddExpression::AddExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+AddExpression::~AddExpression()
+{
+}
+
+void AddExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+{
+    mOperand1->resolveAddresses(section, endAddress);
+    mOperand2->resolveAddresses(section, endAddress);
+}
+
+qint64 AddExpression::evaluate(IErrorReporter* reporter) const
+{
+    return mOperand1->evaluate(reporter) + mOperand2->evaluate(reporter);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SubtractExpression::SubtractExpression(const Token& token, std::unique_ptr<Expression> op1, std::unique_ptr<Expression> op2)
+    : Expression(token)
+    , mOperand1(std::move(op1))
+    , mOperand2(std::move(op2))
+{
+}
+
+SubtractExpression::~SubtractExpression()
+{
+}
+
+void SubtractExpression::resolveAddresses(const ProgramSection* section, unsigned endAddress)
+{
+    mOperand1->resolveAddresses(section, endAddress);
+    mOperand2->resolveAddresses(section, endAddress);
+}
+
+qint64 SubtractExpression::evaluate(IErrorReporter* reporter) const
+{
+    return mOperand1->evaluate(reporter) - mOperand2->evaluate(reporter);
 }
