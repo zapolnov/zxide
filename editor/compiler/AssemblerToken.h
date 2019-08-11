@@ -25,6 +25,7 @@ enum TokenID
     T_RBRACKET,
     T_LCURLY,
     T_RCURLY,
+    T_DOLLAR,
     T_AMPERSAND,
     T_LOGIC_AND,
     T_VERTICALBAR,

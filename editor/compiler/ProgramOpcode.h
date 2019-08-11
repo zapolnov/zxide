@@ -12,6 +12,7 @@ struct Token;
 class File;
 class IErrorReporter;
 class ProgramBinary;
+class ProgramSection;
 
 class ProgramOpcode
 {
@@ -26,7 +27,7 @@ public:
     virtual unsigned tstatesIfNotTaken() const = 0;
     virtual unsigned tstatesIfTaken() const = 0;
 
-    virtual void resolveAddress(quint32& address);
+    virtual void resolveAddress(const ProgramSection* section, quint32& address);
     virtual void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const = 0;
 
 private:

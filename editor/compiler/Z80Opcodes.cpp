@@ -43,6 +43,12 @@ void ADC_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void ADC_A_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void ADC_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x8E);
@@ -55,11 +61,23 @@ void ADC_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void ADC_A_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void ADC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x8E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void ADC_A_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void ADC_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -127,6 +145,12 @@ void ADD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void ADD_A_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void ADD_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x86);
@@ -139,11 +163,23 @@ void ADD_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void ADD_A_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void ADD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x86);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void ADD_A_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void ADD_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -255,6 +291,12 @@ void AND_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void AND_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void AND_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xA6);
@@ -267,11 +309,23 @@ void AND_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void AND_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void AND_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xA6);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void AND_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_0_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -330,12 +384,24 @@ void BIT_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x46);
 }
 
+void BIT_0_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x4E);
+}
+
+void BIT_1_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -346,12 +412,24 @@ void BIT_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x56);
 }
 
+void BIT_2_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x5E);
+}
+
+void BIT_3_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -362,12 +440,24 @@ void BIT_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x66);
 }
 
+void BIT_4_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x6E);
+}
+
+void BIT_5_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -378,12 +468,24 @@ void BIT_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x76);
 }
 
+void BIT_6_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x7E);
+}
+
+void BIT_7_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -394,12 +496,24 @@ void BIT_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x46);
 }
 
+void BIT_0_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x4E);
+}
+
+void BIT_1_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -410,12 +524,24 @@ void BIT_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x56);
 }
 
+void BIT_2_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x5E);
+}
+
+void BIT_3_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -426,12 +552,24 @@ void BIT_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x66);
 }
 
+void BIT_4_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x6E);
+}
+
+void BIT_5_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -442,12 +580,24 @@ void BIT_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x76);
 }
 
+void BIT_6_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void BIT_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x7E);
+}
+
+void BIT_7_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void BIT_0_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -792,10 +942,22 @@ void CALL_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void CALL_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CALL_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDC);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void CALL_C_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void CALL_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -804,10 +966,22 @@ void CALL_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void CALL_M_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CALL_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xD4);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void CALL_NC_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void CALL_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -816,10 +990,22 @@ void CALL_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void CALL_NZ_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CALL_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xF4);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void CALL_P_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void CALL_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -828,16 +1014,34 @@ void CALL_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void CALL_PE_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CALL_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xE4);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void CALL_PO_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CALL_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xCC);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void CALL_Z_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void CCF::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -886,6 +1090,12 @@ void CP_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void CP_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CP_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xBE);
@@ -898,11 +1108,23 @@ void CP_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void CP_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void CP_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xBE);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void CP_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void CPD::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -986,11 +1208,23 @@ void DEC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void DEC_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void DEC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x35);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void DEC_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void DEC_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1034,6 +1268,12 @@ void DJNZ_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x10);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void DJNZ_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void EI::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1100,6 +1340,12 @@ void IN_A_mn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void IN_A_mn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void IN_A_mC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1191,11 +1437,23 @@ void INC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void INC_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void INC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x34);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void INC_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void INC_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1260,10 +1518,22 @@ void JP_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void JP_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JP_C_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDA);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void JP_C_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void JP_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1272,10 +1542,22 @@ void JP_M_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void JP_M_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JP_NC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xD2);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void JP_NC_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void JP_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1284,10 +1566,22 @@ void JP_NZ_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void JP_NZ_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JP_P_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xF2);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void JP_P_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void JP_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1296,16 +1590,34 @@ void JP_PE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void JP_PE_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JP_PO_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xE2);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void JP_PO_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JP_Z_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xCA);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void JP_Z_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void JP_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1331,10 +1643,22 @@ void JR_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void JR_off::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JR_C_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x38);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void JR_C_off::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void JR_NC_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1343,16 +1667,34 @@ void JR_NC_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void JR_NC_off::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JR_NZ_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x20);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void JR_NZ_off::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void JR_Z_off::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x28);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void JR_Z_off::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_A_mBC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1377,6 +1719,12 @@ void LD_A_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_A_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_A_R::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
@@ -1399,12 +1747,25 @@ void LD_mHL_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mHL_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIXn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x36);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(mLiteral2->evaluateByte(reporter));
+}
+
+void LD_mIXn_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+    mLiteral2->resolveAddresses(section, address);
 }
 
 void LD_mIYn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1415,10 +1776,23 @@ void LD_mIYn_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral2->evaluateByte(reporter));
 }
 
+void LD_mIYn_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+    mLiteral2->resolveAddresses(section, address);
+}
+
 void LD_mnn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x32);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_mnn_A::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mnn_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1428,6 +1802,12 @@ void LD_mnn_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_mnn_BC::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mnn_DE::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
@@ -1435,10 +1815,22 @@ void LD_mnn_DE::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_mnn_DE::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mnn_HL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x22);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_mnn_HL::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mnn_SP::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1448,11 +1840,23 @@ void LD_mnn_SP::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_mnn_SP::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mnn_IX::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x22);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_mnn_IX::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mnn_IY::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1462,10 +1866,22 @@ void LD_mnn_IY::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_mnn_IY::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_BC_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x01);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_BC_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_DE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1474,16 +1890,34 @@ void LD_DE_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_DE_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_HL_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x21);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_HL_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_SP_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x31);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_SP_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_BC_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1493,11 +1927,23 @@ void LD_BC_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_BC_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_DE_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
     bin->emitByte(0x5B);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_DE_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_HL_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1506,11 +1952,23 @@ void LD_HL_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_HL_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_SP_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xED);
     bin->emitByte(0x7B);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_SP_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mHL_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1555,11 +2013,23 @@ void LD_mIXn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIXn_A::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIXn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x70);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIXn_B::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIXn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1569,11 +2039,23 @@ void LD_mIXn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIXn_C::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIXn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x72);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIXn_D::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIXn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1583,11 +2065,23 @@ void LD_mIXn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIXn_E::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIXn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x74);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIXn_H::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIXn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1597,11 +2091,23 @@ void LD_mIXn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIXn_L::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIYn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x77);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIYn_A::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIYn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1611,11 +2117,23 @@ void LD_mIYn_B::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIYn_B::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIYn_C::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x71);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIYn_C::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIYn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1625,11 +2143,23 @@ void LD_mIYn_D::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIYn_D::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIYn_E::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x73);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIYn_E::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_mIYn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1639,11 +2169,23 @@ void LD_mIYn_H::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_mIYn_H::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_mIYn_L::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x75);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_mIYn_L::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_I_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1659,11 +2201,23 @@ void LD_IX_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_IX_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_IX_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x2A);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_IX_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_IY_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1673,11 +2227,23 @@ void LD_IY_nn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitWord(mLiteral1->evaluateWord(reporter));
 }
 
+void LD_IY_nn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_IY_mnn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x2A);
     bin->emitWord(mLiteral1->evaluateWord(reporter));
+}
+
+void LD_IY_mnn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_R_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1728,11 +2294,23 @@ void LD_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_A_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_B_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x46);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_B_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_C_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1742,11 +2320,23 @@ void LD_C_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_C_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_D_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x56);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_D_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_E_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1756,11 +2346,23 @@ void LD_E_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_E_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_H_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0x66);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_H_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_L_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1770,11 +2372,23 @@ void LD_L_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_L_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x7E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_A_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_B_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1784,11 +2398,23 @@ void LD_B_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_B_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_C_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x4E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_C_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_D_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1798,11 +2424,23 @@ void LD_D_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_D_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_E_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x5E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_E_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_H_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1812,11 +2450,23 @@ void LD_H_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_H_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_L_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x6E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_L_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1825,10 +2475,22 @@ void LD_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_A_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_B_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x06);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_B_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_C_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1837,10 +2499,22 @@ void LD_C_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_C_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_D_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x16);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_D_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_E_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -1849,16 +2523,34 @@ void LD_E_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_E_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_H_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x26);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void LD_H_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void LD_L_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x2E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void LD_L_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void LD_A_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2199,6 +2891,12 @@ void OR_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void OR_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void OR_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xB6);
@@ -2211,11 +2909,23 @@ void OR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void OR_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void OR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xB6);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void OR_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void OTDR::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2234,6 +2944,12 @@ void OUT_mn_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xD3);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void OUT_mn_A::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void OUT_mC_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2746,12 +3462,24 @@ void RES_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x86);
 }
 
+void RES_0_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x8E);
+}
+
+void RES_1_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2762,12 +3490,24 @@ void RES_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x96);
 }
 
+void RES_2_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x9E);
+}
+
+void RES_3_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2778,12 +3518,24 @@ void RES_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xA6);
 }
 
+void RES_4_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xAE);
+}
+
+void RES_5_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2794,12 +3546,24 @@ void RES_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xB6);
 }
 
+void RES_6_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xBE);
+}
+
+void RES_7_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2810,12 +3574,24 @@ void RES_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x86);
 }
 
+void RES_0_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x8E);
+}
+
+void RES_1_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2826,12 +3602,24 @@ void RES_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x96);
 }
 
+void RES_2_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x9E);
+}
+
+void RES_3_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2842,12 +3630,24 @@ void RES_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xA6);
 }
 
+void RES_4_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xAE);
+}
+
+void RES_5_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RES_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2858,12 +3658,24 @@ void RES_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xB6);
 }
 
+void RES_6_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RES_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xBE);
+}
+
+void RES_7_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RET::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -2979,12 +3791,24 @@ void RL_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x16);
 }
 
+void RL_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x16);
+}
+
+void RL_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RLA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3048,12 +3872,24 @@ void RLC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x06);
 }
 
+void RLC_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RLC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x06);
+}
+
+void RLC_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RLCA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3123,12 +3959,24 @@ void RR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x1E);
 }
 
+void RR_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x1E);
+}
+
+void RR_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RRA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3192,12 +4040,24 @@ void RRC_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x0E);
 }
 
+void RRC_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void RRC_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x0E);
+}
+
+void RRC_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void RRCA::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3292,6 +4152,12 @@ void SBC_A_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void SBC_A_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SBC_A_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x9E);
@@ -3304,11 +4170,23 @@ void SBC_A_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void SBC_A_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SBC_A_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x9E);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void SBC_A_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SBC_HL_BC::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3732,12 +4610,24 @@ void SET_0_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xC6);
 }
 
+void SET_0_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_1_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xCE);
+}
+
+void SET_1_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3748,12 +4638,24 @@ void SET_2_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xD6);
 }
 
+void SET_2_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_3_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xDE);
+}
+
+void SET_3_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3764,12 +4666,24 @@ void SET_4_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xE6);
 }
 
+void SET_4_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_5_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xEE);
+}
+
+void SET_5_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3780,12 +4694,24 @@ void SET_6_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xF6);
 }
 
+void SET_6_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_7_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xDD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xFE);
+}
+
+void SET_7_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3796,12 +4722,24 @@ void SET_0_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xC6);
 }
 
+void SET_0_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_1_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xCE);
+}
+
+void SET_1_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3812,12 +4750,24 @@ void SET_2_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xD6);
 }
 
+void SET_2_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_3_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xDE);
+}
+
+void SET_3_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3828,12 +4778,24 @@ void SET_4_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xE6);
 }
 
+void SET_4_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_5_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xEE);
+}
+
+void SET_5_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SET_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3844,12 +4806,24 @@ void SET_6_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0xF6);
 }
 
+void SET_6_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SET_7_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0xFE);
+}
+
+void SET_7_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SLA_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3908,12 +4882,24 @@ void SLA_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x26);
 }
 
+void SLA_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SLA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x26);
+}
+
+void SLA_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SRA_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -3972,12 +4958,24 @@ void SRA_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x2E);
 }
 
+void SRA_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SRA_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x2E);
+}
+
+void SRA_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SRL_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4036,12 +5034,24 @@ void SRL_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(0x3E);
 }
 
+void SRL_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SRL_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xCB);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
     bin->emitByte(0x3E);
+}
+
+void SRL_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void SUB_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4085,6 +5095,12 @@ void SUB_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void SUB_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SUB_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0x96);
@@ -4097,11 +5113,23 @@ void SUB_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void SUB_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void SUB_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0x96);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void SUB_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }
 
 void XOR_A::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
@@ -4145,6 +5173,12 @@ void XOR_n::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void XOR_n::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void XOR_mHL::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xAE);
@@ -4157,9 +5191,21 @@ void XOR_mIXn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
     bin->emitByte(mLiteral1->evaluateByte(reporter));
 }
 
+void XOR_mIXn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
+}
+
 void XOR_mIYn::emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const
 {
     bin->emitByte(0xFD);
     bin->emitByte(0xAE);
     bin->emitByte(mLiteral1->evaluateByte(reporter));
+}
+
+void XOR_mIYn::resolveAddress(const ProgramSection* section, quint32& address)
+{
+    ProgramOpcode::resolveAddress(section, address);
+    mLiteral1->resolveAddresses(section, address);
 }

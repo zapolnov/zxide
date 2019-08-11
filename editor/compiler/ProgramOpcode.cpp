@@ -11,7 +11,7 @@ ProgramOpcode::~ProgramOpcode()
 {
 }
 
-void ProgramOpcode::resolveAddress(quint32& address)
+void ProgramOpcode::resolveAddress(const ProgramSection*, quint32& address)
 {
     address += lengthInBytes();
 }

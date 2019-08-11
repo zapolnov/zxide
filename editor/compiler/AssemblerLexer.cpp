@@ -187,6 +187,10 @@ int AssemblerLexer::readToken()
                 ++mSource;
                 return T_RCURLY;
 
+            case '$':
+                ++mSource;
+                return T_DOLLAR;
+
             case '&':
                 ++mSource;
                 if (*mSource == '&') {

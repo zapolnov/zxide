@@ -11,6 +11,10 @@ Expression::~Expression()
 {
 }
 
+void Expression::resolveAddresses(const ProgramSection*, unsigned)
+{
+}
+
 unsigned char Expression::evaluateByte(IErrorReporter* reporter) const
 {
     qint64 value = evaluate(reporter);
@@ -58,6 +62,34 @@ ConstantExpression::~ConstantExpression()
 qint64 ConstantExpression::evaluate(IErrorReporter* reporter) const
 {
     return mValue;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DollarExpression::DollarExpression(const Token& token)
+    : Expression(token)
+    , mAddress(0)
+    , mHasValue(false)
+{
+}
+
+DollarExpression::~DollarExpression()
+{
+}
+
+void DollarExpression::resolveAddresses(const ProgramSection*, unsigned endAddress)
+{
+    Q_ASSERT(!mHasValue);
+    mHasValue = true;
+    mAddress = endAddress;
+}
+
+qint64 DollarExpression::evaluate(IErrorReporter* reporter) const
+{
+    if (!mHasValue)
+        error(reporter, QCoreApplication::tr("'$' is not allowed in this context"));
+
+    return mAddress;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,8 +4,9 @@
 #include "IErrorReporter.h"
 #include <QCoreApplication>
 
-ProgramSection::ProgramSection(std::string name)
-    : mName(std::move(name))
+ProgramSection::ProgramSection(Program* program, std::string name)
+    : mProgram(program)
+    , mName(std::move(name))
     , mBase(0)
     , mAlignment(1)
     , mHasBase(false)
@@ -31,7 +32,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
 
     for (auto& opcode : mOpcodes) {
         quint32 old = address;
-        opcode->resolveAddress(address);
+        opcode->resolveAddress(this, address);
         Q_ASSERT(address == old + opcode->lengthInBytes());
         if (address > 0xFFFF) {
             reporter->error(opcode->file(), opcode->line(), QCoreApplication::tr("address is over 64K"));

@@ -791,9 +791,12 @@ def formatOpcode(opcode, i):
     elif opcode == '(iy+#)' and i > 127:
         asm1 += '(iy%d)' % (127 - i)
         str2 += '(iy%d)' % (127 - i)
+    elif opcode == '$+#':
+        asm1 += '$%+d' % (129 - i)
+        str2 += '$%+d' % (129 - i)
     else:
-        asm1 += opcode.replace('##', '%d' % i).replace('$+#', '$%+d' % (129 - i)).replace('#', '%d' % i)
-        str2 += opcode.replace('##', '%d' % i).replace('$+#', '%d' % (127 - i)).replace('#', '%d' % i)
+        asm1 += opcode.replace('##', '%d' % i).replace('#', '%d' % i)
+        str2 += opcode.replace('##', '%d' % i).replace('#', '%d' % i)
 
 for opcode in opcodes:
     opcode_name = opcode[0]

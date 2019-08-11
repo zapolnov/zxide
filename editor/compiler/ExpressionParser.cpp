@@ -12,6 +12,12 @@ std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, 
             return expr;
         }
 
+        case T_DOLLAR: {
+            std::unique_ptr<Expression> expr{new DollarExpression(lastToken())};
+            nextToken();
+            return expr;
+        }
+
         case T_LPAREN:
             if (allowParen) {
                 auto expr = parseExpression(nextToken(), true);

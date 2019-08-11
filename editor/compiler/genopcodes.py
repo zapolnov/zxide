@@ -833,6 +833,8 @@ for opcode in opcodes:
     hdr += '    void emitBinary(IErrorReporter* reporter, ProgramBinary* bin) const override;\n'
     hdr += '\n'
     if opcode.numLiterals > 0:
+        hdr += '    void resolveAddress(const ProgramSection* section, quint32& address) override;\n'
+        hdr += '\n'
         hdr += 'private:\n'
         for idx in range(0, opcode.numLiterals):
             hdr += '    std::unique_ptr<Expression> mLiteral%d;\n' % (idx + 1)
@@ -845,6 +847,15 @@ for opcode in opcodes:
     src += '{\n'
     src += opcode.codeForEmit()
     src += '}\n'
+
+    if opcode.numLiterals > 0:
+        src += '\n'
+        src += 'void %s::resolveAddress(const ProgramSection* section, quint32& address)\n' % opcode.className
+        src += '{\n'
+        src += '    ProgramOpcode::resolveAddress(section, address);\n'
+        for idx in range(0, opcode.numLiterals):
+            src += '    mLiteral%d->resolveAddresses(section, address);\n' % (idx + 1)
+        src += '}\n'
 
 def getDict(dict, key):
     if key in dict:

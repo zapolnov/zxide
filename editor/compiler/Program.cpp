@@ -32,7 +32,7 @@ ProgramSection* Program::getOrCreateSection(const std::string& name)
     if (it != mSections.end())
         return it->second.get();
 
-    auto section = std::make_unique<ProgramSection>(name);
+    auto section = std::make_unique<ProgramSection>(this, name);
     ProgramSection* ptr = section.get();
     mSections[name] = std::move(section);
 

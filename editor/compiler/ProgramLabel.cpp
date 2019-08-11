@@ -28,7 +28,7 @@ unsigned ProgramLabel::tstatesIfTaken() const
     return 0;
 }
 
-void ProgramLabel::resolveAddress(quint32& address)
+void ProgramLabel::resolveAddress(const ProgramSection* section, quint32& address)
 {
     Q_ASSERT(!mHasAddress);
     mHasAddress = true;

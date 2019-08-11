@@ -3971,10 +3971,10 @@ TEST_CASE("djnz $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "djnz -43\n"
-        "djnz 42\n"
-        "djnz 127\n"
-        "djnz -128\n"
+        "djnz $-41\n"
+        "djnz $+44\n"
+        "djnz $+129\n"
+        "djnz $-126\n"
         ;
 
     static const unsigned char binary[] = {
@@ -5153,10 +5153,10 @@ TEST_CASE("jr c, $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "jr c, -43\n"
-        "jr c, 42\n"
-        "jr c, 127\n"
-        "jr c, -128\n"
+        "jr c, $-41\n"
+        "jr c, $+44\n"
+        "jr c, $+129\n"
+        "jr c, $-126\n"
         ;
 
     static const unsigned char binary[] = {
@@ -5182,10 +5182,10 @@ TEST_CASE("jr nc, $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "jr nc, -43\n"
-        "jr nc, 42\n"
-        "jr nc, 127\n"
-        "jr nc, -128\n"
+        "jr nc, $-41\n"
+        "jr nc, $+44\n"
+        "jr nc, $+129\n"
+        "jr nc, $-126\n"
         ;
 
     static const unsigned char binary[] = {
@@ -5211,10 +5211,10 @@ TEST_CASE("jr nz, $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "jr nz, -43\n"
-        "jr nz, 42\n"
-        "jr nz, 127\n"
-        "jr nz, -128\n"
+        "jr nz, $-41\n"
+        "jr nz, $+44\n"
+        "jr nz, $+129\n"
+        "jr nz, $-126\n"
         ;
 
     static const unsigned char binary[] = {
@@ -5240,10 +5240,10 @@ TEST_CASE("jr z, $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "jr z, -43\n"
-        "jr z, 42\n"
-        "jr z, 127\n"
-        "jr z, -128\n"
+        "jr z, $-41\n"
+        "jr z, $+44\n"
+        "jr z, $+129\n"
+        "jr z, $-126\n"
         ;
 
     static const unsigned char binary[] = {
@@ -5269,10 +5269,10 @@ TEST_CASE("jr $+#", "[opcodes]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
-        "jr -43\n"
-        "jr 42\n"
-        "jr 127\n"
-        "jr -128\n"
+        "jr $-41\n"
+        "jr $+44\n"
+        "jr $+129\n"
+        "jr $-126\n"
         ;
 
     static const unsigned char binary[] = {

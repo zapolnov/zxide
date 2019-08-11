@@ -5,6 +5,7 @@
 #include <memory>
 
 class IErrorReporter;
+class ProgramSection;
 
 class EvalError
 {
@@ -17,6 +18,8 @@ public:
     virtual ~Expression();
 
     const Token& token() const { return mToken; }
+
+    virtual void resolveAddresses(const ProgramSection* section, unsigned endAddress);
 
     unsigned char evaluateByte(IErrorReporter* reporter) const;
     unsigned short evaluateWord(IErrorReporter* reporter) const;
@@ -43,6 +46,22 @@ private:
     qint64 mValue;
 
     Q_DISABLE_COPY(ConstantExpression)
+};
+
+class DollarExpression : public Expression
+{
+public:
+    explicit DollarExpression(const Token& token);
+    ~DollarExpression() override;
+
+    void resolveAddresses(const ProgramSection* section, unsigned endAddress) override;
+    qint64 evaluate(IErrorReporter* reporter) const override;
+
+private:
+    unsigned short mAddress;
+    bool mHasValue;
+
+    Q_DISABLE_COPY(DollarExpression)
 };
 
 class NegateExpression : public Expression

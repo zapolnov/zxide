@@ -10,6 +10,7 @@
 #undef emit
 #endif
 
+class Program;
 class ProgramBinary;
 class ProgramLabel;
 class ProgramOpcode;
@@ -18,8 +19,10 @@ class IErrorReporter;
 class ProgramSection
 {
 public:
-    explicit ProgramSection(std::string name);
+    ProgramSection(Program* program, std::string name);
     ~ProgramSection();
+
+    Program* program() const { return mProgram; }
 
     const std::string& name() const { return mName; }
     const char* nameCStr() const { return mName.c_str(); }
@@ -46,6 +49,7 @@ public:
     void emitCode(IErrorReporter* reporter, ProgramBinary* binary) const;
 
 private:
+    Program* mProgram;
     std::string mName;
     std::vector<std::unique_ptr<ProgramOpcode>> mOpcodes;
     unsigned mBase;
