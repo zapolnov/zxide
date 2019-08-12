@@ -4,6 +4,7 @@
 #include "FileManager.h"
 #include "EmulatorCore.h"
 #include "IEditorTab.h"
+#include "SettingsDialog.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
@@ -337,6 +338,16 @@ void MainWindow::on_actionRun_triggered()
 void MainWindow::on_actionStop_triggered()
 {
     mEmulatorCore->stop();
+}
+
+void MainWindow::on_actionSettings_triggered()
+{
+    SettingsDialog dlg(this);
+    if (dlg.exec() == QDialog::Accepted) {
+        for (IEditorTab* tab : mEditorTabs)
+            tab->reloadSettings();
+        mEmulatorCore->reloadSettings();
+    }
 }
 
 void MainWindow::on_actionAbout_triggered()

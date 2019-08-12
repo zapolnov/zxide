@@ -132,6 +132,8 @@
    <addaction name="separator"/>
    <addaction name="actionRun"/>
    <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -142,9 +144,9 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuProject">
     <property name="title">
-     <string>&amp;File</string>
+     <string>&amp;Project</string>
     </property>
     <addaction name="actionNewFile"/>
     <addaction name="actionNewDirectory"/>
@@ -180,18 +182,25 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuProgram">
+   <widget class="QMenu" name="menuDebug">
     <property name="title">
-     <string>&amp;Program</string>
+     <string>&amp;Debug</string>
     </property>
     <addaction name="actionBuild"/>
     <addaction name="separator"/>
     <addaction name="actionRun"/>
     <addaction name="actionStop"/>
    </widget>
-   <addaction name="menuFile"/>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <addaction name="menuProject"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuProgram"/>
+   <addaction name="menuDebug"/>
+   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -359,7 +368,7 @@
      <normaloff>:/resources/fatcow16x16/text_edit.png</normaloff>:/resources/fatcow16x16/text_edit.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Rename...</string>
+    <string>&amp;Rename selected...</string>
    </property>
   </action>
   <action name="actionDeleteFile">
@@ -368,7 +377,7 @@
      <normaloff>:/resources/fatcow16x16/bin_closed.png</normaloff>:/resources/fatcow16x16/bin_closed.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Delete</string>
+    <string>&amp;Delete selected</string>
    </property>
   </action>
   <action name="actionNewDirectory">
@@ -411,6 +420,15 @@
    </property>
    <property name="shortcut">
     <string>Shift+F5</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/gear_in.png</normaloff>:/resources/fatcow16x16/gear_in.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Settings...</string>
    </property>
   </action>
  </widget>

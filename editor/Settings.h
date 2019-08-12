@@ -1,14 +1,36 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QString>
+#include <QSettings>
 
-static const QString SettingAutoIndent = QStringLiteral("SettingAutoIndent");
-static const QString SettingBackspaceUnindents = QStringLiteral("SettingBackspaceUnindents");
-static const QString SettingShowEndOfLine = QStringLiteral("ShowEndOfLine");
-static const QString SettingShowWhitespace = QStringLiteral("ShowWhitespace");
-static const QString SettingTabIndents = QStringLiteral("TabIndents");
-static const QString SettingTabWidth = QStringLiteral("TabWidth");
-static const QString SettingUseTabs = QStringLiteral("UseTabs");
+class Settings
+{
+public:
+    Settings();
+    ~Settings();
+
+    bool autoIndent() const;
+    bool tabIndents() const;
+    bool backspaceUnindents() const;
+    bool useTabs() const;
+    int tabWidth() const;
+    int whitespaceVisibility() const;
+    bool showEol() const;
+    bool enableSound() const;
+
+    void setAutoIndent(bool flag);
+    void setTabIndents(bool flag);
+    void setBackspaceUnindents(bool flag);
+    void setUseTabs(bool flag);
+    void setTabWidth(int value);
+    void setWhitespaceVisibility(int value);
+    void setShowEol(bool flag);
+    void setEnableSound(bool flag);
+
+private:
+    QSettings mSettings;
+
+    Q_DISABLE_COPY(Settings)
+};
 
 #endif

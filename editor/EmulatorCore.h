@@ -19,6 +19,8 @@ public:
     bool start();
     void stop();
 
+    void reloadSettings();
+
     float currentSpeed() const { return (mRunning ? mCurrentSpeed : 0.0f); }
     QString currentSpeedString() const;
 

@@ -1,6 +1,5 @@
 #include "TextEditor.h"
 #include "Settings.h"
-#include <QSettings>
 
 TextEditor::TextEditor(QWidget* parent)
     : ScintillaEdit(parent)
@@ -47,14 +46,14 @@ void TextEditor::reloadSettings()
     setWrapMode(SC_WRAP_NONE);
     setCaretStyle(CARETSTYLE_LINE | CARETSTYLE_OVERSTRIKE_BLOCK);
 
-    QSettings settings;
-    mAutoIndent = settings.value(SettingAutoIndent, true).toBool();
-    setBackSpaceUnIndents(settings.value(SettingBackspaceUnindents, true).toBool());
-    setTabIndents(settings.value(SettingTabIndents, false).toBool());
-    setTabWidth(settings.value(SettingTabWidth, 4).toInt());
-    setUseTabs(settings.value(SettingUseTabs, false).toBool());
-    setViewEOL(settings.value(SettingShowEndOfLine, false).toBool());
-    setViewWS(settings.value(SettingShowWhitespace, SCWS_VISIBLEALWAYS).toInt());
+    Settings settings;
+    mAutoIndent = settings.autoIndent();
+    setTabIndents(settings.tabIndents());
+    setBackSpaceUnIndents(settings.backspaceUnindents());
+    setUseTabs(settings.useTabs());
+    setTabWidth(settings.tabWidth());
+    setViewWS(settings.whitespaceVisibility());
+    setViewEOL(settings.showEol());
 }
 
 void TextEditor::charAdded(int ch)

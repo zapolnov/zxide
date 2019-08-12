@@ -1,4 +1,5 @@
 #include "EmulatorCore.h"
+#include "Settings.h"
 #include <QTimer>
 #include <QFile>
 #include <QElapsedTimer>
@@ -126,6 +127,7 @@ EmulatorCore::EmulatorCore(QObject* parent)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
+    reloadSettings();
 }
 
 EmulatorCore::~EmulatorCore()
@@ -172,6 +174,10 @@ void EmulatorCore::stop()
 
     mRunning = false;
     emit updateUi();
+}
+
+void EmulatorCore::reloadSettings()
+{
 }
 
 QString EmulatorCore::currentSpeedString() const

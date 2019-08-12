@@ -45,7 +45,11 @@ qt_add_sources(GameEditor
         MainWindow.cpp
         MainWindow.h
         MainWindow.ui
+        Settings.cpp
         Settings.h
+        SettingsDialog.cpp
+        SettingsDialog.h
+        SettingsDialog.ui
         main.cpp
     )
 
