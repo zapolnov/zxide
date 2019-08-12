@@ -174,7 +174,7 @@ zxmmc_insert( const char *filename )
     if( mmc_eject( card ) )
       return 0;
 
-  settings_set_string( &settings_current.zxmmc_file, filename );
+  /*settings_set_string( &settings_current.zxmmc_file, filename );*/
 
   error = libspectrum_mmc_insert( card, filename );
   if( error ) return error;

@@ -55,7 +55,7 @@ dck_insert( const char *filename )
     return 1;
   }
 
-  settings_set_string( &settings_current.dck_file, filename );
+  /*settings_set_string( &settings_current.dck_file, filename );*/
 
   machine_reset( 0 );
 

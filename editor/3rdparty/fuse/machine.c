@@ -207,7 +207,7 @@ machine_select_machine( fuse_machine_info *machine )
 
   machine_current = machine;
 
-  settings_set_string( &settings_current.start_machine, machine->id );
+  /*settings_set_string( &settings_current.start_machine, machine->id );*/
   
   tstates = 0;
 

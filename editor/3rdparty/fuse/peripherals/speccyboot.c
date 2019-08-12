@@ -35,7 +35,6 @@
 #include "module.h"
 #include "periph.h"
 #include "settings.h"
-#include "unittests/unittests.h"
 
 #include "speccyboot.h"
 
@@ -257,6 +256,7 @@ speccyboot_register_startup( void )
                             speccyboot_end );
 }
 
+/*
 int
 speccyboot_unittest( void )
 {
@@ -276,6 +276,7 @@ speccyboot_unittest( void )
 
   return r;
 }
+*/
 
 #else			/* #ifdef BUILD_SPECCYBOOT */
 

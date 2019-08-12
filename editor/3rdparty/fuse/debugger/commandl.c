@@ -30,7 +30,7 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#if 1/*defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L*/
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
  * if you want the limit (max/min) macros for int types. 
@@ -1868,7 +1868,11 @@ static void yy_load_buffer_state  (void)
         b->yy_bs_column = 0;
     }
 
+#ifdef _WIN32
+        b->yy_is_interactive = 0;
+#else
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
+#endif
     
 	errno = oerrno;
 }

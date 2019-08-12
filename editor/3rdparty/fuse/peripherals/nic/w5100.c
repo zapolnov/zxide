@@ -26,10 +26,14 @@
 
 #include <config.h>
 
+#ifndef _WIN32
 #include <pthread.h>
+#endif
 #include <string.h>
 #include <sys/types.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "fuse.h"
 #include "ui/ui.h"
@@ -83,8 +87,13 @@ nic_w5100_reset( nic_w5100_t *self )
     nic_w5100_socket_reset( &self->socket[i] );
 }
 
+#ifdef _WIN32
+static DWORD WINAPI
+w5100_io_thread( LPVOID arg )
+#else
 static void*
 w5100_io_thread( void *arg )
+#endif
 {
   nic_w5100_t *self = arg;
   int i;
@@ -136,7 +145,7 @@ w5100_io_thread( void *arg )
     }
   }
 
-  return NULL;
+  return 0;
 }
 
 nic_w5100_t*
@@ -159,11 +168,19 @@ nic_w5100_alloc( void )
 
   self->stop_io_thread = 0;
 
+#ifdef _WIN32
+  self->thread = CreateThread(NULL, 0, w5100_io_thread, self, 0, NULL);
+  if (!self->thread) {
+    ui_error( UI_ERROR_ERROR, "w5100: error %d creating thread", GetLastError() );
+    fuse_abort();
+  }
+#else
   error = pthread_create( &self->thread, NULL, w5100_io_thread, self );
   if( error ) {
     ui_error( UI_ERROR_ERROR, "w5100: error %d creating thread", error );
     fuse_abort();
   }
+#endif
 
   return self;
 }
@@ -177,7 +194,12 @@ nic_w5100_free( nic_w5100_t *self )
     self->stop_io_thread = 1;
     compat_socket_selfpipe_wake( self->selfpipe );
 
+#ifdef _WIN32
+    WaitForSingleObject(self->thread, INFINITE);
+    CloseHandle(self->thread);
+#else
     pthread_join( self->thread, NULL );
+#endif
 
     for( i = 0; i < 4; i++ )
       nic_w5100_socket_end( &self->socket[i] );

@@ -16,6 +16,7 @@ else()
 endif()
 
 add_subdirectory(bzip2)
+add_subdirectory(fuse)
 add_subdirectory(libaudiofile)
 add_subdirectory(libspectrum)
 add_subdirectory(scintilla)

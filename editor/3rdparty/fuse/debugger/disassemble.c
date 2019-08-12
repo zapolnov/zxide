@@ -870,6 +870,7 @@ run_test( libspectrum_byte *data, size_t data_length, const char *expected )
   return 0;
 }
 
+/*
 int
 debugger_disassemble_unittest( void )
 {
@@ -898,3 +899,4 @@ debugger_disassemble_unittest( void )
 
   return r;
 }
+*/

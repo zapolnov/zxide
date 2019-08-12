@@ -29,7 +29,12 @@
 #endif      /* #ifdef HAVE_STRINGS_STRCASECMP */
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_IO_H
+#include <io.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <libspectrum.h>
 
@@ -2096,7 +2101,7 @@ disk_open2( disk_t *d, const char *filename, int preindex )
 #ifdef GEKKO		/* Wii doesn't have access() */
   d->wrprot = 0;
 #else			/* #ifdef GEKKO */
-  if( access( filename, W_OK ) == -1 )		/* file read only */
+  if( access( filename, /*W_OK*/2 ) == -1 )		/* file read only */
     d->wrprot = 1;
   else
     d->wrprot = 0;

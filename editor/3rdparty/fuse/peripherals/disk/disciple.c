@@ -40,7 +40,6 @@
 #include "settings.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 #include "wd_fdc.h"
 #include "options.h"	/* needed for get combo options */
@@ -495,6 +494,7 @@ disciple_activate( void )
   }
 }
 
+#if 0
 int
 disciple_unittest( void )
 {
@@ -547,6 +547,7 @@ disciple_unittest( void )
 
   return r;
 }
+#endif
 
 static int
 ui_drive_is_available( void )

@@ -40,7 +40,6 @@
 #include "settings.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 #include "wd_fdc.h"
 #include "options.h"	/* needed for get combo options */
@@ -514,6 +513,7 @@ opus_to_snapshot( libspectrum_snap *snap )
   libspectrum_snap_set_opus_control_b ( snap, control_b );
 }
 
+#if 0
 int
 opus_unittest( void )
 {
@@ -535,6 +535,7 @@ opus_unittest( void )
 
   return r;
 }
+#endif
 
 static int
 ui_drive_is_available( void )

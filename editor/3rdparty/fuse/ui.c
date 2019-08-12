@@ -27,7 +27,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <libspectrum.h>
 
@@ -38,7 +40,7 @@
 #include "tape.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "ui/widget/widget.h"
+/*#include "ui/widget/widget.h"*/
 
 #define MESSAGE_MAX_LENGTH 256
 

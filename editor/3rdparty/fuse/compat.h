@@ -73,15 +73,15 @@
 #endif
 
 #define ARRAY_SIZE(a) ( \
-  (sizeof(a) / sizeof(*a)) \
-   + MUST_BE_ARRAY(a))
+  (sizeof(a) / sizeof(a[0])) \
+   /*+ MUST_BE_ARRAY(a)*/)
 
 #ifndef HAVE_DIRNAME
 char *dirname( char *path );
 #endif				/* #ifndef HAVE_DIRNAME */
 
 #if !defined HAVE_GETOPT_LONG && !defined AMIGA && !defined __MORPHOS__
-#include "compat/getopt.h"
+/*#include "compat/getopt.h"*/
 #endif				/* #ifndef HAVE_GETOPT_LONG */
 
 #ifndef HAVE_MKSTEMP

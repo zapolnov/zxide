@@ -33,7 +33,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #ifdef HAVE_GETOPT_LONG		/* Did our libc include getopt_long? */
 #include <getopt.h>
@@ -331,8 +333,13 @@ settings_init( int *first_arg, int argc, char **argv )
 
   settings_defaults( &settings_current );
 
+  /*
   error = read_config_file( &settings_current );
   if( error ) return error;
+  */
+
+  /*settings_current.tape_file = ...;*/
+  settings_current.start_scaler_mode = utils_safe_strdup("paltv3x");
 
   error = settings_command_line( &settings_current, first_arg, argc, argv );
   if( error ) return error;
@@ -3724,6 +3731,7 @@ settings_numeric_write( compat_fd doc, const char* name, int config )
   return settings_string_write( doc, name, buffer );
 }
 
+#if 0
 int
 settings_write_config( settings_info *settings )
 {
@@ -4460,6 +4468,7 @@ error:
 
   return 1;
 }
+#endif
 
 #endif				/* #ifdef HAVE_LIB_XML2 */
 
@@ -4468,10 +4477,10 @@ static int
 settings_command_line( settings_info *settings, int *first_arg,
                        int argc, char **argv )
 {
-#ifdef GEKKO
+#if 1//def GEKKO
   /* No argv on the Wii. Just return */
   return 0;
-#endif
+#else//ndif
 
 #if !defined AMIGA && !defined __MORPHOS__
 
@@ -4996,6 +5005,7 @@ settings_command_line( settings_info *settings, int *first_arg,
   *first_arg = optind;
 
   return 0;
+#endif
 }
 
 /* Copy one settings object to another */
@@ -5794,8 +5804,10 @@ settings_free( settings_info *settings )
 static void
 settings_end( void )
 {
+  /*
   if( settings_current.autosave_settings )
     settings_write_config( &settings_current );
+  */
 
   settings_free( &settings_current );
 

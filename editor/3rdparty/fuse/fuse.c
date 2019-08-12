@@ -35,7 +35,9 @@
 #include <windows.h>
 #endif				/* #ifdef WIN32 */
 
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /* We need to include SDL.h on Mac O X and Windows to do some magic
    bootstrapping by redefining main. As we now allow SDL joystick code to be
@@ -104,7 +106,6 @@
 #include "ui/scaler/scaler.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 
 #include "z80/z80.h"
@@ -153,7 +154,7 @@ typedef struct start_files_t {
 /* Context for the display startup routine */
 static display_startup_context display_context;
 
-static int fuse_init(int argc, char **argv);
+int fuse_init(int argc, char **argv);
 
 static void creator_register_startup( void );
 
@@ -166,8 +167,9 @@ static int parse_nonoption_args( int argc, char **argv, int first_arg,
 				 start_files_t *start_files );
 static int do_start_files( start_files_t *start_files );
 
-static int fuse_end(void);
+int fuse_end(void);
 
+#if 0
 #ifdef UI_WIN32
 int fuse_main(int argc, char **argv)
 #else
@@ -206,6 +208,7 @@ int main(int argc, char **argv)
   
   return r;
 }
+#endif
 
 static int
 fuse_libspectrum_init( void *context )
@@ -347,7 +350,7 @@ run_startup_manager( int *argc, char ***argv )
   return startup_manager_run();
 }
 
-static int fuse_init(int argc, char **argv)
+int fuse_init(int argc, char **argv)
 {
   int error, first_arg;
   char *start_scaler;
@@ -413,7 +416,7 @@ creator_init( void *context )
 {
   size_t i;
   unsigned int version[4] = { 0, 0, 0, 0 };
-  char *custom, osname[ 192 ];
+  char *custom, osname[ 192 ] = {0};
   static const size_t CUSTOM_SIZE = 256;
   
   libspectrum_error error; int sys_error;
@@ -425,8 +428,10 @@ creator_init( void *context )
 
   for( i=0; i<4; i++ ) if( version[i] > 0xff ) version[i] = 0xff;
 
+  /*
   sys_error = compat_osname( osname, sizeof( osname ) );
   if( sys_error ) return 1;
+  */
 
   fuse_creator = libspectrum_creator_alloc();
 
@@ -945,7 +950,7 @@ do_start_files( start_files_t *start_files )
 }
 
 /* Tidy-up function called at end of emulation */
-static int fuse_end(void)
+int fuse_end(void)
 {
   movie_stop();		/* stop movie recording */
 

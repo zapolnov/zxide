@@ -29,7 +29,9 @@
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <time.h>
 
 #include "debugger/debugger.h"
@@ -42,7 +44,6 @@
 #include "periph.h"
 #include "settings.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 #include "z80/z80.h"
 
@@ -533,6 +534,7 @@ multiface_setic8( void )
   }
 }
 
+/*
 int
 multiface_unittest( void )
 {
@@ -552,6 +554,7 @@ multiface_unittest( void )
 
   return r;
 }
+*/
 
 static void
 multiface_enabled_snapshot( libspectrum_snap *snap )

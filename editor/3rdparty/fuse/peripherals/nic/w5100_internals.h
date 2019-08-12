@@ -29,7 +29,9 @@
 
 #include <signal.h>
 
-#ifndef WIN32
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/select.h>
 #endif
 
@@ -128,7 +130,11 @@ typedef struct nic_w5100_socket_t {
      longer be used */
   int ok_for_io;
 
+#ifdef _WIN32
+  CRITICAL_SECTION lock;
+#else
   pthread_mutex_t lock;     /* Mutex for this socket */
+#endif
 
 } nic_w5100_socket_t;
 
@@ -140,7 +146,11 @@ struct nic_w5100_t {
 
   nic_w5100_socket_t socket[4];
 
+#ifdef _WIN32
+  HANDLE thread;
+#else
   pthread_t thread;         /* Thread for doing I/O */
+#endif
   sig_atomic_t stop_io_thread; /* Flag to stop I/O thread */
   compat_socket_selfpipe_t *selfpipe; /* Device for waking I/O thread */
 };

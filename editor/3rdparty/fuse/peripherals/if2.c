@@ -36,7 +36,6 @@
 #include "periph.h"
 #include "settings.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 
 /* A 16KB memory chunk accessible by the Z80 when /ROMCS is low */
 static memory_page if2_memory_map_romcs[MEMORY_PAGES_IN_16K];
@@ -106,7 +105,7 @@ if2_insert( const char *filename )
     return 1;
   }
 
-  settings_set_string( &settings_current.if2_file, filename );
+  /*settings_set_string( &settings_current.if2_file, filename );*/
 
   machine_reset( 0 );
 
@@ -204,6 +203,7 @@ if2_to_snapshot( libspectrum_snap *snap )
   libspectrum_snap_set_interface2_rom( snap, 0, buffer );
 }
 
+/*
 int
 if2_unittest( void )
 {
@@ -224,3 +224,4 @@ if2_unittest( void )
 
   return r;
 }
+*/

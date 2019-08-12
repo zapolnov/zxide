@@ -1,6 +1,5 @@
 
 include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}"
     "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
@@ -37,6 +36,7 @@ configure_file(config.h.in "${config_h}")
 source_group("Generated Files" FILES "${config_h}")
 
 add_library(LibSpectrum STATIC ${src_myglib} ${src} "${config_h}")
+target_include_directories(LibSpectrum PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(LibSpectrum ZLib LibBZ2 LibAudioFile)
 set_target_properties(LibSpectrum PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "Spectrum")
 

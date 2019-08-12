@@ -30,7 +30,9 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <libspectrum.h>
 

@@ -30,7 +30,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifdef HAVE_IO_H
+#include <io.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "compat.h"
 #include "debugger/debugger.h"
@@ -43,7 +48,6 @@
 #include "settings.h"
 #include "utils.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 
 #undef IF1_DEBUG_MDR
 #undef IF1_DEBUG_NET
@@ -1337,6 +1341,7 @@ if1_unplug( int what )
   update_menu( UMENU_RS232 );
 }
 
+/*
 int
 if1_unittest( void )
 {
@@ -1356,4 +1361,5 @@ if1_unittest( void )
 
   return r;
 }
+*/
 

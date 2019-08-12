@@ -40,7 +40,6 @@
 #include "settings.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 #include "wd_fdc.h"
 #include "options.h"	/* needed for get combo options */
@@ -394,6 +393,7 @@ didaktik80_get_fdd( didaktik80_drive_number which )
   return &( didaktik_drives[ which ] );
 }
 
+/*
 int
 didaktik80_unittest( void )
 {
@@ -415,6 +415,7 @@ didaktik80_unittest( void )
 
   return r;
 }
+*/
 
 static int
 ui_drive_is_available( void )

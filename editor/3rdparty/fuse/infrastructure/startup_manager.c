@@ -159,7 +159,7 @@ startup_manager_run( void )
   /* If there are still any modules left to be called, then that's bad */
   if( registered_modules->len ) {
     ui_error( UI_ERROR_ERROR, "%u startup modules could not be called",
-              registered_modules->len );
+              ((unsigned)(registered_modules->len)) );
     return 1;
   }
 

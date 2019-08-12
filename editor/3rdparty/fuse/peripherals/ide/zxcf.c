@@ -38,7 +38,6 @@
 #include "periph.h"
 #include "settings.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 #include "zxcf.h"
 
 /* A 16KB memory chunk accessible by the Z80 when /ROMCS is low */
@@ -346,6 +345,7 @@ zxcf_activate( void )
   }
 }
 
+/*
 int
 zxcf_unittest( void )
 {
@@ -374,4 +374,5 @@ zxcf_unittest( void )
 
   return r;
 }
+*/
 

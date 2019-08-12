@@ -36,7 +36,6 @@
 #include "periph.h"
 #include "settings.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 #include "divide.h"
 #include "divxxx.h"
 
@@ -326,6 +325,7 @@ divide_activate( void )
   divxxx_activate( divide_state );
 }
 
+/*
 int
 divide_unittest( void )
 {
@@ -369,3 +369,4 @@ divide_unittest( void )
 
   return r;
 }
+*/

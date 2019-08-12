@@ -34,7 +34,9 @@
 #endif				/* #ifdef HAVE_LIBGEN_H */
 #include <string.h>
 #include <ui/ui.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <libspectrum.h>
 

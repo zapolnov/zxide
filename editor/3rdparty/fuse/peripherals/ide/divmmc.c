@@ -36,7 +36,6 @@
 #include "periph.h"
 #include "settings.h"
 #include "ui/ui.h"
-#include "unittests/unittests.h"
 #include "divmmc.h"
 #include "divxxx.h"
 
@@ -208,7 +207,7 @@ divmmc_insert( const char *filename )
     if( mmc_eject( card ) )
       return 0;
 
-  settings_set_string( &settings_current.divmmc_file, filename );
+  /*settings_set_string( &settings_current.divmmc_file, filename );*/
 
   error = libspectrum_mmc_insert( card, filename );
   if( error ) return error;
@@ -372,6 +371,7 @@ set_control_register( libspectrum_dword value )
   divxxx_control_write_internal( divmmc_state, value & 0xff );
 }
 
+#if 0
 int
 divmmc_unittest( void )
 {
@@ -424,3 +424,4 @@ divmmc_unittest( void )
 
   return r;
 }
+#endif

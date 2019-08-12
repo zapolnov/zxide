@@ -29,7 +29,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <string.h>
 #ifdef HAVE_STRINGS_H
 #include <strings.h>            /* Needed for strncasecmp() on QNX6 */
@@ -49,7 +51,6 @@
 #include "settings.h"
 #include "ui/ui.h"
 #include "ui/uimedia.h"
-#include "unittests/unittests.h"
 #include "utils.h"
 #include "wd_fdc.h"
 #include "z80/z80.h"
@@ -500,6 +501,7 @@ beta_to_snapshot( libspectrum_snap *snap )
   libspectrum_snap_set_beta_system( snap, beta_system_register );
 }
 
+/*
 int
 beta_unittest( void )
 {
@@ -518,6 +520,7 @@ beta_unittest( void )
 
   return r;
 }
+*/
 
 static int
 ui_drive_is_available( void )

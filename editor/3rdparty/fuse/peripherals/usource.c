@@ -37,7 +37,6 @@
 #include "module.h"
 #include "periph.h"
 #include "settings.h"
-#include "unittests/unittests.h"
 #include "usource.h"
 
 /* An 8 KiB memory chunk accessible by the Z80 when /ROMCS is low
@@ -170,6 +169,7 @@ usource_toggle_write( libspectrum_word port GCC_UNUSED, libspectrum_byte val )
   usource_toggle();
 }
 
+/*
 int
 usource_unittest( void )
 {
@@ -191,6 +191,7 @@ usource_unittest( void )
 
   return r;
 }
+*/
 
 static void
 usource_enabled_snapshot( libspectrum_snap *snap )

@@ -26,10 +26,14 @@
 
 #include <config.h>
 
+#ifndef _WIN32
 #include <pthread.h>
+#endif
 #include <string.h>
 #include <sys/types.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #ifdef WIN32
 #include <winsock2.h>
@@ -70,19 +74,30 @@ nic_w5100_socket_init( nic_w5100_socket_t *socket, int which )
 {
   socket->id = which;
   w5100_socket_init_common( socket );
+#ifdef _WIN32
+  InitializeCriticalSection(&socket->lock);
+#else
   pthread_mutex_init( &socket->lock, NULL );
+#endif
 }
 
 void
 nic_w5100_socket_end( nic_w5100_socket_t *socket )
 {
   nic_w5100_socket_reset( socket );
+#ifdef _WIN32
+  DeleteCriticalSection(&socket->lock);
+#else
   pthread_mutex_destroy( &socket->lock );
+#endif
 }
 
 static void
 w5100_socket_acquire_lock( nic_w5100_socket_t *socket )
 {
+#ifdef _WIN32
+  EnterCriticalSection(&socket->lock);
+#else
   int error = pthread_mutex_lock( &socket->lock );
   if( error ) {
     nic_w5100_error( UI_ERROR_ERROR,
@@ -90,16 +105,21 @@ w5100_socket_acquire_lock( nic_w5100_socket_t *socket )
                      __FILE__, __LINE__, error, socket->id );
     fuse_abort();
   }
+#endif
 }
 
 static void
 w5100_socket_release_lock( nic_w5100_socket_t *socket )
 {
+#ifdef _WIN32
+  LeaveCriticalSection(&socket->lock);
+#else
   int error = pthread_mutex_unlock( &socket->lock );
   if( error ) {
     nic_w5100_debug( "%s:%d: error %d unlocking mutex for socket %d\n", __FILE__, __LINE__, error, socket->id );
     fuse_abort();
   }
+#endif
 }
 
 static void

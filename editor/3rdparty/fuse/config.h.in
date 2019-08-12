@@ -1,0 +1,28 @@
+
+#define USE_JOYSTICK 1
+#define HAVE_STRING_H 1
+#define HAVE_ZLIB_H 1
+
+#cmakedefine WORDS_BIGENDIAN 1
+
+/*#cmakedefine HAVE_JSW_H 1*/
+#cmakedefine HAVE_LIBGEN_H 1
+#cmakedefine HAVE_IO_H 1
+#cmakedefine HAVE_UNISTD_H 1
+#cmakedefine HAVE_SYS_TIME_H 1
+#cmakedefine HAVE_STRINGS_H 1
+
+#cmakedefine HAVE_STRINGS_STRCASECMP 1
+#cmakedefine HAVE_DIRNAME 1
+
+/* #undef BLIP_BUFFER_ACCURACY */
+/* #undef BUILD_SPECCYBOOT */
+/* #undef BUILD_SPECTRANET */
+
+#define VERSION "1.5.7"
+#define FUSE_COPYRIGHT "(c) 1999-2018 Philip Kendall and others"
+#define PACKAGE_URL "http://fuse-emulator.sourceforge.net/"
+
+#define FUSEDATADIR "@FUSEDATADIR@"
+
+#define WIN32_LEAN_AND_MEAN
