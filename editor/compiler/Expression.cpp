@@ -23,7 +23,7 @@ template <bool SUB, typename T> Value smartEvaluate(T&& operatr, Value a, Value 
             return Value(operatr(a.number, b.number), Sign::Signed, Value::significantBitsForNumber(operatr(aa, bb)));
         }
 
-        case SignificantBits::NoMoreThan16:
+        case SignificantBits::NoMoreThan16: {
             if (sign == Sign::Unsigned) {
                 quint16 aa = quint16(a.number & 0xffff);
                 quint16 bb = quint16(b.number & 0xffff);
@@ -33,6 +33,10 @@ template <bool SUB, typename T> Value smartEvaluate(T&& operatr, Value a, Value 
             qint16 aa = qint16(a.number & 0xffff);
             qint16 bb = qint16(b.number & 0xffff);
             return Value(operatr(a.number, b.number), Sign::Signed, Value::significantBitsForNumber(operatr(aa, bb)));
+        }
+
+        case SignificantBits::All:
+            break;
     }
 
     return Value(operatr(a.number, b.number), sign);
@@ -161,6 +165,9 @@ Value NegateExpression::evaluate(ExprEvalContext& context) const
                 if (x != -32768) // +32768 does not fit into 16 bits
                     return Value(-value.number, Sign::Signed, SignificantBits::NoMoreThan16);
             }
+            break;
+
+        case SignificantBits::All:
             break;
     }
 

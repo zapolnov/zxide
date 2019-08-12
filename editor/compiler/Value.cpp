@@ -57,6 +57,7 @@ void Value::truncateToSignificantBits()
     switch (bits) {
         case SignificantBits::NoMoreThan8: truncateTo8Bit(); return;
         case SignificantBits::NoMoreThan16: truncateTo16Bit(); return;
+        case SignificantBits::All: return;
     }
 }
 
