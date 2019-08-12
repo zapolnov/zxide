@@ -27,17 +27,17 @@
 int
 sound_lowlevel_init( const char *device, int *freqptr, int *stereoptr )
 {
-  fuse_abort();
+  //fuse_abort();
 }
 
 void
 sound_lowlevel_end( void )
 {
-  fuse_abort();
+  //fuse_abort();
 }
 
 void
 sound_lowlevel_frame( unsigned char *data, int len )
 {
-  fuse_abort();
+  //fuse_abort();
 }

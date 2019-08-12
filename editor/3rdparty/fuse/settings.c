@@ -2626,6 +2626,7 @@ settings_write_config( settings_info *settings )
 static int
 read_config_file( settings_info *settings )
 {
+#if 0
   const char *cfgdir; char path[ PATH_MAX ];
   struct stat stat_info;
   int error;
@@ -2656,6 +2657,7 @@ read_config_file( settings_info *settings )
   if( parse_ini( &file, settings ) ) { utils_close_file( &file ); return 1; }
 
   utils_close_file( &file );
+#endif
 
   return 0;
 }

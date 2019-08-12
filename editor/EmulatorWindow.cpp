@@ -39,7 +39,8 @@ EmulatorWindow::EmulatorWindow(QWidget* parent)
 
 EmulatorWindow::~EmulatorWindow()
 {
-    fuse_end();
+    if (mInitialized)
+        fuse_end();
 }
 
 void EmulatorWindow::tick()
@@ -111,7 +112,7 @@ int compat_get_next_path(path_context* ctx)
 {
     switch ((ctx->state)++) {
         case 0:
-            strcpy(ctx->path, ":/");
+            strcpy(ctx->path, ":/fuse/");
             return 1;
 
         case 1:

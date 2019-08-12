@@ -310,6 +310,7 @@ void MainWindow::on_actionRun_triggered()
     if (!mEmulatorWindow)
         mEmulatorWindow = new EmulatorWindow(this);
 
+    mEmulatorWindow->show();
     mEmulatorWindow->setFocus();
 }
 

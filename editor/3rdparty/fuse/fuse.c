@@ -483,6 +483,7 @@ creator_register_startup( void )
 
 static void fuse_show_copyright(void)
 {
+  /*
   printf( "\n" );
   fuse_show_version();
   printf(
@@ -496,15 +497,19 @@ static void fuse_show_copyright(void)
    "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
    "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
    "GNU General Public License for more details.\n\n");
+  */
 }
 
 static void fuse_show_version( void )
 {
+  /*
   printf( "The Free Unix Spectrum Emulator (Fuse) version " VERSION ".\n" );
+  */
 }
 
 static void fuse_show_help( void )
 {
+  /*
   printf( "\n" );
   fuse_show_version();
   printf(
@@ -534,6 +539,7 @@ static void fuse_show_help( void )
    "For help, please mail <fuse-emulator-devel@lists.sf.net> or use\n"
    "the forums at <http://sourceforge.net/p/fuse-emulator/discussion/>.\n"
    "For complete documentation, see the manual page of Fuse.\n\n" );
+  */
 }
 
 /* Stop all activities associated with actual Spectrum emulation */
