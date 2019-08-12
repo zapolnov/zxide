@@ -6,6 +6,7 @@
 #include <memory>
 
 class IEditorTab;
+class EmulatorWindow;
 class QLabel;
 class Ui_MainWindow;
 
@@ -29,6 +30,7 @@ private:
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
     QLabel* mBuildResultLabel;
+    EmulatorWindow* mEmulatorWindow;
 
     bool confirmSave();
     bool saveAll();

@@ -13,7 +13,7 @@ source_group("Generated Files" FILES "${config_h}")
 add_subdirectory(compiler)
 
 qt_add_executable(GameEditor USES Core Gui Widgets)
-target_link_libraries(GameEditor Scintilla Compiler)
+target_link_libraries(GameEditor Scintilla Compiler Fuse)
 
 qt_add_sources(GameEditor
         code/CodeTab.cpp
@@ -36,6 +36,8 @@ qt_add_sources(GameEditor
         CompilerDialog.cpp
         CompilerDialog.h
         CompilerDialog.ui
+        EmulatorWindow.cpp
+        EmulatorWindow.h
         FileManager.cpp
         FileManager.h
         FileManager.ui

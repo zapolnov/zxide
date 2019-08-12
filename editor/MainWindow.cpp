@@ -2,6 +2,7 @@
 #include "CompilerDialog.h"
 #include "AboutDialog.h"
 #include "FileManager.h"
+#include "EmulatorWindow.h"
 #include "IEditorTab.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -21,6 +22,7 @@ namespace
 
 MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
+    , mEmulatorWindow(nullptr)
 {
     mUi->setupUi(this);
 
@@ -304,6 +306,11 @@ void MainWindow::on_actionBuild_triggered()
 void MainWindow::on_actionRun_triggered()
 {
     build();
+
+    if (!mEmulatorWindow)
+        mEmulatorWindow = new EmulatorWindow(this);
+
+    mEmulatorWindow->setFocus();
 }
 
 void MainWindow::on_actionAbout_triggered()
