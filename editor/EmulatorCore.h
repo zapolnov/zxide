@@ -19,6 +19,11 @@ public:
     bool start();
     void stop();
 
+    float currentSpeed() const { return (mRunning ? mCurrentSpeed : 0.0f); }
+    QString currentSpeedString() const;
+
+    void internal_onSpeedChanged(float speed);
+
 signals:
     void error(const QString& message);
     void updateUi();
@@ -26,6 +31,7 @@ signals:
 private:
     static EmulatorCore* mInstance;
     QTimer* mTimer;
+    float mCurrentSpeed;
     bool mRunning;
 
     void tick();

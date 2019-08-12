@@ -45,6 +45,13 @@ MainWindow::MainWindow(const QString& path)
     mLineColumnLabel->setAlignment(Qt::AlignCenter);
     mUi->statusBar->addPermanentWidget(mLineColumnLabel);
 
+    mEmulatorSpeedLabel = new QLabel(mUi->statusBar);
+    mEmulatorSpeedLabel->setFixedWidth(50);
+    mEmulatorSpeedLabel->setFrameShape(QFrame::StyledPanel);
+    mEmulatorSpeedLabel->setFrameShadow(QFrame::Sunken);
+    mEmulatorSpeedLabel->setAlignment(Qt::AlignCenter);
+    mUi->statusBar->addPermanentWidget(mEmulatorSpeedLabel);
+
     mBuildResultLabel = new QLabel(mUi->statusBar);
     mBuildResultLabel->setText(tr("Ready"));
     mBuildResultLabel->setStyleSheet(QStringLiteral("font-weight: bold; padding-right: 5px"));
@@ -71,6 +78,7 @@ MainWindow::MainWindow(const QString& path)
 
 MainWindow::~MainWindow()
 {
+    delete mEmulatorCore;
 }
 
 IEditorTab* MainWindow::currentTab() const
@@ -138,6 +146,9 @@ bool MainWindow::saveAll()
 
 bool MainWindow::build()
 {
+    if (mEmulatorCore->isRunning())
+        return false;
+
     if (!confirmSave()) {
         mBuildResultLabel->setToolTip(QString());
         mBuildResultLabel->setText(tr("Ready"));
@@ -208,11 +219,13 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
+    mUi->actionBuild->setEnabled(!mEmulatorCore->isRunning());
     mUi->actionRun->setEnabled(!mEmulatorCore->isRunning());
     mUi->actionStop->setEnabled(mEmulatorCore->isRunning());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
+    mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
 
     mUi->stackedWidget->setCurrentIndex(0); // FIXME
 }

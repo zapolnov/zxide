@@ -183,12 +183,14 @@ ui_statusbar_update( ui_statusbar_item item, ui_statusbar_state state )
   return 0;
 }
 
+#if 0
 int
 ui_statusbar_update_speed( float speed )
 {
   /* No error */
   return 0;
 }
+#endif
 
 int
 ui_tape_browser_update( ui_tape_browser_update_type change,

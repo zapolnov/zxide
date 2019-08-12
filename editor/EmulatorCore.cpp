@@ -17,67 +17,7 @@ int fuse_init(int argc, char** argv);
 int fuse_end(void);
 }
 
-EmulatorCore* EmulatorCore::mInstance;
 static QElapsedTimer mElapsedTimer;
-
-EmulatorCore::EmulatorCore(QObject* parent)
-    : QObject(parent)
-    , mTimer(nullptr)
-    , mRunning(false)
-{
-    Q_ASSERT(mInstance == nullptr);
-    mInstance = this;
-}
-
-EmulatorCore::~EmulatorCore()
-{
-    stop();
-
-    Q_ASSERT(mInstance == this);
-    mInstance = nullptr;
-}
-
-bool EmulatorCore::start()
-{
-    Q_ASSERT(!mRunning);
-    if (mRunning)
-        return true;
-
-    int argc = 1;
-    const char* const argv[] = { "fuse" };
-    if (fuse_init(argc, (char**)argv)) {
-        emit error(tr("Unable to initialize emulator core."));
-        return false;
-    }
-
-    mTimer = new QTimer(this);
-    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::tick);
-
-    mRunning = true;
-    emit updateUi();
-
-    return true;
-}
-
-void EmulatorCore::stop()
-{
-    if (!mRunning)
-        return;
-
-    mTimer->deleteLater();
-    mTimer = nullptr;
-
-    fuse_end();
-
-    mRunning = false;
-    emit updateUi();
-}
-
-void EmulatorCore::tick()
-{
-    z80_do_opcodes();
-    event_do_events();
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -166,4 +106,94 @@ double timer_get_time()
 void timer_sleep(int ms)
 {
     QThread::msleep(ms);
+}
+
+int ui_statusbar_update_speed(float speed)
+{
+    emit EmulatorCore::instance()->internal_onSpeedChanged(speed);
+    return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+EmulatorCore* EmulatorCore::mInstance;
+
+EmulatorCore::EmulatorCore(QObject* parent)
+    : QObject(parent)
+    , mTimer(nullptr)
+    , mCurrentSpeed(0.0f)
+    , mRunning(false)
+{
+    Q_ASSERT(mInstance == nullptr);
+    mInstance = this;
+}
+
+EmulatorCore::~EmulatorCore()
+{
+    stop();
+
+    Q_ASSERT(mInstance == this);
+    mInstance = nullptr;
+}
+
+bool EmulatorCore::start()
+{
+    Q_ASSERT(!mRunning);
+    if (mRunning)
+        return true;
+
+    int argc = 1;
+    const char* const argv[] = { "fuse" };
+    if (fuse_init(argc, (char**)argv)) {
+        emit error(tr("Unable to initialize emulator core."));
+        return false;
+    }
+
+    mTimer = new QTimer(this);
+    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::tick);
+    mTimer->start(0);
+
+    mRunning = true;
+    emit updateUi();
+
+    return true;
+}
+
+void EmulatorCore::stop()
+{
+    if (!mRunning)
+        return;
+
+    mTimer->stop();
+    mTimer->deleteLater();
+    mTimer = nullptr;
+
+    fuse_end();
+
+    mRunning = false;
+    emit updateUi();
+}
+
+QString EmulatorCore::currentSpeedString() const
+{
+    if (!mRunning)
+        return QString();
+    return QStringLiteral("%1%").arg(int(mCurrentSpeed));
+}
+
+void EmulatorCore::internal_onSpeedChanged(float speed)
+{
+    if (mCurrentSpeed != speed) {
+        mCurrentSpeed = speed;
+        emit updateUi();
+    }
+}
+
+void EmulatorCore::tick()
+{
+    if (!mRunning)
+        return;
+
+    z80_do_opcodes();
+    event_do_events();
 }

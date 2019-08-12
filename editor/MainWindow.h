@@ -29,6 +29,7 @@ private:
     std::vector<IEditorTab*> mEditorTabs;
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
+    QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
     EmulatorCore* mEmulatorCore;
 
