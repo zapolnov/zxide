@@ -27,7 +27,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
     try {
         auto sections = collectSections();
         if (sections.size() == 0)
-            throw LinkerError();
+            error(tr("Empty program"));
 
         if (!sections[0]->hasBase())
             error(tr("No sections with base address"));
