@@ -315,7 +315,9 @@ void MainWindow::on_actionRun_triggered()
     if (mEmulatorCore->isRunning())
         return;
 
-    build();
+    if (!build())
+        return;
+
     mEmulatorCore->start();
 }
 
