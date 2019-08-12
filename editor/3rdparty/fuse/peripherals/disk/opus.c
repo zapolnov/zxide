@@ -178,6 +178,7 @@ opus_end( void )
 {
   opus_available = 0;
   libspectrum_free( opus_fdc );
+  opus_fdc = NULL;
 }
 
 void

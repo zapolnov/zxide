@@ -95,6 +95,7 @@ static void
 simpleide_end( void )
 {
   libspectrum_ide_free( simpleide_idechn );
+  simpleide_idechn = NULL;
 }
 
 void

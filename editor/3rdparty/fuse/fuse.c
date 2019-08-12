@@ -436,15 +436,15 @@ creator_init( void *context )
   fuse_creator = libspectrum_creator_alloc();
 
   error = libspectrum_creator_set_program( fuse_creator, "Fuse" );
-  if( error ) { libspectrum_creator_free( fuse_creator ); return error; }
+  if( error ) { libspectrum_creator_free( fuse_creator ); fuse_creator = NULL; return error; }
 
   error = libspectrum_creator_set_major( fuse_creator,
 					 version[0] * 0x100 + version[1] );
-  if( error ) { libspectrum_creator_free( fuse_creator ); return error; }
+  if( error ) { libspectrum_creator_free( fuse_creator ); fuse_creator = NULL; return error; }
 
   error = libspectrum_creator_set_minor( fuse_creator,
 					 version[2] * 0x100 + version[3] );
-  if( error ) { libspectrum_creator_free( fuse_creator ); return error; }
+  if( error ) { libspectrum_creator_free( fuse_creator ); fuse_creator = NULL; return error; }
 
   custom = libspectrum_new( char, CUSTOM_SIZE );
 
@@ -460,6 +460,7 @@ creator_init( void *context )
   );
   if( error ) {
     libspectrum_free( custom ); libspectrum_creator_free( fuse_creator );
+    fuse_creator = NULL;
     return error;
   }
 
@@ -470,6 +471,7 @@ static void
 creator_end( void )
 {
   libspectrum_creator_free( fuse_creator );
+  fuse_creator = NULL;
 }
 
 static void

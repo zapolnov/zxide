@@ -366,6 +366,7 @@ if1_end( void )
   for( m = 0; m < 8; m++ ) {
     libspectrum_error error =
       libspectrum_microdrive_free( microdrive[m].cartridge );
+    microdrive[m].cartridge = NULL;
     if( error ) return;
   }
 }

@@ -305,9 +305,13 @@ static void
 keyboard_end( void )
 {
   g_hash_table_destroy( keyboard_data );
+  keyboard_data = NULL;
   g_hash_table_destroy( spectrum_keys );
+  spectrum_keys = NULL;
   g_hash_table_destroy( keysyms_hash );
+  keysyms_hash = NULL;
   g_hash_table_destroy( key_text );
+  key_text = NULL;
 }
 
 void

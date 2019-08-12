@@ -122,8 +122,11 @@ static void
 divide_end( void )
 {
   divxxx_free( divide_state );
+  divide_state = NULL;
   libspectrum_ide_free( divide_idechn0 );
+  divide_idechn0 = NULL;
   libspectrum_ide_free( divide_idechn1 );
+  divide_idechn1 = NULL;
 }
 
 void

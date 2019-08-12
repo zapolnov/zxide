@@ -277,6 +277,7 @@ didaktik80_end( void )
 {
   didaktik80_available = 0;
   libspectrum_free( didaktik_fdc );
+  didaktik_fdc = NULL;
 }
 
 void

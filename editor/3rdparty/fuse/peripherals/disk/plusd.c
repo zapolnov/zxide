@@ -207,6 +207,7 @@ plusd_end( void )
 {
   plusd_available = 0;
   libspectrum_free( plusd_fdc );
+  plusd_fdc = NULL;
 }
 
 void

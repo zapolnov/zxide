@@ -2166,6 +2166,7 @@ disk_open2( disk_t *d, const char *filename, int preindex )
   if( d->status != DISK_OK ) {
     if( d->data != NULL )
       libspectrum_free( d->data );
+    d->data = NULL;
     utils_close_file( &buffer.file );
     return d->status;
   }

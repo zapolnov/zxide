@@ -356,6 +356,7 @@ utils_read_fd( compat_fd fd, const char *filename, utils_file *file )
 
   if( compat_file_read( fd, file ) ) {
     libspectrum_free( file->buffer );
+    file->buffer = NULL;
     compat_file_close( fd );
     return 1;
   }
@@ -364,6 +365,7 @@ utils_read_fd( compat_fd fd, const char *filename, utils_file *file )
     ui_error( UI_ERROR_ERROR, "Couldn't close '%s': %s", filename,
 	      strerror( errno ) );
     libspectrum_free( file->buffer );
+    file->buffer = NULL;
     return 1;
   }
 
@@ -374,6 +376,7 @@ void
 utils_close_file( utils_file *file )
 {
   libspectrum_free( file->buffer );
+  file->buffer = NULL;
 }
 
 int utils_write_file( const char *filename, const unsigned char *buffer,

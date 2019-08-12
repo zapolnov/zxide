@@ -458,7 +458,9 @@ static void
 spectranet_end( void )
 {
   nic_w5100_free( w5100 );
+  w5100 = NULL;
   flash_am29f010_free( flash_rom );
+  flash_rom = NULL;
 }
 
 void

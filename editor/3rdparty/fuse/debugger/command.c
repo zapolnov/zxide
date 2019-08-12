@@ -62,6 +62,7 @@ debugger_command_evaluate( const char *command )
 
   /* And free any memory we allocated while parsing */
   mempool_free( debugger_memory_pool );
+  debugger_memory_pool = 0;
 
   ui_debugger_update();
 }

@@ -198,7 +198,9 @@ static void
 zxatasp_end( void )
 {
   libspectrum_ide_free( zxatasp_idechn0 );
+  zxatasp_idechn0 = NULL;
   libspectrum_ide_free( zxatasp_idechn1 );
+  zxatasp_idechn1 = NULL;
 }
 
 void

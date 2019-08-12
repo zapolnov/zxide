@@ -308,6 +308,7 @@ svg_closefile( void )
   }
 
   libspectrum_free( svg_fname );
+  svg_fname = NULL;
 }
 
 
@@ -344,6 +345,7 @@ svg_stopcapture( void )
     svg_closefile();
 
     libspectrum_free( svg_fnameroot );
+    svg_fnameroot = NULL;
 
     svg_capture_active = 0;
   }

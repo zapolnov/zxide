@@ -174,7 +174,9 @@ int rzx_start_recording( const char *filename, int embed_snapshot )
 
     if( error ) {
       libspectrum_free( rzx_filename );
+      rzx_filename = NULL;
       libspectrum_rzx_free( rzx );
+      rzx = NULL;
       return error;
     }
   }
@@ -217,21 +219,26 @@ int rzx_stop_recording( void )
   );
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) {
     libspectrum_free( rzx_filename );
+    rzx_filename = NULL;
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return libspec_error;
   }
 
   error = utils_write_file( rzx_filename, buffer, length );
   libspectrum_free( rzx_filename );
+  rzx_filename = NULL;
   if( error ) {
     libspectrum_free( buffer );
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return error;
   }
 
   libspectrum_free( buffer );
 
   libspec_error = libspectrum_rzx_free( rzx );
+  rzx = NULL;
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) return libspec_error;
 
   return 0;
@@ -301,6 +308,7 @@ int rzx_start_playback( const char *filename, int check_snapshot )
   error = start_playback( rzx );
   if( error ) {
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return error;
   }
 
@@ -325,6 +333,7 @@ rzx_start_playback_from_buffer( const unsigned char *buffer, size_t length )
     error = utils_open_snap();
     if( error ) {
       libspectrum_rzx_free( rzx );
+      rzx = NULL;
       return error;
     }
   }
@@ -332,6 +341,7 @@ rzx_start_playback_from_buffer( const unsigned char *buffer, size_t length )
   error = start_playback( rzx );
   if( error ) {
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return error;
   }
 
@@ -407,6 +417,7 @@ int rzx_stop_playback( int add_interrupt )
   }
 
   libspec_error = libspectrum_rzx_free( rzx );
+  rzx = NULL;
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) return libspec_error;
 
   debugger_event( end_event );
@@ -479,7 +490,9 @@ rzx_continue_recording( const char *filename )
     if( error ) return error;
   } else {
     libspectrum_free( rzx_filename );
+    rzx_filename = NULL;
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return 1;
   }
 
@@ -506,6 +519,7 @@ rzx_finalise_recording( const char *filename )
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) {
     utils_close_file( &file );
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return libspec_error;
   }
 
@@ -514,6 +528,7 @@ rzx_finalise_recording( const char *filename )
   libspec_error = libspectrum_rzx_finalise( rzx );
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) {
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return libspec_error;
   }
 
@@ -526,6 +541,7 @@ rzx_finalise_recording( const char *filename )
   );
   if( libspec_error != LIBSPECTRUM_ERROR_NONE ) {
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return libspec_error;
   }
 
@@ -533,11 +549,13 @@ rzx_finalise_recording( const char *filename )
   if( error ) {
     libspectrum_free( buffer );
     libspectrum_rzx_free( rzx );
+    rzx = NULL;
     return error;
   }
 
   libspectrum_free( buffer );
   libspectrum_rzx_free( rzx );
+  rzx = NULL;
 
   return 0;
 }

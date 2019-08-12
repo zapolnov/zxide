@@ -254,6 +254,7 @@ beta_end( void )
 {
   beta_available = 0;
   libspectrum_free( beta_fdc );
+  beta_fdc = NULL;
 }
 
 void

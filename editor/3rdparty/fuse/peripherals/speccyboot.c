@@ -241,6 +241,7 @@ static void
 speccyboot_end( void )
 {
   nic_enc28j60_free( nic );
+  nic = NULL;
 }
 
 void

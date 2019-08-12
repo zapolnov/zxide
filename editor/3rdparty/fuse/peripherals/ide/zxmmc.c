@@ -112,6 +112,7 @@ static void
 zxmmc_end( void )
 {
   libspectrum_mmc_free( card );
+  card = NULL;
 }
 
 void

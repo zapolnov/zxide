@@ -142,7 +142,9 @@ static void
 divmmc_end( void )
 {
   divxxx_free( divmmc_state );
+  divmmc_state = NULL;
   libspectrum_mmc_free( card );
+  card = NULL;
 }
 
 void

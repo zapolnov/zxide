@@ -143,6 +143,7 @@ static void
 zxcf_end( void )
 {
   libspectrum_ide_free( zxcf_idechn );
+  zxcf_idechn = NULL;
 }
 
 void

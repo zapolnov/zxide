@@ -246,6 +246,7 @@ disciple_end( void )
 {
   disciple_available = 0;
   libspectrum_free( disciple_fdc );
+  disciple_fdc = NULL;
 }
 
 void
