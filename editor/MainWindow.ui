@@ -129,7 +129,9 @@
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
    <addaction name="actionBuild"/>
+   <addaction name="separator"/>
    <addaction name="actionRun"/>
+   <addaction name="actionStop"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -183,7 +185,9 @@
      <string>&amp;Program</string>
     </property>
     <addaction name="actionBuild"/>
+    <addaction name="separator"/>
     <addaction name="actionRun"/>
+    <addaction name="actionStop"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -295,7 +299,7 @@
      <normaloff>:/resources/tango16x16/media-playback-start.png</normaloff>:/resources/tango16x16/media-playback-start.png</iconset>
    </property>
    <property name="text">
-    <string>Build and &amp;run</string>
+    <string>&amp;Run</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
@@ -395,6 +399,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/tango16x16/media-playback-stop.png</normaloff>:/resources/tango16x16/media-playback-stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F5</string>
    </property>
   </action>
  </widget>

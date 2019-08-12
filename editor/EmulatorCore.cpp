@@ -1,6 +1,5 @@
-#include "EmulatorWindow.h"
+#include "EmulatorCore.h"
 #include <QTimer>
-#include <QMessageBox>
 #include <QFile>
 #include <QElapsedTimer>
 #include <QThread>
@@ -18,32 +17,63 @@ int fuse_init(int argc, char** argv);
 int fuse_end(void);
 }
 
-EmulatorWindow::EmulatorWindow(QWidget* parent)
-    : QWidget(parent)
+EmulatorCore* EmulatorCore::mInstance;
+static QElapsedTimer mElapsedTimer;
+
+EmulatorCore::EmulatorCore(QObject* parent)
+    : QObject(parent)
     , mTimer(nullptr)
-    , mInitialized(false)
+    , mRunning(false)
 {
+    Q_ASSERT(mInstance == nullptr);
+    mInstance = this;
+}
+
+EmulatorCore::~EmulatorCore()
+{
+    stop();
+
+    Q_ASSERT(mInstance == this);
+    mInstance = nullptr;
+}
+
+bool EmulatorCore::start()
+{
+    Q_ASSERT(!mRunning);
+    if (mRunning)
+        return true;
+
     int argc = 1;
     const char* const argv[] = { "fuse" };
     if (fuse_init(argc, (char**)argv)) {
-        show();
-        QMessageBox::critical(this, tr("Error"), tr("Unable to initialize emulator core."));
-        return;
+        emit error(tr("Unable to initialize emulator core."));
+        return false;
     }
 
     mTimer = new QTimer(this);
-    connect(mTimer, &QTimer::timeout, this, &EmulatorWindow::tick);
+    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::tick);
 
-    mInitialized = true;
+    mRunning = true;
+    emit updateUi();
+
+    return true;
 }
 
-EmulatorWindow::~EmulatorWindow()
+void EmulatorCore::stop()
 {
-    if (mInitialized)
-        fuse_end();
+    if (!mRunning)
+        return;
+
+    mTimer->deleteLater();
+    mTimer = nullptr;
+
+    fuse_end();
+
+    mRunning = false;
+    emit updateUi();
 }
 
-void EmulatorWindow::tick()
+void EmulatorCore::tick()
 {
     z80_do_opcodes();
     event_do_events();
@@ -123,14 +153,12 @@ int compat_get_next_path(path_context* ctx)
     return 0;
 }
 
-static QElapsedTimer timer;
-
 double timer_get_time()
 {
-    if (timer.isValid())
-        return timer.elapsed() * 0.001;
+    if (mElapsedTimer.isValid())
+        return mElapsedTimer.elapsed() * 0.001;
     else {
-        timer.start();
+        mElapsedTimer.start();
         return 0;
     }
 }

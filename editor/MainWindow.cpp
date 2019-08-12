@@ -2,7 +2,7 @@
 #include "CompilerDialog.h"
 #include "AboutDialog.h"
 #include "FileManager.h"
-#include "EmulatorWindow.h"
+#include "EmulatorCore.h"
 #include "IEditorTab.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -22,8 +22,13 @@ namespace
 
 MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
-    , mEmulatorWindow(nullptr)
 {
+    mEmulatorCore = new EmulatorCore(this);
+    connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
+    connect(mEmulatorCore, &EmulatorCore::error, this, [this](const QString& message) {
+            QMessageBox::critical(this, tr("Emulator error"), message);
+        });
+
     mUi->setupUi(this);
 
     mInsOverwriteLabel = new QLabel(mUi->statusBar);
@@ -203,6 +208,8 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
+    mUi->actionRun->setEnabled(!mEmulatorCore->isRunning());
+    mUi->actionStop->setEnabled(mEmulatorCore->isRunning());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
@@ -305,13 +312,16 @@ void MainWindow::on_actionBuild_triggered()
 
 void MainWindow::on_actionRun_triggered()
 {
+    if (mEmulatorCore->isRunning())
+        return;
+
     build();
+    mEmulatorCore->start();
+}
 
-    if (!mEmulatorWindow)
-        mEmulatorWindow = new EmulatorWindow(this);
-
-    mEmulatorWindow->show();
-    mEmulatorWindow->setFocus();
+void MainWindow::on_actionStop_triggered()
+{
+    mEmulatorCore->stop();
 }
 
 void MainWindow::on_actionAbout_triggered()

@@ -36,8 +36,8 @@ qt_add_sources(GameEditor
         CompilerDialog.cpp
         CompilerDialog.h
         CompilerDialog.ui
-        EmulatorWindow.cpp
-        EmulatorWindow.h
+        EmulatorCore.cpp
+        EmulatorCore.h
         FileManager.cpp
         FileManager.h
         FileManager.ui

@@ -6,7 +6,7 @@
 #include <memory>
 
 class IEditorTab;
-class EmulatorWindow;
+class EmulatorCore;
 class QLabel;
 class Ui_MainWindow;
 
@@ -30,7 +30,7 @@ private:
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
     QLabel* mBuildResultLabel;
-    EmulatorWindow* mEmulatorWindow;
+    EmulatorCore* mEmulatorCore;
 
     bool confirmSave();
     bool saveAll();
@@ -59,6 +59,7 @@ private:
 
     Q_SLOT void on_actionBuild_triggered();
     Q_SLOT void on_actionRun_triggered();
+    Q_SLOT void on_actionStop_triggered();
 
     Q_SLOT void on_actionAbout_triggered();
 
