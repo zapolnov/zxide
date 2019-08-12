@@ -118,8 +118,8 @@ int compat_get_next_path(path_context* ctx)
             return 0;
     }
 
-    ui_error(UI_ERROR_ERROR, "unknown path_context state %d", ctx->state);
-    fuse_abort();
+    Q_ASSERT(false);
+    return 0;
 }
 
 static QElapsedTimer timer;

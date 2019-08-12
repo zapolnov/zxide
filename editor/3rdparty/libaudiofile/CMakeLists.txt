@@ -3,6 +3,10 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
+add_definitions(
+    -DFile=AFile
+    )
+
 if(WIN32)
     add_definitions(-Dssize_t=ptrdiff_t)
 endif()

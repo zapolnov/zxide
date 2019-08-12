@@ -27,7 +27,7 @@
 #define FUSE_COMPAT_H
 
 #include <stdio.h>
-#include <dirent.h>
+/*#include <dirent.h>*/
 #include <stdlib.h>
 #include <sys/types.h>
 
@@ -135,11 +135,13 @@ int compat_get_next_path( path_context *ctx );
 
 typedef FILE* compat_fd;
 
+#if 0
 #ifndef GEKKO
 typedef DIR* compat_dir;
 #else                           /* #ifndef GEKKO */
 typedef DIR_ITER* compat_dir;
 #endif                          /* #ifndef GEKKO */
+#endif
 
 extern const compat_fd COMPAT_FILE_OPEN_FAILED;
 
@@ -157,6 +159,7 @@ int compat_file_exists( const char *path );
 
 /* Directory handling */
 
+/*
 typedef enum compat_dir_result_t {
   COMPAT_DIR_RESULT_OK,
   COMPAT_DIR_RESULT_END,
@@ -167,6 +170,7 @@ compat_dir compat_opendir( const char *path );
 compat_dir_result_t compat_readdir( compat_dir directory, char *name,
 				    size_t length );
 int compat_closedir( compat_dir directory );
+*/
 
 /* Timing routines */
 
