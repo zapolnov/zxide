@@ -320,7 +320,7 @@ static int parse_xml( xmlDocPtr doc, settings_info *settings );
 static int parse_ini( utils_file *file, settings_info *settings );
 #endif				/* #ifdef HAVE_LIB_XML2 */
 
-static int settings_command_line( settings_info *settings, int *first_arg,
+int settings_command_line( settings_info *settings, int *first_arg,
 				  int argc, char **argv );
 
 static void settings_copy_internal( settings_info *dest, settings_info *src );
@@ -4474,15 +4474,16 @@ error:
 
 #endif				/* #ifdef HAVE_LIB_XML2 */
 
+#if 0
 /* Read options from the command line */
 static int
 settings_command_line( settings_info *settings, int *first_arg,
                        int argc, char **argv )
 {
-#if 1//def GEKKO
+#ifdef GEKKO
   /* No argv on the Wii. Just return */
   return 0;
-#else//ndif
+#endif
 
 #if !defined AMIGA && !defined __MORPHOS__
 
@@ -5007,8 +5008,8 @@ settings_command_line( settings_info *settings, int *first_arg,
   *first_arg = optind;
 
   return 0;
-#endif
 }
+#endif
 
 /* Copy one settings object to another */
 static void

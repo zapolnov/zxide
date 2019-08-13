@@ -14,6 +14,7 @@ extern "C" {
 #include <fuse.h>
 #include <timer/timer.h>
 #include <z80/z80.h>
+#include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
 }
@@ -107,6 +108,13 @@ double timer_get_time()
 void timer_sleep(int ms)
 {
     QThread::msleep(ms);
+}
+
+extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char**)
+{
+    Settings settings;
+    fuse->sound = (settings.enableSound() ? 1 : 0);
+    return 0;
 }
 
 int ui_statusbar_update_speed(float speed)
