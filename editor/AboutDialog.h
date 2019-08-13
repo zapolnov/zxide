@@ -17,6 +17,9 @@ public:
 private:
     std::unique_ptr<Ui_AboutDialog> mUi;
 
+    Q_SLOT void on_aboutQtButton_clicked();
+    Q_SLOT void on_thirdPartyButton_clicked();
+
     Q_DISABLE_COPY(AboutDialog)
 };
 

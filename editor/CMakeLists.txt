@@ -50,6 +50,9 @@ qt_add_sources(GameEditor
         SettingsDialog.cpp
         SettingsDialog.h
         SettingsDialog.ui
+        ThirdPartyDialog.cpp
+        ThirdPartyDialog.h
+        ThirdPartyDialog.ui
         main.cpp
     )
 
