@@ -236,15 +236,15 @@ void MainWindow::on_actionNewFile_triggered()
     currentTab()->createFile();
 }
 
+void MainWindow::on_actionNewDirectory_triggered()
+{
+    currentTab()->createDirectory();
+}
+
 void MainWindow::on_actionSaveAll_triggered()
 {
     for (auto tab : mEditorTabs)
         tab->saveAll();
-}
-
-void MainWindow::on_actionCreateDirectory_triggered()
-{
-    currentTab()->createDirectory();
 }
 
 void MainWindow::on_actionRenameFile_triggered()
