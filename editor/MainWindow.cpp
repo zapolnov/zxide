@@ -368,7 +368,6 @@ void MainWindow::on_actionRun_triggered()
 void MainWindow::on_actionStop_triggered()
 {
     mEmulatorCore->stop();
-    mUi->registersWidget->reset();
 }
 
 void MainWindow::on_actionSettings_triggered()

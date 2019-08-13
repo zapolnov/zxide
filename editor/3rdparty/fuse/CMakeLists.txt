@@ -169,6 +169,7 @@ add_sources(Fuse
     sound/blipbuffer.c
     sound/blipbuffer.h
     sound/coreaudiosound.c
+    sound/dxsound.c
     sound/nullsound.c
     sound/sfifo.c
     sound/sfifo.h
@@ -276,10 +277,11 @@ set_source_files_properties(
     )
 
 if(WIN32)
-    target_link_libraries(Fuse ws2_32)
+    target_link_libraries(Fuse ws2_32 dxguid)
     set_source_files_properties(
         sound/coreaudiosound.c
-        #sound/nullsound.c
+        #sound/dxsound.c
+        sound/nullsound.c
         PROPERTIES HEADER_FILE_ONLY TRUE)
 elseif(APPLE)
     find_library(AudioToolbox AudioToolbox)
@@ -287,6 +289,7 @@ elseif(APPLE)
     target_link_libraries(Fuse ${AudioToolbox} ${CoreAudio})
     set_source_files_properties(
         #sound/coreaudiosound.c
+        sound/dxsound.c
         sound/nullsound.c
         PROPERTIES HEADER_FILE_ONLY TRUE)
 endif()

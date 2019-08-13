@@ -14,7 +14,8 @@ RegistersWidget::RegistersWidget(QWidget* parent)
 {
     mUi->setupUi(this);
 
-    connect(EmulatorCore::instance(), &EmulatorCore::ticked, this, &RegistersWidget::refresh);
+    connect(EmulatorCore::instance(), &EmulatorCore::updated, this, &RegistersWidget::refresh);
+    connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, &RegistersWidget::reset);
 
     mUi->regAF->nameLabel->setText(QStringLiteral("AF"));
     mUi->regBC->nameLabel->setText(QStringLiteral("BC"));
@@ -57,41 +58,43 @@ RegistersWidget::~RegistersWidget()
 
 void RegistersWidget::refresh()
 {
-    mUi->regAF->setValue(AF);
-    mUi->regBC->setValue(BC);
-    mUi->regDE->setValue(DE);
-    mUi->regHL->setValue(HL);
-    mUi->regIX->setValue(IX);
-    mUi->regIY->setValue(IY);
-    mUi->regSP->setValue(SP);
-    mUi->regPC->setValue(PC);
+    const auto& r = EmulatorCore::instance()->registers();
 
-    mUi->regShadowAF->setValue(AF_);
-    mUi->regShadowBC->setValue(BC_);
-    mUi->regShadowDE->setValue(DE_);
-    mUi->regShadowHL->setValue(HL_);
+    mUi->regAF->setValue(r.af);
+    mUi->regBC->setValue(r.bc);
+    mUi->regDE->setValue(r.de);
+    mUi->regHL->setValue(r.hl);
+    mUi->regIX->setValue(r.ix);
+    mUi->regIY->setValue(r.iy);
+    mUi->regSP->setValue(r.sp);
+    mUi->regPC->setValue(r.pc);
 
-    mUi->regA->setValue(A);
-    mUi->regF->setValue(F);
-    mUi->regB->setValue(B);
-    mUi->regC->setValue(C);
-    mUi->regD->setValue(D);
-    mUi->regE->setValue(E);
-    mUi->regH->setValue(H);
-    mUi->regL->setValue(L);
-    mUi->regI->setValue(I);
-    mUi->regR->setValue(R);
+    mUi->regShadowAF->setValue(r.af_);
+    mUi->regShadowBC->setValue(r.bc_);
+    mUi->regShadowDE->setValue(r.de_);
+    mUi->regShadowHL->setValue(r.hl_);
 
-    mUi->regShadowA->setValue(A);
-    mUi->regShadowF->setValue(F);
-    mUi->regShadowB->setValue(B);
-    mUi->regShadowC->setValue(C);
-    mUi->regShadowD->setValue(D);
-    mUi->regShadowE->setValue(E);
-    mUi->regShadowH->setValue(H);
-    mUi->regShadowL->setValue(L);
+    mUi->regA->setValue(r.a);
+    mUi->regF->setValue(r.f);
+    mUi->regB->setValue(r.b);
+    mUi->regC->setValue(r.c);
+    mUi->regD->setValue(r.d);
+    mUi->regE->setValue(r.e);
+    mUi->regH->setValue(r.h);
+    mUi->regL->setValue(r.l);
+    mUi->regI->setValue(r.i);
+    mUi->regR->setValue(r.r);
 
-    #define FLAG(NAME) ((F) & FLAG_##NAME ? QStringLiteral("green") : QStringLiteral("red"))
+    mUi->regShadowA->setValue(r.a);
+    mUi->regShadowF->setValue(r.f);
+    mUi->regShadowB->setValue(r.b);
+    mUi->regShadowC->setValue(r.c);
+    mUi->regShadowD->setValue(r.d);
+    mUi->regShadowE->setValue(r.e);
+    mUi->regShadowH->setValue(r.h);
+    mUi->regShadowL->setValue(r.l);
+
+    #define FLAG(NAME) (r.f & FLAG_##NAME ? QStringLiteral("green") : QStringLiteral("red"))
     mUi->signFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(S)));
     mUi->zeroFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(Z)));
     mUi->halfCarryFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(H)));

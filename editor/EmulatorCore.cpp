@@ -1,8 +1,10 @@
 #include "EmulatorCore.h"
 #include "Settings.h"
 #include <QTimer>
+#include <QThread>
 #include <QFile>
 #include <QElapsedTimer>
+#include <QMutex>
 #include <QThread>
 
 extern "C" {
@@ -14,12 +16,66 @@ extern "C" {
 #include <fuse.h>
 #include <timer/timer.h>
 #include <z80/z80.h>
+#include <z80/z80_macros.h>
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
 }
 
-static QElapsedTimer mElapsedTimer;
+static QElapsedTimer elapsedTimer;
+static float emulatorSpeed;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class EmulatorCore::Thread : public QThread
+{
+public:
+    QMutex mutex;
+
+    explicit Thread(QObject* parent = nullptr)
+        : QThread(parent)
+    {
+    }
+
+    void run() override
+    {
+        if (!init())
+            return;
+
+        while (!isInterruptionRequested())
+            tick();
+
+        cleanup();
+    }
+
+private:
+    bool init()
+    {
+        QMutexLocker lock(&mutex);
+
+        int argc = 1;
+        const char* const argv[] = { "fuse" };
+        if (fuse_init(argc, (char**)argv))
+            return false;
+
+        return true;
+    }
+
+    void cleanup()
+    {
+        QMutexLocker lock(&mutex);
+        fuse_end();
+    }
+
+    void tick()
+    {
+        QMutexLocker lock(&mutex);
+        z80_do_opcodes();
+        event_do_events();
+    }
+
+    Q_DISABLE_COPY(Thread)
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -97,10 +153,10 @@ int compat_get_next_path(path_context* ctx)
 
 double timer_get_time()
 {
-    if (mElapsedTimer.isValid())
-        return mElapsedTimer.elapsed() * 0.001;
+    if (elapsedTimer.isValid())
+        return elapsedTimer.elapsed() * 0.001;
     else {
-        mElapsedTimer.start();
+        elapsedTimer.start();
         return 0;
     }
 }
@@ -119,7 +175,7 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
 
 int ui_statusbar_update_speed(float speed)
 {
-    emit EmulatorCore::instance()->internal_onSpeedChanged(speed);
+    emulatorSpeed = speed;
     return 0;
 }
 
@@ -129,12 +185,22 @@ EmulatorCore* EmulatorCore::mInstance;
 
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
-    , mTimer(nullptr)
+    , mTimer(new QTimer(this))
+    , mThread(new Thread(this))
     , mCurrentSpeed(0.0f)
-    , mRunning(false)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
+
+    mTimer->setInterval(1000 / 50);
+    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::update);
+
+    connect(mThread, &QThread::started, mTimer, QOverload<>::of(&QTimer::start));
+    connect(mThread, &QThread::finished, mTimer, &QTimer::stop);
+    connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
+    connect(mThread, &QThread::finished, this, &EmulatorCore::updateUi);
+    connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
+
     reloadSettings();
 }
 
@@ -148,67 +214,84 @@ EmulatorCore::~EmulatorCore()
 
 bool EmulatorCore::start()
 {
-    Q_ASSERT(!mRunning);
-    if (mRunning)
-        return true;
-
-    int argc = 1;
-    const char* const argv[] = { "fuse" };
-    if (fuse_init(argc, (char**)argv)) {
-        emit error(tr("Unable to initialize emulator core."));
-        return false;
-    }
-
-    mTimer = new QTimer(this);
-    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::tick);
-    mTimer->start(10);
-
-    mRunning = true;
-    emit updateUi();
-
+    mThread->start();
     return true;
 }
 
 void EmulatorCore::stop()
 {
-    if (!mRunning)
-        return;
+    mThread->requestInterruption();
+    mThread->wait();
+}
 
-    mTimer->stop();
-    mTimer->deleteLater();
-    mTimer = nullptr;
-
-    fuse_end();
-
-    mRunning = false;
-    emit updateUi();
+bool EmulatorCore::isRunning() const
+{
+    return mThread->isRunning();
 }
 
 void EmulatorCore::reloadSettings()
 {
+    // FIXME
+}
+
+float EmulatorCore::currentSpeed() const
+{
+    return (mThread->isRunning() ? mCurrentSpeed : 0.0f);
 }
 
 QString EmulatorCore::currentSpeedString() const
 {
-    if (!mRunning)
+    if (!mThread->isRunning())
         return QString();
     return QStringLiteral("%1%").arg(int(mCurrentSpeed));
 }
 
-void EmulatorCore::internal_onSpeedChanged(float speed)
+void EmulatorCore::update()
 {
-    if (mCurrentSpeed != speed) {
-        mCurrentSpeed = speed;
-        emit updateUi();
+    bool shouldUpdateUi = false;
+
+    {
+        QMutexLocker lock(&mThread->mutex);
+
+        if (mCurrentSpeed != emulatorSpeed) {
+            mCurrentSpeed = emulatorSpeed;
+            shouldUpdateUi = true;
+        }
+
+        mRegisters.af = AF;
+        mRegisters.bc = BC;
+        mRegisters.de = DE;
+        mRegisters.hl = HL;
+        mRegisters.ix = IX;
+        mRegisters.iy = IY;
+        mRegisters.sp = SP;
+        mRegisters.pc = PC;
+        mRegisters.af_ = AF_;
+        mRegisters.bc_ = BC_;
+        mRegisters.de_ = DE_;
+        mRegisters.hl_ = HL_;
+        mRegisters.a = A;
+        mRegisters.b = B;
+        mRegisters.c = C;
+        mRegisters.d = D;
+        mRegisters.e = E;
+        mRegisters.h = H;
+        mRegisters.l = L;
+        mRegisters.f = F;
+        mRegisters.i = I;
+        mRegisters.r = R;
+        mRegisters.a_ = A_;
+        mRegisters.b_ = B_;
+        mRegisters.c_ = C_;
+        mRegisters.d_ = D_;
+        mRegisters.e_ = E_;
+        mRegisters.h_ = H_;
+        mRegisters.l_ = L_;
+        mRegisters.f_ = F_;
     }
-}
 
-void EmulatorCore::tick()
-{
-    if (!mRunning)
-        return;
+    if (shouldUpdateUi)
+        emit updateUi();
 
-    z80_do_opcodes();
-    event_do_events();
-    emit ticked();
+    emit updated();
 }
