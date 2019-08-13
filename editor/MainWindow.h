@@ -37,6 +37,7 @@ private:
     bool saveAll();
 
     bool build();
+    void clearBuildResult();
 
     void updateUi();
 

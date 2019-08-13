@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -146,6 +146,23 @@
         </widget>
        </item>
        <item>
+        <widget class="QFrame" name="editorTabSeparator3">
+         <property name="frameShape">
+          <enum>QFrame::HLine</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="autoSaveBeforeCompileCheck">
+         <property name="text">
+          <string>Automatically sa&amp;ve all files before compiling</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="editorTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -203,13 +220,14 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>autoIndentCheck</tabstop>
   <tabstop>tabIndentsCheck</tabstop>
+  <tabstop>autoIndentCheck</tabstop>
   <tabstop>backspaceUnindentsCheck</tabstop>
   <tabstop>useTabsCheck</tabstop>
   <tabstop>tabWidthSpin</tabstop>
   <tabstop>showWhitespaceCheck</tabstop>
   <tabstop>showEolCheck</tabstop>
+  <tabstop>autoSaveBeforeCompileCheck</tabstop>
   <tabstop>enableSoundCheck</tabstop>
  </tabstops>
  <resources/>

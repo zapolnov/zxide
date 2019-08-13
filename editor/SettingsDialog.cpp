@@ -18,6 +18,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     mUi->tabWidthSpin->setValue(settings.tabWidth());
     mUi->showWhitespaceCheck->setChecked(settings.whitespaceVisibility() != SCWS_INVISIBLE); // FIXME: proper selector
     mUi->showEolCheck->setChecked(settings.showEol());
+    mUi->autoSaveBeforeCompileCheck->setChecked(settings.autoSaveBeforeCompile());
     mUi->enableSoundCheck->setChecked(settings.enableSound());
 
     mUi->tabWidget->setCurrentWidget(mUi->editorTab);
@@ -38,6 +39,7 @@ void SettingsDialog::done(int r)
         settings.setTabWidth(mUi->tabWidthSpin->value());
         settings.setWhitespaceVisibility(mUi->showWhitespaceCheck->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         settings.setShowEol(mUi->showEolCheck->isChecked());
+        settings.setAutoSaveBeforeCompile(mUi->autoSaveBeforeCompileCheck->isChecked());
         settings.setEnableSound(mUi->enableSoundCheck->isChecked());
     }
 

@@ -1,13 +1,14 @@
 #include "Settings.h"
 #include "ScintillaEdit/ScintillaEdit.h"
 
-static const QString SettingAutoIndent = QStringLiteral("SettingAutoIndent");
-static const QString SettingBackspaceUnindents = QStringLiteral("SettingBackspaceUnindents");
+static const QString SettingAutoIndent = QStringLiteral("AutoIndent");
+static const QString SettingTabIndents = QStringLiteral("TabIndents");
+static const QString SettingBackspaceUnindents = QStringLiteral("BackspaceUnindents");
 static const QString SettingShowEndOfLine = QStringLiteral("ShowEndOfLine");
 static const QString SettingShowWhitespace = QStringLiteral("ShowWhitespace");
-static const QString SettingTabIndents = QStringLiteral("TabIndents");
 static const QString SettingTabWidth = QStringLiteral("TabWidth");
 static const QString SettingUseTabs = QStringLiteral("UseTabs");
+static const QString SettingAutoSaveBeforeCompile = QStringLiteral("AutoSaveBeforeCompile");
 static const QString SettingEnableSound = QStringLiteral("EnableSound");
 
 Settings::Settings()
@@ -53,6 +54,11 @@ bool Settings::showEol() const
     return mSettings.value(SettingShowEndOfLine, false).toBool();
 }
 
+bool Settings::autoSaveBeforeCompile() const
+{
+    return mSettings.value(SettingAutoSaveBeforeCompile, false).toBool();
+}
+
 bool Settings::enableSound() const
 {
     return mSettings.value(SettingEnableSound, true).toBool();
@@ -91,6 +97,11 @@ void Settings::setWhitespaceVisibility(int value)
 void Settings::setShowEol(bool flag)
 {
     mSettings.setValue(SettingShowEndOfLine, flag);
+}
+
+void Settings::setAutoSaveBeforeCompile(bool flag)
+{
+    mSettings.setValue(SettingAutoSaveBeforeCompile, flag);
 }
 
 void Settings::setEnableSound(bool flag)

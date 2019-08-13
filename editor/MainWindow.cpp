@@ -5,10 +5,12 @@
 #include "EmulatorCore.h"
 #include "IEditorTab.h"
 #include "SettingsDialog.h"
+#include "Settings.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
 #include <QCloseEvent>
+#include <QCheckBox>
 #include <QInputDialog>
 #include <QLabel>
 
@@ -54,9 +56,8 @@ MainWindow::MainWindow(const QString& path)
     mUi->statusBar->addPermanentWidget(mEmulatorSpeedLabel);
 
     mBuildResultLabel = new QLabel(mUi->statusBar);
-    mBuildResultLabel->setText(tr("Ready"));
-    mBuildResultLabel->setStyleSheet(QStringLiteral("font-weight: bold; padding-right: 5px"));
     mUi->statusBar->addWidget(mBuildResultLabel);
+    clearBuildResult();
 
     int n = mUi->tabWidget->count();
     for (int i = 0; i < n; i++) {
@@ -119,8 +120,8 @@ bool MainWindow::confirmSave()
         return true;
 
     QMessageBox msgbox(QMessageBox::Warning, tr("Confirmation"), tr("Save changes?"), QMessageBox::NoButton, this);
-    auto btnSave = msgbox.addButton(tr("Save"), QMessageBox::AcceptRole);
-    auto btnDontSave = msgbox.addButton(tr("Don't Save"), QMessageBox::DestructiveRole);
+    auto btnSave = msgbox.addButton(tr("Save changes"), QMessageBox::AcceptRole);
+    auto btnDontSave = msgbox.addButton(tr("Discard changes"), QMessageBox::DestructiveRole);
     auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
     msgbox.setDefaultButton(btnCancel);
     msgbox.setEscapeButton(btnCancel);
@@ -150,11 +151,38 @@ bool MainWindow::build()
     if (mEmulatorCore->isRunning())
         return false;
 
-    if (!confirmSave()) {
-        mBuildResultLabel->setToolTip(QString());
-        mBuildResultLabel->setText(tr("Ready"));
-        mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
-        return false;
+    if (hasModifiedFiles()) {
+        Settings settings;
+        if (!settings.autoSaveBeforeCompile()) {
+            QCheckBox* autoSaveCheck = new QCheckBox(this);
+            autoSaveCheck->setText(tr("Automatically save files before each build"));
+
+            QMessageBox msgbox(QMessageBox::Warning, tr("Confirmation"),
+                QStringLiteral("%1\n\n%2")
+                    .arg(tr("All modified files have to be saved before compiling the code."))
+                    .arg(tr("Save all files now?")),
+                QMessageBox::NoButton, this);
+            auto btnSave = msgbox.addButton(tr("Save all and build"), QMessageBox::AcceptRole);
+            auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+            msgbox.setCheckBox(autoSaveCheck);
+            msgbox.setDefaultButton(btnCancel);
+            msgbox.setEscapeButton(btnCancel);
+            msgbox.exec();
+
+            auto clicked = msgbox.clickedButton();
+            if (clicked == btnCancel) {
+                clearBuildResult();
+                return false;
+            }
+
+            if (autoSaveCheck->isChecked())
+                settings.setAutoSaveBeforeCompile(true);
+        }
+
+        if (!saveAll()) {
+            clearBuildResult();
+            return false;
+        }
     }
 
     mBuildResultLabel->setToolTip(QString());
@@ -169,12 +197,7 @@ bool MainWindow::build()
     for (File* file : files)
         dlg.addSourceFile(file);
 
-    connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this] {
-            mBuildResultLabel->setToolTip(QString());
-            mBuildResultLabel->setText(tr("Ready"));
-            mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
-        });
-
+    connect(&dlg, &CompilerDialog::compilationSucceeded, this, &MainWindow::clearBuildResult);
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
             mUi->tabWidget->setCurrentWidget(mUi->codeTab);
 
@@ -197,6 +220,13 @@ bool MainWindow::build()
         });
 
     return dlg.runCompiler();
+}
+
+void MainWindow::clearBuildResult()
+{
+    mBuildResultLabel->setToolTip(QString());
+    mBuildResultLabel->setText(tr("Ready"));
+    mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
 }
 
 void MainWindow::updateUi()
