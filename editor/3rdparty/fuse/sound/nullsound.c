@@ -28,6 +28,7 @@ int
 sound_lowlevel_init( const char *device, int *freqptr, int *stereoptr )
 {
   //fuse_abort();
+  return 0;
 }
 
 void
