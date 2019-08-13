@@ -161,7 +161,7 @@ bool EmulatorCore::start()
 
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &EmulatorCore::tick);
-    mTimer->start(0);
+    mTimer->start(10);
 
     mRunning = true;
     emit updateUi();
@@ -210,4 +210,5 @@ void EmulatorCore::tick()
 
     z80_do_opcodes();
     event_do_events();
+    emit ticked();
 }

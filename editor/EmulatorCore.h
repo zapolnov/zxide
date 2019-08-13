@@ -28,6 +28,7 @@ public:
 
 signals:
     void error(const QString& message);
+    void ticked();
     void updateUi();
 
 private:
