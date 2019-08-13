@@ -8,9 +8,7 @@ test_big_endian(WORDS_BIGENDIAN)
 check_include_file("libgen.h" HAVE_LIBGEN_H)
 check_include_file("io.h" HAVE_IO_H)
 check_include_file("unistd.h" HAVE_UNISTD_H)
-check_include_file("sys/time.h" HAVE_SYS_TIME_H)
 check_include_file("strings.h" HAVE_STRINGS_H)
-check_function_exists("dirname" HAVE_DIRNAME)
 check_c_source_compiles("
     #include <strings.h>
     int main() {
@@ -30,8 +28,6 @@ endif()
 if(WIN32)
     add_definitions(-Dssize_t=ptrdiff_t -Dstrcasecmp=stricmp)
 endif()
-
-set(FUSEDATADIR "${CMAKE_BINARY_DIR}")
 
 configure_file(roms/48.rom "${CMAKE_BINARY_DIR}/roms/48.rom" COPYONLY)
 
@@ -172,6 +168,7 @@ add_sources(Fuse
     pokefinder/pokemem.h
     sound/blipbuffer.c
     sound/blipbuffer.h
+    sound/coreaudiosound.c
     sound/nullsound.c
     sound/sfifo.c
     sound/sfifo.h
@@ -278,27 +275,18 @@ set_source_files_properties(
     PROPERTIES HEADER_FILE_ONLY TRUE
     )
 
-if(HAVE_DIRNAME)
-    set_source_files_properties(
-        compat/dirname.c
-        PROPERTIES HEADER_FILE_ONLY TRUE
-        )
-endif()
-
 if(WIN32)
     target_link_libraries(Fuse ws2_32)
     set_source_files_properties(
-        compat/unix/osname.c
-        compat/unix/paths.c
-        compat/unix/relative_paths.c
-        compat/unix/socket.c
-        compat/unix/timer.c
+        sound/coreaudiosound.c
+        #sound/nullsound.c
         PROPERTIES HEADER_FILE_ONLY TRUE)
-else()
+elseif(APPLE)
+    find_library(AudioToolbox AudioToolbox)
+    find_library(CoreAudio CoreAudio)
+    target_link_libraries(Fuse ${AudioToolbox} ${CoreAudio})
     set_source_files_properties(
-        compat/win32/osname.c
-        compat/win32/paths.c
-        compat/win32/socket.c
-        compat/win32/timer.c
+        #sound/coreaudiosound.c
+        sound/nullsound.c
         PROPERTIES HEADER_FILE_ONLY TRUE)
 endif()
