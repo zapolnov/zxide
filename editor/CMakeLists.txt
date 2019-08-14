@@ -37,6 +37,8 @@ qt_add_sources(GameEditor
         tiles/TilesTab.cpp
         tiles/TilesTab.h
         tiles/TilesTab.ui
+        util/SimpleTextWidget.cpp
+        util/SimpleTextWidget.h
         AboutDialog.cpp
         AboutDialog.h
         AboutDialog.ui

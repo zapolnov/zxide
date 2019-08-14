@@ -859,8 +859,8 @@ for opcode in opcodes:
     src += '        ;\n'
     src += '\n'
     src += '    static const unsigned char binary[] = {\n'
-    for byte in correctCode:
-        src += '        0x%02x,\n' % ord(byte)
+    for byte in bytearray(correctCode):
+        src += '        0x%02x,\n' % byte
     src += '        };\n'
     src += '\n'
     src += '    ErrorConsumer errorConsumer;\n'

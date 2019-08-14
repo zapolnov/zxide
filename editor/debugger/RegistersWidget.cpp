@@ -1,6 +1,6 @@
 #include "RegistersWidget.h"
-#include "EmulatorCore.h"
 #include "ui_RegistersWidget.h"
+#include <QPainter>
 
 extern "C" {
 #include <libspectrum.h>
@@ -9,14 +9,12 @@ extern "C" {
 }
 
 RegistersWidget::RegistersWidget(QWidget* parent)
-    : QWidget(parent)
-    , mUi(new Ui_RegistersWidget)
+    : SimpleTextWidget(parent)
 {
-    mUi->setupUi(this);
-
     connect(EmulatorCore::instance(), &EmulatorCore::updated, this, &RegistersWidget::refresh);
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, &RegistersWidget::reset);
 
+    /*
     mUi->regAF->nameLabel->setText(QStringLiteral("AF"));
     mUi->regBC->nameLabel->setText(QStringLiteral("BC"));
     mUi->regDE->nameLabel->setText(QStringLiteral("DE"));
@@ -50,6 +48,7 @@ RegistersWidget::RegistersWidget(QWidget* parent)
     mUi->regShadowE->nameLabel->setText(QStringLiteral("E`"));
     mUi->regShadowH->nameLabel->setText(QStringLiteral("H`"));
     mUi->regShadowL->nameLabel->setText(QStringLiteral("L`"));
+    */
 }
 
 RegistersWidget::~RegistersWidget()
@@ -58,8 +57,9 @@ RegistersWidget::~RegistersWidget()
 
 void RegistersWidget::refresh()
 {
-    const auto& r = EmulatorCore::instance()->registers();
+    mRegisters = EmulatorCore::instance()->registers();
 
+    /*
     mUi->regAF->setValue(r.af);
     mUi->regBC->setValue(r.bc);
     mUi->regDE->setValue(r.de);
@@ -101,10 +101,14 @@ void RegistersWidget::refresh()
     mUi->parityOverflowFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(P)));
     mUi->subtractFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(N)));
     mUi->carryFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(C)));
+    */
+
+    update();
 }
 
 void RegistersWidget::reset()
 {
+    /*
     mUi->regAF->setValue(0); mUi->regAF->clearHighlight();
     mUi->regBC->setValue(0); mUi->regBC->clearHighlight();
     mUi->regDE->setValue(0); mUi->regDE->clearHighlight();
@@ -145,4 +149,12 @@ void RegistersWidget::reset()
     mUi->parityOverflowFlagFrame->setStyleSheet(QString());
     mUi->subtractFlagFrame->setStyleSheet(QString());
     mUi->carryFlagFrame->setStyleSheet(QString());
+    */
+}
+
+void RegistersWidget::paintEvent(QPaintEvent* event)
+{
+    QPainter painter(this);
+    drawTextAt(&painter, 1, 1, "Hello,", RED | INTENSITY);
+    drawTextAt(&painter, 1, 2, "world!", COLOR(GREEN | INTENSITY, BLUE));
 }

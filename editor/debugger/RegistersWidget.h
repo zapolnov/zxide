@@ -1,12 +1,11 @@
 #ifndef DEBUGGER_REGISTERSWIDGET_H
 #define DEBUGGER_REGISTERSWIDGET_H
 
-#include <QWidget>
+#include "EmulatorCore.h"
+#include "util/SimpleTextWidget.h"
 #include <memory>
 
-class Ui_RegistersWidget;
-
-class RegistersWidget : public QWidget
+class RegistersWidget : public SimpleTextWidget
 {
     Q_OBJECT
 
@@ -17,8 +16,11 @@ public:
     void refresh();
     void reset();
 
+protected:
+    void paintEvent(QPaintEvent* event) override;
+
 private:
-    std::unique_ptr<Ui_RegistersWidget> mUi;
+    Registers mRegisters;
 
     Q_DISABLE_COPY(RegistersWidget)
 };
