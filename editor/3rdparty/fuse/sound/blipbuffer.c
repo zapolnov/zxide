@@ -30,7 +30,7 @@ partially reimplemented in C by Gergely Szasz for FUSE
 
 static void _blip_synth_init( Blip_Synth_ * synth_, short *impulses );
 
-inline void
+void
 blip_buffer_set_clock_rate( Blip_Buffer * buff, long cps )
 {
   buff->factor_ = blip_buffer_clock_rate_factor( buff, buff->clock_rate_ =

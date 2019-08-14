@@ -166,6 +166,7 @@ add_sources(Fuse
     pokefinder/pokefinder.h
     pokefinder/pokemem.c
     pokefinder/pokemem.h
+    sound/alsasound.c
     sound/blipbuffer.c
     sound/blipbuffer.h
     sound/coreaudiosound.c
@@ -279,6 +280,7 @@ set_source_files_properties(
 if(WIN32)
     target_link_libraries(Fuse ws2_32 dxguid)
     set_source_files_properties(
+        sound/alsasound.c
         sound/coreaudiosound.c
         #sound/dxsound.c
         sound/nullsound.c
@@ -288,7 +290,18 @@ elseif(APPLE)
     find_library(CoreAudio CoreAudio)
     target_link_libraries(Fuse ${AudioToolbox} ${CoreAudio})
     set_source_files_properties(
+        sound/alsasound.c
         #sound/coreaudiosound.c
+        sound/dxsound.c
+        sound/nullsound.c
+        PROPERTIES HEADER_FILE_ONLY TRUE)
+else()
+    find_package(ALSA REQUIRED)
+    target_include_directories(Fuse PRIVATE ${ALSA_INCLUDE_DIRS})
+    target_link_libraries(Fuse ${ALSA_LIBRARIES})
+    set_source_files_properties(
+        #sound/alsasound.c
+        sound/coreaudiosound.c
         sound/dxsound.c
         sound/nullsound.c
         PROPERTIES HEADER_FILE_ONLY TRUE)
