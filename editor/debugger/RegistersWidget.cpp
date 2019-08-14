@@ -252,8 +252,8 @@ template <typename T> void RegistersWidget::Register<T>::paint(QPainter* painter
                 switch (mMode) {
                     case Decimal_Unsigned: sprintf(buf, " %3u", uvalue); break;
                     case Decimal_Signed: sprintf(buf, "%+4d", svalue); break;
-                    case Hexadecimal_Unsigned: sprintf(buf, " %02xh", uvalue); break;
-                    case Hexadecimal_Signed: sprintf(buf, "%c%02xh", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
+                    case Hexadecimal_Unsigned: sprintf(buf, " %02x\xFF", uvalue); break;
+                    case Hexadecimal_Signed: sprintf(buf, "%c%02x\xFF", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
                 }
             }
             break;
@@ -269,8 +269,8 @@ template <typename T> void RegistersWidget::Register<T>::paint(QPainter* painter
                 switch (mMode) {
                     case Decimal_Unsigned: sprintf(buf, " %5u", uvalue); break;
                     case Decimal_Signed: sprintf(buf, "%+6d", svalue); break;
-                    case Hexadecimal_Unsigned: sprintf(buf, " %04xh", uvalue); break;
-                    case Hexadecimal_Signed: sprintf(buf, "%c%04xh", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
+                    case Hexadecimal_Unsigned: sprintf(buf, " %04x\xFF", uvalue); break;
+                    case Hexadecimal_Signed: sprintf(buf, "%c%04x\xFF", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
                 }
             }
             break;

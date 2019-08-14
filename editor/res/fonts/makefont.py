@@ -77,7 +77,7 @@ def setPixels(code, pixels):
         for xx in range(0, 8):
             ix = x * 8 + xx
             iy = y * font_height + yy
-            image[iy * 128 + ix] = 1 if (pixels[yy][xx] == 'x') else 0
+            image[iy * 128 + ix] = 0 if (pixels[yy][xx] == 'x') else 1
 
 for i in range(0x00, 0x20):
     setChar(i, 0x2E)
@@ -394,7 +394,26 @@ setPixels(0x8F, [
         'xxxxxxxx',
     ])
 
-for i in range(0x90, 0x100):
+for i in range(0x90, 0xFF):
     setChar(i, 0x2E)
+
+setPixels(0xFF, [       # custom for the editor
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '.x..xx..',
+        '.x.x....',
+        '.x.xxx..',
+        '.x.x..x.',
+        '.x.x..x.',
+        '.x..xx..',
+        '........',
+    ])
 
 writePNG()
