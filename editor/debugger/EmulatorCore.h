@@ -5,8 +5,6 @@
 #include <QThread>
 #include <QMutex>
 
-class QTimer;
-
 struct Registers
 {
     quint32 tstates;
@@ -75,8 +73,7 @@ public:
     QString currentSpeedString() const;
 
 signals:
-    void error(const QString& message);
-    void updated();
+    void started();
     void stopped();
     void updateUi();
 
@@ -95,10 +92,8 @@ private:
 
     static EmulatorCore* mInstance;
     Registers mRegisters;
-    QTimer* mTimer;
     Thread* mThread;
     int mCurrentSpeed;
-    bool mUpdated;
     bool mShouldUpdateUi;
 
     void update();

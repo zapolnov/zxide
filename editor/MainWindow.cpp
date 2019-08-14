@@ -28,9 +28,6 @@ MainWindow::MainWindow(const QString& path)
 {
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
-    connect(mEmulatorCore, &EmulatorCore::error, this, [this](const QString& message) {
-            QMessageBox::critical(this, tr("Emulator error"), message);
-        });
 
     mUi->setupUi(this);
 

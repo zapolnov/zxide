@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 
+class QTimer;
+
 class RegistersWidget : public QWidget
 {
     Q_OBJECT
@@ -125,6 +127,7 @@ private:
 
     std::vector<std::unique_ptr<AbstractRegister>> mRegisters;
     Qt::Orientation mOrientation;
+    QTimer* mTimer;
 
     Q_DISABLE_COPY(RegistersWidget)
 };

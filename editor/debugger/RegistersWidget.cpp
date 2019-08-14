@@ -1,10 +1,12 @@
 #include "RegistersWidget.h"
+#include <QTimer>
 #include <QPainter>
 #include <QContextMenuEvent>
 #include <QMenu>
 
 RegistersWidget::RegistersWidget(QWidget* parent)
     : QWidget(parent)
+    , mTimer(new QTimer(this))
     , mOrientation(Qt::Horizontal)
 {
     setOrientation(Qt::Vertical);
@@ -69,7 +71,12 @@ RegistersWidget::RegistersWidget(QWidget* parent)
     UREG(   56, 5,  2, 16, ula,   "ULA", 3);
     TSTATES(56, 6, 18, 16, tstates, "T", 1);
 
-    connect(EmulatorCore::instance(), &EmulatorCore::updated, this, &RegistersWidget::refresh);
+    mTimer->setInterval(1000 / 4);
+    connect(mTimer, &QTimer::timeout, this, &RegistersWidget::refresh);
+
+    connect(EmulatorCore::instance(), &EmulatorCore::started, mTimer, QOverload<>::of(&QTimer::start));
+    connect(EmulatorCore::instance(), &EmulatorCore::started, this, &RegistersWidget::refresh);
+    connect(EmulatorCore::instance(), &EmulatorCore::stopped, mTimer, &QTimer::stop);
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, &RegistersWidget::reset);
 }
 
@@ -79,7 +86,7 @@ RegistersWidget::~RegistersWidget()
 
 void RegistersWidget::refresh()
 {
-    const auto& r = EmulatorCore::instance()->registers();
+    auto r = EmulatorCore::instance()->registers();
     for (const auto& reg : mRegisters)
         reg->updateValue(r);
 }

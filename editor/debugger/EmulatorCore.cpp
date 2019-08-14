@@ -1,6 +1,5 @@
 #include "EmulatorCore.h"
 #include "util/Settings.h"
-#include <QTimer>
 #include <QFile>
 #include <QElapsedTimer>
 #include <QThread>
@@ -28,7 +27,6 @@ EmulatorCore* EmulatorCore::mInstance;
 
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
-    , mTimer(new QTimer(this))
     , mThread(new Thread(this))
     , mCurrentSpeed(0)
     , mShouldUpdateUi(false)
@@ -36,11 +34,7 @@ EmulatorCore::EmulatorCore(QObject* parent)
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
 
-    mTimer->setInterval(1000 / 50);
-    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::update);
-
-    connect(mThread, &QThread::started, mTimer, QOverload<>::of(&QTimer::start));
-    connect(mThread, &QThread::finished, mTimer, &QTimer::stop);
+    connect(mThread, &QThread::started, this, &EmulatorCore::started);
     connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
@@ -110,18 +104,14 @@ QString EmulatorCore::currentSpeedString() const
 
 void EmulatorCore::update()
 {
-    bool shouldUpdate = false, shouldUpdateUi = false;
+    bool shouldUpdateUi = false;
 
     {
         QMutexLocker lock(&mThread->mutex);
-        shouldUpdate = mUpdated;
         shouldUpdateUi = mShouldUpdateUi;
-        mUpdated = false;
         mShouldUpdateUi = false;
     }
 
-    if (shouldUpdate)
-        emit updated();
     if (shouldUpdateUi)
         emit updateUi();
 }
@@ -154,7 +144,6 @@ void EmulatorCore::Thread::syncWithMainThread()
     QMutexLocker lock(&mutex);
 
     auto emu = EmulatorCore::instance();
-    emu->mUpdated = true;
 
     if (emu->mCurrentSpeed != emulatorSpeed) {
         emu->mCurrentSpeed = emulatorSpeed;
