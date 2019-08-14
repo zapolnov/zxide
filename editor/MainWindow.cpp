@@ -254,6 +254,8 @@ void MainWindow::updateUi()
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
     mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
+
+    mUi->registersDockWidget->setVisible(mEmulatorCore->isRunning());
 }
 
 void MainWindow::on_actionNewFile_triggered()
