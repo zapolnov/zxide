@@ -1,8 +1,8 @@
-#ifndef TILES_TILESTAB_H
-#define TILES_TILESTAB_H
+#ifndef EDITOR_TILES_TILESTAB_H
+#define EDITOR_TILES_TILESTAB_H
 
 #include <QWidget>
-#include "IEditorTab.h"
+#include "editor/IEditorTab.h"
 #include <memory>
 
 class Ui_TilesTab;

@@ -1,8 +1,8 @@
-#ifndef LEVELS_LEVELSTAB_H
-#define LEVELS_LEVELSTAB_H
+#ifndef EDITOR_LEVELS_LEVELSTAB_H
+#define EDITOR_LEVELS_LEVELSTAB_H
 
 #include <QWidget>
-#include "IEditorTab.h"
+#include "editor/IEditorTab.h"
 #include <memory>
 
 class Ui_LevelsTab;

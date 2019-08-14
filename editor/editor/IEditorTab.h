@@ -1,5 +1,5 @@
-#ifndef IEDITORTAB_H
-#define IEDITORTAB_H
+#ifndef EDITOR_IEDITORTAB_H
+#define EDITOR_IEDITORTAB_H
 
 #include <functional>
 #include <vector>

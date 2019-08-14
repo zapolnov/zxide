@@ -1,11 +1,11 @@
 #include "MainWindow.h"
 #include "CompilerDialog.h"
 #include "AboutDialog.h"
-#include "FileManager.h"
-#include "EmulatorCore.h"
-#include "IEditorTab.h"
 #include "SettingsDialog.h"
-#include "Settings.h"
+#include "util/Settings.h"
+#include "debugger/EmulatorCore.h"
+#include "editor/IEditorTab.h"
+#include "editor/FileManager.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>

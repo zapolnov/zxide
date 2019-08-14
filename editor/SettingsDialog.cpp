@@ -1,5 +1,5 @@
 #include "SettingsDialog.h"
-#include "Settings.h"
+#include "util/Settings.h"
 #include "ScintillaEdit/ScintillaEdit.h"
 #include "ui_SettingsDialog.h"
 

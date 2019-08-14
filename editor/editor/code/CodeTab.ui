@@ -82,13 +82,13 @@
   <customwidget>
    <class>FileManager</class>
    <extends>QWidget</extends>
-   <header>FileManager.h</header>
+   <header>editor/FileManager.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TextEditor</class>
    <extends>QWidget</extends>
-   <header>code/TextEditor.h</header>
+   <header>editor/code/TextEditor.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

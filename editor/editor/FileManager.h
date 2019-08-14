@@ -1,5 +1,5 @@
-#ifndef FILEMANAGER_H
-#define FILEMANAGER_H
+#ifndef EDITOR_FILEMANAGER_H
+#define EDITOR_FILEMANAGER_H
 
 #include <QWidget>
 #include <QTreeWidgetItem>

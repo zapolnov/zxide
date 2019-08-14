@@ -1,8 +1,8 @@
-#ifndef CODE_CODETAB_H
-#define CODE_CODETAB_H
+#ifndef EDITOR_CODE_CODETAB_H
+#define EDITOR_CODE_CODETAB_H
 
 #include <QWidget>
-#include "AbstractEditorTab.h"
+#include "editor/AbstractEditorTab.h"
 #include <memory>
 #include <unordered_map>
 

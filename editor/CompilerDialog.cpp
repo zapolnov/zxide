@@ -1,5 +1,5 @@
 #include "CompilerDialog.h"
-#include "FileManager.h"
+#include "editor/FileManager.h"
 #include "compiler/Compiler.h"
 #include "ui_CompilerDialog.h"
 #include <QCloseEvent>

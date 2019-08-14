@@ -1,8 +1,8 @@
-#ifndef ABSTRACTEDITORTAB_H
-#define ABSTRACTEDITORTAB_H
+#ifndef EDITOR_ABSTRACTEDITORTAB_H
+#define EDITOR_ABSTRACTEDITORTAB_H
 
 #include <QWidget>
-#include "IEditorTab.h"
+#include "editor/IEditorTab.h"
 
 class FileManager;
 

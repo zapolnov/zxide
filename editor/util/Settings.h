@@ -1,5 +1,5 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef UTIL_SETTINGS_H
+#define UTIL_SETTINGS_H
 
 #include <QSettings>
 

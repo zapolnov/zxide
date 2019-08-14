@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_REGISTERSWIDGET_H
 #define DEBUGGER_REGISTERSWIDGET_H
 
-#include "EmulatorCore.h"
+#include "debugger/EmulatorCore.h"
 #include "util/SimpleTextPainter.h"
 #include <memory>
 #include <vector>

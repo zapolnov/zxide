@@ -1,5 +1,5 @@
-#ifndef CODE_TEXTEDITOR_H
-#define CODE_TEXTEDITOR_H
+#ifndef EDITOR_CODE_TEXTEDITOR_H
+#define EDITOR_CODE_TEXTEDITOR_H
 
 #include "ScintillaEdit/ScintillaEdit.h"
 

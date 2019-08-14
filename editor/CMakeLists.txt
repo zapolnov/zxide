@@ -16,41 +16,41 @@ qt_add_executable(GameEditor USES Core Gui Widgets)
 target_link_libraries(GameEditor Scintilla Compiler Fuse)
 
 qt_add_sources(GameEditor
-        code/CodeTab.cpp
-        code/CodeTab.h
-        code/CodeTab.ui
-        code/TextEditor.cpp
-        code/TextEditor.h
+        debugger/EmulatorCore.cpp
+        debugger/EmulatorCore.h
         debugger/RegistersWidget.cpp
         debugger/RegistersWidget.h
-        levels/LevelsTab.cpp
-        levels/LevelsTab.h
-        levels/LevelsTab.ui
+        editor/code/CodeTab.cpp
+        editor/code/CodeTab.h
+        editor/code/CodeTab.ui
+        editor/code/TextEditor.cpp
+        editor/code/TextEditor.h
+        editor/levels/LevelsTab.cpp
+        editor/levels/LevelsTab.h
+        editor/levels/LevelsTab.ui
+        editor/tiles/TilesTab.cpp
+        editor/tiles/TilesTab.h
+        editor/tiles/TilesTab.ui
+        editor/AbstractEditorTab.cpp
+        editor/AbstractEditorTab.h
+        editor/FileManager.cpp
+        editor/FileManager.h
+        editor/FileManager.ui
+        editor/IEditorTab.h
         res/resources.qrc
-        tiles/TilesTab.cpp
-        tiles/TilesTab.h
-        tiles/TilesTab.ui
+        util/Settings.cpp
+        util/Settings.h
         util/SimpleTextPainter.cpp
         util/SimpleTextPainter.h
         AboutDialog.cpp
         AboutDialog.h
         AboutDialog.ui
-        AbstractEditorTab.cpp
-        AbstractEditorTab.h
         CompilerDialog.cpp
         CompilerDialog.h
         CompilerDialog.ui
-        EmulatorCore.cpp
-        EmulatorCore.h
-        FileManager.cpp
-        FileManager.h
-        FileManager.ui
-        IEditorTab.h
         MainWindow.cpp
         MainWindow.h
         MainWindow.ui
-        Settings.cpp
-        Settings.h
         SettingsDialog.cpp
         SettingsDialog.h
         SettingsDialog.ui

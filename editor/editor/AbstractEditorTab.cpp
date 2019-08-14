@@ -1,5 +1,5 @@
 #include "AbstractEditorTab.h"
-#include "FileManager.h"
+#include "editor/FileManager.h"
 #include <QMessageBox>
 #include <QPushButton>
 

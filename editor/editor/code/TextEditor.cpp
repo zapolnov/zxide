@@ -1,5 +1,5 @@
 #include "TextEditor.h"
-#include "Settings.h"
+#include "util/Settings.h"
 
 TextEditor::TextEditor(QWidget* parent)
     : ScintillaEdit(parent)

@@ -448,19 +448,19 @@
   <customwidget>
    <class>CodeTab</class>
    <extends>QWidget</extends>
-   <header>code/CodeTab.h</header>
+   <header>editor/code/CodeTab.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TilesTab</class>
    <extends>QWidget</extends>
-   <header>tiles/TilesTab.h</header>
+   <header>editor/tiles/TilesTab.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>LevelsTab</class>
    <extends>QWidget</extends>
-   <header>levels/LevelsTab.h</header>
+   <header>editor/levels/LevelsTab.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

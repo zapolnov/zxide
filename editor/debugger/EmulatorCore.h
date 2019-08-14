@@ -1,7 +1,9 @@
-#ifndef EMULATORCORE_H
-#define EMULATORCORE_H
+#ifndef DEBUGGER_EMULATORCORE_H
+#define DEBUGGER_EMULATORCORE_H
 
 #include <QWidget>
+#include <QThread>
+#include <QMutex>
 
 class QTimer;
 
@@ -56,8 +58,6 @@ class EmulatorCore : public QObject
     Q_OBJECT
 
 public:
-    class Thread;
-
     explicit EmulatorCore(QObject* parent = nullptr);
     ~EmulatorCore() override;
 
@@ -81,6 +81,18 @@ signals:
     void updateUi();
 
 private:
+    class Thread : public QThread
+    {
+    public:
+        QMutex mutex;
+        explicit Thread(QObject* parent = nullptr);
+        void run() override;
+
+    private:
+        void syncWithMainThread();
+        Q_DISABLE_COPY(Thread)
+    };
+
     static EmulatorCore* mInstance;
     Registers mRegisters;
     QTimer* mTimer;
