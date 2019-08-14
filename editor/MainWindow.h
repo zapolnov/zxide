@@ -68,6 +68,7 @@ private:
     Q_SLOT void on_actionAbout_triggered();
 
     Q_SLOT void on_tabWidget_currentChanged(int index);
+    Q_SLOT void on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area);
 
     Q_DISABLE_COPY(MainWindow)
 };

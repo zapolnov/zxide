@@ -254,8 +254,6 @@ void MainWindow::updateUi()
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
     mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
-
-    mUi->stackedWidget->setCurrentIndex(0); // FIXME
 }
 
 void MainWindow::on_actionNewFile_triggered()
@@ -386,4 +384,19 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_tabWidget_currentChanged(int)
 {
     updateUi();
+}
+
+void MainWindow::on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area)
+{
+    switch (area) {
+        case Qt::LeftDockWidgetArea:
+        case Qt::RightDockWidgetArea:
+            mUi->registersWidget->setOrientation(Qt::Vertical);
+            break;
+
+        case Qt::TopDockWidgetArea:
+        case Qt::BottomDockWidgetArea:
+            mUi->registersWidget->setOrientation(Qt::Horizontal);
+            break;
+    }
 }

@@ -91,7 +91,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="debugPage"/>
      </widget>
     </item>
    </layout>
