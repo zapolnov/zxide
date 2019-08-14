@@ -21,15 +21,8 @@ qt_add_sources(GameEditor
         code/CodeTab.ui
         code/TextEditor.cpp
         code/TextEditor.h
-        debugger/Reg16Widget.cpp
-        debugger/Reg16Widget.h
-        debugger/Reg16Widget.ui
-        debugger/Reg8Widget.cpp
-        debugger/Reg8Widget.h
-        debugger/Reg8Widget.ui
         debugger/RegistersWidget.cpp
         debugger/RegistersWidget.h
-        debugger/RegistersWidget.ui
         levels/LevelsTab.cpp
         levels/LevelsTab.h
         levels/LevelsTab.ui
@@ -37,8 +30,8 @@ qt_add_sources(GameEditor
         tiles/TilesTab.cpp
         tiles/TilesTab.h
         tiles/TilesTab.ui
-        util/SimpleTextWidget.cpp
-        util/SimpleTextWidget.h
+        util/SimpleTextPainter.cpp
+        util/SimpleTextPainter.h
         AboutDialog.cpp
         AboutDialog.h
         AboutDialog.ui

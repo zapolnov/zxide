@@ -17,13 +17,14 @@ extern "C" {
 #include <timer/timer.h>
 #include <z80/z80.h>
 #include <z80/z80_macros.h>
+#include <peripherals/ula.h>
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
 }
 
 static QElapsedTimer elapsedTimer;
-static float emulatorSpeed;
+static int emulatorSpeed;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,9 +70,61 @@ private:
 
     void tick()
     {
-        QMutexLocker lock(&mutex);
         z80_do_opcodes();
         event_do_events();
+
+        QMutexLocker lock(&mutex);
+
+        auto emu = EmulatorCore::instance();
+        emu->mUpdated = true;
+
+        if (emu->mCurrentSpeed != emulatorSpeed) {
+            emu->mCurrentSpeed = emulatorSpeed;
+            emu->mShouldUpdateUi = true;
+        }
+
+        emu->mRegisters.tstates = tstates;
+        emu->mRegisters.af = AF;
+        emu->mRegisters.bc = BC;
+        emu->mRegisters.de = DE;
+        emu->mRegisters.hl = HL;
+        emu->mRegisters.ix = IX;
+        emu->mRegisters.iy = IY;
+        emu->mRegisters.sp = SP;
+        emu->mRegisters.pc = PC;
+        emu->mRegisters.af_ = AF_;
+        emu->mRegisters.bc_ = BC_;
+        emu->mRegisters.de_ = DE_;
+        emu->mRegisters.hl_ = HL_;
+        emu->mRegisters.a = A;
+        emu->mRegisters.b = B;
+        emu->mRegisters.c = C;
+        emu->mRegisters.d = D;
+        emu->mRegisters.e = E;
+        emu->mRegisters.h = H;
+        emu->mRegisters.l = L;
+        emu->mRegisters.f = F;
+        emu->mRegisters.i = I;
+        emu->mRegisters.r = R;
+        emu->mRegisters.a_ = A_;
+        emu->mRegisters.b_ = B_;
+        emu->mRegisters.c_ = C_;
+        emu->mRegisters.d_ = D_;
+        emu->mRegisters.e_ = E_;
+        emu->mRegisters.h_ = H_;
+        emu->mRegisters.l_ = L_;
+        emu->mRegisters.f_ = F_;
+        emu->mRegisters.im = IM;
+        emu->mRegisters.iff1 = IFF1;
+        emu->mRegisters.iff2 = IFF2;
+        emu->mRegisters.ula = ula_last_byte();
+        emu->mRegisters.sf = (emu->mRegisters.f & FLAG_S) != 0;
+        emu->mRegisters.zf = (emu->mRegisters.f & FLAG_Z) != 0;
+        emu->mRegisters.hf = (emu->mRegisters.f & FLAG_H) != 0;
+        emu->mRegisters.pf = (emu->mRegisters.f & FLAG_P) != 0;
+        emu->mRegisters.nf = (emu->mRegisters.f & FLAG_N) != 0;
+        emu->mRegisters.cf = (emu->mRegisters.f & FLAG_C) != 0;
+        emu->mRegisters.halted = z80.halted;
     }
 
     Q_DISABLE_COPY(Thread)
@@ -175,7 +228,7 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
 
 int ui_statusbar_update_speed(float speed)
 {
-    emulatorSpeed = speed;
+    emulatorSpeed = int(speed);
     return 0;
 }
 
@@ -187,7 +240,8 @@ EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
     , mTimer(new QTimer(this))
     , mThread(new Thread(this))
-    , mCurrentSpeed(0.0f)
+    , mCurrentSpeed(0)
+    , mShouldUpdateUi(false)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
@@ -234,64 +288,50 @@ void EmulatorCore::reloadSettings()
     // FIXME
 }
 
-float EmulatorCore::currentSpeed() const
+Registers EmulatorCore::registers() const
 {
-    return (mThread->isRunning() ? mCurrentSpeed : 0.0f);
+    QMutexLocker lock(&mThread->mutex);
+    return mRegisters;
+}
+
+int EmulatorCore::currentSpeed() const
+{
+    if (!mThread->isRunning())
+        return 0;
+
+    QMutexLocker lock(&mThread->mutex);
+    return mCurrentSpeed;
 }
 
 QString EmulatorCore::currentSpeedString() const
 {
+    int speed;
+
     if (!mThread->isRunning())
         return QString();
-    return QStringLiteral("%1%").arg(int(mCurrentSpeed));
+
+    {
+        QMutexLocker lock(&mThread->mutex);
+        speed = mCurrentSpeed;
+    }
+
+    return QStringLiteral("%1%").arg(speed);
 }
 
 void EmulatorCore::update()
 {
-    bool shouldUpdateUi = false;
+    bool shouldUpdate = false, shouldUpdateUi = false;
 
     {
         QMutexLocker lock(&mThread->mutex);
-
-        if (mCurrentSpeed != emulatorSpeed) {
-            mCurrentSpeed = emulatorSpeed;
-            shouldUpdateUi = true;
-        }
-
-        mRegisters.af = AF;
-        mRegisters.bc = BC;
-        mRegisters.de = DE;
-        mRegisters.hl = HL;
-        mRegisters.ix = IX;
-        mRegisters.iy = IY;
-        mRegisters.sp = SP;
-        mRegisters.pc = PC;
-        mRegisters.af_ = AF_;
-        mRegisters.bc_ = BC_;
-        mRegisters.de_ = DE_;
-        mRegisters.hl_ = HL_;
-        mRegisters.a = A;
-        mRegisters.b = B;
-        mRegisters.c = C;
-        mRegisters.d = D;
-        mRegisters.e = E;
-        mRegisters.h = H;
-        mRegisters.l = L;
-        mRegisters.f = F;
-        mRegisters.i = I;
-        mRegisters.r = R;
-        mRegisters.a_ = A_;
-        mRegisters.b_ = B_;
-        mRegisters.c_ = C_;
-        mRegisters.d_ = D_;
-        mRegisters.e_ = E_;
-        mRegisters.h_ = H_;
-        mRegisters.l_ = L_;
-        mRegisters.f_ = F_;
+        shouldUpdate = mUpdated;
+        shouldUpdateUi = mShouldUpdateUi;
+        mUpdated = false;
+        mShouldUpdateUi = false;
     }
 
+    if (shouldUpdate)
+        emit updated();
     if (shouldUpdateUi)
         emit updateUi();
-
-    emit updated();
 }

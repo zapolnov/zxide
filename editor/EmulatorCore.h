@@ -7,6 +7,7 @@ class QTimer;
 
 struct Registers
 {
+    quint32 tstates;
     quint16 af;
     quint16 bc;
     quint16 de;
@@ -37,6 +38,17 @@ struct Registers
     quint8 h_;
     quint8 l_;
     quint8 f_;
+    quint8 im;
+    quint8 iff1;
+    quint8 iff2;
+    quint8 ula;
+    bool sf;
+    bool zf;
+    bool hf;
+    bool pf;
+    bool nf;
+    bool cf;
+    bool halted;
 };
 
 class EmulatorCore : public QObject
@@ -57,9 +69,9 @@ public:
 
     void reloadSettings();
 
-    const Registers& registers() const { return mRegisters; }
+    Registers registers() const;
 
-    float currentSpeed() const;
+    int currentSpeed() const;
     QString currentSpeedString() const;
 
 signals:
@@ -73,7 +85,9 @@ private:
     Registers mRegisters;
     QTimer* mTimer;
     Thread* mThread;
-    float mCurrentSpeed;
+    int mCurrentSpeed;
+    bool mUpdated;
+    bool mShouldUpdateUi;
 
     void update();
 

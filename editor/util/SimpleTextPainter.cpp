@@ -1,4 +1,4 @@
-#include "SimpleTextWidget.h"
+#include "SimpleTextPainter.h"
 #include <cstring>
 #include <QPainter>
 
@@ -40,22 +40,21 @@ static QColor backColors[16] = {
         QColor(0xff, 0xff, 0xff),
     };
 
-SimpleTextWidget::SimpleTextWidget(QWidget* parent)
-    : QWidget(parent)
-    , mFont(QStringLiteral(":/fonts/font.png"))
+SimpleTextPainter::SimpleTextPainter()
+    : mFont(QStringLiteral(":/fonts/font.png"))
 {
 }
 
-SimpleTextWidget::~SimpleTextWidget()
+SimpleTextPainter::~SimpleTextPainter()
 {
 }
 
-void SimpleTextWidget::drawText(QPainter* painter, int x, int y, const char* text, int color)
+void SimpleTextPainter::drawText(QPainter* painter, int x, int y, const char* text, int color) const
 {
     drawText(painter, x, y, text, strlen(text), color);
 }
 
-void SimpleTextWidget::drawText(QPainter* painter, int x, int y, const char* text, size_t len, int color)
+void SimpleTextPainter::drawText(QPainter* painter, int x, int y, const char* text, size_t len, int color) const
 {
     painter->setPen(foreColors[color & 0xf]);
     painter->setBackgroundMode(Qt::OpaqueMode);
@@ -71,29 +70,39 @@ void SimpleTextWidget::drawText(QPainter* painter, int x, int y, const char* tex
         do {
             int ch = static_cast<unsigned char>(*text++);
             auto& f = fragments[count++];
-            f.x = xx;
-            f.y = y;
-            f.width = 8;
-            f.height = 16;
-            f.sourceLeft = (ch & 15) * 8;
-            f.sourceTop = (ch >> 4) * 16;
+            f.x = xx + CharWidth / 2;
+            f.y = y + CharHeight / 2;
+            f.width = CharWidth;
+            f.height = CharHeight;
+            f.sourceLeft = (ch & 15) * CharWidth;
+            f.sourceTop = (ch >> 4) * CharHeight;
             f.rotation = 0.0f;
             f.scaleX = 1.0f;
             f.scaleY = 1.0f;
             f.opacity = 1.0f;
-            xx += 8;
+            xx += CharWidth;
         } while (--len > 0 && count < MaxFragments);
 
         painter->drawPixmapFragments(fragments, count, mFont);
     }
 }
 
-void SimpleTextWidget::drawTextAt(QPainter* painter, int x, int y, const char* text, int color)
+void SimpleTextPainter::drawText(QPainter* painter, int x, int y, const std::string& text, int color) const
 {
-    drawText(painter, x * 8, y * 16, text, strlen(text), color);
+    drawText(painter, x, y, text.c_str(), text.length(), color);
 }
 
-void SimpleTextWidget::drawTextAt(QPainter* painter, int x, int y, const char* text, size_t len, int color)
+void SimpleTextPainter::drawTextAt(QPainter* painter, int x, int y, const char* text, int color) const
 {
-    drawText(painter, x * 8, y * 16, text, len, color);
+    drawText(painter, x * CharWidth, y * CharHeight, text, strlen(text), color);
+}
+
+void SimpleTextPainter::drawTextAt(QPainter* painter, int x, int y, const char* text, size_t len, int color) const
+{
+    drawText(painter, x * CharWidth, y * CharHeight, text, len, color);
+}
+
+void SimpleTextPainter::drawTextAt(QPainter* painter, int x, int y, const std::string& text, int color) const
+{
+    drawText(painter, x * CharWidth, y * CharHeight, text.c_str(), text.length(), color);
 }

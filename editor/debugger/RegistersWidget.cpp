@@ -1,54 +1,76 @@
 #include "RegistersWidget.h"
-#include "ui_RegistersWidget.h"
 #include <QPainter>
-
-extern "C" {
-#include <libspectrum.h>
-#include <z80/z80.h>
-#include <z80/z80_macros.h>
-}
+#include <QContextMenuEvent>
+#include <QMenu>
 
 RegistersWidget::RegistersWidget(QWidget* parent)
-    : SimpleTextWidget(parent)
+    : QWidget(parent)
+    , mOrientation(Qt::Horizontal)
 {
+    setOrientation(Qt::Vertical);
+
+    #define REG(BITS, HX, HY, VX, VY, REG, N, NW, NW2) \
+        mRegisters.emplace_back( \
+            std::make_unique<Register<quint##BITS>>(this, HX, HY, VX, VY, NW, NW2, offsetof(Registers, REG), N))
+    #define SREG(HX, HY, VX, VY, REG, N, NW, NW2) \
+        mRegisters.emplace_back( \
+            std::make_unique<SimpleRegister>(this, HX, HY, VX, VY, NW, NW2, offsetof(Registers, REG), N))
+    #define UREG(HX, HY, VX, VY, REG, N, NW) \
+        mRegisters.emplace_back(std::make_unique<ULA>(this, HX, HY, VX, VY, NW, offsetof(Registers, REG), N))
+    #define FLAG(HX, HY, VX, VY, REG, N, NW) \
+        mRegisters.emplace_back(std::make_unique<Flag>(this, HX, HY, VX, VY, NW, offsetof(Registers, REG), N))
+    #define TSTATES(HX, HY, VX, VY, REG, N, NW) \
+        mRegisters.emplace_back(std::make_unique<TStates>(this, HX, HY, VX, VY, NW, offsetof(Registers, REG), N))
+
+    REG(16,  2, 1,  2,  1, af , "AF" , 2, 2);
+    REG(16,  2, 2,  2,  2, bc , "BC" , 2, 2);
+    REG(16,  2, 3,  2,  3, de , "DE" , 2, 2);
+    REG(16,  2, 4,  2,  4, hl , "HL" , 2, 2);
+    REG(16,  2, 5,  2,  5, ix , "IX" , 2, 2);
+    REG(16,  2, 6,  2,  6, iy , "IY" , 2, 2);
+    REG(16, 13, 1, 12,  1, af_, "AF'", 3, 3);
+    REG(16, 13, 2, 12,  2, bc_, "BC'", 3, 3);
+    REG(16, 13, 3, 12,  3, de_, "DE'", 3, 3);
+    REG(16, 13, 4, 12,  4, hl_, "HL'", 3, 3);
+    REG(16, 13, 5, 12,  5, sp , "SP" , 3, 3);
+    REG(16, 13, 6, 12,  6, pc , "PC" , 3, 3);
+
+    REG( 8, 25, 1,  2,  8,  b , "B"  , 1, 1);
+    REG( 8, 25, 2,  2,  9,  c , "C"  , 1, 1);
+    REG( 8, 25, 3,  2, 10,  d , "D"  , 1, 1);
+    REG( 8, 25, 4,  2, 11,  e , "E"  , 1, 1);
+    REG( 8, 25, 5,  2, 12,  h , "H"  , 1, 1);
+    REG( 8, 25, 6,  2, 13,  l , "L"  , 1, 1);
+    REG( 8, 33, 1, 10,  8,  b_, "B'" , 2, 2);
+    REG( 8, 33, 2, 10,  9,  c_, "C'" , 2, 2);
+    REG( 8, 33, 3, 10, 10,  d_, "D'" , 2, 2);
+    REG( 8, 33, 4, 10, 11,  e_, "E'" , 2, 2);
+    REG( 8, 33, 5, 10, 12,  h_, "H'" , 2, 2);
+    REG( 8, 33, 6, 10, 13,  l_, "L'" , 2, 2);
+    REG( 8, 42, 1, 19,  8,  a , "A"  , 2, 2);
+    REG( 8, 42, 2, 19,  9,  a_, "A'" , 2, 2);
+    REG( 8, 42, 3, 19, 10,  f , "F"  , 2, 2);
+    REG( 8, 42, 4, 19, 11,  f_, "F'" , 2, 2);
+    REG( 8, 42, 5, 19, 12,  i , "I"  , 2, 2);
+    REG( 8, 42, 6, 19, 13,  r , "R"  , 2, 2);
+
+    FLAG(   51, 1, 23,  1, sf ,  "S" , 3);
+    FLAG(   51, 2, 23,  2, zf ,  "Z" , 3);
+    FLAG(   51, 3, 23,  3, hf ,  "H" , 3);
+    FLAG(   51, 4, 23,  4, pf , "P/V", 3);
+    FLAG(   51, 5, 23,  5, nf ,  "N" , 3);
+    FLAG(   51, 6, 23,  6, cf ,  "C" , 3);
+
+    SREG(   56, 1,  2, 15, im,      "IM", 2, 4);
+    SREG(   56, 2,  7, 15, iff1,  "IFF1", 4, 4);
+    SREG(   56, 3, 14, 15, iff2,  "IFF2", 4, 4);
+    SREG(   56, 4, 21, 15, halted, "HLT", 3, 4);
+
+    UREG(   56, 5,  2, 16, ula,   "ULA", 3);
+    TSTATES(56, 6, 18, 16, tstates, "T", 1);
+
     connect(EmulatorCore::instance(), &EmulatorCore::updated, this, &RegistersWidget::refresh);
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, &RegistersWidget::reset);
-
-    /*
-    mUi->regAF->nameLabel->setText(QStringLiteral("AF"));
-    mUi->regBC->nameLabel->setText(QStringLiteral("BC"));
-    mUi->regDE->nameLabel->setText(QStringLiteral("DE"));
-    mUi->regHL->nameLabel->setText(QStringLiteral("HL"));
-    mUi->regIX->nameLabel->setText(QStringLiteral("IX"));
-    mUi->regIY->nameLabel->setText(QStringLiteral("IY"));
-    mUi->regSP->nameLabel->setText(QStringLiteral("SP"));
-    mUi->regPC->nameLabel->setText(QStringLiteral("PC"));
-
-    mUi->regShadowAF->nameLabel->setText(QStringLiteral("AF`"));
-    mUi->regShadowBC->nameLabel->setText(QStringLiteral("BC`"));
-    mUi->regShadowDE->nameLabel->setText(QStringLiteral("DE`"));
-    mUi->regShadowHL->nameLabel->setText(QStringLiteral("HL`"));
-
-    mUi->regA->nameLabel->setText(QStringLiteral("A"));
-    mUi->regF->nameLabel->setText(QStringLiteral("F"));
-    mUi->regB->nameLabel->setText(QStringLiteral("B"));
-    mUi->regC->nameLabel->setText(QStringLiteral("C"));
-    mUi->regD->nameLabel->setText(QStringLiteral("D"));
-    mUi->regE->nameLabel->setText(QStringLiteral("E"));
-    mUi->regH->nameLabel->setText(QStringLiteral("H"));
-    mUi->regL->nameLabel->setText(QStringLiteral("L"));
-    mUi->regI->nameLabel->setText(QStringLiteral("I"));
-    mUi->regR->nameLabel->setText(QStringLiteral("R"));
-
-    mUi->regShadowA->nameLabel->setText(QStringLiteral("A`"));
-    mUi->regShadowF->nameLabel->setText(QStringLiteral("F`"));
-    mUi->regShadowB->nameLabel->setText(QStringLiteral("B`"));
-    mUi->regShadowC->nameLabel->setText(QStringLiteral("C`"));
-    mUi->regShadowD->nameLabel->setText(QStringLiteral("D`"));
-    mUi->regShadowE->nameLabel->setText(QStringLiteral("E`"));
-    mUi->regShadowH->nameLabel->setText(QStringLiteral("H`"));
-    mUi->regShadowL->nameLabel->setText(QStringLiteral("L`"));
-    */
 }
 
 RegistersWidget::~RegistersWidget()
@@ -57,104 +79,364 @@ RegistersWidget::~RegistersWidget()
 
 void RegistersWidget::refresh()
 {
-    mRegisters = EmulatorCore::instance()->registers();
-
-    /*
-    mUi->regAF->setValue(r.af);
-    mUi->regBC->setValue(r.bc);
-    mUi->regDE->setValue(r.de);
-    mUi->regHL->setValue(r.hl);
-    mUi->regIX->setValue(r.ix);
-    mUi->regIY->setValue(r.iy);
-    mUi->regSP->setValue(r.sp);
-    mUi->regPC->setValue(r.pc);
-
-    mUi->regShadowAF->setValue(r.af_);
-    mUi->regShadowBC->setValue(r.bc_);
-    mUi->regShadowDE->setValue(r.de_);
-    mUi->regShadowHL->setValue(r.hl_);
-
-    mUi->regA->setValue(r.a);
-    mUi->regF->setValue(r.f);
-    mUi->regB->setValue(r.b);
-    mUi->regC->setValue(r.c);
-    mUi->regD->setValue(r.d);
-    mUi->regE->setValue(r.e);
-    mUi->regH->setValue(r.h);
-    mUi->regL->setValue(r.l);
-    mUi->regI->setValue(r.i);
-    mUi->regR->setValue(r.r);
-
-    mUi->regShadowA->setValue(r.a);
-    mUi->regShadowF->setValue(r.f);
-    mUi->regShadowB->setValue(r.b);
-    mUi->regShadowC->setValue(r.c);
-    mUi->regShadowD->setValue(r.d);
-    mUi->regShadowE->setValue(r.e);
-    mUi->regShadowH->setValue(r.h);
-    mUi->regShadowL->setValue(r.l);
-
-    #define FLAG(NAME) (r.f & FLAG_##NAME ? QStringLiteral("green") : QStringLiteral("red"))
-    mUi->signFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(S)));
-    mUi->zeroFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(Z)));
-    mUi->halfCarryFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(H)));
-    mUi->parityOverflowFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(P)));
-    mUi->subtractFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(N)));
-    mUi->carryFlagFrame->setStyleSheet(QStringLiteral("background-color: %1").arg(FLAG(C)));
-    */
-
-    update();
+    const auto& r = EmulatorCore::instance()->registers();
+    for (const auto& reg : mRegisters)
+        reg->updateValue(r);
 }
 
 void RegistersWidget::reset()
 {
-    /*
-    mUi->regAF->setValue(0); mUi->regAF->clearHighlight();
-    mUi->regBC->setValue(0); mUi->regBC->clearHighlight();
-    mUi->regDE->setValue(0); mUi->regDE->clearHighlight();
-    mUi->regHL->setValue(0); mUi->regHL->clearHighlight();
-    mUi->regIX->setValue(0); mUi->regIX->clearHighlight();
-    mUi->regIY->setValue(0); mUi->regIY->clearHighlight();
-    mUi->regSP->setValue(0); mUi->regSP->clearHighlight();
-    mUi->regPC->setValue(0); mUi->regPC->clearHighlight();
+    for (const auto& reg : mRegisters)
+        reg->clear();
+}
 
-    mUi->regShadowAF->setValue(0); mUi->regShadowAF->clearHighlight();
-    mUi->regShadowBC->setValue(0); mUi->regShadowBC->clearHighlight();
-    mUi->regShadowDE->setValue(0); mUi->regShadowDE->clearHighlight();
-    mUi->regShadowHL->setValue(0); mUi->regShadowHL->clearHighlight();
+void RegistersWidget::setOrientation(Qt::Orientation orientation)
+{
+    if (mOrientation != orientation) {
+        mOrientation = orientation;
+        update();
 
-    mUi->regA->setValue(0); mUi->regA->clearHighlight();
-    mUi->regF->setValue(0); mUi->regF->clearHighlight();
-    mUi->regB->setValue(0); mUi->regB->clearHighlight();
-    mUi->regC->setValue(0); mUi->regC->clearHighlight();
-    mUi->regD->setValue(0); mUi->regD->clearHighlight();
-    mUi->regE->setValue(0); mUi->regE->clearHighlight();
-    mUi->regH->setValue(0); mUi->regH->clearHighlight();
-    mUi->regL->setValue(0); mUi->regL->clearHighlight();
-    mUi->regI->setValue(0); mUi->regI->clearHighlight();
-    mUi->regR->setValue(0); mUi->regR->clearHighlight();
+        switch (mOrientation) {
+            case Qt::Horizontal:
+                setFixedHeight(8 * SimpleTextPainter::CharHeight);
+                setMinimumWidth(66 * SimpleTextPainter::CharWidth);
+                setMaximumWidth(QWIDGETSIZE_MAX);
+                break;
 
-    mUi->regShadowA->setValue(0); mUi->regShadowA->clearHighlight();
-    mUi->regShadowF->setValue(0); mUi->regShadowF->clearHighlight();
-    mUi->regShadowB->setValue(0); mUi->regShadowB->clearHighlight();
-    mUi->regShadowC->setValue(0); mUi->regShadowC->clearHighlight();
-    mUi->regShadowD->setValue(0); mUi->regShadowD->clearHighlight();
-    mUi->regShadowE->setValue(0); mUi->regShadowE->clearHighlight();
-    mUi->regShadowH->setValue(0); mUi->regShadowH->clearHighlight();
-    mUi->regShadowL->setValue(0); mUi->regShadowL->clearHighlight();
-
-    mUi->signFlagFrame->setStyleSheet(QString());
-    mUi->zeroFlagFrame->setStyleSheet(QString());
-    mUi->halfCarryFlagFrame->setStyleSheet(QString());
-    mUi->parityOverflowFlagFrame->setStyleSheet(QString());
-    mUi->subtractFlagFrame->setStyleSheet(QString());
-    mUi->carryFlagFrame->setStyleSheet(QString());
-    */
+            case Qt::Vertical:
+                setFixedWidth(28 * SimpleTextPainter::CharWidth);
+                setMinimumHeight(18 * SimpleTextPainter::CharHeight);
+                setMaximumHeight(QWIDGETSIZE_MAX);
+                break;
+        }
+    }
 }
 
 void RegistersWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
-    drawTextAt(&painter, 1, 1, "Hello,", RED | INTENSITY);
-    drawTextAt(&painter, 1, 2, "world!", COLOR(GREEN | INTENSITY, BLUE));
+    for (const auto& reg : mRegisters)
+        reg->paint(&painter);
+}
+
+void RegistersWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+    constexpr int charW = SimpleTextPainter::CharWidth;
+    constexpr int charH = SimpleTextPainter::CharHeight;
+
+    QPoint pos = event->pos();
+    int x = pos.x();
+    int y = pos.y();
+
+    for (const auto& reg : mRegisters) {
+        int rx = reg->x();
+        int ry = reg->y();
+        if (x >= rx * charW && y >= ry * charH && x < (rx + reg->width()) * charW && y < (ry + 1) * charH) {
+            if (reg->isValid())
+                reg->showContextMenu(mapToGlobal(pos));
+            return;
+        }
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RegistersWidget::AbstractRegister::AbstractRegister()
+{
+}
+
+RegistersWidget::AbstractRegister::~AbstractRegister()
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+template <typename T> RegistersWidget::Register<T>::Register(
+        RegistersWidget* w, int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t off, std::string name)
+    : mWidget(w)
+    , mHorizontalX(hx)
+    , mHorizontalY(hy)
+    , mVerticalX(vx)
+    , mVerticalY(vy)
+    , mName(std::move(name))
+    , mOffset(off)
+    , mNameWidth(nw)
+    , mNameWidthHorz(nw2)
+    , mMode(Hexadecimal_Unsigned)
+    , mValue(0)
+    , mOldValue(0)
+    , mIsValid(false)
+{
+}
+
+template <typename T> int RegistersWidget::Register<T>::x() const
+{
+    return mWidget->mOrientation == Qt::Horizontal ? mHorizontalX : mVerticalX;
+}
+
+template <typename T> int RegistersWidget::Register<T>::y() const
+{
+    return mWidget->mOrientation == Qt::Horizontal ? mHorizontalY : mVerticalY;
+}
+
+template <typename T> int RegistersWidget::Register<T>::nameWidth() const
+{
+    return mWidget->mOrientation == Qt::Horizontal ? mNameWidthHorz : mNameWidth;
+}
+
+template <typename T> int RegistersWidget::Register<T>::width() const
+{
+    switch (sizeof(T) * CHAR_BIT) {
+        case 8: return nameWidth() + 5;
+        case 16: return nameWidth() + 7;
+        default: Q_ASSERT(false); return 0;
+    }
+}
+
+template <typename T> void RegistersWidget::Register<T>::setMode(Mode mode)
+{
+    if (mMode != mode) {
+        mMode = mode;
+        mWidget->update();
+    }
+}
+
+template <typename T> void RegistersWidget::Register<T>::clear()
+{
+    if (mIsValid) {
+        mIsValid = false;
+        mWidget->update();
+    }
+}
+
+template <typename T> void RegistersWidget::Register<T>::updateValue(const Registers& reg)
+{
+    T value = *reinterpret_cast<const T*>(reinterpret_cast<const char*>(&reg) + mOffset);
+    if (mValue != value || mOldValue != mValue || !mIsValid) {
+        mIsValid = true;
+        mOldValue = mValue;
+        mValue = value;
+        mWidget->update();
+    }
+}
+
+template <typename T> void RegistersWidget::Register<T>::paint(QPainter* painter) const
+{
+    int xx = x();
+    int yy = y();
+
+    int color = (mValue == mOldValue || !mIsValid ? BLACK | INTENSITY : BLACK);
+    drawTextAt(painter, xx, yy, mName, color);
+
+    char buf[16];
+    switch (sizeof(T) * CHAR_BIT) {
+        case 8:
+            if (!mIsValid) {
+                color = BLACK | INTENSITY;
+                strcpy(buf, "----");
+            } else {
+                color = BLUE;
+                auto uvalue = unsigned(quint8(mValue));
+                auto svalue = int(qint8(mValue));
+                switch (mMode) {
+                    case Decimal_Unsigned: sprintf(buf, " %3u", uvalue); break;
+                    case Decimal_Signed: sprintf(buf, "%+4d", svalue); break;
+                    case Hexadecimal_Unsigned: sprintf(buf, " %02xh", uvalue); break;
+                    case Hexadecimal_Signed: sprintf(buf, "%c%02xh", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
+                }
+            }
+            break;
+
+        case 16:
+            if (!mIsValid) {
+                color = BLACK | INTENSITY;
+                strcpy(buf, "------");
+            } else {
+                color = BLUE;
+                auto uvalue = unsigned(quint16(mValue));
+                auto svalue = int(qint16(mValue));
+                switch (mMode) {
+                    case Decimal_Unsigned: sprintf(buf, " %5u", uvalue); break;
+                    case Decimal_Signed: sprintf(buf, "%+6d", svalue); break;
+                    case Hexadecimal_Unsigned: sprintf(buf, " %04xh", uvalue); break;
+                    case Hexadecimal_Signed: sprintf(buf, "%c%04xh", (svalue < 0 ? '-' : '+'), abs(svalue)); break;
+                }
+            }
+            break;
+
+        default:
+            Q_ASSERT(false);
+            return;
+    }
+
+    drawTextAt(painter, xx + nameWidth() + 1, yy, buf, color);
+}
+
+template <typename T> void RegistersWidget::Register<T>::showContextMenu(const QPoint& pos)
+{
+    QMenu menu;
+
+    #define ACTION(ID, TEXT) \
+        { \
+            QAction* action = menu.addAction(TEXT); \
+            action->setCheckable(true); \
+            action->setChecked(mMode == ID); \
+            connect(action, &QAction::triggered, mWidget, [this]{ setMode(ID); }); \
+        }
+
+    menu.addAction(QLatin1String(mName.c_str()))->setEnabled(false);
+    menu.addSeparator();
+
+    ACTION(Decimal_Unsigned, tr("Decimal / &Unsigned"));
+    ACTION(Decimal_Signed, tr("Decimal / &Signed"));
+    ACTION(Hexadecimal_Unsigned, tr("He&xadecimal / Unsigned"));
+    ACTION(Hexadecimal_Signed, tr("&Hexadecimal / Signed"));
+
+    menu.addSeparator();
+
+    QAction* editAction = menu.addAction(tr("&Edit value..."));
+    connect(editAction, &QAction::triggered, mWidget, [this]{
+            // FIXME
+        });
+
+    menu.exec(pos);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RegistersWidget::SimpleRegister::SimpleRegister(
+        RegistersWidget* w, int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t o, std::string n)
+    : Register(w, hx, hy, vx, vy, nw, nw2, o, std::move(n))
+{
+}
+
+int RegistersWidget::SimpleRegister::width() const
+{
+    return nameWidth() + 2;
+}
+
+void RegistersWidget::SimpleRegister::paint(QPainter* painter) const
+{
+    int xx = x();
+    int yy = y();
+
+    int color = (mValue == mOldValue || !mIsValid ? BLACK | INTENSITY : BLACK);
+    drawTextAt(painter, xx, yy, mName, color);
+
+    char buf[8];
+    if (!mIsValid) {
+        color = BLACK | INTENSITY;
+        strcpy(buf, "-");
+    } else {
+        color = BLUE;
+        sprintf(buf, "%d", static_cast<int>(mValue));
+    }
+
+    drawTextAt(painter, xx + nameWidth() + 1, yy, buf, color);
+}
+
+void RegistersWidget::SimpleRegister::showContextMenu(const QPoint& pos)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RegistersWidget::Flag::Flag(
+        RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
+    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+{
+}
+
+int RegistersWidget::Flag::width() const
+{
+    return nameWidth() + 2;
+}
+
+void RegistersWidget::Flag::paint(QPainter* painter) const
+{
+    int xx = x();
+    int yy = y();
+
+    char buf[8];
+    switch (mName.length()) {
+        case 1: sprintf(buf, " %c ", mName[0]); break;
+        case 3: strcpy(buf, mName.c_str()); break;
+        default: Q_ASSERT(false); return;
+    }
+
+    int color;
+    if (!mIsValid)
+        color = COLOR(BLACK | INTENSITY, GRAY);
+    else if (mValue)
+        color = COLOR((mValue != mOldValue ? GRAY | INTENSITY : GREEN | INTENSITY), GREEN);
+    else
+        color = COLOR((mValue != mOldValue ? BLACK : BLACK | INTENSITY), GRAY);
+
+    drawTextAt(painter, xx, yy, buf, 3, color);
+}
+
+void RegistersWidget::Flag::showContextMenu(const QPoint& pos)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RegistersWidget::TStates::TStates(
+        RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
+    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+{
+}
+
+int RegistersWidget::TStates::width() const
+{
+    return nameWidth() + 7;
+}
+
+void RegistersWidget::TStates::paint(QPainter* painter) const
+{
+    int xx = x();
+    int yy = y();
+
+    int color;
+    char buf[16];
+
+    if (!mIsValid) {
+        color = BLACK | INTENSITY;
+        strcpy(buf, "------ ");
+    } else {
+        color = BLUE;
+        if (mWidget->mOrientation == Qt::Horizontal)
+            sprintf(buf, "%lu", static_cast<unsigned long>(mValue));
+        else
+            sprintf(buf, "%7lu", static_cast<unsigned long>(mValue));
+    }
+
+    if (mWidget->mOrientation == Qt::Vertical) {
+        drawTextAt(painter, xx, yy, buf, color);
+        drawTextAt(painter, xx + 7, yy, mName, BLACK | INTENSITY);
+    } else {
+        if (mIsValid) {
+            drawTextAt(painter, xx, yy, buf, color);
+            drawTextAt(painter, xx + int(strlen(buf)), yy, mName, BLACK | INTENSITY);
+        } else {
+            drawTextAt(painter, xx, yy, mName, BLACK | INTENSITY);
+            drawTextAt(painter, xx + nameWidth() + 1, yy, buf, color);
+        }
+    }
+}
+
+void RegistersWidget::TStates::showContextMenu(const QPoint& pos)
+{
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RegistersWidget::ULA::ULA(
+        RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
+    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+{
+}
+
+void RegistersWidget::ULA::showContextMenu(const QPoint& pos)
+{
 }
