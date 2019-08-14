@@ -1,8 +1,10 @@
 #include "RegistersWidget.h"
+#include "ui_EditRegisterDialog.h"
 #include <QTimer>
 #include <QPainter>
 #include <QContextMenuEvent>
 #include <QMenu>
+#include <QDialog>
 
 RegistersWidget::RegistersWidget(QWidget* parent)
     : QWidget(parent)
@@ -11,9 +13,9 @@ RegistersWidget::RegistersWidget(QWidget* parent)
 {
     setOrientation(Qt::Vertical);
 
-    #define REG(BITS, HX, HY, VX, VY, REG, N, NW, NW2) \
+    #define REG(BITS, HX, HY, VX, VY, REG, N, NW, NW2, ID) \
         mRegisters.emplace_back( \
-            std::make_unique<Register<quint##BITS>>(this, HX, HY, VX, VY, NW, NW2, offsetof(Registers, REG), N))
+            std::make_unique<Register<quint##BITS>>(this, ID, HX, HY, VX, VY, NW, NW2, offsetof(Registers, REG), N))
     #define SREG(HX, HY, VX, VY, REG, N, NW, NW2) \
         mRegisters.emplace_back( \
             std::make_unique<SimpleRegister>(this, HX, HY, VX, VY, NW, NW2, offsetof(Registers, REG), N))
@@ -24,37 +26,37 @@ RegistersWidget::RegistersWidget(QWidget* parent)
     #define TSTATES(HX, HY, VX, VY, REG, N, NW) \
         mRegisters.emplace_back(std::make_unique<TStates>(this, HX, HY, VX, VY, NW, offsetof(Registers, REG), N))
 
-    REG(16,  2, 1,  2,  1, af , "AF" , 2, 2);
-    REG(16,  2, 2,  2,  2, bc , "BC" , 2, 2);
-    REG(16,  2, 3,  2,  3, de , "DE" , 2, 2);
-    REG(16,  2, 4,  2,  4, hl , "HL" , 2, 2);
-    REG(16,  2, 5,  2,  5, ix , "IX" , 2, 2);
-    REG(16,  2, 6,  2,  6, iy , "IY" , 2, 2);
-    REG(16, 13, 1, 12,  1, af_, "AF'", 3, 3);
-    REG(16, 13, 2, 12,  2, bc_, "BC'", 3, 3);
-    REG(16, 13, 3, 12,  3, de_, "DE'", 3, 3);
-    REG(16, 13, 4, 12,  4, hl_, "HL'", 3, 3);
-    REG(16, 13, 5, 12,  5, sp , "SP" , 3, 3);
-    REG(16, 13, 6, 12,  6, pc , "PC" , 3, 3);
+    REG(16,  2, 1,  2,  1, af , "AF" , 2, 2, Reg_AF );
+    REG(16,  2, 2,  2,  2, bc , "BC" , 2, 2, Reg_BC );
+    REG(16,  2, 3,  2,  3, de , "DE" , 2, 2, Reg_DE );
+    REG(16,  2, 4,  2,  4, hl , "HL" , 2, 2, Reg_HL );
+    REG(16,  2, 5,  2,  5, ix , "IX" , 2, 2, Reg_IX );
+    REG(16,  2, 6,  2,  6, iy , "IY" , 2, 2, Reg_IY );
+    REG(16, 13, 1, 12,  1, af_, "AF'", 3, 3, Reg_AF_);
+    REG(16, 13, 2, 12,  2, bc_, "BC'", 3, 3, Reg_BC_);
+    REG(16, 13, 3, 12,  3, de_, "DE'", 3, 3, Reg_DE_);
+    REG(16, 13, 4, 12,  4, hl_, "HL'", 3, 3, Reg_HL_);
+    REG(16, 13, 5, 12,  5, sp , "SP" , 3, 3, Reg_SP );
+    REG(16, 13, 6, 12,  6, pc , "PC" , 3, 3, Reg_PC );
 
-    REG( 8, 25, 1,  2,  8,  b , "B"  , 1, 1);
-    REG( 8, 25, 2,  2,  9,  c , "C"  , 1, 1);
-    REG( 8, 25, 3,  2, 10,  d , "D"  , 1, 1);
-    REG( 8, 25, 4,  2, 11,  e , "E"  , 1, 1);
-    REG( 8, 25, 5,  2, 12,  h , "H"  , 1, 1);
-    REG( 8, 25, 6,  2, 13,  l , "L"  , 1, 1);
-    REG( 8, 33, 1, 10,  8,  b_, "B'" , 2, 2);
-    REG( 8, 33, 2, 10,  9,  c_, "C'" , 2, 2);
-    REG( 8, 33, 3, 10, 10,  d_, "D'" , 2, 2);
-    REG( 8, 33, 4, 10, 11,  e_, "E'" , 2, 2);
-    REG( 8, 33, 5, 10, 12,  h_, "H'" , 2, 2);
-    REG( 8, 33, 6, 10, 13,  l_, "L'" , 2, 2);
-    REG( 8, 42, 1, 19,  8,  a , "A"  , 2, 2);
-    REG( 8, 42, 2, 19,  9,  a_, "A'" , 2, 2);
-    REG( 8, 42, 3, 19, 10,  f , "F"  , 2, 2);
-    REG( 8, 42, 4, 19, 11,  f_, "F'" , 2, 2);
-    REG( 8, 42, 5, 19, 12,  i , "I"  , 2, 2);
-    REG( 8, 42, 6, 19, 13,  r , "R"  , 2, 2);
+    REG( 8, 25, 1,  2,  8,  b , "B"  , 1, 1, Reg_B );
+    REG( 8, 25, 2,  2,  9,  c , "C"  , 1, 1, Reg_C );
+    REG( 8, 25, 3,  2, 10,  d , "D"  , 1, 1, Reg_D );
+    REG( 8, 25, 4,  2, 11,  e , "E"  , 1, 1, Reg_E );
+    REG( 8, 25, 5,  2, 12,  h , "H"  , 1, 1, Reg_H );
+    REG( 8, 25, 6,  2, 13,  l , "L"  , 1, 1, Reg_L );
+    REG( 8, 33, 1, 10,  8,  b_, "B'" , 2, 2, Reg_B_);
+    REG( 8, 33, 2, 10,  9,  c_, "C'" , 2, 2, Reg_C_);
+    REG( 8, 33, 3, 10, 10,  d_, "D'" , 2, 2, Reg_D_);
+    REG( 8, 33, 4, 10, 11,  e_, "E'" , 2, 2, Reg_E_);
+    REG( 8, 33, 5, 10, 12,  h_, "H'" , 2, 2, Reg_H_);
+    REG( 8, 33, 6, 10, 13,  l_, "L'" , 2, 2, Reg_L_);
+    REG( 8, 42, 1, 19,  8,  a , "A"  , 2, 2, Reg_A );
+    REG( 8, 42, 2, 19,  9,  a_, "A'" , 2, 2, Reg_A_);
+    REG( 8, 42, 3, 19, 10,  f , "F"  , 2, 2, Reg_F );
+    REG( 8, 42, 4, 19, 11,  f_, "F'" , 2, 2, Reg_F_);
+    REG( 8, 42, 5, 19, 12,  i , "I"  , 2, 2, Reg_I );
+    REG( 8, 42, 6, 19, 13,  r , "R"  , 2, 2, Reg_R );
 
     FLAG(   51, 1, 23,  1, sf ,  "S" , 3);
     FLAG(   51, 2, 23,  2, zf ,  "Z" , 3);
@@ -159,14 +161,16 @@ RegistersWidget::AbstractRegister::~AbstractRegister()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T> RegistersWidget::Register<T>::Register(
-        RegistersWidget* w, int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t off, std::string name)
-    : mWidget(w)
+        RegistersWidget* widget, ::Register reg,
+            int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t offset, std::string name)
+    : mWidget(widget)
+    , mRegister(reg)
     , mHorizontalX(hx)
     , mHorizontalY(hy)
     , mVerticalX(vx)
     , mVerticalY(vy)
     , mName(std::move(name))
-    , mOffset(off)
+    , mOffset(offset)
     , mNameWidth(nw)
     , mNameWidthHorz(nw2)
     , mMode(Hexadecimal_Unsigned)
@@ -303,7 +307,26 @@ template <typename T> void RegistersWidget::Register<T>::showContextMenu(const Q
 
     QAction* editAction = menu.addAction(tr("&Edit value..."));
     connect(editAction, &QAction::triggered, mWidget, [this]{
-            // FIXME
+            QDialog dlg(mWidget);
+            dlg.setWindowTitle(QLatin1String(mName.c_str()));
+
+            Ui_EditRegisterDialog ui;
+            ui.setupUi(&dlg);
+
+            bool is8Bit = (sizeof(T) * CHAR_BIT == 8);
+            bool isSigned = (mMode == Decimal_Signed || mMode == Hexadecimal_Signed);
+            bool isHex = (mMode == Hexadecimal_Signed || mMode == Hexadecimal_Unsigned);
+            int min = (isSigned ? (is8Bit ? -128 : -32768) : 0);
+            int max = (isSigned ? (is8Bit ? 127 : 32767) : (is8Bit ? 255 : 65535));
+            ui.spinBox->setRange(min, max);
+            ui.spinBox->setValue(mValue);
+            ui.spinBox->setDisplayIntegerBase(isHex ? 16 : 0);
+
+            if (dlg.exec() == QDialog::Accepted) {
+                int value = ui.spinBox->value();
+                quint16 newValue = (isSigned ? qint16(value) : quint16(value));
+                EmulatorCore::instance()->setRegister(mRegister, newValue);
+            }
         });
 
     menu.exec(pos);
@@ -313,7 +336,7 @@ template <typename T> void RegistersWidget::Register<T>::showContextMenu(const Q
 
 RegistersWidget::SimpleRegister::SimpleRegister(
         RegistersWidget* w, int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t o, std::string n)
-    : Register(w, hx, hy, vx, vy, nw, nw2, o, std::move(n))
+    : Register(w, Reg_None, hx, hy, vx, vy, nw, nw2, o, std::move(n))
 {
 }
 
@@ -350,7 +373,7 @@ void RegistersWidget::SimpleRegister::showContextMenu(const QPoint& pos)
 
 RegistersWidget::Flag::Flag(
         RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
-    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+    : Register(widget, Reg_None, hx, hy, vx, vy, nw, nw, offset, std::move(name))
 {
 }
 
@@ -390,7 +413,7 @@ void RegistersWidget::Flag::showContextMenu(const QPoint& pos)
 
 RegistersWidget::TStates::TStates(
         RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
-    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+    : Register(widget, Reg_None, hx, hy, vx, vy, nw, nw, offset, std::move(name))
 {
 }
 
@@ -440,7 +463,7 @@ void RegistersWidget::TStates::showContextMenu(const QPoint& pos)
 
 RegistersWidget::ULA::ULA(
         RegistersWidget* widget, int hx, int hy, int vx, int vy, int nw, ptrdiff_t offset, std::string name)
-    : Register(widget, hx, hy, vx, vy, nw, nw, offset, std::move(name))
+    : Register(widget, Reg_None, hx, hy, vx, vy, nw, nw, offset, std::move(name))
 {
 }
 

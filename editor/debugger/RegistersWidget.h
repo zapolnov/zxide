@@ -57,7 +57,8 @@ private:
     template <typename T> class Register : public AbstractRegister
     {
     public:
-        Register(RegistersWidget* w, int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t off, std::string name);
+        Register(RegistersWidget* widget, ::Register reg,
+            int hx, int hy, int vx, int vy, int nw, int nw2, ptrdiff_t offset, std::string name);
 
         int x() const final override;
         int y() const final override;
@@ -77,6 +78,7 @@ private:
 
     protected:
         RegistersWidget* const mWidget;
+        const ::Register mRegister;
         const int mHorizontalX;
         const int mHorizontalY;
         const int mVerticalX;

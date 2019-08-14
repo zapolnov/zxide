@@ -78,6 +78,53 @@ Registers EmulatorCore::registers() const
     return mRegisters;
 }
 
+void EmulatorCore::setRegister(Register reg, quint16 value)
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [reg, value] {
+            switch (reg) {
+                case Reg_None: break;
+                case Reg_AF: AF = value; return;
+                case Reg_BC: BC = value; return;
+                case Reg_DE: DE = value; return;
+                case Reg_HL: HL = value; return;
+                case Reg_IX: IX = value; return;
+                case Reg_IY: IY = value; return;
+                case Reg_SP: SP = value; return;
+                case Reg_PC: PC = value; return;
+                case Reg_AF_: AF_ = value; return;
+                case Reg_BC_: BC_ = value; return;
+                case Reg_DE_: DE_ = value; return;
+                case Reg_HL_: HL_ = value; return;
+                case Reg_A: Q_ASSERT(value <= 0xff); A = quint8(value & 0xFF); return;
+                case Reg_B: Q_ASSERT(value <= 0xff); B = quint8(value & 0xFF); return;
+                case Reg_C: Q_ASSERT(value <= 0xff); C = quint8(value & 0xFF); return;
+                case Reg_D: Q_ASSERT(value <= 0xff); D = quint8(value & 0xFF); return;
+                case Reg_E: Q_ASSERT(value <= 0xff); E = quint8(value & 0xFF); return;
+                case Reg_H: Q_ASSERT(value <= 0xff); H = quint8(value & 0xFF); return;
+                case Reg_L: Q_ASSERT(value <= 0xff); L = quint8(value & 0xFF); return;
+                case Reg_F: Q_ASSERT(value <= 0xff); F = quint8(value & 0xFF); return;
+                case Reg_I: Q_ASSERT(value <= 0xff); I = quint8(value & 0xFF); return;
+                case Reg_R: Q_ASSERT(value <= 0xff); R = quint8(value & 0xFF); return;
+                case Reg_A_: Q_ASSERT(value <= 0xff); A_ = quint8(value & 0xFF); return;
+                case Reg_B_: Q_ASSERT(value <= 0xff); B_ = quint8(value & 0xFF); return;
+                case Reg_C_: Q_ASSERT(value <= 0xff); C_ = quint8(value & 0xFF); return;
+                case Reg_D_: Q_ASSERT(value <= 0xff); D_ = quint8(value & 0xFF); return;
+                case Reg_E_: Q_ASSERT(value <= 0xff); E_ = quint8(value & 0xFF); return;
+                case Reg_H_: Q_ASSERT(value <= 0xff); H_ = quint8(value & 0xFF); return;
+                case Reg_L_: Q_ASSERT(value <= 0xff); L_ = quint8(value & 0xFF); return;
+                case Reg_F_: Q_ASSERT(value <= 0xff); F_ = quint8(value & 0xFF); return;
+            }
+            Q_ASSERT(false);
+        };
+
+    QMutexLocker lock(&mThread->mutex);
+    mThread->commandQueue.emplace_back(std::move(cmd));
+}
+
 int EmulatorCore::currentSpeed() const
 {
     if (!mThread->isRunning())
@@ -123,6 +170,10 @@ EmulatorCore::Thread::Thread(QObject* parent)
 {
 }
 
+EmulatorCore::Thread::~Thread()
+{
+}
+
 void EmulatorCore::Thread::run()
 {
     int argc = 1;
@@ -142,6 +193,12 @@ void EmulatorCore::Thread::run()
 void EmulatorCore::Thread::syncWithMainThread()
 {
     QMutexLocker lock(&mutex);
+
+    while (!commandQueue.empty()) {
+        auto cmd = commandQueue.front();
+        commandQueue.pop_front();
+        cmd();
+    }
 
     auto emu = EmulatorCore::instance();
 

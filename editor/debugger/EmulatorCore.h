@@ -4,6 +4,43 @@
 #include <QWidget>
 #include <QThread>
 #include <QMutex>
+#include <functional>
+#include <deque>
+
+enum Register
+{
+    Reg_None,
+    Reg_AF,
+    Reg_BC,
+    Reg_DE,
+    Reg_HL,
+    Reg_IX,
+    Reg_IY,
+    Reg_SP,
+    Reg_PC,
+    Reg_AF_,
+    Reg_BC_,
+    Reg_DE_,
+    Reg_HL_,
+    Reg_A,
+    Reg_B,
+    Reg_C,
+    Reg_D,
+    Reg_E,
+    Reg_H,
+    Reg_L,
+    Reg_F,
+    Reg_I,
+    Reg_R,
+    Reg_A_,
+    Reg_B_,
+    Reg_C_,
+    Reg_D_,
+    Reg_E_,
+    Reg_H_,
+    Reg_L_,
+    Reg_F_,
+};
 
 struct Registers
 {
@@ -68,6 +105,7 @@ public:
     void reloadSettings();
 
     Registers registers() const;
+    void setRegister(Register reg, quint16 value);
 
     int currentSpeed() const;
     QString currentSpeedString() const;
@@ -82,11 +120,16 @@ private:
     {
     public:
         QMutex mutex;
+        std::deque<std::function<void()>> commandQueue;
+
         explicit Thread(QObject* parent = nullptr);
+        ~Thread();
+
         void run() override;
 
     private:
         void syncWithMainThread();
+
         Q_DISABLE_COPY(Thread)
     };
 
