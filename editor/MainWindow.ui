@@ -130,6 +130,7 @@
    <addaction name="actionBuild"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
+   <addaction name="actionPause"/>
    <addaction name="actionStop"/>
    <addaction name="separator"/>
    <addaction name="actionSettings"/>
@@ -188,7 +189,11 @@
     <addaction name="actionBuild"/>
     <addaction name="separator"/>
     <addaction name="actionRun"/>
+    <addaction name="actionPause"/>
     <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionStepInto"/>
+    <addaction name="actionStepOver"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -440,6 +445,37 @@
    </property>
    <property name="text">
     <string>&amp;Settings...</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/tango16x16/media-playback-pause.png</normaloff>:/resources/tango16x16/media-playback-pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="actionStepInto">
+   <property name="text">
+    <string>Step &amp;into</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+  </action>
+  <action name="actionStepOver">
+   <property name="text">
+    <string>Step &amp;over</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
    </property>
   </action>
  </widget>

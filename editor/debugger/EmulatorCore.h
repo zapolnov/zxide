@@ -3,9 +3,6 @@
 
 #include <QWidget>
 #include <QThread>
-#include <QMutex>
-#include <functional>
-#include <deque>
 
 enum Register
 {
@@ -88,6 +85,8 @@ struct Registers
     bool halted;
 };
 
+class QTimer;
+
 class EmulatorCore : public QObject
 {
     Q_OBJECT
@@ -101,6 +100,12 @@ public:
     bool start();
     void stop();
     bool isRunning() const;
+
+    void pause();
+    void stepInto();
+    void stepOver();
+    void unpause();
+    bool isPaused() const;
 
     void reloadSettings();
 
@@ -119,25 +124,14 @@ private:
     class Thread : public QThread
     {
     public:
-        QMutex mutex;
-        std::deque<std::function<void()>> commandQueue;
-
         explicit Thread(QObject* parent = nullptr);
-        ~Thread();
-
         void run() override;
-
-    private:
-        void syncWithMainThread();
-
         Q_DISABLE_COPY(Thread)
     };
 
     static EmulatorCore* mInstance;
-    Registers mRegisters;
+    QTimer* mTimer;
     Thread* mThread;
-    int mCurrentSpeed;
-    bool mShouldUpdateUi;
 
     void update();
 

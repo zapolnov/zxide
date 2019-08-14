@@ -248,8 +248,12 @@ void MainWindow::updateUi()
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
     mUi->actionBuild->setEnabled(!mEmulatorCore->isRunning());
-    mUi->actionRun->setEnabled(!mEmulatorCore->isRunning());
+    mUi->actionRun->setEnabled(!mEmulatorCore->isRunning() || mEmulatorCore->isPaused());
+    mUi->actionPause->setEnabled(mEmulatorCore->isRunning() && !mEmulatorCore->isPaused());
+    mUi->actionPause->setChecked(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
     mUi->actionStop->setEnabled(mEmulatorCore->isRunning());
+    mUi->actionStepInto->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
+    mUi->actionStepOver->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
@@ -353,18 +357,36 @@ void MainWindow::on_actionBuild_triggered()
 
 void MainWindow::on_actionRun_triggered()
 {
-    if (mEmulatorCore->isRunning())
-        return;
+    if (!mEmulatorCore->isRunning()) {
+        if (build())
+            mEmulatorCore->start();
+    } else {
+        if (mEmulatorCore->isPaused())
+            mEmulatorCore->unpause();
+    }
+}
 
-    if (!build())
-        return;
-
-    mEmulatorCore->start();
+void MainWindow::on_actionPause_triggered()
+{
+    if (mEmulatorCore->isRunning() && !mEmulatorCore->isPaused())
+        mEmulatorCore->pause();
 }
 
 void MainWindow::on_actionStop_triggered()
 {
     mEmulatorCore->stop();
+}
+
+void MainWindow::on_actionStepInto_triggered()
+{
+    if (mEmulatorCore->isRunning() && mEmulatorCore->isPaused())
+        mEmulatorCore->stepInto();
+}
+
+void MainWindow::on_actionStepOver_triggered()
+{
+    if (mEmulatorCore->isRunning() && mEmulatorCore->isPaused())
+        mEmulatorCore->stepOver();
 }
 
 void MainWindow::on_actionSettings_triggered()

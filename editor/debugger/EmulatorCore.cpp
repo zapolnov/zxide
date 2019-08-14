@@ -2,7 +2,11 @@
 #include "util/Settings.h"
 #include <QFile>
 #include <QElapsedTimer>
+#include <QTimer>
 #include <QThread>
+#include <QMutex>
+#include <functional>
+#include <vector>
 
 extern "C" {
 #include <libspectrum.h>
@@ -14,6 +18,7 @@ extern "C" {
 #include <timer/timer.h>
 #include <z80/z80.h>
 #include <z80/z80_macros.h>
+#include <debugger/debugger.h>
 #include <peripherals/ula.h>
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
@@ -21,6 +26,11 @@ int fuse_end(void);
 }
 
 static QElapsedTimer elapsedTimer;
+static QMutex mutex;
+static std::vector<std::function<void()>> commandQueue;
+static bool paused;
+static bool shouldUpdateUi;
+static Registers registers;
 static int emulatorSpeed;
 
 EmulatorCore* EmulatorCore::mInstance;
@@ -28,11 +38,15 @@ EmulatorCore* EmulatorCore::mInstance;
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
     , mThread(new Thread(this))
-    , mCurrentSpeed(0)
-    , mShouldUpdateUi(false)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
+
+    mTimer = new QTimer(this);
+    mTimer->setInterval(1000 / 4);
+    connect(mTimer, &QTimer::timeout, this, &EmulatorCore::update);
+    connect(mThread, &QThread::started, mTimer, QOverload<>::of(&QTimer::start));
+    connect(mThread, &QThread::finished, mTimer, &QTimer::stop);
 
     connect(mThread, &QThread::started, this, &EmulatorCore::started);
     connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
@@ -67,6 +81,72 @@ bool EmulatorCore::isRunning() const
     return mThread->isRunning();
 }
 
+void EmulatorCore::pause()
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            debugger_trap();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+void EmulatorCore::stepInto()
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            debugger_step();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+void EmulatorCore::stepOver()
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            debugger_next();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+void EmulatorCore::unpause()
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            debugger_run();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+bool EmulatorCore::isPaused() const
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return false;
+
+    QMutexLocker lock(&mutex);
+    return paused;
+}
+
 void EmulatorCore::reloadSettings()
 {
     // FIXME
@@ -74,8 +154,8 @@ void EmulatorCore::reloadSettings()
 
 Registers EmulatorCore::registers() const
 {
-    QMutexLocker lock(&mThread->mutex);
-    return mRegisters;
+    QMutexLocker lock(&mutex);
+    return ::registers;
 }
 
 void EmulatorCore::setRegister(Register reg, quint16 value)
@@ -121,8 +201,8 @@ void EmulatorCore::setRegister(Register reg, quint16 value)
             Q_ASSERT(false);
         };
 
-    QMutexLocker lock(&mThread->mutex);
-    mThread->commandQueue.emplace_back(std::move(cmd));
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
 }
 
 int EmulatorCore::currentSpeed() const
@@ -130,8 +210,8 @@ int EmulatorCore::currentSpeed() const
     if (!mThread->isRunning())
         return 0;
 
-    QMutexLocker lock(&mThread->mutex);
-    return mCurrentSpeed;
+    QMutexLocker lock(&mutex);
+    return emulatorSpeed;
 }
 
 QString EmulatorCore::currentSpeedString() const
@@ -142,8 +222,8 @@ QString EmulatorCore::currentSpeedString() const
         return QString();
 
     {
-        QMutexLocker lock(&mThread->mutex);
-        speed = mCurrentSpeed;
+        QMutexLocker lock(&mutex);
+        speed = emulatorSpeed;
     }
 
     return QStringLiteral("%1%").arg(speed);
@@ -151,26 +231,82 @@ QString EmulatorCore::currentSpeedString() const
 
 void EmulatorCore::update()
 {
-    bool shouldUpdateUi = false;
+    bool shouldUpdateUi_ = false;
 
     {
-        QMutexLocker lock(&mThread->mutex);
-        shouldUpdateUi = mShouldUpdateUi;
-        mShouldUpdateUi = false;
+        QMutexLocker lock(&mutex);
+        shouldUpdateUi_ = shouldUpdateUi;
+        shouldUpdateUi = false;
     }
 
-    if (shouldUpdateUi)
+    if (shouldUpdateUi_)
         emit updateUi();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void syncWithMainThread()
+{
+    QMutexLocker lock(&mutex);
+
+    if (!commandQueue.empty()) {
+        std::vector<std::function<void()>> commands{std::move(commandQueue)};
+        commandQueue = std::vector<std::function<void()>>();
+
+        lock.unlock();
+        for (const auto& cmd : commands)
+            cmd();
+        lock.relock();
+    }
+
+    registers.tstates = tstates;
+    registers.af = AF;
+    registers.bc = BC;
+    registers.de = DE;
+    registers.hl = HL;
+    registers.ix = IX;
+    registers.iy = IY;
+    registers.sp = SP;
+    registers.pc = PC;
+    registers.af_ = AF_;
+    registers.bc_ = BC_;
+    registers.de_ = DE_;
+    registers.hl_ = HL_;
+    registers.a = A;
+    registers.b = B;
+    registers.c = C;
+    registers.d = D;
+    registers.e = E;
+    registers.h = H;
+    registers.l = L;
+    registers.f = F;
+    registers.i = I;
+    registers.r = R;
+    registers.a_ = A_;
+    registers.b_ = B_;
+    registers.c_ = C_;
+    registers.d_ = D_;
+    registers.e_ = E_;
+    registers.h_ = H_;
+    registers.l_ = L_;
+    registers.f_ = F_;
+    registers.im = IM;
+    registers.iff1 = IFF1;
+    registers.iff2 = IFF2;
+    registers.ula = ula_last_byte();
+    registers.sf = (registers.f & FLAG_S) != 0;
+    registers.zf = (registers.f & FLAG_Z) != 0;
+    registers.hf = (registers.f & FLAG_H) != 0;
+    registers.pf = (registers.f & FLAG_P) != 0;
+    registers.nf = (registers.f & FLAG_N) != 0;
+    registers.cf = (registers.f & FLAG_C) != 0;
+    registers.halted = z80.halted;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 EmulatorCore::Thread::Thread(QObject* parent)
     : QThread(parent)
-{
-}
-
-EmulatorCore::Thread::~Thread()
 {
 }
 
@@ -182,73 +318,19 @@ void EmulatorCore::Thread::run()
         return;
 
     while (!isInterruptionRequested()) {
-        z80_do_opcodes();
-        event_do_events();
+        if (paused) // no need to protect it with mutex as it is only set by this thread
+            QThread::msleep(10);
+        else {
+            z80_do_opcodes();
+            event_do_events();
+        }
         syncWithMainThread();
     }
 
+    if (paused)
+        debugger_run();
+
     fuse_end();
-}
-
-void EmulatorCore::Thread::syncWithMainThread()
-{
-    QMutexLocker lock(&mutex);
-
-    while (!commandQueue.empty()) {
-        auto cmd = commandQueue.front();
-        commandQueue.pop_front();
-        cmd();
-    }
-
-    auto emu = EmulatorCore::instance();
-
-    if (emu->mCurrentSpeed != emulatorSpeed) {
-        emu->mCurrentSpeed = emulatorSpeed;
-        emu->mShouldUpdateUi = true;
-    }
-
-    emu->mRegisters.tstates = tstates;
-    emu->mRegisters.af = AF;
-    emu->mRegisters.bc = BC;
-    emu->mRegisters.de = DE;
-    emu->mRegisters.hl = HL;
-    emu->mRegisters.ix = IX;
-    emu->mRegisters.iy = IY;
-    emu->mRegisters.sp = SP;
-    emu->mRegisters.pc = PC;
-    emu->mRegisters.af_ = AF_;
-    emu->mRegisters.bc_ = BC_;
-    emu->mRegisters.de_ = DE_;
-    emu->mRegisters.hl_ = HL_;
-    emu->mRegisters.a = A;
-    emu->mRegisters.b = B;
-    emu->mRegisters.c = C;
-    emu->mRegisters.d = D;
-    emu->mRegisters.e = E;
-    emu->mRegisters.h = H;
-    emu->mRegisters.l = L;
-    emu->mRegisters.f = F;
-    emu->mRegisters.i = I;
-    emu->mRegisters.r = R;
-    emu->mRegisters.a_ = A_;
-    emu->mRegisters.b_ = B_;
-    emu->mRegisters.c_ = C_;
-    emu->mRegisters.d_ = D_;
-    emu->mRegisters.e_ = E_;
-    emu->mRegisters.h_ = H_;
-    emu->mRegisters.l_ = L_;
-    emu->mRegisters.f_ = F_;
-    emu->mRegisters.im = IM;
-    emu->mRegisters.iff1 = IFF1;
-    emu->mRegisters.iff2 = IFF2;
-    emu->mRegisters.ula = ula_last_byte();
-    emu->mRegisters.sf = (emu->mRegisters.f & FLAG_S) != 0;
-    emu->mRegisters.zf = (emu->mRegisters.f & FLAG_Z) != 0;
-    emu->mRegisters.hf = (emu->mRegisters.f & FLAG_H) != 0;
-    emu->mRegisters.pf = (emu->mRegisters.f & FLAG_P) != 0;
-    emu->mRegisters.nf = (emu->mRegisters.f & FLAG_N) != 0;
-    emu->mRegisters.cf = (emu->mRegisters.f & FLAG_C) != 0;
-    emu->mRegisters.halted = z80.halted;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -347,8 +429,45 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
     return 0;
 }
 
+int ui_debugger_activate()
+{
+    {
+        QMutexLocker lock(&mutex);
+        if (!paused) {
+            paused = true;
+            shouldUpdateUi = true;
+        }
+    }
+
+    while (paused && !QThread::currentThread()->isInterruptionRequested()) {
+        QThread::msleep(10);
+        syncWithMainThread();
+    }
+
+    return 0;
+}
+
+int ui_debugger_deactivate(int)
+{
+    QMutexLocker lock(&mutex);
+    if (paused) {
+        paused = false;
+        shouldUpdateUi = true;
+    }
+    return 0;
+}
+
 int ui_statusbar_update_speed(float speed)
 {
-    emulatorSpeed = int(speed);
+    int spd = int(speed);
+
+    {
+        QMutexLocker lock(&mutex);
+        if (emulatorSpeed != spd) {
+            emulatorSpeed = spd;
+            shouldUpdateUi = true;
+        }
+    }
+
     return 0;
 }

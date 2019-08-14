@@ -20,6 +20,7 @@
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
     <file>tango16x16/edit-cut.png</file>
+    <file>tango16x16/media-playback-pause.png</file>
     <file>tango16x16/media-playback-start.png</file>
     <file>tango16x16/media-playback-stop.png</file>
   </qresource>

@@ -65,6 +65,7 @@ ui_confirm_joystick( libspectrum_joystick libspectrum_type, int inputs )
   return UI_CONFIRM_JOYSTICK_NONE;
 }
 
+#if 0
 int
 ui_debugger_activate( void )
 {
@@ -78,6 +79,7 @@ ui_debugger_deactivate( int interruptable )
   /* No error */
   return 0;
 }
+#endif
 
 int
 ui_debugger_disassemble( libspectrum_word addr )
