@@ -29,8 +29,11 @@ int fuse_end(void);
 static QElapsedTimer elapsedTimer;
 static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
-static bool paused;
+static char memory[0x10000];
+static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
+static bool memoryWasChanged;
+static bool paused;
 static Registers registers;
 static int emulatorSpeed;
 
@@ -258,16 +261,27 @@ QString EmulatorCore::currentSpeedString() const
     return QStringLiteral("%1%").arg(speed);
 }
 
+void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize)
+{
+    QMutexLocker lock(&mutex);
+    memcpy(buffer, memory + address, bufferSize);
+}
+
 void EmulatorCore::update()
 {
     bool shouldUpdateUi_ = false;
+    bool memoryWasChanged_ = false;
 
     {
         QMutexLocker lock(&mutex);
         shouldUpdateUi_ = shouldUpdateUi;
         shouldUpdateUi = false;
+        memoryWasChanged_ = memoryWasChanged;
+        memoryWasChanged = false;
     }
 
+    if (memoryWasChanged_)
+        emit memoryChanged();
     if (shouldUpdateUi_)
         emit updateUi();
 }
@@ -330,6 +344,16 @@ static void syncWithMainThread()
     registers.nf = (registers.f & FLAG_N) != 0;
     registers.cf = (registers.f & FLAG_C) != 0;
     registers.halted = z80.halted;
+
+    int offset = 0;
+    for (int i = 0; i < MEMORY_PAGES_IN_64K; i++) {
+        if (!memoryPageValid[i]) {
+            memcpy(memory + offset, memory_map_read[i].page, MEMORY_PAGE_SIZE);
+            memoryPageValid[i] = true;
+            memoryWasChanged = true;
+        }
+        offset += MEMORY_PAGE_SIZE;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -345,6 +369,8 @@ void EmulatorCore::Thread::run()
     const char* const argv[] = { "fuse" };
     if (fuse_init(argc, (char**)argv))
         return;
+
+    memset(memoryPageValid, 0, sizeof(memoryPageValid));
 
     while (!isInterruptionRequested()) {
         if (paused) // no need to protect it with mutex as it is only set by this thread
@@ -484,6 +510,12 @@ int ui_debugger_deactivate(int)
         shouldUpdateUi = true;
     }
     return 0;
+}
+
+extern "C" void ui_notify_memory_page_changed(int page)
+{
+    QMutexLocker lock(&mutex);
+    memoryPageValid[page] = false;
 }
 
 int ui_statusbar_update_speed(float speed)

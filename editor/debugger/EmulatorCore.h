@@ -118,9 +118,12 @@ public:
     int currentSpeed() const;
     QString currentSpeedString() const;
 
+    void getMemory(unsigned address, void* buffer, size_t bufferSize);
+
 signals:
     void started();
     void stopped();
+    void memoryChanged();
     void updateUi();
 
 private:

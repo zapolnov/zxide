@@ -19,6 +19,8 @@ qt_add_sources(GameEditor
         debugger/EditRegisterDialog.ui
         debugger/EmulatorCore.cpp
         debugger/EmulatorCore.h
+        debugger/MemoryWidget.cpp
+        debugger/MemoryWidget.h
         debugger/RegistersWidget.cpp
         debugger/RegistersWidget.h
         editor/code/CodeTab.cpp
@@ -39,6 +41,8 @@ qt_add_sources(GameEditor
         editor/FileManager.ui
         editor/IEditorTab.h
         res/resources.qrc
+        util/ScrollBar.cpp
+        util/ScrollBar.h
         util/Settings.cpp
         util/Settings.h
         util/SimpleTextPainter.cpp

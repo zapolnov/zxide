@@ -98,6 +98,8 @@ static module_info_t memory_module_info = {
 
 };
 
+void ui_notify_memory_page_changed(int page);
+
 /* Set up the information about the normal page mappings.
    Memory contention and usable pages vary from machine to machine and must
    be set in the appropriate _reset function */
@@ -328,7 +330,7 @@ memory_map_2k_read_write( libspectrum_word address, memory_page source[],
   for( i = 0; i < MEMORY_PAGES_IN_2K; i++ ) {
     int page_offset = ( address >> MEMORY_PAGE_SIZE_LOGARITHM ) + i;
     memory_page *page = &source[ page_num * MEMORY_PAGES_IN_2K + i ];
-    if( map_read ) memory_map_read[ page_offset ] = *page;
+    if( map_read ) { memory_map_read[ page_offset ] = *page; ui_notify_memory_page_changed(page_offset); }
     if( map_write ) memory_map_write[ page_offset ] = *page;
   }
 }
@@ -339,6 +341,7 @@ memory_map_page( memory_page *source[], int page_num )
 {
   memory_map_read[ page_num ] = memory_map_write[ page_num ] =
     *source[ page_num ];
+  ui_notify_memory_page_changed(page_num);
 }
 
 /* Page in 16k from /ROMCS */
@@ -497,6 +500,8 @@ writebyte_internal( libspectrum_word address, libspectrum_byte b )
     memory_display_dirty( address, b );
 
     memory[ offset ] = b;
+
+    ui_notify_memory_page_changed(bank);
   }
 }
 

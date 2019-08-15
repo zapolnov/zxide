@@ -227,6 +227,46 @@
    </attribute>
    <widget class="RegistersWidget" name="registersWidget"/>
   </widget>
+  <widget class="QDockWidget" name="memoryDockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Memory</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="memoryDockContentsWidget">
+    <layout class="QHBoxLayout" name="memoryDockWidgetLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="MemoryWidget" name="memoryWidget" native="true"/>
+     </item>
+     <item>
+      <widget class="ScrollBar" name="memoryWidgetScrollBar">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="actionExit">
    <property name="icon">
     <iconset resource="res/resources.qrc">
@@ -542,6 +582,17 @@
    <extends>QWidget</extends>
    <header>debugger/RegistersWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MemoryWidget</class>
+   <extends>QWidget</extends>
+   <header>debugger/MemoryWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScrollBar</class>
+   <extends>QScrollBar</extends>
+   <header>util/ScrollBar.h</header>
   </customwidget>
  </customwidgets>
  <resources>

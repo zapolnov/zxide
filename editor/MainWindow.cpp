@@ -31,6 +31,8 @@ MainWindow::MainWindow(const QString& path)
 
     mUi->setupUi(this);
 
+    mUi->memoryWidget->setScrollBar(mUi->memoryWidgetScrollBar);
+
     mInsOverwriteLabel = new QLabel(mUi->statusBar);
     mInsOverwriteLabel->setFixedWidth(35);
     mInsOverwriteLabel->setFrameShape(QFrame::StyledPanel);
@@ -262,6 +264,7 @@ void MainWindow::updateUi()
     mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
 
     mUi->registersDockWidget->setVisible(mEmulatorCore->isRunning());
+    mUi->memoryDockWidget->setVisible(mEmulatorCore->isRunning());
 }
 
 void MainWindow::on_actionNewFile_triggered()
