@@ -32,9 +32,8 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
         "<hr>"
 
         "<p>This program uses zlib:<br>"
-        "<a href=\"https://sourceforge.net/projects/bzip2/\">https://sourceforge.net/projects/bzip2/</a><br>"
-        "Copyright &copy; 1995-2017 Jean-loup Gailly and Mark Adler.<br>"
-        "Licensed under zlib license.</p>"
+        "<a href=\"https://www.zlib.net/\">https://www.zlib.net/</a><br>"
+        "Copyright &copy; 1995-2017 Jean-loup Gailly and Mark Adler.</p>"
 
         "<hr>"
 
