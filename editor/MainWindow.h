@@ -64,7 +64,9 @@ private:
     Q_SLOT void on_actionPause_triggered();
     Q_SLOT void on_actionStop_triggered();
     Q_SLOT void on_actionStepInto_triggered();
+    Q_SLOT void on_actionStepOut_triggered();
     Q_SLOT void on_actionStepOver_triggered();
+    Q_SLOT void on_actionRunToCursor_triggered();
 
     Q_SLOT void on_actionSettings_triggered();
 

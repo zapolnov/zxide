@@ -33,6 +33,7 @@ public:
     virtual bool canSelectAll() const { return false; }
     virtual bool canClearSelection() const { return false; }
     virtual bool canGoToLine() const { return false; }
+    virtual bool canRunToCursor() const { return false; }
 
     virtual void createFile() {}
     virtual void createDirectory() {}

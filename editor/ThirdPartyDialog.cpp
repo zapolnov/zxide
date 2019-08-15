@@ -43,6 +43,13 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
 
         "<hr>"
 
+        "<p>This program uses Fugue Icons:<br>"
+        "Copyright &copy; 2013 Yusuke Kamiyamane. All rights reserved.<br>"
+        "Licensed under the Creative Commons Attribution 3.0 License.<br>"
+        "<a href=\"https://p.yusukekamiyamane.com/\">https://p.yusukekamiyamane.com/</a></p>"
+
+        "<hr>"
+
         "<p>This program uses Scintilla:<br>"
         "<a href=\"https://www.scintilla.org/\">https://www.scintilla.org/</a><br>"
         "Copyright &copy; 1998-2003 by Neil Hodgson. All Rights Reserved.<br>"

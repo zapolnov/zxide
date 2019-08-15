@@ -44,6 +44,8 @@ GSList *debugger_breakpoints;
 /* The next breakpoint ID to use */
 static size_t next_breakpoint_id;
 
+unsigned debugger_stepover_addr;
+
 /* Textual representations of the breakpoint types and lifetimes */
 const char *debugger_breakpoint_type_text[] = {
   "Execute", "Read", "Write", "Port Read", "Port Write", "Time", "Event",
@@ -239,7 +241,26 @@ debugger_check( debugger_breakpoint_type type, libspectrum_dword value )
 
   case DEBUGGER_MODE_INACTIVE: return 0;
 
+  case DEBUGGER_MODE_STEP_OVER:
+    if (type == DEBUGGER_BREAKPOINT_TYPE_EXECUTE && debugger_stepover_addr == value) {
+        debugger_mode = DEBUGGER_MODE_HALTED;
+        break;
+    }
+    goto check_breakpoints;
+
+  case DEBUGGER_MODE_STEP_OUT:
+    if (type == DEBUGGER_BREAKPOINT_TYPE_EXECUTE_RET) {
+        debugger_mode = DEBUGGER_MODE_HALTED;
+        break;
+    }
+    goto check_breakpoints;
+
+  case DEBUGGER_MODE_RUN_TO_CURSOR:
+    // FIXME
+    goto check_breakpoints;
+
   case DEBUGGER_MODE_ACTIVE:
+  check_breakpoints:
     for( ptr = debugger_breakpoints; ptr; ptr = ptr_next ) {
 
       bp = ptr->data;
@@ -276,7 +297,7 @@ debugger_breakpoint_reduce_tstates( libspectrum_dword tstates )
   GSList *ptr;
   debugger_breakpoint *bp;
 
-  if( debugger_mode != DEBUGGER_MODE_ACTIVE ) return;
+  if( debugger_mode == DEBUGGER_MODE_INACTIVE || debugger_mode == DEBUGGER_MODE_HALTED ) return;
 
   for( ptr = debugger_breakpoints; ptr; ptr = ptr->next ) {
     bp = ptr->data;

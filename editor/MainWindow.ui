@@ -133,6 +133,11 @@
    <addaction name="actionPause"/>
    <addaction name="actionStop"/>
    <addaction name="separator"/>
+   <addaction name="actionStepInto"/>
+   <addaction name="actionStepOut"/>
+   <addaction name="actionStepOver"/>
+   <addaction name="actionRunToCursor"/>
+   <addaction name="separator"/>
    <addaction name="actionSettings"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -193,7 +198,9 @@
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionStepInto"/>
+    <addaction name="actionStepOut"/>
     <addaction name="actionStepOver"/>
+    <addaction name="actionRunToCursor"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -463,6 +470,10 @@
    </property>
   </action>
   <action name="actionStepInto">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fugue16x16/arrow-step.png</normaloff>:/resources/fugue16x16/arrow-step.png</iconset>
+   </property>
    <property name="text">
     <string>Step &amp;into</string>
    </property>
@@ -471,11 +482,39 @@
    </property>
   </action>
   <action name="actionStepOver">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fugue16x16/arrow-step-over.png</normaloff>:/resources/fugue16x16/arrow-step-over.png</iconset>
+   </property>
    <property name="text">
     <string>Step &amp;over</string>
    </property>
    <property name="shortcut">
     <string>F8</string>
+   </property>
+  </action>
+  <action name="actionStepOut">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fugue16x16/arrow-step-out.png</normaloff>:/resources/fugue16x16/arrow-step-out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Step ou&amp;t</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F8</string>
+   </property>
+  </action>
+  <action name="actionRunToCursor">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fugue16x16/arrow-stop.png</normaloff>:/resources/fugue16x16/arrow-stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Run to &amp;cursor</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
    </property>
   </action>
  </widget>

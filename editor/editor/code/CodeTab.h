@@ -32,6 +32,7 @@ public:
     bool canSelectAll() const override;
     bool canClearSelection() const override;
     bool canGoToLine() const override;
+    bool canRunToCursor() const override;
 
     bool saveAll() override;
     void undo() override;

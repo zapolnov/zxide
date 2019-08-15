@@ -36,6 +36,7 @@ typedef enum debugger_breakpoint_type {
   DEBUGGER_BREAKPOINT_TYPE_PORT_WRITE,
   DEBUGGER_BREAKPOINT_TYPE_TIME,
   DEBUGGER_BREAKPOINT_TYPE_EVENT,
+  DEBUGGER_BREAKPOINT_TYPE_EXECUTE_RET,
 } debugger_breakpoint_type;
 
 extern const char *debugger_breakpoint_type_text[];

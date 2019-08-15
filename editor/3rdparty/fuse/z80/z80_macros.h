@@ -328,6 +328,7 @@ break
 {\
   POP16(PCL,PCH);\
   z80.memptr.w = PC;\
+  debugger_check(DEBUGGER_BREAKPOINT_TYPE_EXECUTE_RET, PC); \
 }
 
 #define RL(value)\

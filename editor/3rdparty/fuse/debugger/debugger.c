@@ -47,6 +47,8 @@ int debugger_memory_pool;
 /* The event type used for time breakpoints */
 int debugger_breakpoint_event;
 
+extern unsigned debugger_stepover_addr;
+
 /* Fuse's exit code */
 static int exit_code = 0;
 
@@ -119,16 +121,36 @@ debugger_next( void )
 {
   size_t length;
 
+  libspectrum_byte opcode = readbyte_internal( PC );
+  if (opcode != 0xC4 // call nz
+    && opcode != 0xCC // call z
+    && opcode != 0xCD // call
+    && opcode != 0xD4 // call nc
+    && opcode != 0xDC // call c
+    && opcode != 0xE4 // call po
+    && opcode != 0xEC // call pe
+    && opcode != 0xF4 // call p
+    && opcode != 0xFC // call m
+    && opcode != 0xC7 // rst 0
+    && opcode != 0xCF // rst 8
+    && opcode != 0xD7 // rst 10
+    && opcode != 0xDF // rst 18
+    && opcode != 0xE7 // rst 20
+    && opcode != 0xEF // rst 28
+    && opcode != 0xF7 // rst 30
+    && opcode != 0xFF // rst 38
+    )
+  {
+    debugger_step();
+    return 0;
+  }
+
   /* Find out how long the current instruction is */
   debugger_disassemble( NULL, 0, &length, PC );
 
-  /* And add a breakpoint after that */
-  debugger_breakpoint_add_address(
-    DEBUGGER_BREAKPOINT_TYPE_EXECUTE, memory_source_any, 0, PC + length, 0,
-    DEBUGGER_BREAKPOINT_LIFE_ONESHOT, NULL
-  );
-
-  debugger_run();
+  debugger_mode = DEBUGGER_MODE_STEP_OVER;
+  debugger_stepover_addr = (PC + length) & 0xffff;
+  ui_debugger_deactivate( 0 );
 
   return 0;
 }
@@ -149,18 +171,8 @@ debugger_run( void )
 int
 debugger_breakpoint_exit( void )
 {
-  libspectrum_word target;
-
-  target = readbyte_internal( SP ) + 0x100 * readbyte_internal( SP+1 );
-
-  if( debugger_breakpoint_add_address(
-        DEBUGGER_BREAKPOINT_TYPE_EXECUTE, memory_source_any, 0, target, 0,
-	DEBUGGER_BREAKPOINT_LIFE_ONESHOT, NULL
-      )
-    )
-    return 1;
-
-  if( debugger_run() ) return 1;
+  debugger_mode = DEBUGGER_MODE_STEP_OUT;
+  ui_debugger_deactivate( 0 );
 
   return 0;
 }

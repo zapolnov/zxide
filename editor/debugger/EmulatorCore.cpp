@@ -19,6 +19,7 @@ extern "C" {
 #include <z80/z80.h>
 #include <z80/z80_macros.h>
 #include <debugger/debugger.h>
+#include <debugger/debugger_internals.h>
 #include <peripherals/ula.h>
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
@@ -88,7 +89,7 @@ void EmulatorCore::pause()
         return;
 
     auto cmd = [] {
-            debugger_trap();
+            debugger_mode = DEBUGGER_MODE_HALTED;
         };
 
     QMutexLocker lock(&mutex);
@@ -109,6 +110,20 @@ void EmulatorCore::stepInto()
     commandQueue.emplace_back(std::move(cmd));
 }
 
+void EmulatorCore::stepOut()
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            debugger_breakpoint_exit();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
 void EmulatorCore::stepOver()
 {
     Q_ASSERT(mThread->isRunning());
@@ -117,6 +132,20 @@ void EmulatorCore::stepOver()
 
     auto cmd = [] {
             debugger_next();
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+void EmulatorCore::runTo(const File* file, int line)
+{
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    auto cmd = [] {
+            // FIXME
         };
 
     QMutexLocker lock(&mutex);
@@ -328,7 +357,7 @@ void EmulatorCore::Thread::run()
     }
 
     if (paused)
-        debugger_run();
+        debugger_run(); // "unpause" the debugger before shutting down
 
     fuse_end();
 }

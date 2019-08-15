@@ -85,6 +85,7 @@ struct Registers
     bool halted;
 };
 
+class File;
 class QTimer;
 
 class EmulatorCore : public QObject
@@ -103,7 +104,9 @@ public:
 
     void pause();
     void stepInto();
+    void stepOut();
     void stepOver();
+    void runTo(const File* file, int line);
     void unpause();
     bool isPaused() const;
 

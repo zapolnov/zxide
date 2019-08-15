@@ -99,6 +99,12 @@ bool CodeTab::canGoToLine() const
     return currentFile() != nullptr;
 }
 
+bool CodeTab::canRunToCursor() const
+{
+    // FIXME
+    return false;
+}
+
 bool CodeTab::saveAll()
 {
     bool success = true;
