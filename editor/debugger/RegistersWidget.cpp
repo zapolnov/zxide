@@ -7,7 +7,7 @@
 #include <QDialog>
 
 RegistersWidget::RegistersWidget(QWidget* parent)
-    : QWidget(parent)
+    : QOpenGLWidget(parent)
     , mTimer(new QTimer(this))
     , mOrientation(Qt::Horizontal)
 {
@@ -121,9 +121,10 @@ void RegistersWidget::setOrientation(Qt::Orientation orientation)
     }
 }
 
-void RegistersWidget::paintEvent(QPaintEvent* event)
+void RegistersWidget::paintGL()
 {
     QPainter painter(this);
+    painter.fillRect(0, 0, width(), height(), Qt::white);
     for (const auto& reg : mRegisters)
         reg->paint(&painter);
 }

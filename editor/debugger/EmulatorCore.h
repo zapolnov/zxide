@@ -1,7 +1,7 @@
 #ifndef DEBUGGER_EMULATORCORE_H
 #define DEBUGGER_EMULATORCORE_H
 
-#include <QWidget>
+#include <QObject>
 #include <QThread>
 
 enum Register

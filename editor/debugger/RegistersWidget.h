@@ -1,6 +1,7 @@
 #ifndef DEBUGGER_REGISTERSWIDGET_H
 #define DEBUGGER_REGISTERSWIDGET_H
 
+#include <QOpenGLWidget>
 #include "debugger/EmulatorCore.h"
 #include "util/SimpleTextPainter.h"
 #include <memory>
@@ -9,7 +10,7 @@
 
 class QTimer;
 
-class RegistersWidget : public QWidget
+class RegistersWidget : public QOpenGLWidget
 {
     Q_OBJECT
 
@@ -23,7 +24,7 @@ public:
     void setOrientation(Qt::Orientation orientation);
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
+    void paintGL() override;
     void contextMenuEvent(QContextMenuEvent* event) override;
 
 private:
