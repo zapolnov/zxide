@@ -263,6 +263,7 @@ void MainWindow::updateUi()
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
     mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
 
+    mUi->displayDockWidget->setVisible(mEmulatorCore->isRunning());
     mUi->registersDockWidget->setVisible(mEmulatorCore->isRunning());
     mUi->memoryDockWidget->setVisible(mEmulatorCore->isRunning());
 }

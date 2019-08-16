@@ -15,6 +15,7 @@ extern "C" {
 #include <compat.h>
 #include <event.h>
 #include <fuse.h>
+#include <input.h>
 #include <timer/timer.h>
 #include <z80/z80.h>
 #include <z80/z80_macros.h>
@@ -24,6 +25,7 @@ extern "C" {
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
+extern int display_flash_reversed;
 }
 
 static QElapsedTimer elapsedTimer;
@@ -32,6 +34,7 @@ static std::vector<std::function<void()>> commandQueue;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
+static bool displayFlashReversed;
 static bool memoryWasChanged;
 static bool paused;
 static Registers registers;
@@ -42,6 +45,7 @@ EmulatorCore* EmulatorCore::mInstance;
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
     , mThread(new Thread(this))
+    , mShiftPressed(false)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
@@ -261,10 +265,155 @@ QString EmulatorCore::currentSpeedString() const
     return QStringLiteral("%1%").arg(speed);
 }
 
+bool EmulatorCore::displayFlashReversed() const
+{
+    QMutexLocker lock(&mutex);
+    return ::displayFlashReversed;
+}
+
 void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize)
 {
     QMutexLocker lock(&mutex);
     memcpy(buffer, memory + address, bufferSize);
+}
+
+static input_key mapKey(int key, bool shift)
+{
+    switch (key) {
+        default: return INPUT_KEY_NONE; break;
+
+        case Qt::Key_Escape: return INPUT_KEY_Escape; break;
+        case Qt::Key_1: return INPUT_KEY_1; break;
+        case Qt::Key_2: return INPUT_KEY_2; break;
+        case Qt::Key_3: return INPUT_KEY_3; break;
+        case Qt::Key_4: return INPUT_KEY_4; break;
+        case Qt::Key_5: return INPUT_KEY_5; break;
+        case Qt::Key_6: return INPUT_KEY_6; break;
+        case Qt::Key_7: return INPUT_KEY_7; break;
+        case Qt::Key_8: return INPUT_KEY_8; break;
+        case Qt::Key_9: return INPUT_KEY_9; break;
+        case Qt::Key_0: return INPUT_KEY_0; break;
+        case Qt::Key_Minus: return INPUT_KEY_minus; break;
+        case Qt::Key_Equal: return INPUT_KEY_equal; break;
+        case Qt::Key_Backspace: return INPUT_KEY_BackSpace; break;
+        case Qt::Key_Tab: return INPUT_KEY_Tab; break;
+        case Qt::Key_Q: return (!shift ? INPUT_KEY_q : INPUT_KEY_Q); break;
+        case Qt::Key_W: return (!shift ? INPUT_KEY_w : INPUT_KEY_W); break;
+        case Qt::Key_E: return (!shift ? INPUT_KEY_e : INPUT_KEY_E); break;
+        case Qt::Key_R: return (!shift ? INPUT_KEY_r : INPUT_KEY_R); break;
+        case Qt::Key_T: return (!shift ? INPUT_KEY_t : INPUT_KEY_T); break;
+        case Qt::Key_Y: return (!shift ? INPUT_KEY_y : INPUT_KEY_Y); break;
+        case Qt::Key_U: return (!shift ? INPUT_KEY_u : INPUT_KEY_U); break;
+        case Qt::Key_I: return (!shift ? INPUT_KEY_i : INPUT_KEY_I); break;
+        case Qt::Key_O: return (!shift ? INPUT_KEY_o : INPUT_KEY_O); break;
+        case Qt::Key_P: return (!shift ? INPUT_KEY_p : INPUT_KEY_P); break;
+        case Qt::Key_CapsLock: return INPUT_KEY_Caps_Lock; break;
+        case Qt::Key_A: return (!shift ? INPUT_KEY_a : INPUT_KEY_A); break;
+        case Qt::Key_S: return (!shift ? INPUT_KEY_s : INPUT_KEY_S); break;
+        case Qt::Key_D: return (!shift ? INPUT_KEY_d : INPUT_KEY_D); break;
+        case Qt::Key_F: return (!shift ? INPUT_KEY_f : INPUT_KEY_F); break;
+        case Qt::Key_G: return (!shift ? INPUT_KEY_g : INPUT_KEY_G); break;
+        case Qt::Key_H: return (!shift ? INPUT_KEY_h : INPUT_KEY_H); break;
+        case Qt::Key_J: return (!shift ? INPUT_KEY_j : INPUT_KEY_J); break;
+        case Qt::Key_K: return (!shift ? INPUT_KEY_k : INPUT_KEY_K); break;
+        case Qt::Key_L: return (!shift ? INPUT_KEY_l : INPUT_KEY_L); break;
+        case Qt::Key_Semicolon: return INPUT_KEY_semicolon; break;
+        case Qt::Key_Apostrophe: return INPUT_KEY_apostrophe; break;
+        case Qt::Key_NumberSign: return INPUT_KEY_numbersign; break;
+        case Qt::Key_Return: return INPUT_KEY_Return; break;
+        case Qt::Key_Z: return (!shift ? INPUT_KEY_z : INPUT_KEY_Z); break;
+        case Qt::Key_X: return (!shift ? INPUT_KEY_x : INPUT_KEY_X); break;
+        case Qt::Key_C: return (!shift ? INPUT_KEY_c : INPUT_KEY_C); break;
+        case Qt::Key_V: return (!shift ? INPUT_KEY_v : INPUT_KEY_V); break;
+        case Qt::Key_B: return (!shift ? INPUT_KEY_b : INPUT_KEY_B); break;
+        case Qt::Key_N: return (!shift ? INPUT_KEY_n : INPUT_KEY_N); break;
+        case Qt::Key_M: return (!shift ? INPUT_KEY_m : INPUT_KEY_M); break;
+        case Qt::Key_Comma: return INPUT_KEY_comma; break;
+        case Qt::Key_Period: return INPUT_KEY_period; break;
+        case Qt::Key_Slash: return INPUT_KEY_slash; break;
+
+        case Qt::Key_Asterisk: return INPUT_KEY_asterisk; break;
+        case Qt::Key_Dollar: return INPUT_KEY_dollar; break;
+        case Qt::Key_Exclam: return INPUT_KEY_exclam; break;
+        case Qt::Key_Less: return INPUT_KEY_less; break;
+        case Qt::Key_ParenRight: return INPUT_KEY_parenright; break;
+        case Qt::Key_Colon: return INPUT_KEY_colon; break;
+        case Qt::Key_Plus: return INPUT_KEY_plus; break;
+
+        case Qt::Key_Space: return INPUT_KEY_space; break;
+        case Qt::Key_Menu: return (!shift ? INPUT_KEY_Alt_L : INPUT_KEY_Mode_switch); break;
+
+        case Qt::Key_Left: return INPUT_KEY_Left; break;
+        case Qt::Key_Down: return INPUT_KEY_Down; break;
+        case Qt::Key_Up: return INPUT_KEY_Up; break;
+        case Qt::Key_Right: return INPUT_KEY_Right; break;
+
+        case Qt::Key_Enter: return INPUT_KEY_KP_Enter; break;
+
+        case Qt::Key_QuoteDbl: return INPUT_KEY_quotedbl; break;
+        case Qt::Key_Percent: return INPUT_KEY_percent; break;
+        case Qt::Key_Ampersand: return INPUT_KEY_ampersand; break;
+        case Qt::Key_ParenLeft: return INPUT_KEY_parenleft; break;
+        case Qt::Key_Greater: return INPUT_KEY_greater; break;
+        case Qt::Key_Question: return INPUT_KEY_question; break;
+        case Qt::Key_At: return INPUT_KEY_at; break;
+        case Qt::Key_AsciiCircum: return INPUT_KEY_asciicircum; break;
+        case Qt::Key_Underscore: return INPUT_KEY_underscore; break;
+    }
+}
+
+void EmulatorCore::pressKey(int key)
+{
+    if (key == Qt::Key_Shift) {
+        mShiftPressed = true;
+        return;
+    }
+
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    input_key keyCode = mapKey(key, mShiftPressed);
+    if (keyCode == INPUT_KEY_NONE)
+        return;
+
+    auto cmd = [keyCode] {
+            input_event_t ev;
+            ev.type = INPUT_EVENT_KEYPRESS;
+            ev.types.key.native_key = keyCode;
+            ev.types.key.spectrum_key = keyCode;
+            input_event(&ev);
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
+void EmulatorCore::releaseKey(int key)
+{
+    if (key == Qt::Key_Shift) {
+        mShiftPressed = false;
+        return;
+    }
+
+    Q_ASSERT(mThread->isRunning());
+    if (!mThread->isRunning())
+        return;
+
+    input_key keyCode = mapKey(key, mShiftPressed);
+    if (keyCode == INPUT_KEY_NONE)
+        return;
+
+    auto cmd = [keyCode] {
+            input_event_t ev;
+            ev.type = INPUT_EVENT_KEYRELEASE;
+            ev.types.key.native_key = keyCode;
+            ev.types.key.spectrum_key = keyCode;
+            input_event(&ev);
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
 }
 
 void EmulatorCore::update()
@@ -354,6 +503,8 @@ static void syncWithMainThread()
         }
         offset += MEMORY_PAGE_SIZE;
     }
+
+    displayFlashReversed = (display_flash_reversed != 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

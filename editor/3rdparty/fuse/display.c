@@ -81,7 +81,7 @@ static libspectrum_word
    16<=d_f_c<32 => Flashing characters are reversed
 */
 static int display_frame_count;
-static int display_flash_reversed;
+int display_flash_reversed;
 
 /* Which eight-pixel chunks on each line (including border) need to
    be redisplayed. Bit 0 corresponds to pixels 0-7, bit 39 to

@@ -16,6 +16,8 @@ qt_add_executable(GameEditor USES Core Gui Widgets)
 target_link_libraries(GameEditor Scintilla Compiler Fuse)
 
 qt_add_sources(GameEditor
+        debugger/DisplayWidget.cpp
+        debugger/DisplayWidget.h
         debugger/EditRegisterDialog.ui
         debugger/EmulatorCore.cpp
         debugger/EmulatorCore.h

@@ -118,7 +118,12 @@ public:
     int currentSpeed() const;
     QString currentSpeedString() const;
 
+    bool displayFlashReversed() const;
+
     void getMemory(unsigned address, void* buffer, size_t bufferSize);
+
+    void pressKey(int key);
+    void releaseKey(int key);
 
 signals:
     void started();
@@ -138,6 +143,7 @@ private:
     static EmulatorCore* mInstance;
     QTimer* mTimer;
     Thread* mThread;
+    bool mShiftPressed;
 
     void update();
 

@@ -76,6 +76,16 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_i,           { KEYBOARD_i,     KEYBOARD_NONE   } },
   { INPUT_KEY_o,           { KEYBOARD_o,     KEYBOARD_NONE   } },
   { INPUT_KEY_p,           { KEYBOARD_p,     KEYBOARD_NONE   } },
+  { INPUT_KEY_Q,           { KEYBOARD_q,     KEYBOARD_Caps   } },
+  { INPUT_KEY_W,           { KEYBOARD_w,     KEYBOARD_Caps   } },
+  { INPUT_KEY_E,           { KEYBOARD_e,     KEYBOARD_Caps   } },
+  { INPUT_KEY_R,           { KEYBOARD_r,     KEYBOARD_Caps   } },
+  { INPUT_KEY_T,           { KEYBOARD_t,     KEYBOARD_Caps   } },
+  { INPUT_KEY_Y,           { KEYBOARD_y,     KEYBOARD_Caps   } },
+  { INPUT_KEY_U,           { KEYBOARD_u,     KEYBOARD_Caps   } },
+  { INPUT_KEY_I,           { KEYBOARD_i,     KEYBOARD_Caps   } },
+  { INPUT_KEY_O,           { KEYBOARD_o,     KEYBOARD_Caps   } },
+  { INPUT_KEY_P,           { KEYBOARD_p,     KEYBOARD_Caps   } },
 
   { INPUT_KEY_Caps_Lock,   { KEYBOARD_2,     KEYBOARD_Caps   } },
   { INPUT_KEY_a,           { KEYBOARD_a,     KEYBOARD_NONE   } },
@@ -87,6 +97,15 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_j,           { KEYBOARD_j,     KEYBOARD_NONE   } },
   { INPUT_KEY_k,           { KEYBOARD_k,     KEYBOARD_NONE   } },
   { INPUT_KEY_l,           { KEYBOARD_l,     KEYBOARD_NONE   } },
+  { INPUT_KEY_A,           { KEYBOARD_a,     KEYBOARD_Caps   } },
+  { INPUT_KEY_S,           { KEYBOARD_s,     KEYBOARD_Caps   } },
+  { INPUT_KEY_D,           { KEYBOARD_d,     KEYBOARD_Caps   } },
+  { INPUT_KEY_F,           { KEYBOARD_f,     KEYBOARD_Caps   } },
+  { INPUT_KEY_G,           { KEYBOARD_g,     KEYBOARD_Caps   } },
+  { INPUT_KEY_H,           { KEYBOARD_h,     KEYBOARD_Caps   } },
+  { INPUT_KEY_J,           { KEYBOARD_j,     KEYBOARD_Caps   } },
+  { INPUT_KEY_K,           { KEYBOARD_k,     KEYBOARD_Caps   } },
+  { INPUT_KEY_L,           { KEYBOARD_l,     KEYBOARD_Caps   } },
   { INPUT_KEY_semicolon,   { KEYBOARD_o,     KEYBOARD_Symbol } },
   { INPUT_KEY_apostrophe,  { KEYBOARD_7,     KEYBOARD_Symbol } },
   { INPUT_KEY_numbersign,  { KEYBOARD_3,     KEYBOARD_Symbol } },
@@ -100,6 +119,13 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_b,           { KEYBOARD_b,     KEYBOARD_NONE   } },
   { INPUT_KEY_n,           { KEYBOARD_n,     KEYBOARD_NONE   } },
   { INPUT_KEY_m,           { KEYBOARD_m,     KEYBOARD_NONE   } },
+  { INPUT_KEY_Z,           { KEYBOARD_z,     KEYBOARD_Caps   } },
+  { INPUT_KEY_X,           { KEYBOARD_x,     KEYBOARD_Caps   } },
+  { INPUT_KEY_C,           { KEYBOARD_c,     KEYBOARD_Caps   } },
+  { INPUT_KEY_V,           { KEYBOARD_v,     KEYBOARD_Caps   } },
+  { INPUT_KEY_B,           { KEYBOARD_b,     KEYBOARD_Caps   } },
+  { INPUT_KEY_N,           { KEYBOARD_n,     KEYBOARD_Caps   } },
+  { INPUT_KEY_M,           { KEYBOARD_m,     KEYBOARD_Caps   } },
   { INPUT_KEY_comma,       { KEYBOARD_n,     KEYBOARD_Symbol } },
   { INPUT_KEY_period,      { KEYBOARD_m,     KEYBOARD_Symbol } },
   { INPUT_KEY_slash,       { KEYBOARD_v,     KEYBOARD_Symbol } },
@@ -124,7 +150,7 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_Meta_R,      { KEYBOARD_NONE,  KEYBOARD_Symbol } },
   { INPUT_KEY_Alt_R,       { KEYBOARD_NONE,  KEYBOARD_Symbol } },
   { INPUT_KEY_Control_R,   { KEYBOARD_NONE,  KEYBOARD_Symbol } },
-  { INPUT_KEY_Mode_switch, { KEYBOARD_NONE,  KEYBOARD_Symbol } },
+  { INPUT_KEY_Mode_switch, { KEYBOARD_Caps,  KEYBOARD_Symbol } },
 
   { INPUT_KEY_Left,        { KEYBOARD_5,     KEYBOARD_NONE   } },
   { INPUT_KEY_Down,        { KEYBOARD_6,     KEYBOARD_NONE   } },
@@ -132,6 +158,16 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_Right,       { KEYBOARD_8,     KEYBOARD_NONE   } },
 
   { INPUT_KEY_KP_Enter,    { KEYBOARD_Enter, KEYBOARD_NONE   } },
+
+  { INPUT_KEY_quotedbl,    { KEYBOARD_p,     KEYBOARD_Symbol } },
+  { INPUT_KEY_percent,     { KEYBOARD_5,     KEYBOARD_Symbol } },
+  { INPUT_KEY_ampersand,   { KEYBOARD_6,     KEYBOARD_Symbol } },
+  { INPUT_KEY_parenleft,   { KEYBOARD_8,     KEYBOARD_Symbol } },
+  { INPUT_KEY_greater,     { KEYBOARD_t,     KEYBOARD_Symbol } },
+  { INPUT_KEY_question,    { KEYBOARD_c,     KEYBOARD_Symbol } },
+  { INPUT_KEY_at,          { KEYBOARD_2,     KEYBOARD_Symbol } },
+  { INPUT_KEY_asciicircum, { KEYBOARD_h,     KEYBOARD_Symbol } },
+  { INPUT_KEY_underscore,  { KEYBOARD_0,     KEYBOARD_Symbol } },
 
   { INPUT_KEY_NONE, { KEYBOARD_NONE, KEYBOARD_NONE } } /* End marker */
 
@@ -304,6 +340,7 @@ keyboard_init( void *context )
 static void
 keyboard_end( void )
 {
+  keyboard_release_all();
   g_hash_table_destroy( keyboard_data );
   keyboard_data = NULL;
   g_hash_table_destroy( spectrum_keys );

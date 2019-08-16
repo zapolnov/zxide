@@ -30,7 +30,7 @@ MemoryWidget::~MemoryWidget()
 
 QSize MemoryWidget::sizeHint() const
 {
-    const int hintWidth = 20;
+    const int hintWidth = 85;
     const int hintHeight = 7;
     int x = (AddressWidth + Spacing + hintWidth * HexWidth - 1 + Spacing + SymWidth * hintWidth) * CharWidth;
     int y = hintHeight * CharHeight;
