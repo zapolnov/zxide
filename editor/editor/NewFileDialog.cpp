@@ -12,7 +12,10 @@ NewFileDialog::NewFileDialog(Directory* directory, QWidget* parent)
     , mDirectory(directory)
 {
     mUi->setupUi(this);
+
     mUi->nameEdit->setText(tr("New file"));
+    mUi->nameEdit->selectAll();
+    mUi->nameEdit->setFocus();
 
     bool first = true;
     for (const auto& it : EditorTabFactory::instance()->formats()) {
@@ -35,6 +38,7 @@ void NewFileDialog::done(int r)
         mName = mUi->nameEdit->text().trimmed();
         if (mName.isEmpty()) {
             QMessageBox::critical(this, tr("Error"), tr("File name should not be empty."));
+            mUi->nameEdit->setFocus();
             return;
         }
 
@@ -52,12 +56,16 @@ void NewFileDialog::done(int r)
         QFile file(dir.absoluteFilePath(mName));
         if (file.exists()) {
             QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(mName));
+            mUi->nameEdit->selectAll();
+            mUi->nameEdit->setFocus();
             return;
         }
 
         if (!file.open(QFile::WriteOnly)) {
             QMessageBox::critical(this, tr("Error"), tr("Unable to create file \"%1\" in \"%2\": %3")
                 .arg(mName).arg(dir.absolutePath()).arg(file.errorString()));
+            mUi->nameEdit->selectAll();
+            mUi->nameEdit->setFocus();
             return;
         }
 
