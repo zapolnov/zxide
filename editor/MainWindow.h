@@ -6,6 +6,7 @@
 #include <memory>
 
 class File;
+class EditorTabFactory;
 class AbstractEditorTab;
 class EmulatorCore;
 class Ui_MainWindow;
@@ -36,6 +37,7 @@ private:
     QLabel* mLineColumnLabel;
     QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
+    EditorTabFactory* mTabFactory;
     EmulatorCore* mEmulatorCore;
 
     bool confirmSaveAll();

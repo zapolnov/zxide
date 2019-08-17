@@ -34,6 +34,8 @@ qt_add_sources(GameEditor
         editor/code/TextEditor.h
         editor/AbstractEditorTab.cpp
         editor/AbstractEditorTab.h
+        editor/EditorTabFactory.cpp
+        editor/EditorTabFactory.h
         editor/FileManager.cpp
         editor/FileManager.h
         editor/FileManager.ui

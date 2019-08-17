@@ -15,12 +15,7 @@ class AbstractEditorTab;
 class FileOrDirectory : public QTreeWidgetItem
 {
 public:
-    FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
-        : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
-        , mFileInfo(fileInfo)
-    {
-        setIcon(0, icon);
-    }
+    FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent);
 
     QString name() const { return mFileInfo.fileName(); }
     const QFileInfo& fileInfo() const { return mFileInfo; }
@@ -35,11 +30,7 @@ class File : public FileOrDirectory
 public:
     enum { Type = QTreeWidgetItem::UserType + 1 };
 
-    File(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
-        : FileOrDirectory(icon, fileInfo, Type, parent)
-        , mTab(nullptr)
-    {
-    }
+    File(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent);
 
     AbstractEditorTab* tab() const { return mTab; }
     AbstractEditorTab* createTab(QWidget* parent);
@@ -54,22 +45,10 @@ class Directory : public FileOrDirectory
 public:
     enum { Type = QTreeWidgetItem::UserType + 2 };
 
-    Directory(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
-        : FileOrDirectory(icon, fileInfo, Type, parent)
-    {
-    }
+    Directory(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent);
 
-    Directory* directory(const QString& name) const
-    {
-        auto it = mDirectories.find(name);
-        return (it != mDirectories.end() ? it.value() : nullptr);
-    }
-
-    File* file(const QString& name) const
-    {
-        auto it = mFiles.find(name);
-        return (it != mFiles.end() ? it.value() : nullptr);
-    }
+    Directory* directory(const QString& name) const;
+    File* file(const QString& name) const;
 
 private:
     QHash<QString, Directory*> mDirectories;
@@ -86,7 +65,7 @@ public:
     explicit FileManager(QWidget* parent = nullptr);
     ~FileManager() override;
 
-    void init(const QString& path, const QString& extension);
+    void init(const QString& path);
 
     void selectFileOrDirectory(FileOrDirectory* item);
     FileOrDirectory* selectedFileOrDirectory() const;
@@ -117,7 +96,6 @@ private:
     QIcon mFileIcon;
     Directory* mRootDirectory;
     QString mPath;
-    QString mExtension;
 
     Q_SLOT void on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
     Q_SLOT void on_sourcesTree_customContextMenuRequested(const QPoint& pos);

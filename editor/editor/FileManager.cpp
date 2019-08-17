@@ -1,5 +1,6 @@
 #include "FileManager.h"
-#include "editor/code/CodeEditorTab.h"
+#include "editor/EditorTabFactory.h"
+#include "editor/AbstractEditorTab.h"
 #include "ui_FileManager.h"
 #include <QMenu>
 #include <QDir>
@@ -8,10 +9,37 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
+    : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
+    , mFileInfo(fileInfo)
+{
+    setIcon(0, icon);
+}
+
+Directory* FileOrDirectory::parentDirectory() const
+{
+    auto item = parent();
+    if (item == nullptr)
+        return nullptr;
+
+    if (item->type() == Directory::Type)
+        return static_cast<Directory*>(item);
+
+    return nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+File::File(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
+    : FileOrDirectory(icon, fileInfo, Type, parent)
+    , mTab(nullptr)
+{
+}
+
 AbstractEditorTab* File::createTab(QWidget* parent)
 {
     Q_ASSERT(mTab == nullptr);
-    mTab = new CodeEditorTab(parent); // FIXME
+    mTab = EditorTabFactory::instance()->createTabForFile(this, parent);
     return mTab;
 }
 
@@ -25,16 +53,21 @@ void File::destroyTab()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Directory* FileOrDirectory::parentDirectory() const
+Directory::Directory(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
+    : FileOrDirectory(icon, fileInfo, Type, parent)
 {
-    auto item = parent();
-    if (item == nullptr)
-        return nullptr;
+}
 
-    if (item->type() == Directory::Type)
-        return static_cast<Directory*>(item);
+Directory* Directory::directory(const QString& name) const
+{
+    auto it = mDirectories.find(name);
+    return (it != mDirectories.end() ? it.value() : nullptr);
+}
 
-    return nullptr;
+File* Directory::file(const QString& name) const
+{
+    auto it = mFiles.find(name);
+    return (it != mFiles.end() ? it.value() : nullptr);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,10 +87,9 @@ FileManager::~FileManager()
 {
 }
 
-void FileManager::init(const QString& path, const QString& extension)
+void FileManager::init(const QString& path)
 {
     mPath = QDir::cleanPath(QDir(path).absolutePath());
-    mExtension = extension;
     mRootDirectory = new Directory(mFolderIcon, QFileInfo(mPath), mUi->sourcesTree->invisibleRootItem());
     mRootDirectory->setExpanded(true);
     mUi->sourcesTree->setCurrentItem(mRootDirectory);
@@ -108,7 +140,7 @@ void FileManager::refreshDirectory(Directory* directory)
     QHash<QString, File*> newFiles, oldFiles = directory->mFiles;
 
     QString path = directory->fileInfo().absoluteFilePath();
-    QStringList filters = QStringList() << QStringLiteral("*%1").arg(mExtension);
+    QStringList filters = EditorTabFactory::instance()->filters();
     QDirIterator it(path, filters, QDir::Files | QDir::AllDirs | QDir::Hidden | QDir::NoDotAndDotDot);
     while (it.hasNext()) {
         it.next();
@@ -118,7 +150,7 @@ void FileManager::refreshDirectory(Directory* directory)
 
         if (!info.isDir()) {
             File* file;
-            QString name = info.completeBaseName();
+            QString name = info.fileName();
             auto it = oldFiles.find(name);
             if (it == oldFiles.end())
                 file = new File(mFileIcon, info, directory);
@@ -278,18 +310,16 @@ void FileManager::on_newFileAction_triggered()
         return;
     }
 
-    QString fullName = name + mExtension;
-
     QDir dir(parent->fileInfo().absoluteFilePath());
-    QFile file(dir.absoluteFilePath(fullName));
+    QFile file(dir.absoluteFilePath(name));
     if (file.exists()) {
-        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(fullName));
+        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(name));
         return;
     }
 
     if (!file.open(QFile::WriteOnly)) {
         QMessageBox::critical(this, tr("Error"), tr("Unable to create file \"%1\" in \"%2\": %3")
-            .arg(fullName).arg(dir.absolutePath()).arg(file.errorString()));
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
         return;
     }
 
@@ -341,10 +371,6 @@ void FileManager::on_renameAction_triggered()
 
     QString fullOldName = oldName;
     QString fullNewName = newName;
-    if (!isDirectory) {
-        fullNewName += mExtension;
-        fullOldName += mExtension;
-    }
 
     QDir dir(parent->fileInfo().absoluteFilePath());
     if (QFile(dir.absoluteFilePath(fullNewName)).exists()) {

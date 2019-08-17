@@ -5,6 +5,7 @@
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
+#include "editor/EditorTabFactory.h"
 #include "editor/FileManager.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -18,6 +19,7 @@
 MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
     , mDummyTab(new AbstractEditorTab(this))
+    , mTabFactory(new EditorTabFactory(this))
 {
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
@@ -54,7 +56,7 @@ MainWindow::MainWindow(const QString& path)
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
 
-    mUi->fileManager->init(path, QStringLiteral(".asm"));
+    mUi->fileManager->init(path);
 
     updateUi();
 }
@@ -86,9 +88,16 @@ AbstractEditorTab* MainWindow::setCurrentTab(File* file)
     AbstractEditorTab* tab = file->tab();
     if (!tab) {
         tab = file->createTab(this);
-        tab->loadFile(file);
-        mUi->tabWidget->addTab(tab, file->name());
+        if (!tab)
+            return nullptr;
+
+        if (!tab->loadFile(file)) {
+            tab->deleteLater();
+            return nullptr;
+        }
+
         connect(tab, &AbstractEditorTab::updateUi, this, &MainWindow::updateUi);
+        mUi->tabWidget->addTab(tab, file->name());
     }
 
     if (tab != currentTab()) {
