@@ -44,6 +44,7 @@
 
 /* configuration */
 int sound_enabled = 0;		/* Are we currently using the sound card */
+int was_settings_sound = 0;
 
 static int sound_enabled_ever = 0; /* whether sound has *ever* been in use; see
 				      sound_ay_write() and sound_ay_reset() */
@@ -205,6 +206,8 @@ sound_init( const char *device )
   Blip_Synth **ay_mid_synth;
   Blip_Synth **ay_mid_synth_r;
   Blip_Synth **ay_right_synth;
+
+  was_settings_sound = settings_current.sound;
 
   /* Allow sound as long as emulation speed is greater than 2%
      (less than that and a single Speccy frame generates more
@@ -371,7 +374,7 @@ sound_end( void )
     delete_Blip_Buffer( &left_buf );
     delete_Blip_Buffer( &right_buf );
 
-    if( settings_current.sound ) 
+    if( was_settings_sound )
       sound_lowlevel_end();
     libspectrum_free( samples );
     samples = NULL;
