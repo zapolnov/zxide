@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TilesTab</class>
- <widget class="QWidget" name="TilesTab">
+ <class>CodeEditorTab</class>
+ <widget class="QWidget" name="CodeEditorTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,9 +10,9 @@
     <height>300</height>
    </rect>
   </property>
-  <layout class="QHBoxLayout" name="tilesTabLayout">
+  <layout class="QHBoxLayout" name="codeEditorTabLayout">
    <property name="spacing">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -27,31 +27,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="FileManager" name="fileManager" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>150</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="editor" native="true"/>
+    <widget class="TextEditor" name="textEditor"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FileManager</class>
+   <class>TextEditor</class>
    <extends>QWidget</extends>
-   <header>editor/FileManager.h</header>
+   <header>editor/code/TextEditor.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

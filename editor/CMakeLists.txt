@@ -27,23 +27,16 @@ qt_add_sources(GameEditor
         debugger/RegistersWidget.h
         debugger/StackWidget.cpp
         debugger/StackWidget.h
-        editor/code/CodeTab.cpp
-        editor/code/CodeTab.h
-        editor/code/CodeTab.ui
+        editor/code/CodeEditorTab.cpp
+        editor/code/CodeEditorTab.h
+        editor/code/CodeEditorTab.ui
         editor/code/TextEditor.cpp
         editor/code/TextEditor.h
-        editor/levels/LevelsTab.cpp
-        editor/levels/LevelsTab.h
-        editor/levels/LevelsTab.ui
-        editor/tiles/TilesTab.cpp
-        editor/tiles/TilesTab.h
-        editor/tiles/TilesTab.ui
         editor/AbstractEditorTab.cpp
         editor/AbstractEditorTab.h
         editor/FileManager.cpp
         editor/FileManager.h
         editor/FileManager.ui
-        editor/IEditorTab.h
         res/resources.qrc
         util/ScrollBar.cpp
         util/ScrollBar.h

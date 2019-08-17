@@ -87,8 +87,6 @@ EmulatorCore::EmulatorCore(QObject* parent)
     connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
-
-    reloadSettings();
 }
 
 EmulatorCore::~EmulatorCore()
@@ -208,11 +206,6 @@ bool EmulatorCore::isPaused() const
 
     QMutexLocker lock(&mutex);
     return paused;
-}
-
-void EmulatorCore::reloadSettings()
-{
-    // FIXME
 }
 
 Registers EmulatorCore::registers() const

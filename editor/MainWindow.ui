@@ -22,78 +22,19 @@
   <property name="documentMode">
    <bool>false</bool>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="centralWidgetLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QStackedWidget" name="stackedWidget">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="normalPage">
-       <layout class="QVBoxLayout" name="normalPageLayout">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QTabWidget" name="tabWidget">
-          <property name="tabPosition">
-           <enum>QTabWidget::North</enum>
-          </property>
-          <property name="tabShape">
-           <enum>QTabWidget::Rounded</enum>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <property name="documentMode">
-           <bool>true</bool>
-          </property>
-          <widget class="CodeTab" name="codeTab">
-           <attribute name="title">
-            <string>Code</string>
-           </attribute>
-          </widget>
-          <widget class="TilesTab" name="tilesTab">
-           <attribute name="title">
-            <string>Tiles</string>
-           </attribute>
-          </widget>
-          <widget class="LevelsTab" name="levelsTab">
-           <attribute name="title">
-            <string>Levels</string>
-           </attribute>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="usesScrollButtons">
+    <bool>true</bool>
+   </property>
+   <property name="documentMode">
+    <bool>true</bool>
+   </property>
+   <property name="tabsClosable">
+    <bool>true</bool>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -116,6 +57,7 @@
    </attribute>
    <addaction name="actionNewFile"/>
    <addaction name="actionNewDirectory"/>
+   <addaction name="actionSave"/>
    <addaction name="actionSaveAll"/>
    <addaction name="separator"/>
    <addaction name="actionRefreshFileList"/>
@@ -155,6 +97,7 @@
     </property>
     <addaction name="actionNewFile"/>
     <addaction name="actionNewDirectory"/>
+    <addaction name="actionSave"/>
     <addaction name="actionSaveAll"/>
     <addaction name="separator"/>
     <addaction name="actionRenameFile"/>
@@ -327,6 +270,18 @@
    </attribute>
    <widget class="StackWidget" name="stackWidget"/>
   </widget>
+  <widget class="QDockWidget" name="fileManagerDockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Project</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="FileManager" name="fileManager"/>
+  </widget>
   <action name="actionExit">
    <property name="icon">
     <iconset resource="res/resources.qrc">
@@ -455,10 +410,10 @@
      <normaloff>:/resources/fatcow16x16/disk_multiple.png</normaloff>:/resources/fatcow16x16/disk_multiple.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Save all</string>
+    <string>Save &amp;all</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionGoToLine">
@@ -617,30 +572,24 @@
     <string>F4</string>
    </property>
   </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/diskette.png</normaloff>:/resources/fatcow16x16/diskette.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
    <class>DisplayWidget</class>
    <extends>QWidget</extends>
    <header>debugger/DisplayWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CodeTab</class>
-   <extends>QWidget</extends>
-   <header>editor/code/CodeTab.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TilesTab</class>
-   <extends>QWidget</extends>
-   <header>editor/tiles/TilesTab.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LevelsTab</class>
-   <extends>QWidget</extends>
-   <header>editor/levels/LevelsTab.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -664,6 +613,12 @@
    <class>StackWidget</class>
    <extends>QWidget</extends>
    <header>debugger/StackWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FileManager</class>
+   <extends>QWidget</extends>
+   <header>editor/FileManager.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

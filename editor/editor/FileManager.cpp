@@ -1,4 +1,5 @@
 #include "FileManager.h"
+#include "editor/code/CodeEditorTab.h"
 #include "ui_FileManager.h"
 #include <QMenu>
 #include <QDir>
@@ -6,6 +7,23 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QInputDialog>
+
+AbstractEditorTab* File::createTab(QWidget* parent)
+{
+    Q_ASSERT(mTab == nullptr);
+    mTab = new CodeEditorTab(parent); // FIXME
+    return mTab;
+}
+
+void File::destroyTab()
+{
+    if (mTab) {
+        mTab->deleteLater();
+        mTab = nullptr;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Directory* FileOrDirectory::parentDirectory() const
 {
@@ -18,6 +36,8 @@ Directory* FileOrDirectory::parentDirectory() const
 
     return nullptr;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FileManager::FileManager(QWidget* parent)
     : QWidget(parent)

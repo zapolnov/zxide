@@ -4,7 +4,7 @@
 #include "SettingsDialog.h"
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
-#include "editor/IEditorTab.h"
+#include "editor/AbstractEditorTab.h"
 #include "editor/FileManager.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -15,17 +15,9 @@
 #include <QTimer>
 #include <QLabel>
 
-namespace
-{
-    class DummyTab : public IEditorTab
-    {
-    };
-
-    static DummyTab dummyTab;
-}
-
 MainWindow::MainWindow(const QString& path)
     : mUi(new Ui_MainWindow)
+    , mDummyTab(new AbstractEditorTab(this))
 {
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
@@ -33,6 +25,7 @@ MainWindow::MainWindow(const QString& path)
     mUi->setupUi(this);
 
     mUi->memoryWidget->setScrollBar(mUi->memoryWidgetScrollBar);
+
     tabifyDockWidget(mUi->registersDockWidget, mUi->stackDockWidget);
     QTimer::singleShot(0, mUi->registersDockWidget, &QDockWidget::raise);
 
@@ -61,21 +54,7 @@ MainWindow::MainWindow(const QString& path)
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
 
-    int n = mUi->tabWidget->count();
-    for (int i = 0; i < n; i++) {
-        IEditorTab* tab = dynamic_cast<IEditorTab*>(mUi->tabWidget->widget(i));
-        Q_ASSERT(tab != nullptr);
-        if (tab) {
-            tab->updateUi = std::bind(&MainWindow::updateUi, this);
-            mEditorTabs.emplace_back(tab);
-        }
-    }
-
-    mUi->tabWidget->setCurrentWidget(mUi->codeTab);
-
-    mUi->codeTab->init(QStringLiteral("%1/code").arg(path));
-    mUi->tilesTab->init(QStringLiteral("%1/tiles").arg(path));
-    mUi->levelsTab->init(QStringLiteral("%1/levels").arg(path));
+    mUi->fileManager->init(path, QStringLiteral(".asm"));
 
     updateUi();
 }
@@ -85,24 +64,79 @@ MainWindow::~MainWindow()
     delete mEmulatorCore;
 }
 
-IEditorTab* MainWindow::currentTab() const
+AbstractEditorTab* MainWindow::currentTab() const
 {
     QWidget* widget = mUi->tabWidget->currentWidget();
     if (widget == nullptr)
-        return &dummyTab;
+        return mDummyTab;
 
-    auto tab = dynamic_cast<IEditorTab*>(widget);
+    auto tab = qobject_cast<AbstractEditorTab*>(widget);
     Q_ASSERT(tab != nullptr);
     if (tab == nullptr)
-        return &dummyTab;
+        return mDummyTab;
 
     return tab;
 }
 
+AbstractEditorTab* MainWindow::setCurrentTab(File* file)
+{
+    if (!file)
+        return nullptr;
+
+    AbstractEditorTab* tab = file->tab();
+    if (!tab) {
+        tab = file->createTab(this);
+        tab->loadFile(file);
+        mUi->tabWidget->addTab(tab, file->name());
+        connect(tab, &AbstractEditorTab::updateUi, this, &MainWindow::updateUi);
+    }
+
+    if (tab != currentTab()) {
+        mUi->tabWidget->setCurrentWidget(tab);
+        if (mUi->fileManager && mUi->fileManager->selectedFileOrDirectory() != file)
+            mUi->fileManager->selectFileOrDirectory(file);
+        tab->loadFile(file);
+    }
+
+    updateUi();
+
+    return tab;
+}
+
+void MainWindow::closeTab(File* file)
+{
+    if (file)
+        closeTab(file->tab());
+}
+
+void MainWindow::closeTab(AbstractEditorTab* tab)
+{
+    if (!tab)
+        return;
+
+    if (currentTab() == tab)
+        mUi->fileManager->selectFileOrDirectory(nullptr);
+
+    int index = mUi->tabWidget->indexOf(tab);
+    Q_ASSERT(index >= 0);
+    mUi->tabWidget->removeTab(index);
+
+    Q_ASSERT(tab->file());
+    if (tab->file())
+        tab->file()->destroyTab();
+    else
+        tab->deleteLater();
+
+    updateUi();
+}
+
 bool MainWindow::hasModifiedFiles() const
 {
-    for (IEditorTab* tab : mEditorTabs) {
-        if (tab->hasModifiedFiles())
+    int n = mUi->tabWidget->count();
+    for (int i = 0; i < n; i++) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+        Q_ASSERT(tab != nullptr);
+        if (tab && tab->isModified())
             return true;
     }
     return false;
@@ -110,13 +144,13 @@ bool MainWindow::hasModifiedFiles() const
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    if (confirmSave())
+    if (confirmSaveAll())
         event->accept();
     else
         event->ignore();
 }
 
-bool MainWindow::confirmSave()
+bool MainWindow::confirmSaveAll()
 {
     if (!hasModifiedFiles())
         return true;
@@ -138,11 +172,41 @@ bool MainWindow::confirmSave()
     return false;
 }
 
+bool MainWindow::confirmSave(File* file)
+{
+    if (!file)
+        return true;
+
+    AbstractEditorTab* tab = file->tab();
+    if (!tab || !tab->isModified())
+        return true;
+
+    QMessageBox msgbox(QMessageBox::Warning,
+        tr("Confirmation"), tr("Save changes to \"%1\"?").arg(file->name()), QMessageBox::NoButton, this);
+    auto btnSave = msgbox.addButton(tr("Save"), QMessageBox::AcceptRole);
+    auto btnDiscard = msgbox.addButton(tr("Discard"), QMessageBox::DestructiveRole);
+    auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+    msgbox.setDefaultButton(btnCancel);
+    msgbox.setEscapeButton(btnCancel);
+    msgbox.exec();
+
+    auto clicked = msgbox.clickedButton();
+    if (clicked == btnSave)
+        return tab->save();
+    else if (clicked == btnDiscard)
+        return true;
+
+    return false;
+}
+
 bool MainWindow::saveAll()
 {
     bool success = true;
-    for (IEditorTab* tab : mEditorTabs) {
-        if (!tab->saveAll())
+    int n = mUi->tabWidget->count();
+    for (int i = 0; i < n; i++) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+        Q_ASSERT(tab != nullptr);
+        if (tab && !tab->save())
             success = false;
     }
     return success;
@@ -194,25 +258,22 @@ bool MainWindow::build()
     CompilerDialog dlg(this);
 
     std::vector<File*> files;
-    for (IEditorTab* tab : mEditorTabs)
-        tab->enumerateFiles(files);
+    mUi->fileManager->enumerateFiles(files);
     for (File* file : files)
         dlg.addSourceFile(file);
 
     connect(&dlg, &CompilerDialog::compilationSucceeded, this, &MainWindow::clearBuildResult);
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
-            mUi->tabWidget->setCurrentWidget(mUi->codeTab);
-
             QString message;
             if (!file)
                 message = errorMessage;
             else if (file && line <= 0) {
-                mUi->codeTab->setCurrentFile(file);
+                setCurrentTab(file);
                 message = tr("%1: %2").arg(file->fileInfo().fileName()).arg(errorMessage);
             } else {
-                mUi->codeTab->setCurrentFile(file);
-                mUi->codeTab->goToLine(line - 1);
-                mUi->codeTab->setFocusToEditor();
+                auto tab = setCurrentTab(file);
+                tab->goToLine(line - 1);
+                tab->setFocusToEditor();
                 message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
             }
 
@@ -238,13 +299,11 @@ void MainWindow::updateUi()
 
     setWindowModified(modified);
 
-    IEditorTab* tab = currentTab();
-    mUi->actionNewFile->setEnabled(tab->canCreateFile());
-    mUi->actionNewDirectory->setEnabled(tab->canCreateDirectory());
+    AbstractEditorTab* tab = currentTab();
+    mUi->actionSave->setEnabled(tab->isModified());
     mUi->actionSaveAll->setEnabled(modified);
-    mUi->actionRenameFile->setEnabled(tab->canRenameFile());
-    mUi->actionDeleteFile->setEnabled(tab->canDeleteFile());
-    mUi->actionRefreshFileList->setEnabled(tab->canRefreshFileList());
+    mUi->actionRenameFile->setEnabled(mUi->fileManager->canRename());
+    mUi->actionDeleteFile->setEnabled(mUi->fileManager->canDelete());
     mUi->actionUndo->setEnabled(tab->canUndo());
     mUi->actionRedo->setEnabled(tab->canRedo());
     mUi->actionCut->setEnabled(tab->canCut());
@@ -290,33 +349,37 @@ void MainWindow::updateUi()
 
 void MainWindow::on_actionNewFile_triggered()
 {
-    currentTab()->createFile();
+    mUi->fileManager->createFile();
 }
 
 void MainWindow::on_actionNewDirectory_triggered()
 {
-    currentTab()->createDirectory();
+    mUi->fileManager->createDirectory();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    currentTab()->save();
 }
 
 void MainWindow::on_actionSaveAll_triggered()
 {
-    for (auto tab : mEditorTabs)
-        tab->saveAll();
+    saveAll();
 }
 
 void MainWindow::on_actionRenameFile_triggered()
 {
-    currentTab()->renameFile();
+    mUi->fileManager->renameSelected();
 }
 
 void MainWindow::on_actionDeleteFile_triggered()
 {
-    currentTab()->deleteFile();
+    mUi->fileManager->deleteSelected();
 }
 
 void MainWindow::on_actionRefreshFileList_triggered()
 {
-    currentTab()->refreshFileList();
+    mUi->fileManager->refresh();
 }
 
 void MainWindow::on_actionUndo_triggered()
@@ -433,9 +496,13 @@ void MainWindow::on_actionSettings_triggered()
 {
     SettingsDialog dlg(this);
     if (dlg.exec() == QDialog::Accepted) {
-        for (IEditorTab* tab : mEditorTabs)
-            tab->reloadSettings();
-        mEmulatorCore->reloadSettings();
+        int n = mUi->tabWidget->count();
+        for (int i = 0; i < n; i++) {
+            auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+            Q_ASSERT(tab != nullptr);
+            if (tab)
+                tab->reloadSettings();
+        }
     }
 }
 
@@ -448,6 +515,35 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_tabWidget_currentChanged(int)
 {
     updateUi();
+}
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(index));
+    Q_ASSERT(tab != nullptr);
+    if (tab && confirmSave(tab->file()))
+        closeTab(tab->file());
+}
+
+void MainWindow::on_fileManager_updateUi()
+{
+    updateUi();
+}
+
+void MainWindow::on_fileManager_willRenameFile(File* file, bool* shouldAbort)
+{
+    if (!confirmSave(file))
+        *shouldAbort = true;
+}
+
+void MainWindow::on_fileManager_fileSelected(File* file)
+{
+    setCurrentTab(file);
+}
+
+void MainWindow::on_fileManager_fileDisappeared(File* file)
+{
+    closeTab(file);
 }
 
 void MainWindow::on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area)

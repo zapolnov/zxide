@@ -113,8 +113,6 @@ public:
     void unpause();
     bool isPaused() const;
 
-    void reloadSettings();
-
     Registers registers() const;
     quint16 instructionPointer() const;
     quint16 stackPointer() const;

@@ -2,13 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <vector>
+#include <unordered_map>
 #include <memory>
 
-class IEditorTab;
+class File;
+class AbstractEditorTab;
 class EmulatorCore;
-class QLabel;
 class Ui_MainWindow;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -18,7 +19,11 @@ public:
     explicit MainWindow(const QString& path);
     ~MainWindow() override;
 
-    IEditorTab* currentTab() const;
+    AbstractEditorTab* currentTab() const;
+    AbstractEditorTab* setCurrentTab(File* file);
+    void closeTab(File* file);
+    void closeTab(AbstractEditorTab* tab);
+
     bool hasModifiedFiles() const;
 
 protected:
@@ -26,14 +31,15 @@ protected:
 
 private:
     std::unique_ptr<Ui_MainWindow> mUi;
-    std::vector<IEditorTab*> mEditorTabs;
+    AbstractEditorTab* mDummyTab;
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
     QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
     EmulatorCore* mEmulatorCore;
 
-    bool confirmSave();
+    bool confirmSaveAll();
+    bool confirmSave(File* file);
     bool saveAll();
 
     bool build();
@@ -43,6 +49,7 @@ private:
 
     Q_SLOT void on_actionNewFile_triggered();
     Q_SLOT void on_actionNewDirectory_triggered();
+    Q_SLOT void on_actionSave_triggered();
     Q_SLOT void on_actionSaveAll_triggered();
     Q_SLOT void on_actionRenameFile_triggered();
     Q_SLOT void on_actionDeleteFile_triggered();
@@ -73,6 +80,13 @@ private:
     Q_SLOT void on_actionAbout_triggered();
 
     Q_SLOT void on_tabWidget_currentChanged(int index);
+    Q_SLOT void on_tabWidget_tabCloseRequested(int index);
+
+    Q_SLOT void on_fileManager_updateUi();
+    Q_SLOT void on_fileManager_willRenameFile(File* file, bool* shouldAbort);
+    Q_SLOT void on_fileManager_fileSelected(File* file);
+    Q_SLOT void on_fileManager_fileDisappeared(File* file);
+
     Q_SLOT void on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area);
 
     Q_DISABLE_COPY(MainWindow)

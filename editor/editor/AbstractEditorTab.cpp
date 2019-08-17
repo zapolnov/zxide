@@ -1,12 +1,12 @@
 #include "AbstractEditorTab.h"
-#include "editor/FileManager.h"
+#include "FileManager.h"
 #include <QMessageBox>
-#include <QPushButton>
+#include <QFile>
+#include <QSaveFile>
 
 AbstractEditorTab::AbstractEditorTab(QWidget* parent)
     : QWidget(parent)
-    , mFileManager(nullptr)
-    , mCurrentFile(nullptr)
+    , mFile(nullptr)
 {
 }
 
@@ -14,127 +14,59 @@ AbstractEditorTab::~AbstractEditorTab()
 {
 }
 
-void AbstractEditorTab::setCurrentFile(File* file)
+QByteArray AbstractEditorTab::loadFileData(File* file)
 {
-    if (file == mCurrentFile)
-        return;
-
-    if (loadFile(file))
-        mCurrentFile = file;
-    else
-        mCurrentFile = nullptr;
-
-    if (mFileManager && mFileManager->selectedFileOrDirectory() != mCurrentFile)
-        mFileManager->selectFileOrDirectory(mCurrentFile);
-
-    updateUi();
-}
-
-bool AbstractEditorTab::canCreateFile() const
-{
-    return mFileManager != nullptr;
-}
-
-bool AbstractEditorTab::canCreateDirectory() const
-{
-    return mFileManager != nullptr;
-}
-
-bool AbstractEditorTab::canRenameFile() const
-{
-    return mFileManager && mFileManager->canRename();
-}
-
-bool AbstractEditorTab::canDeleteFile() const
-{
-    return mFileManager && mFileManager->canDelete();
-}
-
-bool AbstractEditorTab::canRefreshFileList() const
-{
-    return mFileManager != nullptr;
-}
-
-void AbstractEditorTab::createFile()
-{
-    if (mFileManager)
-        mFileManager->createFile();
-}
-
-void AbstractEditorTab::createDirectory()
-{
-    if (mFileManager)
-        mFileManager->createDirectory();
-}
-
-void AbstractEditorTab::renameFile()
-{
-    if (mFileManager)
-        mFileManager->renameSelected();
-}
-
-void AbstractEditorTab::deleteFile()
-{
-    if (mFileManager)
-        mFileManager->deleteSelected();
-}
-
-void AbstractEditorTab::refreshFileList()
-{
-    if (mFileManager)
-        mFileManager->refresh();
-}
-
-void AbstractEditorTab::enumerateFiles(std::vector<File*>& files)
-{
-    if (mFileManager)
-        mFileManager->enumerateFiles(files);
-}
-
-void AbstractEditorTab::setFileManager(FileManager* manager)
-{
-    if (mFileManager != manager) {
-        mFileManager = manager;
-        updateUi();
+    Q_ASSERT(file != nullptr);
+    if (!file) {
+        QMessageBox::critical(this,
+            tr("Internal Error"), tr("File is NULL."));
+        return QByteArray();
     }
+
+    mFile = file;
+
+    QFile f(file->fileInfo().absoluteFilePath());
+    if (!f.open(QFile::ReadOnly)) {
+        QMessageBox::critical(this,
+            tr("Error"), tr("Unable to open file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+        return QByteArray();
+    }
+
+    return f.readAll();
 }
 
-void AbstractEditorTab::on_fileManager_updateUi()
+bool AbstractEditorTab::writeFileData(const QByteArray& data)
 {
-    updateUi();
-}
+    Q_ASSERT(mFile != nullptr);
+    if (!mFile) {
+        QMessageBox::critical(this, tr("Internal Error"), tr("File is not open."));
+        return false;
+    }
 
-void AbstractEditorTab::on_fileManager_willRenameFile(File* file, bool* shouldAbort)
-{
-    if (!isFileModified(file))
-        return;
+    QSaveFile f(mFile->fileInfo().absoluteFilePath());
+    if (!f.open(QFile::WriteOnly)) {
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to save file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+        return false;
+    }
 
-    QMessageBox msgbox(QMessageBox::Warning,
-        tr("Confirmation"), tr("Save changes to \"%1\"?").arg(file->name()), QMessageBox::NoButton, this);
-    auto btnSave = msgbox.addButton(tr("Save"), QMessageBox::AcceptRole);
-    auto btnDiscard = msgbox.addButton(tr("Discard"), QMessageBox::DestructiveRole);
-    auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-    msgbox.setDefaultButton(btnCancel);
-    msgbox.setEscapeButton(btnCancel);
-    msgbox.exec();
+    qint64 bytesWritten = f.write(data.constData(), data.length());
+    if (bytesWritten < 0) {
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to write file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+        return false;
+    }
 
-    auto clicked = msgbox.clickedButton();
-    if (clicked == btnSave) {
-        if (!saveFile(file))
-            *shouldAbort = true;
-    } else if (clicked != btnDiscard)
-        *shouldAbort = true;
-}
+    if (bytesWritten != data.length()) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(f.fileName()));
+        return false;
+    }
 
-void AbstractEditorTab::on_fileManager_fileSelected(File* file)
-{
-    setCurrentFile(file);
-}
+    if (!f.commit()) {
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to save file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+        return false;
+    }
 
-void AbstractEditorTab::on_fileManager_fileDisappeared(File* file)
-{
-    removeFile(file);
-    if (mCurrentFile == file)
-        on_fileManager_fileSelected(nullptr);
-    updateUi();
+    return true;
 }

@@ -10,25 +10,24 @@
 class FileManager;
 class Ui_FileManager;
 class Directory;
+class AbstractEditorTab;
 
 class FileOrDirectory : public QTreeWidgetItem
 {
 public:
     FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
-        : QTreeWidgetItem(parent, QStringList() << name(fileInfo), type)
+        : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
         , mFileInfo(fileInfo)
     {
         setIcon(0, icon);
     }
 
-    QString name() const { return name(mFileInfo); }
+    QString name() const { return mFileInfo.fileName(); }
     const QFileInfo& fileInfo() const { return mFileInfo; }
     Directory* parentDirectory() const;
 
 private:
     QFileInfo mFileInfo;
-
-    static QString name(const QFileInfo& info) { return info.isDir() ? info.fileName() : info.completeBaseName(); }
 };
 
 class File : public FileOrDirectory
@@ -38,8 +37,16 @@ public:
 
     File(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
         : FileOrDirectory(icon, fileInfo, Type, parent)
+        , mTab(nullptr)
     {
     }
+
+    AbstractEditorTab* tab() const { return mTab; }
+    AbstractEditorTab* createTab(QWidget* parent);
+    void destroyTab();
+
+private:
+    AbstractEditorTab* mTab;
 };
 
 class Directory : public FileOrDirectory

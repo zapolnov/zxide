@@ -2,11 +2,10 @@
 #define EDITOR_ABSTRACTEDITORTAB_H
 
 #include <QWidget>
-#include "editor/IEditorTab.h"
 
-class FileManager;
+class File;
 
-class AbstractEditorTab : public QWidget, public IEditorTab
+class AbstractEditorTab : public QWidget
 {
     Q_OBJECT
 
@@ -14,39 +13,48 @@ public:
     explicit AbstractEditorTab(QWidget* parent = nullptr);
     ~AbstractEditorTab() override;
 
-    File* currentFile() const override { return mCurrentFile; }
-    void setCurrentFile(File* file);
+    File* file() const { return mFile; }
 
-    bool canCreateFile() const override;
-    bool canCreateDirectory() const override;
-    bool canRenameFile() const override;
-    bool canDeleteFile() const override;
-    bool canRefreshFileList() const override;
+    virtual bool loadFile(File*) { return false; }
 
-    void createFile() override;
-    void createDirectory() override;
-    void renameFile() override;
-    void deleteFile() override;
-    void refreshFileList() override;
+    virtual QString lineColumnLabelText() const { return QString(); }
+    virtual QString insOverwriteLabelText() const { return QString(); }
 
-    void enumerateFiles(std::vector<File*>& files) override;
+    virtual bool isModified() const { return false; }
+    virtual bool canUndo() const { return false; }
+    virtual bool canRedo() const { return false; }
+    virtual bool canCut() const { return false; }
+    virtual bool canCopy() const { return false; }
+    virtual bool canPaste() const { return false; }
+    virtual bool canClear() const { return false; }
+    virtual bool canSelectAll() const { return false; }
+    virtual bool canClearSelection() const { return false; }
+    virtual bool canGoToLine() const { return false; }
+    virtual bool canRunToCursor() const { return false; }
+
+    virtual bool save() { return true; }
+    virtual void undo() {}
+    virtual void redo() {}
+    virtual void cut() {}
+    virtual void copy() {}
+    virtual void paste() {}
+    virtual void clear() {}
+    virtual void selectAll() {}
+    virtual void clearSelection() {}
+    virtual void goToLine(int line) {}
+    virtual void setFocusToEditor() {}
+
+    virtual void reloadSettings() {}
+
+signals:
+    void updateUi();
 
 protected:
-    void setFileManager(FileManager* manager);
-
-    virtual bool isFileModified(File* file) const { return false; }
-    virtual bool loadFile(File* file) { return false; }
-    virtual bool saveFile(File* file) { return false; }
-    virtual void removeFile(File* file) {}
+    QByteArray loadFileData(File* file);
+    bool writeFileData(const QByteArray& data);
 
 private:
-    FileManager* mFileManager;
-    File* mCurrentFile;
-
-    Q_SLOT void on_fileManager_updateUi();
-    Q_SLOT void on_fileManager_willRenameFile(File* file, bool* shouldAbort);
-    Q_SLOT void on_fileManager_fileSelected(File* file);
-    Q_SLOT void on_fileManager_fileDisappeared(File* file);
+    File* mFile;
 
     Q_DISABLE_COPY(AbstractEditorTab)
 };
