@@ -10,6 +10,8 @@ static const QString SettingTabWidth = QStringLiteral("TabWidth");
 static const QString SettingUseTabs = QStringLiteral("UseTabs");
 static const QString SettingAutoSaveBeforeCompile = QStringLiteral("AutoSaveBeforeCompile");
 static const QString SettingEnableSound = QStringLiteral("EnableSound");
+static const QString SettingFastTapeLoading = QStringLiteral("FastTapeLoading");
+static const QString SettingPlayTapeSound = QStringLiteral("PlayTapeSound");
 
 Settings::Settings()
 {
@@ -64,6 +66,16 @@ bool Settings::enableSound() const
     return mSettings.value(SettingEnableSound, true).toBool();
 }
 
+bool Settings::fastTapeLoading() const
+{
+    return mSettings.value(SettingFastTapeLoading, true).toBool();
+}
+
+bool Settings::playTapeSound() const
+{
+    return mSettings.value(SettingPlayTapeSound, false).toBool();
+}
+
 void Settings::setAutoIndent(bool flag)
 {
     mSettings.setValue(SettingAutoIndent, flag);
@@ -107,4 +119,14 @@ void Settings::setAutoSaveBeforeCompile(bool flag)
 void Settings::setEnableSound(bool flag)
 {
     mSettings.setValue(SettingEnableSound, flag);
+}
+
+void Settings::setFastTapeLoading(bool flag)
+{
+    mSettings.setValue(SettingFastTapeLoading, flag);
+}
+
+void Settings::setPlayTapeSound(bool flag)
+{
+    mSettings.setValue(SettingPlayTapeSound, flag);
 }

@@ -338,7 +338,6 @@ settings_init( int *first_arg, int argc, char **argv )
   if( error ) return error;
   */
 
-  /*settings_current.tape_file = ...;*/
   settings_current.start_scaler_mode = utils_safe_strdup("paltv3x");
 
   error = settings_command_line( &settings_current, first_arg, argc, argv );

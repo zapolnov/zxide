@@ -1,4 +1,5 @@
 #include "SettingsDialog.h"
+#include "debugger/EmulatorCore.h"
 #include "util/Settings.h"
 #include "ScintillaEdit/ScintillaEdit.h"
 #include "ui_SettingsDialog.h"
@@ -20,8 +21,13 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     mUi->showEolCheck->setChecked(settings.showEol());
     mUi->autoSaveBeforeCompileCheck->setChecked(settings.autoSaveBeforeCompile());
     mUi->enableSoundCheck->setChecked(settings.enableSound());
+    mUi->fastLoadCheck->setChecked(settings.fastTapeLoading());
+    mUi->tapeSoundCheck->setChecked(settings.playTapeSound());
 
+    mUi->emulatorRestartNotice->setVisible(EmulatorCore::instance()->isRunning());
     mUi->tabWidget->setCurrentWidget(mUi->editorTab);
+
+    updateUi();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -41,7 +47,14 @@ void SettingsDialog::done(int r)
         settings.setShowEol(mUi->showEolCheck->isChecked());
         settings.setAutoSaveBeforeCompile(mUi->autoSaveBeforeCompileCheck->isChecked());
         settings.setEnableSound(mUi->enableSoundCheck->isChecked());
+        settings.setFastTapeLoading(mUi->fastLoadCheck->isChecked());
+        settings.setPlayTapeSound(mUi->tapeSoundCheck->isChecked());
     }
 
     QDialog::done(r);
+}
+
+void SettingsDialog::updateUi()
+{
+    mUi->tapeSoundCheck->setEnabled(mUi->enableSoundCheck->isChecked() && !mUi->fastLoadCheck->isChecked());
 }

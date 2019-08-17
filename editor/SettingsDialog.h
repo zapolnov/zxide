@@ -19,6 +19,12 @@ public:
 private:
     std::unique_ptr<Ui_SettingsDialog> mUi;
 
+    void updateUi();
+
+    Q_SLOT void on_enableSoundCheck_toggled() { updateUi(); }
+    Q_SLOT void on_fastLoadCheck_toggled() { updateUi(); }
+    Q_SLOT void on_tapeSoundCheck_toggled() { updateUi(); }
+
     Q_DISABLE_COPY(SettingsDialog)
 };
 

@@ -656,6 +656,12 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
 {
     Settings settings;
     fuse->sound = (settings.enableSound() ? 1 : 0);
+    fuse->fastload = (settings.fastTapeLoading() ? 1 : 0);
+    fuse->accelerate_loader = fuse->fastload;
+    fuse->detect_loader = fuse->fastload;
+    fuse->sound_load = (settings.playTapeSound() ? 1 : 0);
+    fuse->tape_traps = 1;
+    fuse->auto_load = 1;
     return 0;
 }
 

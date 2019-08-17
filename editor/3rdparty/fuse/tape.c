@@ -404,6 +404,11 @@ tape_load_trap( void )
     if( !block ) return 1;
   }
   
+  if (!settings_current.fastload) {
+    tape_play(1);
+    return -1;
+  }
+
   /* If this block isn't a ROM loader, start the block playing. After
      that, return with `error' so that we actually do whichever
      instruction it was that caused the trap to hit */

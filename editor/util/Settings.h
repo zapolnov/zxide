@@ -18,6 +18,8 @@ public:
     bool showEol() const;
     bool autoSaveBeforeCompile() const;
     bool enableSound() const;
+    bool fastTapeLoading() const;
+    bool playTapeSound() const;
 
     void setAutoIndent(bool flag);
     void setTabIndents(bool flag);
@@ -28,6 +30,8 @@ public:
     void setShowEol(bool flag);
     void setAutoSaveBeforeCompile(bool flag);
     void setEnableSound(bool flag);
+    void setFastTapeLoading(bool flag);
+    void setPlayTapeSound(bool flag);
 
 private:
     QSettings mSettings;
