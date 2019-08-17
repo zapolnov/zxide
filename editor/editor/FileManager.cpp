@@ -1,6 +1,7 @@
 #include "FileManager.h"
 #include "editor/EditorTabFactory.h"
 #include "editor/AbstractEditorTab.h"
+#include "editor/NewFileDialog.h"
 #include "ui_FileManager.h"
 #include <QMenu>
 #include <QDir>
@@ -76,7 +77,6 @@ FileManager::FileManager(QWidget* parent)
     : QWidget(parent)
     , mUi(new Ui_FileManager)
     , mFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder.png"))
-    , mFileIcon(QStringLiteral(":/resources/fatcow16x16/page_white.png"))
     , mRootDirectory(nullptr)
 {
     mUi->setupUi(this);
@@ -140,8 +140,7 @@ void FileManager::refreshDirectory(Directory* directory)
     QHash<QString, File*> newFiles, oldFiles = directory->mFiles;
 
     QString path = directory->fileInfo().absoluteFilePath();
-    QStringList filters = EditorTabFactory::instance()->filters();
-    QDirIterator it(path, filters, QDir::Files | QDir::AllDirs | QDir::Hidden | QDir::NoDotAndDotDot);
+    QDirIterator it(path, QDir::Files | QDir::AllDirs | QDir::Hidden | QDir::NoDotAndDotDot);
     while (it.hasNext()) {
         it.next();
 
@@ -153,7 +152,7 @@ void FileManager::refreshDirectory(Directory* directory)
             QString name = info.fileName();
             auto it = oldFiles.find(name);
             if (it == oldFiles.end())
-                file = new File(mFileIcon, info, directory);
+                file = new File(EditorTabFactory::instance()->iconForFile(info), info, directory);
             else {
                 file = it.value();
                 oldFiles.erase(it);
@@ -204,9 +203,14 @@ void FileManager::enumerateFilesInDirectory(Directory* directory, std::vector<Fi
 void FileManager::on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
     auto selected = selectedFileOrDirectory();
-    Directory* parent = (selected ? selected->parentDirectory() : nullptr);
     emit fileSelected(selected && selected->type() == File::Type ? static_cast<File*>(selected) : nullptr);
     emit updateUi();
+}
+
+void FileManager::on_sourcesTree_itemDoubleClicked(QTreeWidgetItem *item, int)
+{
+    if (item && item->type() == File::Type)
+        emit fileDoubleClicked(static_cast<File*>(item));
 }
 
 void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
@@ -296,41 +300,18 @@ void FileManager::on_newFileAction_triggered()
     if (!parent)
         return;
 
-    QInputDialog dlg(this);
-    dlg.setInputMode(QInputDialog::TextInput);
-    dlg.setWindowTitle(tr("Create file"));
-    dlg.setLabelText(tr("Name:"));
-    dlg.setTextValue(tr("New File"));
+    NewFileDialog dlg(parent, this);
     if (dlg.exec() != QDialog::Accepted)
         return;
 
-    QString name = dlg.textValue().trimmed();
-    if (name.isEmpty()) {
-        QMessageBox::critical(this, tr("Error"), tr("File name should not be empty."));
-        return;
-    }
-
-    QDir dir(parent->fileInfo().absoluteFilePath());
-    QFile file(dir.absoluteFilePath(name));
-    if (file.exists()) {
-        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(name));
-        return;
-    }
-
-    if (!file.open(QFile::WriteOnly)) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to create file \"%1\" in \"%2\": %3")
-            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
-        return;
-    }
-
-    file.close();
-
     refreshDirectory(parent);
 
-    File* newFile = parent->file(name);
+    File* newFile = parent->file(dlg.name());
     Q_ASSERT(newFile);
-    if (newFile)
+    if (newFile) {
         mUi->sourcesTree->setCurrentItem(newFile);
+        emit fileCreated(newFile);
+    }
 }
 
 void FileManager::on_renameAction_triggered()
@@ -401,8 +382,10 @@ void FileManager::on_renameAction_triggered()
     } else {
         File* newFile = parent->file(newName);
         Q_ASSERT(newFile);
-        if (newFile)
+        if (newFile) {
             mUi->sourcesTree->setCurrentItem(newFile);
+            emit didRenameFile(newFile);
+        }
     }
 }
 

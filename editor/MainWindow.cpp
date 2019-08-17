@@ -564,13 +564,23 @@ void MainWindow::on_fileManager_updateUi()
     updateUi();
 }
 
+void MainWindow::on_fileManager_fileCreated(File* file)
+{
+    setCurrentTab(file);
+}
+
 void MainWindow::on_fileManager_willRenameFile(File* file, bool* shouldAbort)
 {
     if (!confirmSave(file))
         *shouldAbort = true;
 }
 
-void MainWindow::on_fileManager_fileSelected(File* file)
+void MainWindow::on_fileManager_didRenameFile(File* file)
+{
+    setCurrentTab(file);
+}
+
+void MainWindow::on_fileManager_fileDoubleClicked(File* file)
 {
     setCurrentTab(file);
 }

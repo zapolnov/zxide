@@ -39,6 +39,9 @@ qt_add_sources(GameEditor
         editor/FileManager.cpp
         editor/FileManager.h
         editor/FileManager.ui
+        editor/NewFileDialog.cpp
+        editor/NewFileDialog.h
+        editor/NewFileDialog.ui
         res/resources.qrc
         util/ScrollBar.cpp
         util/ScrollBar.h

@@ -86,18 +86,21 @@ public:
 
 signals:
     void updateUi();
+    void fileCreated(File* file);
     void willRenameFile(File* file, bool* shouldAbort);
+    void didRenameFile(File* file);
     void fileSelected(File* file);
+    void fileDoubleClicked(File* file);
     void fileDisappeared(File* file);
 
 private:
     std::unique_ptr<Ui_FileManager> mUi;
     QIcon mFolderIcon;
-    QIcon mFileIcon;
     Directory* mRootDirectory;
     QString mPath;
 
     Q_SLOT void on_sourcesTree_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
+    Q_SLOT void on_sourcesTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
     Q_SLOT void on_sourcesTree_customContextMenuRequested(const QPoint& pos);
 
     Q_SLOT void on_refreshAction_triggered();

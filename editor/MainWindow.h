@@ -88,8 +88,10 @@ private:
     Q_SLOT void on_tabWidget_tabCloseRequested(int index);
 
     Q_SLOT void on_fileManager_updateUi();
+    Q_SLOT void on_fileManager_fileCreated(File* file);
     Q_SLOT void on_fileManager_willRenameFile(File* file, bool* shouldAbort);
-    Q_SLOT void on_fileManager_fileSelected(File* file);
+    Q_SLOT void on_fileManager_didRenameFile(File* file);
+    Q_SLOT void on_fileManager_fileDoubleClicked(File* file);
     Q_SLOT void on_fileManager_fileDisappeared(File* file);
 
     Q_SLOT void on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area);

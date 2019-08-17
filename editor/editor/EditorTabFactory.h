@@ -3,10 +3,22 @@
 
 #include <QObject>
 #include <QHash>
+#include <QIcon>
 #include <functional>
+#include <vector>
+#include <memory>
 
 class File;
 class AbstractEditorTab;
+class QFileInfo;
+
+struct FileFormat
+{
+    QString name;
+    QString extension;
+    QIcon icon;
+    std::function<AbstractEditorTab*(QWidget* parent)> factory;
+};
 
 class EditorTabFactory : public QObject
 {
@@ -18,25 +30,35 @@ public:
 
     static EditorTabFactory* instance() { return mInstance; }
 
-    template <typename T, typename... ARGS> void add(const QString& name, const QString& extension, ARGS&&... args)
+    const std::vector<std::unique_ptr<FileFormat>>& formats() const { return mFormats; }
+
+    const QIcon& iconForFile(const QFileInfo& file) const;
+    AbstractEditorTab* createTabForFile(File* file, QWidget* parent);
+
+    template <typename T, typename... ARGS>
+    void add(const QString& name, const QString& extension, const QString& icon, ARGS&&... args)
     {
         Q_ASSERT(!mExtensions.contains(extension));
-        mExtensions[extension] =
-            [args = std::make_tuple(std::forward<ARGS>(args)...)](QWidget* parent) mutable -> AbstractEditorTab* {
-                AbstractEditorTab* result = nullptr;
-                std::apply([&result, parent](auto&&... args) {
-                        result = new T(parent, std::forward<ARGS>(args)...);
-                    }, std::move(args));
-                return result;
-            };
-    }
 
-    QStringList filters() const;
-    AbstractEditorTab* createTabForFile(File* file, QWidget* parent);
+        auto fmt = std::make_unique<FileFormat>();
+        fmt->name = name;
+        fmt->extension = extension;
+        fmt->icon = QIcon(icon);
+        fmt->factory = [args = std::make_tuple(std::forward<ARGS>(args)...)](QWidget* p) mutable {
+                AbstractEditorTab* r = nullptr;
+                std::apply([&r, p](auto&&... args) { r = new T(p, std::forward<ARGS>(args)...); }, std::move(args));
+                return r;
+            };
+
+        mExtensions[extension] = fmt.get();
+        mFormats.emplace_back(std::move(fmt));
+    }
 
 private:
     static EditorTabFactory* mInstance;
-    QHash<QString, std::function<AbstractEditorTab*(QWidget* parent)>> mExtensions;
+    QIcon mUnknownFileIcon;
+    std::vector<std::unique_ptr<FileFormat>> mFormats;
+    QHash<QString, FileFormat*> mExtensions;
 
     Q_DISABLE_COPY(EditorTabFactory)
 };
