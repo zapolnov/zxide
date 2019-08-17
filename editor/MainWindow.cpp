@@ -455,6 +455,7 @@ void MainWindow::on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea a
     switch (area) {
         case Qt::LeftDockWidgetArea:
         case Qt::RightDockWidgetArea:
+        default:
             mUi->registersWidget->setOrientation(Qt::Vertical);
             break;
 
