@@ -57,9 +57,6 @@ void Compiler::compile()
             if (extension == QStringLiteral("asm")) {
                 if (!Assembler(mProgram.get(), this).parse(source.file, fileData))
                     throw CompilationFailed();
-            } else {
-                error(source.file, 0, tr("Unsupported file type: %1").arg(extension));
-                throw CompilationFailed();
             }
         }
 
