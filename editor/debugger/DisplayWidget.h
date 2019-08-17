@@ -3,6 +3,8 @@
 
 #include <QOpenGLWidget>
 
+class QTimer;
+
 class DisplayWidget : public QOpenGLWidget
 {
     Q_OBJECT
@@ -20,8 +22,7 @@ protected:
     void keyReleaseEvent(QKeyEvent* event) override;
 
 private:
-    quint8 mScreenBuffer[6144 + 768];
-    QImage mImage;
+    QTimer* mTimer;
 
     Q_DISABLE_COPY(DisplayWidget)
 };

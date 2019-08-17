@@ -93,6 +93,9 @@ class EmulatorCore : public QObject
     Q_OBJECT
 
 public:
+    static const int ScreenWidth;
+    static const int ScreenHeight;
+
     explicit EmulatorCore(QObject* parent = nullptr);
     ~EmulatorCore() override;
 
@@ -118,9 +121,8 @@ public:
     int currentSpeed() const;
     QString currentSpeedString() const;
 
-    bool displayFlashReversed() const;
-
-    void getMemory(unsigned address, void* buffer, size_t bufferSize);
+    void getMemory(unsigned address, void* buffer, size_t bufferSize) const;
+    QImage getScreen() const;
 
     void pressKey(int key);
     void releaseKey(int key);

@@ -222,11 +222,13 @@ uidisplay_end( void )
   return 0;
 }
 
+#if 0
 void
 uidisplay_frame_end( void )
 {
   /* Do nothing */
 }
+#endif
 
 int
 uidisplay_hotswap_gfx_mode( void )
@@ -235,6 +237,7 @@ uidisplay_hotswap_gfx_mode( void )
   return 0;
 }
 
+#if 0
 int
 uidisplay_init( int width, int height )
 {
@@ -261,3 +264,4 @@ uidisplay_putpixel( int x, int y, int colour )
 {
   /* Do nothing */
 }
+#endif

@@ -1,5 +1,6 @@
 #include "EmulatorCore.h"
 #include "util/Settings.h"
+#include <QImage>
 #include <QFile>
 #include <QElapsedTimer>
 #include <QTimer>
@@ -11,6 +12,7 @@
 extern "C" {
 #include <libspectrum.h>
 #include <ui/ui.h>
+#include <ui/uidisplay.h>
 #include <utils.h>
 #include <compat.h>
 #include <event.h>
@@ -28,19 +30,43 @@ int fuse_end(void);
 extern int display_flash_reversed;
 }
 
+typedef struct { quint8 r, g, b; } Color;
+
+static Color Palette[] = {
+    { 0x00, 0x00, 0x00 },
+    { 0x00, 0x00, 0xc0 },
+    { 0xc0, 0x00, 0x00 },
+    { 0xc0, 0x00, 0xc0 },
+    { 0x00, 0xc0, 0x00 },
+    { 0x00, 0xc0, 0xc0 },
+    { 0xc0, 0xc0, 0x00 },
+    { 0xc0, 0xc0, 0xc0 },
+    { 0x00, 0x00, 0x00 },
+    { 0x00, 0x00, 0xff },
+    { 0xff, 0x00, 0x00 },
+    { 0xff, 0x00, 0xff },
+    { 0x00, 0xff, 0x00 },
+    { 0x00, 0xff, 0xff },
+    { 0xff, 0xff, 0x00 },
+    { 0xff, 0xff, 0xff },
+};
+
 static QElapsedTimer elapsedTimer;
 static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
+static QImage screenBack;
+static QImage screenFront;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
-static bool displayFlashReversed;
 static bool memoryWasChanged;
 static bool paused;
 static Registers registers;
 static int emulatorSpeed;
 
 EmulatorCore* EmulatorCore::mInstance;
+const int EmulatorCore::ScreenWidth = DISPLAY_WIDTH_COLS * 8 + 2 * DISPLAY_BORDER_WIDTH_COLS * 8;
+const int EmulatorCore::ScreenHeight = DISPLAY_SCREEN_HEIGHT;
 
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
@@ -265,16 +291,16 @@ QString EmulatorCore::currentSpeedString() const
     return QStringLiteral("%1%").arg(speed);
 }
 
-bool EmulatorCore::displayFlashReversed() const
-{
-    QMutexLocker lock(&mutex);
-    return ::displayFlashReversed;
-}
-
-void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize)
+void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize) const
 {
     QMutexLocker lock(&mutex);
     memcpy(buffer, memory + address, bufferSize);
+}
+
+QImage EmulatorCore::getScreen() const
+{
+    QMutexLocker lock(&mutex);
+    return screenBack;
 }
 
 static input_key mapKey(int key, bool shift)
@@ -503,8 +529,6 @@ static void syncWithMainThread()
         }
         offset += MEMORY_PAGE_SIZE;
     }
-
-    displayFlashReversed = (display_flash_reversed != 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -667,6 +691,128 @@ extern "C" void ui_notify_memory_page_changed(int page)
 {
     QMutexLocker lock(&mutex);
     memoryPageValid[page] = false;
+}
+
+int uidisplay_init(int width, int height)
+{
+    screenFront = QImage(EmulatorCore::ScreenWidth, EmulatorCore::ScreenHeight, QImage::Format_ARGB32);
+    return 0;
+}
+
+static void setPixel(uchar* line, int x, int color)
+{
+    if (x < 0 || x >= EmulatorCore::ScreenWidth)
+        return;
+
+    const Color* c = &Palette[color];
+    uchar* dst = &line[x * 4];
+    *dst++ = c->b;
+    *dst++ = c->g;
+    *dst++ = c->r;
+    *dst++ = 0xff;
+}
+
+void uidisplay_plot16(int x, int y, libspectrum_word data, libspectrum_byte ink, libspectrum_byte paper)
+{
+    x <<= 4;
+    y <<= 1;
+    for (int i = 0; i < 2; i++, y++) {
+        if (y < 0 || y >= EmulatorCore::ScreenHeight)
+            break;
+
+        uchar* line = screenFront.scanLine(y);
+        setPixel(line, x +  0, (data & 0x8000 ? ink : paper));
+        setPixel(line, x +  1, (data & 0x4000 ? ink : paper));
+        setPixel(line, x +  2, (data & 0x2000 ? ink : paper));
+        setPixel(line, x +  3, (data & 0x1000 ? ink : paper));
+        setPixel(line, x +  4, (data & 0x0800 ? ink : paper));
+        setPixel(line, x +  5, (data & 0x0400 ? ink : paper));
+        setPixel(line, x +  6, (data & 0x0200 ? ink : paper));
+        setPixel(line, x +  7, (data & 0x0100 ? ink : paper));
+        setPixel(line, x +  8, (data & 0x0080 ? ink : paper));
+        setPixel(line, x +  9, (data & 0x0040 ? ink : paper));
+        setPixel(line, x + 10, (data & 0x0020 ? ink : paper));
+        setPixel(line, x + 11, (data & 0x0010 ? ink : paper));
+        setPixel(line, x + 12, (data & 0x0008 ? ink : paper));
+        setPixel(line, x + 13, (data & 0x0004 ? ink : paper));
+        setPixel(line, x + 14, (data & 0x0002 ? ink : paper));
+        setPixel(line, x + 15, (data & 0x0001 ? ink : paper));
+    }
+}
+
+void uidisplay_plot8(int x, int y, libspectrum_byte data, libspectrum_byte ink, libspectrum_byte paper)
+{
+    x <<= 3;
+
+    if (!machine_current->timex) {
+        if (y < 0 || y >= EmulatorCore::ScreenHeight)
+            return;
+
+        uchar* line = screenFront.scanLine(y);
+        setPixel(line, x + 0, (data & 0x80 ? ink : paper));
+        setPixel(line, x + 1, (data & 0x40 ? ink : paper));
+        setPixel(line, x + 2, (data & 0x20 ? ink : paper));
+        setPixel(line, x + 3, (data & 0x10 ? ink : paper));
+        setPixel(line, x + 4, (data & 0x08 ? ink : paper));
+        setPixel(line, x + 5, (data & 0x04 ? ink : paper));
+        setPixel(line, x + 6, (data & 0x02 ? ink : paper));
+        setPixel(line, x + 7, (data & 0x01 ? ink : paper));
+    } else {
+        x <<= 1;
+        y <<= 1;
+        for (int i = 0; i < 2; i++, y++) {
+            if (y < 0 || y >= EmulatorCore::ScreenHeight)
+                break;
+
+            uchar* line = screenFront.scanLine(y);
+            setPixel(line, x +  0, (data & 0x80 ? ink : paper));
+            setPixel(line, x +  1, (data & 0x80 ? ink : paper));
+            setPixel(line, x +  2, (data & 0x40 ? ink : paper));
+            setPixel(line, x +  3, (data & 0x40 ? ink : paper));
+            setPixel(line, x +  4, (data & 0x20 ? ink : paper));
+            setPixel(line, x +  5, (data & 0x20 ? ink : paper));
+            setPixel(line, x +  6, (data & 0x10 ? ink : paper));
+            setPixel(line, x +  7, (data & 0x10 ? ink : paper));
+            setPixel(line, x +  8, (data & 0x08 ? ink : paper));
+            setPixel(line, x +  9, (data & 0x08 ? ink : paper));
+            setPixel(line, x + 10, (data & 0x04 ? ink : paper));
+            setPixel(line, x + 11, (data & 0x04 ? ink : paper));
+            setPixel(line, x + 12, (data & 0x02 ? ink : paper));
+            setPixel(line, x + 13, (data & 0x02 ? ink : paper));
+            setPixel(line, x + 14, (data & 0x01 ? ink : paper));
+            setPixel(line, x + 15, (data & 0x01 ? ink : paper));
+        }
+    }
+}
+
+void uidisplay_putpixel(int x, int y, int colour)
+{
+    if (!machine_current->timex) {
+        if (y < 0 || y >= EmulatorCore::ScreenHeight)
+            return;
+
+        setPixel(screenFront.scanLine(y), x, colour);
+    } else {
+        x <<= 1;
+        y <<= 1;
+        if (y < 0 || y >= EmulatorCore::ScreenHeight)
+            return;
+
+        uchar* line1 = screenFront.scanLine(y + 0);
+        uchar* line2 = screenFront.scanLine(y + 1);
+        setPixel(line1, x + 0, colour);
+        setPixel(line1, x + 1, colour);
+        setPixel(line2, x + 0, colour);
+        setPixel(line2, x + 1, colour);
+    }
+}
+
+void uidisplay_frame_end()
+{
+    QImage copy = screenFront.copy();
+
+    QMutexLocker lock(&mutex);
+    screenBack = copy;
 }
 
 int ui_statusbar_update_speed(float speed)
