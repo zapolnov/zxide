@@ -2,12 +2,9 @@
 #define DEBUGGER_MEMORYWIDGET_H
 
 #include <QOpenGLWidget>
-#include "debugger/EmulatorCore.h"
 #include "util/SimpleTextPainter.h"
-#include <memory>
 #include <vector>
 
-class QTimer;
 class ScrollBar;
 
 class MemoryWidget : public QOpenGLWidget, public SimpleTextPainter

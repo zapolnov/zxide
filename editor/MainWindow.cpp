@@ -12,6 +12,7 @@
 #include <QCloseEvent>
 #include <QCheckBox>
 #include <QInputDialog>
+#include <QTimer>
 #include <QLabel>
 
 namespace
@@ -32,6 +33,8 @@ MainWindow::MainWindow(const QString& path)
     mUi->setupUi(this);
 
     mUi->memoryWidget->setScrollBar(mUi->memoryWidgetScrollBar);
+    tabifyDockWidget(mUi->registersDockWidget, mUi->stackDockWidget);
+    QTimer::singleShot(0, mUi->registersDockWidget, &QDockWidget::raise);
 
     mInsOverwriteLabel = new QLabel(mUi->statusBar);
     mInsOverwriteLabel->setFixedWidth(35);
@@ -272,7 +275,7 @@ void MainWindow::updateUi()
         QDockWidget* dockWidget = mUi->displayDockWidget;
         DisplayWidget* displayWidget = mUi->displayWidget;
         auto conn = std::make_shared<QMetaObject::Connection>();
-        *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [dockWidget, conn] {
+        *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [this, dockWidget, conn] {
                 if (!EmulatorCore::instance()->isRunning())
                     dockWidget->hide();
                 QObject::disconnect(*conn);
@@ -281,6 +284,7 @@ void MainWindow::updateUi()
     }
 
     mUi->registersDockWidget->setVisible(emulatorRunning);
+    mUi->stackDockWidget->setVisible(emulatorRunning);
     mUi->memoryDockWidget->setVisible(emulatorRunning);
 }
 

@@ -221,6 +221,18 @@ Registers EmulatorCore::registers() const
     return ::registers;
 }
 
+quint16 EmulatorCore::instructionPointer() const
+{
+    QMutexLocker lock(&mutex);
+    return ::registers.pc;
+}
+
+quint16 EmulatorCore::stackPointer() const
+{
+    QMutexLocker lock(&mutex);
+    return ::registers.sp;
+}
+
 void EmulatorCore::setRegister(Register reg, quint16 value)
 {
     Q_ASSERT(mThread->isRunning());
@@ -294,8 +306,22 @@ QString EmulatorCore::currentSpeedString() const
 
 void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize) const
 {
+    char* ptr = reinterpret_cast<char*>(buffer);
+    size_t addr = address;
+
     QMutexLocker lock(&mutex);
-    memcpy(buffer, memory + address, bufferSize);
+    while (bufferSize > 0) {
+        addr &= 0xffff;
+
+        size_t bytes = bufferSize;
+        if (addr + bufferSize > 0x10000)
+            bytes = 0x10000 - addr;
+
+        memcpy(ptr, memory + addr, bytes);
+        bufferSize -= bytes;
+        ptr += bytes;
+        addr += bytes;
+    }
 }
 
 QImage EmulatorCore::getScreen() const

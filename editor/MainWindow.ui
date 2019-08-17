@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>650</height>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -251,6 +251,14 @@
      <set>Qt::AlignCenter</set>
     </property>
     <widget class="DisplayWidget" name="displayWidget">
+     <property name="geometry">
+      <rect>
+       <x>266</x>
+       <y>34</y>
+       <width>0</width>
+       <height>0</height>
+      </rect>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -302,6 +310,18 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QDockWidget" name="stackDockWidget">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Stack</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="StackWidget" name="stackWidget"/>
   </widget>
   <action name="actionExit">
    <property name="icon">
@@ -635,6 +655,12 @@
    <class>ScrollBar</class>
    <extends>QScrollBar</extends>
    <header>util/ScrollBar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StackWidget</class>
+   <extends>QWidget</extends>
+   <header>debugger/StackWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

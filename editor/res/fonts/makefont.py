@@ -394,8 +394,46 @@ setPixels(0x8F, [
         'xxxxxxxx',
     ])
 
-for i in range(0x90, 0xFF):
+for i in range(0x90, 0xFD):
     setChar(i, 0x2E)
+
+setPixels(0xFD, [       # custom for the editor
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        'xxxxxxxx',
+        'xxxxxxxx',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+        '........',
+    ])
+
+setPixels(0xFE, [       # custom for the editor
+        '........',
+        '........',
+        '........',
+        '........',
+        '...xx...',
+        '....xx..',
+        '.....xx.',
+        'xxxxxxxx',
+        'xxxxxxxx',
+        '.....xx.',
+        '....xx..',
+        '...xx...',
+        '........',
+        '........',
+        '........',
+        '........',
+    ])
 
 setPixels(0xFF, [       # custom for the editor
         '........',

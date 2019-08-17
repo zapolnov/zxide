@@ -116,6 +116,8 @@ public:
     void reloadSettings();
 
     Registers registers() const;
+    quint16 instructionPointer() const;
+    quint16 stackPointer() const;
     void setRegister(Register reg, quint16 value);
 
     int currentSpeed() const;

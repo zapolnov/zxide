@@ -1,7 +1,7 @@
 #include "MemoryWidget.h"
+#include "debugger/EmulatorCore.h"
 #include "util/ScrollBar.h"
 #include "ui_EditRegisterDialog.h"
-#include <QTimer>
 #include <QPainter>
 #include <QContextMenuEvent>
 #include <QMenu>
@@ -104,8 +104,11 @@ void MemoryWidget::paintGL()
             mLineBuffer[i++] = buf[1];
             mLineBuffer[i++] = ' ';
 
-            if (byte == (char)(unsigned char)0xFF) // hide the editor's "subscript 16" character
+            // hide editor special characters
+            unsigned char code = static_cast<unsigned char>(byte);
+            if (code >= 0xFD)
                 byte = 0;
+
             mLineBuffer[j++] = byte;
 
             ++address;

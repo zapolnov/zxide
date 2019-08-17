@@ -25,6 +25,8 @@ qt_add_sources(GameEditor
         debugger/MemoryWidget.h
         debugger/RegistersWidget.cpp
         debugger/RegistersWidget.h
+        debugger/StackWidget.cpp
+        debugger/StackWidget.h
         editor/code/CodeTab.cpp
         editor/code/CodeTab.h
         editor/code/CodeTab.ui
