@@ -60,6 +60,7 @@ static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
 static bool memoryWasChanged;
+static bool emulatorPaused;
 static bool paused;
 static Registers registers;
 static int emulatorSpeed;
@@ -465,6 +466,14 @@ void EmulatorCore::update()
 
 static void syncWithMainThread()
 {
+    if (emulatorPaused != paused) {
+        emulatorPaused = paused;
+        if (paused)
+            fuse_emulation_pause();
+        else
+            fuse_emulation_unpause();
+    }
+
     QMutexLocker lock(&mutex);
 
     if (!commandQueue.empty()) {
@@ -546,6 +555,7 @@ void EmulatorCore::Thread::run()
         return;
 
     memset(memoryPageValid, 0, sizeof(memoryPageValid));
+    emulatorPaused = false;
 
     while (!isInterruptionRequested()) {
         if (paused) // no need to protect it with mutex as it is only set by this thread
@@ -561,6 +571,8 @@ void EmulatorCore::Thread::run()
         debugger_run(); // "unpause" the debugger before shutting down
 
     fuse_end();
+
+    emulatorPaused = false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

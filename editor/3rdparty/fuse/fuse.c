@@ -547,7 +547,7 @@ static void fuse_show_help( void )
 /* Stop all activities associated with actual Spectrum emulation */
 int fuse_emulation_pause(void)
 {
-  int error;
+  int error = 0;
 
   /* If we were already paused, just return. In any case, increment
      the pause count */
@@ -556,14 +556,14 @@ int fuse_emulation_pause(void)
   /* Stop recording any competition mode RZX file */
   if( rzx_recording && rzx_competition_mode ) {
     ui_error( UI_ERROR_INFO, "Stopping competition mode RZX recording" );
-    error = rzx_stop_recording(); if( error ) return error;
+    error = rzx_stop_recording(); /*if( error ) return error;*/
   }
       
   /* If we had sound enabled (and hence doing the speed regulation),
      turn it off */
   sound_pause();
 
-  return 0;
+  return error;
 }
 
 /* Restart emulation activities */
