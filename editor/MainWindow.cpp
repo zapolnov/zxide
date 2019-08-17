@@ -231,6 +231,8 @@ void MainWindow::clearBuildResult()
 void MainWindow::updateUi()
 {
     bool modified = hasModifiedFiles();
+    bool emulatorRunning = mEmulatorCore->isRunning();
+
     setWindowModified(modified);
 
     IEditorTab* tab = currentTab();
@@ -249,23 +251,37 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
-    mUi->actionBuild->setEnabled(!mEmulatorCore->isRunning());
-    mUi->actionRun->setEnabled(!mEmulatorCore->isRunning() || mEmulatorCore->isPaused());
-    mUi->actionPause->setEnabled(mEmulatorCore->isRunning() && !mEmulatorCore->isPaused());
-    mUi->actionPause->setChecked(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
-    mUi->actionStop->setEnabled(mEmulatorCore->isRunning());
-    mUi->actionStepInto->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
-    mUi->actionStepOut->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
-    mUi->actionStepOver->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused());
-    mUi->actionRunToCursor->setEnabled(mEmulatorCore->isRunning() && mEmulatorCore->isPaused() && tab->canRunToCursor());
+    mUi->actionBuild->setEnabled(!emulatorRunning);
+    mUi->actionRun->setEnabled(!emulatorRunning || mEmulatorCore->isPaused());
+    mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
+    mUi->actionPause->setChecked(emulatorRunning && mEmulatorCore->isPaused());
+    mUi->actionStop->setEnabled(emulatorRunning);
+    mUi->actionStepInto->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
+    mUi->actionStepOut->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
+    mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
+    mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
     mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
 
-    mUi->displayDockWidget->setVisible(mEmulatorCore->isRunning());
-    mUi->registersDockWidget->setVisible(mEmulatorCore->isRunning());
-    mUi->memoryDockWidget->setVisible(mEmulatorCore->isRunning());
+    if (!mUi->displayDockWidget->isVisible() || emulatorRunning)
+        mUi->displayDockWidget->setVisible(emulatorRunning);
+    else {
+        // clear out remaining picture from the framebuffer
+        QDockWidget* dockWidget = mUi->displayDockWidget;
+        DisplayWidget* displayWidget = mUi->displayWidget;
+        auto conn = std::make_shared<QMetaObject::Connection>();
+        *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [dockWidget, conn] {
+                if (!EmulatorCore::instance()->isRunning())
+                    dockWidget->hide();
+                QObject::disconnect(*conn);
+            });
+        displayWidget->repaint();
+    }
+
+    mUi->registersDockWidget->setVisible(emulatorRunning);
+    mUi->memoryDockWidget->setVisible(emulatorRunning);
 }
 
 void MainWindow::on_actionNewFile_triggered()

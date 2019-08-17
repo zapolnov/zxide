@@ -573,6 +573,10 @@ void EmulatorCore::Thread::run()
     fuse_end();
 
     emulatorPaused = false;
+
+    screenFront.fill(Qt::black);
+    QMutexLocker locker(&mutex);
+    screenBack.fill(Qt::black);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -139,6 +139,7 @@ memory_init( void *context )
     }
 
   module_register( &memory_module_info );
+  memset(RAM, 0, sizeof(RAM));
 
   return 0;
 }
