@@ -1,6 +1,7 @@
 #include "FileManager.h"
 #include "editor/EditorTabFactory.h"
 #include "editor/AbstractEditorTab.h"
+#include "editor/RenameDialog.h"
 #include "editor/NewFileDialog.h"
 #include "ui_FileManager.h"
 #include <QMenu>
@@ -324,63 +325,29 @@ void FileManager::on_renameAction_triggered()
     if (!parent)
         return;
 
-    QString oldName = selected->name();
     bool isDirectory = (selected->type() == Directory::Type);
 
   #ifndef NDEBUG
     if (isDirectory)
-        Q_ASSERT(parent->directory(oldName) == selected);
+        Q_ASSERT(parent->directory(selected->name()) == selected);
     else
-        Q_ASSERT(parent->file(oldName) == selected);
+        Q_ASSERT(parent->file(selected->name()) == selected);
   #endif
 
-    QInputDialog dlg(this);
-    dlg.setInputMode(QInputDialog::TextInput);
-    dlg.setWindowTitle(selected->type() == Directory::Type ? tr("Rename directory") : tr("Rename file"));
-    dlg.setLabelText(tr("Name:"));
-    dlg.setTextValue(oldName);
+    RenameDialog dlg(selected, this);
+    connect(&dlg, &RenameDialog::willRenameFile, this, &FileManager::willRenameFile);
     if (dlg.exec() != QDialog::Accepted)
         return;
-
-    QString newName = dlg.textValue().trimmed();
-    if (newName == oldName)
-        return;
-    if (newName.isEmpty()) {
-        QMessageBox::critical(this, tr("Error"), tr("Name should not be empty."));
-        return;
-    }
-
-    QString fullOldName = oldName;
-    QString fullNewName = newName;
-
-    QDir dir(parent->fileInfo().absoluteFilePath());
-    if (QFile(dir.absoluteFilePath(fullNewName)).exists()) {
-        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(fullNewName));
-        return;
-    }
-
-    if (selected->type() == File::Type) {
-        bool shouldAbort = false;
-        emit willRenameFile(static_cast<File*>(selected), &shouldAbort);
-        if (shouldAbort)
-            return;
-    }
-
-    if (!dir.rename(fullOldName, fullNewName)) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to rename \"%1\" to \"%2\" in \"%3\".")
-            .arg(fullOldName).arg(fullNewName).arg(dir.absolutePath()));
-        return;
-    }
 
     refreshDirectory(parent);
 
     if (isDirectory) {
-        Directory* newDirectory = parent->directory(newName);
+        Directory* newDirectory = parent->directory(dlg.newName());
         Q_ASSERT(newDirectory);
         if (newDirectory)
             mUi->sourcesTree->setCurrentItem(newDirectory);
     } else {
-        File* newFile = parent->file(newName);
+        File* newFile = parent->file(dlg.newName());
         Q_ASSERT(newFile);
         if (newFile) {
             mUi->sourcesTree->setCurrentItem(newFile);

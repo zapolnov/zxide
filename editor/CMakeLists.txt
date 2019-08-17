@@ -42,6 +42,9 @@ qt_add_sources(GameEditor
         editor/NewFileDialog.cpp
         editor/NewFileDialog.h
         editor/NewFileDialog.ui
+        editor/RenameDialog.cpp
+        editor/RenameDialog.h
+        editor/RenameDialog.ui
         res/resources.qrc
         util/ScrollBar.cpp
         util/ScrollBar.h
