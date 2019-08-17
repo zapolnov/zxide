@@ -148,3 +148,13 @@ void MemoryWidget::contextMenuEvent(QContextMenuEvent* event)
 
     // FIXME
 }
+
+void MemoryWidget::keyPressEvent(QKeyEvent* event)
+{
+    mScrollBar->keyPressEvent(event);
+}
+
+void MemoryWidget::keyReleaseEvent(QKeyEvent* event)
+{
+    mScrollBar->keyReleaseEvent(event);
+}

@@ -299,7 +299,11 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="MemoryWidget" name="memoryWidget" native="true"/>
+      <widget class="MemoryWidget" name="memoryWidget" native="true">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="ScrollBar" name="memoryWidgetScrollBar">

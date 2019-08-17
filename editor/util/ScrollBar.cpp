@@ -9,6 +9,16 @@ ScrollBar::~ScrollBar()
 {
 }
 
+void ScrollBar::keyPressEvent(QKeyEvent* event)
+{
+    QScrollBar::keyPressEvent(event);
+}
+
+void ScrollBar::keyReleaseEvent(QKeyEvent* event)
+{
+    QScrollBar::keyReleaseEvent(event);
+}
+
 void ScrollBar::wheelEvent(QWheelEvent* event)
 {
     QScrollBar::wheelEvent(event);
