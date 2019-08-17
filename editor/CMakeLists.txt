@@ -42,6 +42,8 @@ qt_add_sources(GameEditor
         editor/NewFileDialog.cpp
         editor/NewFileDialog.h
         editor/NewFileDialog.ui
+        editor/Project.cpp
+        editor/Project.h
         editor/RenameDialog.cpp
         editor/RenameDialog.h
         editor/RenameDialog.ui

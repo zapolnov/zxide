@@ -6,6 +6,7 @@
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/EditorTabFactory.h"
+#include "editor/Project.h"
 #include "editor/FileManager.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -13,6 +14,7 @@
 #include <QCloseEvent>
 #include <QCheckBox>
 #include <QInputDialog>
+#include <QFileDialog>
 #include <QTimer>
 #include <QLabel>
 
@@ -55,8 +57,6 @@ MainWindow::MainWindow(const QString& path)
     mBuildResultLabel = new QLabel(mUi->statusBar);
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
-
-    mUi->fileManager->init(path);
 
     updateUi();
 }
@@ -309,10 +309,15 @@ void MainWindow::updateUi()
     setWindowModified(modified);
 
     AbstractEditorTab* tab = currentTab();
+    mUi->actionNewFile->setEnabled(mProject != nullptr);
+    mUi->actionNewDirectory->setEnabled(mProject != nullptr);
     mUi->actionSave->setEnabled(tab->isModified());
     mUi->actionSaveAll->setEnabled(modified);
-    mUi->actionRenameFile->setEnabled(mUi->fileManager->canRename());
-    mUi->actionDeleteFile->setEnabled(mUi->fileManager->canDelete());
+    mUi->actionCloseWindow->setEnabled(tab != nullptr && tab != mDummyTab);
+    mUi->actionCloseAllWindows->setEnabled(mUi->tabWidget->count() > 0);
+    mUi->actionRenameFile->setEnabled(mProject && mUi->fileManager->canRename());
+    mUi->actionDeleteFile->setEnabled(mProject && mUi->fileManager->canDelete());
+    mUi->actionRefreshFileList->setEnabled(mProject != nullptr);
     mUi->actionUndo->setEnabled(tab->canUndo());
     mUi->actionRedo->setEnabled(tab->canRedo());
     mUi->actionCut->setEnabled(tab->canCut());
@@ -322,8 +327,8 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
-    mUi->actionBuild->setEnabled(!emulatorRunning);
-    mUi->actionRun->setEnabled(!emulatorRunning || mEmulatorCore->isPaused());
+    mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
+    mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
     mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
     mUi->actionPause->setChecked(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionStop->setEnabled(emulatorRunning);
@@ -331,8 +336,6 @@ void MainWindow::updateUi()
     mUi->actionStepOut->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
-    mUi->actionCloseWindow->setEnabled(tab != nullptr && tab != mDummyTab);
-    mUi->actionCloseAllWindows->setEnabled(mUi->tabWidget->count() > 0);
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
@@ -358,14 +361,62 @@ void MainWindow::updateUi()
     mUi->memoryDockWidget->setVisible(emulatorRunning);
 }
 
+void MainWindow::on_actionNewProject_triggered()
+{
+    Settings settings;
+    auto filter = QStringLiteral("%1 (*.%2)").arg(tr("Project files")).arg(Project::FileSuffix);
+    QString file = QFileDialog::getSaveFileName(this, tr("Create project"), settings.lastProjectFile(), filter);
+    if (file.isEmpty())
+        return;
+
+    settings.setLastProjectFile(file);
+
+    auto project = std::make_unique<Project>(this);
+    if (!project->create(file))
+        return;
+
+    if (mProject) {
+        // FIXME
+    } else {
+        mProject = std::move(project);
+        mUi->fileManager->init(mProject->dir().absolutePath());
+        updateUi();
+    }
+}
+
+void MainWindow::on_actionOpenProject_triggered()
+{
+    Settings settings;
+    auto filter = QStringLiteral("%1 (*.%2)").arg(tr("Project files")).arg(Project::FileSuffix);
+    QString file = QFileDialog::getOpenFileName(this, tr("Open project"), settings.lastProjectFile(), filter);
+    if (file.isEmpty())
+        return;
+
+    settings.setLastProjectFile(file);
+
+    auto project = std::make_unique<Project>(this);
+    if (!project->load(file))
+        return;
+
+    if (mProject) {
+        // FIXME
+    } else {
+        mProject = std::move(project);
+        mUi->fileManager->init(mProject->dir().absolutePath());
+        updateUi();
+    }
+}
+
 void MainWindow::on_actionNewFile_triggered()
 {
-    mUi->fileManager->createFile();
+    if (mProject)
+        mUi->fileManager->createFile();
 }
 
 void MainWindow::on_actionNewDirectory_triggered()
 {
-    mUi->fileManager->createDirectory();
+    if (mProject)
+        mUi->fileManager->createDirectory();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -378,19 +429,40 @@ void MainWindow::on_actionSaveAll_triggered()
     saveAll();
 }
 
+void MainWindow::on_actionCloseWindow_triggered()
+{
+    auto tab = currentTab();
+    if (tab)
+        closeTab(tab);
+}
+
+void MainWindow::on_actionCloseAllWindows_triggered()
+{
+    while (mUi->tabWidget->count() > 0) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(0));
+        Q_ASSERT(tab != nullptr);
+        if (!tab)
+            break;
+        closeTab(tab);
+    }
+}
+
 void MainWindow::on_actionRenameFile_triggered()
 {
-    mUi->fileManager->renameSelected();
+    if (mProject)
+        mUi->fileManager->renameSelected();
 }
 
 void MainWindow::on_actionDeleteFile_triggered()
 {
-    mUi->fileManager->deleteSelected();
+    if (mProject)
+        mUi->fileManager->deleteSelected();
 }
 
 void MainWindow::on_actionRefreshFileList_triggered()
 {
-    mUi->fileManager->refresh();
+    if (mProject)
+        mUi->fileManager->refresh();
 }
 
 void MainWindow::on_actionUndo_triggered()
@@ -452,11 +524,15 @@ void MainWindow::on_actionGoToLine_triggered()
 
 void MainWindow::on_actionBuild_triggered()
 {
-    build();
+    if (mProject)
+        build();
 }
 
 void MainWindow::on_actionRun_triggered()
 {
+    if (!mProject)
+        return;
+
     if (!mEmulatorCore->isRunning()) {
         if (build())
             mEmulatorCore->start();
@@ -514,24 +590,6 @@ void MainWindow::on_actionSettings_triggered()
             if (tab)
                 tab->reloadSettings();
         }
-    }
-}
-
-void MainWindow::on_actionCloseWindow_triggered()
-{
-    auto tab = currentTab();
-    if (tab)
-        closeTab(tab);
-}
-
-void MainWindow::on_actionCloseAllWindows_triggered()
-{
-    while (mUi->tabWidget->count() > 0) {
-        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(0));
-        Q_ASSERT(tab != nullptr);
-        if (!tab)
-            break;
-        closeTab(tab);
     }
 }
 

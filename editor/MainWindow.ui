@@ -55,12 +55,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNewProject"/>
+   <addaction name="actionOpenProject"/>
+   <addaction name="separator"/>
    <addaction name="actionNewFile"/>
    <addaction name="actionNewDirectory"/>
    <addaction name="actionSave"/>
    <addaction name="actionSaveAll"/>
-   <addaction name="separator"/>
-   <addaction name="actionRefreshFileList"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
@@ -95,21 +96,16 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <widget class="QMenu" name="menuNew">
-     <property name="title">
-      <string>&amp;New</string>
-     </property>
-     <property name="icon">
-      <iconset resource="res/resources.qrc">
-       <normaloff>:/resources/fatcow16x16/page_white.png</normaloff>:/resources/fatcow16x16/page_white.png</iconset>
-     </property>
-     <addaction name="actionNewFile"/>
-     <addaction name="actionNewDirectory"/>
-    </widget>
-    <addaction name="menuNew"/>
+    <addaction name="actionNewProject"/>
+    <addaction name="actionOpenProject"/>
     <addaction name="separator"/>
+    <addaction name="actionNewFile"/>
+    <addaction name="actionNewDirectory"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionCloseWindow"/>
+    <addaction name="actionCloseAllWindows"/>
     <addaction name="separator"/>
     <addaction name="actionRenameFile"/>
     <addaction name="actionDeleteFile"/>
@@ -162,18 +158,10 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuWindow">
-    <property name="title">
-     <string>&amp;Window</string>
-    </property>
-    <addaction name="actionCloseWindow"/>
-    <addaction name="actionCloseAllWindows"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuDebug"/>
    <addaction name="menuTools"/>
-   <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -402,7 +390,7 @@
   <action name="actionRun">
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/tango16x16/media-playback-start.png</normaloff>:/resources/tango16x16/media-playback-start.png</iconset>
+     <normaloff>:/resources/fugue16x16/control.png</normaloff>:/resources/fugue16x16/control.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Run</string>
@@ -453,7 +441,7 @@
      <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;File...</string>
+    <string>&amp;New file...</string>
    </property>
    <property name="toolTip">
     <string>New file</string>
@@ -486,7 +474,7 @@
      <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Directory...</string>
+    <string>New director&amp;y...</string>
    </property>
    <property name="toolTip">
     <string>New directory</string>
@@ -516,7 +504,7 @@
   <action name="actionStop">
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/tango16x16/media-playback-stop.png</normaloff>:/resources/tango16x16/media-playback-stop.png</iconset>
+     <normaloff>:/resources/fugue16x16/control-stop-square.png</normaloff>:/resources/fugue16x16/control-stop-square.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Stop</string>
@@ -540,7 +528,7 @@
    </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/tango16x16/media-playback-pause.png</normaloff>:/resources/tango16x16/media-playback-pause.png</iconset>
+     <normaloff>:/resources/fugue16x16/control-pause.png</normaloff>:/resources/fugue16x16/control-pause.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Pause</string>
@@ -588,7 +576,7 @@
   <action name="actionRunToCursor">
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/fugue16x16/arrow-stop.png</normaloff>:/resources/fugue16x16/arrow-stop.png</iconset>
+     <normaloff>:/resources/fugue16x16/control-cursor.png</normaloff>:/resources/fugue16x16/control-cursor.png</iconset>
    </property>
    <property name="text">
     <string>Run to &amp;cursor</string>
@@ -610,6 +598,10 @@
    </property>
   </action>
   <action name="actionCloseWindow">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/modified/page_white+font_red_delete.png</normaloff>:/resources/fatcow16x16/modified/page_white+font_red_delete.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Close</string>
    </property>
@@ -618,8 +610,36 @@
    </property>
   </action>
   <action name="actionCloseAllWindows">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/modified/page_white_stack+font_red_delete.png</normaloff>:/resources/fatcow16x16/modified/page_white_stack+font_red_delete.png</iconset>
+   </property>
    <property name="text">
-    <string>Close &amp;all</string>
+    <string>Close a&amp;ll</string>
+   </property>
+  </action>
+  <action name="actionNewProject">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/book_add.png</normaloff>:/resources/fatcow16x16/book_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>New pro&amp;ject...</string>
+   </property>
+   <property name="toolTip">
+    <string>New project</string>
+   </property>
+  </action>
+  <action name="actionOpenProject">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/modified/book+folders_explorer.png</normaloff>:/resources/fatcow16x16/modified/book+folders_explorer.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open project...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open project</string>
    </property>
   </action>
  </widget>

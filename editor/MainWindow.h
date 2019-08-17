@@ -8,6 +8,7 @@
 class File;
 class EditorTabFactory;
 class AbstractEditorTab;
+class Project;
 class EmulatorCore;
 class Ui_MainWindow;
 class QLabel;
@@ -37,8 +38,9 @@ private:
     QLabel* mLineColumnLabel;
     QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
-    EditorTabFactory* mTabFactory;
+    std::unique_ptr<Project> mProject;
     EmulatorCore* mEmulatorCore;
+    EditorTabFactory* mTabFactory;
 
     bool confirmSaveAll();
     bool confirmSave(File* file);
@@ -49,10 +51,14 @@ private:
 
     void updateUi();
 
+    Q_SLOT void on_actionNewProject_triggered();
+    Q_SLOT void on_actionOpenProject_triggered();
     Q_SLOT void on_actionNewFile_triggered();
     Q_SLOT void on_actionNewDirectory_triggered();
     Q_SLOT void on_actionSave_triggered();
     Q_SLOT void on_actionSaveAll_triggered();
+    Q_SLOT void on_actionCloseWindow_triggered();
+    Q_SLOT void on_actionCloseAllWindows_triggered();
     Q_SLOT void on_actionRenameFile_triggered();
     Q_SLOT void on_actionDeleteFile_triggered();
     Q_SLOT void on_actionRefreshFileList_triggered();
@@ -78,9 +84,6 @@ private:
     Q_SLOT void on_actionRunToCursor_triggered();
 
     Q_SLOT void on_actionSettings_triggered();
-
-    Q_SLOT void on_actionCloseWindow_triggered();
-    Q_SLOT void on_actionCloseAllWindows_triggered();
 
     Q_SLOT void on_actionAbout_triggered();
 
