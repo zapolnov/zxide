@@ -77,6 +77,9 @@ private:
 
     Q_SLOT void on_actionSettings_triggered();
 
+    Q_SLOT void on_actionCloseWindow_triggered();
+    Q_SLOT void on_actionCloseAllWindows_triggered();
+
     Q_SLOT void on_actionAbout_triggered();
 
     Q_SLOT void on_tabWidget_currentChanged(int index);

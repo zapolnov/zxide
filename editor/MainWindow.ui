@@ -91,12 +91,23 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuProject">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>&amp;Project</string>
+     <string>&amp;File</string>
     </property>
-    <addaction name="actionNewFile"/>
-    <addaction name="actionNewDirectory"/>
+    <widget class="QMenu" name="menuNew">
+     <property name="title">
+      <string>&amp;New</string>
+     </property>
+     <property name="icon">
+      <iconset resource="res/resources.qrc">
+       <normaloff>:/resources/fatcow16x16/page_white.png</normaloff>:/resources/fatcow16x16/page_white.png</iconset>
+     </property>
+     <addaction name="actionNewFile"/>
+     <addaction name="actionNewDirectory"/>
+    </widget>
+    <addaction name="menuNew"/>
+    <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAll"/>
     <addaction name="separator"/>
@@ -151,10 +162,18 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
-   <addaction name="menuProject"/>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="actionCloseWindow"/>
+    <addaction name="actionCloseAllWindows"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuDebug"/>
    <addaction name="menuTools"/>
+   <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -434,7 +453,10 @@
      <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;New file...</string>
+    <string>&amp;File...</string>
+   </property>
+   <property name="toolTip">
+    <string>New file</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -446,7 +468,7 @@
      <normaloff>:/resources/fatcow16x16/text_edit.png</normaloff>:/resources/fatcow16x16/text_edit.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Rename selected...</string>
+    <string>&amp;Rename...</string>
    </property>
   </action>
   <action name="actionDeleteFile">
@@ -455,7 +477,7 @@
      <normaloff>:/resources/fatcow16x16/bin_closed.png</normaloff>:/resources/fatcow16x16/bin_closed.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Delete selected</string>
+    <string>&amp;Delete</string>
    </property>
   </action>
   <action name="actionNewDirectory">
@@ -464,7 +486,10 @@
      <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
    </property>
    <property name="text">
-    <string>New director&amp;y...</string>
+    <string>&amp;Directory...</string>
+   </property>
+   <property name="toolTip">
+    <string>New directory</string>
    </property>
   </action>
   <action name="actionRefreshFileList">
@@ -582,6 +607,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionCloseWindow">
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F4</string>
+   </property>
+  </action>
+  <action name="actionCloseAllWindows">
+   <property name="text">
+    <string>Close &amp;all</string>
    </property>
   </action>
  </widget>

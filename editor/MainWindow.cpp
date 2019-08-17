@@ -111,7 +111,7 @@ void MainWindow::closeTab(File* file)
 
 void MainWindow::closeTab(AbstractEditorTab* tab)
 {
-    if (!tab)
+    if (!tab || tab == mDummyTab)
         return;
 
     if (currentTab() == tab)
@@ -322,6 +322,8 @@ void MainWindow::updateUi()
     mUi->actionStepOut->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
+    mUi->actionCloseWindow->setEnabled(tab != nullptr && tab != mDummyTab);
+    mUi->actionCloseAllWindows->setEnabled(mUi->tabWidget->count() > 0);
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
@@ -506,14 +508,37 @@ void MainWindow::on_actionSettings_triggered()
     }
 }
 
+void MainWindow::on_actionCloseWindow_triggered()
+{
+    auto tab = currentTab();
+    if (tab)
+        closeTab(tab);
+}
+
+void MainWindow::on_actionCloseAllWindows_triggered()
+{
+    while (mUi->tabWidget->count() > 0) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(0));
+        Q_ASSERT(tab != nullptr);
+        if (!tab)
+            break;
+        closeTab(tab);
+    }
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     AboutDialog dlg(this);
     dlg.exec();
 }
 
-void MainWindow::on_tabWidget_currentChanged(int)
+void MainWindow::on_tabWidget_currentChanged(int index)
 {
+    auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(index));
+    if (tab && tab->file()) {
+        if (mUi->fileManager && mUi->fileManager->selectedFileOrDirectory() != tab->file())
+            mUi->fileManager->selectFileOrDirectory(tab->file());
+    }
     updateUi();
 }
 
@@ -522,7 +547,7 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(index));
     Q_ASSERT(tab != nullptr);
     if (tab && confirmSave(tab->file()))
-        closeTab(tab->file());
+        closeTab(tab);
 }
 
 void MainWindow::on_fileManager_updateUi()
