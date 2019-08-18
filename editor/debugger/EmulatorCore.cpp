@@ -29,7 +29,7 @@ extern "C" {
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
-extern int display_flash_reversed;
+int debugger_run_to_address(unsigned addr);
 }
 
 typedef struct { quint8 r, g, b; } Color;
@@ -190,11 +190,26 @@ void EmulatorCore::runTo(const File* file, int line)
     if (!mThread->isRunning())
         return;
 
-    auto cmd = [] {
-            // FIXME
+    QMutexLocker lock(&mutex);
+
+    ProgramDebugInfo* debugInfo;
+    if (!programBinary || (debugInfo = programBinary->debugInfo()) == nullptr) {
+        lock.unlock();
+        emit error(tr("No debug information available."));
+        return;
+    }
+
+    int addr = debugInfo->resolveAddress(file, line);
+    if (addr < 0) {
+        lock.unlock();
+        emit error(tr("Selected location has no associated code."));
+        return;
+    }
+
+    auto cmd = [addr] {
+            debugger_run_to_address(unsigned(addr));
         };
 
-    QMutexLocker lock(&mutex);
     commandQueue.emplace_back(std::move(cmd));
 }
 

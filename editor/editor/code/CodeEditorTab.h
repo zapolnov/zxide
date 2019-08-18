@@ -15,6 +15,8 @@ public:
     explicit CodeEditorTab(QWidget* parent = nullptr);
     ~CodeEditorTab() override;
 
+    int line() const override;
+
     bool loadFile(File* f) override;
 
     QString lineColumnLabelText() const override;

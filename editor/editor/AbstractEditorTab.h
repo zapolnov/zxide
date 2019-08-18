@@ -14,6 +14,7 @@ public:
     ~AbstractEditorTab() override;
 
     File* file() const { return mFile; }
+    virtual int line() const { return -1; }
 
     virtual bool loadFile(File*) { return false; }
 

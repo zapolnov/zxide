@@ -15,6 +15,13 @@ CodeEditorTab::~CodeEditorTab()
 {
 }
 
+int CodeEditorTab::line() const
+{
+    if (!mDocument)
+        return -1;
+    return mUi->textEditor->lineFromPosition(mUi->textEditor->currentPos()) + 1;
+}
+
 bool CodeEditorTab::loadFile(File* f)
 {
     bool doLoadFile;
@@ -127,8 +134,7 @@ bool CodeEditorTab::canGoToLine() const
 
 bool CodeEditorTab::canRunToCursor() const
 {
-    // FIXME
-    return false;
+    return mDocument != nullptr;
 }
 
 bool CodeEditorTab::save()

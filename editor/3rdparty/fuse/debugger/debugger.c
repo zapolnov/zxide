@@ -48,6 +48,7 @@ int debugger_memory_pool;
 int debugger_breakpoint_event;
 
 extern unsigned debugger_stepover_addr;
+extern unsigned debugger_runto_addr;
 
 /* Fuse's exit code */
 static int exit_code = 0;
@@ -172,6 +173,16 @@ int
 debugger_breakpoint_exit( void )
 {
   debugger_mode = DEBUGGER_MODE_STEP_OUT;
+  ui_debugger_deactivate( 0 );
+
+  return 0;
+}
+
+int
+debugger_run_to_address( unsigned addr )
+{
+  debugger_mode = DEBUGGER_MODE_RUN_TO_ADDRESS;
+  debugger_runto_addr = addr;
   ui_debugger_deactivate( 0 );
 
   return 0;

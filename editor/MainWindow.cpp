@@ -623,8 +623,19 @@ void MainWindow::on_actionStepOver_triggered()
 void MainWindow::on_actionRunToCursor_triggered()
 {
     if (mEmulatorCore->isRunning() && mEmulatorCore->isPaused()) {
-        // FIXME
-        // mEmulatorCore->runToCursor();
+        File* file = currentTab()->file();
+        if (!file) {
+            QMessageBox::critical(this, tr("Error"), tr("No source file."));
+            return;
+        }
+
+        int line = currentTab()->line();
+        if (line <= 0) {
+            QMessageBox::critical(this, tr("Error"), tr("No source line."));
+            return;
+        }
+
+        mEmulatorCore->runTo(file, line);
     }
 }
 

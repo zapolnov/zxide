@@ -27,5 +27,19 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, File* file, int line)
         auto& loc = mSourceLocations[address];
         loc.file = file;
         loc.line = line;
+        mFileToMemory[file][line] = address;
     }
+}
+
+int ProgramDebugInfo::resolveAddress(const File* file, int line) const
+{
+    auto it = mFileToMemory.find(file);
+    if (it == mFileToMemory.end())
+        return -1;
+
+    auto jt = it->second.lower_bound(line);
+    if (jt == it->second.end())
+        return -1;
+
+    return jt->second;
 }

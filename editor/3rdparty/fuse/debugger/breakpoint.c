@@ -45,6 +45,7 @@ GSList *debugger_breakpoints;
 static size_t next_breakpoint_id;
 
 unsigned debugger_stepover_addr;
+unsigned debugger_runto_addr;
 
 /* Textual representations of the breakpoint types and lifetimes */
 const char *debugger_breakpoint_type_text[] = {
@@ -255,8 +256,11 @@ debugger_check( debugger_breakpoint_type type, libspectrum_dword value )
     }
     goto check_breakpoints;
 
-  case DEBUGGER_MODE_RUN_TO_CURSOR:
-    // FIXME
+  case DEBUGGER_MODE_RUN_TO_ADDRESS:
+    if (debugger_runto_addr == value) {
+        debugger_mode = DEBUGGER_MODE_HALTED;
+        break;
+    }
     goto check_breakpoints;
 
   case DEBUGGER_MODE_ACTIVE:

@@ -2,6 +2,8 @@
 #define COMPILER_PROGRAMDEBUGINFO_H
 
 #include <QtGlobal>
+#include <map>
+#include <unordered_map>
 
 class File;
 
@@ -20,7 +22,10 @@ public:
     const SourceLocation& sourceLocationForAddress(unsigned address) const;
     void setSourceLocation(unsigned address, File* file, int line);
 
+    int resolveAddress(const File* file, int line) const;
+
 private:
+    std::unordered_map<const File*, std::map<int, unsigned>> mFileToMemory;
     // that's quite suboptimal use of memory, but who counts memory these days?!
     SourceLocation mSourceLocations[0xffff];
 
