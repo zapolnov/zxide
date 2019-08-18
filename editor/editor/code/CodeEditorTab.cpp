@@ -205,5 +205,5 @@ void CodeEditorTab::reloadSettings()
 
 void CodeEditorTab::setFocusToEditor()
 {
-    mUi->textEditor->setFocus(true);
+    static_cast<QWidget*>(mUi->textEditor)->setFocus();
 }
