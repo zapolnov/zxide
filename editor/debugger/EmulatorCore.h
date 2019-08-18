@@ -113,6 +113,8 @@ public:
     void unpause();
     bool isPaused() const;
 
+    void setTapeFile(const QString& file) { mTapeFile = file; }
+
     Registers registers() const;
     quint16 instructionPointer() const;
     quint16 stackPointer() const;
@@ -131,7 +133,10 @@ signals:
     void started();
     void stopped();
     void memoryChanged();
+    void error(QString message);
     void updateUi();
+
+    void internal_sendError(QString message);
 
 private:
     class Thread : public QThread
@@ -143,6 +148,7 @@ private:
     };
 
     static EmulatorCore* mInstance;
+    QString mTapeFile;
     QTimer* mTimer;
     Thread* mThread;
     bool mShiftPressed;

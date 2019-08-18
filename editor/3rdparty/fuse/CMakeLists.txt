@@ -29,8 +29,6 @@ if(WIN32)
     add_definitions(-Dssize_t=ptrdiff_t -Dstrcasecmp=stricmp)
 endif()
 
-configure_file(roms/48.rom "${CMAKE_BINARY_DIR}/roms/48.rom" COPYONLY)
-
 set(config_h "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 configure_file(config.h.in "${config_h}")
 source_group("Generated Files" FILES "${config_h}")

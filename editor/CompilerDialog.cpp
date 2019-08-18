@@ -56,6 +56,11 @@ void CompilerDialog::addSourceFile(File* file)
     mCompiler->addSourceFile(file, file->fileInfo().absoluteFilePath());
 }
 
+void CompilerDialog::setOutputFile(const QString& file)
+{
+    mCompiler->setOutputFile(file);
+}
+
 bool CompilerDialog::runCompiler()
 {
     mThread->start();

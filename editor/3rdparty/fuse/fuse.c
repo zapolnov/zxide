@@ -350,11 +350,17 @@ run_startup_manager( int *argc, char ***argv )
   return startup_manager_run();
 }
 
+extern char last_message[];
+extern size_t frames_since_last_message;
+
 int fuse_init(int argc, char **argv)
 {
   int error, first_arg;
   char *start_scaler;
   start_files_t start_files;
+
+  strcpy(last_message, "");
+  frames_since_last_message = 0;
 
   /* Seed the bad but widely-available random number
      generator with the current time */

@@ -102,12 +102,14 @@ ui_end( void )
   return 0;
 }
 
+#if 0
 int
 ui_error_specific( ui_error_level severity, const char *message )
 {
   /* No error */
   return 0;
 }
+#endif
 
 int
 ui_event( void )

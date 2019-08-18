@@ -17,6 +17,7 @@ public:
     QString name() const;
     const QString& file() const { return mFile; }
     const QDir& dir() const { return mDir; }
+    QString tapeFileName() const;
 
     bool create(const QString& file);
     bool load(const QString& file);

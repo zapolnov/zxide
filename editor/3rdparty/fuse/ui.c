@@ -47,8 +47,8 @@
 /* We don't start in a widget */
 int ui_widget_level = -1;
 
-static char last_message[ MESSAGE_MAX_LENGTH ] = "";
-static size_t frames_since_last_message = 0;
+/*static*/ char last_message[ MESSAGE_MAX_LENGTH ] = "";
+/*static*/ size_t frames_since_last_message = 0;
 
 static int
 print_error_to_stderr( ui_error_level severity, const char *message );

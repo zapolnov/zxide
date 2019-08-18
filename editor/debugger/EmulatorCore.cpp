@@ -63,6 +63,7 @@ static bool memoryWasChanged;
 static bool emulatorPaused;
 static bool paused;
 static Registers registers;
+static QString tapeFile;
 static int emulatorSpeed;
 
 EmulatorCore* EmulatorCore::mInstance;
@@ -87,6 +88,8 @@ EmulatorCore::EmulatorCore(QObject* parent)
     connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
+
+    connect(this, &EmulatorCore::internal_sendError, this, &EmulatorCore::error, Qt::QueuedConnection);
 }
 
 EmulatorCore::~EmulatorCore()
@@ -99,7 +102,13 @@ EmulatorCore::~EmulatorCore()
 
 bool EmulatorCore::start()
 {
+    Q_ASSERT(!mThread->isRunning());
+    if (mThread->isRunning())
+        return false;
+
+    tapeFile = mTapeFile;
     mThread->start();
+
     return true;
 }
 
@@ -604,7 +613,7 @@ const compat_fd COMPAT_FILE_OPEN_FAILED = NULL;
 
 compat_fd compat_file_open(const char* path, int write)
 {
-    auto file = std::make_unique<QFile>(path);
+    auto file = std::make_unique<QFile>(QString::fromUtf8(path));
     if (!file->open(write ? QFile::WriteOnly : QFile::ReadOnly))
         return nullptr;
     return (compat_fd)file.release();
@@ -697,6 +706,8 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
     fuse->sound_load = (settings.playTapeSound() ? 1 : 0);
     fuse->tape_traps = 1;
     fuse->auto_load = 1;
+    if (!tapeFile.isEmpty())
+        fuse->tape_file = utils_safe_strdup(tapeFile.toUtf8().constData());
     return 0;
 }
 
@@ -854,6 +865,27 @@ void uidisplay_frame_end()
 
     QMutexLocker lock(&mutex);
     screenBack = copy;
+}
+
+int ui_error_specific(ui_error_level severity, const char* message)
+{
+    switch (severity) {
+        case UI_ERROR_INFO:
+        default:
+            qDebug("%s", message);
+            break;
+
+        case UI_ERROR_WARNING:
+            qWarning("%s", message);
+            break;
+
+        case UI_ERROR_ERROR:
+            qCritical("%s", message);
+            emit EmulatorCore::instance()->internal_sendError(QString::fromUtf8(message));
+            break;
+    }
+
+    return 0;
 }
 
 int ui_statusbar_update_speed(float speed)

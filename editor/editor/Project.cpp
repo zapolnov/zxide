@@ -24,6 +24,12 @@ QString Project::name() const
     return QFileInfo(mFile).completeBaseName();
 }
 
+QString Project::tapeFileName() const
+{
+    mDir.mkpath(QStringLiteral("built"));
+    return mDir.absoluteFilePath(QStringLiteral("built/%1.tap")).arg(name());
+}
+
 bool Project::create(const QString& file)
 {
     QSaveFile f(file);

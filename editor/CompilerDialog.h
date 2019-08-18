@@ -24,6 +24,7 @@ public:
     std::unique_ptr<ProgramBinary> takeProgramBinary();
 
     void addSourceFile(File* file);
+    void setOutputFile(const QString& file);
     bool runCompiler();
 
 protected:

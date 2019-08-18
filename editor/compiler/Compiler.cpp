@@ -3,6 +3,7 @@
 #include "ProgramBinary.h"
 #include "Assembler.h"
 #include "Linker.h"
+#include "TapeFileWriter.h"
 #include "Util.h"
 #include <exception>
 #include <QFile>
@@ -22,6 +23,7 @@ namespace
 Compiler::Compiler(QObject* parent)
     : QObject(parent)
     , mProgram(new Program)
+    , mOutputFile(QStringLiteral("out.tap"))
     , mErrorFile(nullptr)
     , mErrorLine(0)
     , mWasError(false)
@@ -77,8 +79,8 @@ void Compiler::compile()
         if (!mProgramBinary)
             throw CompilationFailed();
 
-        // FIXME
-        if (!writeFile("out.bin", mProgramBinary->codeBytes(), mProgramBinary->codeLength(), this))
+        setStatusText(tr("Writing tape file..."));
+        if (!TapeFileWriter(mProgramBinary.get(), this).writeTapeFile(mOutputFile))
             throw CompilationFailed();
     } catch (const CompilationFailed&) {
         emit compilationEnded();

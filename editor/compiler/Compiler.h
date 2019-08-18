@@ -29,6 +29,7 @@ public:
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
     void addSourceFile(File* file, const QString& path);
+    void setOutputFile(const QString& file) { mOutputFile = file; }
 
     void compile();
 
@@ -47,6 +48,7 @@ private:
     std::unique_ptr<ProgramBinary> mProgramBinary;
     QString mStatusText;
     QString mErrorMessage;
+    QString mOutputFile;
     std::vector<SourceFile> mSources;
     File* mErrorFile;
     int mErrorLine;

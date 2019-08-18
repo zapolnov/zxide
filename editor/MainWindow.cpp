@@ -29,6 +29,9 @@ MainWindow::MainWindow()
 {
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
+    connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
+            QMessageBox::critical(this, tr("Emulator error"), message);
+        });
 
     mUi->setupUi(this);
 
@@ -257,6 +260,8 @@ bool MainWindow::saveAll()
 
 bool MainWindow::build()
 {
+    if (!mProject)
+        return false;
     if (mEmulatorCore->isRunning())
         return false;
 
@@ -299,6 +304,7 @@ bool MainWindow::build()
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: #ccaa00; font-weight: bold; padding-right: 5px"));
 
     CompilerDialog dlg(this);
+    dlg.setOutputFile(mProject->tapeFileName());
 
     std::vector<File*> files;
     mUi->fileManager->enumerateFiles(files);
@@ -564,8 +570,10 @@ void MainWindow::on_actionRun_triggered()
         return;
 
     if (!mEmulatorCore->isRunning()) {
-        if (build())
+        if (build()) {
+            mEmulatorCore->setTapeFile(mProject->tapeFileName());
             mEmulatorCore->start();
+        }
     } else {
         if (mEmulatorCore->isPaused())
             mEmulatorCore->unpause();

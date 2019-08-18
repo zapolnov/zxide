@@ -9,6 +9,7 @@ endif()
 
 add_library(Compiler STATIC)
 set_target_properties(Compiler PROPERTIES FOLDER "Compiler")
+target_link_libraries(Compiler LibSpectrum)
 qt_link_libraries(Compiler Core)
 
 qt_add_sources(Compiler
@@ -19,6 +20,8 @@ qt_add_sources(Compiler
         AssemblerParser.cpp
         AssemblerParser.h
         AssemblerToken.h
+        BasicProgram.cpp
+        BasicProgram.h
         Compiler.cpp
         Compiler.h
         Expression.cpp
@@ -39,6 +42,8 @@ qt_add_sources(Compiler
         ProgramOpcode.h
         ProgramSection.cpp
         ProgramSection.h
+        TapeFileWriter.cpp
+        TapeFileWriter.h
         Util.cpp
         Util.h
         Value.cpp
