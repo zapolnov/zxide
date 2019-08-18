@@ -131,6 +131,7 @@ public:
 
 signals:
     void started();
+    void enterDebugger(unsigned pc);
     void stopped();
     void memoryChanged();
     void error(QString message);

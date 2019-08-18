@@ -36,6 +36,8 @@ qt_add_sources(Compiler
         Program.h
         ProgramBinary.cpp
         ProgramBinary.h
+        ProgramDebugInfo.cpp
+        ProgramDebugInfo.h
         ProgramLabel.cpp
         ProgramLabel.h
         ProgramOpcode.cpp

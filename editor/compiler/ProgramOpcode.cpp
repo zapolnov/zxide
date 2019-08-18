@@ -35,7 +35,7 @@ DEFB::~DEFB()
 void DEFB::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, this);
-    binary->emitByte(context.evaluateByte(mValue));
+    binary->emitByte(mToken.file, mToken.line, context.evaluateByte(mValue));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ DEFB_STRING::~DEFB_STRING()
 void DEFB_STRING::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     for (auto ch : mText)
-        binary->emitByte(ch);
+        binary->emitByte(mToken.file, mToken.line, ch);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ DEFW::~DEFW()
 void DEFW::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, this);
-    binary->emitWord(context.evaluateWord(mValue));
+    binary->emitWord(mToken.file, mToken.line, context.evaluateWord(mValue));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,5 +89,5 @@ DEFD::~DEFD()
 void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, this);
-    binary->emitDWord(context.evaluateDWord(mValue));
+    binary->emitDWord(mToken.file, mToken.line, context.evaluateDWord(mValue));
 }

@@ -2,7 +2,11 @@
 #define COMPILER_PROGRAMBINARY_H
 
 #include <QtGlobal>
+#include <memory>
 #include <vector>
+
+class File;
+class ProgramDebugInfo;
 
 class ProgramBinary
 {
@@ -16,13 +20,16 @@ public:
     const quint8* codeBytes() const { return mCode.data(); }
     size_t codeLength() const { return mCode.size(); }
 
-    void emitByte(quint8 byte);
-    void emitWord(quint16 word);
-    void emitDWord(quint32 dword);
-    void emitQWord(quint64 qword);
+    ProgramDebugInfo* debugInfo() const { return mDebugInfo.get(); }
+
+    void emitByte(File* file, int line, quint8 byte);
+    void emitWord(File* file, int line, quint16 word);
+    void emitDWord(File* file, int line, quint32 dword);
+    void emitQWord(File* file, int line, quint64 qword);
 
 private:
     std::vector<quint8> mCode;
+    std::unique_ptr<ProgramDebugInfo> mDebugInfo;
     unsigned mBaseAddress;
     unsigned mEndAddress;
 

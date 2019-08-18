@@ -59,6 +59,7 @@ static QImage screenFront;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
+static bool shouldEmitPausedSignal;
 static bool memoryWasChanged;
 static bool emulatorPaused;
 static bool paused;
@@ -474,18 +475,25 @@ void EmulatorCore::releaseKey(int key)
 void EmulatorCore::update()
 {
     bool shouldUpdateUi_ = false;
+    bool shouldEmitPausedSignal_ = false;
     bool memoryWasChanged_ = false;
+    unsigned pc;
 
     {
         QMutexLocker lock(&mutex);
+        pc = ::registers.pc;
         shouldUpdateUi_ = shouldUpdateUi;
         shouldUpdateUi = false;
+        shouldEmitPausedSignal_ = shouldEmitPausedSignal;
+        shouldEmitPausedSignal = false;
         memoryWasChanged_ = memoryWasChanged;
         memoryWasChanged = false;
     }
 
     if (memoryWasChanged_)
         emit memoryChanged();
+    if (shouldEmitPausedSignal_)
+        emit enterDebugger(pc);
     if (shouldUpdateUi_)
         emit updateUi();
 }
@@ -717,6 +725,7 @@ int ui_debugger_activate()
         QMutexLocker lock(&mutex);
         if (!paused) {
             paused = true;
+            shouldEmitPausedSignal = true;
             shouldUpdateUi = true;
         }
     }

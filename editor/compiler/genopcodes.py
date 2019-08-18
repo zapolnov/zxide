@@ -78,19 +78,19 @@ class Opcode:
                     if self.operands[i] == 'R#':
                         i += 1
                         literalIndex += 1
-                        code += '    binary->emitByte(context%d.evaluateByteOffset(mLiteral%d));\n' % (literalIndex, literalIndex)
+                        code += '    binary->emitByte(token().file, token().line, context%d.evaluateByteOffset(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
                     elif '##' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    binary->emitWord(context%d.evaluateWord(mLiteral%d));\n' % (literalIndex, literalIndex)
+                        code += '    binary->emitWord(token().file, token().line, context%d.evaluateWord(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
                     elif '#' in self.operands[i]:
                         i += 1
                         literalIndex += 1
-                        code += '    binary->emitByte(context%d.evaluateByte(mLiteral%d));\n' % (literalIndex, literalIndex)
+                        code += '    binary->emitByte(token().file, token().line, context%d.evaluateByte(mLiteral%d));\n' % (literalIndex, literalIndex)
                         found = True
                         break
                     else:
@@ -98,7 +98,7 @@ class Opcode:
                 if not found:
                     raise Exception('Invalid operand')
             else:
-                code += '    binary->emitByte(0x%02X);\n' % byte
+                code += '    binary->emitByte(token().file, token().line, 0x%02X);\n' % byte
         return code
 
 opcodes = [

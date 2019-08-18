@@ -9,6 +9,7 @@
 #include "editor/Project.h"
 #include "editor/FileManager.h"
 #include "compiler/Program.h"
+#include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramBinary.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
@@ -31,6 +32,18 @@ MainWindow::MainWindow()
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
+        });
+    connect(mEmulatorCore, &EmulatorCore::enterDebugger, this, [this](unsigned pc) {
+            if (mLastCompiledProgramBinary && mLastCompiledProgramBinary->debugInfo()) {
+                auto loc = mLastCompiledProgramBinary->debugInfo()->sourceLocationForAddress(pc);
+                if (loc.file) {
+                    auto tab = setCurrentTab(loc.file);
+                    if (tab && tab->canGoToLine()) {
+                        tab->goToLine(loc.line - 1);
+                        tab->setFocusToEditor();
+                    }
+                }
+            }
         });
 
     mUi->setupUi(this);
@@ -555,6 +568,7 @@ void MainWindow::on_actionGoToLine_triggered()
         if (dlg.exec() != QDialog::Accepted)
             return;
         tab->goToLine(dlg.intValue() - 1);
+        tab->setFocusToEditor();
     }
 }
 

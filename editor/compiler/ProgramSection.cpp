@@ -47,11 +47,11 @@ void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorRep
 {
     if (mHasBase) {
         while (binary->endAddress() < mBase)
-            binary->emitByte(0); // NOP
+            binary->emitByte(nullptr, 0, 0); // NOP
     } else if (mHasAlignment && mAlignment > 1) {
         quint64 alignedAddress = (binary->endAddress() + mAlignment - 1) / mAlignment * mAlignment;
         while (binary->endAddress() < alignedAddress)
-            binary->emitByte(0); // NOP
+            binary->emitByte(nullptr, 0, 0); // NOP
     }
 
     for (auto& opcode : mOpcodes) {
