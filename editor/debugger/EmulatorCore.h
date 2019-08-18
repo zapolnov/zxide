@@ -86,7 +86,9 @@ struct Registers
 };
 
 class File;
+class ProgramBinary;
 class QTimer;
+struct SourceLocation;
 
 class EmulatorCore : public QObject
 {
@@ -114,6 +116,9 @@ public:
     bool isPaused() const;
 
     void setTapeFile(const QString& file) { mTapeFile = file; }
+
+    void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
+    SourceLocation sourceLocationForAddress(unsigned address) const;
 
     Registers registers() const;
     quint16 instructionPointer() const;

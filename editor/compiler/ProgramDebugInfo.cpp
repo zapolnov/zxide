@@ -1,6 +1,8 @@
 #include "ProgramDebugInfo.h"
 #include <cstring>
 
+static const SourceLocation dummySourceLocation;
+
 ProgramDebugInfo::ProgramDebugInfo()
 {
     memset(mSourceLocations, 0, sizeof(mSourceLocations));
@@ -15,8 +17,7 @@ const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned addres
     Q_ASSERT(address < 0x10000);
     if (address < 0x10000)
         return mSourceLocations[address];
-    static const SourceLocation dummy;
-    return dummy;
+    return dummySourceLocation;
 }
 
 void ProgramDebugInfo::setSourceLocation(unsigned address, File* file, int line)

@@ -1,4 +1,6 @@
 #include "EmulatorCore.h"
+#include "compiler/ProgramBinary.h"
+#include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
 #include <QImage>
 #include <QFile>
@@ -54,12 +56,14 @@ static Color Palette[] = {
 static QElapsedTimer elapsedTimer;
 static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
+static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
 static QImage screenFront;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
 static bool shouldEmitPausedSignal;
+static unsigned pausePC;
 static bool memoryWasChanged;
 static bool emulatorPaused;
 static bool paused;
@@ -216,6 +220,31 @@ bool EmulatorCore::isPaused() const
 
     QMutexLocker lock(&mutex);
     return paused;
+}
+
+void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
+{
+    std::unique_ptr<ProgramBinary> old;
+    {
+        QMutexLocker lock(&mutex);
+        old = std::move(programBinary);
+        programBinary = std::move(binary);
+    }
+}
+
+static const SourceLocation dummySourceLocation;
+
+SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
+{
+    Q_ASSERT(address < 0x10000);
+    if (address < 0x10000) {
+        QMutexLocker lock(&mutex);
+        ProgramDebugInfo* debugInfo;
+        if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
+            return debugInfo->sourceLocationForAddress(address);
+    }
+
+    return dummySourceLocation;
 }
 
 Registers EmulatorCore::registers() const
@@ -477,23 +506,23 @@ void EmulatorCore::update()
     bool shouldUpdateUi_ = false;
     bool shouldEmitPausedSignal_ = false;
     bool memoryWasChanged_ = false;
-    unsigned pc;
+    unsigned pausePC_ = 0;
 
     {
         QMutexLocker lock(&mutex);
-        pc = ::registers.pc;
         shouldUpdateUi_ = shouldUpdateUi;
         shouldUpdateUi = false;
         shouldEmitPausedSignal_ = shouldEmitPausedSignal;
         shouldEmitPausedSignal = false;
         memoryWasChanged_ = memoryWasChanged;
         memoryWasChanged = false;
+        pausePC_ = pausePC;
     }
 
     if (memoryWasChanged_)
         emit memoryChanged();
     if (shouldEmitPausedSignal_)
-        emit enterDebugger(pc);
+        emit enterDebugger(pausePC_);
     if (shouldUpdateUi_)
         emit updateUi();
 }
@@ -723,10 +752,19 @@ int ui_debugger_activate()
 {
     {
         QMutexLocker lock(&mutex);
+
+        ProgramDebugInfo* debugInfo;
+        if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr) {
+            const auto& loc = debugInfo->sourceLocationForAddress(PC);
+            if (!loc.file)
+                return 0;
+        }
+
         if (!paused) {
             paused = true;
             shouldEmitPausedSignal = true;
             shouldUpdateUi = true;
+            pausePC = PC;
         }
     }
 

@@ -34,14 +34,12 @@ MainWindow::MainWindow()
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
     connect(mEmulatorCore, &EmulatorCore::enterDebugger, this, [this](unsigned pc) {
-            if (mLastCompiledProgramBinary && mLastCompiledProgramBinary->debugInfo()) {
-                auto loc = mLastCompiledProgramBinary->debugInfo()->sourceLocationForAddress(pc);
-                if (loc.file) {
-                    auto tab = setCurrentTab(loc.file);
-                    if (tab && tab->canGoToLine()) {
-                        tab->goToLine(loc.line - 1);
-                        tab->setFocusToEditor();
-                    }
+            SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(pc);
+            if (loc.file) {
+                auto tab = setCurrentTab(loc.file);
+                if (tab && tab->canGoToLine()) {
+                    tab->goToLine(loc.line - 1);
+                    tab->setFocusToEditor();
                 }
             }
         });
@@ -326,8 +324,7 @@ bool MainWindow::build()
 
     connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this, &dlg]() {
             clearBuildResult();
-            mLastCompiledProgram = dlg.takeProgram();
-            mLastCompiledProgramBinary = dlg.takeProgramBinary();
+            EmulatorCore::instance()->setProgramBinary(dlg.takeProgramBinary());
         });
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
             QString message;
