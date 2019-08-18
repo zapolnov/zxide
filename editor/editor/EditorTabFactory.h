@@ -57,6 +57,7 @@ public:
 private:
     static EditorTabFactory* mInstance;
     QIcon mUnknownFileIcon;
+    std::unique_ptr<FileFormat> mProjectFileFormat;
     std::vector<std::unique_ptr<FileFormat>> mFormats;
     QHash<QString, FileFormat*> mExtensions;
 

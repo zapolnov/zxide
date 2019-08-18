@@ -1,5 +1,6 @@
 #include "EditorTabFactory.h"
 #include "editor/code/CodeEditorTab.h"
+#include "editor/Project.h"
 #include "editor/FileManager.h"
 #include <QFileInfo>
 
@@ -10,9 +11,16 @@ EditorTabFactory* EditorTabFactory::mInstance;
 EditorTabFactory::EditorTabFactory(QObject* parent)
     : QObject(parent)
     , mUnknownFileIcon(STR(":/resources/fatcow16x16/rules.png"))
+    , mProjectFileFormat(new FileFormat)
 {
     Q_ASSERT(mInstance == nullptr);
     mInstance = this;
+
+    mProjectFileFormat->name = tr("Project file");
+    mProjectFileFormat->extension = Project::FileSuffix;
+    mProjectFileFormat->icon = QIcon(STR(":/resources/fatcow16x16/book.png"));
+    mProjectFileFormat->factory = [](QWidget* p) mutable -> AbstractEditorTab* { return nullptr; };
+    mExtensions[mProjectFileFormat->extension] = mProjectFileFormat.get();
 
     add<CodeEditorTab>(tr("Assembler source"), STR("asm"), STR(":/resources/fatcow16x16/page_white_text.png"));
 }

@@ -17,12 +17,15 @@ class FileOrDirectory : public QTreeWidgetItem
 public:
     FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent);
 
+    bool isProjectFile() const { return mIsProjectFile; }
+
     QString name() const { return mFileInfo.fileName(); }
     const QFileInfo& fileInfo() const { return mFileInfo; }
     Directory* parentDirectory() const;
 
 private:
     QFileInfo mFileInfo;
+    bool mIsProjectFile;
 };
 
 class File : public FileOrDirectory

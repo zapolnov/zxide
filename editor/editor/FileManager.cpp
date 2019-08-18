@@ -1,4 +1,5 @@
 #include "FileManager.h"
+#include "editor/Project.h"
 #include "editor/EditorTabFactory.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/RenameDialog.h"
@@ -14,6 +15,7 @@
 FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
     : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
     , mFileInfo(fileInfo)
+    , mIsProjectFile(!fileInfo.isDir() && fileInfo.suffix() == Project::FileSuffix)
 {
     setIcon(0, icon);
 }
@@ -120,14 +122,14 @@ bool FileManager::canRename() const
 {
     auto selected = selectedFileOrDirectory();
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
-    return (parent != nullptr);
+    return (parent != nullptr && !selected->isProjectFile());
 }
 
 bool FileManager::canDelete() const
 {
     auto selected = selectedFileOrDirectory();
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
-    return (parent != nullptr);
+    return (parent != nullptr && !selected->isProjectFile());
 }
 
 void FileManager::refresh()
@@ -221,8 +223,18 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
         itemUnderMouse = mRootDirectory;
     mUi->sourcesTree->setCurrentItem(itemUnderMouse);
 
-    mUi->renameAction->setEnabled(itemUnderMouse != mRootDirectory);
-    mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory);
+    FileOrDirectory* fileOrDirectory = nullptr;
+    switch (itemUnderMouse->type()) {
+        case File::Type: fileOrDirectory = static_cast<File*>(itemUnderMouse); break;
+        case Directory::Type: fileOrDirectory = static_cast<Directory*>(itemUnderMouse); break;
+    }
+
+    Q_ASSERT(fileOrDirectory != nullptr);
+    if (!fileOrDirectory)
+        return;
+
+    mUi->renameAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
+    mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
 
     QMenu menu;
     menu.addAction(mUi->newFileAction);
