@@ -58,6 +58,13 @@ MainWindow::MainWindow(const QString& path)
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
 
+    Settings settings;
+    if (settings.loadLastProjectOnStart()) {
+        QString lastProject = settings.lastProjectFile();
+        if (!lastProject.isEmpty())
+            loadProject(lastProject);
+    }
+
     updateUi();
 }
 
@@ -157,6 +164,21 @@ void MainWindow::closeEvent(QCloseEvent* event)
         event->accept();
     else
         event->ignore();
+}
+
+void MainWindow::loadProject(const QString& file)
+{
+    auto project = std::make_unique<Project>(this);
+    if (!project->load(file))
+        return;
+
+    if (mProject) {
+        // FIXME
+    } else {
+        mProject = std::move(project);
+        mUi->fileManager->init(mProject->dir().absolutePath());
+        updateUi();
+    }
 }
 
 bool MainWindow::confirmSaveAll()
@@ -359,6 +381,8 @@ void MainWindow::updateUi()
     mUi->registersDockWidget->setVisible(emulatorRunning);
     mUi->stackDockWidget->setVisible(emulatorRunning);
     mUi->memoryDockWidget->setVisible(emulatorRunning);
+
+    mUi->fileManager->setEnabled(mProject != nullptr);
 }
 
 void MainWindow::on_actionNewProject_triggered()
@@ -393,18 +417,7 @@ void MainWindow::on_actionOpenProject_triggered()
         return;
 
     settings.setLastProjectFile(file);
-
-    auto project = std::make_unique<Project>(this);
-    if (!project->load(file))
-        return;
-
-    if (mProject) {
-        // FIXME
-    } else {
-        mProject = std::move(project);
-        mUi->fileManager->init(mProject->dir().absolutePath());
-        updateUi();
-    }
+    loadProject(file);
 }
 
 void MainWindow::on_actionNewFile_triggered()

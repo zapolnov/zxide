@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>329</height>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,9 +25,43 @@
      <property name="movable">
       <bool>false</bool>
      </property>
+     <widget class="QWidget" name="generalTab">
+      <attribute name="title">
+       <string>&amp;General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="loadLastProjectCheck">
+         <property name="text">
+          <string>&amp;Load last project on start</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="autoSaveBeforeCompileCheck">
+         <property name="text">
+          <string>Automatically sa&amp;ve all files before compiling</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="generalTabSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="editorTab">
       <attribute name="title">
-       <string>&amp;Editor</string>
+       <string>&amp;Code Editor</string>
       </attribute>
       <layout class="QVBoxLayout" name="editorTabLayout">
        <item>
@@ -146,23 +180,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="editorTabSeparator3">
-         <property name="frameShape">
-          <enum>QFrame::HLine</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Sunken</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="autoSaveBeforeCompileCheck">
-         <property name="text">
-          <string>Automatically sa&amp;ve all files before compiling</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="editorTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -179,7 +196,7 @@
      </widget>
      <widget class="QWidget" name="emulatorTab">
       <attribute name="title">
-       <string>E&amp;mulator</string>
+       <string>&amp;Emulator</string>
       </attribute>
       <layout class="QVBoxLayout" name="emulatorTabLayout">
        <item>
@@ -250,15 +267,18 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>tabIndentsCheck</tabstop>
+  <tabstop>loadLastProjectCheck</tabstop>
+  <tabstop>autoSaveBeforeCompileCheck</tabstop>
   <tabstop>autoIndentCheck</tabstop>
+  <tabstop>tabIndentsCheck</tabstop>
   <tabstop>backspaceUnindentsCheck</tabstop>
   <tabstop>useTabsCheck</tabstop>
   <tabstop>tabWidthSpin</tabstop>
   <tabstop>showWhitespaceCheck</tabstop>
   <tabstop>showEolCheck</tabstop>
-  <tabstop>autoSaveBeforeCompileCheck</tabstop>
   <tabstop>enableSoundCheck</tabstop>
+  <tabstop>fastLoadCheck</tabstop>
+  <tabstop>tapeSoundCheck</tabstop>
  </tabstops>
  <resources/>
  <connections>

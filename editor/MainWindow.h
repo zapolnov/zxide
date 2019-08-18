@@ -42,6 +42,8 @@ private:
     EmulatorCore* mEmulatorCore;
     EditorTabFactory* mTabFactory;
 
+    void loadProject(const QString& file);
+
     bool confirmSaveAll();
     bool confirmSave(File* file);
     bool saveAll();

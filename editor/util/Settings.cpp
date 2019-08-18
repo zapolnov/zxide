@@ -1,6 +1,7 @@
 #include "Settings.h"
 #include "ScintillaEdit/ScintillaEdit.h"
 
+static const QString SettingLoadLastProject = QStringLiteral("LoadLastProject");
 static const QString SettingLastProjectFile = QStringLiteral("LastProjectFile");
 static const QString SettingAutoIndent = QStringLiteral("AutoIndent");
 static const QString SettingTabIndents = QStringLiteral("TabIndents");
@@ -25,6 +26,11 @@ Settings::~Settings()
 QString Settings::lastProjectFile() const
 {
     return mSettings.value(SettingLastProjectFile).toString();
+}
+
+bool Settings::loadLastProjectOnStart() const
+{
+    return mSettings.value(SettingLoadLastProject, true).toBool();
 }
 
 bool Settings::autoIndent() const
@@ -85,6 +91,11 @@ bool Settings::playTapeSound() const
 void Settings::setLastProjectFile(const QString& file)
 {
     mSettings.setValue(SettingLastProjectFile, file);
+}
+
+void Settings::setLoadLastProjectOnStart(bool flag)
+{
+    mSettings.setValue(SettingLoadLastProject, flag);
 }
 
 void Settings::setAutoIndent(bool flag)

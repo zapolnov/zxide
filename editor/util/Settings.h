@@ -10,6 +10,7 @@ public:
     ~Settings();
 
     QString lastProjectFile() const;
+    bool loadLastProjectOnStart() const;
     bool autoIndent() const;
     bool tabIndents() const;
     bool backspaceUnindents() const;
@@ -23,6 +24,7 @@ public:
     bool playTapeSound() const;
 
     void setLastProjectFile(const QString& file);
+    void setLoadLastProjectOnStart(bool flag);
     void setAutoIndent(bool flag);
     void setTabIndents(bool flag);
     void setBackspaceUnindents(bool flag);
