@@ -23,6 +23,8 @@ public:
     const QFileInfo& fileInfo() const { return mFileInfo; }
     Directory* parentDirectory() const;
 
+    bool operator<(const QTreeWidgetItem &other) const override;
+
 private:
     QFileInfo mFileInfo;
     bool mIsProjectFile;

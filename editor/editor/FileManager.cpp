@@ -32,6 +32,19 @@ Directory* FileOrDirectory::parentDirectory() const
     return nullptr;
 }
 
+bool FileOrDirectory::operator<(const QTreeWidgetItem& other) const
+{
+    bool isDir1 = (type() == Directory::Type);
+    bool isDir2 = (other.type() == Directory::Type);
+
+    if (isDir1 && !isDir2)
+        return true;
+    else if (!isDir1 && isDir2)
+        return false;
+
+    return QTreeWidgetItem::operator<(other);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 File::File(const QIcon& icon, const QFileInfo& fileInfo, QTreeWidgetItem* parent)
