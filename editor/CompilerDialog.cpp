@@ -1,10 +1,16 @@
 #include "CompilerDialog.h"
 #include "editor/FileManager.h"
 #include "compiler/Compiler.h"
+#include "compiler/Program.h"
+#include "compiler/ProgramBinary.h"
 #include "ui_CompilerDialog.h"
 #include <QCloseEvent>
 #include <QTimer>
 #include <QThread>
+
+#ifndef emit
+#define emit
+#endif
 
 CompilerDialog::CompilerDialog(QWidget* parent)
     : QDialog(parent)
@@ -31,6 +37,18 @@ CompilerDialog::~CompilerDialog()
 {
     mThread->wait();
     delete mCompiler;
+}
+
+std::unique_ptr<Program> CompilerDialog::takeProgram()
+{
+    Q_ASSERT(!mThread->isRunning());
+    return mCompiler->takeProgram();
+}
+
+std::unique_ptr<ProgramBinary> CompilerDialog::takeProgramBinary()
+{
+    Q_ASSERT(!mThread->isRunning());
+    return mCompiler->takeProgramBinary();
 }
 
 void CompilerDialog::addSourceFile(File* file)

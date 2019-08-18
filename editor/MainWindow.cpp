@@ -8,6 +8,8 @@
 #include "editor/EditorTabFactory.h"
 #include "editor/Project.h"
 #include "editor/FileManager.h"
+#include "compiler/Program.h"
+#include "compiler/ProgramBinary.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
@@ -303,7 +305,11 @@ bool MainWindow::build()
     for (File* file : files)
         dlg.addSourceFile(file);
 
-    connect(&dlg, &CompilerDialog::compilationSucceeded, this, &MainWindow::clearBuildResult);
+    connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this, &dlg]() {
+            clearBuildResult();
+            mLastCompiledProgram = dlg.takeProgram();
+            mLastCompiledProgramBinary = dlg.takeProgramBinary();
+        });
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
             QString message;
             if (!file)

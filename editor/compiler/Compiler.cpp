@@ -32,6 +32,18 @@ Compiler::~Compiler()
 {
 }
 
+std::unique_ptr<Program> Compiler::takeProgram()
+{
+    std::unique_ptr<Program> program{std::move(mProgram)};
+    return program;
+}
+
+std::unique_ptr<ProgramBinary> Compiler::takeProgramBinary()
+{
+    std::unique_ptr<ProgramBinary> programBinary{std::move(mProgramBinary)};
+    return programBinary;
+}
+
 void Compiler::addSourceFile(File* file, const QString& path)
 {
     mSources.emplace_back(SourceFile{ file, path });
@@ -61,12 +73,12 @@ void Compiler::compile()
         }
 
         setStatusText(tr("Generating code..."));
-        auto binary = Linker(mProgram.get(), this).emitCode();
-        if (!binary)
+        mProgramBinary = Linker(mProgram.get(), this).emitCode();
+        if (!mProgramBinary)
             throw CompilationFailed();
 
         // FIXME
-        if (!writeFile("out.bin", binary->codeBytes(), binary->codeLength(), this))
+        if (!writeFile("out.bin", mProgramBinary->codeBytes(), mProgramBinary->codeLength(), this))
             throw CompilationFailed();
     } catch (const CompilationFailed&) {
         emit compilationEnded();

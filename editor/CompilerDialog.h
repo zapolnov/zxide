@@ -8,6 +8,8 @@
 class QTimer;
 class Ui_CompilerDialog;
 class File;
+class Program;
+class ProgramBinary;
 class Compiler;
 
 class CompilerDialog : public QDialog
@@ -17,6 +19,9 @@ class CompilerDialog : public QDialog
 public:
     explicit CompilerDialog(QWidget* parent = nullptr);
     ~CompilerDialog() override;
+
+    std::unique_ptr<Program> takeProgram();
+    std::unique_ptr<ProgramBinary> takeProgramBinary();
 
     void addSourceFile(File* file);
     bool runCompiler();

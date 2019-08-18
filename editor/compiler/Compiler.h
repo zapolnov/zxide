@@ -8,6 +8,7 @@
 #include <QMutex>
 
 class Program;
+class ProgramBinary;
 
 class Compiler : public QObject, public IErrorReporter
 {
@@ -21,6 +22,9 @@ public:
     QString errorMessage() const { QMutexLocker lock(&mMutex); return mErrorMessage; }
     File* errorFile() const { QMutexLocker lock(&mMutex); return mErrorFile; }
     int errorLine() const { QMutexLocker lock(&mMutex); return mErrorLine; }
+
+    std::unique_ptr<Program> takeProgram();
+    std::unique_ptr<ProgramBinary> takeProgramBinary();
 
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
@@ -40,6 +44,7 @@ private:
 
     mutable QMutex mMutex;
     std::unique_ptr<Program> mProgram;
+    std::unique_ptr<ProgramBinary> mProgramBinary;
     QString mStatusText;
     QString mErrorMessage;
     std::vector<SourceFile> mSources;

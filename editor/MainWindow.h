@@ -9,6 +9,8 @@ class File;
 class EditorTabFactory;
 class AbstractEditorTab;
 class Project;
+class Program;
+class ProgramBinary;
 class EmulatorCore;
 class Ui_MainWindow;
 class QLabel;
@@ -42,6 +44,8 @@ private:
     QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
     std::unique_ptr<Project> mProject;
+    std::unique_ptr<Program> mLastCompiledProgram;
+    std::unique_ptr<ProgramBinary> mLastCompiledProgramBinary;
     EmulatorCore* mEmulatorCore;
     EditorTabFactory* mTabFactory;
 
