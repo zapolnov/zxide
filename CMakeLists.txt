@@ -22,9 +22,6 @@ if(MSVC)
         )
 endif()
 
-set(GAME_NAME "Cool Game")
-set(GAME_DIR "${CMAKE_CURRENT_SOURCE_DIR}/game")
-
 mingw_install_libraries()
 
 add_subdirectory(editor)

@@ -40,7 +40,7 @@ bool Settings::autoIndent() const
 
 bool Settings::tabIndents() const
 {
-    return mSettings.value(SettingTabIndents, false).toBool();
+    return mSettings.value(SettingTabIndents, true).toBool();
 }
 
 bool Settings::backspaceUnindents() const

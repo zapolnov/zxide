@@ -18,8 +18,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(const QString& path);
+    explicit MainWindow();
     ~MainWindow() override;
+
+    void openLastProject();
+    void openProject(const QString& file, bool mayLaunchNewInstance = true);
 
     AbstractEditorTab* currentTab() const;
     AbstractEditorTab* setCurrentTab(File* file);
@@ -41,8 +44,6 @@ private:
     std::unique_ptr<Project> mProject;
     EmulatorCore* mEmulatorCore;
     EditorTabFactory* mTabFactory;
-
-    void loadProject(const QString& file);
 
     bool confirmSaveAll();
     bool confirmSave(File* file);

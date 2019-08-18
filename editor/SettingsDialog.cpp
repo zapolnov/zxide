@@ -26,7 +26,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     mUi->tapeSoundCheck->setChecked(settings.playTapeSound());
 
     mUi->emulatorRestartNotice->setVisible(EmulatorCore::instance()->isRunning());
-    mUi->tabWidget->setCurrentWidget(mUi->editorTab);
+    mUi->tabWidget->setCurrentWidget(mUi->generalTab);
 
     updateUi();
 }

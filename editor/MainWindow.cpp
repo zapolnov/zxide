@@ -17,8 +17,10 @@
 #include <QFileDialog>
 #include <QTimer>
 #include <QLabel>
+#include <QApplication>
+#include <QProcess>
 
-MainWindow::MainWindow(const QString& path)
+MainWindow::MainWindow()
     : mUi(new Ui_MainWindow)
     , mDummyTab(new AbstractEditorTab(this))
     , mTabFactory(new EditorTabFactory(this))
@@ -58,19 +60,41 @@ MainWindow::MainWindow(const QString& path)
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
 
-    Settings settings;
-    if (settings.loadLastProjectOnStart()) {
-        QString lastProject = settings.lastProjectFile();
-        if (!lastProject.isEmpty())
-            loadProject(lastProject);
-    }
-
     updateUi();
 }
 
 MainWindow::~MainWindow()
 {
     delete mEmulatorCore;
+}
+
+void MainWindow::openLastProject()
+{
+    Settings settings;
+    if (settings.loadLastProjectOnStart()) {
+        QString lastProject = settings.lastProjectFile();
+        if (!lastProject.isEmpty())
+            openProject(lastProject, false);
+    }
+}
+
+void MainWindow::openProject(const QString& file, bool mayLaunchNewInstance)
+{
+    Settings settings;
+    settings.setLastProjectFile(file);
+
+    auto project = std::make_unique<Project>(this);
+    if (!project->load(file))
+        return;
+
+    if (mProject) {
+        if (!QProcess::startDetached(QApplication::applicationFilePath(), QStringList() << file))
+            QMessageBox::critical(this, tr("Error"), tr("Unable to launch new instance of the application."));
+    } else {
+        mProject = std::move(project);
+        mUi->fileManager->init(mProject->dir().absolutePath());
+        updateUi();
+    }
 }
 
 AbstractEditorTab* MainWindow::currentTab() const
@@ -164,21 +188,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
         event->accept();
     else
         event->ignore();
-}
-
-void MainWindow::loadProject(const QString& file)
-{
-    auto project = std::make_unique<Project>(this);
-    if (!project->load(file))
-        return;
-
-    if (mProject) {
-        // FIXME
-    } else {
-        mProject = std::move(project);
-        mUi->fileManager->init(mProject->dir().absolutePath());
-        updateUi();
-    }
 }
 
 bool MainWindow::confirmSaveAll()
@@ -400,7 +409,8 @@ void MainWindow::on_actionNewProject_triggered()
         return;
 
     if (mProject) {
-        // FIXME
+        if (!QProcess::startDetached(QApplication::applicationFilePath(), QStringList() << file))
+            QMessageBox::critical(this, tr("Error"), tr("Unable to launch new instance of the application."));
     } else {
         mProject = std::move(project);
         mUi->fileManager->init(mProject->dir().absolutePath());
@@ -416,8 +426,7 @@ void MainWindow::on_actionOpenProject_triggered()
     if (file.isEmpty())
         return;
 
-    settings.setLastProjectFile(file);
-    loadProject(file);
+    openProject(file);
 }
 
 void MainWindow::on_actionNewFile_triggered()

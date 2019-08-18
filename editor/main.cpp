@@ -1,5 +1,4 @@
 #include "MainWindow.h"
-#include "config.h"
 #include <QSurfaceFormat>
 #include <QApplication>
 
@@ -15,13 +14,18 @@ int main(int argc, char** argv)
 
     QApplication::setOrganizationName(QStringLiteral("Nikolay Zapolnov"));
     QApplication::setOrganizationDomain(QStringLiteral("zapolnov.com"));
-    QApplication::setApplicationName(QStringLiteral("%1 Game Editor").arg(GAME_NAME));
+    QApplication::setApplicationName(QStringLiteral("ZX Spectrum IDE"));
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
     QApplication app(argc, argv);
+    MainWindow mainWindow;
 
-    MainWindow mainWindow(GAME_DIR);
+    auto args = app.arguments();
+    if (args.length() > 1)
+        mainWindow.openProject(args[1], false);
+    else
+        mainWindow.openLastProject();
+
     mainWindow.show();
-
     return app.exec();
 }
