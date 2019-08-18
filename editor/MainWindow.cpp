@@ -92,6 +92,7 @@ void MainWindow::openProject(const QString& file, bool mayLaunchNewInstance)
             QMessageBox::critical(this, tr("Error"), tr("Unable to launch new instance of the application."));
     } else {
         mProject = std::move(project);
+        setWindowTitle(QStringLiteral("%1[*] - %2").arg(mProject->name()).arg(windowTitle()));
         mUi->fileManager->init(mProject->dir().absolutePath());
         updateUi();
     }
@@ -413,6 +414,7 @@ void MainWindow::on_actionNewProject_triggered()
             QMessageBox::critical(this, tr("Error"), tr("Unable to launch new instance of the application."));
     } else {
         mProject = std::move(project);
+        setWindowTitle(QStringLiteral("%1[*] - %2").arg(mProject->name()).arg(windowTitle()));
         mUi->fileManager->init(mProject->dir().absolutePath());
         updateUi();
     }

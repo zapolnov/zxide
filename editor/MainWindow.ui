@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Editor[*]</string>
+   <string>ZX Spectrum IDE</string>
   </property>
   <property name="iconSize">
    <size>

@@ -14,6 +14,7 @@ public:
     explicit Project(QWidget* parent = nullptr);
     ~Project() override;
 
+    QString name() const;
     const QString& file() const { return mFile; }
     const QDir& dir() const { return mDir; }
 

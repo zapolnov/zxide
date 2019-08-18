@@ -19,6 +19,11 @@ Project::~Project()
 {
 }
 
+QString Project::name() const
+{
+    return QFileInfo(mFile).completeBaseName();
+}
+
 bool Project::create(const QString& file)
 {
     QSaveFile f(file);
@@ -52,7 +57,9 @@ bool Project::create(const QString& file)
         return false;
     }
 
+    mFile = file;
     mDir = QDir(QFileInfo(file).absolutePath());
+
     return true;
 }
 
@@ -84,6 +91,8 @@ bool Project::load(const QString& file)
         return false;
     }
 
+    mFile = file;
     mDir = QDir(QFileInfo(file).absolutePath());
+
     return true;
 }
