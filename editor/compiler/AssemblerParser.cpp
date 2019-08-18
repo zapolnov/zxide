@@ -163,10 +163,17 @@ void AssemblerParser::parseDefByte()
 {
     do {
         auto token = (nextToken(), lastToken());
-        auto expr = parseExpression(token.id, true);
-        if (!expr)
-            error(mExpressionError);
-        mSection->emit<DEFB>(token, std::move(expr));
+        if (token.id == T_STRING) {
+            std::string text = lastTokenText();
+            if (!text.empty())
+                mSection->emit<DEFB_STRING>(token, std::move(text));
+            nextToken();
+        } else {
+            auto expr = parseExpression(token.id, true);
+            if (!expr)
+                error(mExpressionError);
+            mSection->emit<DEFB>(token, std::move(expr));
+        }
     } while (lastTokenId() == T_COMMA);
     expectEol(lastTokenId());
 }

@@ -58,6 +58,25 @@ private:
     Q_DISABLE_COPY(DEFB)
 };
 
+class DEFB_STRING final : public ProgramOpcode
+{
+public:
+    DEFB_STRING(const Token& token, std::string text);
+    ~DEFB_STRING() override;
+
+    unsigned lengthInBytes() const final override { return unsigned(mText.length()); }
+    unsigned tstatesIfNotTaken() const final override { return 0; }
+    unsigned tstatesIfTaken() const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    Token mToken;
+    std::string mText;
+
+    Q_DISABLE_COPY(DEFB_STRING)
+};
+
 class DEFW final : public ProgramOpcode
 {
 public:

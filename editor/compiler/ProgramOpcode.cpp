@@ -40,6 +40,24 @@ void DEFB::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DEFB_STRING::DEFB_STRING(const Token& token, std::string text)
+    : ProgramOpcode(token)
+    , mText(std::move(text))
+{
+}
+
+DEFB_STRING::~DEFB_STRING()
+{
+}
+
+void DEFB_STRING::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    for (auto ch : mText)
+        binary->emitByte(ch);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 DEFW::DEFW(const Token& token, std::unique_ptr<Expression> value)
     : ProgramOpcode(token)
     , mValue(std::move(value))

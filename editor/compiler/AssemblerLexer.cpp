@@ -482,6 +482,7 @@ void AssemblerLexer::readStringLiteral()
         }
     }
 
+    ++mSource;
     mToken.text = ss.str();
 }
 

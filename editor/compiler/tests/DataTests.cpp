@@ -391,3 +391,48 @@ TEST_CASE("'$' in data definition", "[data]")
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
+
+TEST_CASE("character and string literals", "[data]")
+{
+    static const char source[] =
+        "section main [base 0x15]\n"
+        "db 'x'\n"
+        "db 'y','',\"z\"\n"
+        "db \"Hello, world!\""
+        "db '\\n\\r\\'\"','\\t\\f\\0\\v'"
+        ;
+
+    static const unsigned char binary[] = {
+        0x78,
+        0x79,
+        0x7A,
+        0x48,
+        0x65,
+        0x6C,
+        0x6C,
+        0x6F,
+        0x2C,
+        0x20,
+        0x77,
+        0x6F,
+        0x72,
+        0x6C,
+        0x64,
+        0x21,
+        0x0A,
+        0x0D,
+        0x27,
+        0x22,
+        0x09,
+        0x0C,
+        0x00,
+        0x0B,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
