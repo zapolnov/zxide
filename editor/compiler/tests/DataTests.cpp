@@ -398,7 +398,7 @@ TEST_CASE("character and string literals", "[data]")
         "section main [base 0x15]\n"
         "db 'x'\n"
         "db 'y','',\"z\"\n"
-        "db \"Hello, world!\""
+        "db \"Hello, world!\"\n"
         "db '\\n\\r\\'\"','\\t\\f\\0\\v'"
         ;
 

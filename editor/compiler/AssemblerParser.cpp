@@ -68,7 +68,7 @@ void AssemblerParser::parseLine()
     }
 
     // skip empty or label-only lines
-    if (lastTokenId() == T_EOL)
+    if (matchEol())
         return;
 
     // read directive / instruction
@@ -319,13 +319,14 @@ void AssemblerParser::expectComma(int tokenId)
 
 void AssemblerParser::expectEol(int tokenId)
 {
-    if (tokenId != T_EOL)
+    if (!matchEol())
         error(tr("expected end of line"));
 }
 
 bool AssemblerParser::matchEol()
 {
-    return (lastTokenId() == T_EOL);
+    auto id = lastTokenId();
+    return (id == T_EOL || id == T_EOF);
 }
 
 bool AssemblerParser::matchToken(int token)

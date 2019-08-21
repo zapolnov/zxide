@@ -448,6 +448,14 @@ void AssemblerLexer::readStringLiteral()
                         ss << *mSource++;
                         break;
 
+                    case 'a': ++mSource; ss << '\a'; break;
+                    case 'b': ++mSource; ss << '\b'; break;
+                    case 'f': ++mSource; ss << '\f'; break;
+                    case 'n': ++mSource; ss << '\n'; break;
+                    case 'r': ++mSource; ss << '\r'; break;
+                    case 't': ++mSource; ss << '\t'; break;
+                    case 'v': ++mSource; ss << '\v'; break;
+
                     case 'x': {
                         ++mSource;
                         if (!isHexDigit(mSource[0]) || !isHexDigit(mSource[1]))
