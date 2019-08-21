@@ -7,6 +7,7 @@
 
 struct Token;
 class AssemblerLexer;
+class AssemblerContext;
 class Program;
 class ProgramSection;
 class Expression;
@@ -38,17 +39,25 @@ private:
     AssemblerLexer* mLexer;
     Program* mProgram;
     IErrorReporter* mReporter;
-    ProgramSection* mSection;
     std::string mLastNonLocalLabel;
     QString mExpressionError;
+    std::unique_ptr<AssemblerContext> mContext;
     static std::unordered_map<std::string, void(AssemblerParser::*)()> mDataDirectives;
     static std::unordered_map<std::string, void(AssemblerParser::*)()> mDirectives;
 
+    template <typename T, typename... ARGS> void pushContext(ARGS&&... args);
+    void popContext();
+
     void parseLine();
+
     void parseSectionDecl();
+    void parseRepeatDecl();
+    void parseEndRepeatDecl();
+
     void parseDefByte();
     void parseDefWord();
     void parseDefDWord();
+
     bool parseOpcode(const std::string& str);
     OpcodeParseResult parseOpcode_generated(const std::string& opcode); // in Z80Opcodes_parser.cpp
 

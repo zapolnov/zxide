@@ -810,15 +810,16 @@ hdr += '#include <memory>\n'
 
 src  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src += '#include "Z80Opcodes.h"\n'
-src += '#include "ProgramSection.h"\n'
+src += '#include "CodeEmitter.h"\n'
 src += '#include "ProgramBinary.h"\n'
 src += '#include "ExprEvalContext.h"\n'
 
 src2  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
 src2 += '#include "Z80Opcodes.h"\n'
-src2 += '#include "ProgramSection.h"\n'
+src2 += '#include "CodeEmitter.h"\n'
 src2 += '#include "AssemblerParser.h"\n'
 src2 += '#include "AssemblerToken.h"\n'
+src2 += '#include "AssemblerContext.h"\n'
 src2 += '#include <unordered_map>\n'
 src2 += '\n'
 src2 += '#ifdef emit\n'
@@ -877,7 +878,7 @@ def genCode(dict, indent):
             src2 += '%s}\n' % indent
         else:
             src2 += '\n'
-            src2 += '%s    return mSection->emit<%s>(mToken%s), AssemblerParser::OpcodeParseResult::Success;\n' % \
+            src2 += '%s    return mCodeEmitter->emit<%s>(mToken%s), AssemblerParser::OpcodeParseResult::Success;\n' % \
                 (indent, value.className, value.argsCall())
     src2 += '%sreturn AssemblerParser::OpcodeParseResult::SyntaxError;\n' % indent
 
@@ -971,7 +972,7 @@ src2 += 'class Z80OpcodeParser\n'
 src2 += '{\n'
 src2 += 'private:\n'
 src2 += '    AssemblerParser* mParser;\n'
-src2 += '    ProgramSection* mSection;\n'
+src2 += '    CodeEmitter* mCodeEmitter;\n'
 src2 += '    const Token& mToken;\n'
 src2 += '    Token mMinusToken;\n'
 src2 += '    std::unique_ptr<Expression> mLiteral1;\n'
@@ -992,7 +993,7 @@ src2 += '\n'
 src2 += 'public:\n'
 src2 += '    explicit Z80OpcodeParser(AssemblerParser* parser)\n'
 src2 += '        : mParser(parser)\n'
-src2 += '        , mSection(parser->mSection)\n'
+src2 += '        , mCodeEmitter(parser->mContext->codeEmitter())\n'
 src2 += '        , mToken(parser->lastToken())\n'
 src2 += '    {\n'
 src2 += '        mParser->nextToken();\n'

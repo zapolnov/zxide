@@ -29,7 +29,7 @@ public:
     virtual unsigned tstatesIfNotTaken() const = 0;
     virtual unsigned tstatesIfTaken() const = 0;
 
-    virtual void resolveAddress(const ProgramSection* section, quint32& address);
+    virtual void resolveAddress(quint32& address, IErrorReporter* reporter);
     virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
 private:

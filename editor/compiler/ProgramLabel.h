@@ -5,16 +5,14 @@
 #include <string>
 
 class ProgramBinary;
-class ProgramSection;
 class Program;
 
 class ProgramLabel : public ProgramOpcode
 {
 public:
-    ProgramLabel(const Token& token, ProgramSection* section, std::string name);
+    ProgramLabel(const Token& token, std::string name);
     ~ProgramLabel() override;
 
-    ProgramSection* section() const { return mSection; }
     const std::string& name() const { return mName; }
 
     bool hasAddress() const { return mHasAddress; }
@@ -24,11 +22,10 @@ public:
     unsigned tstatesIfNotTaken() const override;
     unsigned tstatesIfTaken() const override;
 
-    void resolveAddress(const ProgramSection* section, quint32& address) override;
+    void resolveAddress(quint32& address, IErrorReporter* reporter) override;
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
-    ProgramSection* mSection;
     std::string mName;
     unsigned mAddress;
     bool mHasAddress;

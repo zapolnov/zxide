@@ -1,8 +1,7 @@
 #include "ProgramLabel.h"
 
-ProgramLabel::ProgramLabel(const Token& token, ProgramSection* section, std::string name)
+ProgramLabel::ProgramLabel(const Token& token, std::string name)
     : ProgramOpcode(token)
-    , mSection(section)
     , mName(std::move(name))
     , mAddress(0)
     , mHasAddress(false)
@@ -28,7 +27,7 @@ unsigned ProgramLabel::tstatesIfTaken() const
     return 0;
 }
 
-void ProgramLabel::resolveAddress(const ProgramSection* section, quint32& address)
+void ProgramLabel::resolveAddress(quint32& address, IErrorReporter*)
 {
     Q_ASSERT(!mHasAddress);
     mHasAddress = true;

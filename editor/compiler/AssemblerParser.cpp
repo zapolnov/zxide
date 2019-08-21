@@ -1,5 +1,6 @@
 #include "AssemblerParser.h"
 #include "AssemblerLexer.h"
+#include "AssemblerContext.h"
 #include "IErrorReporter.h"
 #include "Z80Opcodes.h"
 #include "Expression.h"
@@ -18,15 +19,16 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDa
 
 std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDirectives = {
         { "section", &AssemblerParser::parseSectionDecl },
+        { "repeat", &AssemblerParser::parseRepeatDecl },
+        { "endrepeat", &AssemblerParser::parseEndRepeatDecl },
     };
 
 AssemblerParser::AssemblerParser(AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
     : mLexer(lexer)
     , mProgram(program)
     , mReporter(reporter)
-    , mSection(nullptr)
+    , mContext(new AssemblerDefaultContext(mProgram))
 {
-    mSection = mProgram->getOrCreateSection(std::string());
 }
 
 AssemblerParser::~AssemblerParser()
@@ -39,6 +41,19 @@ void AssemblerParser::parse()
         parseLine();
 }
 
+template <typename T, typename... ARGS> void AssemblerParser::pushContext(ARGS&&... args)
+{
+    mContext = std::make_unique<T>(std::move(mContext), std::forward<ARGS>(args)...);
+}
+
+void AssemblerParser::popContext()
+{
+    mContext = mContext->takePrev();
+    Q_ASSERT(mContext != nullptr);
+    if (!mContext)
+        error(tr("internal compiler error"));
+}
+
 void AssemblerParser::parseLine()
 {
     ProgramLabel* label = nullptr;
@@ -46,8 +61,8 @@ void AssemblerParser::parseLine()
     // read label, if any
     if (lastTokenId() == T_LABEL || lastTokenId() == T_LOCAL_LABEL) {
         std::string name = readLabelName(lastTokenId());
-        label = mProgram->addLabel(lastToken(), mSection, name);
-        if (!label)
+        label = mProgram->addLabel(lastToken(), mContext->codeEmitter(), name);
+        if (!label || mContext->hasVariable(name))
             error(tr("duplicate identifier '%1'").arg(name.c_str()));
         nextToken();
     }
@@ -93,8 +108,8 @@ void AssemblerParser::parseLine()
     std::unordered_map<std::string, void(AssemblerParser::*)()>::iterator iter;
     std::string lower = toLower(lastTokenText());
     if (lastTokenId() == T_IDENTIFIER && (iter = mDataDirectives.find(lower)) != mDataDirectives.end()) {
-        label = mProgram->addLabel(nameToken, mSection, name);
-        if (!label)
+        label = mProgram->addLabel(nameToken, mContext->codeEmitter(), name);
+        if (!label || mContext->hasVariable(name))
             error(tr("duplicate identifier '%1'").arg(name.c_str()));
         if (nameToken.id == T_IDENTIFIER)
             mLastNonLocalLabel = name;
@@ -103,7 +118,7 @@ void AssemblerParser::parseLine()
         auto expr = parseExpression(nextToken(), true);
         if (!expr)
             error(tr("expected expression after 'equ'"));
-        if (!mProgram->addConstant(name, std::move(expr)))
+        if (!mProgram->addConstant(name, std::move(expr)) || mContext->hasVariable(name))
             error(nameToken, tr("duplicate identifier '%1'").arg(name.c_str()));
     } else {
         if (nameToken.id == T_IDENTIFIER)
@@ -116,33 +131,36 @@ void AssemblerParser::parseLine()
 void AssemblerParser::parseSectionDecl()
 {
     std::string sectionName = expectIdentifier(nextToken());
-    mSection = mProgram->getOrCreateSection(sectionName);
+    auto section = mProgram->getOrCreateSection(sectionName);
+
+    if (!mContext->setCurrentSection(section))
+        error(tr("'section' directive is not allowed in this context"));
 
     if (nextToken() == T_LBRACKET) {
         for (;;) {
             auto param = toLower(expectIdentifier(nextToken()));
             if (param == "align") {
                 auto alignment = (unsigned)parseNumber(nextToken(), 1, 0xFFFF);
-                if (mSection->hasAlignment() && mSection->alignment() != alignment) {
+                if (section->hasAlignment() && section->alignment() != alignment) {
                     error(tr("conflicting alignment for section '%1' (%2 != %3)")
-                        .arg(mSection->nameCStr()).arg(alignment).arg(mSection->alignment()));
+                        .arg(section->nameCStr()).arg(alignment).arg(section->alignment()));
                 }
-                if (mSection->hasBase() && (mSection->base() % alignment) != 0) {
+                if (section->hasBase() && (section->base() % alignment) != 0) {
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(mSection->nameCStr()).arg(mSection->base(), 0, 16).arg(alignment));
+                        .arg(section->nameCStr()).arg(section->base(), 0, 16).arg(alignment));
                 }
-                mSection->setAlignment(alignment);
+                section->setAlignment(alignment);
             } else if (param == "base") {
                 auto base = (unsigned)parseNumber(nextToken());
-                if (mSection->hasBase() && mSection->base() != base) {
+                if (section->hasBase() && section->base() != base) {
                     error(tr("conflicting base address for section '%1' (0x%2 != 0x%3)")
-                        .arg(mSection->nameCStr()).arg(base, 0, 16).arg(mSection->base(), 0, 16));
+                        .arg(section->nameCStr()).arg(base, 0, 16).arg(section->base(), 0, 16));
                 }
-                if (mSection->hasAlignment() && (base % mSection->alignment()) != 0) {
+                if (section->hasAlignment() && (base % section->alignment()) != 0) {
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(mSection->nameCStr()).arg(base, 0, 16).arg(mSection->alignment()));
+                        .arg(section->nameCStr()).arg(base, 0, 16).arg(section->alignment()));
                 }
-                mSection->setBase(base);
+                section->setBase(base);
             } else
                 error(tr("unexpected '%1'").arg(lastTokenCStr()));
 
@@ -156,7 +174,34 @@ void AssemblerParser::parseSectionDecl()
     }
 
     expectEol(lastTokenId());
-    return;
+}
+
+void AssemblerParser::parseRepeatDecl()
+{
+    auto count = (unsigned)parseNumber(nextToken(), 0, 0xFFFF);
+    std::string variable;
+
+    if (lastTokenId() == T_COMMA) {
+        variable = expectIdentifier(nextToken());
+        if (mContext->hasVariable(variable) || mProgram->isDeclared(variable))
+            error(tr("duplicate identifier '%1'").arg(variable.c_str()));
+        nextToken();
+    }
+
+    pushContext<AssemblerRepeatContext>(std::move(variable));
+    // FIXME
+
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseEndRepeatDecl()
+{
+    if (!mContext->isRepeat())
+        error(tr("mismatched 'endrepeat'"));
+
+    popContext();
+
+    expectEol(nextToken());
 }
 
 void AssemblerParser::parseDefByte()
@@ -166,13 +211,13 @@ void AssemblerParser::parseDefByte()
         if (token.id == T_STRING) {
             std::string text = lastTokenText();
             if (!text.empty())
-                mSection->emit<DEFB_STRING>(token, std::move(text));
+                mContext->codeEmitter()->emit<DEFB_STRING>(token, std::move(text));
             nextToken();
         } else {
             auto expr = parseExpression(token.id, true);
             if (!expr)
                 error(mExpressionError);
-            mSection->emit<DEFB>(token, std::move(expr));
+            mContext->codeEmitter()->emit<DEFB>(token, std::move(expr));
         }
     } while (lastTokenId() == T_COMMA);
     expectEol(lastTokenId());
@@ -185,7 +230,7 @@ void AssemblerParser::parseDefWord()
         auto expr = parseExpression(token.id, true);
         if (!expr)
             error(mExpressionError);
-        mSection->emit<DEFW>(token, std::move(expr));
+        mContext->codeEmitter()->emit<DEFW>(token, std::move(expr));
     } while (lastTokenId() == T_COMMA);
     expectEol(lastTokenId());
 }
@@ -197,7 +242,7 @@ void AssemblerParser::parseDefDWord()
         auto expr = parseExpression(token.id, true);
         if (!expr)
             error(mExpressionError);
-        mSection->emit<DEFD>(token, std::move(expr));
+        mContext->codeEmitter()->emit<DEFD>(token, std::move(expr));
     } while (lastTokenId() == T_COMMA);
     expectEol(lastTokenId());
 }

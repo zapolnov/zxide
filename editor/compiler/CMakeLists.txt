@@ -15,6 +15,8 @@ qt_link_libraries(Compiler Core)
 qt_add_sources(Compiler
         Assembler.cpp
         Assembler.h
+        AssemblerContext.cpp
+        AssemblerContext.h
         AssemblerLexer.cpp
         AssemblerLexer.h
         AssemblerParser.cpp
@@ -22,6 +24,8 @@ qt_add_sources(Compiler
         AssemblerToken.h
         BasicProgram.cpp
         BasicProgram.h
+        CodeEmitter.cpp
+        CodeEmitter.h
         Compiler.cpp
         Compiler.h
         Expression.cpp

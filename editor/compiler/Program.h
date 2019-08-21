@@ -10,6 +10,7 @@
 struct Token;
 class IErrorReporter;
 class Expression;
+class ProgramLabel;
 
 class Program
 {
@@ -21,7 +22,9 @@ public:
     const std::unique_ptr<Expression>& findConstant(const std::string& name) const;
     void validateConstants(IErrorReporter* reporter) const;
 
-    ProgramLabel* addLabel(const Token& token, ProgramSection* section, const std::string& name);
+    bool isDeclared(const std::string& name) const;
+
+    ProgramLabel* addLabel(const Token& token, CodeEmitter* codeEmitter, const std::string& name);
     ProgramLabel* findLabel(const std::string& name) const;
 
     size_t sectionCount() const { return mSections.size(); }

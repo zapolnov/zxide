@@ -16,11 +16,7 @@ Program::~Program()
 
 bool Program::addConstant(std::string name, std::unique_ptr<Expression> expr)
 {
-    auto it = mConstants.find(name);
-    if (it != mConstants.end())
-        return false;
-    auto jt = mLabels.find(name);
-    if (jt != mLabels.end())
+    if (isDeclared(name))
         return false;
 
     mConstants[name] = std::move(expr);
@@ -39,27 +35,36 @@ void Program::validateConstants(IErrorReporter* reporter) const
         // Provide a dummy NOP instruction to the evaluation context to allow evaluation of '$' operands
         NOP nop(it.second->token());
         quint32 address = 0x8000;
-        nop.resolveAddress(nullptr, address);
+        nop.resolveAddress(address, reporter);
 
         ExprEvalContext context(this, reporter, &nop);
         context.evaluate(it.second);
     }
 }
 
-ProgramLabel* Program::addLabel(const Token& token, ProgramSection* section, const std::string& name)
+bool Program::isDeclared(const std::string& name) const
 {
-    Q_ASSERT(section != nullptr);
-    if (!section)
-        return nullptr;
-
     auto it = mLabels.find(name);
     if (it != mLabels.end())
-        return nullptr;
+        return true;
+
     auto jt = mConstants.find(name);
     if (jt != mConstants.end())
+        return true;
+
+    return false;
+}
+
+ProgramLabel* Program::addLabel(const Token& token, CodeEmitter* codeEmitter, const std::string& name)
+{
+    Q_ASSERT(codeEmitter != nullptr);
+    if (!codeEmitter)
         return nullptr;
 
-    auto label = section->emit<ProgramLabel>(token, section, name);
+    if (isDeclared(name))
+        return nullptr;
+
+    auto label = codeEmitter->emit<ProgramLabel>(token, name);
     mLabels[name] = label;
 
     return label;

@@ -30,17 +30,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
         return false;
     }
 
-    for (auto& opcode : mOpcodes) {
-        quint32 old = address;
-        opcode->resolveAddress(this, address);
-        Q_ASSERT(address == old + opcode->lengthInBytes());
-        if (address > 0xFFFF) {
-            reporter->error(opcode->token().file, opcode->token().line, QCoreApplication::tr("address is over 64K"));
-            return false;
-        }
-    }
-
-    return true;
+    return CodeEmitter::resolveAddresses(reporter, address);
 }
 
 void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
@@ -54,9 +44,5 @@ void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorRep
             binary->emitByte(nullptr, 0, 0); // NOP
     }
 
-    for (auto& opcode : mOpcodes) {
-        unsigned old = binary->endAddress();
-        opcode->emitBinary(program, binary, reporter);
-        Q_ASSERT(binary->endAddress() == old + opcode->lengthInBytes());
-    }
+    CodeEmitter::emitCode(program, binary, reporter);
 }
