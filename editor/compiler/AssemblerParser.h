@@ -45,7 +45,7 @@ private:
     static std::unordered_map<std::string, void(AssemblerParser::*)()> mDataDirectives;
     static std::unordered_map<std::string, void(AssemblerParser::*)()> mDirectives;
 
-    template <typename T, typename... ARGS> void pushContext(ARGS&&... args);
+    template <typename T, typename... ARGS> T* pushContext(ARGS&&... args);
     void popContext();
 
     void parseLine();

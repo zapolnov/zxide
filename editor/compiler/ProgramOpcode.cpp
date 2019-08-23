@@ -2,6 +2,7 @@
 #include "AssemblerToken.h"
 #include "Expression.h"
 #include "ExprEvalContext.h"
+#include "CodeEmitter.h"
 #include "ProgramBinary.h"
 
 ProgramOpcode::ProgramOpcode(const Token& token)
@@ -16,8 +17,13 @@ ProgramOpcode::~ProgramOpcode()
 
 void ProgramOpcode::resolveAddress(quint32& address, IErrorReporter*)
 {
-    mAddress = qint32(address);
+    setAddress(address);
     address += lengthInBytes();
+}
+
+void ProgramOpcode::setAddress(quint32 address)
+{
+    mAddress = qint32(address);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,4 +96,42 @@ void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 {
     ExprEvalContext context(program, reporter, this);
     binary->emitDWord(mToken.file, mToken.line, context.evaluateDWord(mValue));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RepeatMacro::RepeatMacro(const Token& token, std::shared_ptr<RepeatedCodeEmitter> codeEmitter)
+    : ProgramOpcode(token)
+    , mCodeEmitter(std::move(codeEmitter))
+{
+}
+
+RepeatMacro::~RepeatMacro()
+{
+}
+
+unsigned RepeatMacro::lengthInBytes() const
+{
+    return mCodeEmitter->totalLengthInBytes();
+}
+
+unsigned RepeatMacro::tstatesIfNotTaken() const
+{
+    return mCodeEmitter->totalTStatesIfNotTaken();
+}
+
+unsigned RepeatMacro::tstatesIfTaken() const
+{
+    return mCodeEmitter->totalTStatesIfTaken();
+}
+
+void RepeatMacro::resolveAddress(quint32& address, IErrorReporter* reporter)
+{
+    setAddress(address);
+    mCodeEmitter->resolveAddresses(reporter, address);
+}
+
+void RepeatMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    mCodeEmitter->emitCode(program, binary, reporter);
 }

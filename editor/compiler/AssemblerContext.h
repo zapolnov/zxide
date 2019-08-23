@@ -8,6 +8,8 @@
 class Program;
 class ProgramSection;
 class CodeEmitter;
+class RepeatedCodeEmitter;
+struct Value;
 
 class AssemblerContext
 {
@@ -20,6 +22,7 @@ public:
 
     virtual bool isRepeat() const;
     virtual bool hasVariable(const std::string& name) const;
+    virtual const std::shared_ptr<Value>& getVariable(const std::string& name) const;
 
     virtual CodeEmitter* codeEmitter() const = 0;
     virtual bool setCurrentSection(ProgramSection* section);
@@ -47,15 +50,18 @@ private:
 class AssemblerRepeatContext : public AssemblerContext
 {
 public:
-    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string variable);
+    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string var, qint64 count);
 
     bool isRepeat() const final override;
     bool hasVariable(const std::string& name) const override;
+    const std::shared_ptr<Value>& getVariable(const std::string& name) const override;
 
     CodeEmitter* codeEmitter() const override;
+    const std::shared_ptr<RepeatedCodeEmitter>& codeEmitterSharedPtr() const { return mCodeEmitter; }
 
 private:
     std::string mVariable;
+    std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
 
     Q_DISABLE_COPY(AssemblerRepeatContext)
 };

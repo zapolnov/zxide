@@ -39,11 +39,23 @@ void AssemblerParser::parse()
 {
     while (nextToken() != T_EOF)
         parseLine();
+
+    if (mContext->prev()) {
+        if (mContext->isRepeat())
+            error(tr("missing 'endrepeat'"));
+        else {
+            Q_ASSERT(false);
+            error(tr("internal compiler error"));
+        }
+    }
 }
 
-template <typename T, typename... ARGS> void AssemblerParser::pushContext(ARGS&&... args)
+template <typename T, typename... ARGS> T* AssemblerParser::pushContext(ARGS&&... args)
 {
-    mContext = std::make_unique<T>(std::move(mContext), std::forward<ARGS>(args)...);
+    auto uniq = std::make_unique<T>(std::move(mContext), std::forward<ARGS>(args)...);
+    auto ptr = uniq.get();
+    mContext = std::move(uniq);
+    return ptr;
 }
 
 void AssemblerParser::popContext()
@@ -178,6 +190,8 @@ void AssemblerParser::parseSectionDecl()
 
 void AssemblerParser::parseRepeatDecl()
 {
+    Token token = lastToken();
+
     auto count = (unsigned)parseNumber(nextToken(), 0, 0xFFFF);
     std::string variable;
 
@@ -188,8 +202,10 @@ void AssemblerParser::parseRepeatDecl()
         nextToken();
     }
 
-    pushContext<AssemblerRepeatContext>(std::move(variable));
-    // FIXME
+    auto parentCodeEmitter = mContext->codeEmitter();
+
+    auto context = pushContext<AssemblerRepeatContext>(std::move(variable), count);
+    parentCodeEmitter->emit<RepeatMacro>(token, context->codeEmitterSharedPtr());
 
     expectEol(lastTokenId());
 }

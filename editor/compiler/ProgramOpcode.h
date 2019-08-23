@@ -14,6 +14,7 @@ class IErrorReporter;
 class ProgramBinary;
 class ProgramSection;
 class Program;
+class RepeatedCodeEmitter;
 class Expression;
 
 class ProgramOpcode
@@ -31,6 +32,9 @@ public:
 
     virtual void resolveAddress(quint32& address, IErrorReporter* reporter);
     virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
+
+protected:
+    void setAddress(quint32 address);
 
 private:
     Token mToken;
@@ -113,6 +117,26 @@ private:
     std::unique_ptr<Expression> mValue;
 
     Q_DISABLE_COPY(DEFD)
+};
+
+class RepeatMacro final : public ProgramOpcode
+{
+public:
+    RepeatMacro(const Token& token, std::shared_ptr<RepeatedCodeEmitter> codeEmitter);
+    ~RepeatMacro() override;
+
+    unsigned lengthInBytes() const final override;
+    unsigned tstatesIfNotTaken() const final override;
+    unsigned tstatesIfTaken() const final override;
+
+    void resolveAddress(quint32& address, IErrorReporter* reporter) final override;
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    Token mToken;
+    std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
+
+    Q_DISABLE_COPY(RepeatMacro)
 };
 
 #endif

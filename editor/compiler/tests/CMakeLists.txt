@@ -22,6 +22,7 @@ add_sources(CompilerTests
     ErrorTests.cpp
     ExprTests.cpp
     LabelTests.cpp
+    MacroTests.cpp
     OpcodeTests.cpp
     SectionTests.cpp
     )
