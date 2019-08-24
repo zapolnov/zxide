@@ -398,7 +398,7 @@ TEST_CASE("local labels in repeat", "[macros]")
         "dw @@2\n"
         "repeat 2, cnt2\n"
         "@@1 db ((0x08|cnt1)<<4)|(cnt2|0x08)\n"
-        "@@2 db ((0x04|cnt1)<<4)|(cnt2|0x04)\n"
+        "    db ((0x04|cnt1)<<4)|(cnt2|0x04)\n"
         "dw @@1\n"
         "dw @@2\n"
         "endrepeat\n"
@@ -418,13 +418,13 @@ TEST_CASE("local labels in repeat", "[macros]")
         0x44, // ff07
         0x06, // ff08
         0xff, // ff09
-        0x07, // ff0a
+        0x01, // ff0a
         0xff, // ff0b
         0x89, // ff0c
         0x45, // ff0d
         0x0c, // ff0e
         0xff, // ff0f
-        0x0d, // ff10
+        0x01, // ff10
         0xff, // ff11
         0x00, // ff12
         0xff, // ff13
@@ -440,13 +440,13 @@ TEST_CASE("local labels in repeat", "[macros]")
         0x54, // ff1d
         0x1c, // ff1e
         0xff, // ff1f
-        0x1d, // ff20
+        0x17, // ff20
         0xff, // ff21
         0x99, // ff22
         0x55, // ff23
         0x22, // ff24
         0xff, // ff25
-        0x23, // ff26
+        0x17, // ff26
         0xff, // ff27
         0x16, // ff28
         0xff, // ff29
@@ -541,4 +541,3 @@ TEST_CASE("disallow global labels in repeat", "[macros]")
 }
 
 // FIXME: local labels in two consequtive repeats
-// FIXME: local labels from outer repeat in inner repeat

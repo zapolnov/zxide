@@ -7,7 +7,6 @@
 #include "ExprEvalContext.h"
 #include "Util.h"
 #include "Program.h"
-#include <sstream>
 
 std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDataDirectives = {
         { "db", &AssemblerParser::parseDefByte },
@@ -75,7 +74,7 @@ void AssemblerParser::parseLine()
         if (lastTokenId() != T_LOCAL_LABEL && !mContext->areGlobalLabelsAllowed())
             error(tr("global labels are not allowed in this context"));
 
-        std::string name = readLabelName(lastTokenId());
+        std::string name = readLabelName(lastTokenId(), /* recursiveSearch = */ false);
         label = mProgram->addLabel(lastToken(), mContext->codeEmitter(), name);
         if (!label || mContext->hasVariable(name))
             error(tr("duplicate identifier '%1'").arg(name.c_str()));
@@ -117,7 +116,7 @@ void AssemblerParser::parseLine()
     if (lastTokenId() == T_IDENTIFIER)
         name = nameToken.text.c_str();
     else if (lastTokenId() == T_LOCAL_LABEL_NAME)
-        name = readLabelName(lastTokenId());
+        name = readLabelName(lastTokenId(), /* recursiveSearch = */ false);
     else
         error(tr("expected opcode or directive"));
 
@@ -290,7 +289,7 @@ bool AssemblerParser::parseOpcode(const std::string& str)
     return true;
 }
 
-std::string AssemblerParser::readLabelName(int tokenId)
+std::string AssemblerParser::readLabelName(int tokenId, bool recursiveSearch)
 {
     switch (tokenId) {
         case T_LABEL: {
@@ -300,16 +299,8 @@ std::string AssemblerParser::readLabelName(int tokenId)
         }
 
         case T_LOCAL_LABEL:
-        case T_LOCAL_LABEL_NAME: {
-            const auto& prefix = mContext->localLabelsPrefix();
-            if (prefix.empty())
-                error(tr("found local label name without previous global label"));
-            std::stringstream ss;
-            ss << prefix;
-            ss << "@@";
-            ss << lastTokenText();
-            return ss.str();
-        }
+        case T_LOCAL_LABEL_NAME:
+            return mContext->resolveLocalLabel(mProgram, lastToken(), mReporter, recursiveSearch);
     }
 
     Q_ASSERT(false);

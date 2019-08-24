@@ -43,14 +43,34 @@ const std::shared_ptr<Value>& AssemblerContext::getVariable(const std::string& n
     return (mPrev ? mPrev->getVariable(name) : nullValue);
 }
 
-std::string AssemblerContext::localLabelsPrefix() const
-{
-    return mLocalLabelsPrefix;
-}
-
 void AssemblerContext::setLocalLabelsPrefix(std::string prefix, const Token&, IErrorReporter*)
 {
     mLocalLabelsPrefix = std::move(prefix);
+}
+
+std::string AssemblerContext::resolveLocalLabel(
+    Program* program, const Token& token, IErrorReporter* reporter, bool recursive)
+{
+    std::string name;
+    if (!mLocalLabelsPrefix.empty()) {
+        std::stringstream ss;
+        ss << mLocalLabelsPrefix;
+        ss << "@@";
+        ss << token.text;
+        name = ss.str();
+        if (program->findLabel(name))
+            return name;
+    }
+
+    if (recursive && mPrev)
+        return mPrev->resolveLocalLabel(program, token, reporter, recursive);
+
+    if (name.empty()) {
+        reporter->error(token.file, token.line,
+            QCoreApplication::tr("found local label name without previous global label"));
+    }
+
+    return name;
 }
 
 bool AssemblerContext::areGlobalLabelsAllowed() const
@@ -113,21 +133,31 @@ const std::shared_ptr<Value>& AssemblerRepeatContext::getVariable(const std::str
     return (mVariable == name ? mCodeEmitter->counter() : AssemblerContext::getVariable(name));
 }
 
-std::string AssemblerRepeatContext::localLabelsPrefix() const
+void AssemblerRepeatContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
+{
+    Q_ASSERT(false);
+    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+}
+
+std::string AssemblerRepeatContext::resolveLocalLabel(
+    Program* program, const Token& token, IErrorReporter* reporter, bool recursive)
 {
     int depth = 0;
     for (AssemblerContext* p = prev(); p != nullptr; p = p->prev())
         ++depth;
 
     std::stringstream ss;
-    ss << "rept$" << depth;
-    return ss.str();
-}
+    ss << "repeat$";
+    ss << depth;
+    ss << "@@";
+    ss << token.text;
+    std::string name = ss.str();
 
-void AssemblerRepeatContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
-{
-    Q_ASSERT(false);
-    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+    AssemblerContext* previous;
+    if (recursive && (previous = prev()) != nullptr && !program->findLabel(name))
+        return previous->resolveLocalLabel(program, token, reporter, recursive);
+
+    return name;
 }
 
 bool AssemblerRepeatContext::areGlobalLabelsAllowed() const
