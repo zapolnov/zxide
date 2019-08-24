@@ -60,7 +60,7 @@ private:
     bool parseOpcode(const std::string& str);
     OpcodeParseResult parseOpcode_generated(const std::string& opcode); // in Z80Opcodes_parser.cpp
 
-    std::string readLabelName(int tokenId, bool recursiveSearch);
+    std::string readLabelName(int tokenId);
 
     quint32 parseNumber(int tokenId, quint32 min = 0, quint32 max = 0xFFFFFFFF);
     std::unique_ptr<Expression> parseAtomicExpression(int tokenId, bool unambiguous); // in ExpressionParser.cpp

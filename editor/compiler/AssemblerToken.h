@@ -13,9 +13,10 @@ enum TokenID
     T_IDENTIFIER,
     T_NUMBER,
     T_STRING,
-    T_LABEL,
-    T_LOCAL_LABEL,
-    T_LOCAL_LABEL_NAME,
+    T_LABEL, // foo:
+    T_FULL_LABEL, // foo@@bar:
+    T_LOCAL_LABEL, // @@foo:
+    T_LOCAL_LABEL_NAME, // @@foo
     T_AF_SHADOW, // "af'"
     T_AT,
     T_COMMA,

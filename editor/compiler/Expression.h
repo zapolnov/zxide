@@ -7,6 +7,7 @@
 #include <memory>
 
 class Program;
+class AssemblerContext;
 class ExprEvalContext;
 
 class EvalError
@@ -63,7 +64,6 @@ class IdentifierExpression : public Expression
 {
 public:
     explicit IdentifierExpression(const Token& token);
-    IdentifierExpression(const Token& token, std::string name);
     ~IdentifierExpression() override;
 
 private:
@@ -72,6 +72,21 @@ private:
     Value evaluate(ExprEvalContext& context) const override;
 
     Q_DISABLE_COPY(IdentifierExpression)
+};
+
+class LocalNameExpression : public Expression
+{
+public:
+    LocalNameExpression(std::unique_ptr<AssemblerContext> context, const Token& token);
+    ~LocalNameExpression() override;
+
+private:
+    std::unique_ptr<AssemblerContext> mContext;
+    std::string mName;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(LocalNameExpression)
 };
 
 class MacroVariableExpression : public Expression

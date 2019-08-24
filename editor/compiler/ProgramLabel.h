@@ -11,11 +11,27 @@ struct Value;
 class ProgramLabel : public ProgramOpcode
 {
 public:
+    class Address
+    {
+    public:
+        Address() = default;
+        virtual ~Address() = default;
+
+        virtual bool isValid() const = 0;
+        virtual unsigned value() const = 0;
+        virtual void setValue(unsigned value) = 0;
+
+    protected:
+        virtual std::shared_ptr<Address> clone() const = 0;
+
+        friend class ProgramLabel;
+    };
+
     explicit ProgramLabel(const Token& token);
     ~ProgramLabel() override;
 
-    bool hasAddress() const;
-    unsigned address() const;
+    bool hasAddress() const { return mAddress->isValid(); }
+    const std::shared_ptr<Address>& address() const { return mAddress; }
 
     void addCounter(std::shared_ptr<Value> counter);
 
@@ -27,11 +43,10 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
-    class AbstractAddress;
     class SimpleAddress;
     class CounterDependentAddress;
 
-    std::shared_ptr<AbstractAddress> mAddress;
+    std::shared_ptr<Address> mAddress;
 
     Q_DISABLE_COPY(ProgramLabel)
 };

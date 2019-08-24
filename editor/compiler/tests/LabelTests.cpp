@@ -80,6 +80,7 @@ TEST_CASE("local labels", "[labels]")
         "test@@3:\n"
         "ld hl, test@@3\n"
         "ld hl, nonlocal2@@2\n"
+        "ld hl, @@1\n"
         ;
 
     static const unsigned char binary[] = {
@@ -109,6 +110,9 @@ TEST_CASE("local labels", "[labels]")
         0x01,
         0x21,
         0x15,
+        0x01,
+        0x21,
+        0x09,
         0x01,
         };
 
@@ -152,7 +156,7 @@ TEST_CASE("duplicate full local label", "[labels]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("local without global", "[labels]")
+TEST_CASE("local without global 1", "[labels]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -163,6 +167,21 @@ TEST_CASE("local without global", "[labels]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "found local label name without previous global label");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("local without global 2", "[labels]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "test@@1:\n"
+        "@@1: nop\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "found local label name without previous global label");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 

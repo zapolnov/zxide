@@ -341,7 +341,7 @@ int AssemblerLexer::readToken()
                     return T_AF_SHADOW;
                 } else if (*mSource == ':') {
                     ++mSource;
-                    return T_LABEL;
+                    return (hadAt ? T_FULL_LABEL : T_LABEL);
                 }
                 return T_IDENTIFIER;
             }

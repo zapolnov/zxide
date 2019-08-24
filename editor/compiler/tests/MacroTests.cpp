@@ -659,12 +659,28 @@ TEST_CASE("local labels context affinity 3", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("disallow global labels in repeat", "[macros]")
+TEST_CASE("disallow global labels in repeat 1", "[macros]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
         "repeat 1\n"
         "label:\n"
+        "endrepeat\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "global labels are not allowed in this context");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() != 0);
+}
+
+TEST_CASE("disallow global labels in repeat 2", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "repeat 1\n"
+        "label@@1:\n"
         "endrepeat\n"
         ;
 

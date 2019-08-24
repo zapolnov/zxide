@@ -76,8 +76,7 @@ std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, 
         }
 
         case T_LOCAL_LABEL_NAME: {
-            std::string name = readLabelName(lastTokenId(), /* recursiveSearch = */ true);
-            std::unique_ptr<Expression> expr{new IdentifierExpression(lastToken(), std::move(name))};
+            std::unique_ptr<Expression> expr{new LocalNameExpression(mContext->clone(), lastToken())};
             nextToken();
             return expr;
         }

@@ -1,6 +1,7 @@
 #include "Expression.h"
 #include "ExprEvalContext.h"
 #include "IErrorReporter.h"
+#include "AssemblerContext.h"
 #include "Program.h"
 #include "ProgramLabel.h"
 #include <QCoreApplication>
@@ -100,12 +101,6 @@ IdentifierExpression::IdentifierExpression(const Token& token)
 {
 }
 
-IdentifierExpression::IdentifierExpression(const Token& token, std::string name)
-    : Expression(token)
-    , mName(std::move(name))
-{
-}
-
 IdentifierExpression::~IdentifierExpression()
 {
 }
@@ -116,7 +111,7 @@ Value IdentifierExpression::evaluate(ExprEvalContext& context) const
     if (label != nullptr) {
         if (!label->hasAddress())
             error(context, QCoreApplication::tr("value for '%1' is not available in this context").arg(mName.c_str()));
-        return Value(label->address());
+        return Value(label->address()->value());
     }
 
     const auto& constant = context.program()->findConstant(mName);
@@ -125,6 +120,24 @@ Value IdentifierExpression::evaluate(ExprEvalContext& context) const
 
     error(context, QCoreApplication::tr("use of undeclared identifier '%1'").arg(mName.c_str()));
     return Value(0, Sign::Unsigned, SignificantBits::NoMoreThan8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+LocalNameExpression::LocalNameExpression(std::unique_ptr<AssemblerContext> context, const Token& token)
+    : Expression(token)
+    , mContext(std::move(context))
+    , mName(token.text)
+{
+}
+
+LocalNameExpression::~LocalNameExpression()
+{
+}
+
+Value LocalNameExpression::evaluate(ExprEvalContext& context) const
+{
+    return mContext->resolveLocalValue(context, token());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
