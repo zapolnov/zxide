@@ -15,10 +15,10 @@ ProgramOpcode::~ProgramOpcode()
 {
 }
 
-void ProgramOpcode::resolveAddress(quint32& address, IErrorReporter*)
+void ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
     setAddress(address);
-    address += lengthInBytes();
+    address += lengthInBytes(program, reporter);
 }
 
 void ProgramOpcode::setAddress(quint32 address)
@@ -110,25 +110,24 @@ RepeatMacro::~RepeatMacro()
 {
 }
 
-unsigned RepeatMacro::lengthInBytes() const
+unsigned RepeatMacro::lengthInBytes(const Program* program, IErrorReporter* reporter) const
 {
-    return mCodeEmitter->totalLengthInBytes();
+    return mCodeEmitter->totalLengthInBytes(program, reporter);
 }
 
-unsigned RepeatMacro::tstatesIfNotTaken() const
+unsigned RepeatMacro::tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const
 {
-    return mCodeEmitter->totalTStatesIfNotTaken();
+    return mCodeEmitter->totalTStatesIfNotTaken(program, reporter);
 }
 
-unsigned RepeatMacro::tstatesIfTaken() const
+unsigned RepeatMacro::tstatesIfTaken(const Program* program, IErrorReporter* reporter) const
 {
-    return mCodeEmitter->totalTStatesIfTaken();
+    return mCodeEmitter->totalTStatesIfTaken(program, reporter);
 }
 
-void RepeatMacro::resolveAddress(quint32& address, IErrorReporter* reporter)
+void RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
-    setAddress(address);
-    mCodeEmitter->resolveAddresses(reporter, address);
+    mCodeEmitter->resolveAddresses(reporter, program, address);
 }
 
 void RepeatMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const

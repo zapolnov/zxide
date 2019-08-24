@@ -840,9 +840,9 @@ for opcode in opcodes:
         hdr += '        Q_ASSERT(mLiteral%d != nullptr);\n' % (idx + 1)
     hdr += '    }\n'
     hdr += '\n'
-    hdr += '    unsigned lengthInBytes() const final override { return %d; }\n' % opcode.lengthInBytes
-    hdr += '    unsigned tstatesIfNotTaken() const final override { return %d; }\n' % opcode.tstatesIfNotTaken
-    hdr += '    unsigned tstatesIfTaken() const final override { return %d; }\n' % opcode.tstatesIfTaken
+    hdr += '    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return %d; }\n' % opcode.lengthInBytes
+    hdr += '    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return %d; }\n' % opcode.tstatesIfNotTaken
+    hdr += '    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
     hdr += '    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;\n'
     hdr += '\n'

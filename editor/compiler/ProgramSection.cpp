@@ -18,7 +18,7 @@ ProgramSection::~ProgramSection()
 {
 }
 
-bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address) const
+bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const
 {
     if (mHasBase)
         address = mBase;
@@ -30,7 +30,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, quint32& address
         return false;
     }
 
-    return CodeEmitter::resolveAddresses(reporter, address);
+    return CodeEmitter::resolveAddresses(reporter, program, address);
 }
 
 void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const

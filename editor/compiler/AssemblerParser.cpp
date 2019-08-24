@@ -192,7 +192,7 @@ void AssemblerParser::parseRepeatDecl()
 {
     Token token = lastToken();
 
-    auto count = (unsigned)parseNumber(nextToken(), 0, 0xFFFF);
+    auto count = parseExpression(nextToken(), true);
     std::string variable;
 
     if (lastTokenId() == T_COMMA) {
@@ -204,7 +204,7 @@ void AssemblerParser::parseRepeatDecl()
 
     auto parentCodeEmitter = mContext->codeEmitter();
 
-    auto context = pushContext<AssemblerRepeatContext>(std::move(variable), count);
+    auto context = pushContext<AssemblerRepeatContext>(std::move(variable), std::move(count));
     parentCodeEmitter->emit<RepeatMacro>(token, context->codeEmitterSharedPtr());
 
     expectEol(lastTokenId());

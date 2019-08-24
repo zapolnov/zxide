@@ -1,6 +1,7 @@
 #include "AssemblerContext.h"
 #include "compiler/Program.h"
 #include "compiler/Value.h"
+#include "compiler/Expression.h"
 
 static const std::shared_ptr<Value> nullValue;
 
@@ -60,10 +61,11 @@ bool AssemblerDefaultContext::setCurrentSection(ProgramSection* section)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AssemblerRepeatContext::AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string var, qint64 count)
+AssemblerRepeatContext::AssemblerRepeatContext(
+        std::unique_ptr<AssemblerContext> prev, std::string var, std::unique_ptr<Expression> count)
     : AssemblerContext(std::move(prev))
     , mVariable(std::move(var))
-    , mCodeEmitter(std::make_shared<RepeatedCodeEmitter>(count))
+    , mCodeEmitter(std::make_shared<RepeatedCodeEmitter>(std::move(count)))
 {
 }
 

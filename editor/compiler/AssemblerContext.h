@@ -9,6 +9,7 @@ class Program;
 class ProgramSection;
 class CodeEmitter;
 class RepeatedCodeEmitter;
+class Expression;
 struct Value;
 
 class AssemblerContext
@@ -50,7 +51,7 @@ private:
 class AssemblerRepeatContext : public AssemblerContext
 {
 public:
-    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string var, qint64 count);
+    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string var, std::unique_ptr<Expression> count);
 
     bool isRepeat() const final override;
     bool hasVariable(const std::string& name) const override;

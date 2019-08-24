@@ -18,11 +18,11 @@ public:
     bool hasAddress() const { return mHasAddress; }
     unsigned address() const { Q_ASSERT(mHasAddress); return mAddress; }
 
-    unsigned lengthInBytes() const override;
-    unsigned tstatesIfNotTaken() const override;
-    unsigned tstatesIfTaken() const override;
+    unsigned lengthInBytes(const Program* program, IErrorReporter* reporter) const override;
+    unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const override;
+    unsigned tstatesIfTaken(const Program* program, IErrorReporter* reporter) const override;
 
-    void resolveAddress(quint32& address, IErrorReporter* reporter) override;
+    void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) override;
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:

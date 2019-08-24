@@ -12,22 +12,22 @@ ProgramLabel::~ProgramLabel()
 {
 }
 
-unsigned ProgramLabel::lengthInBytes() const
+unsigned ProgramLabel::lengthInBytes(const Program*, IErrorReporter*) const
 {
     return 0;
 }
 
-unsigned ProgramLabel::tstatesIfNotTaken() const
+unsigned ProgramLabel::tstatesIfNotTaken(const Program*, IErrorReporter*) const
 {
     return 0;
 }
 
-unsigned ProgramLabel::tstatesIfTaken() const
+unsigned ProgramLabel::tstatesIfTaken(const Program*, IErrorReporter*) const
 {
     return 0;
 }
 
-void ProgramLabel::resolveAddress(quint32& address, IErrorReporter*)
+void ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter*)
 {
     Q_ASSERT(!mHasAddress);
     mHasAddress = true;

@@ -17,7 +17,7 @@ ExprEvalContext::ExprEvalContext(const Program* program, IErrorReporter* reporte
     : mProgram(program)
     , mErrorReporter(reporter)
     , mBaseAddress(qint32(opcode->address()))
-    , mNextAddress(mBaseAddress + qint32(opcode->lengthInBytes()))
+    , mNextAddress(mBaseAddress + qint32(opcode->lengthInBytes(program, reporter)))
 {
 }
 

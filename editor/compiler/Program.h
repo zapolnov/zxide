@@ -20,7 +20,7 @@ public:
 
     bool addConstant(std::string name, std::unique_ptr<Expression> expr);
     const std::unique_ptr<Expression>& findConstant(const std::string& name) const;
-    void validateConstants(IErrorReporter* reporter) const;
+    void validateConstants(IErrorReporter* reporter);
 
     bool isDeclared(const std::string& name) const;
 

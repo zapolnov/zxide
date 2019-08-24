@@ -129,6 +129,23 @@ Value IdentifierExpression::evaluate(ExprEvalContext& context) const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+MacroVariableExpression::MacroVariableExpression(const Token& token, std::shared_ptr<Value> value)
+    : Expression(token)
+    , mValue(std::move(value))
+{
+}
+
+MacroVariableExpression::~MacroVariableExpression()
+{
+}
+
+Value MacroVariableExpression::evaluate(ExprEvalContext&) const
+{
+    return *mValue;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 NegateExpression::NegateExpression(const Token& token, std::unique_ptr<Expression> operand)
     : Expression(token)
     , mOperand(std::move(operand))

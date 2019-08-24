@@ -48,3 +48,18 @@ DataBlob assemble2(IErrorReporter& errorConsumer, const char* source1, const cha
         return DataBlob();
     }
 }
+
+DataBlob assemble3(IErrorReporter& errorConsumer, const char* source1, const char* source2, const char* source3)
+{
+    try {
+        Program program;
+        assemble(errorConsumer, &program, source1);
+        assemble(errorConsumer, &program, source2);
+        assemble(errorConsumer, &program, source3);
+        return link(errorConsumer, &program);
+    } catch (const LexerError&) {
+        return DataBlob();
+    } catch (const ParserError&) {
+        return DataBlob();
+    }
+}

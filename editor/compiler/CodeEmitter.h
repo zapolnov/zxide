@@ -12,6 +12,7 @@
 class Program;
 class ProgramBinary;
 class ProgramOpcode;
+class Expression;
 class IErrorReporter;
 struct Value;
 
@@ -31,11 +32,11 @@ public:
         return ptr;
     }
 
-    virtual unsigned totalLengthInBytes() const;
-    virtual unsigned totalTStatesIfNotTaken() const;
-    virtual unsigned totalTStatesIfTaken() const;
+    virtual unsigned totalLengthInBytes(const Program* program, IErrorReporter* reporter) const;
+    virtual unsigned totalTStatesIfNotTaken(const Program* program, IErrorReporter* reporter) const;
+    virtual unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const;
 
-    virtual bool resolveAddresses(IErrorReporter* reporter, quint32& address) const;
+    virtual bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const;
     virtual void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const;
 
 private:
@@ -47,21 +48,23 @@ private:
 class RepeatedCodeEmitter : public CodeEmitter
 {
 public:
-    explicit RepeatedCodeEmitter(qint64 repeatCount);
+    explicit RepeatedCodeEmitter(std::unique_ptr<Expression> repeatCount);
     ~RepeatedCodeEmitter();
 
     const std::shared_ptr<Value>& counter() const { return mCounter; }
 
-    unsigned totalLengthInBytes() const override;
-    unsigned totalTStatesIfNotTaken() const override;
-    unsigned totalTStatesIfTaken() const override;
+    unsigned totalLengthInBytes(const Program* program, IErrorReporter* reporter) const override;
+    unsigned totalTStatesIfNotTaken(const Program* program, IErrorReporter* reporter) const override;
+    unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const override;
 
-    bool resolveAddresses(IErrorReporter* reporter, quint32& address) const override;
+    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
     void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
-    qint64 mRepeatCount;
     std::shared_ptr<Value> mCounter;
+    std::unique_ptr<Expression> mRepeatCount;
+
+    bool evaluateRepeatCount(const Program* program, IErrorReporter* reporter, qint64& value) const;
 
     Q_DISABLE_COPY(RepeatedCodeEmitter)
 };

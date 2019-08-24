@@ -60,6 +60,12 @@ TEST_CASE("case sensitivity in names", "[case]")
         "ld hl, lAbEl1\n"
         "ld hl, equ1\n"
         "ld hl, eQu1\n"
+        "repeat 2, cNt1\n"
+        "db 0xff,cNt1\n"
+        "repeat 2, CnT1\n"
+        "db 0x80,CnT1,cNt1\n"
+        "endrepeat\n"
+        "endrepeat\n"
         ;
 
     static const unsigned char binary[] = {
@@ -76,6 +82,22 @@ TEST_CASE("case sensitivity in names", "[case]")
         0x21,
         0x02,
         0x00,
+        0xff,
+        0x00,
+        0x80,
+        0x00,
+        0x00,
+        0x80,
+        0x01,
+        0x00,
+        0xff,
+        0x01,
+        0x80,
+        0x00,
+        0x01,
+        0x80,
+        0x01,
+        0x01,
         };
 
     ErrorConsumer errorConsumer;

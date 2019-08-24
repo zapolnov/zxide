@@ -14,9 +14,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -31,9 +31,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -48,9 +48,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -65,9 +65,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -82,9 +82,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -99,9 +99,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -116,9 +116,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -135,9 +135,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -155,9 +155,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -174,9 +174,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -196,9 +196,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -216,9 +216,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -233,9 +233,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -250,9 +250,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -267,9 +267,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -284,9 +284,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -301,9 +301,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -318,9 +318,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -335,9 +335,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -352,9 +352,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -369,9 +369,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -386,9 +386,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -405,9 +405,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -425,9 +425,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -444,9 +444,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -466,9 +466,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -486,9 +486,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -503,9 +503,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -520,9 +520,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -537,9 +537,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -554,9 +554,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -571,9 +571,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -588,9 +588,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -605,9 +605,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -622,9 +622,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -639,9 +639,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -656,9 +656,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -673,9 +673,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -690,9 +690,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -707,9 +707,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -724,9 +724,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -741,9 +741,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -758,9 +758,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -775,9 +775,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -792,9 +792,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -811,9 +811,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -831,9 +831,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -850,9 +850,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -872,9 +872,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -892,9 +892,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -909,9 +909,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -926,9 +926,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -943,9 +943,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -960,9 +960,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -977,9 +977,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -994,9 +994,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1011,9 +1011,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1030,9 +1030,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1052,9 +1052,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1074,9 +1074,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1096,9 +1096,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1118,9 +1118,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1140,9 +1140,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1162,9 +1162,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1184,9 +1184,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1206,9 +1206,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1228,9 +1228,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1250,9 +1250,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1272,9 +1272,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1294,9 +1294,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1316,9 +1316,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1338,9 +1338,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1360,9 +1360,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1380,9 +1380,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1397,9 +1397,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1414,9 +1414,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1431,9 +1431,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1448,9 +1448,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1465,9 +1465,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1482,9 +1482,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1499,9 +1499,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1516,9 +1516,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1533,9 +1533,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1550,9 +1550,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1567,9 +1567,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1584,9 +1584,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1601,9 +1601,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1618,9 +1618,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1635,9 +1635,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1652,9 +1652,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1669,9 +1669,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1686,9 +1686,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1703,9 +1703,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1720,9 +1720,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1737,9 +1737,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1754,9 +1754,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1771,9 +1771,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1788,9 +1788,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1805,9 +1805,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1822,9 +1822,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1839,9 +1839,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1856,9 +1856,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1873,9 +1873,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1890,9 +1890,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1907,9 +1907,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1924,9 +1924,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1941,9 +1941,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1958,9 +1958,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1975,9 +1975,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -1992,9 +1992,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2009,9 +2009,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2026,9 +2026,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2043,9 +2043,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2060,9 +2060,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2077,9 +2077,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2094,9 +2094,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2111,9 +2111,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2128,9 +2128,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2145,9 +2145,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2162,9 +2162,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2179,9 +2179,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2196,9 +2196,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2213,9 +2213,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2230,9 +2230,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2247,9 +2247,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2264,9 +2264,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2281,9 +2281,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2298,9 +2298,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2315,9 +2315,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2334,9 +2334,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 17; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 17; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2356,9 +2356,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2378,9 +2378,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2400,9 +2400,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2422,9 +2422,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2444,9 +2444,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2466,9 +2466,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2488,9 +2488,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2510,9 +2510,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 17; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 17; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2530,9 +2530,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2547,9 +2547,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2564,9 +2564,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2581,9 +2581,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2598,9 +2598,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2615,9 +2615,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2632,9 +2632,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2649,9 +2649,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2668,9 +2668,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2688,9 +2688,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2707,9 +2707,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2729,9 +2729,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2749,9 +2749,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2766,9 +2766,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2783,9 +2783,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2800,9 +2800,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2817,9 +2817,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2834,9 +2834,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2851,9 +2851,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2868,9 +2868,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2885,9 +2885,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2902,9 +2902,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2919,9 +2919,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2936,9 +2936,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2953,9 +2953,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2970,9 +2970,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -2989,9 +2989,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3011,9 +3011,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3031,9 +3031,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3048,9 +3048,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3065,9 +3065,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3082,9 +3082,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3099,9 +3099,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3116,9 +3116,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3133,9 +3133,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3152,9 +3152,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 13; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 13; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3172,9 +3172,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3189,9 +3189,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3206,9 +3206,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3223,9 +3223,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3240,9 +3240,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3257,9 +3257,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3274,9 +3274,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3291,9 +3291,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3308,9 +3308,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3325,9 +3325,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3342,9 +3342,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3361,9 +3361,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3381,9 +3381,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3398,9 +3398,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3415,9 +3415,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3432,9 +3432,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3449,9 +3449,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3466,9 +3466,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3483,9 +3483,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3500,9 +3500,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3517,9 +3517,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3534,9 +3534,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3551,9 +3551,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3568,9 +3568,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3585,9 +3585,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3602,9 +3602,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3619,9 +3619,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3638,9 +3638,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3660,9 +3660,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3680,9 +3680,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3697,9 +3697,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3714,9 +3714,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3731,9 +3731,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3748,9 +3748,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3765,9 +3765,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3782,9 +3782,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3799,9 +3799,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3816,9 +3816,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3833,9 +3833,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3852,9 +3852,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3874,9 +3874,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3896,9 +3896,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3918,9 +3918,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3940,9 +3940,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3962,9 +3962,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -3984,9 +3984,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4006,9 +4006,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4028,9 +4028,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4048,9 +4048,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4065,9 +4065,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4082,9 +4082,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4101,9 +4101,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4123,9 +4123,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4145,9 +4145,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4167,9 +4167,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4189,9 +4189,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4209,9 +4209,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4226,9 +4226,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4243,9 +4243,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 9; }
-    unsigned tstatesIfTaken() const final override { return 9; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 9; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 9; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4262,9 +4262,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 13; }
-    unsigned tstatesIfTaken() const final override { return 13; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 13; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 13; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4282,9 +4282,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 9; }
-    unsigned tstatesIfTaken() const final override { return 9; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 9; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 9; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4299,9 +4299,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4316,9 +4316,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4335,9 +4335,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4359,9 +4359,9 @@ public:
         Q_ASSERT(mLiteral2 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4384,9 +4384,9 @@ public:
         Q_ASSERT(mLiteral2 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4407,9 +4407,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 13; }
-    unsigned tstatesIfTaken() const final override { return 13; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 13; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 13; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4429,9 +4429,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4451,9 +4451,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4473,9 +4473,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4495,9 +4495,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4517,9 +4517,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4539,9 +4539,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4561,9 +4561,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4583,9 +4583,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4605,9 +4605,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4627,9 +4627,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4649,9 +4649,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4671,9 +4671,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4693,9 +4693,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4715,9 +4715,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4735,9 +4735,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4752,9 +4752,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4769,9 +4769,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4786,9 +4786,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4803,9 +4803,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4820,9 +4820,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4837,9 +4837,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4856,9 +4856,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4878,9 +4878,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4900,9 +4900,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4922,9 +4922,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4944,9 +4944,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4966,9 +4966,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -4988,9 +4988,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5010,9 +5010,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5032,9 +5032,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5054,9 +5054,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5076,9 +5076,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5098,9 +5098,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5120,9 +5120,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5142,9 +5142,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5162,9 +5162,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 9; }
-    unsigned tstatesIfTaken() const final override { return 9; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 9; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 9; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5181,9 +5181,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5203,9 +5203,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5225,9 +5225,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5247,9 +5247,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 20; }
-    unsigned tstatesIfTaken() const final override { return 20; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 20; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 20; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5267,9 +5267,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 9; }
-    unsigned tstatesIfTaken() const final override { return 9; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 9; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 9; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5284,9 +5284,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5301,9 +5301,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5318,9 +5318,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5335,9 +5335,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5352,9 +5352,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5369,9 +5369,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5386,9 +5386,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5405,9 +5405,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5427,9 +5427,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5449,9 +5449,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5471,9 +5471,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5493,9 +5493,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5515,9 +5515,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5537,9 +5537,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5559,9 +5559,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5581,9 +5581,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5603,9 +5603,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5625,9 +5625,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5647,9 +5647,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5669,9 +5669,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5691,9 +5691,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5713,9 +5713,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5735,9 +5735,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5757,9 +5757,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5779,9 +5779,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5801,9 +5801,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5823,9 +5823,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5845,9 +5845,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5865,9 +5865,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5882,9 +5882,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5899,9 +5899,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5916,9 +5916,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5933,9 +5933,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5950,9 +5950,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5967,9 +5967,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -5984,9 +5984,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6001,9 +6001,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6018,9 +6018,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6035,9 +6035,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6052,9 +6052,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6069,9 +6069,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6086,9 +6086,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6103,9 +6103,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6120,9 +6120,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6137,9 +6137,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6154,9 +6154,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6171,9 +6171,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6188,9 +6188,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6205,9 +6205,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6222,9 +6222,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6239,9 +6239,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6256,9 +6256,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6273,9 +6273,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6290,9 +6290,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6307,9 +6307,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6324,9 +6324,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6341,9 +6341,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6358,9 +6358,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6375,9 +6375,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6392,9 +6392,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6409,9 +6409,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6426,9 +6426,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6443,9 +6443,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6460,9 +6460,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6477,9 +6477,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6494,9 +6494,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6511,9 +6511,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6528,9 +6528,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6545,9 +6545,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6562,9 +6562,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6579,9 +6579,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6596,9 +6596,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6613,9 +6613,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6630,9 +6630,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6647,9 +6647,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6664,9 +6664,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6681,9 +6681,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6698,9 +6698,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 6; }
-    unsigned tstatesIfTaken() const final override { return 6; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 6; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 6; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6715,9 +6715,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6732,9 +6732,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6749,9 +6749,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6766,9 +6766,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6783,9 +6783,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6800,9 +6800,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 17; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 17; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6817,9 +6817,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6834,9 +6834,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6851,9 +6851,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6868,9 +6868,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6885,9 +6885,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6902,9 +6902,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6919,9 +6919,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6936,9 +6936,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6953,9 +6953,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6972,9 +6972,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -6992,9 +6992,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7011,9 +7011,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7033,9 +7033,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7053,9 +7053,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7070,9 +7070,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 21; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 21; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7089,9 +7089,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7109,9 +7109,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7126,9 +7126,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7143,9 +7143,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7160,9 +7160,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7177,9 +7177,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7194,9 +7194,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7211,9 +7211,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 12; }
-    unsigned tstatesIfTaken() const final override { return 12; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 12; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 12; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7228,9 +7228,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7245,9 +7245,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 16; }
-    unsigned tstatesIfTaken() const final override { return 16; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 16; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 16; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7262,9 +7262,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7279,9 +7279,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7296,9 +7296,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7313,9 +7313,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7330,9 +7330,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7347,9 +7347,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7364,9 +7364,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7381,9 +7381,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7398,9 +7398,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7415,9 +7415,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7432,9 +7432,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7449,9 +7449,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7466,9 +7466,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7483,9 +7483,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7500,9 +7500,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7517,9 +7517,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7534,9 +7534,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7551,9 +7551,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7568,9 +7568,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7585,9 +7585,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7602,9 +7602,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7619,9 +7619,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7636,9 +7636,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7653,9 +7653,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7670,9 +7670,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7687,9 +7687,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7704,9 +7704,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7721,9 +7721,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7738,9 +7738,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7755,9 +7755,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7772,9 +7772,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7789,9 +7789,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7806,9 +7806,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7823,9 +7823,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7840,9 +7840,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7857,9 +7857,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7874,9 +7874,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7891,9 +7891,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7908,9 +7908,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7925,9 +7925,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7942,9 +7942,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7959,9 +7959,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7976,9 +7976,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -7993,9 +7993,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8010,9 +8010,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8027,9 +8027,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8044,9 +8044,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8061,9 +8061,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8078,9 +8078,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8095,9 +8095,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8112,9 +8112,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8129,9 +8129,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8146,9 +8146,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8163,9 +8163,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8180,9 +8180,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8197,9 +8197,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8214,9 +8214,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8231,9 +8231,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8248,9 +8248,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8265,9 +8265,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8282,9 +8282,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8299,9 +8299,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8316,9 +8316,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8333,9 +8333,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8350,9 +8350,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8367,9 +8367,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8384,9 +8384,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8401,9 +8401,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8418,9 +8418,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8435,9 +8435,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8452,9 +8452,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8469,9 +8469,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8486,9 +8486,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8503,9 +8503,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8520,9 +8520,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8537,9 +8537,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8556,9 +8556,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8578,9 +8578,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8600,9 +8600,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8622,9 +8622,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8644,9 +8644,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8666,9 +8666,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8688,9 +8688,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8710,9 +8710,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8732,9 +8732,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8754,9 +8754,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8776,9 +8776,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8798,9 +8798,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8820,9 +8820,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8842,9 +8842,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8864,9 +8864,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8886,9 +8886,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8906,9 +8906,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 10; }
-    unsigned tstatesIfTaken() const final override { return 10; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 10; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 10; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8923,9 +8923,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8940,9 +8940,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8957,9 +8957,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8974,9 +8974,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -8991,9 +8991,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9008,9 +9008,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9025,9 +9025,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9042,9 +9042,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 5; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 5; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9059,9 +9059,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9076,9 +9076,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 14; }
-    unsigned tstatesIfTaken() const final override { return 14; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 14; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 14; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9093,9 +9093,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9110,9 +9110,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9127,9 +9127,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9144,9 +9144,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9161,9 +9161,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9178,9 +9178,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9195,9 +9195,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9212,9 +9212,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9231,9 +9231,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9253,9 +9253,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9273,9 +9273,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9290,9 +9290,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9307,9 +9307,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9324,9 +9324,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9341,9 +9341,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9358,9 +9358,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9375,9 +9375,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9392,9 +9392,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9409,9 +9409,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9428,9 +9428,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9450,9 +9450,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9470,9 +9470,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9487,9 +9487,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 18; }
-    unsigned tstatesIfTaken() const final override { return 18; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 18; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 18; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9504,9 +9504,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9521,9 +9521,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9538,9 +9538,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9555,9 +9555,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9572,9 +9572,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9589,9 +9589,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9606,9 +9606,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9623,9 +9623,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9642,9 +9642,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9664,9 +9664,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9684,9 +9684,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9701,9 +9701,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9718,9 +9718,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9735,9 +9735,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9752,9 +9752,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9769,9 +9769,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9786,9 +9786,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9803,9 +9803,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9820,9 +9820,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9839,9 +9839,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9861,9 +9861,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9881,9 +9881,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9898,9 +9898,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 18; }
-    unsigned tstatesIfTaken() const final override { return 18; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 18; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 18; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9915,9 +9915,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9932,9 +9932,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9949,9 +9949,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9966,9 +9966,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -9983,9 +9983,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10000,9 +10000,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10017,9 +10017,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10034,9 +10034,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 11; }
-    unsigned tstatesIfTaken() const final override { return 11; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10051,9 +10051,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10068,9 +10068,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10085,9 +10085,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10102,9 +10102,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10119,9 +10119,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10136,9 +10136,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10153,9 +10153,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10172,9 +10172,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10192,9 +10192,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10211,9 +10211,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10233,9 +10233,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10253,9 +10253,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10270,9 +10270,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10287,9 +10287,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10304,9 +10304,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10321,9 +10321,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10338,9 +10338,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10355,9 +10355,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10372,9 +10372,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10389,9 +10389,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10406,9 +10406,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10423,9 +10423,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10440,9 +10440,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10457,9 +10457,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10474,9 +10474,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10491,9 +10491,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10508,9 +10508,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10525,9 +10525,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10542,9 +10542,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10559,9 +10559,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10576,9 +10576,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10593,9 +10593,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10610,9 +10610,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10627,9 +10627,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10644,9 +10644,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10661,9 +10661,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10678,9 +10678,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10695,9 +10695,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10712,9 +10712,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10729,9 +10729,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10746,9 +10746,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10763,9 +10763,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10780,9 +10780,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10797,9 +10797,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10814,9 +10814,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10831,9 +10831,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10848,9 +10848,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10865,9 +10865,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10882,9 +10882,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10899,9 +10899,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10916,9 +10916,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10933,9 +10933,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10950,9 +10950,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10967,9 +10967,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -10984,9 +10984,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11001,9 +11001,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11018,9 +11018,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11035,9 +11035,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11052,9 +11052,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11069,9 +11069,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11086,9 +11086,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11103,9 +11103,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11120,9 +11120,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11137,9 +11137,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11154,9 +11154,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11171,9 +11171,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11188,9 +11188,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11205,9 +11205,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11222,9 +11222,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11239,9 +11239,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11256,9 +11256,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11273,9 +11273,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11290,9 +11290,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11307,9 +11307,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11324,9 +11324,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11341,9 +11341,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11358,9 +11358,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11375,9 +11375,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11392,9 +11392,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11409,9 +11409,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11428,9 +11428,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11450,9 +11450,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11472,9 +11472,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11494,9 +11494,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11516,9 +11516,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11538,9 +11538,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11560,9 +11560,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11582,9 +11582,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11604,9 +11604,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11626,9 +11626,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11648,9 +11648,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11670,9 +11670,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11692,9 +11692,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11714,9 +11714,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11736,9 +11736,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11758,9 +11758,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11778,9 +11778,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11795,9 +11795,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11812,9 +11812,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11829,9 +11829,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11846,9 +11846,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11863,9 +11863,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11880,9 +11880,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11897,9 +11897,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11916,9 +11916,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11938,9 +11938,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11958,9 +11958,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11975,9 +11975,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -11992,9 +11992,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12009,9 +12009,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12026,9 +12026,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12043,9 +12043,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12060,9 +12060,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12077,9 +12077,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12096,9 +12096,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12118,9 +12118,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12138,9 +12138,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12155,9 +12155,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12172,9 +12172,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12189,9 +12189,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12206,9 +12206,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12223,9 +12223,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12240,9 +12240,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 8; }
-    unsigned tstatesIfTaken() const final override { return 8; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12257,9 +12257,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 15; }
-    unsigned tstatesIfTaken() const final override { return 15; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12276,9 +12276,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12298,9 +12298,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 23; }
-    unsigned tstatesIfTaken() const final override { return 23; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12318,9 +12318,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12335,9 +12335,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12352,9 +12352,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12369,9 +12369,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12386,9 +12386,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12403,9 +12403,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12420,9 +12420,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12439,9 +12439,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12459,9 +12459,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12478,9 +12478,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12500,9 +12500,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12520,9 +12520,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12537,9 +12537,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12554,9 +12554,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12571,9 +12571,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12588,9 +12588,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12605,9 +12605,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12622,9 +12622,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 4; }
-    unsigned tstatesIfTaken() const final override { return 4; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12641,9 +12641,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12661,9 +12661,9 @@ public:
     {
     }
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 7; }
-    unsigned tstatesIfTaken() const final override { return 7; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12680,9 +12680,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -12702,9 +12702,9 @@ public:
         Q_ASSERT(mLiteral1 != nullptr);
     }
 
-    unsigned lengthInBytes() const final override { return 3; }
-    unsigned tstatesIfNotTaken() const final override { return 19; }
-    unsigned tstatesIfTaken() const final override { return 19; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 19; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 19; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 

@@ -29,13 +29,13 @@ const std::unique_ptr<Expression>& Program::findConstant(const std::string& name
     return (it != mConstants.end() ? it->second : nullExpression);
 }
 
-void Program::validateConstants(IErrorReporter* reporter) const
+void Program::validateConstants(IErrorReporter* reporter)
 {
     for (const auto& it : mConstants) {
         // Provide a dummy NOP instruction to the evaluation context to allow evaluation of '$' operands
         NOP nop(it.second->token());
         quint32 address = 0x8000;
-        nop.resolveAddress(address, reporter);
+        nop.resolveAddress(address, this, reporter);
 
         ExprEvalContext context(this, reporter, &nop);
         context.evaluate(it.second);

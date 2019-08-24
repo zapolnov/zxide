@@ -26,11 +26,11 @@ public:
     const Token& token() const { return mToken; }
     unsigned address() const { Q_ASSERT(mAddress >= 0); return unsigned(mAddress); }
 
-    virtual unsigned lengthInBytes() const = 0;
-    virtual unsigned tstatesIfNotTaken() const = 0;
-    virtual unsigned tstatesIfTaken() const = 0;
+    virtual unsigned lengthInBytes(const Program* program, IErrorReporter* reporter) const = 0;
+    virtual unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const = 0;
+    virtual unsigned tstatesIfTaken(const Program* program, IErrorReporter* reporter) const = 0;
 
-    virtual void resolveAddress(quint32& address, IErrorReporter* reporter);
+    virtual void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter);
     virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
 protected:
@@ -49,9 +49,9 @@ public:
     DEFB(const Token& token, std::unique_ptr<Expression> value);
     ~DEFB() override;
 
-    unsigned lengthInBytes() const final override { return 1; }
-    unsigned tstatesIfNotTaken() const final override { return 0; }
-    unsigned tstatesIfTaken() const final override { return 0; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -68,9 +68,9 @@ public:
     DEFB_STRING(const Token& token, std::string text);
     ~DEFB_STRING() override;
 
-    unsigned lengthInBytes() const final override { return unsigned(mText.length()); }
-    unsigned tstatesIfNotTaken() const final override { return 0; }
-    unsigned tstatesIfTaken() const final override { return 0; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return unsigned(mText.length()); }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -87,9 +87,9 @@ public:
     DEFW(const Token& token, std::unique_ptr<Expression> value);
     ~DEFW() override;
 
-    unsigned lengthInBytes() const final override { return 2; }
-    unsigned tstatesIfNotTaken() const final override { return 0; }
-    unsigned tstatesIfTaken() const final override { return 0; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -106,9 +106,9 @@ public:
     DEFD(const Token& token, std::unique_ptr<Expression> value);
     ~DEFD() override;
 
-    unsigned lengthInBytes() const final override { return 4; }
-    unsigned tstatesIfNotTaken() const final override { return 0; }
-    unsigned tstatesIfTaken() const final override { return 0; }
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
@@ -125,11 +125,11 @@ public:
     RepeatMacro(const Token& token, std::shared_ptr<RepeatedCodeEmitter> codeEmitter);
     ~RepeatMacro() override;
 
-    unsigned lengthInBytes() const final override;
-    unsigned tstatesIfNotTaken() const final override;
-    unsigned tstatesIfTaken() const final override;
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override;
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override;
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override;
 
-    void resolveAddress(quint32& address, IErrorReporter* reporter) final override;
+    void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:

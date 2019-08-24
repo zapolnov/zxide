@@ -23,7 +23,7 @@ public:
     unsigned alignment() const { return mAlignment; }
     void setAlignment(unsigned value) { mAlignment = value; mHasAlignment = true; }
 
-    bool resolveAddresses(IErrorReporter* reporter, quint32& address) const override;
+    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
     void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:

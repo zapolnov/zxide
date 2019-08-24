@@ -1,6 +1,7 @@
 #include "AssemblerParser.h"
 #include "AssemblerLexer.h"
 #include "AssemblerToken.h"
+#include "AssemblerContext.h"
 #include "Expression.h"
 #include "Util.h"
 #include <unordered_set>
@@ -63,7 +64,13 @@ std::unique_ptr<Expression> AssemblerParser::parseAtomicExpression(int tokenId, 
                 return nullptr;
             }
 
-            std::unique_ptr<Expression> expr{new IdentifierExpression(lastToken())};
+            std::unique_ptr<Expression> expr;
+            const std::shared_ptr<Value>& value = mContext->getVariable(lastTokenText());
+            if (value)
+                expr.reset(new MacroVariableExpression(lastToken(), value));
+            else
+                expr.reset(new IdentifierExpression(lastToken()));
+
             nextToken();
             return expr;
         }

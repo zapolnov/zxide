@@ -37,7 +37,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
         // Resolve addresses of labels
         quint32 addr = binary->baseAddress();
         for (ProgramSection* section : sections) {
-            if (!section->resolveAddresses(mReporter, addr))
+            if (!section->resolveAddresses(mReporter, mProgram, addr))
                 throw LinkerError();
         }
 

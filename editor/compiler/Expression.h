@@ -74,6 +74,20 @@ private:
     Q_DISABLE_COPY(IdentifierExpression)
 };
 
+class MacroVariableExpression : public Expression
+{
+public:
+    MacroVariableExpression(const Token& token, std::shared_ptr<Value> value);
+    ~MacroVariableExpression() override;
+
+private:
+    std::shared_ptr<Value> mValue;
+
+    Value evaluate(ExprEvalContext& context) const override;
+
+    Q_DISABLE_COPY(MacroVariableExpression)
+};
+
 class NegateExpression : public Expression
 {
 public:
