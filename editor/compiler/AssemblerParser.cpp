@@ -215,7 +215,7 @@ void AssemblerParser::parseRepeatDecl()
 
     auto parentCodeEmitter = mContext->codeEmitter();
 
-    auto context = pushContext<AssemblerRepeatContext>(std::move(variable), std::move(count));
+    auto context = pushContext<AssemblerRepeatContext>(token, std::move(variable), std::move(count));
     parentCodeEmitter->emit<RepeatMacro>(token, context->codeEmitterSharedPtr());
 
     expectEol(lastTokenId());

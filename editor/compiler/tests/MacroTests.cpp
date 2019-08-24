@@ -524,6 +524,141 @@ TEST_CASE("local labels context affinity 2", "[macros]")
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("local labels context affinity 3", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "label:\n"
+        "jp label\n"
+        "jp label@@1\n"
+        "jp label@@2\n"
+        "jp label@@3\n"
+        "jp @@1\n"
+        "jp @@2\n"
+        "jp @@3\n"
+        "@@1:\n"
+        "db 0x33\n"
+        "repeat 2\n"
+        "@@1: db 0\n"
+        "jp @@1\n"
+        "jp @@2\n"
+        "jp @@3\n"
+        "endrepeat\n"
+        "@@2:\n"
+        "db 0x55\n"
+        "repeat 2\n"
+        "jp @@1\n"
+        "jp @@2\n"
+        "jp @@3\n"
+        "@@1: db 1\n"
+        "endrepeat\n"
+        "@@3:\n"
+        "db 0x77\n"
+        "jp label\n"
+        "jp label@@1\n"
+        "jp label@@2\n"
+        "jp label@@3\n"
+        "jp @@1\n"
+        "jp @@2\n"
+        "jp @@3\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xc3, // 0x1234 // jp label
+        0x34, // 0x1235
+        0x12, // 0x1236
+        0xc3, // 0x1237 // jp label@@1
+        0x49, // 0x1238
+        0x12, // 0x1239
+        0xc3, // 0x123a // jp label@@2
+        0x5e, // 0x123b
+        0x12, // 0x123c
+        0xc3, // 0x123d // jp label@@3
+        0x73, // 0x123e
+        0x12, // 0x123f
+        0xc3, // 0x1240 // jp @@1
+        0x49, // 0x1241
+        0x12, // 0x1242
+        0xc3, // 0x1243 // jp @@2
+        0x5e, // 0x1244
+        0x12, // 0x1245
+        0xc3, // 0x1246 // jp @@3
+        0x73, // 0x1247
+        0x12, // 0x1248
+        0x33, // 0x1249 // @@1: db 0x33
+        0x00, // 0x124a // @@1: db 0
+        0xc3, // 0x124b // jp @@1
+        0x4a, // 0x124c
+        0x12, // 0x124d
+        0xc3, // 0x124e // jp @@2
+        0x5e, // 0x124f
+        0x12, // 0x1250
+        0xc3, // 0x1251 // jp @@3
+        0x73, // 0x1252
+        0x12, // 0x1253
+        0x00, // 0x1254 // db 0
+        0xc3, // 0x1255 // jp @@1
+        0x54, // 0x1256
+        0x12, // 0x1257
+        0xc3, // 0x1258 // jp @@2
+        0x5e, // 0x1259
+        0x12, // 0x125a
+        0xc3, // 0x125b // jp @@3
+        0x73, // 0x125c
+        0x12, // 0x125d
+        0x55, // 0x125e // @@2: db 0x55
+        0xc3, // 0x125f // jp @@1
+        0x68, // 0x1260
+        0x12, // 0x1261
+        0xc3, // 0x1262 // jp @@2
+        0x5e, // 0x1263
+        0x12, // 0x1264
+        0xc3, // 0x1265 // jp @@3
+        0x73, // 0x1266
+        0x12, // 0x1267
+        0x01, // 0x1268 // @@1: db 1
+        0xc3, // 0x1269 // jp @@1
+        0x72, // 0x126a
+        0x12, // 0x126b
+        0xc3, // 0x126c // jp @@2
+        0x5e, // 0x126d
+        0x12, // 0x126e
+        0xc3, // 0x126f // jp @@3
+        0x73, // 0x1270
+        0x12, // 0x1271
+        0x01, // 0x1272 // @@1: db 1
+        0x77, // 0x1273 // @@3: db 0x77
+        0xc3, // 0x1274 // jp label
+        0x34, // 0x1275
+        0x12, // 0x1276
+        0xc3, // 0x1274 // jp label@@1
+        0x49, // 0x1275
+        0x12, // 0x1276
+        0xc3, // 0x1277 // jp label@@2
+        0x5e, // 0x1278
+        0x12, // 0x1279
+        0xc3, // 0x127a // jp label@@3
+        0x73, // 0x127b
+        0x12, // 0x127c
+        0xc3, // 0x1274 // jp @@1
+        0x49, // 0x1275
+        0x12, // 0x1276
+        0xc3, // 0x1277 // jp @@2
+        0x5e, // 0x1278
+        0x12, // 0x1279
+        0xc3, // 0x127a // jp @@3
+        0x73, // 0x127b
+        0x12, // 0x127c
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
 TEST_CASE("disallow global labels in repeat", "[macros]")
 {
     static const char source[] =
@@ -539,5 +674,3 @@ TEST_CASE("disallow global labels in repeat", "[macros]")
     REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() != 0);
 }
-
-// FIXME: local labels in two consequtive repeats

@@ -110,11 +110,12 @@ bool AssemblerDefaultContext::setCurrentSection(ProgramSection* section)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AssemblerRepeatContext::AssemblerRepeatContext(
-        std::unique_ptr<AssemblerContext> prev, std::string var, std::unique_ptr<Expression> count)
+AssemblerRepeatContext::AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev,
+        const Token& token, std::string var, std::unique_ptr<Expression> count)
     : AssemblerContext(std::move(prev))
     , mVariable(std::move(var))
     , mCodeEmitter(std::make_shared<RepeatedCodeEmitter>(std::move(count)))
+    , mToken(token)
 {
 }
 
@@ -148,6 +149,10 @@ std::string AssemblerRepeatContext::resolveLocalLabel(
 
     std::stringstream ss;
     ss << "repeat$";
+    ss << mToken.file;
+    ss << "$";
+    ss << mToken.line;
+    ss << "$";
     ss << depth;
     ss << "@@";
     ss << token.text;

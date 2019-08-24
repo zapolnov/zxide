@@ -1,7 +1,7 @@
 #ifndef COMPILER_ASSEMBLERCONTEXT_H
 #define COMPILER_ASSEMBLERCONTEXT_H
 
-#include <QtGlobal>
+#include "AssemblerToken.h"
 #include <memory>
 #include <string>
 
@@ -12,7 +12,6 @@ class CodeEmitter;
 class RepeatedCodeEmitter;
 class Expression;
 class IErrorReporter;
-struct Token;
 struct Value;
 
 class AssemblerContext
@@ -60,7 +59,8 @@ private:
 class AssemblerRepeatContext : public AssemblerContext
 {
 public:
-    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev, std::string var, std::unique_ptr<Expression> count);
+    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev,
+        const Token& token, std::string var, std::unique_ptr<Expression> count);
 
     bool isRepeat() const final override;
     bool hasVariable(const std::string& name) const override;
@@ -77,6 +77,7 @@ public:
 private:
     std::string mVariable;
     std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
+    Token mToken;
 
     Q_DISABLE_COPY(AssemblerRepeatContext)
 };
