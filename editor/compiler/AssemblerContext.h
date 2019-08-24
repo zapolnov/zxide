@@ -7,9 +7,12 @@
 
 class Program;
 class ProgramSection;
+class ProgramLabel;
 class CodeEmitter;
 class RepeatedCodeEmitter;
 class Expression;
+class IErrorReporter;
+struct Token;
 struct Value;
 
 class AssemblerContext
@@ -25,11 +28,17 @@ public:
     virtual bool hasVariable(const std::string& name) const;
     virtual const std::shared_ptr<Value>& getVariable(const std::string& name) const;
 
+    virtual std::string localLabelsPrefix() const;
+    virtual void setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter);
+    virtual bool areGlobalLabelsAllowed() const;
+    virtual void adjustLabel(ProgramLabel* label);
+
     virtual CodeEmitter* codeEmitter() const = 0;
     virtual bool setCurrentSection(ProgramSection* section);
 
 private:
     std::unique_ptr<AssemblerContext> mPrev;
+    std::string mLocalLabelsPrefix;
 
     Q_DISABLE_COPY(AssemblerContext)
 };
@@ -56,6 +65,11 @@ public:
     bool isRepeat() const final override;
     bool hasVariable(const std::string& name) const override;
     const std::shared_ptr<Value>& getVariable(const std::string& name) const override;
+
+    std::string localLabelsPrefix() const override;
+    void setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter) override;
+    bool areGlobalLabelsAllowed() const override;
+    void adjustLabel(ProgramLabel* label) override;
 
     CodeEmitter* codeEmitter() const override;
     const std::shared_ptr<RepeatedCodeEmitter>& codeEmitterSharedPtr() const { return mCodeEmitter; }

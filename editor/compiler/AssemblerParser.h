@@ -39,7 +39,6 @@ private:
     AssemblerLexer* mLexer;
     Program* mProgram;
     IErrorReporter* mReporter;
-    std::string mLastNonLocalLabel;
     QString mExpressionError;
     std::unique_ptr<AssemblerContext> mContext;
     static std::unordered_map<std::string, void(AssemblerParser::*)()> mDataDirectives;

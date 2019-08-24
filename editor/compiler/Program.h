@@ -9,8 +9,8 @@
 
 struct Token;
 class IErrorReporter;
-class Expression;
 class ProgramLabel;
+class Expression;
 
 class Program
 {

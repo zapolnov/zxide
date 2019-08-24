@@ -1,7 +1,15 @@
 #include "AssemblerContext.h"
+#include "compiler/IErrorReporter.h"
 #include "compiler/Program.h"
-#include "compiler/Value.h"
+#include "compiler/ProgramLabel.h"
 #include "compiler/Expression.h"
+#include "compiler/Value.h"
+#include <sstream>
+#include <QCoreApplication>
+
+#ifdef emit
+#undef emit
+#endif
 
 static const std::shared_ptr<Value> nullValue;
 
@@ -27,12 +35,33 @@ bool AssemblerContext::isRepeat() const
 
 bool AssemblerContext::hasVariable(const std::string& name) const
 {
-    return false;
+    return (mPrev ? mPrev->hasVariable(name) : false);
 }
 
 const std::shared_ptr<Value>& AssemblerContext::getVariable(const std::string& name) const
 {
-    return nullValue;
+    return (mPrev ? mPrev->getVariable(name) : nullValue);
+}
+
+std::string AssemblerContext::localLabelsPrefix() const
+{
+    return mLocalLabelsPrefix;
+}
+
+void AssemblerContext::setLocalLabelsPrefix(std::string prefix, const Token&, IErrorReporter*)
+{
+    mLocalLabelsPrefix = std::move(prefix);
+}
+
+bool AssemblerContext::areGlobalLabelsAllowed() const
+{
+    return (mPrev ? mPrev->areGlobalLabelsAllowed() : true);
+}
+
+void AssemblerContext::adjustLabel(ProgramLabel* label)
+{
+    if (mPrev)
+        mPrev->adjustLabel(label);
 }
 
 bool AssemblerContext::setCurrentSection(ProgramSection*)
@@ -76,14 +105,41 @@ bool AssemblerRepeatContext::isRepeat() const
 
 bool AssemblerRepeatContext::hasVariable(const std::string& name) const
 {
-    return mVariable == name || prev()->hasVariable(name);
+    return mVariable == name || AssemblerContext::hasVariable(name);
 }
 
 const std::shared_ptr<Value>& AssemblerRepeatContext::getVariable(const std::string& name) const
 {
-    if (mVariable == name)
-        return mCodeEmitter->counter();
-    return prev()->getVariable(name);
+    return (mVariable == name ? mCodeEmitter->counter() : AssemblerContext::getVariable(name));
+}
+
+std::string AssemblerRepeatContext::localLabelsPrefix() const
+{
+    int depth = 0;
+    for (AssemblerContext* p = prev(); p != nullptr; p = p->prev())
+        ++depth;
+
+    std::stringstream ss;
+    ss << "rept$" << depth;
+    return ss.str();
+}
+
+void AssemblerRepeatContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
+{
+    Q_ASSERT(false);
+    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+}
+
+bool AssemblerRepeatContext::areGlobalLabelsAllowed() const
+{
+    return false;
+}
+
+
+void AssemblerRepeatContext::adjustLabel(ProgramLabel* label)
+{
+    label->addCounter(mCodeEmitter->counter());
+    AssemblerContext::adjustLabel(label);
 }
 
 CodeEmitter* AssemblerRepeatContext::codeEmitter() const

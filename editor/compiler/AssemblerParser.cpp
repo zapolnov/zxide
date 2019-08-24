@@ -72,10 +72,16 @@ void AssemblerParser::parseLine()
 
     // read label, if any
     if (lastTokenId() == T_LABEL || lastTokenId() == T_LOCAL_LABEL) {
+        if (lastTokenId() != T_LOCAL_LABEL && !mContext->areGlobalLabelsAllowed())
+            error(tr("global labels are not allowed in this context"));
+
         std::string name = readLabelName(lastTokenId());
         label = mProgram->addLabel(lastToken(), mContext->codeEmitter(), name);
         if (!label || mContext->hasVariable(name))
             error(tr("duplicate identifier '%1'").arg(name.c_str()));
+
+        mContext->adjustLabel(label);
+
         nextToken();
     }
 
@@ -120,11 +126,17 @@ void AssemblerParser::parseLine()
     std::unordered_map<std::string, void(AssemblerParser::*)()>::iterator iter;
     std::string lower = toLower(lastTokenText());
     if (lastTokenId() == T_IDENTIFIER && (iter = mDataDirectives.find(lower)) != mDataDirectives.end()) {
+        if (nameToken.id != T_LOCAL_LABEL_NAME && !mContext->areGlobalLabelsAllowed())
+            error(tr("global labels are not allowed in this context"));
+
         label = mProgram->addLabel(nameToken, mContext->codeEmitter(), name);
         if (!label || mContext->hasVariable(name))
             error(tr("duplicate identifier '%1'").arg(name.c_str()));
+
+        mContext->adjustLabel(label);
+
         if (nameToken.id == T_IDENTIFIER)
-            mLastNonLocalLabel = name;
+            mContext->setLocalLabelsPrefix(name, nameToken, mReporter);
         (this->*(iter->second))();
     } else if (lastTokenId() == T_IDENTIFIER && lower == "equ") {
         auto expr = parseExpression(nextToken(), true);
@@ -283,16 +295,17 @@ std::string AssemblerParser::readLabelName(int tokenId)
     switch (tokenId) {
         case T_LABEL: {
             const auto& name = lastTokenText();
-            mLastNonLocalLabel = name;
+            mContext->setLocalLabelsPrefix(name, lastToken(), mReporter);
             return name;
         }
 
         case T_LOCAL_LABEL:
         case T_LOCAL_LABEL_NAME: {
-            if (mLastNonLocalLabel.empty())
+            const auto& prefix = mContext->localLabelsPrefix();
+            if (prefix.empty())
                 error(tr("found local label name without previous global label"));
             std::stringstream ss;
-            ss << mLastNonLocalLabel;
+            ss << prefix;
             ss << "@@";
             ss << lastTokenText();
             return ss.str();

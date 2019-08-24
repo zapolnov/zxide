@@ -138,26 +138,10 @@ TEST_CASE("conflicting name in repeat 1", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'label1'");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
-    REQUIRE(errorConsumer.errorCount() == 1);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
 TEST_CASE("conflicting name in repeat 2", "[macros]")
-{
-    static const char source[] =
-        "section main [base 0x100]\n"
-        "repeat 5, label1\n"
-        "label1:\n"
-        "endrepeat\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'label1'");
-    REQUIRE(errorConsumer.lastErrorLine() == 3);
-    REQUIRE(errorConsumer.errorCount() == 1);
-}
-
-TEST_CASE("conflicting name in repeat 3", "[macros]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -170,7 +154,23 @@ TEST_CASE("conflicting name in repeat 3", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'count'");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
-    REQUIRE(errorConsumer.errorCount() == 1);
+    REQUIRE(errorConsumer.errorCount() != 0);
+}
+
+TEST_CASE("conflicting name in repeat 3", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "repeat 5, count\n"
+        "count equ 4\n"
+        "endrepeat\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'count'");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
 TEST_CASE("conflicting name in inner repeat", "[macros]")
@@ -187,7 +187,7 @@ TEST_CASE("conflicting name in inner repeat", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "duplicate identifier 'cnt1'");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
-    REQUIRE(errorConsumer.errorCount() == 1);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
 TEST_CASE("equ in repeat", "[macros]")
@@ -247,6 +247,57 @@ TEST_CASE("equ in repeat", "[macros]")
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("equ with label in repeat 1", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ label1\n"
+        "y equ label2\n"
+        "label1:\n"
+        "db 1,2,3\n"
+        "label2:\n"
+        "repeat y-x\n"
+        "db 0xff\n"
+        "endrepeat\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x01,
+        0x02,
+        0x03,
+        0xff,
+        0xff,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("equ with label in repeat 2", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ label1\n"
+        "y equ label2\n"
+        "label1:\n"
+        "db 1,2,3\n"
+        "repeat y-x\n"
+        "db 0xff\n"
+        "endrepeat\n"
+        "label2:\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "value for 'label2' is not available in this context");
+    REQUIRE(errorConsumer.errorCount() != 0);
+}
+
 TEST_CASE("expression as repeat counter", "[macros]")
 {
     static const char source[] =
@@ -303,7 +354,7 @@ TEST_CASE("missing endrepeat", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "missing 'endrepeat'");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
-    REQUIRE(errorConsumer.errorCount() == 1);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
 TEST_CASE("negative repeat count", "[macros]")
@@ -318,6 +369,7 @@ TEST_CASE("negative repeat count", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "invalid repeat count");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
 TEST_CASE("too large repeat count", "[macros]")
@@ -332,6 +384,161 @@ TEST_CASE("too large repeat count", "[macros]")
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "invalid repeat count");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-// FIXME: test for global and local labels inside repeat macro
+TEST_CASE("local labels in repeat", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0xff00]\n"
+        "repeat 2, cnt1\n"
+        "@@1 db 0x08|cnt1\n"
+        "@@2 db 0x04|cnt1\n"
+        "dw @@1\n"
+        "dw @@2\n"
+        "repeat 2, cnt2\n"
+        "@@1 db ((0x08|cnt1)<<4)|(cnt2|0x08)\n"
+        "@@2 db ((0x04|cnt1)<<4)|(cnt2|0x04)\n"
+        "dw @@1\n"
+        "dw @@2\n"
+        "endrepeat\n"
+        "dw @@1\n"
+        "dw @@2\n"
+        "endrepeat\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x08, // ff00
+        0x04, // ff01
+        0x00, // ff02
+        0xff, // ff03
+        0x01, // ff04
+        0xff, // ff05
+        0x88, // ff06
+        0x44, // ff07
+        0x06, // ff08
+        0xff, // ff09
+        0x07, // ff0a
+        0xff, // ff0b
+        0x89, // ff0c
+        0x45, // ff0d
+        0x0c, // ff0e
+        0xff, // ff0f
+        0x0d, // ff10
+        0xff, // ff11
+        0x00, // ff12
+        0xff, // ff13
+        0x01, // ff14
+        0xff, // ff15
+        0x09, // ff16
+        0x05, // ff17
+        0x16, // ff18
+        0xff, // ff19
+        0x17, // ff1a
+        0xff, // ff1b
+        0x98, // ff1c
+        0x54, // ff1d
+        0x1c, // ff1e
+        0xff, // ff1f
+        0x1d, // ff20
+        0xff, // ff21
+        0x99, // ff22
+        0x55, // ff23
+        0x22, // ff24
+        0xff, // ff25
+        0x23, // ff26
+        0xff, // ff27
+        0x16, // ff28
+        0xff, // ff29
+        0x17, // ff2a
+        0xff, // ff2b
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("local labels context affinity 1", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "label:\n"
+        "repeat 2\n"
+        "@@1: db 0\n"
+        "endrepeat\n"
+        "@@2:\n"
+        "jp label\n"
+        "jp label@@2\n"
+        "jp label@@1\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "use of undeclared identifier 'label@@1'");
+    REQUIRE(errorConsumer.lastErrorLine() == 9);
+    REQUIRE(errorConsumer.errorCount() != 0);
+}
+
+TEST_CASE("local labels context affinity 2", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "label:\n"
+        "@@1:\n"
+        "repeat 2\n"
+        "@@1: db 0\n"
+        "endrepeat\n"
+        "@@2:\n"
+        "jp label\n"
+        "jp label@@2\n"
+        "jp label@@1\n"
+        "jp @@1\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x00,
+        0x00,
+        0xc3,
+        0x34,
+        0x12,
+        0xc3,
+        0x36,
+        0x12,
+        0xc3,
+        0x34,
+        0x12,
+        0xc3,
+        0x34,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("disallow global labels in repeat", "[macros]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "repeat 1\n"
+        "label:\n"
+        "endrepeat\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "global labels are not allowed in this context");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() != 0);
+}
+
+// FIXME: local labels in two consequtive repeats
+// FIXME: local labels from outer repeat in inner repeat

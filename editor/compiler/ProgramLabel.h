@@ -4,19 +4,20 @@
 #include "ProgramOpcode.h"
 #include <string>
 
-class ProgramBinary;
 class Program;
+class ProgramBinary;
+struct Value;
 
 class ProgramLabel : public ProgramOpcode
 {
 public:
-    ProgramLabel(const Token& token, std::string name);
+    explicit ProgramLabel(const Token& token);
     ~ProgramLabel() override;
 
-    const std::string& name() const { return mName; }
+    bool hasAddress() const;
+    unsigned address() const;
 
-    bool hasAddress() const { return mHasAddress; }
-    unsigned address() const { Q_ASSERT(mHasAddress); return mAddress; }
+    void addCounter(std::shared_ptr<Value> counter);
 
     unsigned lengthInBytes(const Program* program, IErrorReporter* reporter) const override;
     unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const override;
@@ -26,9 +27,11 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
-    std::string mName;
-    unsigned mAddress;
-    bool mHasAddress;
+    class AbstractAddress;
+    class SimpleAddress;
+    class CounterDependentAddress;
+
+    std::shared_ptr<AbstractAddress> mAddress;
 
     Q_DISABLE_COPY(ProgramLabel)
 };
