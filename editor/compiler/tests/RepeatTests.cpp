@@ -3,7 +3,7 @@
 #include "helpers/ErrorConsumer.h"
 #include "helpers/TestUtil.h"
 
-TEST_CASE("repeat", "[macros]")
+TEST_CASE("repeat", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -42,7 +42,7 @@ TEST_CASE("repeat", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("repeat with counter", "[macros]")
+TEST_CASE("repeat with counter", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -100,7 +100,7 @@ TEST_CASE("repeat with counter", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("non-conflicting name in repeat", "[macros]")
+TEST_CASE("non-conflicting name in repeat", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -125,7 +125,7 @@ TEST_CASE("non-conflicting name in repeat", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("conflicting name in repeat 1", "[macros]")
+TEST_CASE("conflicting name in repeat 1", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -141,7 +141,7 @@ TEST_CASE("conflicting name in repeat 1", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("conflicting name in repeat 2", "[macros]")
+TEST_CASE("conflicting name in repeat 2", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -157,7 +157,7 @@ TEST_CASE("conflicting name in repeat 2", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("conflicting name in repeat 3", "[macros]")
+TEST_CASE("conflicting name in repeat 3", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -173,7 +173,7 @@ TEST_CASE("conflicting name in repeat 3", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("conflicting name in inner repeat", "[macros]")
+TEST_CASE("conflicting name in inner repeat", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -190,7 +190,7 @@ TEST_CASE("conflicting name in inner repeat", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("equ in repeat", "[macros]")
+TEST_CASE("equ in repeat", "[repeat]")
 {
     static const char source1[] =
         "section main [base 0x100]\n"
@@ -247,7 +247,7 @@ TEST_CASE("equ in repeat", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("equ with label in repeat 1", "[macros]")
+TEST_CASE("equ with label in repeat 1", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -278,7 +278,7 @@ TEST_CASE("equ with label in repeat 1", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("equ with label in repeat 2", "[macros]")
+TEST_CASE("equ with label in repeat 2", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -298,7 +298,7 @@ TEST_CASE("equ with label in repeat 2", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("expression as repeat counter", "[macros]")
+TEST_CASE("expression as repeat counter", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -343,7 +343,7 @@ TEST_CASE("expression as repeat counter", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("missing endrepeat", "[macros]")
+TEST_CASE("missing endrepeat", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -357,7 +357,7 @@ TEST_CASE("missing endrepeat", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("negative repeat count", "[macros]")
+TEST_CASE("negative repeat count", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -372,7 +372,7 @@ TEST_CASE("negative repeat count", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("too large repeat count", "[macros]")
+TEST_CASE("too large repeat count", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -387,7 +387,7 @@ TEST_CASE("too large repeat count", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("local labels in repeat", "[macros]")
+TEST_CASE("local labels in repeat", "[repeat]")
 {
     static const char source[] =
         "section main [base 0xff00]\n"
@@ -462,7 +462,7 @@ TEST_CASE("local labels in repeat", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("local labels context affinity 1", "[macros]")
+TEST_CASE("local labels context affinity 1", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -483,7 +483,7 @@ TEST_CASE("local labels context affinity 1", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("local labels context affinity 2", "[macros]")
+TEST_CASE("local labels context affinity 2", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
@@ -524,7 +524,7 @@ TEST_CASE("local labels context affinity 2", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("local labels context affinity 3", "[macros]")
+TEST_CASE("local labels context affinity 3", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
@@ -659,7 +659,7 @@ TEST_CASE("local labels context affinity 3", "[macros]")
     REQUIRE(actual == expected);
 }
 
-TEST_CASE("disallow global labels in repeat 1", "[macros]")
+TEST_CASE("disallow global labels in repeat 1", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
@@ -675,7 +675,7 @@ TEST_CASE("disallow global labels in repeat 1", "[macros]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-TEST_CASE("disallow global labels in repeat 2", "[macros]")
+TEST_CASE("disallow global labels in repeat 2", "[repeat]")
 {
     static const char source[] =
         "section main [base 0x100]\n"
