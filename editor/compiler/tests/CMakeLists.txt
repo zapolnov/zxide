@@ -21,6 +21,7 @@ add_sources(CompilerTests
     EquTests.cpp
     ErrorTests.cpp
     ExprTests.cpp
+    IfTests.cpp
     LabelTests.cpp
     OpcodeTests.cpp
     RepeatTests.cpp

@@ -256,7 +256,7 @@ void AssemblerParser::parseElseDecl()
 
     mContext->beginElse(mReporter, lastToken());
 
-    expectEol(lastTokenId());
+    expectEol(nextToken());
 }
 
 void AssemblerParser::parseEndIfDecl()
