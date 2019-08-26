@@ -1,7 +1,7 @@
 #include "ProgramDebugInfo.h"
 #include <cstring>
 
-static const SourceLocation dummySourceLocation;
+static const SourceLocation dummySourceLocation{};
 
 ProgramDebugInfo::ProgramDebugInfo()
 {

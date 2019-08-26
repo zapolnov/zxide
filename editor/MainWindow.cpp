@@ -402,7 +402,7 @@ void MainWindow::updateUi()
         QDockWidget* dockWidget = mUi->displayDockWidget;
         DisplayWidget* displayWidget = mUi->displayWidget;
         auto conn = std::make_shared<QMetaObject::Connection>();
-        *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [this, dockWidget, conn] {
+        *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [dockWidget, conn] {
                 if (!EmulatorCore::instance()->isRunning())
                     dockWidget->hide();
                 QObject::disconnect(*conn);

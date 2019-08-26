@@ -854,6 +854,7 @@ libspectrum_byte test13_data[] = { 0xfd, 0xdd, 0xfd, 0xdd, 0xfd, 0xdd, 0xfd,
 libspectrum_byte test14_data[] = { 0x7e };
 libspectrum_byte test15_data[] = { 0xdd, 0x7e, 0x55 };
 
+/*
 static int
 run_test( libspectrum_byte *data, size_t data_length, const char *expected )
 {
@@ -870,7 +871,6 @@ run_test( libspectrum_byte *data, size_t data_length, const char *expected )
   return 0;
 }
 
-/*
 int
 debugger_disassemble_unittest( void )
 {

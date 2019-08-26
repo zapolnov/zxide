@@ -425,7 +425,7 @@ creator_init( void *context )
   char *custom, osname[ 192 ] = {0};
   static const size_t CUSTOM_SIZE = 256;
   
-  libspectrum_error error; int sys_error;
+  libspectrum_error error;/* int sys_error;*/
 
   const char *gcrypt_version;
 

@@ -11,7 +11,7 @@ public:
     {
     }
 
-    std::shared_ptr<Address> SimpleAddress::clone() const final override
+    std::shared_ptr<Address> clone() const final override
     {
         return std::make_shared<SimpleAddress>(*this);
     }
@@ -50,7 +50,7 @@ public:
     {
     }
 
-    std::shared_ptr<Address> CounterDependentAddress::clone() const final override
+    std::shared_ptr<Address> clone() const final override
     {
         return std::make_shared<CounterDependentAddress>(*this);
     }

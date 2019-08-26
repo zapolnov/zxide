@@ -113,7 +113,6 @@ void AssemblerParser::parseLine()
     // read label name
     Token nameToken = lastToken();
     std::string name;
-    bool isIdentifier = false;
     if (lastTokenId() == T_IDENTIFIER)
         name = nameToken.text.c_str();
     else if (lastTokenId() == T_LOCAL_LABEL_NAME)

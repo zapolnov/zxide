@@ -312,12 +312,12 @@ settings_info settings_default = {
   /* show_version */ 0,
 };
 
-static int read_config_file( settings_info *settings );
+/*static int read_config_file( settings_info *settings );*/
 
 #ifdef HAVE_LIB_XML2
 static int parse_xml( xmlDocPtr doc, settings_info *settings );
 #else				/* #ifdef HAVE_LIB_XML2 */
-static int parse_ini( utils_file *file, settings_info *settings );
+/*static int parse_ini( utils_file *file, settings_info *settings );*/
 #endif				/* #ifdef HAVE_LIB_XML2 */
 
 int settings_command_line( settings_info *settings, int *first_arg,
@@ -2622,10 +2622,10 @@ settings_write_config( settings_info *settings )
 
 /* Read options from the config file as ini file (if libxml2 is not available) */
 
+#if 0
 static int
 read_config_file( settings_info *settings )
 {
-#if 0
   const char *cfgdir; char path[ PATH_MAX ];
   struct stat stat_info;
   int error;
@@ -2656,7 +2656,6 @@ read_config_file( settings_info *settings )
   if( parse_ini( &file, settings ) ) { utils_close_file( &file ); return 1; }
 
   utils_close_file( &file );
-#endif
 
   return 0;
 }
@@ -3732,7 +3731,6 @@ settings_numeric_write( compat_fd doc, const char* name, int config )
   return settings_string_write( doc, name, buffer );
 }
 
-#if 0
 int
 settings_write_config( settings_info *settings )
 {

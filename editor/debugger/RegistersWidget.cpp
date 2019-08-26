@@ -8,8 +8,8 @@
 
 RegistersWidget::RegistersWidget(QWidget* parent)
     : QOpenGLWidget(parent)
-    , mTimer(new QTimer(this))
     , mOrientation(Qt::Horizontal)
+    , mTimer(new QTimer(this))
 {
     setOrientation(Qt::Vertical);
 

@@ -44,7 +44,7 @@ static memory_page if2_memory_map_romcs[MEMORY_PAGES_IN_16K];
 int if2_active = 0;
 
 /* IF2 memory source */
-static int if2_memory_source;
+/*static int if2_memory_source;*/
 
 static void if2_reset( int hard_reset );
 static void if2_memory_map( void );

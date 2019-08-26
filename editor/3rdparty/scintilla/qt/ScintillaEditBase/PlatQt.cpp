@@ -724,7 +724,6 @@ PRectangle Window::GetMonitorRect(Point pt)
 {
 	QPoint originGlobal = window(wid)->mapToGlobal(QPoint(0, 0));
 	QPoint posGlobal = window(wid)->mapToGlobal(QPoint(pt.x, pt.y));
-	QDesktopWidget *desktop = QApplication::desktop();
 	QRect rectScreen = QGuiApplication::screenAt(posGlobal)->availableGeometry();
 	rectScreen.translate(-originGlobal.x(), -originGlobal.y());
 	return PRectangle(rectScreen.left(), rectScreen.top(),
@@ -739,6 +738,7 @@ public:
 
 	void setDelegate(IListBoxDelegate *lbDelegate);
 	void selectionChanged();
+	using QListWidget::selectionChanged;
 
 protected:
 	void mouseReleaseEvent(QMouseEvent * event) override;

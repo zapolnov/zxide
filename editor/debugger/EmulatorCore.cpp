@@ -75,6 +75,8 @@ EmulatorCore* EmulatorCore::mInstance;
 const int EmulatorCore::ScreenWidth = DISPLAY_WIDTH_COLS * 8 + 2 * DISPLAY_BORDER_WIDTH_COLS * 8;
 const int EmulatorCore::ScreenHeight = DISPLAY_SCREEN_HEIGHT;
 
+static const SourceLocation dummySourceLocation{};
+
 EmulatorCore::EmulatorCore(QObject* parent)
     : QObject(parent)
     , mThread(new Thread(this))
@@ -246,8 +248,6 @@ void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
         programBinary = std::move(binary);
     }
 }
-
-static const SourceLocation dummySourceLocation;
 
 SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
 {
@@ -748,7 +748,7 @@ void timer_sleep(int ms)
     QThread::msleep(ms);
 }
 
-extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char**)
+extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg, int, char**)
 {
     Settings settings;
     fuse->sound = (settings.enableSound() ? 1 : 0);
@@ -760,6 +760,7 @@ extern "C" int settings_command_line(struct settings_info* fuse, int*, int, char
     fuse->auto_load = 1;
     if (!tapeFile.isEmpty())
         fuse->tape_file = utils_safe_strdup(tapeFile.toUtf8().constData());
+    *first_arg = 1;
     return 0;
 }
 
