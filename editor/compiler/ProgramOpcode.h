@@ -31,7 +31,7 @@ public:
     virtual unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const = 0;
     virtual unsigned tstatesIfTaken(const Program* program, IErrorReporter* reporter) const = 0;
 
-    virtual void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter);
+    virtual bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter);
     virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
 protected:
@@ -131,7 +131,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override;
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override;
 
-    void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
+    bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
@@ -155,7 +155,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override;
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override;
 
-    void resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
+    bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:

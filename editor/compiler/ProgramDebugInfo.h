@@ -27,7 +27,7 @@ public:
 private:
     std::unordered_map<const File*, std::map<int, unsigned>> mFileToMemory;
     // that's quite suboptimal use of memory, but who counts memory these days?!
-    SourceLocation mSourceLocations[0xffff];
+    SourceLocation mSourceLocations[0x10000];
 
     Q_DISABLE_COPY(ProgramDebugInfo)
 };

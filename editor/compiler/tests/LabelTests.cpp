@@ -294,3 +294,37 @@ TEST_CASE("reference labels between multiple files", "[labels]")
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
 }
+
+TEST_CASE("label at 64K", "[labels]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "label1: db 0xfd\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("label over 64K", "[labels]")
+{
+    static const char source[] =
+        "section main [base 0xfffe]\n"
+        "label1: dw label1\n"
+        "label2:\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "address is over 64K");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}

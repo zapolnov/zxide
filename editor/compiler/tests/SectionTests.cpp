@@ -182,3 +182,118 @@ TEST_CASE("base conflicts with alignment", "[sections]")
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
+
+TEST_CASE("last byte fits well 1", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "db 0xc3\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xc3,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("last byte fits well 2", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "repeat 1\n"
+        "db 0xeb\n"
+        "endrepeat\n"
+        "repeat 0\n"
+        "db 0xbf\n"
+        "endrepeat\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xeb,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("last byte fits well 3", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "if 1\n"
+        "db 0xa4\n"
+        "endif\n"
+        "if 0\n"
+        "db 0xbb\n"
+        "endif\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xa4,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("address is too large 1", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "db 0xcc\n"
+        "db 0xee\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "address is over 64K");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("address is too large 2", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "repeat 2\n"
+        "db 0xcc\n"
+        "endrepeat\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "address is over 64K");
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("address is too large 3", "[sections]")
+{
+    static const char source[] =
+        "section main [base 0xffff]\n"
+        "db 0xbb\n"
+        "if 1\n"
+        "db 0xee\n"
+        "endif\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "address is over 64K");
+    REQUIRE(errorConsumer.lastErrorLine() == 4);
+    REQUIRE(errorConsumer.errorCount() == 1);
+}

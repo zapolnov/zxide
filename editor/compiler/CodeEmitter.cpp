@@ -44,9 +44,11 @@ bool CodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, q
 {
     for (const auto& opcode : mOpcodes) {
         quint32 old = address;
-        opcode->resolveAddress(address, program, reporter);
+        if (!opcode->resolveAddress(address, program, reporter))
+            return false;
+
         Q_ASSERT(address == old + opcode->lengthInBytes(program, reporter));
-        if (address > 0xFFFF) {
+        if (address > 0x10000) {
             reporter->error(opcode->token().file, opcode->token().line, QCoreApplication::tr("address is over 64K"));
             return false;
         }

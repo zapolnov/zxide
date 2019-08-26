@@ -1,6 +1,8 @@
 #include "ProgramLabel.h"
+#include "compiler/IErrorReporter.h"
 #include "compiler/Value.h"
 #include <unordered_map>
+#include <QCoreApplication>
 
 class ProgramLabel::SimpleAddress final : public Address
 {
@@ -114,9 +116,15 @@ unsigned ProgramLabel::tstatesIfTaken(const Program*, IErrorReporter*) const
     return 0;
 }
 
-void ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter*)
+bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* reporter)
 {
+    if (address > 0xFFFF) {
+        reporter->error(token().file, token().line, QCoreApplication::tr("address is over 64K"));
+        return false;
+    }
+
     mAddress->setValue(unsigned(address));
+    return true;
 }
 
 void ProgramLabel::emitBinary(Program*, ProgramBinary*, IErrorReporter*) const

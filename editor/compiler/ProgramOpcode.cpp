@@ -4,6 +4,8 @@
 #include "ExprEvalContext.h"
 #include "CodeEmitter.h"
 #include "ProgramBinary.h"
+#include "IErrorReporter.h"
+#include <QCoreApplication>
 
 ProgramOpcode::ProgramOpcode(const Token& token)
     : mToken(token)
@@ -15,10 +17,16 @@ ProgramOpcode::~ProgramOpcode()
 {
 }
 
-void ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
+    if (address > 0xFFFF) {
+        reporter->error(token().file, token().line, QCoreApplication::tr("address is over 64K"));
+        return false;
+    }
+
     setAddress(address);
     address += lengthInBytes(program, reporter);
+    return true;
 }
 
 void ProgramOpcode::setAddress(quint32 address)
@@ -128,9 +136,9 @@ unsigned IfMacro::tstatesIfTaken(const Program* program, IErrorReporter* reporte
     return codeEmitter(program, reporter)->totalTStatesIfTaken(program, reporter);
 }
 
-void IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
-    codeEmitter(program, reporter)->resolveAddresses(reporter, program, address);
+    return codeEmitter(program, reporter)->resolveAddresses(reporter, program, address);
 }
 
 void IfMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
@@ -171,9 +179,9 @@ unsigned RepeatMacro::tstatesIfTaken(const Program* program, IErrorReporter* rep
     return mCodeEmitter->totalTStatesIfTaken(program, reporter);
 }
 
-void RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
-    mCodeEmitter->resolveAddresses(reporter, program, address);
+    return mCodeEmitter->resolveAddresses(reporter, program, address);
 }
 
 void RepeatMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
