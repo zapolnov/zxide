@@ -298,6 +298,38 @@ TEST_CASE("equ with label in repeat 2", "[repeat]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
+TEST_CASE("equ with label in repeat 3", "[repeat]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "x equ label1\n"
+        "y equ label2\n"
+        "label1:\n"
+        "db 1,2,3\n"
+        "repeat 2\n"
+        "dw y\n"
+        "endrepeat\n"
+        "label2:\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x01,
+        0x02,
+        0x03,
+        0x3b,
+        0x12,
+        0x3b,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
 TEST_CASE("expression as repeat counter", "[repeat]")
 {
     static const char source[] =

@@ -161,6 +161,127 @@ TEST_CASE("equ with label in if 2", "[if]")
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("equ with label in if 3", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ label1\n"
+        "y equ label2\n"
+        "label1:\n"
+        "db 1,2,3\n"
+        "label2:\n"
+        "if y-x\n"
+        "db 0xff\n"
+        "endif\n"
+        "if y-y\n"
+        "db 0xcc\n"
+        "endif\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x01,
+        0x02,
+        0x03,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("equ with label in if 4", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "x equ label1\n"
+        "y equ label2\n"
+        "label1:\n"
+        "db 1,2,3\n"
+        "if y-x\n"
+        "db 0xee\n"
+        "endif\n"
+        "label2:\n"
+        ;
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    REQUIRE(errorConsumer.lastErrorMessage() == "value for 'label2' is not available in this context");
+    REQUIRE(errorConsumer.errorCount() == 1);
+}
+
+TEST_CASE("equ with local label in if 1", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "if 1\n"
+        "x equ @@1\n"
+        "db 0xaa,0xbb\n"
+        "@@1 dw x\n"
+        "else\n"
+        "db 0xcc\n"
+        "x equ @@1\n"
+        "@@1 dw x\n"
+        "endif\n"
+        "db 0xdd\n"
+        "dw x\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xaa,
+        0xbb,
+        0x36,
+        0x12,
+        0xdd,
+        0x36,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("equ with local label in if 2", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "if 0\n"
+        "x equ @@1\n"
+        "db 0xaa,0xbb\n"
+        "@@1 dw x\n"
+        "else\n"
+        "db 0xcc\n"
+        "x equ @@1\n"
+        "@@1 dw x\n"
+        "endif\n"
+        "db 0xdd\n"
+        "dw x\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcc,
+        0x35,
+        0x12,
+        0xdd,
+        0x35,
+        0x12,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
 TEST_CASE("expression as condition", "[if]")
 {
     static const char source[] =
@@ -487,5 +608,127 @@ TEST_CASE("disallow global labels in if 2", "[if]")
     REQUIRE(errorConsumer.errorCount() != 0);
 }
 
-// FIXME: repeat inside if
-// FIXME: if inside repeat; also depending on counter
+TEST_CASE("if/repeat nesting 1", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "if 1\n"
+        "db 0xaa\n"
+        "repeat 2\n"
+        "db 0xee\n"
+        "if 0\n"
+        "db 0xcc\n"
+        "else\n"
+        "db 0xdd\n"
+        "endif\n"
+        "db 0xff\n"
+        "endrepeat\n"
+        "db 0xbb\n"
+        "else\n"
+        "db 0x11\n"
+        "repeat 2\n"
+        "db 0x22\n"
+        "if 1\n"
+        "db 0x33\n"
+        "endif\n"
+        "db 0x55\n"
+        "endrepeat\n"
+        "db 0x66\n"
+        "endif\n"
+        "db 0x77\n"
+        "if 0\n"
+        "db 0xaa\n"
+        "repeat 2\n"
+        "db 0xee\n"
+        "if 0\n"
+        "db 0xcc\n"
+        "else\n"
+        "db 0xdd\n"
+        "endif\n"
+        "db 0xff\n"
+        "endrepeat\n"
+        "db 0xbb\n"
+        "else\n"
+        "db 0x11\n"
+        "repeat 1\n"
+        "db 0x22\n"
+        "if 0\n"
+        "db 0x33\n"
+        "endif\n"
+        "db 0x55\n"
+        "endrepeat\n"
+        "db 0x66\n"
+        "endif\n"
+        "db 0x88\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xaa,
+        0xee,
+        0xdd,
+        0xff,
+        0xee,
+        0xdd,
+        0xff,
+        0xbb,
+        0x77,
+        0x11,
+        0x22,
+        0x55,
+        0x66,
+        0x88,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
+
+TEST_CASE("if/repeat nesting 2", "[if]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "repeat 5, cnt\n"
+        "if cnt == 0\n"
+        "db 0xaa\n"
+        "endif\n"
+        "if cnt == 1\n"
+        "db 0xbb\n"
+        "endif\n"
+        "if cnt == 2\n"
+        "db 0xcc\n"
+        "endif\n"
+        "if cnt == 3\n"
+        "db 0xdd\n"
+        "endif\n"
+        "if cnt == 4\n"
+        "repeat 2, cnt2\n"
+        "if cnt2 == 0\n"
+        "db 0xee\n"
+        "else\n"
+        "db 0xff\n"
+        "endif\n"
+        "endrepeat\n"
+        "endif\n"
+        "endrepeat\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xaa,
+        0xbb,
+        0xcc,
+        0xdd,
+        0xee,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}
