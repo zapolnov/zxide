@@ -35,6 +35,23 @@ std::unique_ptr<AssemblerContext> AssemblerContext::takePrev()
     return ret;
 }
 
+bool AssemblerContext::isIf() const
+{
+    return false;
+}
+
+bool AssemblerContext::hasElse() const
+{
+    Q_ASSERT(false);
+    return false;
+}
+
+void AssemblerContext::beginElse(IErrorReporter* reporter, const Token& token)
+{
+    Q_ASSERT(false);
+    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+}
+
 bool AssemblerContext::isRepeat() const
 {
     return false;
@@ -165,17 +182,11 @@ const std::shared_ptr<Value>& AssemblerRepeatContext::getVariable(const std::str
 
 std::string AssemblerRepeatContext::localLabelsPrefix() const
 {
-    int depth = 0;
-    for (AssemblerContext* p = prev(); p != nullptr; p = p->prev())
-        ++depth;
-
     std::stringstream ss;
     ss << "repeat$";
     ss << mToken.file;
     ss << "$";
     ss << mToken.line;
-    ss << "$";
-    ss << depth;
 
     return ss.str();
 }
@@ -200,4 +211,66 @@ void AssemblerRepeatContext::adjustLabel(ProgramLabel* label)
 CodeEmitter* AssemblerRepeatContext::codeEmitter() const
 {
     return mCodeEmitter.get();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+AssemblerIfContext::AssemblerIfContext(std::unique_ptr<AssemblerContext> prev, const Token& token)
+    : AssemblerContext(std::move(prev))
+    , mThenCodeEmitter(std::make_shared<CodeEmitter>())
+    , mElseCodeEmitter(std::make_shared<CodeEmitter>())
+    , mIfToken(token)
+    , mHasElse(false)
+{
+}
+
+std::unique_ptr<AssemblerContext> AssemblerIfContext::clone() const
+{
+    return std::make_unique<AssemblerIfContext>(*this);
+}
+
+bool AssemblerIfContext::isIf() const
+{
+    return true;
+}
+
+bool AssemblerIfContext::hasElse() const
+{
+    return mHasElse;
+}
+
+void AssemblerIfContext::beginElse(IErrorReporter* reporter, const Token& token)
+{
+    Q_ASSERT(!mHasElse);
+    mHasElse = true;
+    mElseToken = token;
+}
+
+std::string AssemblerIfContext::localLabelsPrefix() const
+{
+    const auto& token = (mHasElse ? mElseToken : mIfToken);
+
+    std::stringstream ss;
+    ss << "if$";
+    ss << token.file;
+    ss << "$";
+    ss << token.line;
+
+    return ss.str();
+}
+
+void AssemblerIfContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
+{
+    Q_ASSERT(false);
+    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+}
+
+bool AssemblerIfContext::areGlobalLabelsAllowed() const
+{
+    return false;
+}
+
+CodeEmitter* AssemblerIfContext::codeEmitter() const
+{
+    return (mHasElse ? mElseCodeEmitter.get() : mThenCodeEmitter.get());
 }

@@ -21,6 +21,9 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDi
         { "section", &AssemblerParser::parseSectionDecl },
         { "repeat", &AssemblerParser::parseRepeatDecl },
         { "endrepeat", &AssemblerParser::parseEndRepeatDecl },
+        { "if", &AssemblerParser::parseIfDecl },
+        { "else", &AssemblerParser::parseElseDecl },
+        { "endif", &AssemblerParser::parseEndIfDecl },
     };
 
 AssemblerParser::AssemblerParser(AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
@@ -43,6 +46,8 @@ void AssemblerParser::parse()
     if (mContext->prev()) {
         if (mContext->isRepeat())
             error(tr("missing 'endrepeat'"));
+        else if (mContext->isIf())
+            error(tr("missing 'endif'"));
         else {
             Q_ASSERT(false);
             error(tr("internal compiler error"));
@@ -225,6 +230,39 @@ void AssemblerParser::parseEndRepeatDecl()
 {
     if (!mContext->isRepeat())
         error(tr("mismatched 'endrepeat'"));
+
+    popContext();
+
+    expectEol(nextToken());
+}
+
+void AssemblerParser::parseIfDecl()
+{
+    Token token = lastToken();
+
+    auto cond = parseExpression(nextToken(), true);
+    auto parentCodeEmitter = mContext->codeEmitter();
+
+    auto context = pushContext<AssemblerIfContext>(token);
+    parentCodeEmitter->emit<IfMacro>(token, std::move(cond), context->thenCodeEmitter(), context->elseCodeEmitter());
+
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseElseDecl()
+{
+    if (!mContext->isIf() || mContext->hasElse())
+        error(tr("unexpected 'else'"));
+
+    mContext->beginElse(mReporter, lastToken());
+
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseEndIfDecl()
+{
+    if (!mContext->isIf())
+        error(tr("mismatched 'endif'"));
 
     popContext();
 

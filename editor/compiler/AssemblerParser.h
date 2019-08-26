@@ -52,6 +52,9 @@ private:
     void parseSectionDecl();
     void parseRepeatDecl();
     void parseEndRepeatDecl();
+    void parseIfDecl();
+    void parseElseDecl();
+    void parseEndIfDecl();
 
     void parseDefByte();
     void parseDefWord();

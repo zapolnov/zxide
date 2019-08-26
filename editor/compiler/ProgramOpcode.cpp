@@ -100,6 +100,52 @@ void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+IfMacro::IfMacro(const Token& token, std::unique_ptr<Expression> condition,
+        std::shared_ptr<CodeEmitter> thenCodeEmitter, std::shared_ptr<CodeEmitter> elseCodeEmitter)
+    : ProgramOpcode(token)
+    , mThenCodeEmitter(std::move(thenCodeEmitter))
+    , mElseCodeEmitter(std::move(elseCodeEmitter))
+    , mCondition(std::move(condition))
+{
+}
+
+IfMacro::~IfMacro()
+{
+}
+
+unsigned IfMacro::lengthInBytes(const Program* program, IErrorReporter* reporter) const
+{
+    return codeEmitter(program, reporter)->totalLengthInBytes(program, reporter);
+}
+
+unsigned IfMacro::tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const
+{
+    return codeEmitter(program, reporter)->totalTStatesIfNotTaken(program, reporter);
+}
+
+unsigned IfMacro::tstatesIfTaken(const Program* program, IErrorReporter* reporter) const
+{
+    return codeEmitter(program, reporter)->totalTStatesIfTaken(program, reporter);
+}
+
+void IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+{
+    codeEmitter(program, reporter)->resolveAddresses(reporter, program, address);
+}
+
+void IfMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    codeEmitter(program, reporter)->emitCode(program, binary, reporter);
+}
+
+CodeEmitter* IfMacro::codeEmitter(const Program* program, IErrorReporter* reporter) const
+{
+    ExprEvalContext context(program, reporter);
+    return context.evaluate(mCondition).number ? mThenCodeEmitter.get() : mElseCodeEmitter.get();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 RepeatMacro::RepeatMacro(const Token& token, std::shared_ptr<RepeatedCodeEmitter> codeEmitter)
     : ProgramOpcode(token)
     , mCodeEmitter(std::move(codeEmitter))

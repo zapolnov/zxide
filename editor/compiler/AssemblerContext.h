@@ -27,6 +27,10 @@ public:
     AssemblerContext* prev() const { return mPrev.get(); }
     std::unique_ptr<AssemblerContext> takePrev();
 
+    virtual bool isIf() const;
+    virtual bool hasElse() const;
+    virtual void beginElse(IErrorReporter* reporter, const Token& token);
+
     virtual bool isRepeat() const;
     virtual bool hasVariable(const std::string& name) const;
     virtual const std::shared_ptr<Value>& getVariable(const std::string& name) const;
@@ -83,6 +87,33 @@ private:
     std::string mVariable;
     std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
     Token mToken;
+};
+
+class AssemblerIfContext : public AssemblerContext
+{
+public:
+    AssemblerIfContext(std::unique_ptr<AssemblerContext> prev, const Token& token);
+
+    std::unique_ptr<AssemblerContext> clone() const override;
+
+    bool isIf() const final override;
+    bool hasElse() const final override;
+    void beginElse(IErrorReporter* reporter, const Token& token) final override;
+
+    std::string localLabelsPrefix() const override;
+    void setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter) override;
+    bool areGlobalLabelsAllowed() const override;
+
+    CodeEmitter* codeEmitter() const override;
+    const std::shared_ptr<CodeEmitter>& thenCodeEmitter() const { return mThenCodeEmitter; }
+    const std::shared_ptr<CodeEmitter>& elseCodeEmitter() const { return mElseCodeEmitter; }
+
+private:
+    std::shared_ptr<CodeEmitter> mThenCodeEmitter;
+    std::shared_ptr<CodeEmitter> mElseCodeEmitter;
+    Token mIfToken;
+    Token mElseToken;
+    bool mHasElse;
 };
 
 #endif
