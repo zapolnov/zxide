@@ -381,6 +381,11 @@ void MainWindow::updateUi()
     mUi->actionSelectAll->setEnabled(tab->canSelectAll());
     mUi->actionClearSelection->setEnabled(tab->canClearSelection());
     mUi->actionGoToLine->setEnabled(tab->canGoToLine());
+    mUi->actionDraw->setEnabled(tab->canDraw());
+    mUi->actionDrawRect->setEnabled(tab->canDrawRect());
+    mUi->actionFill->setEnabled(tab->canFill());
+    mUi->actionPick->setEnabled(tab->canPick());
+    mUi->actionSelect->setEnabled(tab->canSelect());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
     mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
     mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
@@ -637,6 +642,31 @@ void MainWindow::on_actionRunToCursor_triggered()
 
         mEmulatorCore->runTo(file, line);
     }
+}
+
+void MainWindow::on_actionDraw_triggered()
+{
+    currentTab()->draw();
+}
+
+void MainWindow::on_actionDrawRect_triggered()
+{
+    currentTab()->drawRect();
+}
+
+void MainWindow::on_actionFill_triggered()
+{
+    currentTab()->fill();
+}
+
+void MainWindow::on_actionPick_triggered()
+{
+    currentTab()->pick();
+}
+
+void MainWindow::on_actionSelect_triggered()
+{
+    currentTab()->select();
 }
 
 void MainWindow::on_actionSettings_triggered()

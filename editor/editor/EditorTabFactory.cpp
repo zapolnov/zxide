@@ -1,5 +1,6 @@
 #include "EditorTabFactory.h"
 #include "editor/code/CodeEditorTab.h"
+#include "editor/tile/TileEditorTab.h"
 #include "editor/Project.h"
 #include "editor/FileManager.h"
 #include <QFileInfo>
@@ -23,6 +24,7 @@ EditorTabFactory::EditorTabFactory(QObject* parent)
     mExtensions[mProjectFileFormat->extension] = mProjectFileFormat.get();
 
     add<CodeEditorTab>(tr("Assembler source"), STR("asm"), STR(":/resources/fatcow16x16/page_white_text.png"));
+    add<TileEditorTab>(tr("Bitmap"), STR("bit"), STR(":/resources/fatcow16x16/picture.png"));
 }
 
 EditorTabFactory::~EditorTabFactory()

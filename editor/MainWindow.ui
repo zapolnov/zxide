@@ -70,6 +70,12 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
+   <addaction name="actionDraw"/>
+   <addaction name="actionDrawRect"/>
+   <addaction name="actionFill"/>
+   <addaction name="actionPick"/>
+   <addaction name="actionSelect"/>
+   <addaction name="separator"/>
    <addaction name="actionBuild"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
@@ -156,12 +162,18 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
+    <addaction name="actionDraw"/>
+    <addaction name="actionDrawRect"/>
+    <addaction name="actionFill"/>
+    <addaction name="actionPick"/>
+    <addaction name="actionSelect"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuDebug"/>
    <addaction name="menuTools"/>
+   <addaction name="menuDebug"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -519,7 +531,7 @@
      <normaloff>:/resources/fatcow16x16/gear_in.png</normaloff>:/resources/fatcow16x16/gear_in.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Settings...</string>
+    <string>S&amp;ettings...</string>
    </property>
   </action>
   <action name="actionPause">
@@ -640,6 +652,66 @@
    </property>
    <property name="toolTip">
     <string>Open project</string>
+   </property>
+  </action>
+  <action name="actionDraw">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/pencil.png</normaloff>:/resources/fatcow16x16/pencil.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Draw</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
+   </property>
+  </action>
+  <action name="actionDrawRect">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/shape_square_edit.png</normaloff>:/resources/fatcow16x16/shape_square_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw &amp;rect</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
+  </action>
+  <action name="actionFill">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/paintcan.png</normaloff>:/resources/fatcow16x16/paintcan.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Fill</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
+  </action>
+  <action name="actionPick">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/pipette.png</normaloff>:/resources/fatcow16x16/pipette.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Pick</string>
+   </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/select.png</normaloff>:/resources/fatcow16x16/select.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Select</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
    </property>
   </action>
  </widget>

@@ -86,6 +86,12 @@ private:
     Q_SLOT void on_actionStepOver_triggered();
     Q_SLOT void on_actionRunToCursor_triggered();
 
+    Q_SLOT void on_actionDraw_triggered();
+    Q_SLOT void on_actionDrawRect_triggered();
+    Q_SLOT void on_actionFill_triggered();
+    Q_SLOT void on_actionPick_triggered();
+    Q_SLOT void on_actionSelect_triggered();
+
     Q_SLOT void on_actionSettings_triggered();
 
     Q_SLOT void on_actionAbout_triggered();

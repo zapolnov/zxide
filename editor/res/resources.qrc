@@ -1,5 +1,20 @@
 <RCC>
   <qresource prefix="resources">
+    <file>colors/00_black.png</file>
+    <file>colors/01_blue.png</file>
+    <file>colors/02_red.png</file>
+    <file>colors/03_magenta.png</file>
+    <file>colors/04_green.png</file>
+    <file>colors/05_cyan.png</file>
+    <file>colors/06_yellow.png</file>
+    <file>colors/07_white.png</file>
+    <file>colors/09_bright_blue.png</file>
+    <file>colors/10_bright_red.png</file>
+    <file>colors/11_bright_magenta.png</file>
+    <file>colors/12_bright_green.png</file>
+    <file>colors/13_bright_cyan.png</file>
+    <file>colors/14_bright_yellow.png</file>
+    <file>colors/15_bright_white.png</file>
     <file>fatcow16x16/modified/book+folders_explorer.png</file>
     <file>fatcow16x16/modified/page_white+font_red_delete.png</file>
     <file>fatcow16x16/modified/page_white_stack+font_red_delete.png</file>
@@ -21,7 +36,13 @@
     <file>fatcow16x16/page_white.png</file>
     <file>fatcow16x16/page_white_add.png</file>
     <file>fatcow16x16/page_white_text.png</file>
+    <file>fatcow16x16/paintcan.png</file>
     <file>fatcow16x16/paste_plain.png</file>
+    <file>fatcow16x16/pencil.png</file>
+    <file>fatcow16x16/picture.png</file>
+    <file>fatcow16x16/pipette.png</file>
+    <file>fatcow16x16/select.png</file>
+    <file>fatcow16x16/shape_square_edit.png</file>
     <file>fatcow16x16/redo.png</file>
     <file>fatcow16x16/rules.png</file>
     <file>fatcow16x16/select_by_adding_to_selection.png</file>

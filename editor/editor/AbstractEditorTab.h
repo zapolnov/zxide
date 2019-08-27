@@ -32,6 +32,11 @@ public:
     virtual bool canClearSelection() const { return false; }
     virtual bool canGoToLine() const { return false; }
     virtual bool canRunToCursor() const { return false; }
+    virtual bool canDraw() const { return false; }
+    virtual bool canDrawRect() const { return false; }
+    virtual bool canFill() const { return false; }
+    virtual bool canPick() const { return false; }
+    virtual bool canSelect() const { return false; }
 
     virtual bool save() { return true; }
     virtual void undo() {}
@@ -43,9 +48,15 @@ public:
     virtual void selectAll() {}
     virtual void clearSelection() {}
     virtual void goToLine(int line) {}
-    virtual void setFocusToEditor() {}
+    virtual void draw() {}
+    virtual void drawRect() {}
+    virtual void fill() {}
+    virtual void pick() {}
+    virtual void select() {}
 
     virtual void reloadSettings() {}
+
+    virtual void setFocusToEditor() {}
 
 signals:
     void updateUi();
