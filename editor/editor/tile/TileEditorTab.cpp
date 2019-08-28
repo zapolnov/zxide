@@ -55,6 +55,9 @@ TileEditorTab::~TileEditorTab()
 
 bool TileEditorTab::loadFile(File* f)
 {
+    if (f == file() && isModified())
+        return true;
+
     reset();
 
     QByteArray data = loadFileData(f);
