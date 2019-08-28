@@ -38,6 +38,12 @@ public:
     virtual bool canPick() const { return false; }
     virtual bool canSelect() const { return false; }
 
+    virtual bool isDrawToolActive() const { return false; }
+    virtual bool isDrawRectToolActive() const { return false; }
+    virtual bool isFillToolActive() const { return false; }
+    virtual bool isPickToolActive() const { return false; }
+    virtual bool isSelectToolActive() const { return false; }
+
     virtual bool save() { return true; }
     virtual void undo() {}
     virtual void redo() {}

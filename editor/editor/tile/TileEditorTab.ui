@@ -116,13 +116,13 @@
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
-         <widget class="QWidget" name="editorWidget">
+         <widget class="TileEditorWidget" name="editorWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>495</width>
-            <height>530</height>
+            <width>489</width>
+            <height>514</height>
            </rect>
           </property>
          </widget>
@@ -493,8 +493,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>170</width>
-            <height>232</height>
+            <width>168</width>
+            <height>127</height>
            </rect>
           </property>
          </widget>
@@ -511,6 +511,12 @@
    <class>QTabBar</class>
    <extends>QWidget</extends>
    <header location="global">QTabBar</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TileEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>editor/tile/TileEditorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

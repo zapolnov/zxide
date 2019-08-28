@@ -28,9 +28,13 @@ qt_add_sources(GameEditor
         editor/code/CodeEditorTab.ui
         editor/code/TextEditor.cpp
         editor/code/TextEditor.h
+        editor/tile/TileData.cpp
+        editor/tile/TileData.h
         editor/tile/TileEditorTab.cpp
         editor/tile/TileEditorTab.h
         editor/tile/TileEditorTab.ui
+        editor/tile/TileEditorWidget.cpp
+        editor/tile/TileEditorWidget.h
         editor/AbstractEditorTab.cpp
         editor/AbstractEditorTab.h
         editor/EditorTabFactory.cpp

@@ -140,6 +140,7 @@ AbstractEditorTab* MainWindow::setCurrentTab(File* file)
             return nullptr;
 
         if (!tab->loadFile(file)) {
+            file->destroyTab();
             tab->deleteLater();
             return nullptr;
         }
@@ -395,6 +396,12 @@ void MainWindow::updateUi()
     mUi->actionStepOut->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
+
+    mUi->actionDraw->setChecked(tab->isDrawToolActive());
+    mUi->actionDrawRect->setChecked(tab->isDrawRectToolActive());
+    mUi->actionFill->setChecked(tab->isFillToolActive());
+    mUi->actionPick->setChecked(tab->isPickToolActive());
+    mUi->actionSelect->setChecked(tab->isSelectToolActive());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());

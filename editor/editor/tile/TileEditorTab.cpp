@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QSaveFile>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include <QJsonObject>
 
 static const QString JsonKey_Version = QStringLiteral("version");
@@ -13,6 +14,7 @@ static const QString JsonKey_Format = QStringLiteral("format");
 static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
 static const QString JsonKey_ColorMode = QStringLiteral("color_mode");
+static const QString JsonKey_Pixels = QStringLiteral("pixels");
 static const QString JsonValue_Standard = QStringLiteral("standard");
 static const QString JsonValue_Multicolor = QStringLiteral("multicolor");
 static const QString JsonValue_Bicolor = QStringLiteral("bicolor");
@@ -75,14 +77,22 @@ bool TileEditorTab::loadFile(File* f)
             return false;
         }
 
+        int w = root[JsonKey_Width].toInt();
+        int h = root[JsonKey_Height].toInt();
+
+        if (!mUi->editorWidget->setPixels(w, h, root[JsonKey_Pixels].toArray())) {
+            mUi->editorWidget->reset();
+            QMessageBox::critical(this, tr("Error"),
+                tr("Unable to read file \"%1\": file is corrupt.").arg(f->fileInfo().absoluteFilePath()));
+            return false;
+        }
+
         mUi->identifierEdit->setText(root[JsonKey_Identifier].toString());
         mUi->sectionEdit->setText(root[JsonKey_Section].toString());
         selectItem(mUi->formatCombo, root[JsonKey_Format].toString());
-        selectItem(mUi->widthCombo, root[JsonKey_Width].toInt());
-        selectItem(mUi->heightCombo, root[JsonKey_Height].toInt());
+        selectItem(mUi->widthCombo, w);
+        selectItem(mUi->heightCombo, h);
         selectItem(mUi->colorModeCombo, root[JsonKey_ColorMode].toString());
-
-        // FIXME: read pixels
     }
 
     mUi->identifierEdit->setEnabled(true);
@@ -119,86 +129,87 @@ bool TileEditorTab::isModified() const
     if (mSavedHeight != selectedItem(mUi->heightCombo).toInt())
         return true;
 
-    // FIXME
-    return false;
+    return mUi->editorWidget->isModified();
 }
 
 bool TileEditorTab::canUndo() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->canUndo();
 }
 
 bool TileEditorTab::canRedo() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->canRedo();
 }
 
 bool TileEditorTab::canCut() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->canCut();
 }
 
 bool TileEditorTab::canCopy() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->canCopy();
 }
 
 bool TileEditorTab::canPaste() const
 {
-    // FIXME
-    return false;
+    return file() != nullptr;
 }
 
 bool TileEditorTab::canClear() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->canClearArea();
 }
 
 bool TileEditorTab::canSelectAll() const
 {
-    // FIXME
-    return false;
+    return file() != nullptr;
 }
 
 bool TileEditorTab::canClearSelection() const
 {
-    // FIXME
-    return false;
+    return file() && mUi->editorWidget->hasSelection();
 }
 
 bool TileEditorTab::canDraw() const
 {
-    // FIXME
-    return false;
+    return file() != nullptr;
 }
 
 bool TileEditorTab::canDrawRect() const
 {
-    // FIXME
-    return false;
+    return file() != nullptr;
 }
 
 bool TileEditorTab::canFill() const
 {
-    // FIXME
-    return false;
-}
-
-bool TileEditorTab::canPick() const
-{
-    // FIXME
-    return false;
+    return file() != nullptr;
 }
 
 bool TileEditorTab::canSelect() const
 {
-    // FIXME
-    return false;
+    return file() != nullptr;
+}
+
+bool TileEditorTab::isDrawToolActive() const
+{
+    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Draw;
+}
+
+bool TileEditorTab::isDrawRectToolActive() const
+{
+    return file() && mUi->editorWidget->currentTool() == TileEditorTool::DrawRect;
+}
+
+bool TileEditorTab::isFillToolActive() const
+{
+    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Fill;
+}
+
+bool TileEditorTab::isSelectToolActive() const
+{
+    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Select;
 }
 
 bool TileEditorTab::save()
@@ -221,6 +232,7 @@ bool TileEditorTab::save()
     root[JsonKey_Width] = selectedItem(mUi->widthCombo).toInt();
     root[JsonKey_Height] = selectedItem(mUi->heightCombo).toInt();
     root[JsonKey_ColorMode] = selectedItem(mUi->colorModeCombo).toString();
+    root[JsonKey_Pixels] = mUi->editorWidget->pixels();
     doc.setObject(root);
     QByteArray json = doc.toJson(QJsonDocument::Indented);
 
@@ -241,8 +253,6 @@ bool TileEditorTab::save()
         return false;
     }
 
-    // FIXME: save pixels
-
     setSaved();
     emit updateUi();
 
@@ -251,67 +261,62 @@ bool TileEditorTab::save()
 
 void TileEditorTab::undo()
 {
-    // FIXME
+    mUi->editorWidget->undo();
 }
 
 void TileEditorTab::redo()
 {
-    // FIXME
+    mUi->editorWidget->redo();
 }
 
 void TileEditorTab::cut()
 {
-    // FIXME
+    mUi->editorWidget->cut();
 }
 
 void TileEditorTab::copy()
 {
-    // FIXME
+    mUi->editorWidget->copy();
 }
 
 void TileEditorTab::paste()
 {
-    // FIXME
+    mUi->editorWidget->paste();
 }
 
 void TileEditorTab::clear()
 {
-    // FIXME
+    mUi->editorWidget->clearArea();
 }
 
 void TileEditorTab::selectAll()
 {
-    // FIXME
+    mUi->editorWidget->selectAll();
 }
 
 void TileEditorTab::clearSelection()
 {
-    // FIXME
+    mUi->editorWidget->clearSelection();
 }
 
 void TileEditorTab::draw()
 {
-    // FIXME
+    mUi->editorWidget->setTool(TileEditorTool::Draw);
 }
 
 void TileEditorTab::drawRect()
 {
-    // FIXME
+    mUi->editorWidget->setTool(TileEditorTool::DrawRect);
 }
 
 void TileEditorTab::fill()
 {
-    // FIXME
-}
-
-void TileEditorTab::pick()
-{
-    // FIXME
+    mUi->editorWidget->setTool(TileEditorTool::Fill);
 }
 
 void TileEditorTab::select()
 {
-    // FIXME
+    mUi->editorWidget->setTool(TileEditorTool::Select);
 }
 
 void TileEditorTab::reloadSettings()
@@ -346,6 +351,7 @@ void TileEditorTab::reset()
     mUi->colorModeCombo->setEnabled(false);
     mUi->editScrollArea->setEnabled(false);
     mUi->previewScrollArea->setEnabled(false);
+    mUi->editorWidget->reset();
 }
 
 void TileEditorTab::setSaved()
@@ -356,6 +362,31 @@ void TileEditorTab::setSaved()
     mSavedColorMode = selectedItem(mUi->colorModeCombo).toString();
     mSavedWidth = selectedItem(mUi->widthCombo).toInt();
     mSavedHeight = selectedItem(mUi->heightCombo).toInt();
+    mUi->editorWidget->setSaved();
+}
+
+void TileEditorTab::on_editorWidget_sizeChanged()
+{
+    selectItem(mUi->widthCombo, mUi->editorWidget->width());
+    selectItem(mUi->heightCombo, mUi->editorWidget->height());
+}
+
+void TileEditorTab::on_widthCombo_currentIndexChanged(int)
+{
+    int w = selectedItem(mUi->widthCombo).toInt();
+    int h = selectedItem(mUi->heightCombo).toInt();
+    if (w != 0 && h != 0)
+        mUi->editorWidget->setSize(w, h);
+    emit updateUi();
+}
+
+void TileEditorTab::on_heightCombo_currentIndexChanged(int)
+{
+    int w = selectedItem(mUi->widthCombo).toInt();
+    int h = selectedItem(mUi->heightCombo).toInt();
+    if (w != 0 && h != 0)
+        mUi->editorWidget->setSize(w, h);
+    emit updateUi();
 }
 
 bool TileEditorTab::selectItem(QComboBox* combo, const QVariant& value)

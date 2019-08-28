@@ -29,8 +29,12 @@ public:
     bool canDraw() const override;
     bool canDrawRect() const override;
     bool canFill() const override;
-    bool canPick() const override;
     bool canSelect() const override;
+
+    bool isDrawToolActive() const override;
+    bool isDrawRectToolActive() const override;
+    bool isFillToolActive() const override;
+    bool isSelectToolActive() const override;
 
     bool save() override;
     void undo() override;
@@ -44,7 +48,6 @@ public:
     void draw() override;
     void drawRect() override;
     void fill() override;
-    void pick() override;
     void select() override;
 
     void reloadSettings() override;
@@ -63,12 +66,14 @@ private:
     void reset();
     void setSaved();
 
+    Q_SLOT void on_editorWidget_sizeChanged();
+    Q_SLOT void on_editorWidget_updateUi() { emit updateUi(); }
     Q_SLOT void on_identifierEdit_textChanged() { emit updateUi(); }
     Q_SLOT void on_sectionEdit_textChanged() { emit updateUi(); }
     Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
-    Q_SLOT void on_widthCombo_currentIndexChanged(int) { emit updateUi(); }
-    Q_SLOT void on_heightCombo_currentIndexChanged(int) { emit updateUi(); }
     Q_SLOT void on_colorModeCombo_currentIndexChanged(int) { emit updateUi(); }
+    Q_SLOT void on_widthCombo_currentIndexChanged(int);
+    Q_SLOT void on_heightCombo_currentIndexChanged(int);
 
     static bool selectItem(QComboBox* combo, const QVariant& value);
     static QVariant selectedItem(const QComboBox* combo);

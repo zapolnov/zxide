@@ -655,6 +655,9 @@
    </property>
   </action>
   <action name="actionDraw">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/pencil.png</normaloff>:/resources/fatcow16x16/pencil.png</iconset>
@@ -667,6 +670,9 @@
    </property>
   </action>
   <action name="actionDrawRect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/shape_square_edit.png</normaloff>:/resources/fatcow16x16/shape_square_edit.png</iconset>
@@ -679,6 +685,9 @@
    </property>
   </action>
   <action name="actionFill">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/paintcan.png</normaloff>:/resources/fatcow16x16/paintcan.png</iconset>
@@ -691,6 +700,9 @@
    </property>
   </action>
   <action name="actionPick">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/pipette.png</normaloff>:/resources/fatcow16x16/pipette.png</iconset>
@@ -703,6 +715,9 @@
    </property>
   </action>
   <action name="actionSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/select.png</normaloff>:/resources/fatcow16x16/select.png</iconset>
