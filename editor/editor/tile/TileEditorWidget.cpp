@@ -9,11 +9,57 @@
 #include <QApplication>
 #include <QDataStream>
 #include <QMouseEvent>
+#include <QTimer>
 #include <QJsonArray>
 
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-tile");
 static const int PixelWidth = 8;
 static const int PixelHeight = 8;
+
+static QColor Palette[] = {
+    QColor(0x00, 0x00, 0x00),
+    QColor(0x00, 0x00, 0xc0),
+    QColor(0xc0, 0x00, 0x00),
+    QColor(0xc0, 0x00, 0xc0),
+    QColor(0x00, 0xc0, 0x00),
+    QColor(0x00, 0xc0, 0xc0),
+    QColor(0xc0, 0xc0, 0x00),
+    QColor(0xc0, 0xc0, 0xc0),
+    QColor(0x00, 0x00, 0x00),
+    QColor(0x00, 0x00, 0xff),
+    QColor(0xff, 0x00, 0x00),
+    QColor(0xff, 0x00, 0xff),
+    QColor(0x00, 0xff, 0x00),
+    QColor(0x00, 0xff, 0xff),
+    QColor(0xff, 0xff, 0x00),
+    QColor(0xff, 0xff, 0xff),
+};
+
+namespace
+{
+    struct Zone
+    {
+        int x;
+        int y;
+        int h;
+    };
+
+    Zone getZone(const TileEditorWidget* widget, int x, int y)
+    {
+        Zone z;
+        z.x = (x & ~7);
+        z.y = 0;
+        z.h = 0;
+
+        switch (widget->colorMode()) {
+            case TileColorMode::Standard: z.y = (y & ~7); z.h = 8; break;
+            case TileColorMode::Multicolor: z.y = y; z.h = 1; break;
+            case TileColorMode::Bicolor: z.y = (y & ~1); z.h = 2; break;
+        }
+
+        return z;
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Operations
@@ -154,6 +200,53 @@ private:
     char mNewValue;
 };
 
+class TileEditorWidget::ColorizeOperation : public Operation
+{
+public:
+    ColorizeOperation(Zone zone, int color, bool ink)
+        : mZone(zone)
+        , mColor(color)
+        , mInk(ink)
+    {
+    }
+
+    static char calcNewAttrib(TileData* data, int x, int y, int color, bool ink)
+    {
+        char attrib = data->attribAt(x, y, TileColorMode::Multicolor) & 0x3F;
+        if (ink)
+            attrib = (attrib & ~7) | (color & 7);
+        else
+            attrib = (attrib & ~0x38) | ((color & 7) << 3);
+        return attrib | ((color & 8) << 3) | ((color & 16) << 3);
+    }
+
+    void redo(TileData* data) override
+    {
+        int x1 = mZone.x;
+        int y1 = mZone.y;
+        int x2 = x1 + 7;
+        int y2 = y1 + mZone.h - 1;
+
+        mOldValue = data->attrib(x1, y1, x2, y2);
+
+        for (int y = y1; y <= y2; y++) {
+            for (int x = x1; x <= x2; x++)
+                data->attribAt(x, y, TileColorMode::Multicolor) = calcNewAttrib(data, x, y, mColor, mInk);
+        }
+    }
+
+    void undo(TileData* data) override
+    {
+        data->setAttrib(mZone.x, mZone.y, 8, mZone.h, mOldValue);
+    }
+
+private:
+    QByteArray mOldValue;
+    Zone mZone;
+    int mColor;
+    bool mInk;
+};
+
 class TileEditorWidget::ClearOperation : public Operation
 {
 public:
@@ -256,6 +349,7 @@ class TileEditorWidget::DrawTool : public Tool
 public:
     DrawTool()
         : mValue(0)
+        , mDragging(false)
     {
     }
 
@@ -280,11 +374,12 @@ public:
 
     void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
-        drawOverlayTile(widget, painter, x, y, mValue);
+        drawOverlayTile(widget, painter, x, y, (mDragging ? mValue : 1));
     }
 
     void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
     {
+        mDragging = true;
         mValue = value;
         emitPixel(widget, x, y, value);
     }
@@ -294,8 +389,14 @@ public:
         emitPixel(widget, x, y, mValue);
     }
 
+    void endDrag(TileEditorWidget* widget, bool cancel) override
+    {
+        mDragging = false;
+    }
+
 private:
     char mValue;
+    bool mDragging;
 
     void emitPixel(TileEditorWidget* widget, int x, int y, char value)
     {
@@ -408,6 +509,7 @@ class TileEditorWidget::FillTool : public Tool
 public:
     FillTool()
         : mValue(0)
+        , mDragging(false)
     {
     }
 
@@ -418,13 +520,14 @@ public:
 
     void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
-        DrawTool::drawOverlayTile(widget, painter, x, y, 1);
+        DrawTool::drawOverlayTile(widget, painter, x, y, (mDragging ? mValue : 1));
     }
 
     void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
     {
         mX = x;
         mY = y;
+        mDragging = true;
         mValue = value;
     }
 
@@ -436,6 +539,7 @@ public:
 
     void endDrag(TileEditorWidget* widget, bool cancel) override
     {
+        mDragging = false;
         if (cancel)
             return;
         if (!widget->mTileData->isValidCoord(mX, mY))
@@ -447,8 +551,81 @@ private:
     int mX;
     int mY;
     char mValue;
+    bool mDragging;
 
     Q_DISABLE_COPY(FillTool)
+};
+
+class TileEditorWidget::ColorizeTool : public Tool
+{
+public:
+    ColorizeTool()
+        : mX(0)
+        , mY(0)
+        , mValue(0)
+    {
+    }
+
+    TileEditorTool id() const override
+    {
+        return TileEditorTool::Colorize;
+    }
+
+    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    {
+        auto z = getZone(widget, x, y);
+        painter.setPen(QColor(128, 128, 128));
+        painter.setBrush(QColor(128, 128, 128, 128));
+        painter.drawRect(z.x * PixelWidth, z.y * PixelHeight, 8 * PixelWidth, z.h * PixelHeight);
+    }
+
+    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    {
+        mX = x;
+        mY = y;
+        mValue = value;
+        colorize(widget, mX, mY, widget->mSelectedColor, mValue != 0);
+    }
+
+    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    {
+        mX = x;
+        mY = y;
+        colorize(widget, mX, mY, widget->mSelectedColor, mValue != 0);
+    }
+
+    void endDrag(TileEditorWidget* widget, bool cancel) override
+    {
+    }
+
+private:
+    int mX;
+    int mY;
+    char mValue;
+
+    void colorize(TileEditorWidget* widget, int x, int y, int color, bool ink)
+    {
+        if (!widget->mTileData->isValidCoord(x, y))
+            return;
+
+        auto z = getZone(widget, x, y);
+
+        bool equal = true;
+        for (int yy = 0; yy < z.h; yy++) {
+            int a = ColorizeOperation::calcNewAttrib(widget->mTileData, x, z.y + yy, color, ink);
+            if (widget->mTileData->attribAt(x, y, widget->mColorMode) != a) {
+                equal = false;
+                break;
+            }
+        }
+
+        if (equal)
+            return;
+
+        widget->pushOperation(new ColorizeOperation(z, color, ink));
+    }
+
+    Q_DISABLE_COPY(ColorizeTool)
 };
 
 class TileEditorWidget::SelectTool : public Tool
@@ -512,10 +689,17 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
     , mSavedIndex(0)
     , mSelection(Rect::empty())
     , mMousePosition(-1, -1)
+    , mColorMode(TileColorMode::Standard)
     , mMousePressed(Qt::NoButton)
+    , mSelectedColor(0)
+    , mFlash(false)
 {
     mTileData = new TileData(8, 8, this);
     setMouseTracking(true);
+
+    mTimer = new QTimer(this);
+    mTimer->start(1000 * 16 / 50);
+    connect(mTimer, &QTimer::timeout, this, [this]{ mFlash = !mFlash; repaint(); });
 
     auto onSizeChanged = [this] {
             setFixedSize(mTileData->width() * PixelWidth, mTileData->height() * PixelHeight);
@@ -523,6 +707,7 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
         };
 
     connect(mTileData, &TileData::sizeChanged, this, onSizeChanged);
+    onSizeChanged();
 }
 
 TileEditorWidget::~TileEditorWidget()
@@ -562,6 +747,24 @@ void TileEditorWidget::setSize(int w, int h)
         pushOperation(new ResizeOperation(w, h));
 }
 
+void TileEditorWidget::setColorMode(TileColorMode mode)
+{
+    if (mColorMode != mode) {
+        mColorMode = mode;
+        update();
+        emit updateUi();
+    }
+}
+
+void TileEditorWidget::setColor(int color)
+{
+    if (mSelectedColor != color) {
+        mSelectedColor = color;
+        update();
+        emit updateUi();
+    }
+}
+
 QJsonArray TileEditorWidget::pixels() const
 {
     QJsonArray result;
@@ -574,9 +777,23 @@ QJsonArray TileEditorWidget::pixels() const
     return result;
 }
 
-bool TileEditorWidget::setPixels(int w, int h, QJsonArray data)
+QJsonArray TileEditorWidget::attribs() const
 {
-    if (data.size() != h)
+    QJsonArray result;
+
+    for (int y = 0; y < mTileData->height(); y++) {
+        QJsonArray lineAttribs;
+        for (int x = 0; x < mTileData->width(); x += 8)
+            lineAttribs.append(mTileData->attribAt(x, y, TileColorMode::Multicolor));
+        result.append(lineAttribs);
+    }
+
+    return result;
+}
+
+bool TileEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attribs)
+{
+    if (data.size() != h || attribs.size() != h)
         return false;
 
     if (w != mTileData->width() || h != mTileData->height())
@@ -597,6 +814,13 @@ bool TileEditorWidget::setPixels(int w, int h, QJsonArray data)
             else
                 return false;
         }
+
+        QJsonArray lineAttribs = attribs[y].toArray();
+        if (lineAttribs.size() != ((w + 7) >> 3))
+            return false;
+
+        for (int x = 0, i = 0; x < w; x += 8, i++)
+            mTileData->attribAt(x, y, TileColorMode::Multicolor) = (char)(lineAttribs[i].toInt() & 0xff);
     }
 
     cancelInput();
@@ -818,6 +1042,7 @@ void TileEditorWidget::setTool(TileEditorTool tool)
             case TileEditorTool::Draw: mCurrentTool.reset(new DrawTool()); break;
             case TileEditorTool::DrawRect: mCurrentTool.reset(new DrawRectTool()); break;
             case TileEditorTool::Fill: mCurrentTool.reset(new FillTool()); break;
+            case TileEditorTool::Colorize: mCurrentTool.reset(new ColorizeTool()); break;
             case TileEditorTool::Select: mCurrentTool.reset(new SelectTool()); break;
         }
         update();
@@ -833,7 +1058,18 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
         for (int tileX = 0; tileX < mTileData->width(); tileX++) {
             int x = tileX * PixelWidth;
             int y = tileY * PixelHeight;
-            painter.fillRect(x, y, PixelWidth, PixelHeight, mTileData->at(tileX, tileY) ? Qt::white : Qt::black);
+
+            char value = mTileData->at(tileX, tileY);
+            char attrib = mTileData->attribAt(tileX, tileY, mColorMode);
+
+            if ((attrib & 0x80) != 0 && mFlash)
+                value = !value;
+
+            int color = (value ? attrib & 7 : (attrib & 0x38) >> 3);
+            if (attrib & 0x40)
+                color += 8;
+
+            painter.fillRect(x, y, PixelWidth, PixelHeight, Palette[color]);
         }
     }
 

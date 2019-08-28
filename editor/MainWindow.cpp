@@ -385,6 +385,7 @@ void MainWindow::updateUi()
     mUi->actionDraw->setEnabled(tab->canDraw());
     mUi->actionDrawRect->setEnabled(tab->canDrawRect());
     mUi->actionFill->setEnabled(tab->canFill());
+    mUi->actionColorize->setEnabled(tab->canColorize());
     mUi->actionPick->setEnabled(tab->canPick());
     mUi->actionSelect->setEnabled(tab->canSelect());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
@@ -400,6 +401,7 @@ void MainWindow::updateUi()
     mUi->actionDraw->setChecked(tab->isDrawToolActive());
     mUi->actionDrawRect->setChecked(tab->isDrawRectToolActive());
     mUi->actionFill->setChecked(tab->isFillToolActive());
+    mUi->actionColorize->setChecked(tab->isColorizeToolActive());
     mUi->actionPick->setChecked(tab->isPickToolActive());
     mUi->actionSelect->setChecked(tab->isSelectToolActive());
 
@@ -664,6 +666,11 @@ void MainWindow::on_actionDrawRect_triggered()
 void MainWindow::on_actionFill_triggered()
 {
     currentTab()->fill();
+}
+
+void MainWindow::on_actionColorize_triggered()
+{
+    currentTab()->colorize();
 }
 
 void MainWindow::on_actionPick_triggered()

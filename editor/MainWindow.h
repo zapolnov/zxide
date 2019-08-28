@@ -89,6 +89,7 @@ private:
     Q_SLOT void on_actionDraw_triggered();
     Q_SLOT void on_actionDrawRect_triggered();
     Q_SLOT void on_actionFill_triggered();
+    Q_SLOT void on_actionColorize_triggered();
     Q_SLOT void on_actionPick_triggered();
     Q_SLOT void on_actionSelect_triggered();
 

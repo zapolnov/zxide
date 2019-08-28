@@ -35,12 +35,14 @@ public:
     virtual bool canDraw() const { return false; }
     virtual bool canDrawRect() const { return false; }
     virtual bool canFill() const { return false; }
+    virtual bool canColorize() const { return false; }
     virtual bool canPick() const { return false; }
     virtual bool canSelect() const { return false; }
 
     virtual bool isDrawToolActive() const { return false; }
     virtual bool isDrawRectToolActive() const { return false; }
     virtual bool isFillToolActive() const { return false; }
+    virtual bool isColorizeToolActive() const { return false; }
     virtual bool isPickToolActive() const { return false; }
     virtual bool isSelectToolActive() const { return false; }
 
@@ -57,6 +59,7 @@ public:
     virtual void draw() {}
     virtual void drawRect() {}
     virtual void fill() {}
+    virtual void colorize() {}
     virtual void pick() {}
     virtual void select() {}
 

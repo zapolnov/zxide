@@ -9,6 +9,9 @@
 
 class TileData;
 class QJsonArray;
+class QTimer;
+
+enum class TileColorMode : int;
 
 enum class TileEditorTool
 {
@@ -16,6 +19,7 @@ enum class TileEditorTool
     Draw,
     DrawRect,
     Fill,
+    Colorize,
     Select,
 };
 
@@ -34,8 +38,13 @@ public:
     void reset();
     void setSize(int w, int h);
 
+    TileColorMode colorMode() const { return mColorMode; }
+    void setColorMode(TileColorMode mode);
+    void setColor(int color);
+
     QJsonArray pixels() const;
-    bool setPixels(int w, int h, QJsonArray data);
+    QJsonArray attribs() const;
+    bool setPixels(int w, int h, QJsonArray data, QJsonArray attribs);
     void setSaved();
 
     bool canUndo() const;
@@ -79,6 +88,7 @@ private:
     class DrawOperation;
     class DrawRectOperation;
     class FillOperation;
+    class ColorizeOperation;
     class ClearOperation;
     class PasteOperation;
     class ResizeOperation;
@@ -87,6 +97,7 @@ private:
     class DrawTool;
     class DrawRectTool;
     class FillTool;
+    class ColorizeTool;
     class SelectTool;
 
     struct Rect
@@ -112,13 +123,17 @@ private:
     };
 
     TileData* mTileData;
+    QTimer* mTimer;
     std::unique_ptr<Tool> mCurrentTool;
     std::vector<std::unique_ptr<Operation>> mUndoStack;
     size_t mUndoStackIndex;
     size_t mSavedIndex;
     Rect mSelection;
     QPoint mMousePosition;
+    TileColorMode mColorMode;
     Qt::MouseButton mMousePressed;
+    int mSelectedColor;
+    bool mFlash;
 
     void cancelInput();
     void updateMousePosition(QMouseEvent* event);

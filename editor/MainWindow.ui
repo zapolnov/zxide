@@ -73,6 +73,7 @@
    <addaction name="actionDraw"/>
    <addaction name="actionDrawRect"/>
    <addaction name="actionFill"/>
+   <addaction name="actionColorize"/>
    <addaction name="actionPick"/>
    <addaction name="actionSelect"/>
    <addaction name="separator"/>
@@ -165,6 +166,7 @@
     <addaction name="actionDraw"/>
     <addaction name="actionDrawRect"/>
     <addaction name="actionFill"/>
+    <addaction name="actionColorize"/>
     <addaction name="actionPick"/>
     <addaction name="actionSelect"/>
     <addaction name="separator"/>
@@ -727,6 +729,21 @@
    </property>
    <property name="shortcut">
     <string>S</string>
+   </property>
+  </action>
+  <action name="actionColorize">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/palette.png</normaloff>:/resources/fatcow16x16/palette.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Colorize</string>
+   </property>
+   <property name="shortcut">
+    <string>C</string>
    </property>
   </action>
  </widget>

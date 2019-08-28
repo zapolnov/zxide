@@ -1,5 +1,6 @@
 #include "TileEditorTab.h"
 #include "editor/FileManager.h"
+#include "editor/tile/TileData.h"
 #include "ui_TileEditorTab.h"
 #include <QMessageBox>
 #include <QSaveFile>
@@ -15,6 +16,7 @@ static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
 static const QString JsonKey_ColorMode = QStringLiteral("color_mode");
 static const QString JsonKey_Pixels = QStringLiteral("pixels");
+static const QString JsonKey_Attribs = QStringLiteral("attribs");
 static const QString JsonValue_Standard = QStringLiteral("standard");
 static const QString JsonValue_Multicolor = QStringLiteral("multicolor");
 static const QString JsonValue_Bicolor = QStringLiteral("bicolor");
@@ -25,6 +27,9 @@ static const int FileFormatVersion = 1;
 TileEditorTab::TileEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
     , mUi(new Ui_TileEditorTab)
+    , mSavedWidth(0)
+    , mSavedHeight(0)
+    , mSelectedColor(-1)
 {
     mUi->setupUi(this);
 
@@ -36,12 +41,12 @@ TileEditorTab::TileEditorTab(QWidget* parent)
     mUi->colorModeCombo->addItem(tr("Standard"), JsonValue_Standard);
     mUi->colorModeCombo->addItem(tr("Multicolor (8x1)"), JsonValue_Multicolor);
     mUi->colorModeCombo->addItem(tr("Bicolor (8x2)"), JsonValue_Bicolor);
+    on_colorModeCombo_currentIndexChanged(-1);
 
     mUi->formatCombo->addItem(tr("Bitmap (8 bytes)"), JsonValue_Monochrome);
     mUi->formatCombo->addItem(tr("NIRVANA+ code"), JsonValue_NirvanaPlusCode);
 
-    mUi->tabBar->addTab(tr("Pixels"));
-    mUi->tabBar->addTab(tr("Colors"));
+    setColor(0, false);
 }
 
 TileEditorTab::~TileEditorTab()
@@ -80,7 +85,7 @@ bool TileEditorTab::loadFile(File* f)
         int w = root[JsonKey_Width].toInt();
         int h = root[JsonKey_Height].toInt();
 
-        if (!mUi->editorWidget->setPixels(w, h, root[JsonKey_Pixels].toArray())) {
+        if (!mUi->editorWidget->setPixels(w, h, root[JsonKey_Pixels].toArray(), root[JsonKey_Attribs].toArray())) {
             mUi->editorWidget->reset();
             QMessageBox::critical(this, tr("Error"),
                 tr("Unable to read file \"%1\": file is corrupt.").arg(f->fileInfo().absoluteFilePath()));
@@ -187,6 +192,11 @@ bool TileEditorTab::canFill() const
     return file() != nullptr;
 }
 
+bool TileEditorTab::canColorize() const
+{
+    return file() != nullptr;
+}
+
 bool TileEditorTab::canSelect() const
 {
     return file() != nullptr;
@@ -205,6 +215,11 @@ bool TileEditorTab::isDrawRectToolActive() const
 bool TileEditorTab::isFillToolActive() const
 {
     return file() && mUi->editorWidget->currentTool() == TileEditorTool::Fill;
+}
+
+bool TileEditorTab::isColorizeToolActive() const
+{
+    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Colorize;
 }
 
 bool TileEditorTab::isSelectToolActive() const
@@ -233,6 +248,7 @@ bool TileEditorTab::save()
     root[JsonKey_Height] = selectedItem(mUi->heightCombo).toInt();
     root[JsonKey_ColorMode] = selectedItem(mUi->colorModeCombo).toString();
     root[JsonKey_Pixels] = mUi->editorWidget->pixels();
+    root[JsonKey_Attribs] = mUi->editorWidget->attribs();
     doc.setObject(root);
     QByteArray json = doc.toJson(QJsonDocument::Indented);
 
@@ -314,6 +330,11 @@ void TileEditorTab::fill()
     mUi->editorWidget->setTool(TileEditorTool::Fill);
 }
 
+void TileEditorTab::colorize()
+{
+    mUi->editorWidget->setTool(TileEditorTool::Colorize);
+}
+
 void TileEditorTab::select()
 {
     mUi->editorWidget->setTool(TileEditorTool::Select);
@@ -371,6 +392,25 @@ void TileEditorTab::on_editorWidget_sizeChanged()
     selectItem(mUi->heightCombo, mUi->editorWidget->height());
 }
 
+void TileEditorTab::on_colorModeCombo_currentIndexChanged(int)
+{
+    TileColorMode mode;
+
+    QString colorMode = selectedItem(mUi->colorModeCombo).toString();
+    if (colorMode == JsonValue_Standard || colorMode.isEmpty())
+        mode = TileColorMode::Standard;
+    else if (colorMode == JsonValue_Multicolor)
+        mode = TileColorMode::Multicolor;
+    else if (colorMode == JsonValue_Bicolor)
+        mode = TileColorMode::Bicolor;
+    else {
+        Q_ASSERT(false);
+        return;
+    }
+
+    mUi->editorWidget->setColorMode(mode);
+}
+
 void TileEditorTab::on_widthCombo_currentIndexChanged(int)
 {
     int w = selectedItem(mUi->widthCombo).toInt();
@@ -405,4 +445,62 @@ QVariant TileEditorTab::selectedItem(const QComboBox* combo)
 {
     int selected = combo->currentIndex();
     return (selected < 0 ? QVariant() : combo->itemData(selected));
+}
+
+void TileEditorTab::setColor(int color, bool setTool)
+{
+    bool bright = mUi->brightCheck->isChecked();
+    if (bright)
+        color |= 8;
+    else
+        color &= ~8;
+
+    if (mUi->blinkingCheck->isChecked())
+        color |= 16;
+    else
+        color &= ~16;
+
+    if (mSelectedColor != color) {
+        mSelectedColor = color;
+
+        mUi->editorWidget->setColor(color);
+        if (setTool)
+            mUi->editorWidget->setTool(TileEditorTool::Colorize);
+
+        mUi->blueButton->setVisible(!bright);
+        mUi->redButton->setVisible(!bright);
+        mUi->magentaButton->setVisible(!bright);
+        mUi->greenButton->setVisible(!bright);
+        mUi->cyanButton->setVisible(!bright);
+        mUi->yellowButton->setVisible(!bright);
+        mUi->whiteButton->setVisible(!bright);
+
+        mUi->brightBlueButton->setVisible(bright);
+        mUi->brightRedButton->setVisible(bright);
+        mUi->brightMagentaButton->setVisible(bright);
+        mUi->brightGreenButton->setVisible(bright);
+        mUi->brightCyanButton->setVisible(bright);
+        mUi->brightYellowButton->setVisible(bright);
+        mUi->brightWhiteButton->setVisible(bright);
+
+        mUi->blackButton->setChecked((color & 7) == 0);
+        mUi->blueButton->setChecked((color & 15) == 1);
+        mUi->redButton->setChecked((color & 15) == 2);
+        mUi->magentaButton->setChecked((color & 15) == 3);
+        mUi->greenButton->setChecked((color & 15) == 4);
+        mUi->cyanButton->setChecked((color & 15) == 5);
+        mUi->yellowButton->setChecked((color & 15) == 6);
+        mUi->whiteButton->setChecked((color & 15) == 7);
+
+        mUi->brightBlueButton->setChecked((color & 15) == 9);
+        mUi->brightRedButton->setChecked((color & 15) == 10);
+        mUi->brightMagentaButton->setChecked((color & 15) == 11);
+        mUi->brightGreenButton->setChecked((color & 15) == 12);
+        mUi->brightCyanButton->setChecked((color & 15) == 13);
+        mUi->brightYellowButton->setChecked((color & 15) == 14);
+        mUi->brightWhiteButton->setChecked((color & 15) == 15);
+
+        mUi->brightCheck->setChecked((color & 8) != 0);
+        mUi->blinkingCheck->setChecked((color & 16) != 0);
+    }
 }
