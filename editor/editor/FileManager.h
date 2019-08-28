@@ -76,11 +76,13 @@ public:
     FileOrDirectory* selectedFileOrDirectory() const;
 
     bool canRename() const;
+    bool canDuplicate() const;
     bool canDelete() const;
 
     void createFile() { on_newFileAction_triggered(); }
     void createDirectory() { on_newDirectoryAction_triggered(); }
     void renameSelected() { on_renameAction_triggered(); }
+    void duplicateSelected() { on_duplicateAction_triggered(); }
     void deleteSelected() { on_deleteAction_triggered(); }
 
     void refresh();
@@ -94,6 +96,7 @@ signals:
     void fileCreated(File* file);
     void willRenameFile(File* file, bool* shouldAbort);
     void didRenameFile(File* file);
+    void willDuplicateFile(File* file, bool* shouldAbort);
     void fileSelected(File* file);
     void fileDoubleClicked(File* file);
     void fileDisappeared(File* file);
@@ -112,6 +115,7 @@ private:
     Q_SLOT void on_newDirectoryAction_triggered();
     Q_SLOT void on_newFileAction_triggered();
     Q_SLOT void on_renameAction_triggered();
+    Q_SLOT void on_duplicateAction_triggered();
     Q_SLOT void on_deleteAction_triggered();
 
     Q_DISABLE_COPY(FileManager)

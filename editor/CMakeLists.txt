@@ -37,6 +37,9 @@ qt_add_sources(GameEditor
         editor/tile/TileEditorWidget.h
         editor/AbstractEditorTab.cpp
         editor/AbstractEditorTab.h
+        editor/DuplicateDialog.cpp
+        editor/DuplicateDialog.h
+        editor/DuplicateDialog.ui
         editor/EditorTabFactory.cpp
         editor/EditorTabFactory.h
         editor/FileManager.cpp

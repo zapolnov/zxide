@@ -17,12 +17,12 @@ RenameDialog::RenameDialog(FileOrDirectory* item, QWidget* parent)
     bool isDirectory = (mItem->type() == Directory::Type);
     if (isDirectory) {
         setWindowTitle(tr("Rename directory"));
-        mUi->oldNameLabel->setText(tr("Rename directory"));
+        mUi->oldNameLabel->setText(tr("&Rename directory:"));
         mUi->oldNameEdit->setText(mItem->name());
         mUi->newNameEdit->setText(mItem->name());
     } else {
         setWindowTitle(tr("Rename file"));
-        mUi->oldNameLabel->setText(tr("Rename file"));
+        mUi->oldNameLabel->setText(tr("&Rename file:"));
         mUi->oldNameEdit->setText(mItem->name());
         mUi->newNameEdit->setText(mItem->fileInfo().completeBaseName());
     }

@@ -77,6 +77,8 @@
    <addaction name="actionPick"/>
    <addaction name="actionSelect"/>
    <addaction name="separator"/>
+   <addaction name="actionToggleGrid"/>
+   <addaction name="separator"/>
    <addaction name="actionBuild"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
@@ -115,6 +117,7 @@
     <addaction name="actionCloseAllWindows"/>
     <addaction name="separator"/>
     <addaction name="actionRenameFile"/>
+    <addaction name="actionDuplicateFile"/>
     <addaction name="actionDeleteFile"/>
     <addaction name="separator"/>
     <addaction name="actionRefreshFileList"/>
@@ -761,6 +764,18 @@
    </property>
    <property name="shortcut">
     <string>G</string>
+   </property>
+  </action>
+  <action name="actionDuplicateFile">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/calendar_copy.png</normaloff>:/resources/fatcow16x16/calendar_copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>D&amp;uplicate</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

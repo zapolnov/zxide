@@ -3,6 +3,7 @@
 #include "editor/EditorTabFactory.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/RenameDialog.h"
+#include "editor/DuplicateDialog.h"
 #include "editor/NewFileDialog.h"
 #include "ui_FileManager.h"
 #include <QMenu>
@@ -138,6 +139,12 @@ bool FileManager::canRename() const
     return (parent != nullptr && !selected->isProjectFile());
 }
 
+bool FileManager::canDuplicate() const
+{
+    auto selected = selectedFileOrDirectory();
+    return (selected && selected->type() == File::Type && !selected->isProjectFile());
+}
+
 bool FileManager::canDelete() const
 {
     auto selected = selectedFileOrDirectory();
@@ -247,6 +254,7 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
         return;
 
     mUi->renameAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
+    mUi->duplicateAction->setEnabled(fileOrDirectory->type() == File::Type && !fileOrDirectory->isProjectFile());
     mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
 
     QMenu menu;
@@ -254,6 +262,7 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
     menu.addAction(mUi->newDirectoryAction);
     menu.addSeparator();
     menu.addAction(mUi->renameAction);
+    menu.addAction(mUi->duplicateAction);
     menu.addAction(mUi->deleteAction);
     menu.addSeparator();
     menu.addAction(mUi->refreshAction);
@@ -378,6 +387,38 @@ void FileManager::on_renameAction_triggered()
             mUi->sourcesTree->setCurrentItem(newFile);
             emit didRenameFile(newFile);
         }
+    }
+}
+
+void FileManager::on_duplicateAction_triggered()
+{
+    auto selected = selectedFileOrDirectory();
+    if (!selected)
+        return;
+
+    auto parent = selected->parentDirectory();
+    if (!parent)
+        return;
+
+    if (selected->type() != File::Type)
+        return;
+
+  #ifndef NDEBUG
+    Q_ASSERT(parent->file(selected->name()) == selected);
+  #endif
+
+    DuplicateDialog dlg(selected, this);
+    connect(&dlg, &DuplicateDialog::willDuplicateFile, this, &FileManager::willDuplicateFile);
+    if (dlg.exec() != QDialog::Accepted)
+        return;
+
+    refreshDirectory(parent);
+
+    File* newFile = parent->file(dlg.newName());
+    Q_ASSERT(newFile);
+    if (newFile) {
+        mUi->sourcesTree->setCurrentItem(newFile);
+        emit fileDoubleClicked(newFile);
     }
 }
 

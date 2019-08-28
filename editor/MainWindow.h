@@ -63,6 +63,7 @@ private:
     Q_SLOT void on_actionCloseWindow_triggered();
     Q_SLOT void on_actionCloseAllWindows_triggered();
     Q_SLOT void on_actionRenameFile_triggered();
+    Q_SLOT void on_actionDuplicateFile_triggered();
     Q_SLOT void on_actionDeleteFile_triggered();
     Q_SLOT void on_actionRefreshFileList_triggered();
 
@@ -105,6 +106,7 @@ private:
     Q_SLOT void on_fileManager_fileCreated(File* file);
     Q_SLOT void on_fileManager_willRenameFile(File* file, bool* shouldAbort);
     Q_SLOT void on_fileManager_didRenameFile(File* file);
+    Q_SLOT void on_fileManager_willDuplicateFile(File* file, bool* shouldAbort);
     Q_SLOT void on_fileManager_fileDoubleClicked(File* file);
     Q_SLOT void on_fileManager_fileDisappeared(File* file);
 

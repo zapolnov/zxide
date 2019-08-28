@@ -95,7 +95,7 @@
   </layout>
   <action name="newDirectoryAction">
    <property name="icon">
-    <iconset resource="res/resources.qrc">
+    <iconset resource="../res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/folder_add.png</normaloff>:/resources/fatcow16x16/folder_add.png</iconset>
    </property>
    <property name="text">
@@ -104,7 +104,7 @@
   </action>
   <action name="newFileAction">
    <property name="icon">
-    <iconset resource="res/resources.qrc">
+    <iconset resource="../res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/page_white_add.png</normaloff>:/resources/fatcow16x16/page_white_add.png</iconset>
    </property>
    <property name="text">
@@ -113,7 +113,7 @@
   </action>
   <action name="renameAction">
    <property name="icon">
-    <iconset resource="res/resources.qrc">
+    <iconset resource="../res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/text_edit.png</normaloff>:/resources/fatcow16x16/text_edit.png</iconset>
    </property>
    <property name="text">
@@ -122,7 +122,7 @@
   </action>
   <action name="deleteAction">
    <property name="icon">
-    <iconset resource="res/resources.qrc">
+    <iconset resource="../res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/bin_closed.png</normaloff>:/resources/fatcow16x16/bin_closed.png</iconset>
    </property>
    <property name="text">
@@ -131,11 +131,20 @@
   </action>
   <action name="refreshAction">
    <property name="icon">
-    <iconset resource="res/resources.qrc">
+    <iconset resource="../res/resources.qrc">
      <normaloff>:/resources/fatcow16x16/arrow_refresh.png</normaloff>:/resources/fatcow16x16/arrow_refresh.png</iconset>
    </property>
    <property name="text">
     <string>Re&amp;fresh</string>
+   </property>
+  </action>
+  <action name="duplicateAction">
+   <property name="icon">
+    <iconset resource="../res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/calendar_copy.png</normaloff>:/resources/fatcow16x16/calendar_copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>D&amp;uplicate</string>
    </property>
   </action>
  </widget>
@@ -143,7 +152,7 @@
   <tabstop>sourcesTree</tabstop>
  </tabstops>
  <resources>
-  <include location="res/resources.qrc"/>
+  <include location="../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

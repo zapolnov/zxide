@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RenameDialog</class>
- <widget class="QDialog" name="RenameDialog">
+ <class>DuplicateDialog</class>
+ <widget class="QDialog" name="DuplicateDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -9,6 +9,9 @@
     <width>284</width>
     <height>151</height>
    </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Duplicate file</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -26,8 +29,8 @@
    </item>
    <item>
     <widget class="QLabel" name="oldNameLabel">
-     <property name="textFormat">
-      <enum>Qt::PlainText</enum>
+     <property name="text">
+      <string>&amp;Duplicate file:</string>
      </property>
      <property name="buddy">
       <cstring>oldNameEdit</cstring>
@@ -47,10 +50,7 @@
    <item>
     <widget class="QLabel" name="newNameLabel">
      <property name="text">
-      <string>&amp;To:</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::PlainText</enum>
+      <string>&amp;As:</string>
      </property>
      <property name="buddy">
       <cstring>newNameEdit</cstring>
@@ -94,7 +94,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>RenameDialog</receiver>
+   <receiver>DuplicateDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -110,7 +110,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>RenameDialog</receiver>
+   <receiver>DuplicateDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
