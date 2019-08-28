@@ -18,8 +18,7 @@ QByteArray AbstractEditorTab::loadFileData(File* file)
 {
     Q_ASSERT(file != nullptr);
     if (!file) {
-        QMessageBox::critical(this,
-            tr("Internal Error"), tr("File is NULL."));
+        QMessageBox::critical(this, tr("Internal Error"), tr("File is NULL."));
         return QByteArray();
     }
 

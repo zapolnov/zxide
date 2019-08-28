@@ -4,6 +4,7 @@
 #include "editor/AbstractEditorTab.h"
 #include <memory>
 
+class QComboBox;
 class Ui_TileEditorTab;
 
 class TileEditorTab : public AbstractEditorTab
@@ -52,6 +53,25 @@ public:
 
 private:
     std::unique_ptr<Ui_TileEditorTab> mUi;
+    QString mSavedIdentifier;
+    QString mSavedSection;
+    QString mSavedFormat;
+    QString mSavedColorMode;
+    int mSavedWidth;
+    int mSavedHeight;
+
+    void reset();
+    void setSaved();
+
+    Q_SLOT void on_identifierEdit_textChanged() { emit updateUi(); }
+    Q_SLOT void on_sectionEdit_textChanged() { emit updateUi(); }
+    Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
+    Q_SLOT void on_widthCombo_currentIndexChanged(int) { emit updateUi(); }
+    Q_SLOT void on_heightCombo_currentIndexChanged(int) { emit updateUi(); }
+    Q_SLOT void on_colorModeCombo_currentIndexChanged(int) { emit updateUi(); }
+
+    static bool selectItem(QComboBox* combo, const QVariant& value);
+    static QVariant selectedItem(const QComboBox* combo);
 
     Q_DISABLE_COPY(TileEditorTab)
 };
