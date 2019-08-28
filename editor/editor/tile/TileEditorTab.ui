@@ -542,10 +542,16 @@
        </item>
        <item>
         <widget class="QScrollArea" name="previewScrollArea">
+         <property name="styleSheet">
+          <string notr="true">background-color: black</string>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="previewWidget">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <widget class="QLabel" name="previewWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -553,6 +559,15 @@
             <width>216</width>
             <height>326</height>
            </rect>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </widget>

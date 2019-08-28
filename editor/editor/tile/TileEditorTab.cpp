@@ -32,6 +32,7 @@ TileEditorTab::TileEditorTab(QWidget* parent)
     , mSelectedColor(-1)
 {
     mUi->setupUi(this);
+    mUi->editorWidget->setPreviewWidget(mUi->previewWidget);
 
     for (int i = 8; i <= 128; i += 8) {
         mUi->widthCombo->addItem(QString::number(i), QVariant(i));

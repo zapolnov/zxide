@@ -10,6 +10,7 @@
 class TileData;
 class QJsonArray;
 class QTimer;
+class QLabel;
 
 enum class TileColorMode : int;
 
@@ -37,6 +38,8 @@ public:
     bool isModified() const;
     void reset();
     void setSize(int w, int h);
+
+    void setPreviewWidget(QLabel* preview);
 
     TileColorMode colorMode() const { return mColorMode; }
     void setColorMode(TileColorMode mode);
@@ -127,6 +130,7 @@ private:
 
     TileData* mTileData;
     QTimer* mTimer;
+    QLabel* mPreview;
     std::unique_ptr<Tool> mCurrentTool;
     std::vector<std::unique_ptr<Operation>> mUndoStack;
     size_t mUndoStackIndex;

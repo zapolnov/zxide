@@ -11,6 +11,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QJsonArray>
+#include <QLabel>
 
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-tile");
 static const int PixelWidth = 8;
@@ -684,6 +685,7 @@ private:
 
 TileEditorWidget::TileEditorWidget(QWidget* parent)
     : QWidget(parent)
+    , mPreview(nullptr)
     , mCurrentTool(new DrawTool())
     , mUndoStackIndex(0)
     , mSavedIndex(0)
@@ -704,6 +706,8 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
 
     auto onSizeChanged = [this] {
             setFixedSize(mTileData->width() * PixelWidth, mTileData->height() * PixelHeight);
+            if (mPreview)
+                mPreview->setFixedSize(mTileData->width() * 2, mTileData->height() * 2);
             emit sizeChanged();
         };
 
@@ -746,6 +750,15 @@ void TileEditorWidget::setSize(int w, int h)
 {
     if (w != mTileData->width() || h != mTileData->height())
         pushOperation(new ResizeOperation(w, h));
+}
+
+void TileEditorWidget::setPreviewWidget(QLabel* preview)
+{
+    mPreview = preview;
+    if (preview) {
+        preview->setFixedSize(mTileData->width() * 2, mTileData->height() * 2);
+        update();
+    }
 }
 
 void TileEditorWidget::setColorMode(TileColorMode mode)
@@ -1064,6 +1077,7 @@ void TileEditorWidget::setTool(TileEditorTool tool)
 void TileEditorWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
+    QImage image(mTileData->width() * 2, mTileData->height() * 2, QImage::Format_ARGB32);
 
     for (int tileY = 0; tileY < mTileData->height(); tileY++) {
         for (int tileX = 0; tileX < mTileData->width(); tileX++) {
@@ -1080,9 +1094,20 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
             if (attrib & 0x40)
                 color += 8;
 
-            painter.fillRect(x, y, PixelWidth, PixelHeight, Palette[color]);
+            const QColor& colorRef = Palette[color];
+            uint rgb = colorRef.rgb();
+
+            for (int yy = 0; yy < 2; yy++) {
+                for (int xx = 0; xx < 2; xx++)
+                    image.setPixel(tileX * 2 + xx, tileY * 2 + yy, rgb);
+            }
+
+            painter.fillRect(x, y, PixelWidth, PixelHeight, colorRef);
         }
     }
+
+    if (mPreview)
+        mPreview->setPixmap(QPixmap::fromImage(image));
 
     if (mGridVisible) {
         painter.setBrush(Qt::transparent);
