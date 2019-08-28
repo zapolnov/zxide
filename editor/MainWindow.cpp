@@ -388,6 +388,7 @@ void MainWindow::updateUi()
     mUi->actionColorize->setEnabled(tab->canColorize());
     mUi->actionPick->setEnabled(tab->canPick());
     mUi->actionSelect->setEnabled(tab->canSelect());
+    mUi->actionToggleGrid->setEnabled(tab->canToggleGrid());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
     mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
     mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
@@ -404,6 +405,7 @@ void MainWindow::updateUi()
     mUi->actionColorize->setChecked(tab->isColorizeToolActive());
     mUi->actionPick->setChecked(tab->isPickToolActive());
     mUi->actionSelect->setChecked(tab->isSelectToolActive());
+    mUi->actionToggleGrid->setChecked(tab->isGridActive());
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
@@ -681,6 +683,11 @@ void MainWindow::on_actionPick_triggered()
 void MainWindow::on_actionSelect_triggered()
 {
     currentTab()->select();
+}
+
+void MainWindow::on_actionToggleGrid_triggered()
+{
+    currentTab()->toggleGrid();
 }
 
 void MainWindow::on_actionSettings_triggered()

@@ -38,6 +38,7 @@ public:
     virtual bool canColorize() const { return false; }
     virtual bool canPick() const { return false; }
     virtual bool canSelect() const { return false; }
+    virtual bool canToggleGrid() const { return false; }
 
     virtual bool isDrawToolActive() const { return false; }
     virtual bool isDrawRectToolActive() const { return false; }
@@ -45,6 +46,7 @@ public:
     virtual bool isColorizeToolActive() const { return false; }
     virtual bool isPickToolActive() const { return false; }
     virtual bool isSelectToolActive() const { return false; }
+    virtual bool isGridActive() const { return false; }
 
     virtual bool save() { return true; }
     virtual void undo() {}
@@ -62,6 +64,7 @@ public:
     virtual void colorize() {}
     virtual void pick() {}
     virtual void select() {}
+    virtual void toggleGrid() {}
 
     virtual void reloadSettings() {}
 

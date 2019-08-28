@@ -205,6 +205,11 @@ bool TileEditorTab::canSelect() const
     return file() != nullptr;
 }
 
+bool TileEditorTab::canToggleGrid() const
+{
+    return file() != nullptr;
+}
+
 bool TileEditorTab::isDrawToolActive() const
 {
     return file() && mUi->editorWidget->currentTool() == TileEditorTool::Draw;
@@ -228,6 +233,11 @@ bool TileEditorTab::isColorizeToolActive() const
 bool TileEditorTab::isSelectToolActive() const
 {
     return file() && mUi->editorWidget->currentTool() == TileEditorTool::Select;
+}
+
+bool TileEditorTab::isGridActive() const
+{
+    return file() && mUi->editorWidget->gridVisible();
 }
 
 bool TileEditorTab::save()
@@ -341,6 +351,11 @@ void TileEditorTab::colorize()
 void TileEditorTab::select()
 {
     mUi->editorWidget->setTool(TileEditorTool::Select);
+}
+
+void TileEditorTab::toggleGrid()
+{
+    mUi->editorWidget->setGridVisible(!mUi->editorWidget->gridVisible());
 }
 
 void TileEditorTab::reloadSettings()

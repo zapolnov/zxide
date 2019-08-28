@@ -170,6 +170,8 @@
     <addaction name="actionPick"/>
     <addaction name="actionSelect"/>
     <addaction name="separator"/>
+    <addaction name="actionToggleGrid"/>
+    <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
    <addaction name="menuFile"/>
@@ -744,6 +746,21 @@
    </property>
    <property name="shortcut">
     <string>C</string>
+   </property>
+  </action>
+  <action name="actionToggleGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/grid.png</normaloff>:/resources/fatcow16x16/grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Grid</string>
+   </property>
+   <property name="shortcut">
+    <string>G</string>
    </property>
   </action>
  </widget>

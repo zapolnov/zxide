@@ -693,6 +693,7 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
     , mMousePressed(Qt::NoButton)
     , mSelectedColor(0)
     , mFlash(false)
+    , mGridVisible(true)
 {
     mTileData = new TileData(8, 8, this);
     setMouseTracking(true);
@@ -763,6 +764,16 @@ void TileEditorWidget::setColor(int color)
         update();
         emit updateUi();
     }
+}
+
+void TileEditorWidget::setGridVisible(bool visible)
+{
+    if (mGridVisible != visible) {
+        mGridVisible = visible;
+        update();
+        emit updateUi();
+    }
+    repaint();
 }
 
 QJsonArray TileEditorWidget::pixels() const
@@ -1070,6 +1081,22 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
                 color += 8;
 
             painter.fillRect(x, y, PixelWidth, PixelHeight, Palette[color]);
+        }
+    }
+
+    if (mGridVisible) {
+        painter.setBrush(Qt::transparent);
+        for (int tileY = 0; tileY < mTileData->height(); tileY++) {
+            float w = ((tileY & 7) == 0 ? 0.5f : 1.0f);
+            int y = tileY * PixelHeight;
+            painter.setPen(QPen(QColor(128, 128, 128, 128), w));
+            painter.drawLine(0, y, QWidget::width(), y);
+        }
+        for (int tileX = 0; tileX < mTileData->width(); tileX++) {
+            float w = ((tileX & 7) == 0 ? 0.5f : 1.0f);
+            int x = tileX * PixelWidth;
+            painter.setPen(QPen(QColor(128, 128, 128, 128), w));
+            painter.drawLine(x, 0, x, QWidget::height());
         }
     }
 

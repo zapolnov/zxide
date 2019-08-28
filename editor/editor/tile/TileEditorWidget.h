@@ -42,6 +42,9 @@ public:
     void setColorMode(TileColorMode mode);
     void setColor(int color);
 
+    bool gridVisible() const { return mGridVisible; }
+    void setGridVisible(bool visible);
+
     QJsonArray pixels() const;
     QJsonArray attribs() const;
     bool setPixels(int w, int h, QJsonArray data, QJsonArray attribs);
@@ -134,6 +137,7 @@ private:
     Qt::MouseButton mMousePressed;
     int mSelectedColor;
     bool mFlash;
+    bool mGridVisible;
 
     void cancelInput();
     void updateMousePosition(QMouseEvent* event);

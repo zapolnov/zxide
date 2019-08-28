@@ -31,12 +31,14 @@ public:
     bool canFill() const override;
     bool canColorize() const override;
     bool canSelect() const override;
+    bool canToggleGrid() const override;
 
     bool isDrawToolActive() const override;
     bool isDrawRectToolActive() const override;
     bool isFillToolActive() const override;
     bool isColorizeToolActive() const override;
     bool isSelectToolActive() const override;
+    bool isGridActive() const override;
 
     bool save() override;
     void undo() override;
@@ -52,6 +54,7 @@ public:
     void fill() override;
     void colorize() override;
     void select() override;
+    void toggleGrid() override;
 
     void reloadSettings() override;
 
