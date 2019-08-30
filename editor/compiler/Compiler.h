@@ -9,6 +9,7 @@
 
 class Program;
 class ProgramBinary;
+struct lua_State;
 
 class Compiler : public QObject, public IErrorReporter
 {
@@ -46,16 +47,21 @@ private:
     mutable QMutex mMutex;
     std::unique_ptr<Program> mProgram;
     std::unique_ptr<ProgramBinary> mProgramBinary;
+    lua_State* mLua;
     QString mStatusText;
     QString mErrorMessage;
     QString mOutputFile;
     std::vector<SourceFile> mSources;
+    std::vector<SourceFile> mBuildScripts;
     File* mErrorFile;
     int mErrorLine;
     bool mWasError;
 
     void error(File* file, int line, const QString& message) override;
     void setStatusText(const QString& text);
+
+    bool runBuildScripts();
+    void destroyLuaVM();
 
     Q_DISABLE_COPY(Compiler)
 };

@@ -24,6 +24,7 @@ EditorTabFactory::EditorTabFactory(QObject* parent)
     mExtensions[mProjectFileFormat->extension] = mProjectFileFormat.get();
 
     add<CodeEditorTab>(tr("Assembler source"), STR("asm"), STR(":/resources/fatcow16x16/page_white_text.png"));
+    add<CodeEditorTab>(tr("Build Script (Lua)"), STR("lua"), STR(":/resources/fatcow16x16/page_white_text.png"));
     add<GfxEditorTab>(tr("Graphic"), STR("gfx"), STR(":/resources/fatcow16x16/picture.png"));
 }
 
