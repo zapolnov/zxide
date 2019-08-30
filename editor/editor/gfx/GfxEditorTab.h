@@ -62,8 +62,6 @@ public:
 
 private:
     std::unique_ptr<Ui_GfxEditorTab> mUi;
-    QString mSavedIdentifier;
-    QString mSavedSection;
     QString mSavedFormat;
     QString mSavedColorMode;
     int mSavedWidth;
@@ -75,8 +73,6 @@ private:
 
     Q_SLOT void on_editorWidget_sizeChanged();
     Q_SLOT void on_editorWidget_updateUi() { emit updateUi(); }
-    Q_SLOT void on_identifierEdit_textChanged() { emit updateUi(); }
-    Q_SLOT void on_sectionEdit_textChanged() { emit updateUi(); }
     Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
     Q_SLOT void on_colorModeCombo_currentIndexChanged(int);
     Q_SLOT void on_widthCombo_currentIndexChanged(int);
@@ -101,7 +97,6 @@ private:
     Q_SLOT void on_brightCyanButton_clicked() { setColor(13); }
     Q_SLOT void on_brightYellowButton_clicked() { setColor(14); }
     Q_SLOT void on_brightWhiteButton_clicked() { setColor(15); }
-    Q_SLOT void on_brightCheck_toggled() { setColor(mSelectedColor); }
     Q_SLOT void on_blinkingCheck_toggled() { setColor(mSelectedColor); }
 
     Q_DISABLE_COPY(GfxEditorTab)

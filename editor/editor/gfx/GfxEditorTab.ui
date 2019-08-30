@@ -10,7 +10,7 @@
     <height>594</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="mainLayout" stretch="1000">
+  <layout class="QVBoxLayout" name="mainLayout" stretch="0">
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
@@ -19,80 +19,34 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="leftLayoutWidget">
-      <layout class="QVBoxLayout" name="leftLayout">
-       <item>
-        <layout class="QHBoxLayout" name="topLayout">
-         <property name="spacing">
-          <number>6</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="identifierLabel">
-           <property name="text">
-            <string>Identifier:</string>
-           </property>
-           <property name="buddy">
-            <cstring>identifierEdit</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="identifierEdit"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="sectionLabel">
-           <property name="text">
-            <string>Section:</string>
-           </property>
-           <property name="buddy">
-            <cstring>sectionEdit</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="sectionEdit"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="formatLabel">
-           <property name="text">
-            <string>Format:</string>
-           </property>
-           <property name="buddy">
-            <cstring>formatCombo</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="formatCombo"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QScrollArea" name="editScrollArea">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <widget class="GfxEditorWidget" name="editorWidget">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>449</width>
-            <height>544</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-      </layout>
+     <widget class="QScrollArea" name="editScrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <widget class="GfxEditorWidget" name="editorWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>72</width>
+         <height>568</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="rightLayoutWidget">
       <layout class="QVBoxLayout" name="rightLayout">
        <item>
         <layout class="QFormLayout" name="formLayout">
+         <property name="horizontalSpacing">
+          <number>2</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>2</number>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="widthLabel">
            <property name="text">
@@ -111,6 +65,9 @@
            <property name="text">
             <string>Height:</string>
            </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
            <property name="buddy">
             <cstring>heightCombo</cstring>
            </property>
@@ -122,7 +79,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="colorModeLabel">
            <property name="text">
-            <string>Color mode:</string>
+            <string>Color:</string>
            </property>
            <property name="buddy">
             <cstring>colorModeCombo</cstring>
@@ -131,6 +88,25 @@
          </item>
          <item row="2" column="1">
           <widget class="QComboBox" name="colorModeCombo"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="formatLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Format:</string>
+           </property>
+           <property name="buddy">
+            <cstring>formatCombo</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="formatCombo"/>
          </item>
         </layout>
        </item>
@@ -175,234 +151,24 @@
             </item>
             <item>
              <layout class="QGridLayout" name="paletteColorsLayout">
-              <item row="0" column="1">
-               <layout class="QVBoxLayout" name="blueLayout">
-                <property name="spacing">
-                 <number>0</number>
+              <item row="5" column="3">
+               <widget class="QToolButton" name="brightMagentaButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
                 </property>
-                <item>
-                 <widget class="QToolButton" name="blueButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/01_blue.png</normaloff>:/resources/colors/01_blue.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightBlueButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/09_bright_blue.png</normaloff>:/resources/colors/09_bright_blue.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="2">
-               <layout class="QVBoxLayout" name="redLayout">
-                <property name="spacing">
-                 <number>0</number>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/11_bright_magenta.png</normaloff>:/resources/colors/11_bright_magenta.png</iconset>
                 </property>
-                <item>
-                 <widget class="QToolButton" name="redButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/02_red.png</normaloff>:/resources/colors/02_red.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightRedButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/10_bright_red.png</normaloff>:/resources/colors/10_bright_red.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="4" column="0">
-               <layout class="QVBoxLayout" name="greenLayout">
-                <property name="spacing">
-                 <number>0</number>
+                <property name="checkable">
+                 <bool>true</bool>
                 </property>
-                <item>
-                 <widget class="QToolButton" name="greenButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/04_green.png</normaloff>:/resources/colors/04_green.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightGreenButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/12_bright_green.png</normaloff>:/resources/colors/12_bright_green.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="3">
-               <layout class="QVBoxLayout" name="magentaLayout">
-                <property name="spacing">
-                 <number>0</number>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
                 </property>
-                <item>
-                 <widget class="QToolButton" name="magentaButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/03_magenta.png</normaloff>:/resources/colors/03_magenta.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightMagentaButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/11_bright_magenta.png</normaloff>:/resources/colors/11_bright_magenta.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="4" column="2">
-               <layout class="QVBoxLayout" name="yellowLayout">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QToolButton" name="yellowButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/06_yellow.png</normaloff>:/resources/colors/06_yellow.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightYellowButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/14_bright_yellow.png</normaloff>:/resources/colors/14_bright_yellow.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               </widget>
               </item>
               <item row="4" column="1">
-               <layout class="QVBoxLayout" name="cyanLayout">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QToolButton" name="cyanButton">
-                  <property name="styleSheet">
-                   <string notr="true">padding: 3px</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/05_cyan.png</normaloff>:/resources/colors/05_cyan.png</iconset>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="toolButtonStyle">
-                   <enum>Qt::ToolButtonIconOnly</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QToolButton" name="brightCyanButton">
                   <property name="styleSheet">
                    <string notr="true">padding: 3px</string>
@@ -418,8 +184,23 @@
                    <enum>Qt::ToolButtonIconOnly</enum>
                   </property>
                  </widget>
-                </item>
-               </layout>
+              </item>
+              <item row="5" column="1">
+               <widget class="QToolButton" name="brightBlueButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/09_bright_blue.png</normaloff>:/resources/colors/09_bright_blue.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
               </item>
               <item row="0" column="0">
                <widget class="QToolButton" name="blackButton">
@@ -439,8 +220,6 @@
                </widget>
               </item>
               <item row="4" column="3">
-               <layout class="QVBoxLayout" name="whiteLayout">
-                <item>
                  <widget class="QToolButton" name="whiteButton">
                   <property name="styleSheet">
                    <string notr="true">padding: 3px</string>
@@ -456,15 +235,32 @@
                    <enum>Qt::ToolButtonIconOnly</enum>
                   </property>
                  </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="brightWhiteButton">
+              </item>
+              <item row="5" column="2">
+               <widget class="QToolButton" name="brightRedButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/10_bright_red.png</normaloff>:/resources/colors/10_bright_red.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+                 <widget class="QToolButton" name="blueButton">
                   <property name="styleSheet">
                    <string notr="true">padding: 3px</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../res/resources.qrc">
-                    <normaloff>:/resources/colors/15_bright_white.png</normaloff>:/resources/colors/15_bright_white.png</iconset>
+                    <normaloff>:/resources/colors/01_blue.png</normaloff>:/resources/colors/01_blue.png</iconset>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -473,8 +269,142 @@
                    <enum>Qt::ToolButtonIconOnly</enum>
                   </property>
                  </widget>
-                </item>
-               </layout>
+              </item>
+              <item row="0" column="2">
+                 <widget class="QToolButton" name="redButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 3px</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/resources/colors/02_red.png</normaloff>:/resources/colors/02_red.png</iconset>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonIconOnly</enum>
+                  </property>
+                 </widget>
+              </item>
+              <item row="4" column="0">
+                 <widget class="QToolButton" name="greenButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 3px</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/resources/colors/04_green.png</normaloff>:/resources/colors/04_green.png</iconset>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonIconOnly</enum>
+                  </property>
+                 </widget>
+              </item>
+              <item row="0" column="3">
+                 <widget class="QToolButton" name="magentaButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 3px</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/resources/colors/03_magenta.png</normaloff>:/resources/colors/03_magenta.png</iconset>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonIconOnly</enum>
+                  </property>
+                 </widget>
+              </item>
+              <item row="4" column="2">
+                 <widget class="QToolButton" name="yellowButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 3px</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/resources/colors/06_yellow.png</normaloff>:/resources/colors/06_yellow.png</iconset>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonIconOnly</enum>
+                  </property>
+                 </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QToolButton" name="cyanButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/05_cyan.png</normaloff>:/resources/colors/05_cyan.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QToolButton" name="brightGreenButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/12_bright_green.png</normaloff>:/resources/colors/12_bright_green.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QToolButton" name="brightYellowButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/14_bright_yellow.png</normaloff>:/resources/colors/14_bright_yellow.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="3">
+               <widget class="QToolButton" name="brightWhiteButton">
+                <property name="styleSheet">
+                 <string notr="true">padding: 3px</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../res/resources.qrc">
+                  <normaloff>:/resources/colors/15_bright_white.png</normaloff>:/resources/colors/15_bright_white.png</iconset>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+                <property name="toolButtonStyle">
+                 <enum>Qt::ToolButtonIconOnly</enum>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -507,13 +437,6 @@
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="brightCheck">
-              <property name="text">
-               <string>Bright</string>
-              </property>
-             </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="blinkingCheck">
@@ -556,8 +479,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>216</width>
-            <height>326</height>
+            <width>587</width>
+            <height>239</height>
            </rect>
           </property>
           <property name="text">
@@ -587,11 +510,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>identifierEdit</tabstop>
-  <tabstop>sectionEdit</tabstop>
-  <tabstop>formatCombo</tabstop>
-  <tabstop>widthCombo</tabstop>
-  <tabstop>heightCombo</tabstop>
   <tabstop>colorModeCombo</tabstop>
   <tabstop>editScrollArea</tabstop>
   <tabstop>previewScrollArea</tabstop>

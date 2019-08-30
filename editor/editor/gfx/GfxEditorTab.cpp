@@ -9,8 +9,6 @@
 #include <QJsonObject>
 
 static const QString JsonKey_Version = QStringLiteral("version");
-static const QString JsonKey_Identifier = QStringLiteral("identifier");
-static const QString JsonKey_Section = QStringLiteral("section");
 static const QString JsonKey_Format = QStringLiteral("format");
 static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
@@ -33,6 +31,7 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
 {
     mUi->setupUi(this);
     mUi->editorWidget->setPreviewWidget(mUi->previewWidget);
+    mUi->splitter->setSizes(QList<int>() << (width() * 4 / 5) << (width() / 5));
 
     for (int i = 8; i <= 128; i += 8) {
         mUi->widthCombo->addItem(QString::number(i), QVariant(i));
@@ -63,8 +62,6 @@ bool GfxEditorTab::loadFile(File* f)
 
     QByteArray data = loadFileData(f);
     if (data.isEmpty()) {
-        mUi->identifierEdit->setText(QString());
-        mUi->sectionEdit->setText(QString());
         mUi->formatCombo->setCurrentIndex(0);
         mUi->widthCombo->setCurrentIndex(0);
         mUi->heightCombo->setCurrentIndex(0);
@@ -96,16 +93,12 @@ bool GfxEditorTab::loadFile(File* f)
             return false;
         }
 
-        mUi->identifierEdit->setText(root[JsonKey_Identifier].toString());
-        mUi->sectionEdit->setText(root[JsonKey_Section].toString());
         selectItem(mUi->formatCombo, root[JsonKey_Format].toString());
         selectItem(mUi->widthCombo, w);
         selectItem(mUi->heightCombo, h);
         selectItem(mUi->colorModeCombo, root[JsonKey_ColorMode].toString());
     }
 
-    mUi->identifierEdit->setEnabled(true);
-    mUi->sectionEdit->setEnabled(true);
     mUi->formatCombo->setEnabled(true);
     mUi->widthCombo->setEnabled(true);
     mUi->heightCombo->setEnabled(true);
@@ -125,10 +118,6 @@ bool GfxEditorTab::isModified() const
     if (!file())
         return false;
 
-    if (mSavedIdentifier != mUi->identifierEdit->text())
-        return true;
-    if (mSavedSection != mUi->sectionEdit->text())
-        return true;
     if (mSavedFormat != selectedItem(mUi->formatCombo).toString())
         return true;
     if (mSavedColorMode != selectedItem(mUi->colorModeCombo).toString())
@@ -255,8 +244,6 @@ bool GfxEditorTab::save()
     QJsonDocument doc;
     QJsonObject root;
     root[JsonKey_Version] = FileFormatVersion;
-    root[JsonKey_Identifier] = mUi->identifierEdit->text();
-    root[JsonKey_Section] = mUi->sectionEdit->text();
     root[JsonKey_Format] = selectedItem(mUi->formatCombo).toString();
     root[JsonKey_Width] = selectedItem(mUi->widthCombo).toInt();
     root[JsonKey_Height] = selectedItem(mUi->heightCombo).toInt();
@@ -370,17 +357,11 @@ void GfxEditorTab::setFocusToEditor()
 
 void GfxEditorTab::reset()
 {
-    mSavedIdentifier = QString();
-    mSavedSection = QString();
     mSavedFormat = QString();
     mSavedColorMode = QString();
     mSavedWidth = 0;
     mSavedHeight = 0;
 
-    mUi->identifierEdit->clear();
-    mUi->identifierEdit->setEnabled(false);
-    mUi->sectionEdit->clear();
-    mUi->sectionEdit->setEnabled(false);
     mUi->formatCombo->setCurrentIndex(-1);
     mUi->formatCombo->setEnabled(false);
     mUi->widthCombo->setCurrentIndex(-1);
@@ -396,8 +377,6 @@ void GfxEditorTab::reset()
 
 void GfxEditorTab::setSaved()
 {
-    mSavedIdentifier = mUi->identifierEdit->text();
-    mSavedSection = mUi->sectionEdit->text();
     mSavedFormat = selectedItem(mUi->formatCombo).toString();
     mSavedColorMode = selectedItem(mUi->colorModeCombo).toString();
     mSavedWidth = selectedItem(mUi->widthCombo).toInt();
@@ -468,12 +447,6 @@ QVariant GfxEditorTab::selectedItem(const QComboBox* combo)
 
 void GfxEditorTab::setColor(int color, bool setTool)
 {
-    bool bright = mUi->brightCheck->isChecked();
-    if (bright)
-        color |= 8;
-    else
-        color &= ~8;
-
     if (mUi->blinkingCheck->isChecked())
         color |= 16;
     else
@@ -485,22 +458,6 @@ void GfxEditorTab::setColor(int color, bool setTool)
         mUi->editorWidget->setColor(color);
         if (setTool)
             mUi->editorWidget->setTool(GfxEditorTool::Colorize);
-
-        mUi->blueButton->setVisible(!bright);
-        mUi->redButton->setVisible(!bright);
-        mUi->magentaButton->setVisible(!bright);
-        mUi->greenButton->setVisible(!bright);
-        mUi->cyanButton->setVisible(!bright);
-        mUi->yellowButton->setVisible(!bright);
-        mUi->whiteButton->setVisible(!bright);
-
-        mUi->brightBlueButton->setVisible(bright);
-        mUi->brightRedButton->setVisible(bright);
-        mUi->brightMagentaButton->setVisible(bright);
-        mUi->brightGreenButton->setVisible(bright);
-        mUi->brightCyanButton->setVisible(bright);
-        mUi->brightYellowButton->setVisible(bright);
-        mUi->brightWhiteButton->setVisible(bright);
 
         mUi->blackButton->setChecked((color & 7) == 0);
         mUi->blueButton->setChecked((color & 15) == 1);
@@ -519,7 +476,6 @@ void GfxEditorTab::setColor(int color, bool setTool)
         mUi->brightYellowButton->setChecked((color & 15) == 14);
         mUi->brightWhiteButton->setChecked((color & 15) == 15);
 
-        mUi->brightCheck->setChecked((color & 8) != 0);
         mUi->blinkingCheck->setChecked((color & 16) != 0);
     }
 }
