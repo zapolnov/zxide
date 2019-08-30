@@ -1,7 +1,7 @@
-#include "TileData.h"
+#include "GfxData.h"
 #include <cstring>
 
-TileData::TileData(int w, int h, QObject* parent)
+GfxData::GfxData(int w, int h, QObject* parent)
     : QObject(parent)
     , mData(new char[w * h])
     , mAttrib(new char[((w + 7) >> 3) * h])
@@ -11,11 +11,11 @@ TileData::TileData(int w, int h, QObject* parent)
     clear();
 }
 
-TileData::~TileData()
+GfxData::~GfxData()
 {
 }
 
-void TileData::resize(int w, int h)
+void GfxData::resize(int w, int h)
 {
     Q_ASSERT(w > 0);
     Q_ASSERT(h > 0);
@@ -38,17 +38,17 @@ void TileData::resize(int w, int h)
     emit sizeChanged();
 }
 
-bool TileData::isValidCoord(int x, int y) const
+bool GfxData::isValidCoord(int x, int y) const
 {
     return (x >= 0 && y >= 0 && x < mWidth && y < mHeight);
 }
 
-bool TileData::isValidCoord(const QPoint& pt) const
+bool GfxData::isValidCoord(const QPoint& pt) const
 {
     return isValidCoord(pt.x(), pt.y());
 }
 
-char TileData::at(int x, int y) const
+char GfxData::at(int x, int y) const
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y))
@@ -57,12 +57,12 @@ char TileData::at(int x, int y) const
     return mData[y * mWidth + x];
 }
 
-char TileData::at(const QPoint& p) const
+char GfxData::at(const QPoint& p) const
 {
     return at(p.x(), p.y());
 }
 
-char& TileData::at(int x, int y)
+char& GfxData::at(int x, int y)
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y)) {
@@ -74,18 +74,18 @@ char& TileData::at(int x, int y)
     return mData[y * mWidth + x];
 }
 
-char& TileData::at(const QPoint& p)
+char& GfxData::at(const QPoint& p)
 {
     return at(p.x(), p.y());
 }
 
-char TileData::attribAt(int x, int y, TileColorMode mode) const
+char GfxData::attribAt(int x, int y, GfxColorMode mode) const
 {
     x &= ~7;
     switch (mode) {
-        case TileColorMode::Standard: y &= ~7; break;
-        case TileColorMode::Bicolor: y &= ~1; break;
-        case TileColorMode::Multicolor: break;
+        case GfxColorMode::Standard: y &= ~7; break;
+        case GfxColorMode::Bicolor: y &= ~1; break;
+        case GfxColorMode::Multicolor: break;
     }
 
     Q_ASSERT(isValidCoord(x, y));
@@ -95,13 +95,13 @@ char TileData::attribAt(int x, int y, TileColorMode mode) const
     return mAttrib[y * ((mWidth + 7) >> 3) + (x >> 3)];
 }
 
-char& TileData::attribAt(int x, int y, TileColorMode mode)
+char& GfxData::attribAt(int x, int y, GfxColorMode mode)
 {
     x &= ~7;
     switch (mode) {
-        case TileColorMode::Standard: y &= ~7; break;
-        case TileColorMode::Bicolor: y &= ~1; break;
-        case TileColorMode::Multicolor: break;
+        case GfxColorMode::Standard: y &= ~7; break;
+        case GfxColorMode::Bicolor: y &= ~1; break;
+        case GfxColorMode::Multicolor: break;
     }
 
     Q_ASSERT(isValidCoord(x, y));
@@ -114,13 +114,13 @@ char& TileData::attribAt(int x, int y, TileColorMode mode)
     return mAttrib[y * ((mWidth + 7) >> 3) + (x >> 3)];
 }
 
-void TileData::clear()
+void GfxData::clear()
 {
     memset(mData.get(), 0, mWidth * mHeight);
     memset(mAttrib.get(), 7, ((mWidth + 7) >> 3) * mHeight);
 }
 
-void TileData::clear(int x1, int y1, int x2, int y2)
+void GfxData::clear(int x1, int y1, int x2, int y2)
 {
     for (int y = y1; y <= y2; y++) {
         for (int x = x1; x <= x2; x++)
@@ -128,12 +128,12 @@ void TileData::clear(int x1, int y1, int x2, int y2)
     }
 }
 
-QByteArray TileData::bytes() const
+QByteArray GfxData::bytes() const
 {
     return QByteArray(mData.get(), mWidth * mHeight) + QByteArray(mAttrib.get(), ((mWidth + 7) >> 3) * mHeight);
 }
 
-QByteArray TileData::bytes(int x1, int y1, int x2, int y2) const
+QByteArray GfxData::bytes(int x1, int y1, int x2, int y2) const
 {
     int w = (x2 - x1 + 1);
     int h = (y2 - y1 + 1);
@@ -149,7 +149,7 @@ QByteArray TileData::bytes(int x1, int y1, int x2, int y2) const
     return result;
 }
 
-QByteArray TileData::attrib(int x1, int y1, int x2, int y2) const
+QByteArray GfxData::attrib(int x1, int y1, int x2, int y2) const
 {
     int w = (x2 - x1 + 1);
     int h = (y2 - y1 + 1);
@@ -159,20 +159,20 @@ QByteArray TileData::attrib(int x1, int y1, int x2, int y2) const
     QByteArray result(w * h, Qt::Uninitialized);
     for (int y = y1; y <= y2; y++) {
         for (int x = x1; x <= x2; x++)
-            result[(y - y1) * w + (x - x1)] = isValidCoord(x, y) ? attribAt(x, y, TileColorMode::Multicolor) : 7;
+            result[(y - y1) * w + (x - x1)] = isValidCoord(x, y) ? attribAt(x, y, GfxColorMode::Multicolor) : 7;
     }
 
     return result;
 }
 
-void TileData::setBytes(const QByteArray& data)
+void GfxData::setBytes(const QByteArray& data)
 {
     Q_ASSERT(data.length() == mWidth * mHeight + ((mWidth + 7) >> 3) * mHeight);
     memcpy(mData.get(), data.constData(), mWidth * mHeight);
     memcpy(mAttrib.get(), data.constData() + mWidth * mHeight, ((mWidth + 7) >> 3) * mHeight);
 }
 
-void TileData::setBytes(int x, int y, int w, int h, const QByteArray& data)
+void GfxData::setBytes(int x, int y, int w, int h, const QByteArray& data)
 {
     Q_ASSERT(data.length() == w * h);
     for (int iy = 0; iy < h; iy++) {
@@ -185,7 +185,7 @@ void TileData::setBytes(int x, int y, int w, int h, const QByteArray& data)
     }
 }
 
-void TileData::setAttrib(int x, int y, int w, int h, const QByteArray& data)
+void GfxData::setAttrib(int x, int y, int w, int h, const QByteArray& data)
 {
     Q_ASSERT(data.length() == w * h);
     for (int iy = 0; iy < h; iy++) {
@@ -193,7 +193,7 @@ void TileData::setAttrib(int x, int y, int w, int h, const QByteArray& data)
             int xx = x + ix;
             int yy = y + iy;
             if (isValidCoord(xx, yy))
-                attribAt(xx, yy, TileColorMode::Multicolor) = data[iy * w + ix];
+                attribAt(xx, yy, GfxColorMode::Multicolor) = data[iy * w + ix];
         }
     }
 }

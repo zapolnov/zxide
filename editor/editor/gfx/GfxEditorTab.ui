@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TileEditorTab</class>
- <widget class="QWidget" name="TileEditorTab">
+ <class>GfxEditorTab</class>
+ <widget class="QWidget" name="GfxEditorTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -75,7 +75,7 @@
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
-         <widget class="TileEditorWidget" name="editorWidget">
+         <widget class="GfxEditorWidget" name="editorWidget">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -580,9 +580,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>TileEditorWidget</class>
+   <class>GfxEditorWidget</class>
    <extends>QWidget</extends>
-   <header>editor/tile/TileEditorWidget.h</header>
+   <header>editor/gfx/GfxEditorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

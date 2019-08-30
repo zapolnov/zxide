@@ -1,5 +1,5 @@
-#ifndef EDITOR_TILE_TILEEDITORWIDGET_H
-#define EDITOR_TILE_TILEEDITORWIDGET_H
+#ifndef EDITOR_GFX_GFXEDITORWIDGET_H
+#define EDITOR_GFX_GFXEDITORWIDGET_H
 
 #include <QWidget>
 #include <QHash>
@@ -7,14 +7,14 @@
 #include <vector>
 #include <memory>
 
-class TileData;
+class GfxData;
 class QJsonArray;
 class QTimer;
 class QLabel;
 
-enum class TileColorMode : int;
+enum class GfxColorMode : int;
 
-enum class TileEditorTool
+enum class GfxEditorTool
 {
     None,
     Draw,
@@ -24,13 +24,13 @@ enum class TileEditorTool
     Select,
 };
 
-class TileEditorWidget : public QWidget
+class GfxEditorWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TileEditorWidget(QWidget* parent = nullptr);
-    ~TileEditorWidget() override;
+    explicit GfxEditorWidget(QWidget* parent = nullptr);
+    ~GfxEditorWidget() override;
 
     int width() const;
     int height() const;
@@ -41,8 +41,8 @@ public:
 
     void setPreviewWidget(QLabel* preview);
 
-    TileColorMode colorMode() const { return mColorMode; }
-    void setColorMode(TileColorMode mode);
+    GfxColorMode colorMode() const { return mColorMode; }
+    void setColorMode(GfxColorMode mode);
     void setColor(int color);
 
     bool gridVisible() const { return mGridVisible; }
@@ -74,8 +74,8 @@ public:
     char at(int x, int y) const;
     char at(const QPoint& p) const;
 
-    TileEditorTool currentTool() const;
-    void setTool(TileEditorTool tool);
+    GfxEditorTool currentTool() const;
+    void setTool(GfxEditorTool tool);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -128,7 +128,7 @@ private:
         }
     };
 
-    TileData* mTileData;
+    GfxData* mGfxData;
     QTimer* mTimer;
     QLabel* mPreview;
     std::unique_ptr<Tool> mCurrentTool;
@@ -137,7 +137,7 @@ private:
     size_t mSavedIndex;
     Rect mSelection;
     QPoint mMousePosition;
-    TileColorMode mColorMode;
+    GfxColorMode mColorMode;
     Qt::MouseButton mMousePressed;
     int mSelectedColor;
     bool mFlash;
@@ -149,7 +149,7 @@ private:
     void pushOperation(Operation* op);
     void pushOperation(std::unique_ptr<Operation>&& op);
 
-    Q_DISABLE_COPY(TileEditorWidget)
+    Q_DISABLE_COPY(GfxEditorWidget)
 };
 
 #endif

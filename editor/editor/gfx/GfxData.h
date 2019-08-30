@@ -1,24 +1,24 @@
-#ifndef EDITOR_TILE_TILEDATA_H
-#define EDITOR_TILE_TILEDATA_H
+#ifndef EDITOR_GFX_GFXDATA_H
+#define EDITOR_GFX_GFXDATA_H
 
 #include <QObject>
 #include <QPoint>
 #include <memory>
 
-enum class TileColorMode : int
+enum class GfxColorMode : int
 {
     Standard,
     Multicolor,
     Bicolor,
 };
 
-class TileData : public QObject
+class GfxData : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit TileData(int w, int h, QObject* parent = nullptr);
-    ~TileData() override;
+    explicit GfxData(int w, int h, QObject* parent = nullptr);
+    ~GfxData() override;
 
     int width() const { return mWidth; }
     int height() const { return mHeight; }
@@ -32,8 +32,8 @@ public:
     char& at(int x, int y);
     char& at(const QPoint& p);
 
-    char attribAt(int x, int y, TileColorMode mode) const;
-    char& attribAt(int x, int y, TileColorMode mode);
+    char attribAt(int x, int y, GfxColorMode mode) const;
+    char& attribAt(int x, int y, GfxColorMode mode);
 
     void clear();
     void clear(int x1, int y1, int x2, int y2);
@@ -55,7 +55,7 @@ private:
     int mWidth;
     int mHeight;
 
-    Q_DISABLE_COPY(TileData)
+    Q_DISABLE_COPY(GfxData)
 };
 
 #endif

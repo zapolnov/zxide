@@ -1,19 +1,19 @@
-#ifndef EDITOR_TILE_TILEEDITORTAB_H
-#define EDITOR_TILE_TILEEDITORTAB_H
+#ifndef EDITOR_GFX_GFXEDITORTAB_H
+#define EDITOR_GFX_GFXEDITORTAB_H
 
 #include "editor/AbstractEditorTab.h"
 #include <memory>
 
 class QComboBox;
-class Ui_TileEditorTab;
+class Ui_GfxEditorTab;
 
-class TileEditorTab : public AbstractEditorTab
+class GfxEditorTab : public AbstractEditorTab
 {
     Q_OBJECT
 
 public:
-    explicit TileEditorTab(QWidget* parent = nullptr);
-    ~TileEditorTab() override;
+    explicit GfxEditorTab(QWidget* parent = nullptr);
+    ~GfxEditorTab() override;
 
     bool loadFile(File* f) override;
 
@@ -61,7 +61,7 @@ public:
     void setFocusToEditor() override;
 
 private:
-    std::unique_ptr<Ui_TileEditorTab> mUi;
+    std::unique_ptr<Ui_GfxEditorTab> mUi;
     QString mSavedIdentifier;
     QString mSavedSection;
     QString mSavedFormat;
@@ -104,7 +104,7 @@ private:
     Q_SLOT void on_brightCheck_toggled() { setColor(mSelectedColor); }
     Q_SLOT void on_blinkingCheck_toggled() { setColor(mSelectedColor); }
 
-    Q_DISABLE_COPY(TileEditorTab)
+    Q_DISABLE_COPY(GfxEditorTab)
 };
 
 #endif

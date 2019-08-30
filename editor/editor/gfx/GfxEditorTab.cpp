@@ -1,7 +1,7 @@
-#include "TileEditorTab.h"
+#include "GfxEditorTab.h"
 #include "editor/FileManager.h"
-#include "editor/tile/TileData.h"
-#include "ui_TileEditorTab.h"
+#include "editor/gfx/GfxData.h"
+#include "ui_GfxEditorTab.h"
 #include <QMessageBox>
 #include <QSaveFile>
 #include <QJsonDocument>
@@ -24,9 +24,9 @@ static const QString JsonValue_Monochrome = QStringLiteral("monochrome");
 static const QString JsonValue_NirvanaPlusCode = QStringLiteral("nirvana+_code");
 static const int FileFormatVersion = 1;
 
-TileEditorTab::TileEditorTab(QWidget* parent)
+GfxEditorTab::GfxEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
-    , mUi(new Ui_TileEditorTab)
+    , mUi(new Ui_GfxEditorTab)
     , mSavedWidth(0)
     , mSavedHeight(0)
     , mSelectedColor(-1)
@@ -50,11 +50,11 @@ TileEditorTab::TileEditorTab(QWidget* parent)
     setColor(0, false);
 }
 
-TileEditorTab::~TileEditorTab()
+GfxEditorTab::~GfxEditorTab()
 {
 }
 
-bool TileEditorTab::loadFile(File* f)
+bool GfxEditorTab::loadFile(File* f)
 {
     if (f == file() && isModified())
         return true;
@@ -120,7 +120,7 @@ bool TileEditorTab::loadFile(File* f)
     return true;
 }
 
-bool TileEditorTab::isModified() const
+bool GfxEditorTab::isModified() const
 {
     if (!file())
         return false;
@@ -141,107 +141,107 @@ bool TileEditorTab::isModified() const
     return mUi->editorWidget->isModified();
 }
 
-bool TileEditorTab::canUndo() const
+bool GfxEditorTab::canUndo() const
 {
     return file() && mUi->editorWidget->canUndo();
 }
 
-bool TileEditorTab::canRedo() const
+bool GfxEditorTab::canRedo() const
 {
     return file() && mUi->editorWidget->canRedo();
 }
 
-bool TileEditorTab::canCut() const
+bool GfxEditorTab::canCut() const
 {
     return file() && mUi->editorWidget->canCut();
 }
 
-bool TileEditorTab::canCopy() const
+bool GfxEditorTab::canCopy() const
 {
     return file() && mUi->editorWidget->canCopy();
 }
 
-bool TileEditorTab::canPaste() const
+bool GfxEditorTab::canPaste() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canClear() const
+bool GfxEditorTab::canClear() const
 {
     return file() && mUi->editorWidget->canClearArea();
 }
 
-bool TileEditorTab::canSelectAll() const
+bool GfxEditorTab::canSelectAll() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canClearSelection() const
+bool GfxEditorTab::canClearSelection() const
 {
     return file() && mUi->editorWidget->hasSelection();
 }
 
-bool TileEditorTab::canDraw() const
+bool GfxEditorTab::canDraw() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canDrawRect() const
+bool GfxEditorTab::canDrawRect() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canFill() const
+bool GfxEditorTab::canFill() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canColorize() const
+bool GfxEditorTab::canColorize() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canSelect() const
+bool GfxEditorTab::canSelect() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::canToggleGrid() const
+bool GfxEditorTab::canToggleGrid() const
 {
     return file() != nullptr;
 }
 
-bool TileEditorTab::isDrawToolActive() const
+bool GfxEditorTab::isDrawToolActive() const
 {
-    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Draw;
+    return file() && mUi->editorWidget->currentTool() == GfxEditorTool::Draw;
 }
 
-bool TileEditorTab::isDrawRectToolActive() const
+bool GfxEditorTab::isDrawRectToolActive() const
 {
-    return file() && mUi->editorWidget->currentTool() == TileEditorTool::DrawRect;
+    return file() && mUi->editorWidget->currentTool() == GfxEditorTool::DrawRect;
 }
 
-bool TileEditorTab::isFillToolActive() const
+bool GfxEditorTab::isFillToolActive() const
 {
-    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Fill;
+    return file() && mUi->editorWidget->currentTool() == GfxEditorTool::Fill;
 }
 
-bool TileEditorTab::isColorizeToolActive() const
+bool GfxEditorTab::isColorizeToolActive() const
 {
-    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Colorize;
+    return file() && mUi->editorWidget->currentTool() == GfxEditorTool::Colorize;
 }
 
-bool TileEditorTab::isSelectToolActive() const
+bool GfxEditorTab::isSelectToolActive() const
 {
-    return file() && mUi->editorWidget->currentTool() == TileEditorTool::Select;
+    return file() && mUi->editorWidget->currentTool() == GfxEditorTool::Select;
 }
 
-bool TileEditorTab::isGridActive() const
+bool GfxEditorTab::isGridActive() const
 {
     return file() && mUi->editorWidget->gridVisible();
 }
 
-bool TileEditorTab::save()
+bool GfxEditorTab::save()
 {
     QString fileName = file()->fileInfo().absoluteFilePath();
 
@@ -289,86 +289,86 @@ bool TileEditorTab::save()
     return true;
 }
 
-void TileEditorTab::undo()
+void GfxEditorTab::undo()
 {
     mUi->editorWidget->undo();
 }
 
-void TileEditorTab::redo()
+void GfxEditorTab::redo()
 {
     mUi->editorWidget->redo();
 }
 
-void TileEditorTab::cut()
+void GfxEditorTab::cut()
 {
     mUi->editorWidget->cut();
 }
 
-void TileEditorTab::copy()
+void GfxEditorTab::copy()
 {
     mUi->editorWidget->copy();
 }
 
-void TileEditorTab::paste()
+void GfxEditorTab::paste()
 {
     mUi->editorWidget->paste();
 }
 
-void TileEditorTab::clear()
+void GfxEditorTab::clear()
 {
     mUi->editorWidget->clearArea();
 }
 
-void TileEditorTab::selectAll()
+void GfxEditorTab::selectAll()
 {
     mUi->editorWidget->selectAll();
 }
 
-void TileEditorTab::clearSelection()
+void GfxEditorTab::clearSelection()
 {
     mUi->editorWidget->clearSelection();
 }
 
-void TileEditorTab::draw()
+void GfxEditorTab::draw()
 {
-    mUi->editorWidget->setTool(TileEditorTool::Draw);
+    mUi->editorWidget->setTool(GfxEditorTool::Draw);
 }
 
-void TileEditorTab::drawRect()
+void GfxEditorTab::drawRect()
 {
-    mUi->editorWidget->setTool(TileEditorTool::DrawRect);
+    mUi->editorWidget->setTool(GfxEditorTool::DrawRect);
 }
 
-void TileEditorTab::fill()
+void GfxEditorTab::fill()
 {
-    mUi->editorWidget->setTool(TileEditorTool::Fill);
+    mUi->editorWidget->setTool(GfxEditorTool::Fill);
 }
 
-void TileEditorTab::colorize()
+void GfxEditorTab::colorize()
 {
-    mUi->editorWidget->setTool(TileEditorTool::Colorize);
+    mUi->editorWidget->setTool(GfxEditorTool::Colorize);
 }
 
-void TileEditorTab::select()
+void GfxEditorTab::select()
 {
-    mUi->editorWidget->setTool(TileEditorTool::Select);
+    mUi->editorWidget->setTool(GfxEditorTool::Select);
 }
 
-void TileEditorTab::toggleGrid()
+void GfxEditorTab::toggleGrid()
 {
     mUi->editorWidget->setGridVisible(!mUi->editorWidget->gridVisible());
 }
 
-void TileEditorTab::reloadSettings()
+void GfxEditorTab::reloadSettings()
 {
 }
 
-void TileEditorTab::setFocusToEditor()
+void GfxEditorTab::setFocusToEditor()
 {
     mUi->editorWidget->setFocus();
 }
 
-void TileEditorTab::reset()
+void GfxEditorTab::reset()
 {
     mSavedIdentifier = QString();
     mSavedSection = QString();
@@ -394,7 +394,7 @@ void TileEditorTab::reset()
     mUi->editorWidget->reset();
 }
 
-void TileEditorTab::setSaved()
+void GfxEditorTab::setSaved()
 {
     mSavedIdentifier = mUi->identifierEdit->text();
     mSavedSection = mUi->sectionEdit->text();
@@ -405,23 +405,23 @@ void TileEditorTab::setSaved()
     mUi->editorWidget->setSaved();
 }
 
-void TileEditorTab::on_editorWidget_sizeChanged()
+void GfxEditorTab::on_editorWidget_sizeChanged()
 {
     selectItem(mUi->widthCombo, mUi->editorWidget->width());
     selectItem(mUi->heightCombo, mUi->editorWidget->height());
 }
 
-void TileEditorTab::on_colorModeCombo_currentIndexChanged(int)
+void GfxEditorTab::on_colorModeCombo_currentIndexChanged(int)
 {
-    TileColorMode mode;
+    GfxColorMode mode;
 
     QString colorMode = selectedItem(mUi->colorModeCombo).toString();
     if (colorMode == JsonValue_Standard || colorMode.isEmpty())
-        mode = TileColorMode::Standard;
+        mode = GfxColorMode::Standard;
     else if (colorMode == JsonValue_Multicolor)
-        mode = TileColorMode::Multicolor;
+        mode = GfxColorMode::Multicolor;
     else if (colorMode == JsonValue_Bicolor)
-        mode = TileColorMode::Bicolor;
+        mode = GfxColorMode::Bicolor;
     else {
         Q_ASSERT(false);
         return;
@@ -430,7 +430,7 @@ void TileEditorTab::on_colorModeCombo_currentIndexChanged(int)
     mUi->editorWidget->setColorMode(mode);
 }
 
-void TileEditorTab::on_widthCombo_currentIndexChanged(int)
+void GfxEditorTab::on_widthCombo_currentIndexChanged(int)
 {
     int w = selectedItem(mUi->widthCombo).toInt();
     int h = selectedItem(mUi->heightCombo).toInt();
@@ -439,7 +439,7 @@ void TileEditorTab::on_widthCombo_currentIndexChanged(int)
     emit updateUi();
 }
 
-void TileEditorTab::on_heightCombo_currentIndexChanged(int)
+void GfxEditorTab::on_heightCombo_currentIndexChanged(int)
 {
     int w = selectedItem(mUi->widthCombo).toInt();
     int h = selectedItem(mUi->heightCombo).toInt();
@@ -448,7 +448,7 @@ void TileEditorTab::on_heightCombo_currentIndexChanged(int)
     emit updateUi();
 }
 
-bool TileEditorTab::selectItem(QComboBox* combo, const QVariant& value)
+bool GfxEditorTab::selectItem(QComboBox* combo, const QVariant& value)
 {
     int n = combo->count();
     for (int i = 0; i < n; i++) {
@@ -460,13 +460,13 @@ bool TileEditorTab::selectItem(QComboBox* combo, const QVariant& value)
     return false;
 }
 
-QVariant TileEditorTab::selectedItem(const QComboBox* combo)
+QVariant GfxEditorTab::selectedItem(const QComboBox* combo)
 {
     int selected = combo->currentIndex();
     return (selected < 0 ? QVariant() : combo->itemData(selected));
 }
 
-void TileEditorTab::setColor(int color, bool setTool)
+void GfxEditorTab::setColor(int color, bool setTool)
 {
     bool bright = mUi->brightCheck->isChecked();
     if (bright)
@@ -484,7 +484,7 @@ void TileEditorTab::setColor(int color, bool setTool)
 
         mUi->editorWidget->setColor(color);
         if (setTool)
-            mUi->editorWidget->setTool(TileEditorTool::Colorize);
+            mUi->editorWidget->setTool(GfxEditorTool::Colorize);
 
         mUi->blueButton->setVisible(!bright);
         mUi->redButton->setVisible(!bright);

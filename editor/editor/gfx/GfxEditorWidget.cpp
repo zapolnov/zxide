@@ -1,5 +1,5 @@
-#include "TileEditorWidget.h"
-#include "TileData.h"
+#include "GfxEditorWidget.h"
+#include "GfxData.h"
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
@@ -13,7 +13,7 @@
 #include <QJsonArray>
 #include <QLabel>
 
-static const QString MimeType = QStringLiteral("application/x-zxspectrum-tile");
+static const QString MimeType = QStringLiteral("application/x-zxspectrum-graphic");
 static const int PixelWidth = 8;
 static const int PixelHeight = 8;
 
@@ -45,7 +45,7 @@ namespace
         int h;
     };
 
-    Zone getZone(const TileEditorWidget* widget, int x, int y)
+    Zone getZone(const GfxEditorWidget* widget, int x, int y)
     {
         Zone z;
         z.x = (x & ~7);
@@ -53,9 +53,9 @@ namespace
         z.h = 0;
 
         switch (widget->colorMode()) {
-            case TileColorMode::Standard: z.y = (y & ~7); z.h = 8; break;
-            case TileColorMode::Multicolor: z.y = y; z.h = 1; break;
-            case TileColorMode::Bicolor: z.y = (y & ~1); z.h = 2; break;
+            case GfxColorMode::Standard: z.y = (y & ~7); z.h = 8; break;
+            case GfxColorMode::Multicolor: z.y = y; z.h = 1; break;
+            case GfxColorMode::Bicolor: z.y = (y & ~1); z.h = 2; break;
         }
 
         return z;
@@ -65,7 +65,7 @@ namespace
 ///////////////////////////////////////////////////////////////////////////////
 // Operations
 
-class TileEditorWidget::Operation
+class GfxEditorWidget::Operation
 {
 public:
     Rect selectionRect;
@@ -73,13 +73,13 @@ public:
     Operation() = default;
     virtual ~Operation() = default;
 
-    virtual void redo(TileData* data) = 0;
-    virtual void undo(TileData* data) = 0;
+    virtual void redo(GfxData* data) = 0;
+    virtual void undo(GfxData* data) = 0;
 
     Q_DISABLE_COPY(Operation)
 };
 
-class TileEditorWidget::DrawOperation : public Operation
+class GfxEditorWidget::DrawOperation : public Operation
 {
 public:
     DrawOperation(int x, int y, char value)
@@ -89,14 +89,14 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         char& ref = data->at(mX, mY);
         mOldValue = ref;
         ref = mNewValue;
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         data->at(mX, mY) = mOldValue;
     }
@@ -108,7 +108,7 @@ private:
     char mNewValue;
 };
 
-class TileEditorWidget::DrawRectOperation : public Operation
+class GfxEditorWidget::DrawRectOperation : public Operation
 {
 public:
     DrawRectOperation(const Rect& r, char value)
@@ -118,7 +118,7 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         int w = mRect.width();
         for (int y = mRect.y1; y <= mRect.y2; y++) {
@@ -130,7 +130,7 @@ public:
         }
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         int w = mRect.width();
         for (int y = mRect.y1; y <= mRect.y2; y++) {
@@ -145,7 +145,7 @@ private:
     char mNewValue;
 };
 
-class TileEditorWidget::FillOperation : public Operation
+class GfxEditorWidget::FillOperation : public Operation
 {
 public:
     FillOperation(int x, int y, char value)
@@ -154,7 +154,7 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         mOldValue.clear();
 
@@ -189,7 +189,7 @@ public:
         } while (!stack.empty());
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         for (const auto& it : mOldValue)
             data->at(it.first.first, it.first.second) = it.second;
@@ -201,7 +201,7 @@ private:
     char mNewValue;
 };
 
-class TileEditorWidget::ColorizeOperation : public Operation
+class GfxEditorWidget::ColorizeOperation : public Operation
 {
 public:
     ColorizeOperation(Zone zone, int color, bool ink)
@@ -211,9 +211,9 @@ public:
     {
     }
 
-    static char calcNewAttrib(TileData* data, int x, int y, int color, bool ink)
+    static char calcNewAttrib(GfxData* data, int x, int y, int color, bool ink)
     {
-        char attrib = data->attribAt(x, y, TileColorMode::Multicolor) & 0x3F;
+        char attrib = data->attribAt(x, y, GfxColorMode::Multicolor) & 0x3F;
         if (ink)
             attrib = (attrib & ~7) | (color & 7);
         else
@@ -221,7 +221,7 @@ public:
         return attrib | ((color & 8) << 3) | ((color & 16) << 3);
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         int x1 = mZone.x;
         int y1 = mZone.y;
@@ -232,11 +232,11 @@ public:
 
         for (int y = y1; y <= y2; y++) {
             for (int x = x1; x <= x2; x++)
-                data->attribAt(x, y, TileColorMode::Multicolor) = calcNewAttrib(data, x, y, mColor, mInk);
+                data->attribAt(x, y, GfxColorMode::Multicolor) = calcNewAttrib(data, x, y, mColor, mInk);
         }
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         data->setAttrib(mZone.x, mZone.y, 8, mZone.h, mOldValue);
     }
@@ -248,7 +248,7 @@ private:
     bool mInk;
 };
 
-class TileEditorWidget::ClearOperation : public Operation
+class GfxEditorWidget::ClearOperation : public Operation
 {
 public:
     explicit ClearOperation(const Rect& r)
@@ -256,13 +256,13 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         mOldValue = data->bytes(mRect.x1, mRect.y1, mRect.x2, mRect.y2);
         data->clear(mRect.x1, mRect.y1, mRect.x2, mRect.y2);
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         data->setBytes(mRect.x1, mRect.y1, mRect.width(), mRect.height(), mOldValue);
     }
@@ -272,7 +272,7 @@ private:
     QByteArray mOldValue;
 };
 
-class TileEditorWidget::PasteOperation : public Operation
+class GfxEditorWidget::PasteOperation : public Operation
 {
 public:
     PasteOperation(const Rect& r, const QByteArray& data)
@@ -281,13 +281,13 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         mOldValue = data->bytes(mRect.x1, mRect.y1, mRect.x2, mRect.y2);
         data->setBytes(mRect.x1, mRect.y1, mRect.width(), mRect.height(), mNewValue);
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         data->setBytes(mRect.x1, mRect.y1, mRect.width(), mRect.height(), mOldValue);
     }
@@ -298,7 +298,7 @@ private:
     QByteArray mNewValue;
 };
 
-class TileEditorWidget::ResizeOperation : public Operation
+class GfxEditorWidget::ResizeOperation : public Operation
 {
 public:
     ResizeOperation(int newWidth, int newHeight)
@@ -307,7 +307,7 @@ public:
     {
     }
 
-    void redo(TileData* data) override
+    void redo(GfxData* data) override
     {
         mOldWidth = data->width();
         mOldHeight = data->height();
@@ -315,7 +315,7 @@ public:
         data->resize(mNewWidth, mNewHeight);
     }
 
-    void undo(TileData* data) override
+    void undo(GfxData* data) override
     {
         data->resize(mOldWidth, mOldHeight);
         data->setBytes(mOldBytes);
@@ -333,19 +333,19 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // Tools
 
-class TileEditorWidget::Tool
+class GfxEditorWidget::Tool
 {
 public:
     virtual ~Tool() = default;
-    virtual TileEditorTool id() const = 0;
+    virtual GfxEditorTool id() const = 0;
     virtual QCursor cursorAt(int x, int y) const { return Qt::ArrowCursor; }
-    virtual void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const {}
-    virtual void beginDrag(TileEditorWidget* widget, int x, int y, char value) {}
-    virtual void continueDrag(TileEditorWidget* widget, int x, int y) {}
-    virtual void endDrag(TileEditorWidget* widget, bool cancel) {}
+    virtual void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const {}
+    virtual void beginDrag(GfxEditorWidget* widget, int x, int y, char value) {}
+    virtual void continueDrag(GfxEditorWidget* widget, int x, int y) {}
+    virtual void endDrag(GfxEditorWidget* widget, bool cancel) {}
 };
 
-class TileEditorWidget::DrawTool : public Tool
+class GfxEditorWidget::DrawTool : public Tool
 {
 public:
     DrawTool()
@@ -354,12 +354,12 @@ public:
     {
     }
 
-    TileEditorTool id() const override
+    GfxEditorTool id() const override
     {
-        return TileEditorTool::Draw;
+        return GfxEditorTool::Draw;
     }
 
-    static void drawOverlayTile(TileEditorWidget* widget, QPainter& painter, int x, int y, char value)
+    static void drawOverlayGfx(GfxEditorWidget* widget, QPainter& painter, int x, int y, char value)
     {
         int x1 = x * PixelWidth;
         int y1 = y * PixelHeight;
@@ -373,24 +373,24 @@ public:
         painter.drawRect(x1, y1, PixelWidth, PixelHeight);
     }
 
-    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
-        drawOverlayTile(widget, painter, x, y, (mDragging ? mValue : 1));
+        drawOverlayGfx(widget, painter, x, y, (mDragging ? mValue : 1));
     }
 
-    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    void beginDrag(GfxEditorWidget* widget, int x, int y, char value) override
     {
         mDragging = true;
         mValue = value;
         emitPixel(widget, x, y, value);
     }
 
-    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    void continueDrag(GfxEditorWidget* widget, int x, int y) override
     {
         emitPixel(widget, x, y, mValue);
     }
 
-    void endDrag(TileEditorWidget* widget, bool cancel) override
+    void endDrag(GfxEditorWidget* widget, bool cancel) override
     {
         mDragging = false;
     }
@@ -399,11 +399,11 @@ private:
     char mValue;
     bool mDragging;
 
-    void emitPixel(TileEditorWidget* widget, int x, int y, char value)
+    void emitPixel(GfxEditorWidget* widget, int x, int y, char value)
     {
-        if (!widget->mTileData->isValidCoord(x, y))
+        if (!widget->mGfxData->isValidCoord(x, y))
             return;
-        if (widget->mTileData->at(x, y) == value)
+        if (widget->mGfxData->at(x, y) == value)
             return;
         widget->pushOperation(new DrawOperation(x, y, value));
     }
@@ -411,7 +411,7 @@ private:
     Q_DISABLE_COPY(DrawTool)
 };
 
-class TileEditorWidget::DrawRectTool : public Tool
+class GfxEditorWidget::DrawRectTool : public Tool
 {
 public:
     DrawRectTool()
@@ -424,12 +424,12 @@ public:
     {
     }
 
-    TileEditorTool id() const override
+    GfxEditorTool id() const override
     {
-        return TileEditorTool::DrawRect;
+        return GfxEditorTool::DrawRect;
     }
 
-    static Rect makeRect(TileData* data, int startX, int startY, int endX, int endY)
+    static Rect makeRect(GfxData* data, int startX, int startY, int endX, int endY)
     {
         startX = qMin(qMax(startX, 0), data->width() - 1);
         startY = qMin(qMax(startY, 0), data->height() - 1);
@@ -445,14 +445,14 @@ public:
         return r;
     }
 
-    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
         if (!mDragging) {
-            DrawTool::drawOverlayTile(widget, painter, x, y, 1);
+            DrawTool::drawOverlayGfx(widget, painter, x, y, 1);
             return;
         }
 
-        Rect r = makeTileRect(widget->mTileData);
+        Rect r = makeGfxRect(widget->mGfxData);
         QRect visualRect(r.x1 * PixelWidth, r.y1 * PixelHeight, r.width() * PixelWidth, r.height() * PixelHeight);
 
         painter.setOpacity(0.7f);
@@ -467,7 +467,7 @@ public:
         painter.drawRect(visualRect);
     }
 
-    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    void beginDrag(GfxEditorWidget* widget, int x, int y, char value) override
     {
         mStartX = x;
         mStartY = y;
@@ -477,16 +477,16 @@ public:
         mDragging = true;
     }
 
-    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    void continueDrag(GfxEditorWidget* widget, int x, int y) override
     {
         mEndX = x;
         mEndY = y;
     }
 
-    void endDrag(TileEditorWidget* widget, bool cancel) override
+    void endDrag(GfxEditorWidget* widget, bool cancel) override
     {
         if (!cancel) {
-            Rect r = makeTileRect(widget->mTileData);
+            Rect r = makeGfxRect(widget->mGfxData);
             widget->pushOperation(new DrawRectOperation(r, mValue));
         }
         mDragging = false;
@@ -500,12 +500,12 @@ private:
     char mValue;
     bool mDragging;
 
-    Rect makeTileRect(TileData* data) const { return makeRect(data, mStartX, mStartY, mEndX, mEndY); }
+    Rect makeGfxRect(GfxData* data) const { return makeRect(data, mStartX, mStartY, mEndX, mEndY); }
 
     Q_DISABLE_COPY(DrawRectTool)
 };
 
-class TileEditorWidget::FillTool : public Tool
+class GfxEditorWidget::FillTool : public Tool
 {
 public:
     FillTool()
@@ -514,17 +514,17 @@ public:
     {
     }
 
-    TileEditorTool id() const override
+    GfxEditorTool id() const override
     {
-        return TileEditorTool::Fill;
+        return GfxEditorTool::Fill;
     }
 
-    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
-        DrawTool::drawOverlayTile(widget, painter, x, y, (mDragging ? mValue : 1));
+        DrawTool::drawOverlayGfx(widget, painter, x, y, (mDragging ? mValue : 1));
     }
 
-    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    void beginDrag(GfxEditorWidget* widget, int x, int y, char value) override
     {
         mX = x;
         mY = y;
@@ -532,18 +532,18 @@ public:
         mValue = value;
     }
 
-    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    void continueDrag(GfxEditorWidget* widget, int x, int y) override
     {
         mX = x;
         mY = y;
     }
 
-    void endDrag(TileEditorWidget* widget, bool cancel) override
+    void endDrag(GfxEditorWidget* widget, bool cancel) override
     {
         mDragging = false;
         if (cancel)
             return;
-        if (!widget->mTileData->isValidCoord(mX, mY))
+        if (!widget->mGfxData->isValidCoord(mX, mY))
             return;
         widget->pushOperation(new FillOperation(mX, mY, mValue));
     }
@@ -557,7 +557,7 @@ private:
     Q_DISABLE_COPY(FillTool)
 };
 
-class TileEditorWidget::ColorizeTool : public Tool
+class GfxEditorWidget::ColorizeTool : public Tool
 {
 public:
     ColorizeTool()
@@ -567,12 +567,12 @@ public:
     {
     }
 
-    TileEditorTool id() const override
+    GfxEditorTool id() const override
     {
-        return TileEditorTool::Colorize;
+        return GfxEditorTool::Colorize;
     }
 
-    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
         auto z = getZone(widget, x, y);
         painter.setPen(QColor(128, 128, 128));
@@ -580,7 +580,7 @@ public:
         painter.drawRect(z.x * PixelWidth, z.y * PixelHeight, 8 * PixelWidth, z.h * PixelHeight);
     }
 
-    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    void beginDrag(GfxEditorWidget* widget, int x, int y, char value) override
     {
         mX = x;
         mY = y;
@@ -588,14 +588,14 @@ public:
         colorize(widget, mX, mY, widget->mSelectedColor, mValue != 0);
     }
 
-    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    void continueDrag(GfxEditorWidget* widget, int x, int y) override
     {
         mX = x;
         mY = y;
         colorize(widget, mX, mY, widget->mSelectedColor, mValue != 0);
     }
 
-    void endDrag(TileEditorWidget* widget, bool cancel) override
+    void endDrag(GfxEditorWidget* widget, bool cancel) override
     {
     }
 
@@ -604,17 +604,17 @@ private:
     int mY;
     char mValue;
 
-    void colorize(TileEditorWidget* widget, int x, int y, int color, bool ink)
+    void colorize(GfxEditorWidget* widget, int x, int y, int color, bool ink)
     {
-        if (!widget->mTileData->isValidCoord(x, y))
+        if (!widget->mGfxData->isValidCoord(x, y))
             return;
 
         auto z = getZone(widget, x, y);
 
         bool equal = true;
         for (int yy = 0; yy < z.h; yy++) {
-            int a = ColorizeOperation::calcNewAttrib(widget->mTileData, x, z.y + yy, color, ink);
-            if (widget->mTileData->attribAt(x, y, widget->mColorMode) != a) {
+            int a = ColorizeOperation::calcNewAttrib(widget->mGfxData, x, z.y + yy, color, ink);
+            if (widget->mGfxData->attribAt(x, y, widget->mColorMode) != a) {
                 equal = false;
                 break;
             }
@@ -629,26 +629,26 @@ private:
     Q_DISABLE_COPY(ColorizeTool)
 };
 
-class TileEditorWidget::SelectTool : public Tool
+class GfxEditorWidget::SelectTool : public Tool
 {
 public:
     SelectTool()
     {
     }
 
-    TileEditorTool id() const override
+    GfxEditorTool id() const override
     {
-        return TileEditorTool::Select;
+        return GfxEditorTool::Select;
     }
 
-    void drawOverlay(TileEditorWidget* widget, QPainter& painter, int x, int y) const override
+    void drawOverlay(GfxEditorWidget* widget, QPainter& painter, int x, int y) const override
     {
         painter.setPen(QColor(128, 128, 128));
         painter.setBrush(Qt::transparent);
         painter.drawRect(x * PixelWidth, y * PixelHeight, PixelWidth, PixelHeight);
     }
 
-    void beginDrag(TileEditorWidget* widget, int x, int y, char value) override
+    void beginDrag(GfxEditorWidget* widget, int x, int y, char value) override
     {
         mStartX = x;
         mStartY = y;
@@ -657,7 +657,7 @@ public:
         updateSelection(widget);
     }
 
-    void continueDrag(TileEditorWidget* widget, int x, int y) override
+    void continueDrag(GfxEditorWidget* widget, int x, int y) override
     {
         mEndX = x;
         mEndY = y;
@@ -670,9 +670,9 @@ private:
     int mEndX;
     int mEndY;
 
-    void updateSelection(TileEditorWidget* widget)
+    void updateSelection(GfxEditorWidget* widget)
     {
-        widget->mSelection = DrawRectTool::makeRect(widget->mTileData, mStartX, mStartY, mEndX, mEndY);
+        widget->mSelection = DrawRectTool::makeRect(widget->mGfxData, mStartX, mStartY, mEndX, mEndY);
         widget->update();
         emit widget->updateUi();
     }
@@ -683,9 +683,9 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
-bool TileEditorWidget::mGridVisible = true;
+bool GfxEditorWidget::mGridVisible = true;
 
-TileEditorWidget::TileEditorWidget(QWidget* parent)
+GfxEditorWidget::GfxEditorWidget(QWidget* parent)
     : QWidget(parent)
     , mPreview(nullptr)
     , mCurrentTool(new DrawTool())
@@ -693,12 +693,12 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
     , mSavedIndex(0)
     , mSelection(Rect::empty())
     , mMousePosition(-1, -1)
-    , mColorMode(TileColorMode::Standard)
+    , mColorMode(GfxColorMode::Standard)
     , mMousePressed(Qt::NoButton)
     , mSelectedColor(0)
     , mFlash(false)
 {
-    mTileData = new TileData(8, 8, this);
+    mGfxData = new GfxData(8, 8, this);
     setMouseTracking(true);
 
     mTimer = new QTimer(this);
@@ -706,39 +706,39 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
     connect(mTimer, &QTimer::timeout, this, [this]{ mFlash = !mFlash; repaint(); });
 
     auto onSizeChanged = [this] {
-            setFixedSize(mTileData->width() * PixelWidth, mTileData->height() * PixelHeight);
+            setFixedSize(mGfxData->width() * PixelWidth, mGfxData->height() * PixelHeight);
             if (mPreview)
-                mPreview->setFixedSize(mTileData->width() * 2, mTileData->height() * 2);
+                mPreview->setFixedSize(mGfxData->width() * 2, mGfxData->height() * 2);
             emit sizeChanged();
         };
 
-    connect(mTileData, &TileData::sizeChanged, this, onSizeChanged);
+    connect(mGfxData, &GfxData::sizeChanged, this, onSizeChanged);
     onSizeChanged();
 }
 
-TileEditorWidget::~TileEditorWidget()
+GfxEditorWidget::~GfxEditorWidget()
 {
 }
 
-int TileEditorWidget::width() const
+int GfxEditorWidget::width() const
 {
-    return mTileData->width();
+    return mGfxData->width();
 }
 
-int TileEditorWidget::height() const
+int GfxEditorWidget::height() const
 {
-    return mTileData->height();
+    return mGfxData->height();
 }
 
-bool TileEditorWidget::isModified() const
+bool GfxEditorWidget::isModified() const
 {
     return mUndoStackIndex != mSavedIndex;
 }
 
-void TileEditorWidget::reset()
+void GfxEditorWidget::reset()
 {
     cancelInput();
-    mTileData->clear();
+    mGfxData->clear();
     mUndoStack.clear();
     mUndoStackIndex = 0;
     mSelection = Rect::empty();
@@ -747,22 +747,22 @@ void TileEditorWidget::reset()
     emit updateUi();
 }
 
-void TileEditorWidget::setSize(int w, int h)
+void GfxEditorWidget::setSize(int w, int h)
 {
-    if (w != mTileData->width() || h != mTileData->height())
+    if (w != mGfxData->width() || h != mGfxData->height())
         pushOperation(new ResizeOperation(w, h));
 }
 
-void TileEditorWidget::setPreviewWidget(QLabel* preview)
+void GfxEditorWidget::setPreviewWidget(QLabel* preview)
 {
     mPreview = preview;
     if (preview) {
-        preview->setFixedSize(mTileData->width() * 2, mTileData->height() * 2);
+        preview->setFixedSize(mGfxData->width() * 2, mGfxData->height() * 2);
         update();
     }
 }
 
-void TileEditorWidget::setColorMode(TileColorMode mode)
+void GfxEditorWidget::setColorMode(GfxColorMode mode)
 {
     if (mColorMode != mode) {
         mColorMode = mode;
@@ -771,7 +771,7 @@ void TileEditorWidget::setColorMode(TileColorMode mode)
     }
 }
 
-void TileEditorWidget::setColor(int color)
+void GfxEditorWidget::setColor(int color)
 {
     if (mSelectedColor != color) {
         mSelectedColor = color;
@@ -780,7 +780,7 @@ void TileEditorWidget::setColor(int color)
     }
 }
 
-void TileEditorWidget::setGridVisible(bool visible)
+void GfxEditorWidget::setGridVisible(bool visible)
 {
     if (mGridVisible != visible) {
         mGridVisible = visible;
@@ -790,41 +790,41 @@ void TileEditorWidget::setGridVisible(bool visible)
     repaint();
 }
 
-QJsonArray TileEditorWidget::pixels() const
+QJsonArray GfxEditorWidget::pixels() const
 {
     QJsonArray result;
-    for (int y = 0; y < mTileData->height(); y++) {
-        QString str(mTileData->width(), '?');
-        for (int x = 0; x < mTileData->width(); x++)
-            str[x] = (mTileData->at(x, y) ? '#' : '.');
+    for (int y = 0; y < mGfxData->height(); y++) {
+        QString str(mGfxData->width(), '?');
+        for (int x = 0; x < mGfxData->width(); x++)
+            str[x] = (mGfxData->at(x, y) ? '#' : '.');
         result.append(str);
     }
     return result;
 }
 
-QJsonArray TileEditorWidget::attribs() const
+QJsonArray GfxEditorWidget::attribs() const
 {
     QJsonArray result;
 
-    for (int y = 0; y < mTileData->height(); y++) {
+    for (int y = 0; y < mGfxData->height(); y++) {
         QJsonArray lineAttribs;
-        for (int x = 0; x < mTileData->width(); x += 8)
-            lineAttribs.append(mTileData->attribAt(x, y, TileColorMode::Multicolor));
+        for (int x = 0; x < mGfxData->width(); x += 8)
+            lineAttribs.append(mGfxData->attribAt(x, y, GfxColorMode::Multicolor));
         result.append(lineAttribs);
     }
 
     return result;
 }
 
-bool TileEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attribs)
+bool GfxEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attribs)
 {
     if (data.size() != h || attribs.size() != h)
         return false;
 
-    if (w != mTileData->width() || h != mTileData->height())
-        mTileData->resize(w, h);
+    if (w != mGfxData->width() || h != mGfxData->height())
+        mGfxData->resize(w, h);
 
-    mTileData->clear();
+    mGfxData->clear();
     for (int y = 0; y < h; y++) {
         const QString& str = data[y].toString();
         if (str.length() != w)
@@ -833,9 +833,9 @@ bool TileEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attri
         for (int x = 0; x < w; x++) {
             QChar ch = str[x];
             if (ch == '#')
-                mTileData->at(x, y) = 1;
+                mGfxData->at(x, y) = 1;
             else if (ch == '.')
-                mTileData->at(x, y) = 0;
+                mGfxData->at(x, y) = 0;
             else
                 return false;
         }
@@ -845,7 +845,7 @@ bool TileEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attri
             return false;
 
         for (int x = 0, i = 0; x < w; x += 8, i++)
-            mTileData->attribAt(x, y, TileColorMode::Multicolor) = (char)(lineAttribs[i].toInt() & 0xff);
+            mGfxData->attribAt(x, y, GfxColorMode::Multicolor) = (char)(lineAttribs[i].toInt() & 0xff);
     }
 
     cancelInput();
@@ -859,30 +859,30 @@ bool TileEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attri
     return true;
 }
 
-void TileEditorWidget::setSaved()
+void GfxEditorWidget::setSaved()
 {
     mSavedIndex = mUndoStackIndex;
     update();
     emit updateUi();
 }
 
-bool TileEditorWidget::canUndo() const
+bool GfxEditorWidget::canUndo() const
 {
     return mUndoStackIndex > 0;
 }
 
-bool TileEditorWidget::canRedo() const
+bool GfxEditorWidget::canRedo() const
 {
     return mUndoStackIndex < mUndoStack.size();
 }
 
-void TileEditorWidget::undo()
+void GfxEditorWidget::undo()
 {
     if (mUndoStackIndex > 0) {
         cancelInput();
 
         auto& op = mUndoStack[--mUndoStackIndex];
-        op->undo(mTileData);
+        op->undo(mGfxData);
         mSelection = op->selectionRect;
 
         update();
@@ -890,12 +890,12 @@ void TileEditorWidget::undo()
     }
 }
 
-void TileEditorWidget::redo()
+void GfxEditorWidget::redo()
 {
     if (mUndoStackIndex < mUndoStack.size()) {
         cancelInput();
 
-        mUndoStack[mUndoStackIndex++]->redo(mTileData);
+        mUndoStack[mUndoStackIndex++]->redo(mGfxData);
         if (mUndoStackIndex < mUndoStack.size())
             mSelection = mUndoStack[mUndoStackIndex]->selectionRect;
 
@@ -904,22 +904,22 @@ void TileEditorWidget::redo()
     }
 }
 
-bool TileEditorWidget::canCut() const
+bool GfxEditorWidget::canCut() const
 {
     return hasSelection();
 }
 
-bool TileEditorWidget::canCopy() const
+bool GfxEditorWidget::canCopy() const
 {
     return hasSelection();
 }
 
-bool TileEditorWidget::canClearArea() const
+bool GfxEditorWidget::canClearArea() const
 {
     return hasSelection();
 }
 
-void TileEditorWidget::cut()
+void GfxEditorWidget::cut()
 {
     if (!hasSelection())
         return;
@@ -932,14 +932,14 @@ void TileEditorWidget::cut()
     clearSelection();
 }
 
-void TileEditorWidget::copy()
+void GfxEditorWidget::copy()
 {
     if (!hasSelection())
         return;
 
     cancelInput();
 
-    QByteArray pixels = mTileData->bytes(mSelection.x1, mSelection.y1, mSelection.x2, mSelection.y2);
+    QByteArray pixels = mGfxData->bytes(mSelection.x1, mSelection.y1, mSelection.x2, mSelection.y2);
 
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
@@ -956,7 +956,7 @@ void TileEditorWidget::copy()
     clipboard->setMimeData(mime.release());
 }
 
-void TileEditorWidget::paste()
+void GfxEditorWidget::paste()
 {
     auto clipboard = QApplication::clipboard();
     const QMimeData* mime = clipboard->mimeData();
@@ -1008,7 +1008,7 @@ void TileEditorWidget::paste()
     clearSelection();
 }
 
-void TileEditorWidget::clearArea()
+void GfxEditorWidget::clearArea()
 {
     if (!hasSelection())
         return;
@@ -1019,21 +1019,21 @@ void TileEditorWidget::clearArea()
     clearSelection();
 }
 
-void TileEditorWidget::selectAll()
+void GfxEditorWidget::selectAll()
 {
     if (mSelection.x1 != 0 || mSelection.y1 != 0
-            || mSelection.width() != mTileData->width() || mSelection.height() != mTileData->height()) {
+            || mSelection.width() != mGfxData->width() || mSelection.height() != mGfxData->height()) {
         cancelInput();
         mSelection.x1 = 0;
         mSelection.y1 = 0;
-        mSelection.x2 = mTileData->width() - 1;
-        mSelection.y2 = mTileData->height() - 1;
+        mSelection.x2 = mGfxData->width() - 1;
+        mSelection.y2 = mGfxData->height() - 1;
         update();
         emit updateUi();
     }
 }
 
-void TileEditorWidget::clearSelection()
+void GfxEditorWidget::clearSelection()
 {
     if (!mSelection.isEmpty()) {
         cancelInput();
@@ -1043,50 +1043,50 @@ void TileEditorWidget::clearSelection()
     }
 }
 
-char TileEditorWidget::at(int x, int y) const
+char GfxEditorWidget::at(int x, int y) const
 {
-    return mTileData->at(x, y);
+    return mGfxData->at(x, y);
 }
 
-char TileEditorWidget::at(const QPoint& p) const
+char GfxEditorWidget::at(const QPoint& p) const
 {
-    return mTileData->at(p);
+    return mGfxData->at(p);
 }
 
-TileEditorTool TileEditorWidget::currentTool() const
+GfxEditorTool GfxEditorWidget::currentTool() const
 {
-    return (mCurrentTool ? mCurrentTool->id() : TileEditorTool::None);
+    return (mCurrentTool ? mCurrentTool->id() : GfxEditorTool::None);
 }
 
-void TileEditorWidget::setTool(TileEditorTool tool)
+void GfxEditorWidget::setTool(GfxEditorTool tool)
 {
     if (currentTool() != tool) {
         cancelInput();
         switch (tool) {
-            case TileEditorTool::None: mCurrentTool.reset(); break;
-            case TileEditorTool::Draw: mCurrentTool.reset(new DrawTool()); break;
-            case TileEditorTool::DrawRect: mCurrentTool.reset(new DrawRectTool()); break;
-            case TileEditorTool::Fill: mCurrentTool.reset(new FillTool()); break;
-            case TileEditorTool::Colorize: mCurrentTool.reset(new ColorizeTool()); break;
-            case TileEditorTool::Select: mCurrentTool.reset(new SelectTool()); break;
+            case GfxEditorTool::None: mCurrentTool.reset(); break;
+            case GfxEditorTool::Draw: mCurrentTool.reset(new DrawTool()); break;
+            case GfxEditorTool::DrawRect: mCurrentTool.reset(new DrawRectTool()); break;
+            case GfxEditorTool::Fill: mCurrentTool.reset(new FillTool()); break;
+            case GfxEditorTool::Colorize: mCurrentTool.reset(new ColorizeTool()); break;
+            case GfxEditorTool::Select: mCurrentTool.reset(new SelectTool()); break;
         }
         update();
     }
     emit updateUi();
 }
 
-void TileEditorWidget::paintEvent(QPaintEvent* event)
+void GfxEditorWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
-    QImage image(mTileData->width() * 2, mTileData->height() * 2, QImage::Format_ARGB32);
+    QImage image(mGfxData->width() * 2, mGfxData->height() * 2, QImage::Format_ARGB32);
 
-    for (int tileY = 0; tileY < mTileData->height(); tileY++) {
-        for (int tileX = 0; tileX < mTileData->width(); tileX++) {
-            int x = tileX * PixelWidth;
-            int y = tileY * PixelHeight;
+    for (int gfxY = 0; gfxY < mGfxData->height(); gfxY++) {
+        for (int gfxX = 0; gfxX < mGfxData->width(); gfxX++) {
+            int x = gfxX * PixelWidth;
+            int y = gfxY * PixelHeight;
 
-            char value = mTileData->at(tileX, tileY);
-            char attrib = mTileData->attribAt(tileX, tileY, mColorMode);
+            char value = mGfxData->at(gfxX, gfxY);
+            char attrib = mGfxData->attribAt(gfxX, gfxY, mColorMode);
 
             if ((attrib & 0x80) != 0 && mFlash)
                 value = !value;
@@ -1100,7 +1100,7 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
 
             for (int yy = 0; yy < 2; yy++) {
                 for (int xx = 0; xx < 2; xx++)
-                    image.setPixel(tileX * 2 + xx, tileY * 2 + yy, rgb);
+                    image.setPixel(gfxX * 2 + xx, gfxY * 2 + yy, rgb);
             }
 
             painter.fillRect(x, y, PixelWidth, PixelHeight, colorRef);
@@ -1113,17 +1113,17 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
     if (mGridVisible) {
         painter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
         painter.setBrush(Qt::transparent);
-        for (int tileY = 1; tileY < mTileData->height(); tileY++) {
-            float w = ((tileY & 7) == 0 ? 1.5f : 1.0f);
-            int c = ((tileY & 7) == 0 ? 255 : 128);
-            int y = tileY * PixelHeight;
+        for (int gridY = 1; gridY < mGfxData->height(); gridY++) {
+            float w = ((gridY & 7) == 0 ? 1.5f : 1.0f);
+            int c = ((gridY & 7) == 0 ? 255 : 128);
+            int y = gridY * PixelHeight;
             painter.setPen(QPen(QColor(c, c, c, 128), w));
             painter.drawLine(0, y, QWidget::width(), y);
         }
-        for (int tileX = 1; tileX < mTileData->width(); tileX++) {
-            float w = ((tileX & 7) == 0 ? 1.5f : 1.0f);
-            int c = ((tileX & 7) == 0 ? 255 : 128);
-            int x = tileX * PixelWidth;
+        for (int gridX = 1; gridX < mGfxData->width(); gridX++) {
+            float w = ((gridX & 7) == 0 ? 1.5f : 1.0f);
+            int c = ((gridX & 7) == 0 ? 255 : 128);
+            int x = gridX * PixelWidth;
             painter.setPen(QPen(QColor(c, c, c, 128), w));
             painter.drawLine(x, 0, x, QWidget::height());
         }
@@ -1142,7 +1142,7 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
     }
 
     QCursor cursor = Qt::ArrowCursor;
-    if (mCurrentTool && mTileData->isValidCoord(mMousePosition)) {
+    if (mCurrentTool && mGfxData->isValidCoord(mMousePosition)) {
         cursor = mCurrentTool->cursorAt(mMousePosition.x(), mMousePosition.y());
         mCurrentTool->drawOverlay(this, painter, mMousePosition.x(), mMousePosition.y());
     }
@@ -1150,7 +1150,7 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
     setCursor(cursor);
 }
 
-void TileEditorWidget::mousePressEvent(QMouseEvent* event)
+void GfxEditorWidget::mousePressEvent(QMouseEvent* event)
 {
     updateMousePosition(event);
     if ((event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
@@ -1162,7 +1162,7 @@ void TileEditorWidget::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void TileEditorWidget::mouseReleaseEvent(QMouseEvent* event)
+void GfxEditorWidget::mouseReleaseEvent(QMouseEvent* event)
 {
     updateMousePosition(event);
     if (event->button() == mMousePressed) {
@@ -1176,7 +1176,7 @@ void TileEditorWidget::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-void TileEditorWidget::mouseMoveEvent(QMouseEvent* event)
+void GfxEditorWidget::mouseMoveEvent(QMouseEvent* event)
 {
     updateMousePosition(event);
     if (mMousePressed != Qt::NoButton) {
@@ -1187,7 +1187,7 @@ void TileEditorWidget::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
-void TileEditorWidget::leaveEvent(QEvent* event)
+void GfxEditorWidget::leaveEvent(QEvent* event)
 {
     if (mMousePosition.x() != -1 || mMousePosition.y() != -1) {
         mMousePosition = QPoint(-1, -1);
@@ -1198,7 +1198,7 @@ void TileEditorWidget::leaveEvent(QEvent* event)
     }
 }
 
-void TileEditorWidget::cancelInput()
+void GfxEditorWidget::cancelInput()
 {
     if (mMousePressed != Qt::NoButton) {
         mMousePressed = Qt::NoButton;
@@ -1209,7 +1209,7 @@ void TileEditorWidget::cancelInput()
     }
 }
 
-void TileEditorWidget::updateMousePosition(QMouseEvent* event)
+void GfxEditorWidget::updateMousePosition(QMouseEvent* event)
 {
     QPoint pos = event->pos();
     int x = pos.x() / PixelWidth;
@@ -1220,12 +1220,12 @@ void TileEditorWidget::updateMousePosition(QMouseEvent* event)
     }
 }
 
-void TileEditorWidget::pushOperation(Operation* op)
+void GfxEditorWidget::pushOperation(Operation* op)
 {
     pushOperation(std::unique_ptr<Operation>(op));
 }
 
-void TileEditorWidget::pushOperation(std::unique_ptr<Operation>&& op)
+void GfxEditorWidget::pushOperation(std::unique_ptr<Operation>&& op)
 {
     if (mUndoStackIndex < mUndoStack.size()) {
         if (mSavedIndex > mUndoStackIndex)
@@ -1236,7 +1236,7 @@ void TileEditorWidget::pushOperation(std::unique_ptr<Operation>&& op)
     op->selectionRect = mSelection;
 
     mUndoStack.emplace_back(std::move(op));
-    mUndoStack.back()->redo(mTileData);
+    mUndoStack.back()->redo(mGfxData);
     ++mUndoStackIndex;
 
     update();
