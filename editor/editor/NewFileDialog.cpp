@@ -6,6 +6,8 @@
 #include <QDir>
 #include <QMessageBox>
 
+static QString lastSelectedExtension;
+
 NewFileDialog::NewFileDialog(Directory* directory, QWidget* parent)
     : QDialog(parent)
     , mUi(new Ui_NewFileDialog)
@@ -13,7 +15,7 @@ NewFileDialog::NewFileDialog(Directory* directory, QWidget* parent)
 {
     mUi->setupUi(this);
 
-    mUi->nameEdit->setText(tr("New file"));
+    mUi->nameEdit->setText(tr("Untitled"));
     mUi->nameEdit->selectAll();
     mUi->nameEdit->setFocus();
 
@@ -21,7 +23,7 @@ NewFileDialog::NewFileDialog(Directory* directory, QWidget* parent)
     for (const auto& it : EditorTabFactory::instance()->formats()) {
         auto item = new QListWidgetItem(it->icon, it->name, mUi->typeList);
         item->setData(Qt::UserRole, it->extension);
-        if (first) {
+        if (first || it->extension == lastSelectedExtension) {
             mUi->typeList->setCurrentItem(item);
             first = false;
         }
@@ -49,6 +51,7 @@ void NewFileDialog::done(int r)
         }
 
         QString extension = item->data(Qt::UserRole).toString();
+        lastSelectedExtension = extension;
         if (!mName.endsWith(QStringLiteral(".%1").arg(extension)))
             mName = QStringLiteral("%1.%2").arg(mName).arg(extension);
 
