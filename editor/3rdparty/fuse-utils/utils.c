@@ -21,7 +21,7 @@
 
 */
 
-#include <config.h>
+/*#include <config.h>*/
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,7 +29,11 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef WIN32
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
 
 #ifndef WIN32
 #include <sys/utsname.h>
@@ -67,6 +71,7 @@ get_creator( libspectrum_creator **creator, const char *program )
   libspectrum_error error;
   size_t i;
 
+/*
 #ifndef WIN32
   char osname[ 256 ];
   int sys_error;
@@ -74,15 +79,16 @@ get_creator( libspectrum_creator **creator, const char *program )
   sys_error = compat_osname( osname, sizeof( osname ) );
   if( sys_error ) return 1;
 #endif
+*/
 
   *creator = libspectrum_creator_alloc();
 
   error = libspectrum_creator_set_program( *creator, program );
   if( error ) { libspectrum_creator_free( *creator ); return error; }
 
-  sscanf( VERSION, "%u.%u.%u.%u",
-	  &version[0], &version[1], &version[2], &version[3] );
-  for( i=0; i<4; i++ ) if( version[i] > 0xff ) version[i] = 0xff;
+  /*sscanf( VERSION, "%u.%u.%u.%u",
+	  &version[0], &version[1], &version[2], &version[3] );*/
+  for( i=0; i<4; i++ ) /*if( version[i] > 0xff )*/ version[i] = 0xff;
 
   error = libspectrum_creator_set_major( *creator,
 					 version[0] * 0x100 + version[1] );
@@ -106,7 +112,7 @@ get_creator( libspectrum_creator **creator, const char *program )
 #else
   snprintf( custom, 256, "libspectrum: %s\nuname: %s\n",
 	    libspectrum_version(),
-	    osname );
+	    /*osname*/"unknown" );
 #endif
 
   error = libspectrum_creator_set_custom( *creator,
@@ -124,7 +130,7 @@ int
 read_file( const char *filename, unsigned char **buffer, size_t *length )
 {
   int fd; struct stat file_info;
-  ssize_t bytes;
+  /*ssize_t*/long bytes;
   
   if( ( fd = open( filename, O_RDONLY | O_BINARY ) ) == -1 ) {
     fprintf( stderr, "%s: couldn't open `%s': %s\n", progname, filename,

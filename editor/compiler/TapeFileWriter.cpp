@@ -3,12 +3,22 @@
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
 #include "compiler/Util.h"
+#include <QFileInfo>
 #include <QCoreApplication>
+#include <QDir>
+#include <QDataStream>
 #include <sstream>
 #include <algorithm>
 
+#define ssize_t ptrdiff_t
+
+#include <File.h> // libaudiofile
+#include <af_vfs.h>
+
 extern "C" {
 #include <libspectrum.h>
+#include <internals.h> // libspectrum
+int write_tape(AFvirtualfile* vf, libspectrum_tape* tape, int sample_rate); // tape2wav
 }
 
 #ifdef max
@@ -84,6 +94,11 @@ namespace
                 libspectrum_tape_block_free(mBlock);
         }
 
+        void setPause(int ms)
+        {
+            libspectrum_set_pause_ms(mBlock, ms);
+        }
+
         void setDataWithChecksum(const void* data, size_t length, quint8 flag = 0)
         {
             auto error = libspectrum_tape_block_set_data_length(mBlock, length + 2);
@@ -141,6 +156,106 @@ namespace
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    class VirtualFile
+    {
+    public:
+        VirtualFile()
+            : mDestroyed(0)
+        {
+            mHandle = af_virtual_file_new();
+            if (!mHandle)
+                return;
+
+            mHandle->closure = this;
+            mHandle->destroy = destroy;
+            mHandle->tell = tell;
+            mHandle->length = tell;
+            mHandle->seek = seek;
+            mHandle->write = write;
+        }
+
+        ~VirtualFile()
+        {
+            if (mHandle) {
+                Q_ASSERT(mDestroyed == 0 || mDestroyed == 1);
+                if (!mDestroyed) {
+                    af_virtual_file_destroy(mHandle);
+                    Q_ASSERT(mDestroyed == 1);
+                }
+            }
+        }
+
+        const void* data() const { return mBuffer.constData(); }
+        size_t length() const { return size_t(mSize); }
+
+        operator AFvirtualfile*() const { return mHandle; }
+
+    private:
+        AFvirtualfile* mHandle;
+        QByteArray mBuffer;
+        AFfileoffset mOffset;
+        AFfileoffset mSize;
+        int mDestroyed;
+
+        static void destroy(AFvirtualfile* vf)
+        {
+            auto self = reinterpret_cast<VirtualFile*>(vf->closure);
+            Q_ASSERT(self->mDestroyed == 0);
+            self->mDestroyed++;
+        }
+
+        static AFfileoffset tell(AFvirtualfile* vf)
+        {
+            auto self = reinterpret_cast<VirtualFile*>(vf->closure);
+            Q_ASSERT(self->mDestroyed == 0);
+            return self->mOffset;
+        }
+
+        static AFfileoffset seek(AFvirtualfile* vf, AFfileoffset offset, int whence)
+        {
+            auto self = reinterpret_cast<VirtualFile*>(vf->closure);
+            Q_ASSERT(self->mDestroyed == 0);
+
+            AFfileoffset newOffset;
+            switch (whence) {
+                case File::SeekFromBeginning: newOffset = offset; break;
+                case File::SeekFromCurrent: newOffset = self->mOffset + offset; break;
+                case File::SeekFromEnd: newOffset = self->mSize + offset; break;
+                default: Q_ASSERT(false); return -1;
+            }
+
+            self->mOffset = newOffset;
+            return newOffset;
+        }
+
+        static ssize_t write(AFvirtualfile* vf, const void* data, size_t nbytes)
+        {
+            auto self = reinterpret_cast<VirtualFile*>(vf->closure);
+            Q_ASSERT(self->mDestroyed == 0);
+
+            AFfileoffset curOffset = self->mOffset;
+            AFfileoffset newOffset = curOffset + nbytes;
+            if (newOffset > self->mSize) {
+                int newLength = self->mBuffer.length();
+                if (newLength == 0)
+                    newLength = 16384;
+                while (newLength < newOffset)
+                    newLength *= 2;
+                self->mBuffer.resize(newLength);
+                self->mSize = newOffset;
+            }
+
+            memcpy(self->mBuffer.data() + curOffset, data, nbytes);
+            self->mOffset = newOffset;
+
+            return ssize_t(nbytes);
+        }
+
+        Q_DISABLE_COPY(VirtualFile)
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     class LibSpectrumTape
     {
     public:
@@ -166,6 +281,7 @@ namespace
         void appendBlock(const void* data, size_t length, quint8 flag = 0)
         {
             LibSpectrumTapeBlock block(LIBSPECTRUM_TAPE_BLOCK_ROM);
+            block.setPause(1000);
             block.setDataWithChecksum(data, length, flag);
             appendBlock(block);
         }
@@ -188,6 +304,18 @@ namespace
             LibSpectrumBuffer buffer;
             write(buffer, &length, type);
             if (!::writeFile(file, buffer.constData(), length, reporter))
+                throw TapeFileWriterException();
+        }
+
+        void writeWavFile(const QString& file, IErrorReporter* reporter)
+        {
+            VirtualFile vf;
+            if (write_tape(vf, mTape, 44100) != 0) {
+                reporter->error(nullptr, 0, QCoreApplication::tr("write_tape failed"));
+                throw TapeFileWriterException();
+            }
+
+            if (!::writeFile(file, vf.data(), vf.length(), reporter))
                 throw TapeFileWriterException();
         }
 
@@ -361,6 +489,11 @@ bool TapeFileWriter::writeTapeFile(const QString& file)
         tape.appendBlock(loaderData, 255);
         tape.appendBlock(programHeader.toBinary(), 0);
         tape.appendBlock(mProgram->codeBytes(), mProgram->codeLength(), 255);
+
+        QFileInfo fileInfo(file);
+        QDir dir(fileInfo.absolutePath());
+        QString wavFile = dir.absoluteFilePath(QStringLiteral("%1.wav").arg(fileInfo.completeBaseName()));
+        tape.writeWavFile(wavFile, mReporter);
 
         tape.writeFile(LIBSPECTRUM_ID_TAPE_TAP, file, mReporter);
     } catch (const TapeFileWriterException&) {
