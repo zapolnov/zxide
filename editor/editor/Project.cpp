@@ -32,6 +32,12 @@ QString Project::tapeFileName() const
     return mDir.absoluteFilePath(QStringLiteral("%1/%2.tap")).arg(BuildDirectory).arg(name());
 }
 
+QString Project::wavFileName() const
+{
+    mDir.mkpath(BuildDirectory);
+    return mDir.absoluteFilePath(QStringLiteral("%1/%2.wav")).arg(BuildDirectory).arg(name());
+}
+
 QDir Project::generatedFilesDirectory() const
 {
     return mDir.absoluteFilePath(GeneratedDirectory);

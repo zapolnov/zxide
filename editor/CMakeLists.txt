@@ -9,7 +9,7 @@ include_directories(
 add_subdirectory(compiler)
 add_subdirectory(scripting)
 
-qt_add_executable(GameEditor USES Core Gui Widgets)
+qt_add_executable(GameEditor USES Core Gui Widgets Multimedia Network)
 target_link_libraries(GameEditor Lua Scintilla Compiler Scripting Fuse)
 
 qt_add_sources(GameEditor
@@ -68,6 +68,9 @@ qt_add_sources(GameEditor
         MainWindow.cpp
         MainWindow.h
         MainWindow.ui
+        PlayAudioDialog.cpp
+        PlayAudioDialog.h
+        PlayAudioDialog.ui
         SettingsDialog.cpp
         SettingsDialog.h
         SettingsDialog.ui

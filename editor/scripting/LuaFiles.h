@@ -1,6 +1,8 @@
 #ifndef SCRIPTING_LUAFILES_H
 #define SCRIPTING_LUAFILES_H
 
+#include <cstddef>
+
 struct lua_State;
 struct luaL_Reg;
 

@@ -56,9 +56,14 @@ void CompilerDialog::addSourceFile(File* file)
     mCompiler->addSourceFile(file, file->fileInfo().absoluteFilePath());
 }
 
-void CompilerDialog::setOutputFile(const QString& file)
+void CompilerDialog::setOutputTapeFile(const QString& file)
 {
-    mCompiler->setOutputFile(file);
+    mCompiler->setOutputTapeFile(file);
+}
+
+void CompilerDialog::setOutputWavFile(const QString& file)
+{
+    mCompiler->setOutputWavFile(file);
 }
 
 void CompilerDialog::setGeneratedFilesDirectory(const QDir& dir)

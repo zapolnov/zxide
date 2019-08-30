@@ -25,15 +25,33 @@ int write_tape(AFvirtualfile* vf, libspectrum_tape* tape, int sample_rate); // t
 #undef max
 #endif
 
+class TapeFileWriter::ILibSpectrum
+{
+public:
+    virtual ~ILibSpectrum() = default;
+};
+
+class TapeFileWriter::ILibSpectrumTape
+{
+public:
+    virtual ~ILibSpectrumTape() = default;
+    virtual void appendBlock(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) = 0;
+    virtual void appendBlock(const std::string& data, quint8 flag = 0, int pauseMs = 1000) = 0;
+    virtual void writeFile(libspectrum_id_t type, const QString& file, IErrorReporter* reporter) = 0;
+    virtual void writeWavFile(const QString& file, IErrorReporter* reporter) = 0;
+};
+
 namespace
 {
+    class LibSpectrumTape;
+
     class TapeFileWriterException
     {
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    class LibSpectrum
+    class LibSpectrum : public TapeFileWriter::ILibSpectrum
     {
     public:
         explicit LibSpectrum(IErrorReporter* reporter)
@@ -50,7 +68,7 @@ namespace
             }
         }
 
-        ~LibSpectrum()
+        ~LibSpectrum() override
         {
             if (mInitialized)
                 libspectrum_end();
@@ -256,7 +274,7 @@ namespace
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    class LibSpectrumTape
+    class LibSpectrumTape final : public TapeFileWriter::ILibSpectrumTape
     {
     public:
         LibSpectrumTape()
@@ -266,7 +284,7 @@ namespace
                 throw TapeFileWriterException();
         }
 
-        ~LibSpectrumTape()
+        ~LibSpectrumTape() override
         {
             if (mTape)
                 libspectrum_tape_free(mTape);
@@ -278,17 +296,17 @@ namespace
             block.mBlock = nullptr;
         }
 
-        void appendBlock(const void* data, size_t length, quint8 flag = 0)
+        void appendBlock(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) final override
         {
             LibSpectrumTapeBlock block(LIBSPECTRUM_TAPE_BLOCK_ROM);
-            block.setPause(1000);
+            block.setPause(pauseMs);
             block.setDataWithChecksum(data, length, flag);
             appendBlock(block);
         }
 
-        void appendBlock(const std::string& data, quint8 flag = 0)
+        void appendBlock(const std::string& data, quint8 flag = 0, int pauseMs = 1000) final override
         {
-            appendBlock(data.data(), data.length(), flag);
+            appendBlock(data.data(), data.length(), flag, pauseMs);
         }
 
         void write(LibSpectrumBuffer& buffer, size_t* length, libspectrum_id_t type)
@@ -298,7 +316,7 @@ namespace
                 throw TapeFileWriterException();
         }
 
-        void writeFile(libspectrum_id_t type, const QString& file, IErrorReporter* reporter)
+        void writeFile(libspectrum_id_t type, const QString& file, IErrorReporter* reporter) final override
         {
             size_t length = 0;
             LibSpectrumBuffer buffer;
@@ -307,7 +325,7 @@ namespace
                 throw TapeFileWriterException();
         }
 
-        void writeWavFile(const QString& file, IErrorReporter* reporter)
+        void writeWavFile(const QString& file, IErrorReporter* reporter) final override
         {
             VirtualFile vf;
             if (write_tape(vf, mTape, 44100) != 0) {
@@ -462,11 +480,11 @@ TapeFileWriter::~TapeFileWriter()
 {
 }
 
-bool TapeFileWriter::writeTapeFile(const QString& file)
+bool TapeFileWriter::makeTape()
 {
     try {
-        LibSpectrum libSpectrum(mReporter);
-        LibSpectrumTape tape;
+        mLibSpectrum = std::make_unique<LibSpectrum>(mReporter);
+        mTape = std::make_unique<LibSpectrumTape>();
 
         BasicProgram loader;
         loader.line(10).CLEAR(mProgram->baseAddress() - 1);
@@ -485,17 +503,32 @@ bool TapeFileWriter::writeTapeFile(const QString& file)
         programHeader.setSize(mProgram->codeLength());
         programHeader.setStartAddress(mProgram->baseAddress());
 
-        tape.appendBlock(loaderHeader.toBinary(), 0);
-        tape.appendBlock(loaderData, 255);
-        tape.appendBlock(programHeader.toBinary(), 0);
-        tape.appendBlock(mProgram->codeBytes(), mProgram->codeLength(), 255);
+        mTape->appendBlock(loaderHeader.toBinary(), 0);
+        mTape->appendBlock(loaderData, 255);
+        mTape->appendBlock(programHeader.toBinary(), 0);
+        mTape->appendBlock(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
+    } catch (const TapeFileWriterException&) {
+        return false;
+    }
 
-        QFileInfo fileInfo(file);
-        QDir dir(fileInfo.absolutePath());
-        QString wavFile = dir.absoluteFilePath(QStringLiteral("%1.wav").arg(fileInfo.completeBaseName()));
-        tape.writeWavFile(wavFile, mReporter);
+    return true;
+}
 
-        tape.writeFile(LIBSPECTRUM_ID_TAPE_TAP, file, mReporter);
+bool TapeFileWriter::writeTapeFile(const QString& file)
+{
+    try {
+        mTape->writeFile(LIBSPECTRUM_ID_TAPE_TAP, file, mReporter);
+    } catch (const TapeFileWriterException&) {
+        return false;
+    }
+
+    return true;
+}
+
+bool TapeFileWriter::writeWavFile(const QString& file)
+{
+    try {
+        mTape->writeWavFile(file, mReporter);
     } catch (const TapeFileWriterException&) {
         return false;
     }

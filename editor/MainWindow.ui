@@ -80,6 +80,7 @@
    <addaction name="actionToggleGrid"/>
    <addaction name="separator"/>
    <addaction name="actionBuild"/>
+   <addaction name="actionPlayAudio"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
    <addaction name="actionPause"/>
@@ -151,8 +152,6 @@
     <property name="title">
      <string>&amp;Debug</string>
     </property>
-    <addaction name="actionBuild"/>
-    <addaction name="separator"/>
     <addaction name="actionRun"/>
     <addaction name="actionPause"/>
     <addaction name="actionStop"/>
@@ -177,9 +176,18 @@
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
+   <widget class="QMenu" name="menuBuild">
+    <property name="title">
+     <string>&amp;Build</string>
+    </property>
+    <addaction name="actionBuild"/>
+    <addaction name="separator"/>
+    <addaction name="actionPlayAudio"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuTools"/>
+   <addaction name="menuBuild"/>
    <addaction name="menuDebug"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -776,6 +784,15 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionPlayAudio">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/sound_wave.png</normaloff>:/resources/fatcow16x16/sound_wave.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Play audio</string>
    </property>
   </action>
  </widget>

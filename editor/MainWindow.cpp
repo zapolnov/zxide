@@ -2,6 +2,7 @@
 #include "CompilerDialog.h"
 #include "AboutDialog.h"
 #include "SettingsDialog.h"
+#include "PlayAudioDialog.h"
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
@@ -318,7 +319,8 @@ bool MainWindow::build()
     CompilerDialog dlg(this);
     dlg.setProjectDirectory(mProject->projectDirectory());
     dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
-    dlg.setOutputFile(mProject->tapeFileName());
+    dlg.setOutputWavFile(mProject->wavFileName());
+    dlg.setOutputTapeFile(mProject->tapeFileName());
 
     std::vector<File*> files;
     mUi->fileManager->enumerateFiles(files, false);
@@ -396,6 +398,7 @@ void MainWindow::updateUi()
     mUi->actionSelect->setEnabled(tab->canSelect());
     mUi->actionToggleGrid->setEnabled(tab->canToggleGrid());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
+    mUi->actionPlayAudio->setEnabled(mProject && !emulatorRunning);
     mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
     mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
     mUi->actionPause->setChecked(emulatorRunning && mEmulatorCore->isPaused());
@@ -601,6 +604,17 @@ void MainWindow::on_actionBuild_triggered()
 {
     if (mProject)
         build();
+}
+
+void MainWindow::on_actionPlayAudio_triggered()
+{
+    if (!mProject)
+        return;
+
+    if (build()) {
+        PlayAudioDialog dlg(mProject.get(), this);
+        dlg.exec();
+    }
 }
 
 void MainWindow::on_actionRun_triggered()

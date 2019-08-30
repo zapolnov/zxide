@@ -25,7 +25,8 @@ public:
     std::unique_ptr<ProgramBinary> takeProgramBinary();
 
     void addSourceFile(File* file);
-    void setOutputFile(const QString& file);
+    void setOutputTapeFile(const QString& file);
+    void setOutputWavFile(const QString& file);
     void setGeneratedFilesDirectory(const QDir& dir);
     void setProjectDirectory(const QDir& dir);
 

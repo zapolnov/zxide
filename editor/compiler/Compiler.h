@@ -30,7 +30,8 @@ public:
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
     void addSourceFile(File* file, const QString& path);
-    void setOutputFile(const QString& file) { mOutputFile = file; }
+    void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
+    void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
 
@@ -51,7 +52,8 @@ private:
     std::unique_ptr<ProgramBinary> mProgramBinary;
     QString mStatusText;
     QString mErrorMessage;
-    QString mOutputFile;
+    QString mOutputTapeFile;
+    QString mOutputWavFile;
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
     std::vector<SourceFile> mSources;

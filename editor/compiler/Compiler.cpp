@@ -24,7 +24,8 @@ namespace
 Compiler::Compiler(QObject* parent)
     : QObject(parent)
     , mProgram(new Program)
-    , mOutputFile(QStringLiteral("out.tap"))
+    , mOutputTapeFile(QStringLiteral("out.tap"))
+    , mOutputWavFile(QStringLiteral("out.wav"))
     , mErrorFile(nullptr)
     , mErrorLine(0)
     , mWasError(false)
@@ -88,7 +89,10 @@ void Compiler::compile()
             throw CompilationFailed();
 
         setStatusText(tr("Writing tape file..."));
-        if (!TapeFileWriter(mProgramBinary.get(), this).writeTapeFile(mOutputFile))
+        TapeFileWriter tapeWriter(mProgramBinary.get(), this);
+        if (!tapeWriter.makeTape()
+                || !tapeWriter.writeTapeFile(mOutputTapeFile)
+                || !tapeWriter.writeWavFile(mOutputWavFile))
             throw CompilationFailed();
     } catch (const CompilationFailed&) {
         emit compilationEnded();

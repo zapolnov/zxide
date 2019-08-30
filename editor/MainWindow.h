@@ -79,6 +79,8 @@ private:
     Q_SLOT void on_actionGoToLine_triggered();
 
     Q_SLOT void on_actionBuild_triggered();
+    Q_SLOT void on_actionPlayAudio_triggered();
+
     Q_SLOT void on_actionRun_triggered();
     Q_SLOT void on_actionPause_triggered();
     Q_SLOT void on_actionStop_triggered();
