@@ -104,6 +104,7 @@ signals:
 private:
     std::unique_ptr<Ui_FileManager> mUi;
     QIcon mFolderIcon;
+    QIcon mRootDirectoryIcon;
     Directory* mRootDirectory;
     QString mPath;
 

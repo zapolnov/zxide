@@ -10,6 +10,7 @@ class Project : public QObject
 
 public:
     static const QString FileSuffix;
+    static const QString BuiltDirectory;
 
     explicit Project(QWidget* parent = nullptr);
     ~Project() override;

@@ -7,6 +7,7 @@
 #include <QMessageBox>
 
 const QString Project::FileSuffix = QStringLiteral("zxprj");
+const QString Project::BuiltDirectory = QStringLiteral("built");
 static const QString JsonKey_Version = QStringLiteral("version");
 static const int FileFormatVersion = 1;
 
@@ -26,8 +27,8 @@ QString Project::name() const
 
 QString Project::tapeFileName() const
 {
-    mDir.mkpath(QStringLiteral("built"));
-    return mDir.absoluteFilePath(QStringLiteral("built/%1.tap")).arg(name());
+    mDir.mkpath(BuiltDirectory);
+    return mDir.absoluteFilePath(QStringLiteral("%1/%2.tap")).arg(BuiltDirectory).arg(name());
 }
 
 bool Project::create(const QString& file)

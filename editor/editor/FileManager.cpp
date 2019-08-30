@@ -13,6 +13,16 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
+static bool isReservedName(const QString& name)
+{
+    static const QSet<QString> reservedNames = {
+            QStringLiteral(".git"),
+            QStringLiteral(".gitignore"),
+        };
+
+    return reservedNames.contains(name);
+}
+
 FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
     : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
     , mFileInfo(fileInfo)
@@ -94,6 +104,7 @@ FileManager::FileManager(QWidget* parent)
     : QWidget(parent)
     , mUi(new Ui_FileManager)
     , mFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder.png"))
+    , mRootDirectoryIcon(QStringLiteral(":/resources/fatcow16x16/book.png"))
     , mRootDirectory(nullptr)
 {
     mUi->setupUi(this);
@@ -107,7 +118,7 @@ FileManager::~FileManager()
 void FileManager::init(const QString& path)
 {
     mPath = QDir::cleanPath(QDir(path).absolutePath());
-    mRootDirectory = new Directory(mFolderIcon, QFileInfo(mPath), mUi->sourcesTree->invisibleRootItem());
+    mRootDirectory = new Directory(mRootDirectoryIcon, QFileInfo(mPath), mUi->sourcesTree->invisibleRootItem());
     mRootDirectory->setExpanded(true);
     mUi->sourcesTree->setCurrentItem(mRootDirectory);
     refresh();
@@ -165,11 +176,20 @@ void FileManager::refreshDirectory(Directory* directory)
     QString path = directory->fileInfo().absoluteFilePath();
     QDirIterator it(path, QDir::Files | QDir::AllDirs | QDir::Hidden | QDir::NoDotAndDotDot);
     while (it.hasNext()) {
-        it.next();
-
+        QString fileName = it.next();
         QFileInfo info = it.fileInfo();
-        QString path = QDir::cleanPath(info.absoluteFilePath());
 
+        if (isReservedName(info.fileName()))
+            continue;
+
+        if (directory == mRootDirectory) {
+            if (!info.isDir() && info.suffix() == Project::FileSuffix)
+                continue;
+            if (fileName == Project::BuiltDirectory)
+                continue;
+        }
+
+        QString path = QDir::cleanPath(info.absoluteFilePath());
         if (!info.isDir()) {
             File* file;
             QString name = info.fileName();
