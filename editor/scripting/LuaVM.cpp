@@ -1,5 +1,6 @@
 #include "LuaVM.h"
 #include "LuaFiles.h"
+#include "LuaGfx.h"
 #include <QFile>
 #include <QCoreApplication>
 
@@ -34,6 +35,7 @@ void LuaVM::openLibs()
 {
     luaL_openlibs(mLua);
     openLib(LuaFiles);
+    openLib(LuaGfx);
 }
 
 void LuaVM::openLib(const char* name, lua_CFunction func)
@@ -47,6 +49,16 @@ void LuaVM::openLib(const luaL_Reg* funcs)
     lua_pushglobaltable(mLua);
     luaL_setfuncs(mLua, funcs, 0);
     lua_pop(mLua, 1);
+}
+
+const QDir& LuaVM::projectDirectory() const
+{
+    return mProjectDirectory;
+}
+
+void LuaVM::setProjectDirectory(const QDir& dir)
+{
+    mProjectDirectory = dir;
 }
 
 const QDir& LuaVM::generatedFilesDirectory() const

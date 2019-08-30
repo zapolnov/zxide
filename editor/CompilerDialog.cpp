@@ -66,6 +66,11 @@ void CompilerDialog::setGeneratedFilesDirectory(const QDir& dir)
     mCompiler->setGeneratedFilesDirectory(dir);
 }
 
+void CompilerDialog::setProjectDirectory(const QDir& dir)
+{
+    mCompiler->setProjectDirectory(dir);
+}
+
 bool CompilerDialog::runCompiler()
 {
     mThread->start();

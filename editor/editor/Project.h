@@ -21,6 +21,7 @@ public:
     const QDir& dir() const { return mDir; }
 
     QString tapeFileName() const;
+    const QDir& projectDirectory() const { return mDir; }
     QDir generatedFilesDirectory() const;
 
     bool create(const QString& file);

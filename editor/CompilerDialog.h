@@ -27,6 +27,7 @@ public:
     void addSourceFile(File* file);
     void setOutputFile(const QString& file);
     void setGeneratedFilesDirectory(const QDir& dir);
+    void setProjectDirectory(const QDir& dir);
 
     bool runCompiler();
 

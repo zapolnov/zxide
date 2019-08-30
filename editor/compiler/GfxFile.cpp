@@ -1,4 +1,5 @@
 #include "GfxFile.h"
+#include <QDataStream>
 #include <QCoreApplication>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -35,7 +36,7 @@ GfxFile::~GfxFile()
 {
 }
 
-bool GfxFile::deserialize(GfxData* data)
+bool GfxFile::deserializeFromJson(GfxData* data)
 {
     if (mFileData.isEmpty()) {
         format = GfxFormat::None;
@@ -121,7 +122,7 @@ bool GfxFile::deserialize(GfxData* data)
     return true;
 }
 
-void GfxFile::serialize(const GfxData* data)
+void GfxFile::serializeToJson(const GfxData* data)
 {
     QJsonDocument doc;
     QJsonObject root;
@@ -161,4 +162,26 @@ void GfxFile::serialize(const GfxData* data)
 
     doc.setObject(root);
     mFileData = doc.toJson(QJsonDocument::Indented);
+}
+
+void GfxFile::serializeToBTile16(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
+
+    for (int y = 0; y < data->height(); y++) {
+        for (int x = 0; x < data->width(); ) {
+            unsigned char byte = 0;
+            for (int i = 0; i < 8; i++, x++) {
+                char value = data->at(x, y);
+                if (value)
+                    byte |= (0x80 >> i);
+            }
+            stream << quint8(byte);
+        }
+    }
+
+    for (int x = 0; x < data->width(); x += 8) {
+        for (int y = 0; y < data->height(); y += 2)
+            stream << quint8(data->attribAt(x, y, GfxColorMode::Bicolor));
+    }
 }

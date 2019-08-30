@@ -316,6 +316,7 @@ bool MainWindow::build()
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: #ccaa00; font-weight: bold; padding-right: 5px"));
 
     CompilerDialog dlg(this);
+    dlg.setProjectDirectory(mProject->projectDirectory());
     dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
     dlg.setOutputFile(mProject->tapeFileName());
 

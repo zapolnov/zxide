@@ -32,6 +32,7 @@ public:
     void addSourceFile(File* file, const QString& path);
     void setOutputFile(const QString& file) { mOutputFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
+    void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
 
     void compile();
 
@@ -52,6 +53,7 @@ private:
     QString mErrorMessage;
     QString mOutputFile;
     QDir mGeneratedFilesDirectory;
+    QDir mProjectDirectory;
     std::vector<SourceFile> mSources;
     std::vector<SourceFile> mBuildScripts;
     File* mErrorFile;

@@ -129,6 +129,7 @@ bool Compiler::runBuildScripts()
 
         lua.openLibs();
         lua.setGeneratedFilesDirectory(mGeneratedFilesDirectory);
+        lua.setProjectDirectory(mProjectDirectory);
 
         for (const auto& script : mBuildScripts) {
             QFileInfo info(script.path);

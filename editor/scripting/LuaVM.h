@@ -35,6 +35,9 @@ public:
     void openLib(const char* name, lua_CFunction func);
     void openLib(const luaL_Reg* funcs);
 
+    const QDir& projectDirectory() const;
+    void setProjectDirectory(const QDir& dir);
+
     const QDir& generatedFilesDirectory() const;
     void setGeneratedFilesDirectory(const QDir& dir);
 
@@ -51,25 +54,33 @@ public:
     template <typename T> void push(T&& value)
     {
         using Type = typename std::remove_cv<typename std::remove_reference<T>::type>::type;
-        void* ptr = lua_newuserdata(mLua, sizeof(Type));
+        pushNew<Type>(std::forward<T>(value));
+    }
 
-        luaL_getmetatable(mLua, typeid(Type).name());
+    template <typename T, typename... ARGS> T* pushNew(ARGS&&... args)
+    {
+        void* ptr = lua_newuserdata(mLua, sizeof(T));
+
+        luaL_getmetatable(mLua, typeid(T).name());
         if (!lua_istable(mLua, -1)) {
             lua_pop(mLua, 1);
-            luaL_newmetatable(mLua, typeid(Type).name());
+            luaL_newmetatable(mLua, typeid(T).name());
             lua_pushliteral(mLua, "__gc");
             lua_pushcclosure(mLua, [](lua_State* L) {
-                    return (reinterpret_cast<Type*>(lua_touserdata(L, 1))->~Type()), 0;
+                    return (reinterpret_cast<T*>(lua_touserdata(L, 1))->~T()), 0;
                 }, 0);
             lua_rawset(mLua, -3);
         }
 
-        new(ptr) Type(std::forward<T>(value));
+        T* result = new(ptr) T(std::forward<ARGS>(args)...);
         lua_setmetatable(mLua, -2);
+
+        return result;
     }
 
 private:
     lua_State* mLua;
+    QDir mProjectDirectory;
     QDir mGeneratedFilesDirectory;
     QStringList mGeneratedFiles;
 

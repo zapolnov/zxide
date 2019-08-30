@@ -793,12 +793,12 @@ void GfxEditorWidget::setGridVisible(bool visible)
 
 void GfxEditorWidget::serialize(GfxFile& file)
 {
-    file.serialize(mGfxData);
+    file.serializeToJson(mGfxData);
 }
 
 bool GfxEditorWidget::deserialize(GfxFile& file)
 {
-    if (!file.deserialize(mGfxData)) {
+    if (!file.deserializeFromJson(mGfxData)) {
         reset();
         return false;
     }
