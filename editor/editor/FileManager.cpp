@@ -23,12 +23,15 @@ static bool isReservedName(const QString& name)
     return reservedNames.contains(name);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent)
     : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
     , mFileInfo(fileInfo)
     , mIsProjectFile(!fileInfo.isDir() && fileInfo.suffix() == Project::FileSuffix)
 {
     setIcon(0, icon);
+    setExpanded(true);
 }
 
 Directory* FileOrDirectory::parentDirectory() const
