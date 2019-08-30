@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QThread>
+#include <QDir>
 #include <memory>
 
 class QTimer;
@@ -25,6 +26,8 @@ public:
 
     void addSourceFile(File* file);
     void setOutputFile(const QString& file);
+    void setGeneratedFilesDirectory(const QDir& dir);
+
     bool runCompiler();
 
 protected:

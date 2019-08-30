@@ -179,16 +179,17 @@ void FileManager::refreshDirectory(Directory* directory)
     QString path = directory->fileInfo().absoluteFilePath();
     QDirIterator it(path, QDir::Files | QDir::AllDirs | QDir::Hidden | QDir::NoDotAndDotDot);
     while (it.hasNext()) {
-        QString fileName = it.next();
+        it.next();
         QFileInfo info = it.fileInfo();
 
-        if (isReservedName(info.fileName()))
+        QString fileName = info.fileName();
+        if (isReservedName(fileName))
             continue;
 
         if (directory == mRootDirectory) {
             if (!info.isDir() && info.suffix() == Project::FileSuffix)
                 continue;
-            if (fileName == Project::BuiltDirectory)
+            if (fileName == Project::BuildDirectory)
                 continue;
         }
 
@@ -233,9 +234,16 @@ void FileManager::refreshDirectory(Directory* directory)
     directory->sortChildren(0, Qt::AscendingOrder);
 }
 
-void FileManager::enumerateFiles(std::vector<File*>& files)
+void FileManager::enumerateFiles(std::vector<File*>& files, bool includeGenerated)
 {
-    enumerateFilesInDirectory(mRootDirectory, files);
+    for (Directory* subdir : mRootDirectory->mDirectories) {
+        if (!includeGenerated && subdir->name() == QStringLiteral("generated"))
+            continue;
+        enumerateFilesInDirectory(subdir, files);
+    }
+
+    for (File* file : mRootDirectory->mFiles)
+        files.emplace_back(file);
 }
 
 void FileManager::enumerateFilesInDirectory(Directory* directory, std::vector<File*>& files)

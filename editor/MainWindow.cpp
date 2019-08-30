@@ -316,16 +316,18 @@ bool MainWindow::build()
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: #ccaa00; font-weight: bold; padding-right: 5px"));
 
     CompilerDialog dlg(this);
+    dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
     dlg.setOutputFile(mProject->tapeFileName());
 
     std::vector<File*> files;
-    mUi->fileManager->enumerateFiles(files);
+    mUi->fileManager->enumerateFiles(files, false);
     for (File* file : files)
         dlg.addSourceFile(file);
 
     connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this, &dlg]() {
             clearBuildResult();
             EmulatorCore::instance()->setProgramBinary(dlg.takeProgramBinary());
+            mUi->fileManager->refresh();
         });
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
             QString message;
@@ -344,6 +346,8 @@ bool MainWindow::build()
             mBuildResultLabel->setText(message);
             mBuildResultLabel->setToolTip(message);
             mBuildResultLabel->setStyleSheet(QStringLiteral("color: red; font-weight: bold; padding-right: 5px"));
+
+            mUi->fileManager->refresh();
         });
 
     return dlg.runCompiler();

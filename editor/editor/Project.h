@@ -10,7 +10,8 @@ class Project : public QObject
 
 public:
     static const QString FileSuffix;
-    static const QString BuiltDirectory;
+    static const QString GeneratedDirectory;
+    static const QString BuildDirectory;
 
     explicit Project(QWidget* parent = nullptr);
     ~Project() override;
@@ -18,7 +19,9 @@ public:
     QString name() const;
     const QString& file() const { return mFile; }
     const QDir& dir() const { return mDir; }
+
     QString tapeFileName() const;
+    QDir generatedFilesDirectory() const;
 
     bool create(const QString& file);
     bool load(const QString& file);

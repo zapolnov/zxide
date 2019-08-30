@@ -61,6 +61,11 @@ void CompilerDialog::setOutputFile(const QString& file)
     mCompiler->setOutputFile(file);
 }
 
+void CompilerDialog::setGeneratedFilesDirectory(const QDir& dir)
+{
+    mCompiler->setGeneratedFilesDirectory(dir);
+}
+
 bool CompilerDialog::runCompiler()
 {
     mThread->start();

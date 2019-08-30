@@ -5,11 +5,11 @@
 #include <vector>
 #include <memory>
 #include <QObject>
+#include <QDir>
 #include <QMutex>
 
 class Program;
 class ProgramBinary;
-struct lua_State;
 
 class Compiler : public QObject, public IErrorReporter
 {
@@ -31,6 +31,7 @@ public:
 
     void addSourceFile(File* file, const QString& path);
     void setOutputFile(const QString& file) { mOutputFile = file; }
+    void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
 
     void compile();
 
@@ -47,10 +48,10 @@ private:
     mutable QMutex mMutex;
     std::unique_ptr<Program> mProgram;
     std::unique_ptr<ProgramBinary> mProgramBinary;
-    lua_State* mLua;
     QString mStatusText;
     QString mErrorMessage;
     QString mOutputFile;
+    QDir mGeneratedFilesDirectory;
     std::vector<SourceFile> mSources;
     std::vector<SourceFile> mBuildScripts;
     File* mErrorFile;
@@ -61,7 +62,6 @@ private:
     void setStatusText(const QString& text);
 
     bool runBuildScripts();
-    void destroyLuaVM();
 
     Q_DISABLE_COPY(Compiler)
 };

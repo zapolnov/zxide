@@ -88,7 +88,7 @@ public:
     void refresh();
     void refreshDirectory(Directory* directory);
 
-    void enumerateFiles(std::vector<File*>& files);
+    void enumerateFiles(std::vector<File*>& files, bool includeGenerated);
     void enumerateFilesInDirectory(Directory* directory, std::vector<File*>& files);
 
 signals:

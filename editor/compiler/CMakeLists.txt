@@ -9,7 +9,7 @@ endif()
 
 add_library(Compiler STATIC)
 set_target_properties(Compiler PROPERTIES FOLDER "Compiler")
-target_link_libraries(Compiler LibSpectrum Lua)
+target_link_libraries(Compiler LibSpectrum Scripting Lua)
 qt_link_libraries(Compiler Core)
 
 qt_add_sources(Compiler

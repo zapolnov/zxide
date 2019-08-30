@@ -4,7 +4,7 @@ include_directories(
     )
 
 qt_add_executable(CompilerTests USES Core)
-target_link_libraries(CompilerTests Compiler)
+target_link_libraries(CompilerTests Compiler Scripting)
 set_target_properties(CompilerTests PROPERTIES FOLDER "Compiler" WIN32_EXECUTABLE FALSE)
 
 add_sources(CompilerTests

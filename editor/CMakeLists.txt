@@ -7,9 +7,10 @@ include_directories(
     )
 
 add_subdirectory(compiler)
+add_subdirectory(scripting)
 
 qt_add_executable(GameEditor USES Core Gui Widgets)
-target_link_libraries(GameEditor Scintilla Compiler Fuse)
+target_link_libraries(GameEditor Lua Scintilla Compiler Scripting Fuse)
 
 qt_add_sources(GameEditor
         debugger/DisplayWidget.cpp
