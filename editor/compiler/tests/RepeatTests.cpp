@@ -722,3 +722,52 @@ TEST_CASE("disallow global labels in repeat 2", "[repeat]")
     REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() != 0);
 }
+
+TEST_CASE("relative local labels in repeat", "[repeat]")
+{
+    static const char source[] =
+        "section main [base 0x100]\n"
+        "repeat 2\n"
+        "@@local:\n"
+        "djnz @@local\n"
+        "endrepeat\n"
+        "repeat 2\n"
+        "@@local:\n"
+        "jr @@local\n"
+        "endrepeat\n"
+        "repeat 2\n"
+        "djnz @@local\n"
+        "@@local:\n"
+        "endrepeat\n"
+        "repeat 2\n"
+        "jr @@local\n"
+        "@@local:\n"
+        "endrepeat\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0x10,
+        0xfe,
+        0x10,
+        0xfe,
+        0x18,
+        0xfe,
+        0x18,
+        0xfe,
+        0x10,
+        0x00,
+        0x10,
+        0x00,
+        0x18,
+        0x00,
+        0x18,
+        0x00,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+}

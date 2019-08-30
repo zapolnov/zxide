@@ -9,7 +9,6 @@
 
 ProgramOpcode::ProgramOpcode(const Token& token)
     : mToken(token)
-    , mAddress(-1)
 {
 }
 
@@ -24,14 +23,8 @@ bool ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorRep
         return false;
     }
 
-    setAddress(address);
     address += lengthInBytes(program, reporter);
     return true;
-}
-
-void ProgramOpcode::setAddress(quint32 address)
-{
-    mAddress = qint32(address);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +41,7 @@ DEFB::~DEFB()
 
 void DEFB::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context(program, reporter, this);
+    ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitByte(mToken.file, mToken.line, context.evaluateByte(mValue));
 }
 
@@ -84,7 +77,7 @@ DEFW::~DEFW()
 
 void DEFW::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context(program, reporter, this);
+    ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitWord(mToken.file, mToken.line, context.evaluateWord(mValue));
 }
 
@@ -102,7 +95,7 @@ DEFD::~DEFD()
 
 void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context(program, reporter, this);
+    ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitDWord(mToken.file, mToken.line, context.evaluateDWord(mValue));
 }
 

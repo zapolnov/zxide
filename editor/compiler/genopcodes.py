@@ -69,7 +69,7 @@ class Opcode:
 
         if self.numLiterals > 0:
             for j in range(0, self.numLiterals):
-                code += '    ExprEvalContext context%d(program, reporter, this);\n' % (j + 1)
+                code += '    ExprEvalContext context%d(program, reporter, binary->endAddress(), this);\n' % (j + 1)
 
         for byte in self.bytes:
             if byte == '#':

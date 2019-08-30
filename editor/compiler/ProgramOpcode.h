@@ -25,7 +25,6 @@ public:
     virtual ~ProgramOpcode();
 
     const Token& token() const { return mToken; }
-    unsigned address() const { Q_ASSERT(mAddress >= 0); return unsigned(mAddress); }
 
     virtual unsigned lengthInBytes(const Program* program, IErrorReporter* reporter) const = 0;
     virtual unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const = 0;
@@ -34,12 +33,8 @@ public:
     virtual bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter);
     virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
-protected:
-    void setAddress(quint32 address);
-
 private:
     Token mToken;
-    qint32 mAddress;
 
     Q_DISABLE_COPY(ProgramOpcode)
 };

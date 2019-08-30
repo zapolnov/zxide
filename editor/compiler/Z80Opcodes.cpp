@@ -41,7 +41,7 @@ void ADC_A_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void ADC_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xCE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -53,7 +53,7 @@ void ADC_A_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void ADC_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x8E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -61,7 +61,7 @@ void ADC_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void ADC_A_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x8E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -128,7 +128,7 @@ void ADD_A_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void ADD_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xC6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -140,7 +140,7 @@ void ADD_A_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void ADD_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x86);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -148,7 +148,7 @@ void ADD_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void ADD_A_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x86);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -259,7 +259,7 @@ void AND_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* 
 
 void AND_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xE6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -271,7 +271,7 @@ void AND_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void AND_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xA6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -279,7 +279,7 @@ void AND_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void AND_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xA6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -335,7 +335,7 @@ void BIT_7_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void BIT_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -344,7 +344,7 @@ void BIT_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -353,7 +353,7 @@ void BIT_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -362,7 +362,7 @@ void BIT_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -371,7 +371,7 @@ void BIT_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -380,7 +380,7 @@ void BIT_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -389,7 +389,7 @@ void BIT_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -398,7 +398,7 @@ void BIT_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -407,7 +407,7 @@ void BIT_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -416,7 +416,7 @@ void BIT_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -425,7 +425,7 @@ void BIT_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -434,7 +434,7 @@ void BIT_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -443,7 +443,7 @@ void BIT_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -452,7 +452,7 @@ void BIT_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -461,7 +461,7 @@ void BIT_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -470,7 +470,7 @@ void BIT_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void BIT_7_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -815,63 +815,63 @@ void BIT_7_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void CALL_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xCD);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_C_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDC);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_M_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFC);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_NC_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xD4);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_NZ_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xC4);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_P_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xF4);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_PE_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xEC);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_PO_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xE4);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void CALL_Z_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xCC);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
@@ -918,7 +918,7 @@ void CP_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 void CP_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -930,7 +930,7 @@ void CP_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void CP_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xBE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -938,7 +938,7 @@ void CP_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void CP_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xBE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1020,7 +1020,7 @@ void DEC_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void DEC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x35);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1028,7 +1028,7 @@ void DEC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void DEC_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x35);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1073,7 +1073,7 @@ void DI::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* rep
 
 void DJNZ_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x10);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
@@ -1140,7 +1140,7 @@ void IM_2::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 void IN_A_mn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -1229,7 +1229,7 @@ void INC_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void INC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x34);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1237,7 +1237,7 @@ void INC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void INC_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x34);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1301,63 +1301,63 @@ void INIR::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 void JP_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xC3);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_C_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDA);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_M_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFA);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_NC_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xD2);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_NZ_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xC2);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_P_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xF2);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_PE_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xEA);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_PO_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xE2);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void JP_Z_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xCA);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
@@ -1381,35 +1381,35 @@ void JP_mIY::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void JR_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x18);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
 
 void JR_C_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x38);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
 
 void JR_NC_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x30);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
 
 void JR_NZ_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x20);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
 
 void JR_Z_off::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x28);
     binary->emitByte(token().file, token().line, context1.evaluateByteOffset(mLiteral1));
 }
@@ -1432,7 +1432,7 @@ void LD_A_I::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void LD_A_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x3A);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
@@ -1455,15 +1455,15 @@ void LD_mDE_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void LD_mHL_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x36);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_mIXn_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
-    ExprEvalContext context2(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
+    ExprEvalContext context2(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x36);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1472,8 +1472,8 @@ void LD_mIXn_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
-    ExprEvalContext context2(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
+    ExprEvalContext context2(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x36);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1482,14 +1482,14 @@ void LD_mIYn_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mnn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x32);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_mnn_BC::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x43);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1497,7 +1497,7 @@ void LD_mnn_BC::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mnn_DE::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x53);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1505,14 +1505,14 @@ void LD_mnn_DE::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mnn_HL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_mnn_SP::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x73);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1520,7 +1520,7 @@ void LD_mnn_SP::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mnn_IX::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1528,7 +1528,7 @@ void LD_mnn_IX::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mnn_IY::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1536,35 +1536,35 @@ void LD_mnn_IY::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_BC_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x01);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_DE_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x11);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_HL_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x21);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_SP_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x31);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_BC_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x4B);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1572,7 +1572,7 @@ void LD_BC_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_DE_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x5B);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1580,14 +1580,14 @@ void LD_DE_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_HL_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x2A);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
 }
 
 void LD_SP_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x7B);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1630,7 +1630,7 @@ void LD_mHL_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void LD_mIXn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x77);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1638,7 +1638,7 @@ void LD_mIXn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x70);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1646,7 +1646,7 @@ void LD_mIXn_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x71);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1654,7 +1654,7 @@ void LD_mIXn_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x72);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1662,7 +1662,7 @@ void LD_mIXn_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x73);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1670,7 +1670,7 @@ void LD_mIXn_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x74);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1678,7 +1678,7 @@ void LD_mIXn_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIXn_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x75);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1686,7 +1686,7 @@ void LD_mIXn_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x77);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1694,7 +1694,7 @@ void LD_mIYn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x70);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1702,7 +1702,7 @@ void LD_mIYn_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x71);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1710,7 +1710,7 @@ void LD_mIYn_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x72);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1718,7 +1718,7 @@ void LD_mIYn_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x73);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1726,7 +1726,7 @@ void LD_mIYn_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x74);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1734,7 +1734,7 @@ void LD_mIYn_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_mIYn_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x75);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1748,7 +1748,7 @@ void LD_I_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void LD_IX_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x21);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1756,7 +1756,7 @@ void LD_IX_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void LD_IX_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x2A);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1764,7 +1764,7 @@ void LD_IX_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_IY_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x21);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1772,7 +1772,7 @@ void LD_IY_nn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void LD_IY_mnn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x2A);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
@@ -1821,7 +1821,7 @@ void LD_L_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void LD_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x7E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1829,7 +1829,7 @@ void LD_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_B_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x46);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1837,7 +1837,7 @@ void LD_B_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_C_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x4E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1845,7 +1845,7 @@ void LD_C_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_D_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x56);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1853,7 +1853,7 @@ void LD_D_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_E_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x5E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1861,7 +1861,7 @@ void LD_E_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_H_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x66);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1869,7 +1869,7 @@ void LD_H_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_L_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x6E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1877,7 +1877,7 @@ void LD_L_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_A_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x7E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1885,7 +1885,7 @@ void LD_A_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_B_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x46);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1893,7 +1893,7 @@ void LD_B_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_C_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x4E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1901,7 +1901,7 @@ void LD_C_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_D_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x56);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1909,7 +1909,7 @@ void LD_D_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_E_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x5E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1917,7 +1917,7 @@ void LD_E_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_H_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x66);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1925,7 +1925,7 @@ void LD_H_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_L_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x6E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -1933,49 +1933,49 @@ void LD_L_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void LD_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x3E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_B_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x06);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_C_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x0E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_D_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x16);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_E_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x1E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_H_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x26);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
 void LD_L_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0x2E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -2314,7 +2314,7 @@ void OR_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 void OR_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xF6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -2326,7 +2326,7 @@ void OR_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void OR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xB6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2334,7 +2334,7 @@ void OR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void OR_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xB6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2354,7 +2354,7 @@ void OTIR::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 void OUT_mn_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xD3);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -2863,7 +2863,7 @@ void RES_7_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void RES_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2872,7 +2872,7 @@ void RES_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2881,7 +2881,7 @@ void RES_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2890,7 +2890,7 @@ void RES_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2899,7 +2899,7 @@ void RES_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2908,7 +2908,7 @@ void RES_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2917,7 +2917,7 @@ void RES_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2926,7 +2926,7 @@ void RES_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2935,7 +2935,7 @@ void RES_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2944,7 +2944,7 @@ void RES_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2953,7 +2953,7 @@ void RES_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2962,7 +2962,7 @@ void RES_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2971,7 +2971,7 @@ void RES_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2980,7 +2980,7 @@ void RES_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2989,7 +2989,7 @@ void RES_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -2998,7 +2998,7 @@ void RES_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void RES_7_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3112,7 +3112,7 @@ void RL_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void RL_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3121,7 +3121,7 @@ void RL_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void RL_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3183,7 +3183,7 @@ void RLC_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void RLC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3192,7 +3192,7 @@ void RLC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void RLC_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3260,7 +3260,7 @@ void RR_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter*
 
 void RR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3269,7 +3269,7 @@ void RR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void RR_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3331,7 +3331,7 @@ void RRC_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void RRC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3340,7 +3340,7 @@ void RRC_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void RRC_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3435,7 +3435,7 @@ void SBC_A_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void SBC_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -3447,7 +3447,7 @@ void SBC_A_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void SBC_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x9E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3455,7 +3455,7 @@ void SBC_A_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SBC_A_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x9E);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3876,7 +3876,7 @@ void SET_7_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReport
 
 void SET_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3885,7 +3885,7 @@ void SET_0_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3894,7 +3894,7 @@ void SET_1_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3903,7 +3903,7 @@ void SET_2_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3912,7 +3912,7 @@ void SET_3_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3921,7 +3921,7 @@ void SET_4_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3930,7 +3930,7 @@ void SET_5_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3939,7 +3939,7 @@ void SET_6_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3948,7 +3948,7 @@ void SET_7_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3957,7 +3957,7 @@ void SET_0_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3966,7 +3966,7 @@ void SET_1_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3975,7 +3975,7 @@ void SET_2_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3984,7 +3984,7 @@ void SET_3_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -3993,7 +3993,7 @@ void SET_4_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4002,7 +4002,7 @@ void SET_5_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4011,7 +4011,7 @@ void SET_6_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorRepor
 
 void SET_7_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4068,7 +4068,7 @@ void SLA_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void SLA_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4077,7 +4077,7 @@ void SLA_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void SLA_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4134,7 +4134,7 @@ void SRA_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void SRA_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4143,7 +4143,7 @@ void SRA_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void SRA_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4200,7 +4200,7 @@ void SRL_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void SRL_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4209,7 +4209,7 @@ void SRL_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void SRL_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xCB);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4253,7 +4253,7 @@ void SUB_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* 
 
 void SUB_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xD6);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -4265,7 +4265,7 @@ void SUB_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void SUB_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x96);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4273,7 +4273,7 @@ void SUB_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void SUB_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x96);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4316,7 +4316,7 @@ void XOR_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* 
 
 void XOR_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xEE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
@@ -4328,7 +4328,7 @@ void XOR_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter
 
 void XOR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0xAE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
@@ -4336,7 +4336,7 @@ void XOR_mIXn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporte
 
 void XOR_mIYn::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    ExprEvalContext context1(program, reporter, this);
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0xAE);
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));

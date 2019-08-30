@@ -13,10 +13,11 @@ ExprEvalContext::ExprEvalContext(const Program* program, IErrorReporter* reporte
 {
 }
 
-ExprEvalContext::ExprEvalContext(const Program* program, IErrorReporter* reporter, const ProgramOpcode* opcode)
+ExprEvalContext::ExprEvalContext(
+        const Program* program, IErrorReporter* reporter, unsigned address, const ProgramOpcode* opcode)
     : mProgram(program)
     , mErrorReporter(reporter)
-    , mBaseAddress(qint32(opcode->address()))
+    , mBaseAddress(qint32(address))
     , mNextAddress(mBaseAddress + qint32(opcode->lengthInBytes(program, reporter)))
 {
 }

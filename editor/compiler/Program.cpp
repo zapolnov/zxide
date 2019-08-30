@@ -37,7 +37,7 @@ void Program::validateConstants(IErrorReporter* reporter)
         quint32 address = 0x8000;
         nop.resolveAddress(address, this, reporter);
 
-        ExprEvalContext context(this, reporter, &nop);
+        ExprEvalContext context(this, reporter, 0x8000, &nop);
         context.evaluate(it.second);
     }
 }

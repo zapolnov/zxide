@@ -15,7 +15,7 @@ class ExprEvalContext
 {
 public:
     ExprEvalContext(const Program* program, IErrorReporter* reporter);
-    ExprEvalContext(const Program* program, IErrorReporter* reporter, const ProgramOpcode* opcode);
+    ExprEvalContext(const Program* program, IErrorReporter* reporter, unsigned address, const ProgramOpcode* opcode);
     ~ExprEvalContext();
 
     const Program* program() const { return mProgram; }
