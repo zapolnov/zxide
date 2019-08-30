@@ -141,7 +141,7 @@ private:
     Qt::MouseButton mMousePressed;
     int mSelectedColor;
     bool mFlash;
-    bool mGridVisible;
+    static bool mGridVisible;
 
     void cancelInput();
     void updateMousePosition(QMouseEvent* event);

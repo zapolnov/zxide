@@ -683,6 +683,8 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
+bool TileEditorWidget::mGridVisible = true;
+
 TileEditorWidget::TileEditorWidget(QWidget* parent)
     : QWidget(parent)
     , mPreview(nullptr)
@@ -695,7 +697,6 @@ TileEditorWidget::TileEditorWidget(QWidget* parent)
     , mMousePressed(Qt::NoButton)
     , mSelectedColor(0)
     , mFlash(false)
-    , mGridVisible(true)
 {
     mTileData = new TileData(8, 8, this);
     setMouseTracking(true);
@@ -1110,19 +1111,23 @@ void TileEditorWidget::paintEvent(QPaintEvent* event)
         mPreview->setPixmap(QPixmap::fromImage(image));
 
     if (mGridVisible) {
+        painter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
         painter.setBrush(Qt::transparent);
-        for (int tileY = 0; tileY < mTileData->height(); tileY++) {
-            float w = ((tileY & 7) == 0 ? 0.5f : 1.0f);
+        for (int tileY = 1; tileY < mTileData->height(); tileY++) {
+            float w = ((tileY & 7) == 0 ? 1.5f : 1.0f);
+            int c = ((tileY & 7) == 0 ? 255 : 128);
             int y = tileY * PixelHeight;
-            painter.setPen(QPen(QColor(128, 128, 128, 128), w));
+            painter.setPen(QPen(QColor(c, c, c, 128), w));
             painter.drawLine(0, y, QWidget::width(), y);
         }
-        for (int tileX = 0; tileX < mTileData->width(); tileX++) {
-            float w = ((tileX & 7) == 0 ? 0.5f : 1.0f);
+        for (int tileX = 1; tileX < mTileData->width(); tileX++) {
+            float w = ((tileX & 7) == 0 ? 1.5f : 1.0f);
+            int c = ((tileX & 7) == 0 ? 255 : 128);
             int x = tileX * PixelWidth;
-            painter.setPen(QPen(QColor(128, 128, 128, 128), w));
+            painter.setPen(QPen(QColor(c, c, c, 128), w));
             painter.drawLine(x, 0, x, QWidget::height());
         }
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     }
 
     if (!mSelection.isEmpty()) {
