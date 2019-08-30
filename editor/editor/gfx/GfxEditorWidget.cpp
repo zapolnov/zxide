@@ -1,5 +1,6 @@
 #include "GfxEditorWidget.h"
-#include "GfxData.h"
+#include "compiler/GfxData.h"
+#include "compiler/GfxFile.h"
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
@@ -790,62 +791,16 @@ void GfxEditorWidget::setGridVisible(bool visible)
     repaint();
 }
 
-QJsonArray GfxEditorWidget::pixels() const
+void GfxEditorWidget::serialize(GfxFile& file)
 {
-    QJsonArray result;
-    for (int y = 0; y < mGfxData->height(); y++) {
-        QString str(mGfxData->width(), '?');
-        for (int x = 0; x < mGfxData->width(); x++)
-            str[x] = (mGfxData->at(x, y) ? '#' : '.');
-        result.append(str);
-    }
-    return result;
+    file.serialize(mGfxData);
 }
 
-QJsonArray GfxEditorWidget::attribs() const
+bool GfxEditorWidget::deserialize(GfxFile& file)
 {
-    QJsonArray result;
-
-    for (int y = 0; y < mGfxData->height(); y++) {
-        QJsonArray lineAttribs;
-        for (int x = 0; x < mGfxData->width(); x += 8)
-            lineAttribs.append(mGfxData->attribAt(x, y, GfxColorMode::Multicolor));
-        result.append(lineAttribs);
-    }
-
-    return result;
-}
-
-bool GfxEditorWidget::setPixels(int w, int h, QJsonArray data, QJsonArray attribs)
-{
-    if (data.size() != h || attribs.size() != h)
+    if (!file.deserialize(mGfxData)) {
+        reset();
         return false;
-
-    if (w != mGfxData->width() || h != mGfxData->height())
-        mGfxData->resize(w, h);
-
-    mGfxData->clear();
-    for (int y = 0; y < h; y++) {
-        const QString& str = data[y].toString();
-        if (str.length() != w)
-            return false;
-
-        for (int x = 0; x < w; x++) {
-            QChar ch = str[x];
-            if (ch == '#')
-                mGfxData->at(x, y) = 1;
-            else if (ch == '.')
-                mGfxData->at(x, y) = 0;
-            else
-                return false;
-        }
-
-        QJsonArray lineAttribs = attribs[y].toArray();
-        if (lineAttribs.size() != ((w + 7) >> 3))
-            return false;
-
-        for (int x = 0, i = 0; x < w; x += 8, i++)
-            mGfxData->attribAt(x, y, GfxColorMode::Multicolor) = (char)(lineAttribs[i].toInt() & 0xff);
     }
 
     cancelInput();

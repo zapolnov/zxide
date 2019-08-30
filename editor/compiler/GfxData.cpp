@@ -20,6 +20,9 @@ void GfxData::resize(int w, int h)
     Q_ASSERT(w > 0);
     Q_ASSERT(h > 0);
 
+    if (mWidth == w && mHeight == h)
+        return;
+
     std::unique_ptr<char[]> newData{new char[w * h]};
     std::unique_ptr<char[]> newAttrib{new char[((w + 7) >> 3) * h]};
     for (int y = 0; y < h; y++) {

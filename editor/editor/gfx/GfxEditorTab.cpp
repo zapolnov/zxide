@@ -1,30 +1,16 @@
 #include "GfxEditorTab.h"
 #include "editor/FileManager.h"
-#include "editor/gfx/GfxData.h"
+#include "compiler/GfxData.h"
+#include "compiler/GfxFile.h"
 #include "ui_GfxEditorTab.h"
 #include <QMessageBox>
 #include <QSaveFile>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonObject>
-
-static const QString JsonKey_Version = QStringLiteral("version");
-static const QString JsonKey_Format = QStringLiteral("format");
-static const QString JsonKey_Width = QStringLiteral("width");
-static const QString JsonKey_Height = QStringLiteral("height");
-static const QString JsonKey_ColorMode = QStringLiteral("color_mode");
-static const QString JsonKey_Pixels = QStringLiteral("pixels");
-static const QString JsonKey_Attribs = QStringLiteral("attribs");
-static const QString JsonValue_Standard = QStringLiteral("standard");
-static const QString JsonValue_Multicolor = QStringLiteral("multicolor");
-static const QString JsonValue_Bicolor = QStringLiteral("bicolor");
-static const QString JsonValue_Monochrome = QStringLiteral("monochrome");
-static const QString JsonValue_NirvanaPlusCode = QStringLiteral("nirvana+_code");
-static const int FileFormatVersion = 1;
 
 GfxEditorTab::GfxEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
     , mUi(new Ui_GfxEditorTab)
+    , mSavedFormat(GfxFormat::None)
+    , mSavedColorMode(GfxColorMode::Standard)
     , mSavedWidth(0)
     , mSavedHeight(0)
     , mSelectedColor(-1)
@@ -33,18 +19,18 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     mUi->editorWidget->setPreviewWidget(mUi->previewWidget);
     mUi->splitter->setSizes(QList<int>() << (width() * 4 / 5) << (width() / 5));
 
-    for (int i = 8; i <= 128; i += 8) {
+    for (int i = 8; i <= 256; i += 8)
         mUi->widthCombo->addItem(QString::number(i), QVariant(i));
+    for (int i = 8; i <= 192; i += 8)
         mUi->heightCombo->addItem(QString::number(i), QVariant(i));
-    }
 
-    mUi->colorModeCombo->addItem(tr("Standard"), JsonValue_Standard);
-    mUi->colorModeCombo->addItem(tr("Multicolor (8x1)"), JsonValue_Multicolor);
-    mUi->colorModeCombo->addItem(tr("Bicolor (8x2)"), JsonValue_Bicolor);
+    mUi->colorModeCombo->addItem(tr("Standard"), int(GfxColorMode::Standard));
+    mUi->colorModeCombo->addItem(tr("Multicolor (8x1)"), int(GfxColorMode::Multicolor));
+    mUi->colorModeCombo->addItem(tr("Bicolor (8x2)"), int(GfxColorMode::Bicolor));
     on_colorModeCombo_currentIndexChanged(-1);
 
-    mUi->formatCombo->addItem(tr("Bitmap (8 bytes)"), JsonValue_Monochrome);
-    mUi->formatCombo->addItem(tr("NIRVANA+ code"), JsonValue_NirvanaPlusCode);
+    mUi->formatCombo->addItem(tr("None"), int(GfxFormat::None));
+    mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
 
     setColor(0, false);
 }
@@ -60,44 +46,18 @@ bool GfxEditorTab::loadFile(File* f)
 
     reset();
 
-    QByteArray data = loadFileData(f);
-    if (data.isEmpty()) {
-        mUi->formatCombo->setCurrentIndex(0);
-        mUi->widthCombo->setCurrentIndex(0);
-        mUi->heightCombo->setCurrentIndex(0);
-        mUi->colorModeCombo->setCurrentIndex(0);
-    } else {
-        QJsonParseError error;
-        auto doc = QJsonDocument::fromJson(data, &error);
-        if (doc.isNull()) {
-            QMessageBox::critical(this, tr("Error"),
-                tr("Unable to read file \"%1\": %2").arg(f->fileInfo().absoluteFilePath()).arg(error.errorString()));
-            return false;
-        }
-
-        QJsonObject root = doc.object();
-        int formatVersion = root[JsonKey_Version].toInt();
-        if (formatVersion < 1 || formatVersion > FileFormatVersion) {
-            QMessageBox::critical(this, tr("Error"),
-                tr("Unable to read file \"%1\": file has unsupported format.").arg(f->fileInfo().absoluteFilePath()));
-            return false;
-        }
-
-        int w = root[JsonKey_Width].toInt();
-        int h = root[JsonKey_Height].toInt();
-
-        if (!mUi->editorWidget->setPixels(w, h, root[JsonKey_Pixels].toArray(), root[JsonKey_Attribs].toArray())) {
-            mUi->editorWidget->reset();
-            QMessageBox::critical(this, tr("Error"),
-                tr("Unable to read file \"%1\": file is corrupt.").arg(f->fileInfo().absoluteFilePath()));
-            return false;
-        }
-
-        selectItem(mUi->formatCombo, root[JsonKey_Format].toString());
-        selectItem(mUi->widthCombo, w);
-        selectItem(mUi->heightCombo, h);
-        selectItem(mUi->colorModeCombo, root[JsonKey_ColorMode].toString());
+    GfxFile fileData(loadFileData(f));
+    if (!mUi->editorWidget->deserialize(fileData)) {
+        QMessageBox::critical(this, tr("Error"),
+            QCoreApplication::tr("Unable to read file \"%1\": %2")
+                .arg(f->fileInfo().absoluteFilePath()).arg(fileData.lastError()));
+        return false;
     }
+
+    selectItem(mUi->formatCombo, int(fileData.format));
+    selectItem(mUi->colorModeCombo, int(fileData.colorMode));
+    selectItem(mUi->widthCombo, mUi->editorWidget->width());
+    selectItem(mUi->heightCombo, mUi->editorWidget->height());
 
     mUi->formatCombo->setEnabled(true);
     mUi->widthCombo->setEnabled(true);
@@ -118,9 +78,9 @@ bool GfxEditorTab::isModified() const
     if (!file())
         return false;
 
-    if (mSavedFormat != selectedItem(mUi->formatCombo).toString())
+    if (mSavedFormat != GfxFormat(selectedItem(mUi->formatCombo).toInt()))
         return true;
-    if (mSavedColorMode != selectedItem(mUi->colorModeCombo).toString())
+    if (mSavedColorMode != GfxColorMode(selectedItem(mUi->colorModeCombo).toInt()))
         return true;
     if (mSavedWidth != selectedItem(mUi->widthCombo).toInt())
         return true;
@@ -234,6 +194,11 @@ bool GfxEditorTab::save()
 {
     QString fileName = file()->fileInfo().absoluteFilePath();
 
+    GfxFile file;
+    file.format = GfxFormat(selectedItem(mUi->formatCombo).toInt());
+    file.colorMode = GfxColorMode(selectedItem(mUi->colorModeCombo).toInt());
+    mUi->editorWidget->serialize(file);
+
     QSaveFile f(fileName);
     if (!f.open(QFile::WriteOnly)) {
         QMessageBox::critical(this, tr("Error"),
@@ -241,25 +206,14 @@ bool GfxEditorTab::save()
         return false;
     }
 
-    QJsonDocument doc;
-    QJsonObject root;
-    root[JsonKey_Version] = FileFormatVersion;
-    root[JsonKey_Format] = selectedItem(mUi->formatCombo).toString();
-    root[JsonKey_Width] = selectedItem(mUi->widthCombo).toInt();
-    root[JsonKey_Height] = selectedItem(mUi->heightCombo).toInt();
-    root[JsonKey_ColorMode] = selectedItem(mUi->colorModeCombo).toString();
-    root[JsonKey_Pixels] = mUi->editorWidget->pixels();
-    root[JsonKey_Attribs] = mUi->editorWidget->attribs();
-    doc.setObject(root);
-    QByteArray json = doc.toJson(QJsonDocument::Indented);
-
-    qint64 bytesWritten = f.write(json);
+    QByteArray fileData = file.data();
+    qint64 bytesWritten = f.write(fileData);
     if (bytesWritten < 0) {
         QMessageBox::critical(this, tr("Error"),
             tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
         return false;
     }
-    if (bytesWritten != json.length()) {
+    if (bytesWritten != fileData.length()) {
         QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(fileName));
         return false;
     }
@@ -357,8 +311,8 @@ void GfxEditorTab::setFocusToEditor()
 
 void GfxEditorTab::reset()
 {
-    mSavedFormat = QString();
-    mSavedColorMode = QString();
+    mSavedFormat = GfxFormat::None;
+    mSavedColorMode = GfxColorMode::Standard;
     mSavedWidth = 0;
     mSavedHeight = 0;
 
@@ -377,8 +331,8 @@ void GfxEditorTab::reset()
 
 void GfxEditorTab::setSaved()
 {
-    mSavedFormat = selectedItem(mUi->formatCombo).toString();
-    mSavedColorMode = selectedItem(mUi->colorModeCombo).toString();
+    mSavedFormat = GfxFormat(selectedItem(mUi->formatCombo).toInt());
+    mSavedColorMode = GfxColorMode(selectedItem(mUi->colorModeCombo).toInt());
     mSavedWidth = selectedItem(mUi->widthCombo).toInt();
     mSavedHeight = selectedItem(mUi->heightCombo).toInt();
     mUi->editorWidget->setSaved();
@@ -392,21 +346,7 @@ void GfxEditorTab::on_editorWidget_sizeChanged()
 
 void GfxEditorTab::on_colorModeCombo_currentIndexChanged(int)
 {
-    GfxColorMode mode;
-
-    QString colorMode = selectedItem(mUi->colorModeCombo).toString();
-    if (colorMode == JsonValue_Standard || colorMode.isEmpty())
-        mode = GfxColorMode::Standard;
-    else if (colorMode == JsonValue_Multicolor)
-        mode = GfxColorMode::Multicolor;
-    else if (colorMode == JsonValue_Bicolor)
-        mode = GfxColorMode::Bicolor;
-    else {
-        Q_ASSERT(false);
-        return;
-    }
-
-    mUi->editorWidget->setColorMode(mode);
+    mUi->editorWidget->setColorMode(GfxColorMode(selectedItem(mUi->colorModeCombo).toInt()));
 }
 
 void GfxEditorTab::on_widthCombo_currentIndexChanged(int)

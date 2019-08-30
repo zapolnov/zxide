@@ -8,6 +8,7 @@
 #include <memory>
 
 class GfxData;
+class GfxFile;
 class QJsonArray;
 class QTimer;
 class QLabel;
@@ -48,9 +49,8 @@ public:
     bool gridVisible() const { return mGridVisible; }
     void setGridVisible(bool visible);
 
-    QJsonArray pixels() const;
-    QJsonArray attribs() const;
-    bool setPixels(int w, int h, QJsonArray data, QJsonArray attribs);
+    void serialize(GfxFile& file);
+    bool deserialize(GfxFile& file);
     void setSaved();
 
     bool canUndo() const;

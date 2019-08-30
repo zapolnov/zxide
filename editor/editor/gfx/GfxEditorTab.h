@@ -6,6 +6,8 @@
 
 class QComboBox;
 class Ui_GfxEditorTab;
+enum class GfxFormat : int;
+enum class GfxColorMode : int;
 
 class GfxEditorTab : public AbstractEditorTab
 {
@@ -62,8 +64,8 @@ public:
 
 private:
     std::unique_ptr<Ui_GfxEditorTab> mUi;
-    QString mSavedFormat;
-    QString mSavedColorMode;
+    GfxFormat mSavedFormat;
+    GfxColorMode mSavedColorMode;
     int mSavedWidth;
     int mSavedHeight;
     int mSelectedColor;

@@ -1,9 +1,15 @@
-#ifndef EDITOR_GFX_GFXDATA_H
-#define EDITOR_GFX_GFXDATA_H
+#ifndef EDITOR_COMPILER_GFXDATA_H
+#define EDITOR_COMPILER_GFXDATA_H
 
 #include <QObject>
 #include <QPoint>
 #include <memory>
+
+enum class GfxFormat : int
+{
+    None,
+    BTile16,
+};
 
 enum class GfxColorMode : int
 {

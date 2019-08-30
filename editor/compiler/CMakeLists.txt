@@ -33,6 +33,10 @@ qt_add_sources(Compiler
         ExpressionParser.cpp
         ExprEvalContext.cpp
         ExprEvalContext.h
+        GfxData.cpp
+        GfxData.h
+        GfxFile.cpp
+        GfxFile.h
         IErrorReporter.h
         Linker.cpp
         Linker.h
