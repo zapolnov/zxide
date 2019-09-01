@@ -17,6 +17,12 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
 
         "<hr>"
 
+        "<p>This program embeds bas2tap utility:<br>"
+        "Copyright &copy; 1998-2013 Martijn van der Heide, ThunderWare Research Center.<br>"
+        "Licensed under the GNU General Public License.</p>"
+
+        "<hr>"
+
         "<p>This program uses the Audio File library:<br>"
         "<a href=\"https://audiofile.68k.org/\">https://audiofile.68k.org/</a><br>"
         "Copyright &copy; 1998-2013, Michael Pruett.<br>"

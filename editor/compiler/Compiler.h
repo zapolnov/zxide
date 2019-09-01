@@ -2,6 +2,7 @@
 #define COMPILER_COMPILER_H
 
 #include "IErrorReporter.h"
+#include "CompileSettings.h"
 #include <vector>
 #include <memory>
 #include <QObject>
@@ -30,6 +31,7 @@ public:
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
     void addSourceFile(File* file, const QString& path);
+    void setSettings(CompileSettings settings);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
@@ -56,8 +58,11 @@ private:
     QString mOutputWavFile;
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
+    QByteArray mCompiledBasicCode;
     std::vector<SourceFile> mSources;
+    std::vector<SourceFile> mBasicSources;
     std::vector<SourceFile> mBuildScripts;
+    CompileSettings mCompileSettings;
     File* mErrorFile;
     int mErrorLine;
     bool mWasError;
@@ -66,6 +71,11 @@ private:
     void setStatusText(const QString& text);
 
     bool runBuildScripts();
+
+    bool compileBasicCode();
+    static void bas2tapError(int line, int stmt, const char* fmt, ...);
+    static int bas2tapFGets(char** basicIndex, int* basicLineNo);
+    static void bas2tapOutput(const void* dst, size_t length);
 
     Q_DISABLE_COPY(Compiler)
 };

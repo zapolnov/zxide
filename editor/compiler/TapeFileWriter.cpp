@@ -1,5 +1,4 @@
 #include "TapeFileWriter.h"
-#include "BasicProgram.h"
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
 #include "compiler/Util.h"
@@ -35,8 +34,9 @@ class TapeFileWriter::ILibSpectrumTape
 {
 public:
     virtual ~ILibSpectrumTape() = default;
-    virtual void appendBlock(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) = 0;
-    virtual void appendBlock(const std::string& data, quint8 flag = 0, int pauseMs = 1000) = 0;
+    virtual void appendBlockRaw(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) = 0;
+    virtual void appendBlockString(const std::string& data, quint8 flag = 0, int pauseMs = 1000) = 0;
+    virtual void appendBlockByteArray(const QByteArray& data, quint8 flag = 0, int pauseMs = 1000) = 0;
     virtual void writeFile(libspectrum_id_t type, const QString& file, IErrorReporter* reporter) = 0;
     virtual void writeWavFile(const QString& file, IErrorReporter* reporter) = 0;
 };
@@ -296,7 +296,7 @@ namespace
             block.mBlock = nullptr;
         }
 
-        void appendBlock(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) final override
+        void appendBlockRaw(const void* data, size_t length, quint8 flag = 0, int pauseMs = 1000) final override
         {
             LibSpectrumTapeBlock block(LIBSPECTRUM_TAPE_BLOCK_ROM);
             block.setPause(pauseMs);
@@ -304,9 +304,14 @@ namespace
             appendBlock(block);
         }
 
-        void appendBlock(const std::string& data, quint8 flag = 0, int pauseMs = 1000) final override
+        void appendBlockString(const std::string& data, quint8 flag = 0, int pauseMs = 1000) final override
         {
-            appendBlock(data.data(), data.length(), flag, pauseMs);
+            appendBlockRaw(data.data(), data.length(), flag, pauseMs);
+        }
+
+        void appendBlockByteArray(const QByteArray& data, quint8 flag = 0, int pauseMs = 1000) final override
+        {
+            appendBlockRaw(data.constData(), data.length(), flag, pauseMs);
         }
 
         void write(LibSpectrumBuffer& buffer, size_t* length, libspectrum_id_t type)
@@ -359,7 +364,6 @@ namespace
 
         void setName(std::string name)
         {
-            Q_ASSERT(name.length() <= 10);
             mName = std::move(name);
         }
 
@@ -424,7 +428,6 @@ namespace
 
         void setName(std::string name)
         {
-            Q_ASSERT(name.length() <= 10);
             mName = std::move(name);
         }
 
@@ -473,6 +476,9 @@ namespace
 TapeFileWriter::TapeFileWriter(ProgramBinary* program, IErrorReporter* reporter)
     : mProgram(program)
     , mReporter(reporter)
+    , mLoaderName("loader")
+    , mProgramName("program")
+    , mBasicStartLine(-1)
 {
 }
 
@@ -486,27 +492,22 @@ bool TapeFileWriter::makeTape()
         mLibSpectrum = std::make_unique<LibSpectrum>(mReporter);
         mTape = std::make_unique<LibSpectrumTape>();
 
-        BasicProgram loader;
-        loader.line(10).CLEAR(mProgram->baseAddress() - 1);
-        loader.line(20).POKE(23610, 255); // Avoid error message on +3
-        loader.line(30).LOAD("").CODE();
-        loader.line(40).RANDOMIZE().USR(mProgram->baseAddress());
-        std::string loaderData = loader.toBinary();
-
-        TapeProgramHeader loaderHeader;
-        loaderHeader.setName("LOADER");
-        loaderHeader.setSize(loaderData.length());
-        loaderHeader.setAutoStartLine(10);
+        if (!mBasicCode.isEmpty()) {
+            TapeProgramHeader loaderHeader;
+            loaderHeader.setName(mLoaderName);
+            loaderHeader.setSize(mBasicCode.length());
+            if (mBasicStartLine >= 0)
+                loaderHeader.setAutoStartLine(mBasicStartLine);
+            mTape->appendBlockString(loaderHeader.toBinary(), 0);
+            mTape->appendBlockByteArray(mBasicCode, 255);
+        }
 
         TapeCodeHeader programHeader;
-        programHeader.setName("PROGRAM");
+        programHeader.setName(mProgramName);
         programHeader.setSize(mProgram->codeLength());
         programHeader.setStartAddress(mProgram->baseAddress());
-
-        mTape->appendBlock(loaderHeader.toBinary(), 0);
-        mTape->appendBlock(loaderData, 255);
-        mTape->appendBlock(programHeader.toBinary(), 0);
-        mTape->appendBlock(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
+        mTape->appendBlockString(programHeader.toBinary(), 0);
+        mTape->appendBlockRaw(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
     } catch (const TapeFileWriterException&) {
         return false;
     }

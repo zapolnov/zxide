@@ -41,6 +41,9 @@
 #include <ctype.h>
 #include <math.h>
 
+#define BAS2TAP_EXTERN
+#include "bas2tap.h"
+
 /**********************************************************************************************************************************/
 /* Some compilers don't define the following things, so I define them here...                                                     */
 /**********************************************************************************************************************************/
@@ -251,11 +254,11 @@ struct TokenMap_s
    {"RETURN",    1, { 0 }},
    {"COPY",      1, { 0 }}};
 
-#define MAXLINELENGTH 1024
 
-char ConvertedSpectrumLine[MAXLINELENGTH + 1];
+char bas2tap_ConvertedSpectrumLine[MAXLINELENGTH + 1];
 byte ResultingLine[MAXLINELENGTH + 1];
 
+#if 0
 struct TapeHeader_s
 {
   byte LenLo1;
@@ -279,6 +282,7 @@ struct TapeHeader_s
                 0,                                                                /* Parity header */
                 0, 0,                                                             /* Len converted BASIC */
                 255};                                                             /* Flag converted BASIC */
+#endif
 
 int   Is48KProgram    = -1;                                                                                       /* -1 = unknown */
                                                                                                                   /*  1 = 48K     */
@@ -295,14 +299,29 @@ bool  TokenBracket    = FALSE;
 bool  HandlingDEFFN   = FALSE;                                                                         /* Exceptional instruction */
 bool  InsideDEFFN     = FALSE;
 #define DEFFN           0xCE
-FILE *ErrStream;
+/*FILE *ErrStream;*/
+int PreviousBasicLineNo = -1;
+
+void bas2tap_reset()
+{
+    Is48KProgram = -1;
+    UsesInterface1 = -1;
+    CaseIndependant = FALSE;
+    Quiet = FALSE;
+    NoWarnings = FALSE;
+    DoCheckSyntax = TRUE;
+    TokenBracket = FALSE;
+    HandlingDEFFN = FALSE;
+    InsideDEFFN = FALSE;
+    PreviousBasicLineNo = -1;
+}
 
 /**********************************************************************************************************************************/
 /* Let's be lazy and define a very commonly used error message....                                                                */
 /**********************************************************************************************************************************/
 
-#define BADTOKEN(_Exp,_Got)        fprintf (ErrStream, "ERROR in line %d, statement %d - Expected %s, but got \"%s\"\n", \
-                                            BasicLineNo, StatementNo, _Exp, _Got)
+#define BADTOKEN(_Exp,_Got)        bas2tap_error (FileLineNo, StatementNo, "expected %s but got \"%s\"", \
+                                            _Exp, _Got)
 
 /**********************************************************************************************************************************/
 /* And let's generate tons of debugging info too....                                                                              */
@@ -318,34 +337,33 @@ FILE *ErrStream;
 /**********************************************************************************************************************************/
 
 int  GetLineNumber     (char **FirstAfter);
-int  MatchToken        (int BasicLineNo, bool WantKeyword, char **LineIndex, byte *Token);
-int  HandleNumbers     (int BasicLineNo, char **BasicLine, byte **SpectrumLine);
-int  HandleBIN         (int BasicLineNo, char **BasicLine, byte **SpectrumLine);
-int  ExpandSequences   (int BasicLineNo, char **BasicLine, byte **SpectrumLine, bool StripSpaces);
-int  PrepareLine       (char *LineIn, int FileLineNo, char **FirstToken);
-bool ScanVariable      (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int *NameLen, int AllowSlicing);
-bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool ScanStream        (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool ScanChannel       (int BasicLineNo, int StatementNo, int Keyword, byte **Index, byte *WhichChannel);
-bool SignalInterface1  (int BasicLineNo, int StatementNo, int NewMode);
-bool CheckEnd          (int BasicLineNo, int StatementNo, byte **Index);
-bool ScanExpression    (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int Level);
-bool HandleClass01     (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type);
-bool HandleClass02     (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool Type);
-bool HandleClass03     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass04     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass05     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass06     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass07     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass08     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass09     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass10     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass11     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass12     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass13     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass14     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool HandleClass15     (int BasicLineNo, int StatementNo, int Keyword, byte **Index);
-bool CheckSyntax       (int BasicLineNo, byte *Line);
+int  MatchToken        (int FileLineNo, bool WantKeyword, char **LineIndex, byte *Token);
+int  HandleNumbers     (int FileLineNo, char **BasicLine, byte **SpectrumLine);
+int  HandleBIN         (int FileLineNo, char **BasicLine, byte **SpectrumLine);
+int  ExpandSequences   (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool StripSpaces);
+bool ScanVariable      (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int *NameLen, int AllowSlicing);
+bool SliceDirectString (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool ScanStream        (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool ScanChannel       (int FileLineNo, int StatementNo, int Keyword, byte **Index, byte *WhichChannel);
+bool SignalInterface1  (int FileLineNo, int StatementNo, int NewMode);
+bool CheckEnd          (int FileLineNo, int StatementNo, byte **Index);
+bool ScanExpression    (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int Level);
+bool HandleClass01     (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type);
+bool HandleClass02     (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool Type);
+bool HandleClass03     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass04     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass05     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass06     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass07     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass08     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass09     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass10     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass11     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass12     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass13     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass14     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool HandleClass15     (int FileLineNo, int StatementNo, int Keyword, byte **Index);
+bool CheckSyntax       (int FileLineNo, byte *Line);
 
 /**********************************************************************************************************************************/
 /* Start of the program                                                                                                           */
@@ -365,7 +383,7 @@ int GetLineNumber (char **FirstAfter)
   bool  SkipSpaces = TRUE;
   bool  Continue   = TRUE;
 
-  LineIndex = ConvertedSpectrumLine;
+  LineIndex = bas2tap_ConvertedSpectrumLine;
   while (*LineIndex && Continue)
     if (*LineIndex == ' ')                                                                                 /* Skip leading spaces */
     {
@@ -390,7 +408,7 @@ int GetLineNumber (char **FirstAfter)
   return (LineNo);
 }
 
-int MatchToken (int BasicLineNo, bool WantKeyword, char **LineIndex, byte *Token)
+int MatchToken (int FileLineNo, bool WantKeyword, char **LineIndex, byte *Token)
 
 /**********************************************************************************************************************************/
 /* Pre   : `WantKeyword' is TRUE if we need in keyword match, `LineIndex' holds the position to match.                            */
@@ -439,8 +457,8 @@ int MatchToken (int BasicLineNo, bool WantKeyword, char **LineIndex, byte *Token
     switch (Is48KProgram)                                                                        /* Then the program must be 128K */
     {
       case -1 : Is48KProgram = 0; break;                                                                          /* Set the flag */
-      case  1 : fprintf (ErrStream, "ERROR - Line %d contains a 128K keyword, but the program\n"
-                         "also uses UDGs \'T\' and/or \'U\'\n", BasicLineNo);
+      case  1 : bas2tap_error (FileLineNo, -1, "line contains a 128K keyword but the program "
+                         "also uses UDGs \'T\' and/or \'U\'");
                 return (-2);
       case  0 : break;
     }
@@ -451,7 +469,7 @@ int MatchToken (int BasicLineNo, bool WantKeyword, char **LineIndex, byte *Token
     return (1);                                                                                                 /* Signal: match! */
 }
 
-int HandleNumbers (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
+int HandleNumbers (int FileLineNo, char **BasicLine, byte **SpectrumLine)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the current BASIC line number, `BasicLine' points into the line, `SpectrumLine' points to the      */
@@ -531,7 +549,7 @@ int HandleNumbers (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
     Exp = floor (x_log2 (Value));
     if (Exp < -129 || Exp > 126)
     {
-      fprintf (ErrStream, "ERROR - Number too big in line %d\n", BasicLineNo);
+      bas2tap_error (FileLineNo, -1, "number is too big");
       return (-1);
     }
     Mantissa = (unsigned long)floor ((Value / pow (2.0, Exp) - 1.0) * SHIFT31BITS + 0.5);                   /* Calculate mantissa */
@@ -545,7 +563,7 @@ int HandleNumbers (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
   return (1);
 }
 
-int HandleBIN (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
+int HandleBIN (int FileLineNo, char **BasicLine, byte **SpectrumLine)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the current BASIC line number, `BasicLine' points into the line just past the BIN token,           */
@@ -564,7 +582,7 @@ int HandleBIN (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
     Value = Value * 2 + **BasicLine - '0';
     if (Value > 65535)
     {
-      fprintf (ErrStream, "ERROR - Number too big in line %d\n", BasicLineNo);
+      bas2tap_error (FileLineNo, -1, "number is too big");
       return (-1);
     }
     *((*SpectrumLine) ++) = *((*BasicLine) ++);                                                            /* (Copy digit across) */
@@ -578,7 +596,7 @@ int HandleBIN (int BasicLineNo, char **BasicLine, byte **SpectrumLine)
   return (1);
 }
 
-int ExpandSequences (int BasicLineNo, char **BasicLine, byte **SpectrumLine, bool StripSpaces)
+int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool StripSpaces)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the current BASIC line number, `BasicLine' points into the line, `SpectrumLine' points to the      */
@@ -646,8 +664,8 @@ int ExpandSequences (int BasicLineNo, char **BasicLine, byte **SpectrumLine, boo
       switch (Is48KProgram)                                                                       /* Then the program must be 48K */
       {
         case -1 : Is48KProgram = 1; break;                                                                        /* Set the flag */
-        case  0 : fprintf (ErrStream, "ERROR - Line %d contains UDGs \'T\' and/or \'U\'\n"
-                           "but the program was already marked 128K\n", BasicLineNo);
+        case  0 : bas2tap_error (FileLineNo, -1, "line contains UDGs \'T\' and/or \'U\' "
+                           "but the program was already marked 128K");
                   return (-1);
         case  1 : break;
       }
@@ -758,7 +776,7 @@ int ExpandSequences (int BasicLineNo, char **BasicLine, byte **SpectrumLine, boo
     {
       OldCharacter = *((*BasicLine) + Cnt + 1);
       *((*BasicLine) + Cnt + 1) = '\0';
-      printf ("WARNING - Unexpandable sequence \"%s\" in line %d\n", (*BasicLine), BasicLineNo);
+      bas2tap_error (FileLineNo, -1, "unexpandable sequence \"%s\"", (*BasicLine));
       *((*BasicLine) + Cnt + 1) = OldCharacter;
       return (0);
     }
@@ -766,7 +784,7 @@ int ExpandSequences (int BasicLineNo, char **BasicLine, byte **SpectrumLine, boo
   return (0);
 }
 
-int PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
+int bas2tap_PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
 
 /**********************************************************************************************************************************/
 /* Pre   : `LineIn' points to the read line, `FileLineNo' holds the real line number.                                             */
@@ -785,10 +803,9 @@ int PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
   bool   StillOk         = TRUE;
   bool   DoingREM        = FALSE;
   int    BasicLineNo     = -1;
-  static int PreviousBasicLineNo = -1;
 
   IndexIn = LineIn;
-  IndexOut = ConvertedSpectrumLine;
+  IndexOut = bas2tap_ConvertedSpectrumLine;
   while (*IndexIn && StillOk)
   {
     if (*IndexIn == '\t')                                                                                   /* EXCEPTION: Print ' */
@@ -833,22 +850,21 @@ int PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
       StillOk = TRUE;                                                                     /* (Accept CR and/or LF as end-of-line) */
   BasicLineNo = GetLineNumber (FirstToken);
   if (InString)
-    fprintf (ErrStream, "ERROR - %s line %d misses terminating quote\n",
-             BasicLineNo < 0 ? "ASCII" : "BASIC", BasicLineNo < 0 ? FileLineNo : BasicLineNo);
+    bas2tap_error (FileLineNo, -1, "line misses terminating quote");
   else if (!StillOk)
-    fprintf (ErrStream, "ERROR - %s line %d contains a bad character (code %02Xh)\n",
-             BasicLineNo < 0 ? "ASCII" : "BASIC", BasicLineNo < 0 ? FileLineNo : BasicLineNo, *IndexIn);
+    bas2tap_error (FileLineNo, -1, "line contains a bad character (code %02Xh)",
+             (unsigned char)*IndexIn);
   else if (BasicLineNo < 0)                                                                         /* Could not read line number */
   {
     if (!(**FirstToken))                                                                            /* Line is completely empty ? */
     {
-      if (!NoWarnings)
-        printf ("WARNING - Skipping empty ASCII line %d\n", FileLineNo);
+      //if (!NoWarnings)
+      //  printf ("WARNING - Skipping empty ASCII line %d\n", FileLineNo);
       return (-2);                                                                                    /* Signal: skip entire line */
     }
     else
     {
-      fprintf (ErrStream, "ERROR - Missing line number in ASCII line %d\n", FileLineNo);
+      bas2tap_error (FileLineNo, -1, "missing line number");
       StillOk = FALSE;
     }
   }
@@ -856,15 +872,15 @@ int PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
   {
     if (BasicLineNo < PreviousBasicLineNo)                                            /* This line number smaller than previous ? */
     {
-      fprintf (ErrStream, "ERROR - Line number %d is smaller than previous line number %d\n", BasicLineNo, PreviousBasicLineNo);
+      bas2tap_error (FileLineNo, -1, "line number %d is smaller than previous line number %d", BasicLineNo, PreviousBasicLineNo);
       StillOk = FALSE;
     }
     else if (BasicLineNo == PreviousBasicLineNo && !NoWarnings)                                 /* Same line number as previous ? */
-      printf ("WARNING - Duplicate use of line number %d\n", BasicLineNo);                  /* (BASIC can handle it after all...) */
+      bas2tap_error (FileLineNo, -1, "duplicate use of line number %d", BasicLineNo);                  /* (BASIC can handle it after all...) */
   }
   else if (!(**FirstToken))                                                                 /* Line contains only a line number ? */
   {
-    fprintf (ErrStream, "ERROR - Line %d contains no statements!\n", BasicLineNo);
+    bas2tap_error (FileLineNo, -1, "line contains no statements");
     StillOk = FALSE;
   }
   PreviousBasicLineNo = BasicLineNo;                                                                 /* Remember this line number */
@@ -874,7 +890,7 @@ int PrepareLine (char *LineIn, int FileLineNo, char **FirstToken)
     return (-1);
 }
 
-bool CheckEnd (int BasicLineNo, int StatementNo, byte **Index)
+bool CheckEnd (int FileLineNo, int StatementNo, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Index' the current position in the line.     */
@@ -886,13 +902,13 @@ bool CheckEnd (int BasicLineNo, int StatementNo, byte **Index)
 {
   if (**Index == ':' || **Index == 0x0D)                                                     /* End of statement or end of line ? */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of statement\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "unexpected end of statement");
     return (TRUE);
   }
   return (FALSE);
 }
 
-bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int *NameLen, int AllowSlicing)
+bool ScanVariable (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int *NameLen, int AllowSlicing)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Keyword' the keyword to which this operand   */
@@ -930,8 +946,7 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
   {
     if (*NameLen > 1)                                                   /* String variables can only have a single character name */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - String variables can only have single character names\n",
-               BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "string variables can only have single character names");
       return (FALSE);
     }
     (*Index) ++;
@@ -947,27 +962,25 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
 #endif
     if (*NameLen > 1)                                                             /* Arrays can only have a single character name */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Arrays can only have single character names\n",
-               BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "arrays can only have single character names");
       return (FALSE);
     }
     if (AllowSlicing == 0)                                                                      /* Slicing/Indexing not allowed ? */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Slicing/Indexing not allowed\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "slicing/indexing not allowed");
       return (FALSE);
     }
     (*Index) ++;                                                                                            /* (Skip the bracket) */
     if (**Index == ')')                                                                           /* Empty slice "a$()" is not ok */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Empty array index not allowed\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "empty array index not allowed");
       return (FALSE);
     }
     if (**Index == 0xCC)                                                                           /* "a$( TO num)" or "a$( TO )" */
     {
       if (AllowSlicing == 2)
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Slicing token \"TO\" inappropriate for arrays\n",
-                 BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "slicing token \"TO\" inappropriate for arrays");
         return (FALSE);
       }
     }
@@ -978,13 +991,13 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
         TokenBracket = TRUE;                                                                          /* Allow complex expression */
         SetTokenBracket = TRUE;
       }
-      if (!ScanExpression (BasicLineNo, StatementNo, '(', Index, &SubType, 0))                                 /* First parameter */
+      if (!ScanExpression (FileLineNo, StatementNo, '(', Index, &SubType, 0))                                 /* First parameter */
         return (FALSE);
       if (SetTokenBracket)
         TokenBracket = FALSE;
       if (!SubType)                                                                                            /* Must be numeric */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Variables indices must be numeric\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "variable indices must be numeric");
         return (FALSE);
       }
       if (**Index == ')')                                                                                      /* "a$(num)" is ok */
@@ -998,8 +1011,8 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
     }
     if (**Index != 0xCC && **Index != ',')                                                          /* Either an array or a slice */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected index character \"%c\"\n",
-               BasicLineNo, StatementNo, **Index);
+      bas2tap_error (FileLineNo, StatementNo, "unexpected index character \"%c\"",
+               **Index);
       return (FALSE);
     }
     if (**Index == ',')
@@ -1008,13 +1021,12 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
     {
       if (AllowSlicing == 2)
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Slicing token \"TO\" inappropriate for arrays\n",
-                 BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "slicing token \"TO\" inappropriate for arrays");
         return (FALSE);
       }
       if (*Type)                                                                          /* Only character strings can be sliced */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Only character strings can be sliced\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "only character strings can be sliced");
         return (FALSE);
       }
     }
@@ -1026,13 +1038,13 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
         TokenBracket = TRUE;
         SetTokenBracket = TRUE;
       }
-      if (!ScanExpression (BasicLineNo, StatementNo, '(', Index, &SubType, 0))                     /* Second or further parameter */
+      if (!ScanExpression (FileLineNo, StatementNo, '(', Index, &SubType, 0))                     /* Second or further parameter */
         return (FALSE);
       if (SetTokenBracket)
         TokenBracket = FALSE;
       if (!SubType)                                                                                            /* Must be numeric */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Variables indices must be numeric\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "variable indices must be numeric");
         return (FALSE);
       }
       if (!IsArray && **Index != ')')
@@ -1055,7 +1067,7 @@ bool ScanVariable (int BasicLineNo, int StatementNo, int Keyword, byte **Index, 
   return (TRUE);
 }
 
-bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool SliceDirectString (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Keyword' the keyword to which this operand   */
@@ -1085,13 +1097,13 @@ bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **In
       TokenBracket = TRUE;
       SetTokenBracket = TRUE;
     }
-    if (!ScanExpression (BasicLineNo, StatementNo, '(', Index, &SubType, 0))                                   /* First parameter */
+    if (!ScanExpression (FileLineNo, StatementNo, '(', Index, &SubType, 0))                                   /* First parameter */
       return (FALSE);
     if (SetTokenBracket)
       TokenBracket = FALSE;
     if (!SubType)                                                                                              /* Must be numeric */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Slice values must be numeric\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "slice values must be numeric");
       return (FALSE);
     }
   }
@@ -1102,7 +1114,7 @@ bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **In
   }
   if (**Index != 0xCC)                                                                                                  /* ('TO') */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected index character\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "unexpected index character");
     return (FALSE);
   }
   (*Index) ++;
@@ -1116,13 +1128,13 @@ bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **In
     TokenBracket = TRUE;
     SetTokenBracket = TRUE;
   }
-  if (!ScanExpression (BasicLineNo, StatementNo, '(', Index, &SubType, 0))                                    /* Second parameter */
+  if (!ScanExpression (FileLineNo, StatementNo, '(', Index, &SubType, 0))                                    /* Second parameter */
     return (FALSE);
   if (SetTokenBracket)
     TokenBracket = FALSE;
   if (!SubType)                                                                                                /* Must be numeric */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Slice values must be numeric\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "slice values must be numeric");
     return (FALSE);
   }
   if (**Index != ')')
@@ -1134,7 +1146,7 @@ bool SliceDirectString (int BasicLineNo, int StatementNo, int Keyword, byte **In
   return (TRUE);
 }
 
-bool ScanStream (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool ScanStream (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Keyword' the keyword to which this operand   */
@@ -1146,12 +1158,12 @@ bool ScanStream (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
 /**********************************************************************************************************************************/
 
 {
-  if (!SignalInterface1 (BasicLineNo, StatementNo, 0))
+  if (!SignalInterface1 (FileLineNo, StatementNo, 0))
     return (FALSE);
-  return (HandleClass06 (BasicLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
+  return (HandleClass06 (FileLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
 }
 
-bool SignalInterface1 (int BasicLineNo, int StatementNo, int NewMode)
+bool SignalInterface1 (int FileLineNo, int StatementNo, int NewMode)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `NewMode' holds the required hardware mode.   */
@@ -1164,16 +1176,15 @@ bool SignalInterface1 (int BasicLineNo, int StatementNo, int NewMode)
   if ((NewMode == 1 && UsesInterface1 == 2) ||                                 /* Interface1 required, but already flagged Opus ? */
       (NewMode == 2 && UsesInterface1 == 1))                                   /* Opus required, but already flagged Interface1 ? */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - The program uses commands that are specific\n"
-                        "for Interface 1 and Opus Discovery, but don't exist on both devices\n",
-             BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "the program uses commands that are specific "
+                        "for Interface 1 and Opus Discovery but don't exist on both devices");
     return (FALSE);
   }
   UsesInterface1 = NewMode;
   return (TRUE);
 }
 
-bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, byte *WhichChannel)
+bool ScanChannel (int FileLineNo, int StatementNo, int Keyword, byte **Index, byte *WhichChannel)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Keyword' the keyword to which this operand   */
@@ -1189,19 +1200,19 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
   int  NeededHardware = 0;                                                                            /* (Default to Interface 1) */
 
   *WhichChannel = '\0';
-  if (CheckEnd (BasicLineNo, StatementNo, Index))
+  if (CheckEnd (FileLineNo, StatementNo, Index))
     return (FALSE);
   if (**Index != '\"')
   {
-    if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))/* EXCEPTION: The Opus allows '<num>' to abbreviate '"m";<num>' */
+    if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))/* EXCEPTION: The Opus allows '<num>' to abbreviate '"m";<num>' */
     {
-      fprintf (ErrStream, "Expected to find a channel identifier\n");
+      bas2tap_error (FileLineNo, -1, "expected to find a channel identifier");
       return (FALSE);
     }
     *WhichChannel = 'm';
-    if (!SignalInterface1 (BasicLineNo, StatementNo, 2))                                          /* Signal the Opus specificness */
+    if (!SignalInterface1 (FileLineNo, StatementNo, 2))                                          /* Signal the Opus specificness */
       return (FALSE);
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
     if (**Index != ';')
     {
@@ -1209,29 +1220,29 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
       return (FALSE);
     }
     (*Index) ++;
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
   }
   else
   {
     (*Index) ++;
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
     if (!isalpha (**Index) &&                                                                               /* (Ordinary channel) */
         **Index != '#' &&                                                                        /* (Linked channel, OPEN # only) */
         **Index != 0xAF &&                                                                       /* ('CODE' channel, OPEN # only) */
         **Index != 0xCF)                                                                          /* ('CAT' channel, OPEN # only) */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Channel name must be alphanumeric\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "channel name must be alphanumeric");
       return (FALSE);
     }
     *WhichChannel = tolower (**Index);
     (*Index) ++;
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
     if (**Index != '\"')
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Channel name must be single character\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "channel name must be single character");
       return (FALSE);
     }
     (*Index) ++;
@@ -1245,12 +1256,12 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
              *WhichChannel == 'd' ||                                                                      /* (Opus: disk channel) */
              *WhichChannel == 0xAF)                                                                     /* (Opus: 'CODE' channel) */
       NeededHardware = 2;
-    if (!SignalInterface1 (BasicLineNo, StatementNo, NeededHardware))
+    if (!SignalInterface1 (FileLineNo, StatementNo, NeededHardware))
       return (FALSE);
     if (*WhichChannel == 'm' || *WhichChannel == 'd' || *WhichChannel == 'n' ||     /* Continue checking with these channels only */
         *WhichChannel == '#' || *WhichChannel == 0xCF)
     {
-      if (CheckEnd (BasicLineNo, StatementNo, Index))
+      if (CheckEnd (FileLineNo, StatementNo, Index))
         return (FALSE);
       if (**Index != ';')
       {
@@ -1258,11 +1269,11 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
         return (FALSE);
       }
       (*Index) ++;
-      if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                                   /* Find numeric expression */
+      if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                                   /* Find numeric expression */
         return (FALSE);
       if (*WhichChannel == 'm')                                        /* Omly the 'm' channel requires a ';' character following */
       {
-        if (CheckEnd (BasicLineNo, StatementNo, Index))
+        if (CheckEnd (FileLineNo, StatementNo, Index))
           return (FALSE);
         if (**Index != ';')
         {
@@ -1270,7 +1281,7 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
           return (FALSE);
         }
         (*Index) ++;
-        if (CheckEnd (BasicLineNo, StatementNo, Index))
+        if (CheckEnd (FileLineNo, StatementNo, Index))
           return (FALSE);
       }
     }
@@ -1278,7 +1289,7 @@ bool ScanChannel (int BasicLineNo, int StatementNo, int Keyword, byte **Index, b
   return (TRUE);
 }
 
-bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int Level)
+bool ScanExpression (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type, int Level)
 
 /**********************************************************************************************************************************/
 /* Pre   : `BasicLineNo' holds the line number, `StatementNo' the statement number, `Keyword' the keyword to which this operand   */
@@ -1325,11 +1336,11 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
       printf ("DEBUG - %sRecurse ScanExpression for \"(\"\n", ListSpaces);
 #endif
       (*Index) ++;                                                                 /* The 'parent' steps past the opening bracket */
-      if (!ScanExpression (BasicLineNo, StatementNo, '(', Index, &SubSubType, Level + 1))                              /* Recurse */
+      if (!ScanExpression (FileLineNo, StatementNo, '(', Index, &SubSubType, Level + 1))                              /* Recurse */
         return (FALSE);
       if (TypeKnown && SubSubType != SubType)                                                         /* Bad subexpression type ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
         return (FALSE);
       }
       else if (!TypeKnown)                                                               /* We didn't have an expected type yet ? */
@@ -1342,13 +1353,12 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
       {
         if (!SubSubType)                                                                                 /* Result was a string ? */
         {
-          if (!SliceDirectString (BasicLineNo, StatementNo, Keyword, Index))
+          if (!SliceDirectString (FileLineNo, StatementNo, Keyword, Index))
             return (FALSE);
         }
         else                                                                       /* No, it was numerical, which you can't slice */
         {
-          fprintf (ErrStream, "ERROR in line %d, statement %d - cannot slice a numerical value\n",
-                   BasicLineNo, StatementNo);
+          bas2tap_error (FileLineNo, StatementNo, "cannot slice a numerical value");
           return (FALSE);
         }
       }
@@ -1372,7 +1382,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
         *Type = SubType;                                                                                       /* Set return type */
       if (Level)                                                                                         /* Not on lowest level ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - too few closing brackets\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "too few closing brackets");
         return (FALSE);
       }
       More = FALSE;
@@ -1386,7 +1396,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
       }
       else if (!SubType)                                                                         /* Type was known to be string ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
         return (FALSE);
       }
       while (*(++ (*Index)) != 0x0E)                                                              /* Skip until the number marker */
@@ -1402,7 +1412,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
       }
       else if (SubType)                                                                         /* Type was known to be numeric ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
         return (FALSE);
       }
       while (**Index == '\"')                         /* Concatenated strings are ok, since they allow the use of the " character */
@@ -1412,10 +1422,10 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
         (*Index) ++;                                                                                              /* Step past it */
       }
       if (**Index == '(')                                                                                   /* String is sliced ? */
-        if (!SliceDirectString (BasicLineNo, StatementNo, Keyword, Index))
+        if (!SliceDirectString (FileLineNo, StatementNo, Keyword, Index))
           return (FALSE);
     }
-    else if (ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &SubSubType, &VarNameLen, 1))          /* Is it a variable ? */
+    else if (ScanVariable (FileLineNo, StatementNo, Keyword, Index, &SubSubType, &VarNameLen, 1))          /* Is it a variable ? */
     {
       if (!TypeKnown)                                                                            /* Unknown expression type yet ? */
       {
@@ -1424,7 +1434,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
       }
       else if (SubType != SubSubType)                                                                /* Different type variable ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
         return (FALSE);
       }
     }
@@ -1433,12 +1443,10 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
     /* It's none of the above. Go check tokens */
     else switch (TokenMap[**Index].TokenType)
     {
-      case 0 : fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected token \"%s\"\n",
-                        BasicLineNo, StatementNo, TokenMap[**Index].Token);
+      case 0 : bas2tap_error (FileLineNo, StatementNo, "unexpected token \"%s\"", TokenMap[**Index].Token);
                return (FALSE);
       case 1 :
-      case 2 : fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected keyword \"%s\"\n",
-                        BasicLineNo, StatementNo, TokenMap[**Index].Token);
+      case 2 : bas2tap_error (FileLineNo, StatementNo, "unexpected keyword \"%s\"", TokenMap[**Index].Token);
                return (FALSE);
       case 3 :
       case 4 :
@@ -1447,29 +1455,26 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
                {
                  if (Keyword != 0xF5 && Keyword != 0xE0)                                      /* Not handling a PRINT or LPRINT ? */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected token \"%s\"\n",
-                            BasicLineNo, StatementNo, TokenMap[**Index].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "unexpected token \"%s\"", TokenMap[**Index].Token);
                    return (FALSE);
                  }
                }
                else if (ThisToken == 0xC0 && **Index == '\"')                                                 /* Special: USR "x" */
                {
                  (*Index) ++;                                                                    /* (Step past the opening quote) */
-                 if (CheckEnd (BasicLineNo, StatementNo, Index))
+                 if (CheckEnd (FileLineNo, StatementNo, Index))
                    return (FALSE);
                  if (toupper (**Index) < 'A' || toupper (**Index) > 'U')                                   /* Bad UDG character ? */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Bad UDG \"%s\"\n",
-                            BasicLineNo, StatementNo, TokenMap[**Index].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "bad UDG \"%s\"", TokenMap[**Index].Token);
                    return (FALSE);
                  }
                  (*Index) ++;
-                 if (CheckEnd (BasicLineNo, StatementNo, Index))
+                 if (CheckEnd (FileLineNo, StatementNo, Index))
                    return (FALSE);
                  if (**Index != '\"')                                                                   /* More than one letter ? */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - An UDG name may be only 1 letter\n",
-                            BasicLineNo, StatementNo);
+                   bas2tap_error (FileLineNo, StatementNo, "an UDG name may be only 1 letter");
                    return (FALSE);
                  }
                  (*Index) --;
@@ -1477,8 +1482,8 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
                    switch (Is48KProgram)                                                          /* Then the program must be 48K */
                    {
                      case -1 : Is48KProgram = 1; break;                                                           /* Set the flag */
-                     case  0 : fprintf (ErrStream, "ERROR - Line %d contains UDGs \'T\' and/or \'U\'\n"
-                                        "but the program was already marked 128K\n", BasicLineNo);
+                     case  0 : bas2tap_error (FileLineNo, StatementNo, "line contains UDGs \'T\' and/or \'U\' "
+                                        "but the program was already marked 128K");
                                return (FALSE);
                      case  1 : break;
                    }
@@ -1495,21 +1500,21 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
                  else if ((SubType && TokenMap[ThisToken].TokenType == 4) ||
                           (!SubType && TokenMap[ThisToken].TokenType == 3))
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+                   bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
                    return (FALSE);
                  }
                }
                ClassIndex = -1;
                while (TokenMap[ThisToken].KeywordClass[++ ClassIndex])                             /* Handle all class parameters */
                {
-                 if (CheckEnd (BasicLineNo, StatementNo, Index))
+                 if (CheckEnd (FileLineNo, StatementNo, Index))
                    return (FALSE);
                  else if (TokenMap[ThisToken].KeywordClass[ClassIndex] >= 32)                        /* Required token or class ? */
                  {
                    if (**Index != TokenMap[ThisToken].KeywordClass[ClassIndex])                               /* (Required token) */
                    {                                                                                         /* (Token not there) */
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - Expected \"%c\", but got \"%s\"\n",
-                              BasicLineNo, StatementNo, TokenMap[ThisToken].KeywordClass[ClassIndex], TokenMap[**Index].Token);
+                     bas2tap_error (FileLineNo, StatementNo, "expected \"%c\" but got \"%s\"",
+                              TokenMap[ThisToken].KeywordClass[ClassIndex], TokenMap[**Index].Token);
                      return (FALSE);
                    }
                    else
@@ -1535,31 +1540,31 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
                  {
                    switch (TokenMap[ThisToken].KeywordClass[ClassIndex])
                    {
-                     case  1 : if (!HandleClass01 (BasicLineNo, StatementNo, ThisToken, Index, &Dummy))          /* (Special: FN) */
+                     case  1 : if (!HandleClass01 (FileLineNo, StatementNo, ThisToken, Index, &Dummy))          /* (Special: FN) */
                                  return (FALSE);
                                break;
-                     case  3 : if (!HandleClass03 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case  3 : if (!HandleClass03 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case  5 : if (!HandleClass05 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case  5 : if (!HandleClass05 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case  6 : if (!HandleClass06 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case  6 : if (!HandleClass06 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case  8 : if (!HandleClass08 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case  8 : if (!HandleClass08 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case 10 : if (!HandleClass10 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case 10 : if (!HandleClass10 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case 12 : if (!HandleClass12 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case 12 : if (!HandleClass12 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case 13 : if (!HandleClass13 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case 13 : if (!HandleClass13 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
-                     case 14 : if (!HandleClass14 (BasicLineNo, StatementNo, ThisToken, Index))
+                     case 14 : if (!HandleClass14 (FileLineNo, StatementNo, ThisToken, Index))
                                  return (FALSE);
                                break;
                    }
@@ -1573,7 +1578,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
                  if (**Index == '#')                                                                  /* Type 'INKEY$#<stream>' ? */
                  {
                    (*Index) ++;
-                   if (!ScanStream (BasicLineNo, StatementNo, ThisToken, Index))
+                   if (!ScanStream (FileLineNo, StatementNo, ThisToken, Index))
                      return (FALSE);
                  }
                break;
@@ -1603,16 +1608,15 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
           //*Type = SubType;
         if (**Index == 0xC5 && !*Type)
         {
-          fprintf (ErrStream, "ERROR in line %d, statement %d - \"OR\" requires a numeric left value\n", BasicLineNo, StatementNo);
+          bas2tap_error(FileLineNo, StatementNo, "\"OR\" requires a numeric left value");
           return (FALSE);
         }
         ThisToken = *((*Index) ++);                                                   /* Step over the operator - but remember it */
-        if (!ScanExpression (BasicLineNo, StatementNo, ThisToken, Index, &SubSubType, 0))                /* Recurse - at level 0! */
+        if (!ScanExpression (FileLineNo, StatementNo, ThisToken, Index, &SubSubType, 0))                /* Recurse - at level 0! */
           return (FALSE);
         if (!SubSubType)                                       /* The expression at the right must be numeric for both AND and OR */
         {
-          fprintf (ErrStream, "ERROR in line %d, statement %d - \"%s\" requires a numeric right value\n",
-                   BasicLineNo, StatementNo, TokenMap[ThisToken].Token);
+          bas2tap_error (FileLineNo, StatementNo, "\"%s\" requires a numeric right value", TokenMap[ThisToken].Token);
           return (FALSE);
         }
         if (!TypeKnown)                                                                  /* We didn't have an expected type yet ? */
@@ -1644,7 +1648,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
         {
           if (!SubType)                                                                          /* Type was known to be string ? */
           {
-            fprintf (ErrStream, "ERROR in line %d, statement %d - Type conflict in expression\n", BasicLineNo, StatementNo);
+            bas2tap_error (FileLineNo, StatementNo, "type conflict in expression");
             return (FALSE);
           }
           (*Index) ++;
@@ -1678,7 +1682,7 @@ bool ScanExpression (int BasicLineNo, int StatementNo, int Keyword, byte **Index
   return (TRUE);
 }
 
-bool HandleClass01 (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool *Type)
+bool HandleClass01 (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool *Type)
 
 /**********************************************************************************************************************************/
 /* Class 1 = Used in LET. A variable is required.                                                                                 */
@@ -1700,7 +1704,7 @@ bool HandleClass01 (int BasicLineNo, int StatementNo, int Keyword, byte **Index,
     ParseArray = 1;
   else
     ParseArray = 2;
-  if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, Type, &VarNameLen, ParseArray))
+  if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, Type, &VarNameLen, ParseArray))
   {
     if (VarNameLen == 0)
       BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -1709,7 +1713,7 @@ bool HandleClass01 (int BasicLineNo, int StatementNo, int Keyword, byte **Index,
   return (TRUE);
 }
 
-bool HandleClass02 (int BasicLineNo, int StatementNo, int Keyword, byte **Index, bool Type)
+bool HandleClass02 (int FileLineNo, int StatementNo, int Keyword, byte **Index, bool Type)
 
 /**********************************************************************************************************************************/
 /* Class 2 = Used in LET. An expression, numeric or string, must follow.                                                          */
@@ -1723,17 +1727,17 @@ bool HandleClass02 (int BasicLineNo, int StatementNo, int Keyword, byte **Index,
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 2, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &SubType, 0))
+  if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &SubType, 0))
     return (FALSE);
   if (SubType != Type)                                                                                              /* Must match */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Bad assignment expression type\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "bad assignment expression type");
     return (FALSE);
   }
   return (TRUE);
 }
 
-bool HandleClass03 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass03 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 3 = A numeric expression may follow. Zero to be used in case of default.                                                 */
@@ -1749,15 +1753,15 @@ bool HandleClass03 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   if (Keyword == 0xFD && **Index == '#')                   /* EXCEPTION: CLEAR may take a stream rather than a numeric expression */
   {
     (*Index) ++;
-    if (!SignalInterface1 (BasicLineNo, StatementNo, 0))                                   /* (Which is Interface1/Opus specific) */
+    if (!SignalInterface1 (FileLineNo, StatementNo, 0))                                   /* (Which is Interface1/Opus specific) */
       return (FALSE);
     if (**Index == ':' || **Index == 0x0D)                                                           /* No expression following ? */
       return (TRUE);                                      /* (An empty stream is allowed as well - it clears all streams at once) */
   }
-  return (HandleClass06 (BasicLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
+  return (HandleClass06 (FileLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
 }
 
-bool HandleClass04 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass04 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 4 = A single character variable must follow.                                                                             */
@@ -1771,7 +1775,7 @@ bool HandleClass04 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 4, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 0))
+  if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 0))
   {
     if (VarNameLen == 0)
       BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -1779,13 +1783,13 @@ bool HandleClass04 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   }
   if (VarNameLen != 1 || !Type)                                                  /* Not single letter or not a numeric variable ? */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Wrong variable type\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "wrong variable type");
     return (FALSE);
   }
   return (TRUE);
 }
 
-bool HandleClass05 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass05 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 5 = A set of items may be given.                                                                                         */
@@ -1809,22 +1813,22 @@ bool HandleClass05 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     else if (**Index == '#')                                                                                        /* A stream ? */
     {
       (*Index) ++;                                                                                    /* (Step past the '#' mark) */
-      if (!ScanStream (BasicLineNo, StatementNo, Keyword, Index))
+      if (!ScanStream (FileLineNo, StatementNo, Keyword, Index))
         return (FALSE);
     }
     else if (TokenMap[**Index].TokenType == 2 ||                                                          /* A colour parameter ? */
              **Index == 0xAD)                                                                                            /* TAB ? */
     {
       (*Index) ++;                                                                                            /* (Skip the token) */
-      if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                       /* Find parameter (numeric expression) */
+      if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                       /* Find parameter (numeric expression) */
         return (FALSE);
     }
     else if (**Index == 0xAC)                                                                                             /* AT ? */
     {
       (*Index) ++;                                                                                            /* (Skip the token) */
-      if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                 /* Find first parameter (numeric expression) */
+      if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                 /* Find first parameter (numeric expression) */
         return (FALSE);
-      if (CheckEnd (BasicLineNo, StatementNo, Index))
+      if (CheckEnd (FileLineNo, StatementNo, Index))
         return (FALSE);
       if (**Index != ',')                                                                           /* (Required separator token) */
       {
@@ -1832,13 +1836,13 @@ bool HandleClass05 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
         return (FALSE);
       }
       (*Index) ++;                                                                                            /* (Skip the token) */
-      if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                /* Find second parameter (numeric expression) */
+      if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                /* Find second parameter (numeric expression) */
         return (FALSE);
     }
     else if (Keyword == 0xEE && **Index == 0xCA)                                                            /* INPUT may use LINE */
     {
       (*Index) ++;                                                                                            /* (Skip the token) */
-      if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 0))
+      if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 0))
       {
         if (VarNameLen == 0)
           BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -1846,12 +1850,11 @@ bool HandleClass05 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
       }
       if (Type)                                                                                  /* Not a alphanumeric variable ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - INPUT LINE requires an alphanumeric variable\n",
-                 BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "INPUT LINE requires an alphanumeric variable");
         return (FALSE);
       }
     }
-    else if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0))                              /* Get expression */
+    else if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0))                              /* Get expression */
       return (FALSE);
     if (**Index == ':' || **Index == 0x0D)                                                   /* End of statement or end of line ? */
       More = FALSE;
@@ -1865,7 +1868,7 @@ bool HandleClass05 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   return (TRUE);
 }
 
-bool HandleClass06 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass06 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 6 = A numeric expression must follow.                                                                                    */
@@ -1878,17 +1881,17 @@ bool HandleClass06 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 6, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0))                                     /* Get expression */
+  if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0))                                     /* Get expression */
     return (FALSE);
   if (!Type && Keyword != 0xC0)                                                                                /* Must be numeric */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Expected numeric expression\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "expected numeric expression");
     return (FALSE);
   }
   return (TRUE);
 }
 
-bool HandleClass07 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass07 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 7 = Handles colour items.                                                                                                */
@@ -1900,10 +1903,10 @@ bool HandleClass07 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 7, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  return (HandleClass06 (BasicLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
+  return (HandleClass06 (FileLineNo, StatementNo, Keyword, Index));                                   /* Find numeric expression */
 }
 
-bool HandleClass08 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass08 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 8 = Two numeric expressions, separated by a comma, must follow.                                                          */
@@ -1914,7 +1917,7 @@ bool HandleClass08 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 8, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                                 /* Find first numeric expression */
+  if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                                 /* Find first numeric expression */
     return (FALSE);
   if (**Index != ',')
   {
@@ -1922,10 +1925,10 @@ bool HandleClass08 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     return (FALSE);
   }
   (*Index) ++;
-  return (HandleClass06 (BasicLineNo, StatementNo, Keyword, Index));                            /* Find second numeric expression */
+  return (HandleClass06 (FileLineNo, StatementNo, Keyword, Index));                            /* Find second numeric expression */
 }
 
-bool HandleClass09 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass09 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 9 = As for class 8 but colour items may precede the expression.                                                          */
@@ -1941,14 +1944,14 @@ bool HandleClass09 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
 #endif
   while (CheckColour)
   {
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
     if (TokenMap[**Index].TokenType == 2)                                                                 /* A colour parameter ? */
     {
       (*Index) ++;                                                                                              /* Skip the token */
-      if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                       /* Find parameter (numeric expression) */
+      if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                       /* Find parameter (numeric expression) */
         return (FALSE);
-      if (CheckEnd (BasicLineNo, StatementNo, Index))
+      if (CheckEnd (FileLineNo, StatementNo, Index))
         return (FALSE);
       if (**Index != ';')                                              /* All colour parameters must be separated with semicolons */
       {
@@ -1960,12 +1963,12 @@ bool HandleClass09 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     else
       CheckColour = FALSE;
   }
-  if (CheckEnd (BasicLineNo, StatementNo, Index))
+  if (CheckEnd (FileLineNo, StatementNo, Index))
     return (FALSE);
-  return (HandleClass08 (BasicLineNo, StatementNo, Keyword, Index));
+  return (HandleClass08 (FileLineNo, StatementNo, Keyword, Index));
 }
 
-bool HandleClass10 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass10 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 10 = A string expression must follow.                                                                                    */
@@ -1978,17 +1981,17 @@ bool HandleClass10 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 10, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0))                                     /* Get expression */
+  if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0))                                     /* Get expression */
     return (FALSE);
   if (Type)                                                                                                     /* Must be string */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Expected string expression\n", BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "expected string expression");
     return (FALSE);
   }
   return (TRUE);
 }
 
-bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass11 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 11 = Handles cassette routines.                                                                                          */
@@ -2011,12 +2014,12 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     case 0xD5: if (**Index == '*')                                                                                     /* (MERGE) */
                {
                  (*Index) ++;
-                 if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))
+                 if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))
                    return (FALSE);
                  if (WhichChannel != 'm' && WhichChannel != 'b' && WhichChannel != 'n')
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot LOAD/VERIFY/MERGE from the \"%s\" channel\n",
-                            BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "cannot LOAD/VERIFY/MERGE from the \"%s\" channel",
+                            TokenMap[WhichChannel].Token);
                    return (FALSE);
                  }
                }
@@ -2026,8 +2029,8 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  switch (Is48KProgram)                                                           /* Then the program must be 128K */
                  {
                    case -1 : Is48KProgram = 0; break;                                                             /* Set the flag */
-                   case  1 : fprintf (ErrStream, "ERROR - Line %d contains 128K file I/O, but the program\n"
-                                      "also uses UDGs \'T\' and/or \'U\'\n", BasicLineNo);
+                   case  1 : bas2tap_error (FileLineNo, -1, "line contains 128K file I/O but the program "
+                                      "also uses UDGs \'T\' and/or \'U\'");
                              return (FALSE);
                    case  0 : break;
                  }
@@ -2040,8 +2043,8 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                      **Index != 0xCA &&                                                                                 /* (LINE) */
                      **Index != 0xAA)                                                                                /* (SCREEN$) */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - The \"%s\" channel does not use filenames\n",
-                            BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "the \"%s\" channel does not use filenames",
+                            TokenMap[WhichChannel].Token);
                    return (FALSE);
                  }
                }
@@ -2054,7 +2057,7 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                      while (*(++ (*Index)) != '\"')                                                         /* Find closing quote */
                        if (**Index == 0x0D)                                                                      /* End of line ? */
                        {
-                         fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n", BasicLineNo, StatementNo);
+                         bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                          return (FALSE);
                        }
                      (*Index) ++;                                                                                 /* Step past it */
@@ -2069,7 +2072,7 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    BADTOKEN ("filename", TokenMap[**Index].Token);
                    return (FALSE);
                  }
-                 else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))              /* Look for a string expression */
+                 else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))              /* Look for a string expression */
                    return (FALSE);
                }
                if (**Index != ':' && **Index != 0x0D)                                       /* (Continue unless end of statement) */
@@ -2078,18 +2081,18 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  {
                    if (Keyword == 0xD5)                                                                /* (We were doing MERGE ?) */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - Cannot MERGE CODE\n", BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "cannot MERGE CODE");
                      return (FALSE);
                    }
                    (*Index) ++;
                    if (**Index != ':' && **Index != 0x0D)                                                   /* Optional address ? */
                    {
-                     if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))          /* Find address (numeric expression) */
+                     if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))          /* Find address (numeric expression) */
                        return (FALSE);
                      if (**Index == ',')                                                                /* Also optional length ? */
                      {
                        (*Index) ++;
-                       if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))         /* Find length (numeric expression) */
+                       if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))         /* Find length (numeric expression) */
                          return (FALSE);
                      }
                      else if (**Index != ':' && **Index != 0x0D)
@@ -2104,9 +2107,9 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  else if (**Index == 0xE4)                                                                                /* DATA */
                  {
                    (*Index) ++;
-                   if (CheckEnd (BasicLineNo, StatementNo, Index))
+                   if (CheckEnd (FileLineNo, StatementNo, Index))
                      return (FALSE);
-                   if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
+                   if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
                    {
                      if (VarNameLen == 0)
                        BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -2114,29 +2117,25 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    }
                    if (VarNameLen != 1)                                                                    /* Not single letter ? */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - Wrong variable type; must be single character\n",
-                              BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "wrong variable type; must be single character");
                      return (FALSE);
                    }
                    if (**Index != '(')                                         /* The variable must be followed by an empty index */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - DATA requires an array\n",
-                              BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "DATA requires an array");
                      return (FALSE);
                    }
                    (*Index) ++;
                    if (**Index != ')')
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - DATA requires an empty array index\n",
-                                BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "DATA requires an empty array index");
                      return (FALSE);
                    }
                    (*Index) ++;
                  }
                  else
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Unknown file-type \"%s\"\n",
-                            BasicLineNo, StatementNo, TokenMap[**Index].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "unknown file-type \"%s\"", TokenMap[**Index].Token);
                    return (FALSE);
                  }
                }
@@ -2144,12 +2143,11 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     case 0xF8: if (**Index == '*')                                                                                      /* (SAVE) */
                {
                  (*Index) ++;
-                 if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))
+                 if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))
                    return (FALSE);
                  if (WhichChannel != 'm' && WhichChannel != 'b' && WhichChannel != 'n')
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot SAVE to the \"%s\" channel\n",
-                            BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "cannot SAVE to the \"%s\" channel", TokenMap[WhichChannel].Token);
                    return (FALSE);
                  }
                }
@@ -2159,8 +2157,8 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  switch (Is48KProgram)                                                           /* Then the program must be 128K */
                  {
                    case -1 : Is48KProgram = 0; break;                                                             /* Set the flag */
-                   case  1 : fprintf (ErrStream, "ERROR - Line %d contains 128K file I/O, but the program\n"
-                                      "also uses UDGs \'T\' and/or \'U\'\n", BasicLineNo);
+                   case  1 : bas2tap_error (FileLineNo, -1, "line contains 128K file I/O but the program "
+                                      "also uses UDGs \'T\' and/or \'U\'");
                              return (FALSE);
                    case  0 : break;
                  }
@@ -2173,8 +2171,8 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                      **Index != 0xCA &&                                                                                 /* (LINE) */
                      **Index != 0xAA)                                                                                /* (SCREEN$) */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - The \"%s\" channel does not use filenames\n",
-                            BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "the \"%s\" channel does not use filenames",
+                            TokenMap[WhichChannel].Token);
                    return (FALSE);
                  }
                }
@@ -2185,7 +2183,7 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    if (*(*Index + 1) == '\"' &&                                                   /* Empty string (not allowed) ? */
                        *(*Index + 2) != '\"')                                    /* Concatenation - first char is a " (allowed) ? */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - Empty filename not allowed\n", BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "empty filename is not allowed");
                      return (FALSE);
                    }
                    while (**Index == '\"')            /* Concatenated strings are ok, since they allow the use of the " character */
@@ -2193,7 +2191,7 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                      while (*(++ (*Index)) != '\"')                                                         /* Find closing quote */
                        if (**Index == 0x0D)                                                                      /* End of line ? */
                        {
-                         fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n", BasicLineNo, StatementNo);
+                         bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                          return (FALSE);
                        }
                      (*Index) ++;                                                                                 /* Step past it */
@@ -2208,7 +2206,7 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    BADTOKEN ("filename", TokenMap[**Index].Token);
                    return (FALSE);
                  }
-                 else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))              /* Look for a string expression */
+                 else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))              /* Look for a string expression */
                    return (FALSE);
                }
                if (**Index != ':' && **Index != 0x0D)                                       /* (Continue unless end of statement) */
@@ -2216,24 +2214,24 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  if (**Index == 0xAF)                                                                                     /* CODE */
                  {
                    (*Index) ++;
-                   if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))            /* Find address (numeric expression) */
+                   if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))            /* Find address (numeric expression) */
                      return (FALSE);
                    if (**Index != ',')
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - %s CODE requires both address and length\n",
-                              BasicLineNo, StatementNo, TokenMap[Keyword].Token);
+                     bas2tap_error (FileLineNo, StatementNo, "%s CODE requires both address and length\n",
+                              TokenMap[Keyword].Token);
                      return (FALSE);
                    }
                    (*Index) ++;
-                   if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))             /* Find length (numeric expression) */
+                   if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))             /* Find length (numeric expression) */
                      return (FALSE);
                  }
                  else if (**Index == 0xE4)                                                                                /* DATA */
                  {
                    (*Index) ++;
-                   if (CheckEnd (BasicLineNo, StatementNo, Index))
+                   if (CheckEnd (FileLineNo, StatementNo, Index))
                      return (FALSE);
-                   if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
+                   if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
                    {
                      if (VarNameLen == 0)
                        BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -2241,21 +2239,18 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    }
                    if (VarNameLen != 1)                                                                    /* Not single letter ? */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - Wrong variable type; must be single character\n",
-                              BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "wrong variable type; must be single character");
                      return (FALSE);
                    }
                    if (**Index != '(')                                         /* The variable must be followed by an empty index */
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - DATA requires an array\n",
-                              BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "DATA requires an array");
                      return (FALSE);
                    }
                    (*Index) ++;
                    if (**Index != ')')
                    {
-                     fprintf (ErrStream, "ERROR in line %d, statement %d - DATA requires an empty array index\n",
-                              BasicLineNo, StatementNo);
+                     bas2tap_error (FileLineNo, StatementNo, "DATA requires an empty array index");
                      return (FALSE);
                    }
                    (*Index) ++;
@@ -2265,23 +2260,22 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  else if (**Index == 0xCA)                                                                                /* LINE */
                  {
                    (*Index) ++;
-                   if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))      /* Find starting line (numeric expression) */
+                   if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))      /* Find starting line (numeric expression) */
                      return (FALSE);
                  }
                  else
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Unknown file-type \"%s\"\n",
-                            BasicLineNo, StatementNo, TokenMap[**Index].Token);
+                   bas2tap_error (FileLineNo, StatementNo, "unknown file-type \"%s\"", TokenMap[**Index].Token);
                    return (FALSE);
                  }
                }
                break;
-    case 0xCF: if (!SignalInterface1 (BasicLineNo, StatementNo, 0))                                                      /* (CAT) */
+    case 0xCF: if (!SignalInterface1 (FileLineNo, StatementNo, 0))                                                      /* (CAT) */
                  return (FALSE);
                if (**Index == '#')                                                       /* A stream may precede the drive number */
                {
                  (*Index) ++;
-                 if (!ScanStream (BasicLineNo, StatementNo, Keyword, Index))
+                 if (!ScanStream (FileLineNo, StatementNo, Keyword, Index))
                    return (FALSE);
                  if (**Index != ',')                                                                /* (Required separator token) */
                  {
@@ -2289,22 +2283,21 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    return (FALSE);
                  }
                }
-               if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))           /* Find drive number (numeric expression) */
+               if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))           /* Find drive number (numeric expression) */
                  return (FALSE);
                break;
-    case 0xD0: if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))                            /* (FORMAT) */
+    case 0xD0: if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))                            /* (FORMAT) */
                  return (FALSE);
                switch (WhichChannel)
                {
-                 case 'm' : if (CheckEnd (BasicLineNo, StatementNo, Index))         /* "m" requires an additional new volume name */
+                 case 'm' : if (CheckEnd (FileLineNo, StatementNo, Index))         /* "m" requires an additional new volume name */
                               return (FALSE);
                             if (**Index == '\"')                                                        /* Look for a volume name */
                             {
                               if (*(*Index + 1) == '\"' &&                                        /* Empty string (not allowed) ? */
                                   *(*Index + 2) != '\"')                         /* Concatenation - first char is a " (allowed) ? */
                               {
-                                fprintf (ErrStream, "ERROR in line %d, statement %d - Empty volume name not allowed\n",
-                                         BasicLineNo, StatementNo);
+                                bas2tap_error (FileLineNo, StatementNo, "empty volume name not allowed");
                                 return (FALSE);
                               }
                               while (**Index == '\"') /* Concatenated strings are ok, since they allow the use of the " character */
@@ -2312,14 +2305,13 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                                 while (*(++ (*Index)) != '\"')                                              /* Find closing quote */
                                   if (**Index == 0x0D)                                                           /* End of line ? */
                                   {
-                                    fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n",
-                                             BasicLineNo, StatementNo);
+                                    bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                                     return (FALSE);
                                   }
                                 (*Index) ++;                                                                      /* Step past it */
                               }
                             }
-                            else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))   /* Look for a string expression */
+                            else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))   /* Look for a string expression */
                               return (FALSE);
                             break;
                  case 't' :                                                 /* The port channels requires an additional baud rate */
@@ -2330,13 +2322,13 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                               return (FALSE);
                             }
                             (*Index) ++;
-                            if (CheckEnd (BasicLineNo, StatementNo, Index))
+                            if (CheckEnd (FileLineNo, StatementNo, Index))
                               return (FALSE);
-                            if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))       /* Look for a numeric expression */
+                            if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))       /* Look for a numeric expression */
                               return (FALSE);
                             break;
-                 default  : fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot FORMAT from the \"%s\" channel\n",
-                                     BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                 default  : bas2tap_error (FileLineNo, StatementNo, "cannot FORMAT from the \"%s\" channel",
+                                     TokenMap[WhichChannel].Token);
                             return (FALSE);
                }
                break;
@@ -2345,24 +2337,23 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  if (**Index == '#')
                  {
                    (*Index) ++;                                                                       /* (Step past the '#' mark) */
-                   if (!ScanStream (BasicLineNo, StatementNo, Keyword, Index))
+                   if (!ScanStream (FileLineNo, StatementNo, Keyword, Index))
                      return (FALSE);
                  }
                  else
                  {
-                   if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))
+                   if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))
                      return (FALSE);
                    switch (WhichChannel)
                    {
-                     case 'm' : if (CheckEnd (BasicLineNo, StatementNo, Index))            /* "m" requires an additional filename */
+                     case 'm' : if (CheckEnd (FileLineNo, StatementNo, Index))            /* "m" requires an additional filename */
                                   return (FALSE);
                                 if (**Index == '\"')                                                       /* Look for a filename */
                                 {
                                   if (*(*Index + 1) == '\"' &&                                    /* Empty string (not allowed) ? */
                                       *(*Index + 2) != '\"')                     /* Concatenation - first char is a " (allowed) ? */
                                   {
-                                    fprintf (ErrStream, "ERROR in line %d, statement %d - Empty filename not allowed\n",
-                                             BasicLineNo, StatementNo);
+                                    bas2tap_error (FileLineNo, StatementNo, "empty filename not allowed");
                                     return (FALSE);
                                   }
                                   while (**Index == '\"')
@@ -2370,14 +2361,13 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                                     while (*(++ (*Index)) != '\"')
                                       if (**Index == 0x0D)
                                       {
-                                        fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n",
-                                                 BasicLineNo, StatementNo);
+                                        bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                                         return (FALSE);
                                       }
                                     (*Index) ++;
                                   }
                                 }
-                                else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))
+                                else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))
                                   return (FALSE);
                                 break;
                      case 't' :
@@ -2386,20 +2376,18 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                      case 'd' : break;                                       /* All these are okay and don't use extra parameters */
                      case 's' : if (MoveLoop == 0)                                               /* The "s" channel is write-only */
                                 {
-                                  fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot MOVE from the \"s\" channel\n",
-                                         BasicLineNo, StatementNo);
+                                  bas2tap_error (FileLineNo, StatementNo, "cannot MOVE from the \"s\" channel");
                                   return (FALSE);
                                 }
                                 break;
                      case 'k' : if (MoveLoop == 1)                                                /* The "k" channel is read-only */
                                 {
-                                  fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot MOVE to the \"k\" channel\n",
-                                         BasicLineNo, StatementNo);
+                                  bas2tap_error (FileLineNo, StatementNo, "cannot MOVE to the \"k\" channel");
                                   return (FALSE);
                                 }
                                 break;
-                     default  : fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot MOVE from/to the \"%s\" channel\n",
-                                         BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                     default  : bas2tap_error (FileLineNo, StatementNo, "cannot MOVE from/to the \"%s\" channel",
+                                         TokenMap[WhichChannel].Token);
                                 return (FALSE);
                    }
                  }
@@ -2420,32 +2408,30 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  switch (Is48KProgram)                                                           /* Then the program must be 128K */
                  {
                    case -1 : Is48KProgram = 0; break;                                                             /* Set the flag */
-                   case  1 : fprintf (ErrStream, "ERROR - Line %d contains 128K file I/O, but the program\n"
-                                      "also uses UDGs \'T\' and/or \'U\'\n", BasicLineNo);
+                   case  1 : bas2tap_error (FileLineNo, -1, "line contains 128K file I/O but the program "
+                                      "also uses UDGs \'T\' and/or \'U\'");
                              return (FALSE);
                    case  0 : break;
                  }
                }
                else
                {
-                 if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))
+                 if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))
                    return (FALSE);
                  if (WhichChannel != 'm')
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - You can only ERASE from the ! or \"m\" channel\n",
-                            BasicLineNo, StatementNo);
+                   bas2tap_error (FileLineNo, StatementNo, "can only ERASE from the ! or \"m\" channel");
                    return (FALSE);
                  }
                }
-               if (CheckEnd (BasicLineNo, StatementNo, Index))                                    /* Additional filename required */
+               if (CheckEnd (FileLineNo, StatementNo, Index))                                    /* Additional filename required */
                  return (FALSE);
                if (**Index == '\"')                                                                        /* Look for a filename */
                {
                  if (*(*Index + 1) == '\"' &&                                                     /* Empty string (not allowed) ? */
                      *(*Index + 2) != '\"')                                      /* Concatenation - first char is a " (allowed) ? */
                  {
-                   fprintf (ErrStream, "ERROR in line %d, statement %d - Empty filename not allowed\n",
-                            BasicLineNo, StatementNo);
+                   bas2tap_error (FileLineNo, StatementNo, "empty filename not allowed");
                    return (FALSE);
                  }
                  while (**Index == '\"')
@@ -2453,17 +2439,16 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                    while (*(++ (*Index)) != '\"')
                      if (**Index == 0x0D)
                      {
-                       fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n",
-                                BasicLineNo, StatementNo);
+                       bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                        return (FALSE);
                      }
                    (*Index) ++;
                  }
                }
-               else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))
+               else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))
                  return (FALSE);
                break;
-    case 0xD3: if (!ScanStream (BasicLineNo, StatementNo, Keyword, Index))                                            /* (OPEN #) */
+    case 0xD3: if (!ScanStream (FileLineNo, StatementNo, Keyword, Index))                                            /* (OPEN #) */
                  return (FALSE);
                if (**Index != ';' && **Index != ',')                                                          /* (Required token) */
                {
@@ -2471,19 +2456,18 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  return (FALSE);
                }
                (*Index) ++;
-               if (!ScanChannel (BasicLineNo, StatementNo, Keyword, Index, &WhichChannel))
+               if (!ScanChannel (FileLineNo, StatementNo, Keyword, Index, &WhichChannel))
                  return (FALSE);
                switch (WhichChannel)
                {
-                 case 'm' : if (CheckEnd (BasicLineNo, StatementNo, Index))                /* "m" requires an additional filename */
+                 case 'm' : if (CheckEnd (FileLineNo, StatementNo, Index))                /* "m" requires an additional filename */
                               return (FALSE);
                             if (**Index == '\"')                                                           /* Look for a filename */
                             {
                               if (*(*Index + 1) == '\"' &&                                        /* Empty string (not allowed) ? */
                                   *(*Index + 2) != '\"')                         /* Concatenation - first char is a " (allowed) ? */
                               {
-                                fprintf (ErrStream, "ERROR in line %d, statement %d - Empty filename not allowed\n",
-                                         BasicLineNo, StatementNo);
+                                bas2tap_error (FileLineNo, StatementNo, "empty filename not allowed");
                                 return (FALSE);
                               }
                               while (**Index == '\"')
@@ -2491,14 +2475,13 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                                 while (*(++ (*Index)) != '\"')
                                   if (**Index == 0x0D)
                                   {
-                                    fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n",
-                                             BasicLineNo, StatementNo);
+                                    bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
                                     return (FALSE);
                                   }
                                 (*Index) ++;
                               }
                             }
-                            else if (!HandleClass10 (BasicLineNo, StatementNo, Keyword, Index))
+                            else if (!HandleClass10 (FileLineNo, StatementNo, Keyword, Index))
                               return (FALSE);
                             break;
                  case 's' :
@@ -2510,8 +2493,8 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  case 0xAF:
                  case 0xCF:
                  case '#' : break;                                           /* All these are okay and don't use extra parameters */
-                 default  : fprintf (ErrStream, "ERROR in line %d, statement %d - You cannot attach a stream to the \"%s\" "
-                                     "channel\n", BasicLineNo, StatementNo, TokenMap[WhichChannel].Token);
+                 default  : bas2tap_error (FileLineNo, StatementNo, "cannot attach a stream to the \"%s\" "
+                                     "channel", TokenMap[WhichChannel].Token);
                             return (FALSE);
                }
                if (**Index != ':' && **Index != 0x0D)                                       /* (Continue unless end of statement) */
@@ -2519,42 +2502,42 @@ bool HandleClass11 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
                  if (**Index == 0xBF)                                                                                       /* IN */
                  {
                    (*Index) ++;
-                   if (!SignalInterface1 (BasicLineNo, StatementNo, 2))                                  /* This is Opus specific */
+                   if (!SignalInterface1 (FileLineNo, StatementNo, 2))                                  /* This is Opus specific */
                      return (FALSE);
                  }
                  else if (**Index == 0xDF ||                                                                               /* OUT */
                           **Index == 0xB9)                                                                                 /* EXP */
                  {
                    (*Index) ++;
-                   if (!SignalInterface1 (BasicLineNo, StatementNo, 2))                                  /* This is Opus specific */
+                   if (!SignalInterface1 (FileLineNo, StatementNo, 2))                                  /* This is Opus specific */
                      return (FALSE);
-                   if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                      /* Find numeric expression */
+                   if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                      /* Find numeric expression */
                      return (FALSE);
                  }
                  else if (**Index == 0xA5)                                                                                 /* RND */
                  {
                    (*Index) ++;
-                   if (!SignalInterface1 (BasicLineNo, StatementNo, 2))                                  /* This is Opus specific */
+                   if (!SignalInterface1 (FileLineNo, StatementNo, 2))                                  /* This is Opus specific */
                      return (FALSE);
-                   if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))                      /* Find numeric expression */
+                   if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))                      /* Find numeric expression */
                      return (FALSE);
                    if (**Index == ',')                                                         /* RND may take a second parameter */
                    {
                      (*Index) ++;
-                     if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, Index))
+                     if (!HandleClass06 (FileLineNo, StatementNo, Keyword, Index))
                        return (FALSE);
                    }
                  }
                }
                break;
-    case 0xD4: if (!ScanStream (BasicLineNo, StatementNo, Keyword, Index))                                           /* (CLOSE #) */
+    case 0xD4: if (!ScanStream (FileLineNo, StatementNo, Keyword, Index))                                           /* (CLOSE #) */
                  return (FALSE);
                break;
   }
   return (TRUE);
 }
 
-bool HandleClass12 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass12 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 12 = One or more string expressions, separated by commas, must follow.                                                   */
@@ -2570,12 +2553,12 @@ bool HandleClass12 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
 #endif
   while (More)
   {
-    if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0))                               /* Find an expression */
+    if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0))                               /* Find an expression */
       return (FALSE);
     if (Type)                                                                                                   /* Must be string */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - \"%s\" requires string parameters\n",
-               BasicLineNo, StatementNo, TokenMap[Keyword].Token);
+      bas2tap_error (FileLineNo, StatementNo, "\"%s\" requires string parameters",
+               TokenMap[Keyword].Token);
       return (FALSE);
     }
     if (**Index == ':' || **Index == 0x0D)                                                   /* End of statement or end of line ? */
@@ -2591,7 +2574,7 @@ bool HandleClass12 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   return (TRUE);
 }
 
-bool HandleClass13 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass13 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 13 = One or more expressions, separated by commas, must follow (DATA, DIM, FN)                                           */
@@ -2609,16 +2592,16 @@ bool HandleClass13 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     return (TRUE);                               /* (The closing bracket is a required character and stepped over in CheckSyntax) */
   while (More)
   {
-    if (!ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0))                               /* Find an expression */
+    if (!ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0))                               /* Find an expression */
       return (FALSE);                                                                              /* (Don't care about the type) */
     if (Keyword == 0xE9 && !Type)                                                              /* DIM requires numeric dimensions */
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - \"DIM\" requires numeric dimensions\n", BasicLineNo, StatementNo);
+      bas2tap_error(FileLineNo, StatementNo, "\"DIM\" requires numeric dimensions");
       return (FALSE);
     }
     if (Keyword == 0xE9 || Keyword == 0xA8)                                              /* FN and DIM end with a closing bracket */
     {
-      if (CheckEnd (BasicLineNo, StatementNo, Index))
+      if (CheckEnd (FileLineNo, StatementNo, Index))
         return (FALSE);
       if (**Index == ')')
         More = FALSE;
@@ -2636,7 +2619,7 @@ bool HandleClass13 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   return (TRUE);
 }
 
-bool HandleClass14 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass14 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 14 = One or more variables, separated by commas, must follow (READ)                                                      */
@@ -2653,7 +2636,7 @@ bool HandleClass14 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
 #endif
   while (More)
   {
-    if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 2))                    /* We need a variable */
+    if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, 2))                    /* We need a variable */
     {
       if (VarNameLen == 0)                                                                                    /* (Not a variable) */
         BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -2672,7 +2655,7 @@ bool HandleClass14 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   return (TRUE);
 }
 
-bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
+bool HandleClass15 (int FileLineNo, int StatementNo, int Keyword, byte **Index)
 
 /**********************************************************************************************************************************/
 /* Class 15 = DEF FN                                                                                                              */
@@ -2686,7 +2669,7 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   printf ("DEBUG - %sLine %d, statement %d, Enter Class 15, keyword \"%s\", next is \"%s\"\n",
           ListSpaces, BasicLineNo, StatementNo, TokenMap[Keyword].Token, TokenMap[**Index].Token);
 #endif
-  if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
+  if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
   {
     if (VarNameLen == 0)
       BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -2694,23 +2677,22 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
   }
   if (VarNameLen != 1)                                                                                     /* Not single letter ? */
   {
-    fprintf (ErrStream, "ERROR in line %d, statement %d - Wrong variable type; must be single character\n",
-             BasicLineNo, StatementNo);
+    bas2tap_error (FileLineNo, StatementNo, "wrong variable type; must be single character");
     return (FALSE);
   }
   if (**Index == '(')                                                 /* Arguments to be passed to the expression while running ? */
   {
     (*Index) ++;
-    if (CheckEnd (BasicLineNo, StatementNo, Index))
+    if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
     if (**Index == ')')
     {
-      fprintf (ErrStream, "ERROR in line %d, statement %d - Empty parameter array not allowed\n", BasicLineNo, StatementNo);
+      bas2tap_error (FileLineNo, StatementNo, "empty parameter array not allowed");
       return (FALSE);
     }
     while (**Index != ')')
     {
-      if (!ScanVariable (BasicLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
+      if (!ScanVariable (FileLineNo, StatementNo, Keyword, Index, &Type, &VarNameLen, -1))
       {
         if (VarNameLen == 0)
           BADTOKEN ("variable", TokenMap[**Index].Token);
@@ -2718,8 +2700,7 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
       }
       if (VarNameLen != 1)                                                                                 /* Not single letter ? */
       {
-        fprintf (ErrStream, "ERROR in line %d, statement %d - Wrong variable type; must be single character\n",
-                 BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "wrong variable type; must be single character");
         return (FALSE);
       }
       if (**Index != 0x0E)                                                        /* A number (marker) must follow each parameter */
@@ -2728,7 +2709,7 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
         return (FALSE);
       }
       (*Index) ++;                                                                                              /* (Step past it) */
-      if (CheckEnd (BasicLineNo, StatementNo, Index))
+      if (CheckEnd (FileLineNo, StatementNo, Index))
         return (FALSE);
       if (**Index != ')')
       {
@@ -2743,7 +2724,7 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     }
     (*Index) ++;
   }
-  if (CheckEnd (BasicLineNo, StatementNo, Index))
+  if (CheckEnd (FileLineNo, StatementNo, Index))
     return (FALSE);
   if (**Index != '=')
   {
@@ -2751,12 +2732,12 @@ bool HandleClass15 (int BasicLineNo, int StatementNo, int Keyword, byte **Index)
     return (FALSE);
   }
   (*Index) ++;
-  if (CheckEnd (BasicLineNo, StatementNo, Index))
+  if (CheckEnd (FileLineNo, StatementNo, Index))
     return (FALSE);
-  return (ScanExpression (BasicLineNo, StatementNo, Keyword, Index, &Type, 0));                             /* Find an expression */
+  return (ScanExpression (FileLineNo, StatementNo, Keyword, Index, &Type, 0));                             /* Find an expression */
 }
 
-bool CheckSyntax (int BasicLineNo, byte *Line)
+bool CheckSyntax (int FileLineNo, byte *Line)
 
 /**********************************************************************************************************************************/
 /* Pre   : `Line' points to the converted BASIC line. An initial syntax check has been done already -                             */
@@ -2836,12 +2817,11 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
       {
         if (*StrippedIndex != '#')                                                /* It must be followed by a stream in that case */
         {
-          fprintf (ErrStream, "ERROR - Keyword (\"%s\") error in line %d, statement %d\n",
-                   TokenMap[Keyword].Token, BasicLineNo, StatementNo);
+          bas2tap_error (FileLineNo, StatementNo, "keyword (\"%s\") error", TokenMap[Keyword].Token);
           return (FALSE);
         }
         StrippedIndex ++;
-        if (!ScanStream (BasicLineNo, StatementNo, Keyword, &StrippedIndex))       /* (Also signals Interface1/Opus specificness) */
+        if (!ScanStream (FileLineNo, StatementNo, Keyword, &StrippedIndex))       /* (Also signals Interface1/Opus specificness) */
           return (FALSE);
         if (*StrippedIndex != ';')
         {
@@ -2849,13 +2829,12 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
           return (FALSE);
         }
         StrippedIndex ++;
-        if (!HandleClass06 (BasicLineNo, StatementNo, Keyword, &StrippedIndex))
+        if (!HandleClass06 (FileLineNo, StatementNo, Keyword, &StrippedIndex))
           return (FALSE);
       }
       else
       {
-        fprintf (ErrStream, "ERROR - Keyword (\"%s\") error in line %d, statement %d\n",
-                 TokenMap[Keyword].Token, BasicLineNo, StatementNo);
+        bas2tap_error (FileLineNo, StatementNo, "keyword (\"%s\") error", TokenMap[Keyword].Token);
         return (FALSE);
       }
     }
@@ -2870,7 +2849,7 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
       if ((Keyword == 0xE1 || Keyword == 0xF0) && *StrippedIndex == '#')           /* EXCEPTION: LIST and LLIST may take a stream */
       {
         StrippedIndex ++;
-        if (!ScanStream (BasicLineNo, StatementNo, Keyword, &StrippedIndex))       /* (Also signals Interface1/Opus specificness) */
+        if (!ScanStream (FileLineNo, StatementNo, Keyword, &StrippedIndex))       /* (Also signals Interface1/Opus specificness) */
           return (FALSE);
         if (*StrippedIndex != ':' && *StrippedIndex != 0x0D)                                       /* Line number is not required */
         {
@@ -2894,7 +2873,7 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
               ClassIndex ++;
             else
             {
-              fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected end of line\n", BasicLineNo, StatementNo);
+              bas2tap_error (FileLineNo, StatementNo, "unexpected end of line");
               AllOk = FALSE;
             }
           }
@@ -2909,8 +2888,8 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
                                                                         /* EXCEPTION: 'DRAW' does not require the third parameter */
             else
             {                                                                                                /* (Token not there) */
-              fprintf (ErrStream, "ERROR in line %d, statement %d - Expected \"%s\", but got \"%s\"\n",
-                       BasicLineNo, StatementNo, TokenMap[TokenMap[Keyword].KeywordClass[ClassIndex]].Token,
+              bas2tap_error (FileLineNo, StatementNo, "expected \"%s\" but got \"%s\"",
+                       TokenMap[TokenMap[Keyword].KeywordClass[ClassIndex]].Token,
                        TokenMap[*StrippedIndex].Token);
               AllOk = FALSE;
             }
@@ -2921,21 +2900,21 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
         else                                                                                                   /* (Command class) */
           switch (TokenMap[Keyword].KeywordClass[ClassIndex])
           {
-            case  1 : AllOk = HandleClass01 (BasicLineNo, StatementNo, Keyword, &StrippedIndex, &VarType); break;
-            case  2 : AllOk = HandleClass02 (BasicLineNo, StatementNo, Keyword, &StrippedIndex, VarType); break;
-            case  3 : AllOk = HandleClass03 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  4 : AllOk = HandleClass04 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  5 : AllOk = HandleClass05 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  6 : AllOk = HandleClass06 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  7 : AllOk = HandleClass07 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  8 : AllOk = HandleClass08 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case  9 : AllOk = HandleClass09 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 10 : AllOk = HandleClass10 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 11 : AllOk = HandleClass11 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 12 : AllOk = HandleClass12 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 13 : AllOk = HandleClass13 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 14 : AllOk = HandleClass14 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
-            case 15 : AllOk = HandleClass15 (BasicLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  1 : AllOk = HandleClass01 (FileLineNo, StatementNo, Keyword, &StrippedIndex, &VarType); break;
+            case  2 : AllOk = HandleClass02 (FileLineNo, StatementNo, Keyword, &StrippedIndex, VarType); break;
+            case  3 : AllOk = HandleClass03 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  4 : AllOk = HandleClass04 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  5 : AllOk = HandleClass05 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  6 : AllOk = HandleClass06 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  7 : AllOk = HandleClass07 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  8 : AllOk = HandleClass08 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case  9 : AllOk = HandleClass09 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 10 : AllOk = HandleClass10 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 11 : AllOk = HandleClass11 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 12 : AllOk = HandleClass12 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 13 : AllOk = HandleClass13 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 14 : AllOk = HandleClass14 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
+            case 15 : AllOk = HandleClass15 (FileLineNo, StatementNo, Keyword, &StrippedIndex); break;
           }
       }
     }
@@ -2946,19 +2925,19 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
         if (Keyword == 0xFB && *StrippedIndex == '#')                                            /* EXCEPTION: 'CLS #' is allowed */
         {
           StrippedIndex ++;
-          if (!SignalInterface1 (BasicLineNo, StatementNo, 0))
+          if (!SignalInterface1 (FileLineNo, StatementNo, 0))
             return (FALSE);
           if (*StrippedIndex != ':' && *StrippedIndex != 0x0D)
           {
-            fprintf (ErrStream, "ERROR in line %d, statement %d - Expected end of statement, but got \"%s\"\n",
-                     BasicLineNo, StatementNo, TokenMap[*StrippedIndex].Token);
+            bas2tap_error (FileLineNo, StatementNo, "expected end of statement but got \"%s\"",
+                     TokenMap[*StrippedIndex].Token);
             AllOk = FALSE;
           }
         }
         else
         {
-          fprintf (ErrStream, "ERROR in line %d, statement %d - Expected end of statement, but got \"%s\"\n",
-                   BasicLineNo, StatementNo, TokenMap[*StrippedIndex].Token);
+          bas2tap_error (FileLineNo, StatementNo, "expected end of statement but got \"%s\"",
+                   TokenMap[*StrippedIndex].Token);
           AllOk = FALSE;
         }
       }
@@ -2976,7 +2955,7 @@ bool CheckSyntax (int BasicLineNo, byte *Line)
   return (AllOk);
 }
 
-int main (int argc, char **argv)
+int bas2tap_main (/*int argc, char **argv*/)
 
 /**********************************************************************************************************************************/
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAIN PROGRAM <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
@@ -2984,11 +2963,13 @@ int main (int argc, char **argv)
 /**********************************************************************************************************************************/
 
 {
+  #if 0
   FILE *FpIn;
   FILE *FpOut;
   char  FileNameIn[256]  = "\0";
   char  FileNameOut[256] = "\0";
   char  LineIn[MAXLINELENGTH + 1];                                                           /* One line read from the ASCII file */
+  #endif
   char *BasicIndex;                                                        /* Current scan position in the (converted) ASCII line */
   byte *ResultIndex;                                                          /* Current write index in to the binary result line */
   byte  Token;
@@ -2998,13 +2979,14 @@ int main (int argc, char **argv)
   bool  ExpectKeyword;                                                       /* If TRUE, the next scanned token must be a keyword */
   bool  InString;                                                                                     /* TRUE while inside quotes */
   int   BracketCount     = 0;                                                               /* Match opening and closing brackets */
-  int   AutoStart;                                                             /* Auto-start line as provided on the command line */
+  /*int   AutoStart;*/                                                             /* Auto-start line as provided on the command line */
   int   ObjectLength;                                                                      /* Binary length of one converted line */
   int   BlockSize        = 0;                                                                      /* Total size of the TAP block */
-  byte  Parity           = 0;                                                                             /* Overall block parity */
+  /*byte  Parity           = 0;*/                                                                             /* Overall block parity */
   bool  AllOk            = TRUE;
   bool  EndOfFile        = FALSE;
   bool  WriteError       = FALSE;                                                     /* Fingers crossed that this stays FALSE... */
+  #if 0
   size_t Size;
   int   Cnt;
 
@@ -3024,7 +3006,7 @@ int main (int argc, char **argv)
                    if (AutoStart < 0 || AutoStart >= 10000)
                    {
                      fprintf (ErrStream, "Invalid auto-start line number %d\n", AutoStart);
-                     exit (1);
+                     return (1);
                    }
                    TapeHeader.HStartLo = (byte)(AutoStart & 0xFF);
                    TapeHeader.HStartHi = (byte)(AutoStart >> 8);
@@ -3032,7 +3014,7 @@ int main (int argc, char **argv)
         case 's' : if (strlen (argv[Cnt] + 2) > 10)
                    {
                      fprintf (ErrStream, "Spectrum blockname too long \"%s\"\n", argv[Cnt] + 2);
-                     exit (1);
+                     return (1);
                    }
                    strncpy (TapeHeader.HName, argv[Cnt] + 2, strlen (argv[Cnt] + 2));
                    break;
@@ -3059,7 +3041,7 @@ int main (int argc, char **argv)
     printf ("       -n = disable syntax checking\n");
     printf ("       -a = set auto-start line in BASIC header\n");
     printf ("       -s = set \"filename\" in BASIC header\n");
-    exit (1);
+    return (1);
   }
   if (FileNameOut[0] == '\0')
     strcpy (FileNameOut, FileNameIn);
@@ -3075,46 +3057,36 @@ int main (int argc, char **argv)
   if ((FpIn = fopen (FileNameIn, "rt")) == NULL)
   {
     perror ("ERROR - Cannot open source file");
-    exit (1);
+    return (1);
   }
   if ((FpOut = fopen (FileNameOut, "wb")) == NULL)
   {
     perror ("ERROR - Cannot create output file");
     fclose (FpIn);
-    exit (1);
+    return (1);
   }
   Parity = TapeHeader.Flag2;
   if (fwrite (&TapeHeader, 1, sizeof (struct TapeHeader_s), FpOut) < sizeof (struct TapeHeader_s))
   { AllOk = FALSE; WriteError = TRUE; }                                                        /* Write dummy header to get space */
+  #endif
   while (AllOk && !EndOfFile)
   {
-    if (fgets (LineIn, MAXLINELENGTH + 1, FpIn) != NULL)
+    if (bas2tap_fgets(&BasicIndex, &BasicLineNo))
     {
-      LineCount ++;
-      if (strlen (LineIn) >= MAXLINELENGTH)
-      {                                                                                 /* We don't require an end-of-line marker */
-        fprintf (ErrStream, "ERROR - Line %d too long\n", LineCount);
-        AllOk = FALSE;
-      }
-      else if ((BasicLineNo = PrepareLine (LineIn, LineCount, &BasicIndex)) < 0)
+      if (BasicLineNo >= 10000)
       {
-        if (BasicLineNo == -1)                                                                                         /* (Error) */
-          AllOk = FALSE;
-        else                                                                                   /* (Line should simply be skipped) */
-          ;
-      }
-      else if (BasicLineNo >= 10000)
-      {
-        fprintf (ErrStream, "ERROR - Line number %d is larger than the maximum allowed\n", BasicLineNo);
+        bas2tap_error (LineCount, -1, "line number %d is larger than the maximum allowed", BasicLineNo);
         AllOk = FALSE;
       }
       else
       {
+        #if 0
         if (!Quiet)
         {
           printf ("\rConverting line %4d -> %4d\r", LineCount, BasicLineNo);
           fflush (stdout);                                                      /* (Force line without end-of-line to be printed) */
         }
+        #endif
         InString = FALSE;
         ExpectKeyword = TRUE;
         SubLineCount = 1;
@@ -3132,7 +3104,7 @@ int main (int argc, char **argv)
                 BasicIndex ++;
             }
             else
-              switch (ExpandSequences (BasicLineNo, &BasicIndex, &ResultIndex, FALSE))
+              switch (ExpandSequences (LineCount, &BasicIndex, &ResultIndex, FALSE))
               {
                 case -1 : AllOk = FALSE; break;                                                     /* (Error - already reported) */
                 case  0 : *(ResultIndex ++) = *(BasicIndex ++); break;                                     /* (No expansion made) */
@@ -3143,7 +3115,7 @@ int main (int argc, char **argv)
           {
             if (ExpectKeyword)
             {
-              fprintf (ErrStream, "ERROR in line %d, statement %d - Expected keyword but got quote\n", BasicLineNo, SubLineCount);
+              bas2tap_error(LineCount, SubLineCount, "expected keyword but got quote");
               AllOk = FALSE;
             }
             else
@@ -3154,15 +3126,15 @@ int main (int argc, char **argv)
           }
           else if (ExpectKeyword)
           {
-            switch (MatchToken (BasicLineNo, TRUE, &BasicIndex, &Token))
+            switch (MatchToken (LineCount, TRUE, &BasicIndex, &Token))
             {
               case -2 : AllOk = FALSE; break;                                                       /* (Error - already reported) */
-              case -1 : fprintf (ErrStream, "ERROR in line %d, statement %d - Expected keyword but got token \"%s\"\n",
-                                 BasicLineNo, SubLineCount, TokenMap[Token].Token);                              /* (Not keyword) */
+              case -1 : bas2tap_error (LineCount, SubLineCount, "expected keyword but got token \"%s\"",
+                                 TokenMap[Token].Token);                              /* (Not keyword) */
                         AllOk = FALSE;
                         break;
-              case  0 : fprintf (ErrStream, "ERROR in line %d, statement %d - Expected keyword but got \"%s\"\n",   /* (No match) */
-                                 BasicLineNo, SubLineCount, TokenMap[(byte)(*BasicIndex)].Token);
+              case  0 : bas2tap_error (LineCount, SubLineCount, "expected keyword but got \"%s\"",   /* (No match) */
+                                 TokenMap[(byte)(*BasicIndex)].Token);
                         AllOk = FALSE;
                         break;
               case  1 : *(ResultIndex ++) = Token;                                                             /* (Found keyword) */
@@ -3178,7 +3150,7 @@ int main (int argc, char **argv)
                                                                                        /* disregarding token or number expansions */
                                                                   /* As brackets aren't tested for, the match counting stops here */
                                                               /* (a closing bracket in a REM statement will not be seen by BASIC) */
-                            switch (ExpandSequences (BasicLineNo, &BasicIndex, &ResultIndex, FALSE))
+                            switch (ExpandSequences (LineCount, &BasicIndex, &ResultIndex, FALSE))
                             {
                               case -1 : AllOk = FALSE; break;
                               case  0 : *(ResultIndex ++) = *(BasicIndex ++); break;
@@ -3220,7 +3192,7 @@ int main (int argc, char **argv)
             }
             if (-- BracketCount < 0)                                                        /* More closing than opening brackets */
             {
-              fprintf (ErrStream, "ERROR in line %d, statement %d - Too many closing brackets\n", BasicLineNo, SubLineCount);
+              bas2tap_error (LineCount, SubLineCount, "too many closing brackets");
               AllOk = FALSE;
             }
             else
@@ -3240,16 +3212,16 @@ int main (int argc, char **argv)
             *(ResultIndex ++) = *(BasicIndex ++);                                                          /* (Copy over the ',') */
           }
           else
-            switch (MatchToken (BasicLineNo, FALSE, &BasicIndex, &Token))
+            switch (MatchToken (LineCount, FALSE, &BasicIndex, &Token))
             {
               case -2 : AllOk = FALSE; break;                                                       /* (Error - already reported) */
-              case -1 : fprintf (ErrStream, "ERROR in line %d, statement %d - Unexpected keyword \"%s\"\n",/* (Match but keyword) */
-                                 BasicLineNo, SubLineCount, TokenMap[Token].Token);
+              case -1 : bas2tap_error (LineCount, SubLineCount, "unexpected keyword \"%s\"",/* (Match but keyword) */
+                                 TokenMap[Token].Token);
                         AllOk = FALSE;
                         break;
-              case  0 : switch (HandleNumbers (BasicLineNo, &BasicIndex, &ResultIndex))                             /* (No token) */
+              case  0 : switch (HandleNumbers (LineCount, &BasicIndex, &ResultIndex))                             /* (No token) */
                         {
-                          case 0 :  switch (ExpandSequences (BasicLineNo, &BasicIndex, &ResultIndex, TRUE))        /* (No number) */
+                          case 0 :  switch (ExpandSequences (LineCount, &BasicIndex, &ResultIndex, TRUE))        /* (No number) */
                                     {
                                       case -1 : AllOk = FALSE; break;                               /* (Error - already reported) */
                                       case  0 : if (isalpha (*BasicIndex))                                 /* (No expansion made) */
@@ -3271,19 +3243,18 @@ int main (int argc, char **argv)
                           HandlingDEFFN = FALSE;
                           if (BracketCount != 0)                                                          /* All brackets match ? */
                           {
-                            fprintf (ErrStream, "ERROR in line %d, statement %d - Too few closing brackets\n",
-                                     BasicLineNo, SubLineCount);
+                            bas2tap_error (LineCount, SubLineCount, "too few closing brackets");
                             AllOk = FALSE;
                           }
                           if (++ SubLineCount > 127)
                           {
-                            fprintf (ErrStream, "ERROR - Line %d has too many statements\n", BasicLineNo);
+                            bas2tap_error (LineCount, -1, "line has too many statements");
                             AllOk = FALSE;
                           }
                         }
                         else if (Token == 0xC4)                                                                            /* BIN */
                         {
-                          if (HandleBIN (BasicLineNo, &BasicIndex, &ResultIndex) == -1)
+                          if (HandleBIN (LineCount, &BasicIndex, &ResultIndex) == -1)
                             AllOk = FALSE;
                         }
                         break;
@@ -3292,11 +3263,11 @@ int main (int argc, char **argv)
         *(ResultIndex ++) = 0x0D;
         if (AllOk && BracketCount != 0)                                                                   /* All brackets match ? */
         {
-          fprintf (ErrStream, "ERROR in line %d, statement %d - Too few closing brackets\n", BasicLineNo, SubLineCount);
+          bas2tap_error (LineCount, SubLineCount, "too few closing brackets");
           AllOk = FALSE;
         }
         if (AllOk && DoCheckSyntax)
-          AllOk = CheckSyntax (BasicLineNo, ResultingLine + 4);                           /* Check the syntax of the decoded line */
+          AllOk = CheckSyntax (LineCount, ResultingLine + 4);                           /* Check the syntax of the decoded line */
         if (AllOk)
         {
           ObjectLength = (int)(ResultIndex - ResultingLine);
@@ -3305,22 +3276,28 @@ int main (int argc, char **argv)
           ResultingLine[2] = (byte)((ObjectLength - 4) & 0xFF);                                 /* Make sure this runs on any CPU */
           ResultingLine[3] = (byte)((ObjectLength - 4) >> 8);
           BlockSize += ObjectLength;
+          #if 0
           for (Cnt = 0 ; Cnt < ObjectLength ; Cnt ++)
             Parity ^= ResultingLine[Cnt];
+          #endif
           if (BlockSize > 41500)                                                       /* (= 65368-23755-<some work/stack space>) */
           {
-            fprintf (ErrStream, "ERROR - Object file too large at line %d!\n", BasicLineNo);
+            bas2tap_error (LineCount, -1, "basic code is too large");
             AllOk = FALSE;
           }
           else
+          #if 0
             if (fwrite (ResultingLine, 1, ObjectLength, FpOut) != ObjectLength)
             { AllOk = FALSE; WriteError = TRUE; }
+          #endif
+            bas2tap_output(ResultingLine, ObjectLength);
         }
       }
     }
     else
       EndOfFile = TRUE;
   }
+  #if 0
   if (!Quiet)
   {
     printf ("\r                                     \r");
@@ -3334,7 +3311,7 @@ int main (int argc, char **argv)
       perror ("ERROR - Write error");
       fclose (FpIn);
       fclose (FpOut);
-      exit (1);
+      return (1);
     }
     TapeHeader.HLenLo = TapeHeader.HBasLenLo = (byte)(BlockSize & 0xFF);
     TapeHeader.HLenHi = TapeHeader.HBasLenHi = (byte)(BlockSize >> 8);
@@ -3348,7 +3325,7 @@ int main (int argc, char **argv)
     if (fwrite (&TapeHeader, 1, sizeof (struct TapeHeader_s), FpOut) < sizeof (struct TapeHeader_s))
     {
       perror ("ERROR - Write error");
-      exit (1);
+      return (1);
     }
     if (!Quiet)
     {
@@ -3371,5 +3348,8 @@ int main (int argc, char **argv)
     perror ("ERROR - Write error");
   fclose (FpIn);
   fclose (FpOut);
+  #endif
+  if (!AllOk || WriteError)
+    return 1;
   return (0);                                                                                     /* (Keep weird compilers happy) */
 }

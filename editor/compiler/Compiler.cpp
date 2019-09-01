@@ -7,8 +7,11 @@
 #include "Util.h"
 #include "scripting/LuaVM.h"
 #include <exception>
+#include <QDataStream>
 #include <QFile>
 #include <QFileInfo>
+#include <cstdarg>
+#include <bas2tap.h>
 
 #ifndef emit
 #define emit
@@ -53,8 +56,15 @@ void Compiler::addSourceFile(File* file, const QString& path)
     QString ext = QFileInfo(path).suffix();
     if (ext == QStringLiteral("lua"))
         mBuildScripts.emplace_back(SourceFile{ file, path });
+    else if (ext == QStringLiteral("bas"))
+        mBasicSources.emplace_back(SourceFile{ file, path });
     else if (ext == QStringLiteral("asm") || ext == QStringLiteral("gfx"))
         mSources.emplace_back(SourceFile{ file, path });
+}
+
+void Compiler::setSettings(CompileSettings settings)
+{
+    mCompileSettings = std::move(settings);
 }
 
 void Compiler::compile()
@@ -83,13 +93,20 @@ void Compiler::compile()
             }
         }
 
-        setStatusText(tr("Generating code..."));
+        setStatusText(tr("Linking assembly code..."));
         mProgramBinary = Linker(mProgram.get(), this).emitCode();
         if (!mProgramBinary)
             throw CompilationFailed();
 
+        if (!compileBasicCode())
+            throw CompilationFailed();
+
         setStatusText(tr("Writing tape file..."));
         TapeFileWriter tapeWriter(mProgramBinary.get(), this);
+        tapeWriter.setBasicCode(mCompiledBasicCode);
+        tapeWriter.setBasicStartLine(mCompileSettings.basicStartLine);
+        tapeWriter.setLoaderName(mCompileSettings.loaderName);
+        tapeWriter.setProgramName(mCompileSettings.programName);
         if (!tapeWriter.makeTape()
                 || !tapeWriter.writeTapeFile(mOutputTapeFile)
                 || !tapeWriter.writeWavFile(mOutputWavFile))
@@ -154,4 +171,175 @@ bool Compiler::runBuildScripts()
     }
 
     return true;
+}
+
+namespace
+{
+    struct Line
+    {
+        File* file;
+        int line;
+        int basicIndex;
+        QByteArray lineData;
+    };
+
+    static Compiler* compiler;
+    static std::map<int, Line> lines;
+    static std::map<int, Line>::const_iterator linesIter;
+    static std::unique_ptr<QDataStream> compiledBasicStream;
+    static File* basicFile;
+    static int basicFileLine;
+}
+
+#define APPEND(C) \
+    if (d >= MAXLINELENGTH) { \
+        error(source.file, line, tr("line is too long")); \
+        return false; \
+    } else \
+        lineIn[d++] = (C)
+
+#define APPENDSTR(STR) \
+    for (const char* str = (STR); *str; ++str) \
+        APPEND(*str)
+
+bool Compiler::compileBasicCode()
+{
+    setStatusText(tr("Compiling BASIC code..."));
+
+    compiler = this;
+    bas2tap_error = bas2tapError;
+    bas2tap_fgets = bas2tapFGets;
+    bas2tap_output = bas2tapOutput;
+
+    lines.clear();
+    bas2tap_reset();
+
+    for (const auto& source : mBasicSources) {
+        QFileInfo info(source.path);
+        QFile file(info.absoluteFilePath());
+        if (!file.open(QFile::ReadOnly)) {
+            error(source.file, 0, file.errorString());
+            lines.clear();
+            return false;
+        }
+        QByteArray fileData = file.readAll();
+        file.close();
+
+        const char* p = fileData.constData();
+        const char* end = p + fileData.length();
+        int line = 0;
+        while (p < end) {
+            ++line;
+            basicFile = source.file;
+            basicFileLine = line;
+
+            char lineIn[MAXLINELENGTH + 1];
+            int d = 0;
+            const char* start = p;
+            while (*p) {
+                char ch = *p++;
+                if (ch == '\r' && *p == '\n') {
+                    ++p;
+                    ch = '\n';
+                }
+
+                if (ch == '@' && *p == '{') {
+                    const char* pend = p + 1;
+                    while (*pend && *pend != '}')
+                        ++pend;
+                    if (*pend == '}') {
+                        int n = int(pend - (p + 1));
+                        if (n == 9 && !strncmp(p + 1, "clearaddr", n)) {
+                            char buf[32];
+                            snprintf(buf, sizeof(buf), "%d", mProgramBinary->baseAddress() - 1);
+                            APPENDSTR(buf);
+                            p = pend + 1;
+                            continue;
+                        } else if (n == 8 && !strncmp(p + 1, "baseaddr", n)) {
+                            char buf[32];
+                            snprintf(buf, sizeof(buf), "%d", mProgramBinary->baseAddress());
+                            APPENDSTR(buf);
+                            p = pend + 1;
+                            continue;
+                        }
+                    }
+                }
+
+                APPEND(ch);
+
+                if (ch == '\n')
+                    break;
+            }
+            lineIn[d] = 0;
+
+            char* basicIndex = nullptr;
+            int basicLine = bas2tap_PrepareLine(lineIn, line, &basicIndex);
+            if (basicLine < 0) {
+                if (basicLine == -1) {
+                    lines.clear();
+                    return false;
+                }
+                continue; // line should be skipped
+            }
+
+            Line l;
+            l.file = source.file;
+            l.line = line;
+            l.basicIndex = int(basicIndex - bas2tap_ConvertedSpectrumLine);
+            l.lineData = bas2tap_ConvertedSpectrumLine;
+            if (!lines.emplace(basicLine, std::move(l)).second) {
+                error(source.file, line, tr("duplicate use of line number %1").arg(basicLine));
+                lines.clear();
+                return false;
+            }
+        }
+    }
+
+    mCompiledBasicCode.clear();
+    compiledBasicStream = std::make_unique<QDataStream>(&mCompiledBasicCode, QFile::WriteOnly);
+
+    linesIter = lines.cbegin();
+    basicFile = nullptr;
+    basicFileLine = 0;
+    bool success = (bas2tap_main() == 0);
+
+    lines.clear();
+    compiledBasicStream.reset();
+
+    return success;
+}
+
+void Compiler::bas2tapError(int line, int stmt, const char* fmt, ...)
+{
+    char buf[1024];
+    va_list args;
+
+    va_start(args, fmt);
+    vsnprintf(buf, sizeof(buf), fmt, args);
+    va_end(args);
+
+    compiler->error(basicFile, basicFileLine, QString::fromUtf8(buf));
+}
+
+int Compiler::bas2tapFGets(char** basicIndex, int* basicLineNo)
+{
+    if (linesIter == lines.end())
+        return 0;
+
+    int basicLine = linesIter->first;
+    const Line& line = linesIter->second;
+    ++linesIter;
+
+    basicFile = line.file;
+    basicFileLine = line.line;
+    memcpy(bas2tap_ConvertedSpectrumLine, line.lineData.constData(), line.lineData.length() + 1);
+    *basicIndex = bas2tap_ConvertedSpectrumLine + line.basicIndex;
+    *basicLineNo = basicLine;
+
+    return 1;
+}
+
+void Compiler::bas2tapOutput(const void* dst, size_t length)
+{
+    compiledBasicStream->writeRawData(reinterpret_cast<const char*>(dst), int(length));
 }

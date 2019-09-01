@@ -23,6 +23,7 @@ else()
         )
 endif()
 
+add_subdirectory(bas2tap)
 add_subdirectory(bzip2)
 add_subdirectory(fuse)
 add_subdirectory(fuse-utils)

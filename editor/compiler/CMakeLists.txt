@@ -9,7 +9,7 @@ endif()
 
 add_library(Compiler STATIC)
 set_target_properties(Compiler PROPERTIES FOLDER "Compiler")
-target_link_libraries(Compiler LibSpectrum LibAudioFile Scripting Tape2Wav Lua)
+target_link_libraries(Compiler LibSpectrum LibAudioFile Scripting Tape2Wav Bas2Tap Lua)
 qt_link_libraries(Compiler Core)
 
 qt_add_sources(Compiler
@@ -22,12 +22,11 @@ qt_add_sources(Compiler
         AssemblerParser.cpp
         AssemblerParser.h
         AssemblerToken.h
-        BasicProgram.cpp
-        BasicProgram.h
         CodeEmitter.cpp
         CodeEmitter.h
         Compiler.cpp
         Compiler.h
+        CompileSettings.h
         Expression.cpp
         Expression.h
         ExpressionParser.cpp
