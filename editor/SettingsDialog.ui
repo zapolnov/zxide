@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="tabsClosable">
       <bool>false</bool>
@@ -180,6 +180,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="lineNumbersCheck">
+         <property name="text">
+          <string>Show line &amp;numbers</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="editorTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -276,6 +283,7 @@
   <tabstop>tabWidthSpin</tabstop>
   <tabstop>showWhitespaceCheck</tabstop>
   <tabstop>showEolCheck</tabstop>
+  <tabstop>lineNumbersCheck</tabstop>
   <tabstop>enableSoundCheck</tabstop>
   <tabstop>fastLoadCheck</tabstop>
   <tabstop>tapeSoundCheck</tabstop>

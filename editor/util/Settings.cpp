@@ -8,6 +8,7 @@ static const QString SettingTabIndents = QStringLiteral("TabIndents");
 static const QString SettingBackspaceUnindents = QStringLiteral("BackspaceUnindents");
 static const QString SettingShowEndOfLine = QStringLiteral("ShowEndOfLine");
 static const QString SettingShowWhitespace = QStringLiteral("ShowWhitespace");
+static const QString SettingShowLineNumbers = QStringLiteral("ShowLineNumbers");
 static const QString SettingTabWidth = QStringLiteral("TabWidth");
 static const QString SettingUseTabs = QStringLiteral("UseTabs");
 static const QString SettingAutoSaveBeforeCompile = QStringLiteral("AutoSaveBeforeCompile");
@@ -66,6 +67,11 @@ int Settings::whitespaceVisibility() const
 bool Settings::showEol() const
 {
     return mSettings.value(SettingShowEndOfLine, false).toBool();
+}
+
+bool Settings::showLineNumbers() const
+{
+    return mSettings.value(SettingShowLineNumbers, true).toBool();
 }
 
 bool Settings::autoSaveBeforeCompile() const
@@ -131,6 +137,11 @@ void Settings::setWhitespaceVisibility(int value)
 void Settings::setShowEol(bool flag)
 {
     mSettings.setValue(SettingShowEndOfLine, flag);
+}
+
+void Settings::setShowLineNumbers(bool flag)
+{
+    mSettings.setValue(SettingShowLineNumbers, flag);
 }
 
 void Settings::setAutoSaveBeforeCompile(bool flag)

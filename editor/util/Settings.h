@@ -18,6 +18,7 @@ public:
     int tabWidth() const;
     int whitespaceVisibility() const;
     bool showEol() const;
+    bool showLineNumbers() const;
     bool autoSaveBeforeCompile() const;
     bool enableSound() const;
     bool fastTapeLoading() const;
@@ -32,6 +33,7 @@ public:
     void setTabWidth(int value);
     void setWhitespaceVisibility(int value);
     void setShowEol(bool flag);
+    void setShowLineNumbers(bool flag);
     void setAutoSaveBeforeCompile(bool flag);
     void setEnableSound(bool flag);
     void setFastTapeLoading(bool flag);

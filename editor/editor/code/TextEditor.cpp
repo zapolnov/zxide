@@ -76,6 +76,16 @@ void TextEditor::reloadSettings()
     setTabWidth(settings.tabWidth());
     setViewWS(settings.whitespaceVisibility());
     setViewEOL(settings.showEol());
+
+    setMarginMaskN(1, SC_MASK_FOLDERS | (1 << 24));
+
+    if (!settings.showLineNumbers())
+        setMarginWidthN(2, 0);
+    else {
+        setMarginTypeN(2, SC_MARGIN_NUMBER);
+        setMarginWidthN(2, textWidth(STYLE_LINENUMBER, "_99999"));
+        setMarginMaskN(2, 0);
+    }
 }
 
 void TextEditor::charAdded(int ch)

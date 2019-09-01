@@ -21,6 +21,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     mUi->tabWidthSpin->setValue(settings.tabWidth());
     mUi->showWhitespaceCheck->setChecked(settings.whitespaceVisibility() != SCWS_INVISIBLE); // FIXME: proper selector
     mUi->showEolCheck->setChecked(settings.showEol());
+    mUi->lineNumbersCheck->setChecked(settings.showLineNumbers());
     mUi->enableSoundCheck->setChecked(settings.enableSound());
     mUi->fastLoadCheck->setChecked(settings.fastTapeLoading());
     mUi->tapeSoundCheck->setChecked(settings.playTapeSound());
@@ -48,6 +49,7 @@ void SettingsDialog::done(int r)
         settings.setTabWidth(mUi->tabWidthSpin->value());
         settings.setWhitespaceVisibility(mUi->showWhitespaceCheck->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         settings.setShowEol(mUi->showEolCheck->isChecked());
+        settings.setShowLineNumbers(mUi->lineNumbersCheck->isChecked());
         settings.setEnableSound(mUi->enableSoundCheck->isChecked());
         settings.setFastTapeLoading(mUi->fastLoadCheck->isChecked());
         settings.setPlayTapeSound(mUi->tapeSoundCheck->isChecked());
