@@ -354,18 +354,16 @@ void GfxEditorTab::on_colorModeCombo_currentIndexChanged(int)
 void GfxEditorTab::on_widthCombo_currentIndexChanged(int)
 {
     int w = selectedItem(mUi->widthCombo).toInt();
-    int h = selectedItem(mUi->heightCombo).toInt();
-    if (w != 0 && h != 0)
-        mUi->editorWidget->setSize(w, h);
+    if (w != 0)
+        mUi->editorWidget->setSize(w, mUi->editorWidget->height());
     emit updateUi();
 }
 
 void GfxEditorTab::on_heightCombo_currentIndexChanged(int)
 {
-    int w = selectedItem(mUi->widthCombo).toInt();
     int h = selectedItem(mUi->heightCombo).toInt();
-    if (w != 0 && h != 0)
-        mUi->editorWidget->setSize(w, h);
+    if (h != 0)
+        mUi->editorWidget->setSize(mUi->editorWidget->width(), h);
     emit updateUi();
 }
 

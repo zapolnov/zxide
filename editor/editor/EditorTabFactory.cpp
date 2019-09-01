@@ -1,6 +1,7 @@
 #include "EditorTabFactory.h"
 #include "editor/code/CodeEditorTab.h"
 #include "editor/gfx/GfxEditorTab.h"
+#include "editor/map/MapEditorTab.h"
 #include "editor/tileset/TileSetEditorTab.h"
 #include "editor/Project.h"
 #include "editor/FileManager.h"
@@ -32,6 +33,7 @@ EditorTabFactory::EditorTabFactory(QObject* parent)
     add<CodeEditorTab>(tr("Build script (Lua)"), STR("lua"), STR(":/resources/fatcow16x16/modified/script_php.png"));
     add<GfxEditorTab>(tr("Graphic"), STR("gfx"), STR(":/resources/fatcow16x16/picture.png"));
     add<TileSetEditorTab>(tr("Tile set"), STR("tileset"), STR(":/resources/fatcow16x16/pictures.png"));
+    add<MapEditorTab>(tr("Map"), STR("map"), STR(":/resources/fatcow16x16/map.png"));
 }
 
 EditorTabFactory::~EditorTabFactory()

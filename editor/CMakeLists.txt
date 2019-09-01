@@ -34,6 +34,11 @@ qt_add_sources(GameEditor
         editor/gfx/GfxEditorTab.ui
         editor/gfx/GfxEditorWidget.cpp
         editor/gfx/GfxEditorWidget.h
+        editor/map/MapEditorTab.cpp
+        editor/map/MapEditorTab.h
+        editor/map/MapEditorTab.ui
+        editor/map/MapEditorWidget.cpp
+        editor/map/MapEditorWidget.h
         editor/tileset/TileSetEditorTab.cpp
         editor/tileset/TileSetEditorTab.h
         editor/tileset/TileSetEditorTab.ui

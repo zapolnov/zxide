@@ -10,9 +10,12 @@ static void fillMenu(QMenu* menu, const Directory* directory, const QString& ext
 {
     directory->forEachSubdirectory([menu, &ext, &cb](Directory* subdir) {
             if (!subdir->isGenerated()) {
-                QIcon icon = EditorTabFactory::instance()->folderIcon();
-                QMenu* submenu = menu->addMenu(icon, subdir->name());
+                QMenu* submenu = new QMenu(subdir->name(), menu);
                 fillMenu(submenu, subdir, ext, cb);
+                if (submenu->actions().count() > 0) {
+                    submenu->setIcon(EditorTabFactory::instance()->folderIcon());
+                    menu->addMenu(submenu);
+                }
             }
         });
 

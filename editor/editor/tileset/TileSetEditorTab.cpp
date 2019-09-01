@@ -114,6 +114,7 @@ bool TileSetEditorTab::save()
 
     mModified = false;
     emit updateUi();
+    emit EditorTabFactory::instance()->tileSetChanged();
 
     return true;
 }
@@ -171,10 +172,11 @@ void TileSetEditorTab::onButtonClicked(QToolButton* button, int x, int y)
 {
     QTimer::singleShot(0, this, [this, button, x, y] {
             File* selected = nullptr;
-            selectFile(button, file(), &selected, QStringLiteral("gfx"));
-            mData.setTileAt(x, y, (selected ? selected->relativeName() : QString()));
-            mModified = true;
-            refresh();
-            emit updateUi();
+            if (selectFile(button, file(), &selected, QStringLiteral("gfx"))) {
+                mData.setTileAt(x, y, (selected ? selected->relativeName() : QString()));
+                mModified = true;
+                refresh();
+                emit updateUi();
+            }
         });
 }

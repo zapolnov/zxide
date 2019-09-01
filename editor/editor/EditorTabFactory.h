@@ -60,6 +60,7 @@ public:
 
 signals:
     void tileChanged();
+    void tileSetChanged();
 
 private:
     static EditorTabFactory* mInstance;
