@@ -48,15 +48,22 @@ bool Project::create(const QString& file)
     QFileInfo fileInfo(file);
     QDir dir(fileInfo.absolutePath());
 
-    QString gitignore = dir.absoluteFilePath(QStringLiteral(".gitignore"));
-    if (QFile::exists(gitignore)) {
-        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
-            tr("File \"%1\" already exists.").arg(gitignore));
+    QString gitignore = QStringLiteral("/%1/\n/%2/\n").arg(OutDirectory).arg(GeneratedDirectory);
+    if (!writeFile(dir.absoluteFilePath(QStringLiteral(".gitignore")), gitignore.toUtf8()))
         return false;
-    }
 
-    QString gitignoreContents = QStringLiteral("/%1/\n/%2/\n").arg(OutDirectory).arg(GeneratedDirectory);
-    if (!writeFile(gitignore, gitignoreContents.toUtf8()))
+    QByteArray loader =
+        "10 CLEAR @{clearaddr}\n"
+        "20 POKE 23610, 255\n"
+        "30 LOAD \"\" CODE\n"
+        "40 RANDOMIZE USR @{baseaddr}\n";
+    if (!writeFile(dir.absoluteFilePath(QStringLiteral("loader.bas")), loader))
+        return false;
+
+    QByteArray mainAsm =
+        "section main [base 0x8000]\n"
+        "ret\n";
+    if (!writeFile(dir.absoluteFilePath(QStringLiteral("main.asm")), loader))
         return false;
 
     QJsonDocument doc;
@@ -113,6 +120,12 @@ bool Project::writeFile(const QString& file, const QByteArray& data)
 
 bool Project::writeFile(const QString& file, const void* data, int length)
 {
+    if (QFile::exists(file)) {
+        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
+            tr("File \"%1\" already exists.").arg(file));
+        return false;
+    }
+
     QSaveFile f(file);
     if (!f.open(QFile::WriteOnly)) {
         QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
