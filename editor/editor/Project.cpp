@@ -5,11 +5,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <cstring>
 
 const QString Project::FileSuffix = QStringLiteral("zxprj");
 const QString Project::GeneratedDirectory = QStringLiteral("generated");
-const QString Project::BuildDirectory = QStringLiteral("build");
+const QString Project::OutDirectory = QStringLiteral("_out");
 static const QString JsonKey_Version = QStringLiteral("version");
 static const int FileFormatVersion = 1;
 
@@ -29,14 +28,14 @@ QString Project::name() const
 
 QString Project::tapeFileName() const
 {
-    mDir.mkpath(BuildDirectory);
-    return mDir.absoluteFilePath(QStringLiteral("%1/%2.tap")).arg(BuildDirectory).arg(name());
+    mDir.mkpath(OutDirectory);
+    return mDir.absoluteFilePath(QStringLiteral("%1/%2.tap")).arg(OutDirectory).arg(name());
 }
 
 QString Project::wavFileName() const
 {
-    mDir.mkpath(BuildDirectory);
-    return mDir.absoluteFilePath(QStringLiteral("%1/%2.wav")).arg(BuildDirectory).arg(name());
+    mDir.mkpath(OutDirectory);
+    return mDir.absoluteFilePath(QStringLiteral("%1/%2.wav")).arg(OutDirectory).arg(name());
 }
 
 QDir Project::generatedFilesDirectory() const
@@ -56,7 +55,8 @@ bool Project::create(const QString& file)
         return false;
     }
 
-    if (!writeFile(gitignore, "build/\ngenerated/\n"))
+    QString gitignoreContents = QStringLiteral("/%1/\n/%2/\n").arg(OutDirectory).arg(GeneratedDirectory);
+    if (!writeFile(gitignore, gitignoreContents.toUtf8()))
         return false;
 
     QJsonDocument doc;
@@ -64,7 +64,7 @@ bool Project::create(const QString& file)
     root[JsonKey_Version] = FileFormatVersion;
     doc.setObject(root);
     QByteArray json = doc.toJson(QJsonDocument::Indented);
-    if (!writeFile(file, json.constData(), json.length()))
+    if (!writeFile(file, json))
         return false;
 
     mFile = file;
@@ -106,9 +106,9 @@ bool Project::load(const QString& file)
     return true;
 }
 
-bool Project::writeFile(const QString& file, const char* text)
+bool Project::writeFile(const QString& file, const QByteArray& data)
 {
-    return writeFile(file, text, int(strlen(text)));
+    return writeFile(file, data.constData(), data.length());
 }
 
 bool Project::writeFile(const QString& file, const void* data, int length)

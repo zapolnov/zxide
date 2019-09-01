@@ -11,7 +11,7 @@ class Project : public QObject
 public:
     static const QString FileSuffix;
     static const QString GeneratedDirectory;
-    static const QString BuildDirectory;
+    static const QString OutDirectory;
 
     explicit Project(QWidget* parent = nullptr);
     ~Project() override;
@@ -32,7 +32,7 @@ private:
     QString mFile;
     QDir mDir;
 
-    bool writeFile(const QString& file, const char* text);
+    bool writeFile(const QString& file, const QByteArray& data);
     bool writeFile(const QString& file, const void* data, int length);
 
     Q_DISABLE_COPY(Project)

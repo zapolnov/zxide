@@ -189,7 +189,7 @@ void FileManager::refreshDirectory(Directory* directory)
         if (directory == mRootDirectory) {
             if (!info.isDir() && info.suffix() == Project::FileSuffix)
                 continue;
-            if (fileName == Project::BuildDirectory)
+            if (fileName == Project::OutDirectory)
                 continue;
         }
 
@@ -332,6 +332,10 @@ void FileManager::on_newDirectoryAction_triggered()
     QString name = dlg.textValue().trimmed();
     if (name.isEmpty()) {
         QMessageBox::critical(this, tr("Error"), tr("Directory name should not be empty."));
+        return;
+    }
+    if (parent == mRootDirectory && name == Project::OutDirectory) {
+        QMessageBox::critical(this, tr("Error"), tr("Name \"%1\" is reserved.").arg(Project::OutDirectory));
         return;
     }
 
