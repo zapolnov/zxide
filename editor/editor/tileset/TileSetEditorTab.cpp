@@ -45,7 +45,9 @@ TileSetEditorTab::TileSetEditorTab(QWidget* parent)
         }
     }
 
-    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged, this, &TileSetEditorTab::refresh);
+    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged,
+        this, std::bind(&TileSetEditorTab::refresh, this, true));
+
     refresh();
 }
 
@@ -116,7 +118,7 @@ bool TileSetEditorTab::save()
     return true;
 }
 
-void TileSetEditorTab::refresh()
+void TileSetEditorTab::refresh(bool forceReload)
 {
     File* f = file();
     Directory* rootDirectory = (f ? f->rootDirectory() : nullptr);
@@ -127,13 +129,11 @@ void TileSetEditorTab::refresh()
         for (int x = 0; x < GridWidth; x++) {
             QToolButton* button = mButtons[y * GridWidth + x];
             QString file = mData.tileAt(x, y);
-            if (button->text() != file) {
+            if (forceReload || button->toolTip() != file) {
                 if (file.isEmpty()) {
-                    mButtons[y * GridWidth + x]->setText(QString());
                     mButtons[y * GridWidth + x]->setToolTip(QString());
                     mButtons[y * GridWidth + x]->setIcon(QIcon());
                 } else {
-                    mButtons[y * GridWidth + x]->setText(file);
                     mButtons[y * GridWidth + x]->setToolTip(file);
                     FileOrDirectory* item = (rootDirectory ? rootDirectory->findChild(file) : nullptr);
                     if (!item) {

@@ -30,7 +30,7 @@ private:
     TileSetData mData;
     bool mModified;
 
-    void refresh();
+    void refresh(bool forceReload = false);
 
     void onButtonClicked(QToolButton* button, int x, int y);
 
