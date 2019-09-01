@@ -44,6 +44,7 @@
     <file>fatcow16x16/paste_plain.png</file>
     <file>fatcow16x16/pencil.png</file>
     <file>fatcow16x16/picture.png</file>
+    <file>fatcow16x16/pictures.png</file>
     <file>fatcow16x16/pipette.png</file>
     <file>fatcow16x16/select.png</file>
     <file>fatcow16x16/shape_square_edit.png</file>
@@ -63,6 +64,7 @@
     <file>fugue16x16/control-pause.png</file>
     <file>fugue16x16/control-stop-square.png</file>
     <file>tango16x16/edit-cut.png</file>
+    <file>tango16x16/image-missing.png</file>
   </qresource>
   <qresource prefix="fonts">
     <file alias="font.png">fonts/font.png</file>

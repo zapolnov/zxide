@@ -53,6 +53,10 @@ qt_add_sources(Compiler
         ProgramSection.h
         TapeFileWriter.cpp
         TapeFileWriter.h
+        TileSetData.cpp
+        TileSetData.h
+        TileSetFile.cpp
+        TileSetFile.h
         Util.cpp
         Util.h
         Value.cpp

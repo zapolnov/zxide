@@ -34,6 +34,9 @@ qt_add_sources(GameEditor
         editor/gfx/GfxEditorTab.ui
         editor/gfx/GfxEditorWidget.cpp
         editor/gfx/GfxEditorWidget.h
+        editor/tileset/TileSetEditorTab.cpp
+        editor/tileset/TileSetEditorTab.h
+        editor/tileset/TileSetEditorTab.ui
         editor/AbstractEditorTab.cpp
         editor/AbstractEditorTab.h
         editor/DuplicateDialog.cpp
@@ -53,6 +56,10 @@ qt_add_sources(GameEditor
         editor/RenameDialog.h
         editor/RenameDialog.ui
         res/resources.qrc
+        util/FileSelectorMenu.cpp
+        util/FileSelectorMenu.h
+        util/GfxFileUtil.cpp
+        util/GfxFileUtil.h
         util/ScrollBar.cpp
         util/ScrollBar.h
         util/Settings.cpp

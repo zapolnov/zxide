@@ -9,6 +9,8 @@ qt_add_sources(Scripting
         LuaFiles.h
         LuaGfx.cpp
         LuaGfx.h
+        LuaTileSet.cpp
+        LuaTileSet.h
         LuaVM.cpp
         LuaVM.h
     )

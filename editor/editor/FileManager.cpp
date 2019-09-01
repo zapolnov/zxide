@@ -35,6 +35,17 @@ FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, i
     setExpanded(true);
 }
 
+QString FileOrDirectory::relativeName() const
+{
+    QString name = mFileInfo.fileName();
+
+    Directory* parent = parentDirectory();
+    if (parent && parent->parentDirectory())
+        name = QStringLiteral("%1/%2").arg(parent->relativeName()).arg(name);
+
+    return name;
+}
+
 Directory* FileOrDirectory::parentDirectory() const
 {
     auto item = parent();
@@ -45,6 +56,25 @@ Directory* FileOrDirectory::parentDirectory() const
         return static_cast<Directory*>(item);
 
     return nullptr;
+}
+
+Directory* FileOrDirectory::rootDirectory() const
+{
+    Directory* rootDirectory = parentDirectory();
+    if (!rootDirectory) {
+        Q_ASSERT(type() == Directory::Type);
+        if (type() != Directory::Type)
+            return nullptr;
+        rootDirectory = static_cast<Directory*>(const_cast<FileOrDirectory*>(this));
+    } else {
+        for (;;) {
+            Directory* p = rootDirectory->parentDirectory();
+            if (!p)
+                break;
+            rootDirectory = p;
+        }
+    }
+    return rootDirectory;
 }
 
 bool FileOrDirectory::operator<(const QTreeWidgetItem& other) const
@@ -102,14 +132,23 @@ File* Directory::file(const QString& name) const
     return (it != mFiles.end() ? it.value() : nullptr);
 }
 
+FileOrDirectory* Directory::findChild(const QString& relativePath) const
+{
+    int index = relativePath.indexOf('/');
+    if (index < 0) {
+        File* f = file(relativePath);
+        return (f ? static_cast<FileOrDirectory*>(f) : static_cast<FileOrDirectory*>(directory(relativePath)));
+    }
+
+    Directory* d = directory(relativePath.mid(0, index));
+    return (d ? d->findChild(relativePath.mid(index + 1)) : nullptr);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FileManager::FileManager(QWidget* parent)
     : QWidget(parent)
     , mUi(new Ui_FileManager)
-    , mFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder.png"))
-    , mGeneratedFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder_blue.png"))
-    , mRootDirectoryIcon(QStringLiteral(":/resources/fatcow16x16/book.png"))
     , mRootDirectory(nullptr)
 {
     mUi->setupUi(this);
@@ -122,8 +161,9 @@ FileManager::~FileManager()
 
 void FileManager::init(const QString& path)
 {
+    QIcon icon = EditorTabFactory::instance()->rootDirectoryIcon();
     mPath = QDir::cleanPath(QDir(path).absolutePath());
-    mRootDirectory = new Directory(mRootDirectoryIcon, QFileInfo(mPath), mUi->sourcesTree->invisibleRootItem());
+    mRootDirectory = new Directory(icon, QFileInfo(mPath), mUi->sourcesTree->invisibleRootItem());
     mRootDirectory->setExpanded(true);
     mUi->sourcesTree->setCurrentItem(mRootDirectory);
     refresh();
@@ -245,14 +285,16 @@ void FileManager::refreshDirectory(Directory* directory)
             newFiles[fileName] = file;
         } else {
             Directory* subdir;
+            auto factory = EditorTabFactory::instance();
+            QIcon icon = (isGenerated ? factory->generatedFolderIcon() : factory->folderIcon());
             auto it = oldDirectories.find(fileName);
             if (it == oldDirectories.end()) {
-                subdir = new Directory((isGenerated ? mGeneratedFolderIcon : mFolderIcon), info, directory);
+                subdir = new Directory(icon, info, directory);
                 subdir->mIsGenerated = isGenerated;
             } else {
                 subdir = it.value();
                 subdir->mIsGenerated = isGenerated;
-                subdir->setIcon(0, (isGenerated ? mGeneratedFolderIcon : mFolderIcon));
+                subdir->setIcon(0, icon);
                 oldDirectories.erase(it);
             }
             newDirectories[fileName] = subdir;

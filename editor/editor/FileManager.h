@@ -6,6 +6,7 @@
 #include <QHash>
 #include <QFileInfo>
 #include <memory>
+#include <functional>
 
 class FileManager;
 class Ui_FileManager;
@@ -21,8 +22,10 @@ public:
     bool isGenerated() const { return mIsGenerated; }
 
     QString name() const { return mFileInfo.fileName(); }
+    QString relativeName() const;
     const QFileInfo& fileInfo() const { return mFileInfo; }
     Directory* parentDirectory() const;
+    Directory* rootDirectory() const;
 
     bool operator<(const QTreeWidgetItem &other) const override;
 
@@ -60,6 +63,20 @@ public:
 
     Directory* directory(const QString& name) const;
     File* file(const QString& name) const;
+
+    void forEachFile(const std::function<void(File*)>& callback) const
+    {
+        for (const auto& it : mFiles)
+            callback(it);
+    }
+
+    void forEachSubdirectory(const std::function<void(Directory*)>& callback) const
+    {
+        for (const auto& it : mDirectories)
+            callback(it);
+    }
+
+    FileOrDirectory* findChild(const QString& relativePath) const;
 
 private:
     QHash<QString, Directory*> mDirectories;
@@ -113,9 +130,6 @@ signals:
 
 private:
     std::unique_ptr<Ui_FileManager> mUi;
-    QIcon mFolderIcon;
-    QIcon mGeneratedFolderIcon;
-    QIcon mRootDirectoryIcon;
     Directory* mRootDirectory;
     QString mPath;
 

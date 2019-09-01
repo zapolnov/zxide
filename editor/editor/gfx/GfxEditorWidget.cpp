@@ -1,6 +1,7 @@
 #include "GfxEditorWidget.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
+#include "util/GfxFileUtil.h"
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
@@ -17,25 +18,6 @@
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-graphic");
 static const int PixelWidth = 8;
 static const int PixelHeight = 8;
-
-static QColor Palette[] = {
-    QColor(0x00, 0x00, 0x00),
-    QColor(0x00, 0x00, 0xc0),
-    QColor(0xc0, 0x00, 0x00),
-    QColor(0xc0, 0x00, 0xc0),
-    QColor(0x00, 0xc0, 0x00),
-    QColor(0x00, 0xc0, 0xc0),
-    QColor(0xc0, 0xc0, 0x00),
-    QColor(0xc0, 0xc0, 0xc0),
-    QColor(0x00, 0x00, 0x00),
-    QColor(0x00, 0x00, 0xff),
-    QColor(0xff, 0x00, 0x00),
-    QColor(0xff, 0x00, 0xff),
-    QColor(0x00, 0xff, 0x00),
-    QColor(0x00, 0xff, 0xff),
-    QColor(0xff, 0xff, 0x00),
-    QColor(0xff, 0xff, 0xff),
-};
 
 namespace
 {
@@ -1050,7 +1032,7 @@ void GfxEditorWidget::paintEvent(QPaintEvent* event)
             if (attrib & 0x40)
                 color += 8;
 
-            const QColor& colorRef = Palette[color];
+            const QColor& colorRef = GfxFilePalette[color];
             uint rgb = colorRef.rgb();
 
             for (int yy = 0; yy < 2; yy++) {

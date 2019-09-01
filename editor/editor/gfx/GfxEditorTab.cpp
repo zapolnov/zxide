@@ -1,5 +1,6 @@
 #include "GfxEditorTab.h"
 #include "editor/FileManager.h"
+#include "editor/EditorTabFactory.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
 #include "ui_GfxEditorTab.h"
@@ -225,6 +226,7 @@ bool GfxEditorTab::save()
     }
 
     setSaved();
+    emit EditorTabFactory::instance()->tileChanged();
     emit updateUi();
 
     return true;

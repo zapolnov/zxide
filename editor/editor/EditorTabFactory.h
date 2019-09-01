@@ -32,6 +32,10 @@ public:
 
     const std::vector<std::unique_ptr<FileFormat>>& formats() const { return mFormats; }
 
+    const QIcon& folderIcon() const { return mFolderIcon; }
+    const QIcon& generatedFolderIcon() const { return mGeneratedFolderIcon; }
+    const QIcon& rootDirectoryIcon() const { return mRootDirectoryIcon; }
+
     const QIcon& iconForFile(const QFileInfo& file) const;
     AbstractEditorTab* createTabForFile(File* file, QWidget* parent);
 
@@ -54,9 +58,15 @@ public:
         mFormats.emplace_back(std::move(fmt));
     }
 
+signals:
+    void tileChanged();
+
 private:
     static EditorTabFactory* mInstance;
     QIcon mUnknownFileIcon;
+    QIcon mFolderIcon;
+    QIcon mGeneratedFolderIcon;
+    QIcon mRootDirectoryIcon;
     std::unique_ptr<FileFormat> mProjectFileFormat;
     std::vector<std::unique_ptr<FileFormat>> mFormats;
     QHash<QString, FileFormat*> mExtensions;
