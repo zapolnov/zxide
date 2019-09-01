@@ -332,7 +332,19 @@ bool MainWindow::build()
 
     connect(&dlg, &CompilerDialog::compilationSucceeded, this, [this, &dlg]() {
             clearBuildResult();
-            EmulatorCore::instance()->setProgramBinary(dlg.takeProgramBinary());
+
+            auto binary = dlg.takeProgramBinary();
+            ProgramDebugInfo* debugInfo = binary->debugInfo();
+            EmulatorCore::instance()->setProgramBinary(std::move(binary));
+
+            int n = mUi->tabWidget->count();
+            for (int i = 0; i < n; i++) {
+                auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+                Q_ASSERT(tab != nullptr);
+                if (tab)
+                    tab->updateTStates(debugInfo);
+            }
+
             mUi->fileManager->refresh();
         });
     connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {

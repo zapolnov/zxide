@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class File;
+class ProgramDebugInfo;
 
 class AbstractEditorTab : public QWidget
 {
@@ -68,6 +69,8 @@ public:
 
     virtual void setHighlight(int line) {}
     virtual void clearHighlight() {}
+
+    virtual void updateTStates(ProgramDebugInfo* debugInfo) {}
 
     virtual void reloadSettings() {}
 

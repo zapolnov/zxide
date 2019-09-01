@@ -411,14 +411,14 @@ void MarginView::PaintMargin(Surface *surface, Sci::Line topLine, PRectangle rc,
 					const StyledText stMargin = model.pdoc->MarginStyledText(lineDoc);
 					if (stMargin.text && ValidStyledText(vs, vs.marginStyleOffset, stMargin)) {
 						if (firstSubLine) {
-							surface->FillRectangle(rcMarker,
-								vs.styles[stMargin.StyleAt(0) + vs.marginStyleOffset].back);
+							//surface->FillRectangle(rcMarker,
+							//	vs.styles[stMargin.StyleAt(0) + vs.marginStyleOffset].back);
 							if (vs.ms[margin].style == SC_MARGIN_RTEXT) {
 								const int width = WidestLineWidth(surface, vs, vs.marginStyleOffset, stMargin);
 								rcMarker.left = rcMarker.right - width - 3;
 							}
 							DrawStyledText(surface, vs, vs.marginStyleOffset, rcMarker,
-								stMargin, 0, stMargin.length, drawAll);
+								stMargin, 0, stMargin.length, /*drawAll*/ DrawPhase(drawAll & ~drawBack));
 						} else {
 							// if we're displaying annotation lines, colour the margin to match the associated document line
 							const int annotationLines = model.pdoc->AnnotationLines(lineDoc);

@@ -1,5 +1,6 @@
 #include "CodeEditorTab.h"
 #include "editor/FileManager.h"
+#include "compiler/ProgramDebugInfo.h"
 #include "ui_CodeEditorTab.h"
 #include <SciLexer.h>
 
@@ -213,6 +214,11 @@ void CodeEditorTab::setHighlight(int line)
 void CodeEditorTab::clearHighlight()
 {
     mUi->textEditor->clearHighlight();
+}
+
+void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)
+{
+    mUi->textEditor->updateTStates(debugInfo->tstatesForFile(file()));
 }
 
 void CodeEditorTab::reloadSettings()

@@ -718,6 +718,9 @@ void ScintillaEditBase::notifyParent(SCNotification scn)
 				emit linesAdded(added ? 1 : -1);
 			}
 
+			if (scn.modificationType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
+				textModified(scn.position, scn.length);
+
 			const QByteArray bytes = QByteArray::fromRawData(scn.text, scn.length);
 			emit modified(scn.modificationType, scn.position, scn.length,
 			              scn.linesAdded, bytes, scn.line,

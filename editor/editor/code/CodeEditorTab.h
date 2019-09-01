@@ -48,6 +48,8 @@ public:
     void setHighlight(int line) override;
     void clearHighlight() override;
 
+    void updateTStates(ProgramDebugInfo* debugInfo) override;
+
     void reloadSettings() override;
 
     void setFocusToEditor() override;

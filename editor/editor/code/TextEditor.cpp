@@ -1,9 +1,12 @@
 #include "TextEditor.h"
+#include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
+#include <cstdio>
 
 TextEditor::TextEditor(QWidget* parent)
     : ScintillaEdit(parent)
     , mHighlightVisible(false)
+    , mTStatesVisible(false)
 {
     reloadSettings();
 }
@@ -55,6 +58,32 @@ void TextEditor::clearHighlight()
     }
 }
 
+void TextEditor::updateTStates(const std::map<int, TStates>& tstates)
+{
+    if (!mTStatesVisible) {
+        mTStatesVisible = true;
+        reloadSettings();
+    }
+
+    marginTextClearAll();
+    for (const auto& it : tstates) {
+        char buf[64];
+        if (it.second.taken == it.second.notTaken)
+            snprintf(buf, sizeof(buf), "%u", it.second.taken);
+        else
+            snprintf(buf, sizeof(buf), "%u/%u", it.second.taken, it.second.notTaken);
+        marginSetText(it.first - 1, buf);
+    }
+}
+
+void TextEditor::clearTStates()
+{
+    if (mTStatesVisible) {
+        mTStatesVisible = false;
+        marginTextClearAll();
+    }
+}
+
 void TextEditor::reloadSettings()
 {
     setCodePage(SC_CP_UTF8);
@@ -78,13 +107,17 @@ void TextEditor::reloadSettings()
     setViewEOL(settings.showEol());
 
     setMarginMaskN(1, SC_MASK_FOLDERS | (1 << 24));
+    setMarginTypeN(3, SC_MARGIN_RTEXT);
+    setMarginWidthN(3, mTStatesVisible ? textWidth(STYLE_LINENUMBER, "_9/99") : 0);
 
-    if (!settings.showLineNumbers())
+    if (!settings.showLineNumbers()) {
         setMarginWidthN(2, 0);
-    else {
+        setMarginMaskN(3, 0);
+    } else {
         setMarginTypeN(2, SC_MARGIN_NUMBER);
         setMarginWidthN(2, textWidth(STYLE_LINENUMBER, "_99999"));
         setMarginMaskN(2, 0);
+        setMarginMaskN(3, SC_MASK_FOLDERS);
     }
 }
 
@@ -97,4 +130,12 @@ void TextEditor::charAdded(int ch)
     }
 
     ScintillaEdit::charAdded(ch);
+}
+
+void TextEditor::textModified(int position, int length)
+{
+    if (mTStatesVisible) {
+        for (int i = position; i < position + length; i++)
+            marginSetText(lineFromPosition(i), "");
+    }
 }

@@ -2,6 +2,7 @@
 #include <cstring>
 
 static const SourceLocation dummySourceLocation{};
+static const std::map<int, TStates> dummyTStatesMap;
 
 ProgramDebugInfo::ProgramDebugInfo()
 {
@@ -29,6 +30,20 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, File* file, int line)
         loc.line = line;
         mFileToMemory[file][line] = address;
     }
+}
+
+void ProgramDebugInfo::setTStatesForLocation(const File* file, int line, unsigned taken, unsigned notTaken)
+{
+    TStates s;
+    s.taken = taken;
+    s.notTaken = notTaken;
+    mFileToTStates[file][line] = s;
+}
+
+const std::map<int, TStates>& ProgramDebugInfo::tstatesForFile(const File* file) const
+{
+    auto it = mFileToTStates.find(file);
+    return (it != mFileToTStates.end() ? it->second : dummyTStatesMap);
 }
 
 int ProgramDebugInfo::resolveAddress(const File* file, int line) const

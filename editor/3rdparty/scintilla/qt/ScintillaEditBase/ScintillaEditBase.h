@@ -122,6 +122,7 @@ signals:
 
 protected:
 	virtual void charAdded(int ch) {}
+	virtual void textModified(int position, int length) {}
 
 	bool event(QEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
