@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <cstring>
 
 const QString Project::FileSuffix = QStringLiteral("zxprj");
 const QString Project::GeneratedDirectory = QStringLiteral("generated");
@@ -45,40 +46,29 @@ QDir Project::generatedFilesDirectory() const
 
 bool Project::create(const QString& file)
 {
-    QSaveFile f(file);
-    if (!f.open(QFile::WriteOnly)) {
+    QFileInfo fileInfo(file);
+    QDir dir(fileInfo.absolutePath());
+
+    QString gitignore = dir.absoluteFilePath(QStringLiteral(".gitignore"));
+    if (QFile::exists(gitignore)) {
         QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
+            tr("File \"%1\" already exists.").arg(gitignore));
         return false;
     }
+
+    if (!writeFile(gitignore, "build/\ngenerated/\n"))
+        return false;
 
     QJsonDocument doc;
     QJsonObject root;
     root[JsonKey_Version] = FileFormatVersion;
     doc.setObject(root);
     QByteArray json = doc.toJson(QJsonDocument::Indented);
-
-    qint64 bytesWritten = f.write(json);
-    if (bytesWritten < 0) {
-        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
+    if (!writeFile(file, json.constData(), json.length()))
         return false;
-    }
-    if (bytesWritten != json.length()) {
-        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
-            tr("Unable to write file \"%1\".").arg(file));
-        return false;
-    }
-
-    if (!f.commit()) {
-        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
-        return false;
-    }
 
     mFile = file;
-    mDir = QDir(QFileInfo(file).absolutePath());
-
+    mDir = dir;
     return true;
 }
 
@@ -112,6 +102,41 @@ bool Project::load(const QString& file)
 
     mFile = file;
     mDir = QDir(QFileInfo(file).absolutePath());
+
+    return true;
+}
+
+bool Project::writeFile(const QString& file, const char* text)
+{
+    return writeFile(file, text, int(strlen(text)));
+}
+
+bool Project::writeFile(const QString& file, const void* data, int length)
+{
+    QSaveFile f(file);
+    if (!f.open(QFile::WriteOnly)) {
+        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
+            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
+        return false;
+    }
+
+    qint64 bytesWritten = f.write(reinterpret_cast<const char*>(data), qint64(length));
+    if (bytesWritten < 0) {
+        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
+            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
+        return false;
+    }
+    if (bytesWritten != qint64(length)) {
+        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
+            tr("Unable to write file \"%1\".").arg(file));
+        return false;
+    }
+
+    if (!f.commit()) {
+        QMessageBox::critical(static_cast<QWidget*>(parent()), tr("Error"),
+            tr("Unable to write file \"%1\": %2").arg(file).arg(f.errorString()));
+        return false;
+    }
 
     return true;
 }

@@ -32,6 +32,9 @@ private:
     QString mFile;
     QDir mDir;
 
+    bool writeFile(const QString& file, const char* text);
+    bool writeFile(const QString& file, const void* data, int length);
+
     Q_DISABLE_COPY(Project)
 };
 
