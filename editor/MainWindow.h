@@ -52,6 +52,8 @@ private:
     bool build();
     void clearBuildResult();
 
+    void clearHighlights();
+
     void updateUi();
 
     Q_SLOT void on_actionNewProject_triggered();

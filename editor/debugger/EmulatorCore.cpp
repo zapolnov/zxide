@@ -63,6 +63,7 @@ static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static bool shouldUpdateUi;
 static bool shouldEmitPausedSignal;
+static bool shouldEmitUnpausedSignal;
 static unsigned pausePC;
 static bool memoryWasChanged;
 static bool emulatorPaused;
@@ -519,6 +520,7 @@ void EmulatorCore::releaseKey(int key)
 void EmulatorCore::update()
 {
     bool shouldUpdateUi_ = false;
+    bool shouldEmitUnpausedSignal_ = false;
     bool shouldEmitPausedSignal_ = false;
     bool memoryWasChanged_ = false;
     unsigned pausePC_ = 0;
@@ -527,6 +529,8 @@ void EmulatorCore::update()
         QMutexLocker lock(&mutex);
         shouldUpdateUi_ = shouldUpdateUi;
         shouldUpdateUi = false;
+        shouldEmitUnpausedSignal_ = shouldEmitUnpausedSignal;
+        shouldEmitUnpausedSignal = false;
         shouldEmitPausedSignal_ = shouldEmitPausedSignal;
         shouldEmitPausedSignal = false;
         memoryWasChanged_ = memoryWasChanged;
@@ -536,6 +540,8 @@ void EmulatorCore::update()
 
     if (memoryWasChanged_)
         emit memoryChanged();
+    if (shouldEmitUnpausedSignal_)
+        emit leaveDebugger();
     if (shouldEmitPausedSignal_)
         emit enterDebugger(pausePC_);
     if (shouldUpdateUi_)
@@ -797,6 +803,7 @@ int ui_debugger_deactivate(int)
     QMutexLocker lock(&mutex);
     if (paused) {
         paused = false;
+        shouldEmitUnpausedSignal = true;
         shouldUpdateUi = true;
     }
     return 0;

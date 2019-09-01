@@ -13,9 +13,14 @@ public:
 
     void setLineIndent(int line, int indent);
 
+    void setHighlight(int line);
+    void clearHighlight();
+
     void reloadSettings();
 
 private:
+    sptr_t mHighlightHandle;
+    bool mHighlightVisible;
     bool mAutoIndent;
 
     void charAdded(int ch) override;

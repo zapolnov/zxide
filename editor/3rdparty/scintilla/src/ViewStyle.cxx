@@ -160,8 +160,8 @@ void ViewStyle::CalculateMarginWidthAndMask() {
 	int maskDefinedMarkers = 0;
 	for (const MarginStyle &m : ms) {
 		fixedColumnWidth += m.width;
-		if (m.width > 0)
-			maskInLine &= ~m.mask;
+		//if (m.width > 0)
+			//maskInLine &= ~m.mask;
 		maskDefinedMarkers |= m.mask;
 	}
 	maskDrawInText = 0;

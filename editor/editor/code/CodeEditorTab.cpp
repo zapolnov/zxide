@@ -204,6 +204,17 @@ void CodeEditorTab::goToLine(int line)
         mUi->textEditor->gotoLine(line);
 }
 
+void CodeEditorTab::setHighlight(int line)
+{
+    if (mDocument)
+        mUi->textEditor->setHighlight(line);
+}
+
+void CodeEditorTab::clearHighlight()
+{
+    mUi->textEditor->clearHighlight();
+}
+
 void CodeEditorTab::reloadSettings()
 {
     mUi->textEditor->reloadSettings();

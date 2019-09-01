@@ -45,6 +45,9 @@ public:
     void clearSelection() override;
     void goToLine(int line) override;
 
+    void setHighlight(int line) override;
+    void clearHighlight() override;
+
     void reloadSettings() override;
 
     void setFocusToEditor() override;

@@ -3,6 +3,7 @@
 
 TextEditor::TextEditor(QWidget* parent)
     : ScintillaEdit(parent)
+    , mHighlightVisible(false)
 {
     reloadSettings();
 }
@@ -30,6 +31,27 @@ void TextEditor::setLineIndent(int line, int indent)
             setSelectionStart(selStart < oldPos ? newPos : selStart + newPos - oldPos);
         if (selEnd >= newPos)
             setSelectionStart(selEnd < oldPos ? newPos : selEnd + newPos - oldPos);
+    }
+}
+
+void TextEditor::setHighlight(int line)
+{
+    if (mHighlightVisible)
+        markerDeleteHandle(mHighlightHandle);
+
+    markerDefine(24, SC_MARK_SHORTARROW);
+    markerSetFore(24, 0);
+    markerSetBack(24, 0x00ffff);
+
+    mHighlightHandle = markerAdd(line, 24);
+    mHighlightVisible = true;
+}
+
+void TextEditor::clearHighlight()
+{
+    if (mHighlightVisible) {
+        markerDeleteHandle(mHighlightHandle);
+        mHighlightVisible = false;
     }
 }
 

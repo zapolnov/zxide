@@ -66,6 +66,9 @@ public:
     virtual void select() {}
     virtual void toggleGrid() {}
 
+    virtual void setHighlight(int line) {}
+    virtual void clearHighlight() {}
+
     virtual void reloadSettings() {}
 
     virtual void setFocusToEditor() {}

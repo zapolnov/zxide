@@ -31,6 +31,8 @@ MainWindow::MainWindow()
 {
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
+    connect(mEmulatorCore, &EmulatorCore::leaveDebugger, this, &MainWindow::clearHighlights);
+    connect(mEmulatorCore, &EmulatorCore::stopped, this, &MainWindow::clearHighlights);
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
@@ -40,6 +42,7 @@ MainWindow::MainWindow()
                 auto tab = setCurrentTab(loc.file);
                 if (tab && tab->canGoToLine()) {
                     tab->goToLine(loc.line - 1);
+                    tab->setHighlight(loc.line - 1);
                     tab->setFocusToEditor();
                 }
             }
@@ -361,6 +364,17 @@ void MainWindow::clearBuildResult()
     mBuildResultLabel->setToolTip(QString());
     mBuildResultLabel->setText(tr("Ready"));
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
+}
+
+void MainWindow::clearHighlights()
+{
+    int n = mUi->tabWidget->count();
+    for (int i = 0; i < n; i++) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+        Q_ASSERT(tab != nullptr);
+        if (tab)
+            tab->clearHighlight();
+    }
 }
 
 void MainWindow::updateUi()
