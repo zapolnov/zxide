@@ -29,6 +29,7 @@ FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, i
     : QTreeWidgetItem(parent, QStringList() << fileInfo.fileName(), type)
     , mFileInfo(fileInfo)
     , mIsProjectFile(!fileInfo.isDir() && fileInfo.suffix() == Project::FileSuffix)
+    , mIsGenerated(false)
 {
     setIcon(0, icon);
     setExpanded(true);
@@ -107,6 +108,7 @@ FileManager::FileManager(QWidget* parent)
     : QWidget(parent)
     , mUi(new Ui_FileManager)
     , mFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder.png"))
+    , mGeneratedFolderIcon(QStringLiteral(":/resources/fatcow16x16/folder_blue.png"))
     , mRootDirectoryIcon(QStringLiteral(":/resources/fatcow16x16/book.png"))
     , mRootDirectory(nullptr)
 {
@@ -146,28 +148,61 @@ FileOrDirectory* FileManager::selectedFileOrDirectory() const
     return nullptr;
 }
 
+Directory* FileManager::directoryOrParent(FileOrDirectory* selected) const
+{
+    Directory* parent = nullptr;
+    if (!selected)
+        selected = mRootDirectory;
+    if (selected->type() == Directory::Type)
+        parent = static_cast<Directory*>(selected);
+    else {
+        parent = selected->parentDirectory();
+        if (!parent)
+            parent = mRootDirectory;
+    }
+    return parent;
+}
+
+Directory* FileManager::selectedParentDirectory() const
+{
+    return directoryOrParent(selectedFileOrDirectory());
+}
+
+bool FileManager::canCreateFile() const
+{
+    auto selected = selectedParentDirectory();
+    return (selected && !selected->isGenerated());
+}
+
+bool FileManager::canCreateDirectory() const
+{
+    auto selected = selectedParentDirectory();
+    return (selected && !selected->isGenerated());
+}
+
 bool FileManager::canRename() const
 {
     auto selected = selectedFileOrDirectory();
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
-    return (parent != nullptr && !selected->isProjectFile());
+    return (parent != nullptr && !selected->isProjectFile() && !selected->isGenerated());
 }
 
 bool FileManager::canDuplicate() const
 {
     auto selected = selectedFileOrDirectory();
-    return (selected && selected->type() == File::Type && !selected->isProjectFile());
+    return (selected && selected->type() == File::Type && !selected->isProjectFile() && !selected->isGenerated());
 }
 
 bool FileManager::canDelete() const
 {
     auto selected = selectedFileOrDirectory();
     Directory* parent = (selected ? selected->parentDirectory() : nullptr);
-    return (parent != nullptr && !selected->isProjectFile());
+    return (parent != nullptr && !selected->isProjectFile() && !selected->isGenerated());
 }
 
 void FileManager::refresh()
 {
+    Q_ASSERT(!mRootDirectory->isGenerated());
     refreshDirectory(mRootDirectory);
 }
 
@@ -193,29 +228,34 @@ void FileManager::refreshDirectory(Directory* directory)
                 continue;
         }
 
+        bool isGenerated =
+            directory->isGenerated() || (directory == mRootDirectory && fileName == Project::GeneratedDirectory);
+
         QString path = QDir::cleanPath(info.absoluteFilePath());
         if (!info.isDir()) {
             File* file;
-            QString name = info.fileName();
-            auto it = oldFiles.find(name);
+            auto it = oldFiles.find(fileName);
             if (it == oldFiles.end())
                 file = new File(EditorTabFactory::instance()->iconForFile(info), info, directory);
             else {
                 file = it.value();
                 oldFiles.erase(it);
             }
-            newFiles[name] = file;
+            file->mIsGenerated = isGenerated;
+            newFiles[fileName] = file;
         } else {
             Directory* subdir;
-            QString name = info.fileName();
-            auto it = oldDirectories.find(name);
-            if (it == oldDirectories.end())
-                subdir = new Directory(mFolderIcon, info, directory);
-            else {
+            auto it = oldDirectories.find(fileName);
+            if (it == oldDirectories.end()) {
+                subdir = new Directory((isGenerated ? mGeneratedFolderIcon : mFolderIcon), info, directory);
+                subdir->mIsGenerated = isGenerated;
+            } else {
                 subdir = it.value();
+                subdir->mIsGenerated = isGenerated;
+                subdir->setIcon(0, (isGenerated ? mGeneratedFolderIcon : mFolderIcon));
                 oldDirectories.erase(it);
             }
-            newDirectories[name] = subdir;
+            newDirectories[fileName] = subdir;
             refreshDirectory(subdir);
         }
     }
@@ -237,7 +277,7 @@ void FileManager::refreshDirectory(Directory* directory)
 void FileManager::enumerateFiles(std::vector<File*>& files, bool includeGenerated)
 {
     for (Directory* subdir : mRootDirectory->mDirectories) {
-        if (!includeGenerated && subdir->name() == QStringLiteral("generated"))
+        if (!includeGenerated && subdir->name() == Project::GeneratedDirectory)
             continue;
         enumerateFilesInDirectory(subdir, files);
     }
@@ -284,9 +324,15 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
     if (!fileOrDirectory)
         return;
 
-    mUi->renameAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
-    mUi->duplicateAction->setEnabled(fileOrDirectory->type() == File::Type && !fileOrDirectory->isProjectFile());
-    mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory && !fileOrDirectory->isProjectFile());
+    bool isProjectFile = fileOrDirectory->isProjectFile();
+    bool isGenerated = fileOrDirectory->isGenerated();
+    Directory* parent = directoryOrParent(fileOrDirectory);
+
+    mUi->newFileAction->setEnabled(parent && !parent->isGenerated());
+    mUi->newDirectoryAction->setEnabled(parent && !parent->isGenerated());
+    mUi->renameAction->setEnabled(itemUnderMouse != mRootDirectory && !isProjectFile && !isGenerated);
+    mUi->duplicateAction->setEnabled(fileOrDirectory->type() == File::Type && !isProjectFile && !isGenerated);
+    mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory && !isProjectFile && !isGenerated);
 
     QMenu menu;
     menu.addAction(mUi->newFileAction);
@@ -307,17 +353,7 @@ void FileManager::on_refreshAction_triggered()
 
 void FileManager::on_newDirectoryAction_triggered()
 {
-    Directory* parent = nullptr;
-    auto selected = selectedFileOrDirectory();
-    if (!selected)
-        selected = mRootDirectory;
-    if (selected->type() == Directory::Type)
-        parent = static_cast<Directory*>(selected);
-    else {
-        parent = selected->parentDirectory();
-        if (!parent)
-            parent = mRootDirectory;
-    }
+    Directory* parent = selectedParentDirectory();
     if (!parent)
         return;
 
@@ -334,8 +370,8 @@ void FileManager::on_newDirectoryAction_triggered()
         QMessageBox::critical(this, tr("Error"), tr("Directory name should not be empty."));
         return;
     }
-    if (parent == mRootDirectory && name == Project::OutDirectory) {
-        QMessageBox::critical(this, tr("Error"), tr("Name \"%1\" is reserved.").arg(Project::OutDirectory));
+    if (parent == mRootDirectory && (name == Project::OutDirectory || name == Project::GeneratedDirectory)) {
+        QMessageBox::critical(this, tr("Error"), tr("Name \"%1\" is reserved.").arg(name));
         return;
     }
 
@@ -356,17 +392,7 @@ void FileManager::on_newDirectoryAction_triggered()
 
 void FileManager::on_newFileAction_triggered()
 {
-    Directory* parent = nullptr;
-    auto selected = selectedFileOrDirectory();
-    if (!selected)
-        selected = mRootDirectory;
-    if (selected->type() == Directory::Type)
-        parent = static_cast<Directory*>(selected);
-    else {
-        parent = selected->parentDirectory();
-        if (!parent)
-            parent = mRootDirectory;
-    }
+    Directory* parent = selectedParentDirectory();
     if (!parent)
         return;
 

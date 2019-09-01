@@ -18,6 +18,7 @@ public:
     FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, int type, QTreeWidgetItem* parent);
 
     bool isProjectFile() const { return mIsProjectFile; }
+    bool isGenerated() const { return mIsGenerated; }
 
     QString name() const { return mFileInfo.fileName(); }
     const QFileInfo& fileInfo() const { return mFileInfo; }
@@ -28,6 +29,9 @@ public:
 private:
     QFileInfo mFileInfo;
     bool mIsProjectFile;
+    bool mIsGenerated;
+
+    friend class FileManager;
 };
 
 class File : public FileOrDirectory
@@ -43,6 +47,8 @@ public:
 
 private:
     AbstractEditorTab* mTab;
+
+    friend class FileManager;
 };
 
 class Directory : public FileOrDirectory
@@ -74,7 +80,11 @@ public:
 
     void selectFileOrDirectory(FileOrDirectory* item);
     FileOrDirectory* selectedFileOrDirectory() const;
+    Directory* directoryOrParent(FileOrDirectory* selected) const;
+    Directory* selectedParentDirectory() const;
 
+    bool canCreateFile() const;
+    bool canCreateDirectory() const;
     bool canRename() const;
     bool canDuplicate() const;
     bool canDelete() const;
@@ -104,6 +114,7 @@ signals:
 private:
     std::unique_ptr<Ui_FileManager> mUi;
     QIcon mFolderIcon;
+    QIcon mGeneratedFolderIcon;
     QIcon mRootDirectoryIcon;
     Directory* mRootDirectory;
     QString mPath;

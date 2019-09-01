@@ -403,6 +403,8 @@ void MainWindow::updateUi()
     mUi->actionSaveAll->setEnabled(modified);
     mUi->actionCloseWindow->setEnabled(tab != nullptr && tab != mDummyTab);
     mUi->actionCloseAllWindows->setEnabled(mUi->tabWidget->count() > 0);
+    mUi->actionNewFile->setEnabled(mProject && mUi->fileManager->canCreateFile());
+    mUi->actionNewDirectory->setEnabled(mProject && mUi->fileManager->canCreateDirectory());
     mUi->actionRenameFile->setEnabled(mProject && mUi->fileManager->canRename());
     mUi->actionDuplicateFile->setEnabled(mProject && mUi->fileManager->canDuplicate());
     mUi->actionDeleteFile->setEnabled(mProject && mUi->fileManager->canDelete());
