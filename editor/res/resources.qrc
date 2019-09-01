@@ -18,6 +18,7 @@
     <file>fatcow16x16/modified/book+folders_explorer.png</file>
     <file>fatcow16x16/modified/page_white+font_red_delete.png</file>
     <file>fatcow16x16/modified/page_white_stack+font_red_delete.png</file>
+    <file>fatcow16x16/modified/script_php.png</file>
     <file>fatcow16x16/arrow_refresh.png</file>
     <file>fatcow16x16/bin_closed.png</file>
     <file>fatcow16x16/book.png</file>
@@ -38,7 +39,6 @@
     <file>fatcow16x16/page_go.png</file>
     <file>fatcow16x16/page_white.png</file>
     <file>fatcow16x16/page_white_add.png</file>
-    <file>fatcow16x16/page_white_text.png</file>
     <file>fatcow16x16/paintcan.png</file>
     <file>fatcow16x16/palette.png</file>
     <file>fatcow16x16/paste_plain.png</file>
@@ -49,6 +49,8 @@
     <file>fatcow16x16/shape_square_edit.png</file>
     <file>fatcow16x16/redo.png</file>
     <file>fatcow16x16/rules.png</file>
+    <file>fatcow16x16/script_binary.png</file>
+    <file>fatcow16x16/script_bricks.png</file>
     <file>fatcow16x16/select_by_adding_to_selection.png</file>
     <file>fatcow16x16/sound_wave.png</file>
     <file>fatcow16x16/text_edit.png</file>
