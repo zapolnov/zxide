@@ -580,6 +580,12 @@ void MapEditorWidget::setSize(int w, int h)
         pushOperation(new ResizeOperation(w, h));
 }
 
+void MapEditorWidget::setTiles(QHash<int, QPixmap> tiles)
+{
+    mTiles = tiles;
+    repaint();
+}
+
 bool MapEditorWidget::isModified() const
 {
     return mUndoStackIndex != mSavedIndex;

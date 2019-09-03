@@ -10,6 +10,9 @@ class TileSetData : public QObject
     Q_OBJECT
 
 public:
+    static const int GridWidth = 16;
+    static const int GridHeight = 16;
+
     class Iterator
     {
     public:

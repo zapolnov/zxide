@@ -3,6 +3,10 @@
 #include "editor/EditorTabFactory.h"
 #include "compiler/MapData.h"
 #include "compiler/MapFile.h"
+#include "compiler/GfxData.h"
+#include "compiler/GfxFile.h"
+#include "compiler/TileSetData.h"
+#include "compiler/TileSetFile.h"
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_MapEditorTab.h"
@@ -28,16 +32,26 @@ MapEditorTab::MapEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("None"), int(MapFormat::None));
     mUi->formatCombo->addItem(tr("Byte array"), int(MapFormat::ByteArray));
 
-    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged,
-        this, std::bind(&MapEditorTab::refreshTileList, this, true));
-    connect(EditorTabFactory::instance(), &EditorTabFactory::tileSetChanged,
-        this, std::bind(&MapEditorTab::refreshTileList, this, true));
+    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged, this, &MapEditorTab::refreshTileList);
+    connect(EditorTabFactory::instance(), &EditorTabFactory::tileSetChanged, this, &MapEditorTab::refreshTileList);
 
     refreshTileList();
 }
 
 MapEditorTab::~MapEditorTab()
 {
+}
+
+void MapEditorTab::selectTile(char item)
+{
+    int n = mUi->paletteListWidget->count();
+    for (int i = 0; i < n; i++) {
+        QListWidgetItem* listItem = mUi->paletteListWidget->item(i);
+        if (listItem->type() - QListWidgetItem::UserType == item) {
+            mUi->paletteListWidget->setCurrentItem(listItem);
+            break;
+        }
+    }
 }
 
 bool MapEditorTab::loadFile(File* f)
@@ -67,8 +81,9 @@ bool MapEditorTab::loadFile(File* f)
     mUi->editScrollArea->setEnabled(true);
     mUi->paletteListWidget->setEnabled(true);
 
-    reloadSettings();
     setSaved();
+    refreshTileList();
+    reloadSettings();
     emit updateUi();
 
     return true;
@@ -329,6 +344,8 @@ void MapEditorTab::reset()
     mUi->editScrollArea->setEnabled(false);
     mUi->paletteListWidget->setEnabled(false);
     mUi->editorWidget->reset();
+
+    refreshTileList();
 }
 
 void MapEditorTab::setSaved()
@@ -346,6 +363,11 @@ void MapEditorTab::on_editorWidget_sizeChanged()
     mUi->heightSpin->setValue(mUi->editorWidget->height());
 }
 
+void MapEditorTab::on_editorWidget_itemPicked(char item)
+{
+    selectTile(item);
+}
+
 void MapEditorTab::on_widthSpin_valueChanged(int)
 {
     int w = mUi->widthSpin->value();
@@ -358,6 +380,14 @@ void MapEditorTab::on_heightSpin_valueChanged(int)
     int h = mUi->heightSpin->value();
     mUi->editorWidget->setSize(mUi->editorWidget->width(), h);
     emit updateUi();
+}
+
+void MapEditorTab::on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
+{
+    if (!current || current->type() < QListWidgetItem::UserType)
+        mUi->editorWidget->setItem(0);
+    else
+        mUi->editorWidget->setItem(current->type() - QListWidgetItem::UserType);
 }
 
 void MapEditorTab::on_tilesetButton_clicked()
@@ -388,9 +418,100 @@ void MapEditorTab::setTilesetButton(const QString& file)
     }
 }
 
-void MapEditorTab::refreshTileList(bool forceReload)
+void MapEditorTab::refreshTileList()
 {
-    // FIXME
+    mUi->paletteListWidget->clear();
+    QHash<int, QPixmap> tiles;
+
+    if (!file()) {
+        mUi->editorWidget->setTiles(tiles);
+        return;
+    }
+
+    QString tilesetFile = tilesetButtonSelection();
+    if (tilesetFile.isEmpty()) {
+        mUi->editorWidget->setTiles(tiles);
+        return;
+    }
+
+    Directory* rootDirectory = file()->rootDirectory();
+    if (!rootDirectory) {
+        mUi->editorWidget->setTiles(tiles);
+        return;
+    }
+
+    FileOrDirectory* child = rootDirectory->findChild(tilesetFile);
+    if (!child) {
+        mUi->editorWidget->setTiles(tiles);
+        QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(tilesetFile));
+        return;
+    }
+    if (child->type() != File::Type) {
+        mUi->editorWidget->setTiles(tiles);
+        QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(tilesetFile));
+        return;
+    }
+
+    File* f = static_cast<File*>(child);
+    QFile file(f->fileInfo().absoluteFilePath());
+    if (!file.open(QFile::ReadOnly)) {
+        mUi->editorWidget->setTiles(tiles);
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+        return;
+    }
+
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    TileSetFile loader(fileData);
+    TileSetData tileSet;
+    if (!loader.deserializeFromJson(&tileSet)) {
+        mUi->editorWidget->setTiles(tiles);
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(loader.lastError()));
+        return;
+    }
+
+    GfxData tileData(16, 16);
+    for (int y = 0; y < TileSetData::GridHeight; y++) {
+        for (int x = 0; x < TileSetData::GridWidth; x++) {
+            QString tileFile = tileSet.tileAt(x, y);
+            if (tileFile.isEmpty())
+                continue;
+
+            FileOrDirectory* item = rootDirectory->findChild(tileFile);
+            if (!item)
+                QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(tileFile));
+            else if (item->type() != File::Type)
+                QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(tileFile));
+            else {
+                file.setFileName(static_cast<File*>(item)->fileInfo().absoluteFilePath());
+                if (!file.open(QFile::ReadOnly)) {
+                    QMessageBox::critical(this, tr("Error"),
+                        tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+                } else {
+                    GfxFile gfxFile(file.readAll());
+                    file.close();
+                    if (!gfxFile.deserializeFromJson(&tileData)) {
+                        QMessageBox::critical(this, tr("Error"),
+                            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
+                    } else {
+                        int tileIndex = y * TileSetData::GridWidth + x;
+                        int type = QListWidgetItem::UserType + tileIndex;
+                        QString name = item->fileInfo().completeBaseName();
+                        QPixmap pixmap = QPixmap::fromImage(gfxToQImage(&tileData, gfxFile.colorMode, 2));
+                        auto item = new QListWidgetItem(pixmap, name, mUi->paletteListWidget, type);
+                        item->setSizeHint(QSize(64, 64));
+                        item->setTextAlignment(Qt::AlignCenter);
+                        tiles[tileIndex] = pixmap;
+                    }
+                }
+            }
+        }
+    }
+
+    mUi->editorWidget->setTiles(tiles);
 }
 
 bool MapEditorTab::selectItem(QComboBox* combo, const QVariant& value)

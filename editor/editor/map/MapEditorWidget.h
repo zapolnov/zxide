@@ -32,6 +32,8 @@ public:
     int height() const;
     void setSize(int w, int h);
 
+    void setTiles(QHash<int, QPixmap> tiles);
+
     bool isModified() const;
     void reset();
 

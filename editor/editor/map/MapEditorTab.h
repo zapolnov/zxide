@@ -5,6 +5,7 @@
 #include <memory>
 
 class QComboBox;
+class QListWidgetItem;
 class Ui_MapEditorTab;
 enum class MapFormat : int;
 
@@ -15,6 +16,8 @@ class MapEditorTab : public AbstractEditorTab
 public:
     explicit MapEditorTab(QWidget* parent = nullptr);
     ~MapEditorTab() override;
+
+    void selectTile(char item);
 
     bool loadFile(File* f) override;
 
@@ -73,16 +76,18 @@ private:
     void setSaved();
 
     Q_SLOT void on_editorWidget_sizeChanged();
+    Q_SLOT void on_editorWidget_itemPicked(char item);
     Q_SLOT void on_editorWidget_updateUi() { emit updateUi(); }
     Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
     Q_SLOT void on_widthSpin_valueChanged(int);
     Q_SLOT void on_heightSpin_valueChanged(int);
+    Q_SLOT void on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     Q_SLOT void on_tilesetButton_clicked();
 
     QString tilesetButtonSelection() const;
     void setTilesetButton(const QString& file);
 
-    void refreshTileList(bool forceReload = false);
+    void refreshTileList();
 
     static bool selectItem(QComboBox* combo, const QVariant& value);
     static QVariant selectedItem(const QComboBox* combo);
