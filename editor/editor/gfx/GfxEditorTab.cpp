@@ -162,6 +162,26 @@ bool GfxEditorTab::canToggleGrid() const
     return file() != nullptr;
 }
 
+bool GfxEditorTab::canRotateClockwise() const
+{
+    return file() != nullptr;
+}
+
+bool GfxEditorTab::canRotateCounterClockwise() const
+{
+    return file() != nullptr;
+}
+
+bool GfxEditorTab::canFlipVertical() const
+{
+    return file() != nullptr;
+}
+
+bool GfxEditorTab::canFlipHorizontal() const
+{
+    return file() != nullptr;
+}
+
 bool GfxEditorTab::isDrawToolActive() const
 {
     return file() && mUi->editorWidget->currentTool() == GfxEditorTool::Draw;
@@ -301,6 +321,26 @@ void GfxEditorTab::select()
 void GfxEditorTab::toggleGrid()
 {
     mUi->editorWidget->setGridVisible(!mUi->editorWidget->gridVisible());
+}
+
+void GfxEditorTab::rotateClockwise()
+{
+    mUi->editorWidget->rotateClockwise();
+}
+
+void GfxEditorTab::rotateCounterClockwise()
+{
+    mUi->editorWidget->rotateCounterClockwise();
+}
+
+void GfxEditorTab::flipVertical()
+{
+    mUi->editorWidget->flipVertical();
+}
+
+void GfxEditorTab::flipHorizontal()
+{
+    mUi->editorWidget->flipHorizontal();
 }
 
 void GfxEditorTab::reloadSettings()

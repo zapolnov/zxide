@@ -172,6 +172,11 @@
     <addaction name="actionPick"/>
     <addaction name="actionSelect"/>
     <addaction name="separator"/>
+    <addaction name="actionRotateClockwise"/>
+    <addaction name="actionRotateCounterClockwise"/>
+    <addaction name="actionFlipVertically"/>
+    <addaction name="actionFlipHorizontally"/>
+    <addaction name="separator"/>
     <addaction name="actionToggleGrid"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
@@ -793,6 +798,42 @@
    </property>
    <property name="text">
     <string>&amp;Play audio</string>
+   </property>
+  </action>
+  <action name="actionFlipHorizontally">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/shape_flip_horizontal.png</normaloff>:/resources/fatcow16x16/shape_flip_horizontal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Flip &amp;horizontally</string>
+   </property>
+  </action>
+  <action name="actionFlipVertically">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/shape_flip_vertical.png</normaloff>:/resources/fatcow16x16/shape_flip_vertical.png</iconset>
+   </property>
+   <property name="text">
+    <string>Flip &amp;vertically</string>
+   </property>
+  </action>
+  <action name="actionRotateClockwise">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/shape_rotate_clockwise.png</normaloff>:/resources/fatcow16x16/shape_rotate_clockwise.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate clock&amp;wise</string>
+   </property>
+  </action>
+  <action name="actionRotateCounterClockwise">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/shape_rotate_anticlockwise.png</normaloff>:/resources/fatcow16x16/shape_rotate_anticlockwise.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotate co&amp;unterclockwise</string>
    </property>
   </action>
  </widget>

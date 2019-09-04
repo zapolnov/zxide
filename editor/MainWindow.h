@@ -98,6 +98,10 @@ private:
     Q_SLOT void on_actionPick_triggered();
     Q_SLOT void on_actionSelect_triggered();
     Q_SLOT void on_actionToggleGrid_triggered();
+    Q_SLOT void on_actionRotateClockwise_triggered();
+    Q_SLOT void on_actionRotateCounterClockwise_triggered();
+    Q_SLOT void on_actionFlipVertically_triggered();
+    Q_SLOT void on_actionFlipHorizontally_triggered();
 
     Q_SLOT void on_actionSettings_triggered();
 

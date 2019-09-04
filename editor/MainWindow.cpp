@@ -425,6 +425,10 @@ void MainWindow::updateUi()
     mUi->actionPick->setEnabled(tab->canPick());
     mUi->actionSelect->setEnabled(tab->canSelect());
     mUi->actionToggleGrid->setEnabled(tab->canToggleGrid());
+    mUi->actionRotateClockwise->setEnabled(tab->canRotateClockwise());
+    mUi->actionRotateCounterClockwise->setEnabled(tab->canRotateCounterClockwise());
+    mUi->actionFlipVertically->setEnabled(tab->canFlipVertical());
+    mUi->actionFlipHorizontally->setEnabled(tab->canFlipHorizontal());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
     mUi->actionPlayAudio->setEnabled(mProject && !emulatorRunning);
     mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
@@ -742,6 +746,26 @@ void MainWindow::on_actionSelect_triggered()
 void MainWindow::on_actionToggleGrid_triggered()
 {
     currentTab()->toggleGrid();
+}
+
+void MainWindow::on_actionRotateClockwise_triggered()
+{
+    currentTab()->rotateClockwise();
+}
+
+void MainWindow::on_actionRotateCounterClockwise_triggered()
+{
+    currentTab()->rotateCounterClockwise();
+}
+
+void MainWindow::on_actionFlipVertically_triggered()
+{
+    currentTab()->flipVertical();
+}
+
+void MainWindow::on_actionFlipHorizontally_triggered()
+{
+    currentTab()->flipHorizontal();
 }
 
 void MainWindow::on_actionSettings_triggered()

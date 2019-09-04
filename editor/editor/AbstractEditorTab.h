@@ -40,6 +40,10 @@ public:
     virtual bool canPick() const { return false; }
     virtual bool canSelect() const { return false; }
     virtual bool canToggleGrid() const { return false; }
+    virtual bool canRotateClockwise() const { return false; }
+    virtual bool canRotateCounterClockwise() const { return false; }
+    virtual bool canFlipVertical() const { return false; }
+    virtual bool canFlipHorizontal() const { return false; }
 
     virtual bool isDrawToolActive() const { return false; }
     virtual bool isDrawRectToolActive() const { return false; }
@@ -66,6 +70,10 @@ public:
     virtual void pick() {}
     virtual void select() {}
     virtual void toggleGrid() {}
+    virtual void rotateClockwise() {}
+    virtual void rotateCounterClockwise() {}
+    virtual void flipVertical() {}
+    virtual void flipHorizontal() {}
 
     virtual void setHighlight(int line) {}
     virtual void clearHighlight() {}

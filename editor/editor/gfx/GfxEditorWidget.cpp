@@ -312,6 +312,120 @@ private:
     int mNewHeight;
 };
 
+class GfxEditorWidget::RotateClockwiseOperation : public Operation
+{
+public:
+    RotateClockwiseOperation()
+    {
+    }
+
+    void redo(GfxData* data) override
+    {
+        mOldBytes = data->bytes();
+
+        GfxData tmp(data->height(), data->width());
+        for (int y = 0; y < data->height(); y++) {
+            for (int x = 0; x < data->width(); x++)
+                tmp.at(y, x) = data->at(x, data->height() - y - 1);
+        }
+
+        for (int y = 0; y < data->height(); y++) {
+            for (int x = 0; x < data->width(); x++)
+                data->at(x, y) = (x < tmp.width() && y < tmp.height() ? tmp.at(x, y) : 0);
+        }
+    }
+
+    void undo(GfxData* data) override
+    {
+        data->setBytes(mOldBytes);
+    }
+
+private:
+    QByteArray mOldBytes;
+};
+
+class GfxEditorWidget::RotateCounterClockwiseOperation : public Operation
+{
+public:
+    RotateCounterClockwiseOperation()
+    {
+    }
+
+    void redo(GfxData* data) override
+    {
+        mOldBytes = data->bytes();
+
+        GfxData tmp(data->height(), data->width());
+        for (int y = 0; y < data->height(); y++) {
+            for (int x = 0; x < data->width(); x++)
+                tmp.at(y, x) = data->at(data->width() - x - 1, y);
+        }
+
+        for (int y = 0; y < data->height(); y++) {
+            for (int x = 0; x < data->width(); x++)
+                data->at(x, y) = (x < tmp.width() && y < tmp.height() ? tmp.at(x, y) : 0);
+        }
+    }
+
+    void undo(GfxData* data) override
+    {
+        data->setBytes(mOldBytes);
+    }
+
+private:
+    QByteArray mOldBytes;
+};
+
+class GfxEditorWidget::FlipVerticalOperation : public Operation
+{
+public:
+    FlipVerticalOperation()
+    {
+    }
+
+    void redo(GfxData* data) override
+    {
+        mOldBytes = data->bytes();
+        for (int y = 0; y < data->height() / 2; y++) {
+            for (int x = 0; x < data->width(); x++)
+                std::swap(data->at(x, y), data->at(x, data->height() - y - 1));
+        }
+    }
+
+    void undo(GfxData* data) override
+    {
+        data->setBytes(mOldBytes);
+    }
+
+private:
+    QByteArray mOldBytes;
+};
+
+class GfxEditorWidget::FlipHorizontalOperation : public Operation
+{
+public:
+    FlipHorizontalOperation()
+    {
+    }
+
+    void redo(GfxData* data) override
+    {
+        mOldBytes = data->bytes();
+        for (int y = 0; y < data->height(); y++) {
+            for (int x = 0; x < data->width() / 2; x++)
+                std::swap(data->at(x, y), data->at(data->width() - x - 1, y));
+        }
+    }
+
+    void undo(GfxData* data) override
+    {
+        data->setBytes(mOldBytes);
+    }
+
+private:
+    QByteArray mOldBytes;
+};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Tools
@@ -978,6 +1092,26 @@ void GfxEditorWidget::clearSelection()
         update();
         emit updateUi();
     }
+}
+
+void GfxEditorWidget::rotateClockwise()
+{
+    pushOperation(new RotateClockwiseOperation());
+}
+
+void GfxEditorWidget::rotateCounterClockwise()
+{
+    pushOperation(new RotateCounterClockwiseOperation());
+}
+
+void GfxEditorWidget::flipVertical()
+{
+    pushOperation(new FlipVerticalOperation());
+}
+
+void GfxEditorWidget::flipHorizontal()
+{
+    pushOperation(new FlipHorizontalOperation());
 }
 
 char GfxEditorWidget::at(int x, int y) const

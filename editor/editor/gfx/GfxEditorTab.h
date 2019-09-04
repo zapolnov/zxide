@@ -34,6 +34,10 @@ public:
     bool canColorize() const override;
     bool canSelect() const override;
     bool canToggleGrid() const override;
+    bool canRotateClockwise() const override;
+    bool canRotateCounterClockwise() const override;
+    bool canFlipVertical() const override;
+    bool canFlipHorizontal() const override;
 
     bool isDrawToolActive() const override;
     bool isDrawRectToolActive() const override;
@@ -57,6 +61,10 @@ public:
     void colorize() override;
     void select() override;
     void toggleGrid() override;
+    void rotateClockwise() override;
+    void rotateCounterClockwise() override;
+    void flipVertical() override;
+    void flipHorizontal() override;
 
     void reloadSettings() override;
 

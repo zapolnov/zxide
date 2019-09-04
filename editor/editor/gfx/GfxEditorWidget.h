@@ -71,6 +71,11 @@ public:
     void selectAll();
     void clearSelection();
 
+    void rotateClockwise();
+    void rotateCounterClockwise();
+    void flipVertical();
+    void flipHorizontal();
+
     char at(int x, int y) const;
     char at(const QPoint& p) const;
 
@@ -98,6 +103,10 @@ private:
     class ClearOperation;
     class PasteOperation;
     class ResizeOperation;
+    class RotateClockwiseOperation;
+    class RotateCounterClockwiseOperation;
+    class FlipVerticalOperation;
+    class FlipHorizontalOperation;
 
     class Tool;
     class DrawTool;

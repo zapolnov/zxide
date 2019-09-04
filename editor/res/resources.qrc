@@ -55,6 +55,10 @@
     <file>fatcow16x16/script_binary.png</file>
     <file>fatcow16x16/script_bricks.png</file>
     <file>fatcow16x16/select_by_adding_to_selection.png</file>
+    <file>fatcow16x16/shape_flip_horizontal.png</file>
+    <file>fatcow16x16/shape_flip_vertical.png</file>
+    <file>fatcow16x16/shape_rotate_anticlockwise.png</file>
+    <file>fatcow16x16/shape_rotate_clockwise.png</file>
     <file>fatcow16x16/sound_wave.png</file>
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
