@@ -1,6 +1,7 @@
 #include "MapEditorWidget.h"
 #include "compiler/MapData.h"
 #include "compiler/MapFile.h"
+#include "compiler/TileSetData.h"
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
@@ -36,51 +37,69 @@ public:
 class MapEditorWidget::DrawOperation : public Operation
 {
 public:
-    DrawOperation(int x, int y, char value)
+    DrawOperation(MapEditorWidget* widget, int x, int y, char value)
         : mX(x)
         , mY(y)
         , mNewValue(value)
     {
+        auto it = widget->mTiles.find(mNewValue);
+        mWidth = (it != widget->mTiles.end() ? it->width : 1);
+        mHeight = (it != widget->mTiles.end() ? it->height : 1);
     }
 
     void redo(MapData* data) override
     {
-        char& ref = data->at(mX, mY);
-        mOldValue = ref;
-        ref = mNewValue;
+        mOldData = data->bytes(mX, mY, mX + mWidth - 1, mY + mHeight - 1);
+        int tileX = (unsigned char)mNewValue % TileSetData::GridWidth;
+        int tileY = (unsigned char)mNewValue / TileSetData::GridWidth;
+        for (int y = 0; y < mHeight; y++) {
+            for (int x = 0; x < mWidth; x++)
+                data->at(mX + x, mY + y) = (tileY + y) * TileSetData::GridWidth + (tileX + x);
+        }
     }
 
     void undo(MapData* data) override
     {
-        data->at(mX, mY) = mOldValue;
+        data->setBytes(mX, mY, mWidth, mHeight, mOldData);
     }
 
 private:
     int mX;
     int mY;
-    char mOldValue;
+    int mWidth;
+    int mHeight;
+    QByteArray mOldData;
     char mNewValue;
 };
 
 class MapEditorWidget::DrawRectOperation : public Operation
 {
 public:
-    DrawRectOperation(const Rect& r, char value)
+    DrawRectOperation(MapEditorWidget* widget, const Rect& r, char value)
         : mRect(r)
         , mOldValue(new char[r.width() * r.height()])
         , mNewValue(value)
     {
+        auto it = widget->mTiles.find(mNewValue);
+        mTileWidth = (it != widget->mTiles.end() ? it->width : 1);
+        mTileHeight = (it != widget->mTiles.end() ? it->height : 1);
     }
 
     void redo(MapData* data) override
     {
         int w = mRect.width();
+        int tileOriginX = (unsigned char)mNewValue % TileSetData::GridWidth;
+        int tileOriginY = (unsigned char)mNewValue / TileSetData::GridWidth;
+        int tileY = 0;
         for (int y = mRect.y1; y <= mRect.y2; y++) {
+            int tileX = 0;
             for (int x = mRect.x1; x <= mRect.x2; x++) {
                 char& ref = data->at(x, y);
                 mOldValue[(y - mRect.y1) * w + (x - mRect.x1)] = ref;
-                ref = mNewValue;
+                ref = (tileOriginY + tileY) * TileSetData::GridWidth + (tileOriginX + tileX);
+                tileX = (tileX + 1) % mTileWidth;
             }
+            tileY = (tileY + 1) % mTileHeight;
         }
     }
 
@@ -95,6 +114,8 @@ public:
 
 private:
     Rect mRect;
+    int mTileWidth;
+    int mTileHeight;
     std::unique_ptr<char[]> mOldValue;
     char mNewValue;
 };
@@ -269,13 +290,15 @@ public:
         int x1 = x * TileWidth;
         int y1 = y * TileHeight;
 
+        const auto& tile = widget->mTiles[widget->mCurrentItem];
+
         painter.setOpacity(0.7f);
-        painter.drawPixmap(x1, y1, widget->mTiles[widget->mCurrentItem]);
+        painter.drawPixmap(x1, y1, tile.fullPixmap);
         painter.setOpacity(1.0f);
 
         painter.setPen(Qt::white);
         painter.setBrush(Qt::transparent);
-        painter.drawRect(x1, y1, TileWidth, TileHeight);
+        painter.drawRect(x1, y1, tile.width * TileWidth, tile.height * TileHeight);
     }
 
     void drawOverlay(MapEditorWidget* widget, QPainter& painter, int x, int y) const override
@@ -300,7 +323,7 @@ private:
             return;
         if (widget->mMapData->at(x, y) == widget->mCurrentItem)
             return;
-        widget->pushOperation(new DrawOperation(x, y, widget->mCurrentItem));
+        widget->pushOperation(new DrawOperation(widget, x, y, widget->mCurrentItem));
     }
 
     Q_DISABLE_COPY(DrawTool)
@@ -349,10 +372,22 @@ public:
         Rect r = makeMapRect(widget->mMapData);
         QRect visualRect(r.x1 * TileWidth, r.y1 * TileHeight, r.width() * TileWidth, r.height() * TileHeight);
 
+        const auto& tile = widget->mTiles[widget->mCurrentItem];
+        int tileW = tile.width;
+        int tileH = tile.height;
+
         painter.setOpacity(0.7f);
+        int tileOriginX = (unsigned char)widget->mCurrentItem % TileSetData::GridWidth;
+        int tileOriginY = (unsigned char)widget->mCurrentItem / TileSetData::GridWidth;
+        int tileY = 0;
         for (int y = r.y1; y <= r.y2; y++) {
-            for (int x = r.x1; x <= r.x2; x++)
-                painter.drawPixmap(x * TileWidth, y * TileHeight, widget->mTiles[widget->mCurrentItem]);
+            int tileX = 0;
+            for (int x = r.x1; x <= r.x2; x++) {
+                int tileIndex = (tileOriginY + tileY) * TileSetData::GridWidth + (tileOriginX + tileX);
+                painter.drawPixmap(x * TileWidth, y * TileHeight, widget->mTiles[tileIndex].pixmap);
+                tileX = (tileX + 1) % tileW;
+            }
+            tileY = (tileY + 1) % tileH;
         }
         painter.setOpacity(1.0f);
 
@@ -380,7 +415,7 @@ public:
     {
         if (!cancel) {
             Rect r = makeMapRect(widget->mMapData);
-            widget->pushOperation(new DrawRectOperation(r, widget->mCurrentItem));
+            widget->pushOperation(new DrawRectOperation(widget, r, widget->mCurrentItem));
         }
         mDragging = false;
     }
@@ -580,7 +615,7 @@ void MapEditorWidget::setSize(int w, int h)
         pushOperation(new ResizeOperation(w, h));
 }
 
-void MapEditorWidget::setTiles(QHash<int, QPixmap> tiles)
+void MapEditorWidget::setTiles(QHash<int, MapEditorTile> tiles)
 {
     mTiles = tiles;
     repaint();
@@ -870,7 +905,7 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
         for (int mapX = 0; mapX < mMapData->width(); mapX++) {
             int x = mapX * TileWidth;
             int y = mapY * TileHeight;
-            painter.drawPixmap(x, y, mTiles[mMapData->at(mapX, mapY)]);
+            painter.drawPixmap(x, y, mTiles[mMapData->at(mapX, mapY)].pixmap);
         }
     }
 

@@ -420,7 +420,7 @@ void MapEditorTab::setTilesetButton(const QString& file)
 
 void MapEditorTab::refreshTileList()
 {
-    QHash<int, QPixmap> tiles;
+    QHash<int, MapEditorTile> tiles;
 
     int selectedTile = mUi->editorWidget->currentItem();
     mUi->paletteListWidget->clear();
@@ -475,44 +475,71 @@ void MapEditorTab::refreshTileList()
         return;
     }
 
-    GfxData tileData(16, 16);
+    GfxData tileData(tileSet.tileWidth, tileSet.tileHeight);
     for (int y = 0; y < TileSetData::GridHeight; y++) {
         for (int x = 0; x < TileSetData::GridWidth; x++) {
             QString tileFile = tileSet.tileAt(x, y);
             if (tileFile.isEmpty())
                 continue;
 
-            FileOrDirectory* item = rootDirectory->findChild(tileFile);
-            if (!item)
+            FileOrDirectory* fileOrDirectory = rootDirectory->findChild(tileFile);
+            if (!fileOrDirectory) {
                 QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(tileFile));
-            else if (item->type() != File::Type)
+                continue;
+            }
+            if (fileOrDirectory->type() != File::Type) {
                 QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(tileFile));
-            else {
-                file.setFileName(static_cast<File*>(item)->fileInfo().absoluteFilePath());
-                if (!file.open(QFile::ReadOnly)) {
-                    QMessageBox::critical(this, tr("Error"),
-                        tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
-                } else {
-                    GfxFile gfxFile(file.readAll());
-                    file.close();
-                    if (!gfxFile.deserializeFromJson(&tileData)) {
-                        QMessageBox::critical(this, tr("Error"),
-                            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
-                    } else {
-                        int tileIndex = y * TileSetData::GridWidth + x;
-                        int type = QListWidgetItem::UserType + tileIndex;
-                        QString name = item->fileInfo().completeBaseName();
-                        QPixmap pixmap = QPixmap::fromImage(gfxToQImage(&tileData, gfxFile.colorMode));
-                        auto item = new QListWidgetItem(pixmap, name, mUi->paletteListWidget, type);
-                        item->setSizeHint(QSize(64, 64));
-                        item->setTextAlignment(Qt::AlignCenter);
-                        tiles[tileIndex] = pixmap;
+                continue;
+            }
 
-                        if (tileIndex == selectedTile)
-                            mUi->paletteListWidget->setCurrentItem(item);
-                    }
+            file.setFileName(static_cast<File*>(fileOrDirectory)->fileInfo().absoluteFilePath());
+            if (!file.open(QFile::ReadOnly)) {
+                QMessageBox::critical(this, tr("Error"),
+                    tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+                continue;
+            }
+
+            GfxFile gfxFile(file.readAll());
+            file.close();
+
+            if (!gfxFile.deserializeFromJson(&tileData)) {
+                QMessageBox::critical(this, tr("Error"),
+                    tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
+                continue;
+            }
+
+            int tileIndex = y * TileSetData::GridWidth + x;
+            int type = QListWidgetItem::UserType + tileIndex;
+            QString name = fileOrDirectory->fileInfo().completeBaseName();
+            QImage image = gfxToQImage(&tileData, gfxFile.colorMode);
+            QPixmap fullPixmap = QPixmap::fromImage(image);
+
+            auto item = new QListWidgetItem(fullPixmap, name, mUi->paletteListWidget, type);
+            item->setSizeHint(QSize(64, 64));
+            item->setTextAlignment(Qt::AlignCenter);
+
+            int tileW = tileSet.tileWidth;
+            int tileH = tileSet.tileHeight;
+            int nx = (tileData.width() + tileW - 1) / tileW;
+            int ny = (tileData.height() + tileH - 1) / tileH;
+            if (x + nx > TileSetData::GridWidth)
+                nx = TileSetData::GridWidth - x;
+            if (y + ny > TileSetData::GridHeight)
+                ny = TileSetData::GridHeight - y;
+
+            for (int yy = 0; yy < ny; yy++) {
+                for (int xx = 0; xx < nx; xx++) {
+                    MapEditorTile tile;
+                    tile.pixmap = QPixmap::fromImage(image.copy(xx * tileW, yy * tileH, tileW, tileH));
+                    tile.fullPixmap = (xx == 0 && yy == 0 ? fullPixmap : tile.pixmap);
+                    tile.width = (xx == 0 && yy == 0 ? nx : 1);
+                    tile.height = (xx == 0 && yy == 0 ? ny : 1);
+                    tiles[(y + yy) * TileSetData::GridWidth + (x + xx)] = tile;
                 }
             }
+
+            if (tileIndex == selectedTile)
+                mUi->paletteListWidget->setCurrentItem(item);
         }
     }
 

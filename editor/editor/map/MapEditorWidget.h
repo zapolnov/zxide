@@ -20,6 +20,14 @@ enum class MapEditorTool
     Select,
 };
 
+struct MapEditorTile
+{
+    QPixmap pixmap;
+    QPixmap fullPixmap;
+    int width = 1;
+    int height = 1;
+};
+
 class MapEditorWidget : public QWidget
 {
     Q_OBJECT
@@ -32,7 +40,7 @@ public:
     int height() const;
     void setSize(int w, int h);
 
-    void setTiles(QHash<int, QPixmap> tiles);
+    void setTiles(QHash<int, MapEditorTile> tiles);
 
     bool isModified() const;
     void reset();
@@ -127,7 +135,7 @@ private:
     std::vector<std::unique_ptr<Operation>> mUndoStack;
     size_t mUndoStackIndex;
     size_t mSavedIndex;
-    QHash<int, QPixmap> mTiles;
+    QHash<int, MapEditorTile> mTiles;
     Rect mSelection;
     QPoint mMousePosition;
     char mCurrentItem;
