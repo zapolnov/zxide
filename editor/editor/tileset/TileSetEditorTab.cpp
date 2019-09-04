@@ -8,6 +8,7 @@
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_TileSetEditorTab.h"
+#include <set>
 #include <QMessageBox>
 #include <QSaveFile>
 #include <QToolButton>
@@ -17,35 +18,47 @@
 static const int IconScale = 2;
 static const int IconWidth = 16 * IconScale;
 static const int IconHeight = 16 * IconScale;
-static const int ButtonWidth = 8 + IconWidth;
-static const int ButtonHeight = 8 + IconHeight;
+static const int ButtonPadding = 8;
+
+namespace
+{
+    class MyToolButton : public QToolButton
+    {
+    public:
+        explicit MyToolButton(QWidget* parent = nullptr) : QToolButton(parent) {}
+        void leaveEvent(QEvent* e) override { QToolButton::leaveEvent(e); }
+    };
+}
 
 TileSetEditorTab::TileSetEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
     , mUi(new Ui_TileSetEditorTab)
     , mImageMissingIcon(QStringLiteral(":/resources/tango16x16/image-missing.png"))
+    , mSavedTileWidth(TileSetFile::MinTileWidth)
+    , mSavedTileHeight(TileSetFile::MinTileHeight)
     , mModified(false)
 {
     mUi->setupUi(this);
-    mUi->scrollAreaContents->setFixedSize(TileSetData::GridWidth * ButtonWidth, TileSetData::GridHeight * ButtonHeight);
 
     mButtons.reserve(TileSetData::GridWidth * TileSetData::GridHeight);
     for (int y = 0; y < TileSetData::GridHeight; y++) {
         for (int x = 0; x < TileSetData::GridWidth; x++) {
-            QToolButton* button = new QToolButton(mUi->scrollAreaContents);
-            button->setGeometry(x * ButtonWidth, y * ButtonHeight, ButtonWidth, ButtonHeight);
+            QToolButton* button = new MyToolButton(mUi->scrollAreaContents);
             button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-            button->setIconSize(QSize(IconWidth, IconHeight));
-            button->setFixedSize(ButtonWidth, ButtonHeight);
             connect(button, &QToolButton::clicked,
                 this, std::bind(&TileSetEditorTab::onButtonClicked, this, button, x, y));
             mButtons.emplace_back(button);
         }
     }
 
-    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged,
-        this, std::bind(&TileSetEditorTab::refresh, this, true));
+    connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged, this, &TileSetEditorTab::refresh);
 
+    for (int i = TileSetFile::MinTileWidth; i <= TileSetFile::MaxTileWidth; i += 8)
+        mUi->tileWidthCombo->addItem(QString::number(i), QVariant(i));
+    for (int i = TileSetFile::MinTileHeight; i <= TileSetFile::MaxTileHeight; i += 8)
+        mUi->tileHeightCombo->addItem(QString::number(i), QVariant(i));
+
+    reset();
     refresh();
 }
 
@@ -58,6 +71,8 @@ bool TileSetEditorTab::loadFile(File* f)
     if (f == file() && isModified())
         return true;
 
+    reset();
+
     TileSetFile serializer(loadFileData(f));
     if (!serializer.deserializeFromJson(&mData)) {
         QMessageBox::critical(this, tr("Error"),
@@ -66,16 +81,23 @@ bool TileSetEditorTab::loadFile(File* f)
         return false;
     }
 
+    selectItem(mUi->tileWidthCombo, mData.tileWidth);
+    selectItem(mUi->tileHeightCombo, mData.tileHeight);
+
+    setSaved();
     refresh();
-    mModified = false;
     emit updateUi();
+
+    mUi->tileWidthCombo->setEnabled(true);
+    mUi->tileHeightCombo->setEnabled(true);
+    mUi->scrollArea->setEnabled(true);
 
     return true;
 }
 
 bool TileSetEditorTab::isModified() const
 {
-    return (file() && mModified);
+    return (file() && (mModified || mData.tileWidth != mSavedTileWidth || mData.tileHeight != mSavedTileHeight));
 }
 
 bool TileSetEditorTab::save()
@@ -110,71 +132,188 @@ bool TileSetEditorTab::save()
         return false;
     }
 
-    mModified = false;
+    setSaved();
     emit updateUi();
     emit EditorTabFactory::instance()->tileSetChanged();
 
     return true;
 }
 
-void TileSetEditorTab::refresh(bool forceReload)
+void TileSetEditorTab::on_tileWidthCombo_currentIndexChanged(int)
+{
+    mData.tileWidth = selectedItem(mUi->tileWidthCombo).toInt();
+    emit updateUi();
+    refresh();
+}
+
+void TileSetEditorTab::on_tileHeightCombo_currentIndexChanged(int)
+{
+    mData.tileHeight = selectedItem(mUi->tileHeightCombo).toInt();
+    emit updateUi();
+    refresh();
+}
+
+void TileSetEditorTab::setSaved()
+{
+    mSavedTileWidth = mData.tileWidth;
+    mSavedTileHeight = mData.tileHeight;
+    mModified = false;
+}
+
+void TileSetEditorTab::reset()
+{
+    mSavedTileWidth = TileSetFile::MinTileWidth;
+    mSavedTileHeight = TileSetFile::MinTileHeight;
+
+    selectItem(mUi->tileWidthCombo, mSavedTileWidth);
+    mUi->tileWidthCombo->setEnabled(false);
+    selectItem(mUi->tileHeightCombo, mSavedTileHeight);
+    mUi->tileHeightCombo->setEnabled(false);
+    mUi->scrollArea->setEnabled(false);
+}
+
+void TileSetEditorTab::refresh()
 {
     File* f = file();
     Directory* rootDirectory = (f ? f->rootDirectory() : nullptr);
 
-    auto data = std::make_unique<GfxData>(0, 0);
+    GfxData data(0, 0);
+    std::set<std::pair<int, int>> occupied;
+
+    int tileW = mData.tileWidth;
+    int tileH = mData.tileHeight;
+    int scaledW = tileW * IconScale;
+    int scaledH = tileH * IconScale;
+    int buttonW = scaledW + ButtonPadding;
+    int buttonH = scaledH + ButtonPadding;
+    mUi->scrollAreaContents->setFixedSize(TileSetData::GridWidth * buttonW, TileSetData::GridHeight * buttonH);
 
     for (int y = 0; y < TileSetData::GridHeight; y++) {
         for (int x = 0; x < TileSetData::GridWidth; x++) {
-            QToolButton* button = mButtons[y * TileSetData::GridWidth + x];
+            int index = y * TileSetData::GridWidth + x;
+
+            QToolButton* button = mButtons[index];
+            button->setIconSize(QSize(scaledW, scaledH));
+            button->setGeometry(x * buttonW, y * buttonH, buttonW, buttonH);
+            button->setFixedSize(buttonW, buttonH);
+
             QString file = mData.tileAt(x, y);
-            if (forceReload || button->toolTip() != file) {
-                if (file.isEmpty()) {
-                    mButtons[y * TileSetData::GridWidth + x]->setToolTip(QString());
-                    mButtons[y * TileSetData::GridWidth + x]->setIcon(QIcon());
-                } else {
-                    mButtons[y * TileSetData::GridWidth + x]->setToolTip(file);
-                    FileOrDirectory* item = (rootDirectory ? rootDirectory->findChild(file) : nullptr);
-                    if (!item) {
-                        QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(file));
-                        mButtons[y * TileSetData::GridWidth + x]->setIcon(mImageMissingIcon);
-                    } else if (item->type() != File::Type) {
-                        QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(file));
-                        mButtons[y * TileSetData::GridWidth + x]->setIcon(EditorTabFactory::instance()->folderIcon());
-                    } else {
-                        QFile file(static_cast<File*>(item)->fileInfo().absoluteFilePath());
-                        if (!file.open(QFile::ReadOnly)) {
-                            QMessageBox::critical(this, tr("Error"),
-                                tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
-                            mButtons[y * TileSetData::GridWidth + x]->setIcon(mImageMissingIcon);
-                        } else {
-                            GfxFile gfxFile(file.readAll());
-                            file.close();
-                            if (gfxFile.deserializeFromJson(data.get())) {
-                                QIcon icon = QPixmap::fromImage(gfxToQImage(data.get(), gfxFile.colorMode, IconScale));
-                                mButtons[y * TileSetData::GridWidth + x]->setIcon(icon);
-                            } else {
-                                QMessageBox::critical(this, tr("Error"),
-                                    tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
-                                mButtons[y * TileSetData::GridWidth + x]->setIcon(mImageMissingIcon);
-                            }
-                        }
-                    }
+            if (file.isEmpty()) {
+                if (occupied.find(std::make_pair(x, y)) == occupied.end()) {
+                    mButtons[index]->setToolTip(QString());
+                    mButtons[index]->setIcon(QIcon());
+                }
+                continue;
+            }
+
+            mButtons[index]->setToolTip(file);
+            FileOrDirectory* item = (rootDirectory ? rootDirectory->findChild(file) : nullptr);
+            if (!item) {
+                QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(file));
+                mButtons[index]->setIcon(mImageMissingIcon);
+                continue;
+            }
+            if (item->type() != File::Type) {
+                QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(file));
+                mButtons[index]->setIcon(EditorTabFactory::instance()->folderIcon());
+                continue;
+            }
+
+            GfxColorMode colorMode;
+            if (!loadTile(static_cast<File*>(item)->fileInfo().absoluteFilePath(), &data, &colorMode)) {
+                mButtons[index]->setIcon(mImageMissingIcon);
+                continue;
+            }
+
+            QImage image = gfxToQImage(&data, colorMode, IconScale);
+            int nx = (data.width() + tileW - 1) / tileW;
+            int ny = (data.height() + tileH - 1) / tileH;
+            for (int yy = 0; yy < ny; yy++) {
+                for (int xx = 0; xx < nx; xx++) {
+                    if (x + xx >= TileSetData::GridWidth || y + yy >= TileSetData::GridHeight)
+                        continue;
+                    QIcon icon = QPixmap::fromImage(image.copy(xx * scaledW, yy * scaledH, scaledW, scaledH));
+                    mButtons[(y + yy) * TileSetData::GridWidth + (x + xx)]->setIcon(icon);
+                    occupied.emplace(x + xx, y + yy);
                 }
             }
         }
     }
 }
 
+bool TileSetEditorTab::loadTile(const QString& fileName, GfxData* data, GfxColorMode* colorMode)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly)) {
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+        return false;
+    }
+
+    GfxFile gfxFile(file.readAll());
+    file.close();
+
+    if (!gfxFile.deserializeFromJson(data)) {
+        QMessageBox::critical(this, tr("Error"),
+            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
+        return false;
+    }
+
+    if (colorMode)
+        *colorMode = gfxFile.colorMode;
+
+    return true;
+}
+
 void TileSetEditorTab::onButtonClicked(QToolButton* button, int x, int y)
 {
     QTimer::singleShot(0, this, [this, button, x, y] {
+            button->setEnabled(false);
+
             File* selected = nullptr;
             if (selectFile(button, file(), &selected, QStringLiteral("gfx"))) {
-                mData.setTileAt(x, y, (selected ? selected->relativeName() : QString()));
+                int nx = 1, ny = 1;
+                QString file = (selected ? selected->relativeName() : QString());
+                if (!file.isEmpty()) {
+                    const int tileW = mData.tileWidth;
+                    const int tileH = mData.tileHeight;
+
+                    GfxData data(tileW, tileH);
+                    if (!loadTile(selected->fileInfo().absoluteFilePath(), &data))
+                        return;
+
+                    nx = (data.width() + tileW - 1) / tileW;
+                    ny = (data.height() + tileH - 1) / tileH;
+                }
+
+                for (int yy = 0; yy < ny; yy++) {
+                    for (int xx = 0; xx < nx; xx++)
+                        mData.setTileAt(x + xx, y + yy, (xx == 0 && yy == 0 ? file : QString()));
+                }
+
                 mModified = true;
                 refresh();
                 emit updateUi();
             }
+
+            button->setEnabled(true);
         });
+}
+
+bool TileSetEditorTab::selectItem(QComboBox* combo, const QVariant& value)
+{
+    int n = combo->count();
+    for (int i = 0; i < n; i++) {
+        if (combo->itemData(i) == value) {
+            combo->setCurrentIndex(i);
+            return true;
+        }
+    }
+    return false;
+}
+
+QVariant TileSetEditorTab::selectedItem(const QComboBox* combo)
+{
+    int selected = combo->currentIndex();
+    return (selected < 0 ? QVariant() : combo->itemData(selected));
 }

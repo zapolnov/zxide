@@ -32,6 +32,9 @@ public:
         std::map<std::pair<int, int>, QString>::const_iterator mIterator;
     };
 
+    int tileWidth;
+    int tileHeight;
+
     explicit TileSetData(QObject* parent = nullptr);
     ~TileSetData() override;
 

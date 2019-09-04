@@ -2,6 +2,8 @@
 
 TileSetData::TileSetData(QObject* parent)
     : QObject(parent)
+    , tileWidth(8)
+    , tileHeight(8)
 {
 }
 

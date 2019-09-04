@@ -65,6 +65,7 @@ public:
     char at(int x, int y) const;
     char at(const QPoint& p) const;
 
+    char currentItem() const { return mCurrentItem; }
     void setItem(char item);
 
     MapEditorTool currentTool() const;

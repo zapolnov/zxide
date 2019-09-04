@@ -8,7 +8,10 @@
 #include <memory>
 
 class QToolButton;
+class QComboBox;
 class Ui_TileSetEditorTab;
+class GfxData;
+enum class GfxColorMode : int;
 
 class TileSetEditorTab : public AbstractEditorTab
 {
@@ -28,11 +31,24 @@ private:
     std::vector<QToolButton*> mButtons;
     QIcon mImageMissingIcon;
     TileSetData mData;
+    int mSavedTileWidth;
+    int mSavedTileHeight;
     bool mModified;
 
-    void refresh(bool forceReload = false);
+    Q_SLOT void on_tileWidthCombo_currentIndexChanged(int);
+    Q_SLOT void on_tileHeightCombo_currentIndexChanged(int);
+
+    void setSaved();
+
+    void reset();
+
+    void refresh();
+    bool loadTile(const QString& fileName, GfxData* data, GfxColorMode* colorMode = nullptr);
 
     void onButtonClicked(QToolButton* button, int x, int y);
+
+    static bool selectItem(QComboBox* combo, const QVariant& value);
+    static QVariant selectedItem(const QComboBox* combo);
 
     Q_DISABLE_COPY(TileSetEditorTab)
 };

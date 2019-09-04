@@ -12,17 +12,17 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     , mUi(new Ui_GfxEditorTab)
     , mSavedFormat(GfxFormat::None)
     , mSavedColorMode(GfxColorMode::Standard)
-    , mSavedWidth(0)
-    , mSavedHeight(0)
+    , mSavedWidth(GfxFile::MinWidth)
+    , mSavedHeight(GfxFile::MinHeight)
     , mSelectedColor(-1)
 {
     mUi->setupUi(this);
     mUi->editorWidget->setPreviewWidget(mUi->previewWidget);
     mUi->splitter->setSizes(QList<int>() << (width() * 4 / 5) << (width() / 5));
 
-    for (int i = 8; i <= 256; i += 8)
+    for (int i = GfxFile::MinWidth; i <= GfxFile::MaxWidth; i += 8)
         mUi->widthCombo->addItem(QString::number(i), QVariant(i));
-    for (int i = 8; i <= 192; i += 8)
+    for (int i = GfxFile::MinHeight; i <= GfxFile::MaxHeight; i += 8)
         mUi->heightCombo->addItem(QString::number(i), QVariant(i));
 
     mUi->colorModeCombo->addItem(tr("Standard"), int(GfxColorMode::Standard));
@@ -33,6 +33,7 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("None"), int(GfxFormat::None));
     mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
 
+    reset();
     setColor(0, false);
 }
 
@@ -315,8 +316,8 @@ void GfxEditorTab::reset()
 {
     mSavedFormat = GfxFormat::None;
     mSavedColorMode = GfxColorMode::Standard;
-    mSavedWidth = 0;
-    mSavedHeight = 0;
+    mSavedWidth = GfxFile::MinWidth;
+    mSavedHeight = GfxFile::MinHeight;
 
     mUi->formatCombo->setCurrentIndex(-1);
     mUi->formatCombo->setEnabled(false);

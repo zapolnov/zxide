@@ -9,6 +9,8 @@ static const int FileFormatVersion = 1;
 
 static const QString JsonKey_Version = QStringLiteral("version");
 static const QString JsonKey_Tiles = QStringLiteral("tiles");
+static const QString JsonKey_TileWidth = QStringLiteral("tileWidth");
+static const QString JsonKey_TileHeight = QStringLiteral("tileHeight");
 static const QString JsonKey_X = QStringLiteral("x");
 static const QString JsonKey_Y = QStringLiteral("y");
 static const QString JsonKey_File = QStringLiteral("file");
@@ -50,6 +52,19 @@ bool TileSetFile::deserializeFromJson(TileSetData* data)
 
     data->clear();
 
+    data->tileWidth = root[JsonKey_TileWidth].toInt();
+    data->tileHeight = root[JsonKey_TileHeight].toInt();
+
+    if (data->tileWidth < MinTileWidth)
+        data->tileWidth = MinTileWidth;
+    if (data->tileWidth > MaxTileWidth)
+        data->tileWidth = MaxTileWidth;
+
+    if (data->tileHeight < MinTileHeight)
+        data->tileHeight = MinTileHeight;
+    if (data->tileHeight > MaxTileHeight)
+        data->tileHeight = MaxTileHeight;
+
     QJsonArray tiles = root[JsonKey_Tiles].toArray();
     int n = tiles.count();
     for (int i = 0; i < n; i++) {
@@ -69,6 +84,8 @@ void TileSetFile::serializeToJson(const TileSetData* data)
     QJsonObject root;
 
     root[JsonKey_Version] = FileFormatVersion;
+    root[JsonKey_TileWidth] = data->tileWidth;
+    root[JsonKey_TileHeight] = data->tileHeight;
 
     QJsonArray tiles;
     for (const auto& it : *data) {

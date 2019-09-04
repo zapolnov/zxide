@@ -420,8 +420,10 @@ void MapEditorTab::setTilesetButton(const QString& file)
 
 void MapEditorTab::refreshTileList()
 {
-    mUi->paletteListWidget->clear();
     QHash<int, QPixmap> tiles;
+
+    int selectedTile = mUi->editorWidget->currentItem();
+    mUi->paletteListWidget->clear();
 
     if (!file()) {
         mUi->editorWidget->setTiles(tiles);
@@ -500,11 +502,14 @@ void MapEditorTab::refreshTileList()
                         int tileIndex = y * TileSetData::GridWidth + x;
                         int type = QListWidgetItem::UserType + tileIndex;
                         QString name = item->fileInfo().completeBaseName();
-                        QPixmap pixmap = QPixmap::fromImage(gfxToQImage(&tileData, gfxFile.colorMode, 2));
+                        QPixmap pixmap = QPixmap::fromImage(gfxToQImage(&tileData, gfxFile.colorMode));
                         auto item = new QListWidgetItem(pixmap, name, mUi->paletteListWidget, type);
                         item->setSizeHint(QSize(64, 64));
                         item->setTextAlignment(Qt::AlignCenter);
                         tiles[tileIndex] = pixmap;
+
+                        if (tileIndex == selectedTile)
+                            mUi->paletteListWidget->setCurrentItem(item);
                     }
                 }
             }

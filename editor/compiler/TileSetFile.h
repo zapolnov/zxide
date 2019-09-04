@@ -8,6 +8,11 @@ class TileSetData;
 class TileSetFile
 {
 public:
+    static const int MinTileWidth = 8;
+    static const int MinTileHeight = 8;
+    static const int MaxTileWidth = 64;
+    static const int MaxTileHeight = 64;
+
     TileSetFile();
     explicit TileSetFile(const QByteArray& data);
     ~TileSetFile();

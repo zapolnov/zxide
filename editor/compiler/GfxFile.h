@@ -7,6 +7,11 @@
 class GfxFile
 {
 public:
+    static const int MinWidth = 8;
+    static const int MinHeight = 8;
+    static const int MaxWidth = 256;
+    static const int MaxHeight = 192;
+
     GfxFormat format;
     GfxColorMode colorMode;
 
