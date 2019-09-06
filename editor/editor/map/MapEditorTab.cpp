@@ -511,10 +511,12 @@ void MapEditorTab::refreshTileList()
             int tileIndex = y * TileSetData::GridWidth + x;
             int type = QListWidgetItem::UserType + tileIndex;
             QString name = fileOrDirectory->fileInfo().completeBaseName();
-            QImage image = gfxToQImage(&tileData, gfxFile.colorMode);
-            QPixmap fullPixmap = QPixmap::fromImage(image);
+            QImage image1 = gfxToQImage(&tileData, gfxFile.colorMode, 1, false);
+            QImage image2 = gfxToQImage(&tileData, gfxFile.colorMode, 1, true);
+            QPixmap fullPixmap1 = QPixmap::fromImage(image1);
+            QPixmap fullPixmap2 = QPixmap::fromImage(image2);
 
-            auto item = new QListWidgetItem(fullPixmap, name, mUi->paletteListWidget, type);
+            auto item = new QListWidgetItem(fullPixmap1, name, mUi->paletteListWidget, type);
             item->setSizeHint(QSize(64, 64));
             item->setTextAlignment(Qt::AlignCenter);
 
@@ -530,8 +532,9 @@ void MapEditorTab::refreshTileList()
             for (int yy = 0; yy < ny; yy++) {
                 for (int xx = 0; xx < nx; xx++) {
                     MapEditorTile tile;
-                    tile.pixmap = QPixmap::fromImage(image.copy(xx * tileW, yy * tileH, tileW, tileH));
-                    tile.fullPixmap = (xx == 0 && yy == 0 ? fullPixmap : tile.pixmap);
+                    tile.pixmap1 = QPixmap::fromImage(image1.copy(xx * tileW, yy * tileH, tileW, tileH));
+                    tile.pixmap2 = QPixmap::fromImage(image2.copy(xx * tileW, yy * tileH, tileW, tileH));
+                    tile.fullPixmap = (xx == 0 && yy == 0 ? fullPixmap1 : tile.pixmap1);
                     tile.width = (xx == 0 && yy == 0 ? nx : 1);
                     tile.height = (xx == 0 && yy == 0 ? ny : 1);
                     tiles[(y + yy) * TileSetData::GridWidth + (x + xx)] = tile;

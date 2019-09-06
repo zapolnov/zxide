@@ -10,6 +10,7 @@
 #include <QMimeData>
 #include <QApplication>
 #include <QDataStream>
+#include <QTimer>
 #include <QMouseEvent>
 
 static const int TileWidth = 16;
@@ -384,7 +385,7 @@ public:
             int tileX = 0;
             for (int x = r.x1; x <= r.x2; x++) {
                 int tileIndex = (tileOriginY + tileY) * TileSetData::GridWidth + (tileOriginX + tileX);
-                painter.drawPixmap(x * TileWidth, y * TileHeight, widget->mTiles[tileIndex].pixmap);
+                painter.drawPixmap(x * TileWidth, y * TileHeight, widget->mTiles[tileIndex].pixmap1);
                 tileX = (tileX + 1) % tileW;
             }
             tileY = (tileY + 1) % tileH;
@@ -582,9 +583,14 @@ MapEditorWidget::MapEditorWidget(QWidget* parent)
     , mMousePosition(-1, -1)
     , mCurrentItem(0)
     , mMousePressed(false)
+    , mFlash(false)
 {
     mMapData = new MapData(1, 1, this);
     setMouseTracking(true);
+
+    mTimer = new QTimer(this);
+    mTimer->start(1000 * 16 / 50);
+    connect(mTimer, &QTimer::timeout, this, [this]{ mFlash = !mFlash; repaint(); });
 
     auto onSizeChanged = [this] {
             setFixedSize(mMapData->width() * TileWidth, mMapData->height() * TileHeight);
@@ -903,9 +909,10 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
 
     for (int mapY = 0; mapY < mMapData->height(); mapY++) {
         for (int mapX = 0; mapX < mMapData->width(); mapX++) {
+            const auto& tile = mTiles[mMapData->at(mapX, mapY)];
             int x = mapX * TileWidth;
             int y = mapY * TileHeight;
-            painter.drawPixmap(x, y, mTiles[mMapData->at(mapX, mapY)].pixmap);
+            painter.drawPixmap(x, y, (mFlash ? tile.pixmap2 : tile.pixmap1));
         }
     }
 

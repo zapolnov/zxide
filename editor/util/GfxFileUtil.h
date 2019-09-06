@@ -8,6 +8,6 @@ enum class GfxColorMode : int;
 
 extern const QColor GfxFilePalette[];
 
-QImage gfxToQImage(const GfxData* data, GfxColorMode mode, int scale = 1);
+QImage gfxToQImage(const GfxData* data, GfxColorMode mode, int scale = 1, bool flash = false);
 
 #endif

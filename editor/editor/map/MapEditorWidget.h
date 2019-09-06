@@ -22,7 +22,8 @@ enum class MapEditorTool
 
 struct MapEditorTile
 {
-    QPixmap pixmap;
+    QPixmap pixmap1;
+    QPixmap pixmap2;
     QPixmap fullPixmap;
     int width = 1;
     int height = 1;
@@ -131,6 +132,7 @@ private:
     };
 
     MapData* mMapData;
+    QTimer* mTimer;
     std::unique_ptr<Tool> mCurrentTool;
     std::vector<std::unique_ptr<Operation>> mUndoStack;
     size_t mUndoStackIndex;
@@ -140,6 +142,7 @@ private:
     QPoint mMousePosition;
     char mCurrentItem;
     bool mMousePressed;
+    bool mFlash;
     static bool mGridVisible;
 
     void cancelInput();

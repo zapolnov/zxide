@@ -23,7 +23,7 @@ const QColor GfxFilePalette[] = {
         QColor(0xff, 0xff, 0xff),
     };
 
-QImage gfxToQImage(const GfxData* data, GfxColorMode mode, int scale)
+QImage gfxToQImage(const GfxData* data, GfxColorMode mode, int scale, bool flash)
 {
     int w = data->width();
     int h = data->height();
@@ -33,6 +33,9 @@ QImage gfxToQImage(const GfxData* data, GfxColorMode mode, int scale)
         for (int x = 0; x < w; x++) {
             char value = data->at(x, y);
             char attrib = data->attribAt(x, y, mode);
+
+            if ((attrib & 0x80) != 0 && flash)
+                value = !value;
 
             int color = (value ? attrib & 7 : (attrib & 0x38) >> 3);
             if (attrib & 0x40)
