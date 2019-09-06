@@ -178,7 +178,8 @@ namespace
     {
     public:
         VirtualFile()
-            : mDestroyed(0)
+            : mSize(0)
+            , mDestroyed(0)
         {
             mHandle = af_virtual_file_new();
             if (!mHandle)
@@ -253,7 +254,7 @@ namespace
 
             AFfileoffset curOffset = self->mOffset;
             AFfileoffset newOffset = curOffset + nbytes;
-            if (newOffset > self->mSize) {
+            if (newOffset >= self->mSize) {
                 int newLength = self->mBuffer.length();
                 if (newLength == 0)
                     newLength = 16384;
