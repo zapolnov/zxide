@@ -12,6 +12,11 @@ add_subdirectory(scripting)
 qt_add_executable(GameEditor USES Core Gui Widgets Multimedia Network)
 target_link_libraries(GameEditor Lua Scintilla Compiler Scripting Fuse)
 
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    find_library(LIBPULSE pulse)
+    target_link_libraries(GameEditor ${LIBPULSE})
+endif()
+
 qt_add_sources(GameEditor
         debugger/DisplayWidget.cpp
         debugger/DisplayWidget.h
