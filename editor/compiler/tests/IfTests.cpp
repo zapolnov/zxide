@@ -65,6 +65,7 @@ TEST_CASE("if", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ in if", "[if]")
@@ -95,6 +96,7 @@ TEST_CASE("equ in if", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in if 1", "[if]")
@@ -127,6 +129,7 @@ TEST_CASE("equ with label in if 1", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in if 2", "[if]")
@@ -159,6 +162,7 @@ TEST_CASE("equ with label in if 2", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in if 3", "[if]")
@@ -191,6 +195,7 @@ TEST_CASE("equ with label in if 3", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in if 4", "[if]")
@@ -246,6 +251,7 @@ TEST_CASE("equ with local label in if 1", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with local label in if 2", "[if]")
@@ -280,6 +286,7 @@ TEST_CASE("equ with local label in if 2", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("expression as condition", "[if]")
@@ -309,6 +316,7 @@ TEST_CASE("expression as condition", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("missing endif", "[if]")
@@ -369,6 +377,7 @@ TEST_CASE("local labels in if", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("local labels context affinity in if 1", "[if]")
@@ -431,6 +440,7 @@ TEST_CASE("local labels context affinity in if 2", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("local labels context affinity in if 3", "[if]")
@@ -574,6 +584,7 @@ TEST_CASE("local labels context affinity in if 3", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("disallow global labels in if 1", "[if]")
@@ -685,6 +696,7 @@ TEST_CASE("if/repeat nesting 1", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("if/repeat nesting 2", "[if]")
@@ -731,4 +743,5 @@ TEST_CASE("if/repeat nesting 2", "[if]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }

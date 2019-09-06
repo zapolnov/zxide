@@ -24,7 +24,9 @@ private:
     Program* mProgram;
     IErrorReporter* mReporter;
 
-    std::vector<ProgramSection*> collectSections() const;
+    bool isEmpty(const std::vector<ProgramSection*>& sections) const;
+    bool hasCode(const std::vector<ProgramSection*>& sections) const;
+    std::vector<ProgramSection*> collectSections(int bank) const;
 
     void error(const QString& message);
 

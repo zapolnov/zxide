@@ -23,6 +23,7 @@ TEST_CASE("forward label", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("backward label", "[labels]")
@@ -45,6 +46,7 @@ TEST_CASE("backward label", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("duplicate label", "[labels]")
@@ -122,6 +124,7 @@ TEST_CASE("local labels", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("duplicate local label", "[labels]")
@@ -209,6 +212,7 @@ TEST_CASE("label arithmetics", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("orphan local label", "[labels]")
@@ -254,6 +258,7 @@ TEST_CASE("ld a, (label)", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("reference labels between multiple files", "[labels]")
@@ -293,6 +298,7 @@ TEST_CASE("reference labels between multiple files", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("label at 64K", "[labels]")
@@ -312,6 +318,7 @@ TEST_CASE("label at 64K", "[labels]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("label over 64K", "[labels]")

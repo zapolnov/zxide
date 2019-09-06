@@ -1,6 +1,7 @@
 #include "TapeFileWriter.h"
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
+#include "compiler/ProgramSection.h"
 #include "compiler/Util.h"
 #include <QFileInfo>
 #include <QCoreApplication>
@@ -503,14 +504,26 @@ bool TapeFileWriter::makeTape()
             mTape->appendBlockByteArray(mBasicCode, 255);
         }
 
-        TapeCodeHeader programHeader;
-        programHeader.setName(mProgramName);
-        programHeader.setSize(mProgram->codeLength());
-        programHeader.setStartAddress(mProgram->baseAddress());
-        mTape->appendBlockString(programHeader.toBinary(), 0);
-        mTape->appendBlockRaw(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
+        for (int i = -1; i <= ProgramSection::MaxBank; i++) {
+            if (mProgram->hasBank(i)) {
+                mProgram->setCurrentBank(i);
+
+                TapeCodeHeader programHeader;
+                programHeader.setName(i < 0 ? mProgramName : "bank" + std::to_string(i));
+                programHeader.setSize(mProgram->codeLength());
+                programHeader.setStartAddress(mProgram->baseAddress());
+                mTape->appendBlockString(programHeader.toBinary(), 0);
+                mTape->appendBlockRaw(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
+            }
+        }
+
+        mProgram->setCurrentBank(-1);
     } catch (const TapeFileWriterException&) {
+        mProgram->setCurrentBank(-1);
         return false;
+    } catch (...) {
+        mProgram->setCurrentBank(-1);
+        throw;
     }
 
     return true;

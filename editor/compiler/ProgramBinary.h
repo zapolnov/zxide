@@ -2,6 +2,7 @@
 #define COMPILER_PROGRAMBINARY_H
 
 #include <QtGlobal>
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -14,13 +15,18 @@ public:
     explicit ProgramBinary(unsigned baseAddr);
     ~ProgramBinary();
 
-    unsigned baseAddress() const { return mBaseAddress; }
-    unsigned endAddress() const { return mEndAddress; }
+    unsigned baseAddress() const { return bank().baseAddress; }
+    unsigned endAddress() const { return bank().endAddress; }
 
-    const quint8* codeBytes() const { return mCode.data(); }
-    size_t codeLength() const { return mCode.size(); }
+    int currentBank() const { return mCurrentBank; }
+    void setCurrentBank(int bank);
+    void setCurrentBank(int bank, unsigned baseAddress);
+    bool hasBank(int bank) { return bank == -1 || mBanks.find(bank) != mBanks.end(); }
 
-    ProgramDebugInfo* debugInfo() const { return mDebugInfo.get(); }
+    const quint8* codeBytes() const { return bank().code.data(); }
+    size_t codeLength() const { return bank().code.size(); }
+
+    ProgramDebugInfo* debugInfo() const { return bank().debugInfo.get(); }
 
     void emitByte(File* file, int line, quint8 byte);
     void emitWord(File* file, int line, quint16 word);
@@ -28,10 +34,20 @@ public:
     void emitQWord(File* file, int line, quint64 qword);
 
 private:
-    std::vector<quint8> mCode;
-    std::unique_ptr<ProgramDebugInfo> mDebugInfo;
-    unsigned mBaseAddress;
-    unsigned mEndAddress;
+    struct Bank
+    {
+        std::vector<quint8> code;
+        std::unique_ptr<ProgramDebugInfo> debugInfo;
+        unsigned baseAddress;
+        unsigned endAddress;
+    };
+
+    std::map<int, Bank> mBanks;
+    int mCurrentBank;
+
+    const Bank& bank() const;
+    Bank& bank();
+    std::map<int, Bank>::iterator createBank(int bank, unsigned baseAddress);
 
     Q_DISABLE_COPY(ProgramBinary)
 };

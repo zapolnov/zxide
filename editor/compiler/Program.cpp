@@ -76,13 +76,13 @@ ProgramLabel* Program::findLabel(const std::string& name) const
     return (it != mLabels.end() ? it->second : nullptr);
 }
 
-ProgramSection* Program::getOrCreateSection(const std::string& name)
+ProgramSection* Program::getOrCreateSection(const std::string& name, const Token& token)
 {
     auto it = mSections.find(name);
     if (it != mSections.end())
         return it->second.get();
 
-    auto section = std::make_unique<ProgramSection>(this, name);
+    auto section = std::make_unique<ProgramSection>(this, token, name);
     ProgramSection* ptr = section.get();
     mSections[name] = std::move(section);
 

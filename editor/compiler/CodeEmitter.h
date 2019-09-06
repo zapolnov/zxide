@@ -23,6 +23,7 @@ public:
     virtual ~CodeEmitter();
 
     bool isEmpty() const { return mOpcodes.empty(); }
+    bool hasCode(const Program* program, IErrorReporter* reporter) const;
 
     template <typename T, typename... ARGS> T* emit(ARGS&&... args)
     {

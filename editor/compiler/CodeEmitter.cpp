@@ -16,6 +16,15 @@ CodeEmitter::~CodeEmitter()
 {
 }
 
+bool CodeEmitter::hasCode(const Program* program, IErrorReporter* reporter) const
+{
+    for (const auto& opcode : mOpcodes) {
+        if (opcode->lengthInBytes(program, reporter) != 0)
+            return true;
+    }
+    return false;
+}
+
 unsigned CodeEmitter::totalLengthInBytes(const Program* program, IErrorReporter* reporter) const
 {
     unsigned n = 0;

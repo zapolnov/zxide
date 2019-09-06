@@ -40,6 +40,7 @@ TEST_CASE("repeat", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("repeat with counter", "[repeat]")
@@ -98,6 +99,7 @@ TEST_CASE("repeat with counter", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("non-conflicting name in repeat", "[repeat]")
@@ -123,6 +125,7 @@ TEST_CASE("non-conflicting name in repeat", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("conflicting name in repeat 1", "[repeat]")
@@ -245,6 +248,7 @@ TEST_CASE("equ in repeat", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in repeat 1", "[repeat]")
@@ -276,6 +280,7 @@ TEST_CASE("equ with label in repeat 1", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ with label in repeat 2", "[repeat]")
@@ -328,6 +333,7 @@ TEST_CASE("equ with label in repeat 3", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("expression as repeat counter", "[repeat]")
@@ -373,6 +379,7 @@ TEST_CASE("expression as repeat counter", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("missing endrepeat", "[repeat]")
@@ -395,6 +402,7 @@ TEST_CASE("negative repeat count", "[repeat]")
         "section main [base 0x100]\n"
         "repeat -1\n"
         "endrepeat\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
@@ -410,6 +418,7 @@ TEST_CASE("too large repeat count", "[repeat]")
         "section main [base 0x100]\n"
         "repeat 0x10000\n"
         "endrepeat\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
@@ -492,6 +501,7 @@ TEST_CASE("local labels in repeat", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("local labels context affinity 1", "[repeat]")
@@ -554,6 +564,7 @@ TEST_CASE("local labels context affinity 2", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("local labels context affinity 3", "[repeat]")
@@ -689,6 +700,7 @@ TEST_CASE("local labels context affinity 3", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("disallow global labels in repeat 1", "[repeat]")
@@ -770,4 +782,5 @@ TEST_CASE("relative local labels in repeat", "[repeat]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }

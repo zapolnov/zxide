@@ -4,6 +4,7 @@
 #include "Linker.h"
 #include "Program.h"
 #include "ProgramBinary.h"
+#include "ProgramSection.h"
 #include "ErrorConsumer.h"
 #include "DataBlob.h"
 
@@ -19,7 +20,18 @@ static DataBlob link(IErrorReporter& errorConsumer, Program* program)
 {
     Linker linker(program, &errorConsumer);
     auto binary = linker.emitCode();
-    return (binary ? DataBlob(binary->codeBytes(), binary->codeLength()) : DataBlob());
+    if (!binary)
+        return DataBlob();
+
+    DataBlob result(binary->codeBytes(), binary->codeLength());
+    for (int i = 0; i <= ProgramSection::MaxBank; i++) {
+        if (binary->hasBank(i)) {
+            binary->setCurrentBank(i);
+            result.setBankData(i, DataBlob(binary->codeBytes(), binary->codeLength()));
+        }
+    }
+
+    return result;
 }
 
 DataBlob assemble(IErrorReporter& errorConsumer, const char* source)

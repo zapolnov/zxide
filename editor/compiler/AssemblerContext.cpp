@@ -130,7 +130,7 @@ bool AssemblerContext::setCurrentSection(ProgramSection*)
 AssemblerDefaultContext::AssemblerDefaultContext(Program* program)
     : AssemblerContext(nullptr)
 {
-    mSection = program->getOrCreateSection(std::string());
+    mSection = program->getOrCreateSection(std::string(), Token{});
 }
 
 std::unique_ptr<AssemblerContext> AssemblerDefaultContext::clone() const

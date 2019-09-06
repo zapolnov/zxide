@@ -28,7 +28,7 @@ public:
     ProgramLabel* findLabel(const std::string& name) const;
 
     size_t sectionCount() const { return mSections.size(); }
-    ProgramSection* getOrCreateSection(const std::string& name);
+    ProgramSection* getOrCreateSection(const std::string& name, const Token& token);
     void forEachSection(const std::function<void(ProgramSection*)>& iterator) const;
 
 private:

@@ -28,6 +28,7 @@ TEST_CASE("equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("referencing other equ", "[equ]")
@@ -55,6 +56,7 @@ TEST_CASE("referencing other equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("duplicate equ", "[equ]")
@@ -109,6 +111,7 @@ TEST_CASE("local equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("duplicate local equ", "[equ]")
@@ -181,6 +184,7 @@ TEST_CASE("equ arithmetics", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("conflicting equ name with label", "[equ]")
@@ -264,6 +268,7 @@ TEST_CASE("reference equ between multiple files", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("labels in equ", "[equ]")
@@ -323,6 +328,7 @@ TEST_CASE("labels in equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("circular reference", "[equ]")
@@ -331,6 +337,7 @@ TEST_CASE("circular reference", "[equ]")
         "section main [base 0x100]\n"
         "x equ y\n"
         "y equ x\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
@@ -349,6 +356,7 @@ TEST_CASE("deeper circular reference", "[equ]")
         "y equ z+4\n"
         "z equ 12-w+5\n"
         "w equ 3+x\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
@@ -388,6 +396,7 @@ TEST_CASE("'$' in equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("ensure unused equs are validated", "[equ]")
@@ -395,6 +404,7 @@ TEST_CASE("ensure unused equs are validated", "[equ]")
     static const char source[] =
         "section main [base 0x100]\n"
         "x equ y+4\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
@@ -426,6 +436,7 @@ TEST_CASE("equ in bit instruction", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }
 
 TEST_CASE("equ in rst instruction", "[equ]")
@@ -446,4 +457,5 @@ TEST_CASE("equ in rst instruction", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasBanks());
 }

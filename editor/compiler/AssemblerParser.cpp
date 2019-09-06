@@ -159,7 +159,7 @@ void AssemblerParser::parseLine()
 void AssemblerParser::parseSectionDecl()
 {
     std::string sectionName = expectIdentifier(nextToken());
-    auto section = mProgram->getOrCreateSection(sectionName);
+    auto section = mProgram->getOrCreateSection(sectionName, lastToken());
 
     if (!mContext->setCurrentSection(section))
         error(tr("'section' directive is not allowed in this context"));
@@ -188,7 +188,24 @@ void AssemblerParser::parseSectionDecl()
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
                         .arg(section->nameCStr()).arg(base, 0, 16).arg(section->alignment()));
                 }
+                if (section->hasBank() && !ProgramSection::isValidBaseForBank(section->bank(), base)) {
+                    error(tr("invalid base address 0x%1 for section '%2' in bank %3")
+                        .arg(base, 0, 16).arg(section->nameCStr()).arg(section->bank()));
+                }
                 section->setBase(base);
+            } else if (param == "bank") {
+                auto bank = (unsigned)parseNumber(nextToken(), 0, 0xFFFFFFFF);
+                if (!ProgramSection::isValidBankNumber(bank))
+                    error(tr("invalid bank %1").arg(bank));
+                if (section->hasBank() && section->bank() != bank) {
+                    error(tr("conflicting bank for section '%1' (%2 != %3)")
+                        .arg(section->nameCStr()).arg(bank).arg(section->bank()));
+                }
+                if (section->hasBase() && !ProgramSection::isValidBaseForBank(bank, section->base())) {
+                    error(tr("invalid base address 0x%1 for section '%2' in bank %3")
+                        .arg(section->base(), 0, 16).arg(section->nameCStr()).arg(bank));
+                }
+                section->setBank(bank);
             } else
                 error(tr("unexpected '%1'").arg(lastTokenCStr()));
 
