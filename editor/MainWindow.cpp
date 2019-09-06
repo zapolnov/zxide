@@ -458,12 +458,17 @@ void MainWindow::updateUi()
         // clear out remaining picture from the framebuffer
         QDockWidget* dockWidget = mUi->displayDockWidget;
         DisplayWidget* displayWidget = mUi->displayWidget;
+
+        #pragma warning(push)
+        #pragma warning(disable:4573) // 'QObject::disconnect' requires the compiler to capture 'this' (NB: not really)
         auto conn = std::make_shared<QMetaObject::Connection>();
         *conn = connect(displayWidget, &QOpenGLWidget::frameSwapped, dockWidget, [dockWidget, conn] {
                 if (!EmulatorCore::instance()->isRunning())
                     dockWidget->hide();
                 QObject::disconnect(*conn);
             });
+        #pragma warning(pop)
+
         displayWidget->repaint();
     }
 
