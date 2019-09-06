@@ -433,30 +433,28 @@ void GfxEditorTab::setColor(int color, bool setTool)
     else
         color &= ~16;
 
-    if (mSelectedColor != color) {
-        mSelectedColor = color;
+    mSelectedColor = color;
 
-        mUi->editorWidget->setColor(color);
-        if (setTool)
-            mUi->editorWidget->setTool(GfxEditorTool::Colorize);
+    mUi->editorWidget->setColor(color);
+    if (setTool)
+        mUi->editorWidget->setTool(GfxEditorTool::Colorize);
 
-        mUi->blackButton->setChecked((color & 7) == 0);
-        mUi->blueButton->setChecked((color & 15) == 1);
-        mUi->redButton->setChecked((color & 15) == 2);
-        mUi->magentaButton->setChecked((color & 15) == 3);
-        mUi->greenButton->setChecked((color & 15) == 4);
-        mUi->cyanButton->setChecked((color & 15) == 5);
-        mUi->yellowButton->setChecked((color & 15) == 6);
-        mUi->whiteButton->setChecked((color & 15) == 7);
+    mUi->blackButton->setChecked((color & 7) == 0);
+    mUi->blueButton->setChecked((color & 15) == 1);
+    mUi->redButton->setChecked((color & 15) == 2);
+    mUi->magentaButton->setChecked((color & 15) == 3);
+    mUi->greenButton->setChecked((color & 15) == 4);
+    mUi->cyanButton->setChecked((color & 15) == 5);
+    mUi->yellowButton->setChecked((color & 15) == 6);
+    mUi->whiteButton->setChecked((color & 15) == 7);
 
-        mUi->brightBlueButton->setChecked((color & 15) == 9);
-        mUi->brightRedButton->setChecked((color & 15) == 10);
-        mUi->brightMagentaButton->setChecked((color & 15) == 11);
-        mUi->brightGreenButton->setChecked((color & 15) == 12);
-        mUi->brightCyanButton->setChecked((color & 15) == 13);
-        mUi->brightYellowButton->setChecked((color & 15) == 14);
-        mUi->brightWhiteButton->setChecked((color & 15) == 15);
+    mUi->brightBlueButton->setChecked((color & 15) == 9);
+    mUi->brightRedButton->setChecked((color & 15) == 10);
+    mUi->brightMagentaButton->setChecked((color & 15) == 11);
+    mUi->brightGreenButton->setChecked((color & 15) == 12);
+    mUi->brightCyanButton->setChecked((color & 15) == 13);
+    mUi->brightYellowButton->setChecked((color & 15) == 14);
+    mUi->brightWhiteButton->setChecked((color & 15) == 15);
 
-        mUi->blinkingCheck->setChecked((color & 16) != 0);
-    }
+    mUi->blinkingCheck->setChecked((color & 16) != 0);
 }

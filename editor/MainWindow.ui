@@ -80,7 +80,6 @@
    <addaction name="actionToggleGrid"/>
    <addaction name="separator"/>
    <addaction name="actionBuild"/>
-   <addaction name="actionPlayAudio"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
    <addaction name="actionPause"/>
@@ -578,7 +577,7 @@
     <string>Step &amp;into</string>
    </property>
    <property name="shortcut">
-    <string>F7</string>
+    <string>F11</string>
    </property>
   </action>
   <action name="actionStepOver">
@@ -590,7 +589,7 @@
     <string>Step &amp;over</string>
    </property>
    <property name="shortcut">
-    <string>F8</string>
+    <string>F10</string>
    </property>
   </action>
   <action name="actionStepOut">
@@ -602,7 +601,7 @@
     <string>Step ou&amp;t</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F8</string>
+    <string>Ctrl+F11</string>
    </property>
   </action>
   <action name="actionRunToCursor">
