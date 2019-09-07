@@ -7,7 +7,7 @@
 #include <sstream>
 #include <lua.hpp>
 
-static int luaGfxLoad(lua_State* L)
+int luaGfxLoad(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
 

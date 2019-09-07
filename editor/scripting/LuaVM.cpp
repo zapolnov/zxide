@@ -2,6 +2,7 @@
 #include "LuaFiles.h"
 #include "LuaGfx.h"
 #include "LuaTileSet.h"
+#include "LuaMap.h"
 #include <QFile>
 #include <QCoreApplication>
 
@@ -38,6 +39,7 @@ void LuaVM::openLibs()
     openLib(LuaFiles);
     openLib(LuaGfx);
     openLib(LuaTileSet);
+    openLib(LuaMap);
 }
 
 void LuaVM::openLib(const char* name, lua_CFunction func)
