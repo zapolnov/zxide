@@ -101,6 +101,23 @@ void Compiler::compile()
         if (!compileBasicCode())
             throw CompilationFailed();
 
+      #if 1 // FIXME: make configurable
+        setStatusText(tr("Writing bin files..."));
+        for (int i = -1; i <= ProgramSection::MaxBank; i++) {
+            if (mProgramBinary->hasBank(i)) {
+                mProgramBinary->setCurrentBank(i);
+                QString fileName = (i < 0 ? QStringLiteral("main@%1.bin") : QStringLiteral("bank%1@%2.bin").arg(i));
+                fileName = fileName.arg(mProgramBinary->baseAddress(), 0, 16);
+                fileName = QDir(QFileInfo(mOutputTapeFile).absolutePath()).absoluteFilePath(fileName);
+                std::vector<char> data;
+                data.resize(mProgramBinary->baseAddress() + mProgramBinary->codeLength());
+                memcpy(data.data() + mProgramBinary->baseAddress(), mProgramBinary->codeBytes(), mProgramBinary->codeLength());
+                writeFile(fileName, data.data(), data.size(), this);
+            }
+        }
+        mProgramBinary->setCurrentBank(-1);
+      #endif
+
         setStatusText(tr("Writing tape file..."));
         TapeFileWriter tapeWriter(mProgramBinary.get(), this);
         tapeWriter.setBasicCode(mCompiledBasicCode);
