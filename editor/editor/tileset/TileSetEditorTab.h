@@ -43,7 +43,7 @@ private:
     void reset();
 
     void refresh();
-    bool loadTile(const QString& fileName, GfxData* data, GfxColorMode* colorMode = nullptr);
+    bool loadTile(const QString& fileName, GfxData* data, QStringList* errors, GfxColorMode* colorMode = nullptr);
 
     void onButtonClicked(QToolButton* button, int x, int y);
 

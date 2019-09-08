@@ -141,16 +141,20 @@ bool TileSetEditorTab::save()
 
 void TileSetEditorTab::on_tileWidthCombo_currentIndexChanged(int)
 {
-    mData.tileWidth = selectedItem(mUi->tileWidthCombo).toInt();
-    emit updateUi();
-    refresh();
+    int w = selectedItem(mUi->tileWidthCombo).toInt();
+    if (w != mData.tileWidth) {
+        emit updateUi();
+        refresh();
+    }
 }
 
 void TileSetEditorTab::on_tileHeightCombo_currentIndexChanged(int)
 {
-    mData.tileHeight = selectedItem(mUi->tileHeightCombo).toInt();
-    emit updateUi();
-    refresh();
+    int h = selectedItem(mUi->tileHeightCombo).toInt();
+    if (h != mData.tileHeight) {
+        emit updateUi();
+        refresh();
+    }
 }
 
 void TileSetEditorTab::setSaved()
@@ -188,6 +192,8 @@ void TileSetEditorTab::refresh()
     int buttonH = scaledH + ButtonPadding;
     mUi->scrollAreaContents->setFixedSize(TileSetData::GridWidth * buttonW, TileSetData::GridHeight * buttonH);
 
+    QStringList errors;
+
     for (int y = 0; y < TileSetData::GridHeight; y++) {
         for (int x = 0; x < TileSetData::GridWidth; x++) {
             int index = y * TileSetData::GridWidth + x;
@@ -209,18 +215,18 @@ void TileSetEditorTab::refresh()
             mButtons[index]->setToolTip(file);
             FileOrDirectory* item = (rootDirectory ? rootDirectory->findChild(file) : nullptr);
             if (!item) {
-                QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(file));
+                errors << tr("File not found: \"%1\".").arg(file);
                 mButtons[index]->setIcon(mImageMissingIcon);
                 continue;
             }
             if (item->type() != File::Type) {
-                QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(file));
+                errors << tr("Not a file: \"%1\".").arg(file);
                 mButtons[index]->setIcon(EditorTabFactory::instance()->folderIcon());
                 continue;
             }
 
             GfxColorMode colorMode;
-            if (!loadTile(static_cast<File*>(item)->fileInfo().absoluteFilePath(), &data, &colorMode)) {
+            if (!loadTile(static_cast<File*>(item)->fileInfo().absoluteFilePath(), &data, &errors, &colorMode)) {
                 mButtons[index]->setIcon(mImageMissingIcon);
                 continue;
             }
@@ -239,14 +245,16 @@ void TileSetEditorTab::refresh()
             }
         }
     }
+
+    if (errors.count() > 0)
+        QMessageBox::critical(this, tr("Error"), errors.join('\n'));
 }
 
-bool TileSetEditorTab::loadTile(const QString& fileName, GfxData* data, GfxColorMode* colorMode)
+bool TileSetEditorTab::loadTile(const QString& fileName, GfxData* data, QStringList* errors, GfxColorMode* colorMode)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+        *errors << tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString());
         return false;
     }
 
@@ -254,8 +262,7 @@ bool TileSetEditorTab::loadTile(const QString& fileName, GfxData* data, GfxColor
     file.close();
 
     if (!gfxFile.deserializeFromJson(data)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
+        *errors << tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError());
         return false;
     }
 
@@ -279,8 +286,11 @@ void TileSetEditorTab::onButtonClicked(QToolButton* button, int x, int y)
                     const int tileH = mData.tileHeight;
 
                     GfxData data(tileW, tileH);
-                    if (!loadTile(selected->fileInfo().absoluteFilePath(), &data))
+                    QStringList errors;
+                    if (!loadTile(selected->fileInfo().absoluteFilePath(), &data, &errors)) {
+                        QMessageBox::critical(this, tr("Error"), errors.join('\n'));
                         return;
+                    }
 
                     nx = (data.width() + tileW - 1) / tileW;
                     ny = (data.height() + tileH - 1) / tileH;
