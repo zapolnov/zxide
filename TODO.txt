@@ -1,0 +1,29 @@
+* Implement memory editing in the memory view
+* In the memory view highlight symbol when mouse is over a hexadecimal value and vise-versa
+* Implement breakpoints
+* Run to cursor is currently inaccurate
+* Disassembly window (?)
+* Watch window with symbols (?)
+* Navigation through source (?), back/forward buttons (?)
+* Show the corresponding label in the stack window
+* Drag and drop in the file list
+* Remove non-empty directories in the file list
+* Multiple file selection in the file list (?)
+* Implement support for unnamed sections
+* Implement elseif (?)
+* When error happens in the generated file we should open that file
+* Implement project settings
+* Search and search-with-replace in the text editor
+* Import and dither-to-monochrome images
+* Flip and rotation in the tile editor should work only on a selected area
+* Support memory banks in the debug info
+* Grid in the level editor
+* Tile selector in the level editor has overlapping name strings
+* Level editor is hardcoded to 16x16 tiles
+* No code generation for tiles, tilesets and maps
+* When highlighting an error, set cursor to the first non-space character in the string
+* Do not open file after renaming if it was not previously open
+* In the compiler when evaluating equ constants immediately, symbol from other files could be undefined
+  (this is non-deterministic, depends on file order which maybe different between different runs)
+* Some 'equ in if' tests fail
+* Hardware selection in the settings (48K / 128K)
