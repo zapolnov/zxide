@@ -27,3 +27,4 @@
   (this is non-deterministic, depends on file order which maybe different between different runs)
 * Some 'equ in if' tests fail
 * Hardware selection in the settings (48K / 128K)
+* Cleanup old files in the 'generated' directory
