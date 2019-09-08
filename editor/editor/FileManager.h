@@ -64,6 +64,9 @@ public:
     Directory* directory(const QString& name) const;
     File* file(const QString& name) const;
 
+    size_t numFiles() const { return mFiles.size(); }
+    size_t numSubdirectories() const { return mDirectories.size(); }
+
     void forEachFile(const std::function<void(File*)>& callback) const
     {
         for (const auto& it : mFiles)
