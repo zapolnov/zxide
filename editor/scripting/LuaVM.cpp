@@ -75,6 +75,21 @@ void LuaVM::setGeneratedFilesDirectory(const QDir& dir)
     mGeneratedFilesDirectory = dir;
 }
 
+void LuaVM::pushString(const std::string& str)
+{
+    lua_pushlstring(mLua, str.data(), str.length());
+}
+
+void LuaVM::pushString(const QString& str)
+{
+    pushByteArray(str.toUtf8());
+}
+
+void LuaVM::pushByteArray(const QByteArray& str)
+{
+    lua_pushlstring(mLua, str.constData(), str.length());
+}
+
 void LuaVM::runScript(const QString& fileName)
 {
     QFile file(fileName);

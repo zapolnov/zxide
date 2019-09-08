@@ -31,6 +31,7 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     on_colorModeCombo_currentIndexChanged(-1);
 
     mUi->formatCombo->addItem(tr("None"), int(GfxFormat::None));
+    mUi->formatCombo->addItem(tr("Monochrome"), int(GfxFormat::Monochrome));
     mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
 
     reset();

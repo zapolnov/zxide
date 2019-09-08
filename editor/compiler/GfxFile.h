@@ -27,7 +27,9 @@ public:
     bool deserializeFromJson(GfxData* data);
     void serializeToJson(const GfxData* data);
 
+    void serializeToMonochrome(const GfxData* data);
     void serializeToBTile16(const GfxData* data);
+    void serializeToBTile16Attributes(const GfxData* data);
 
 private:
     QString mLastError;

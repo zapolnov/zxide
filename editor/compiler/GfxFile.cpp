@@ -18,6 +18,7 @@ static const QString JsonValue_ColorModeStandard = QStringLiteral("standard");
 static const QString JsonValue_ColorModeMulticolor = QStringLiteral("multicolor");
 static const QString JsonValue_ColorModeBicolor = QStringLiteral("bicolor");
 static const QString JsonValue_FormatNone = QStringLiteral("none");
+static const QString JsonValue_FormatMonochrome = QStringLiteral("monochrome");
 static const QString JsonValue_FormatBTile16 = QStringLiteral("btile16");
 
 GfxFile::GfxFile()
@@ -62,6 +63,7 @@ bool GfxFile::deserializeFromJson(GfxData* data)
 
     QString fmt = root[JsonKey_Format].toString();
     if (fmt == JsonValue_FormatNone) format = GfxFormat::None;
+    else if (fmt == JsonValue_FormatMonochrome) format = GfxFormat::Monochrome;
     else if (fmt == JsonValue_FormatBTile16) format = GfxFormat::BTile16;
     else {
         mLastError = QCoreApplication::tr("invalid format \"%1\".").arg(fmt);
@@ -133,6 +135,7 @@ void GfxFile::serializeToJson(const GfxData* data)
 
     switch (format) {
         case GfxFormat::None: root[JsonKey_Format] = JsonValue_FormatNone; break;
+        case GfxFormat::Monochrome: root[JsonKey_Format] = JsonValue_FormatMonochrome; break;
         case GfxFormat::BTile16: root[JsonKey_Format] = JsonValue_FormatBTile16; break;
     }
 
@@ -164,6 +167,23 @@ void GfxFile::serializeToJson(const GfxData* data)
     mFileData = doc.toJson(QJsonDocument::Indented);
 }
 
+void GfxFile::serializeToMonochrome(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
+
+    for (int y = 0; y < data->height(); y++) {
+        for (int x = 0; x < data->width(); ) {
+            unsigned char byte = 0;
+            for (int i = 0; i < 8; i++, x++) {
+                char value = data->at(x, y);
+                if (value)
+                    byte |= (0x80 >> i);
+            }
+            stream << quint8(byte);
+        }
+    }
+}
+
 void GfxFile::serializeToBTile16(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);
@@ -179,6 +199,16 @@ void GfxFile::serializeToBTile16(const GfxData* data)
             stream << quint8(byte);
         }
     }
+
+    for (int x = 0; x < data->width(); x += 8) {
+        for (int y = 0; y < data->height(); y += 2)
+            stream << quint8(data->attribAt(x, y, GfxColorMode::Bicolor));
+    }
+}
+
+void GfxFile::serializeToBTile16Attributes(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
 
     for (int x = 0; x < data->width(); x += 8) {
         for (int y = 0; y < data->height(); y += 2)

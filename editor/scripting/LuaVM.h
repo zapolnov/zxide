@@ -44,6 +44,10 @@ public:
     const QStringList& generatedFiles() const { return mGeneratedFiles; }
     void addGeneratedFile(const QString& file) { mGeneratedFiles << file; }
 
+    void pushString(const std::string& str);
+    void pushString(const QString& str);
+    void pushByteArray(const QByteArray& str);
+
     void runScript(const QString& file);
 
     template <typename T> T& check(int index)

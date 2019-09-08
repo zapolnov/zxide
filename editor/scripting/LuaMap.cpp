@@ -33,6 +33,23 @@ static int luaMapLoad(lua_State* L)
     return 1;
 }
 
+static int luaMapGetTileAt(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    MapData& data = vm->check<MapData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+
+    if (x < 0 || x >= data.width())
+        return luaL_error(L, "x coordinate is out of range.");
+    if (y < 0 || y >= data.height())
+        return luaL_error(L, "y coordinate is out of range.");
+
+    lua_pushinteger(L, data.at(x, y));
+    return 1;
+}
+
 static int luaMapWriteByteArray(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -63,6 +80,7 @@ static int luaMapWriteByteArray(lua_State* L)
 
 const luaL_Reg LuaMap[] = {
     { "mapLoad", luaMapLoad },
+    { "mapGetTileAt", luaMapGetTileAt },
     { "mapWriteByteArray", luaMapWriteByteArray },
     { nullptr, nullptr }
 };

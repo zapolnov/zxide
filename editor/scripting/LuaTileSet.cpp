@@ -62,9 +62,8 @@ static int luaTilesetLoad(lua_State* L)
             if (tileName.isEmpty())
                 continue;
 
-            QByteArray tileNameUtf8 = tileName.toUtf8();
             lua_pushcfunction(L, &luaGfxLoad);
-            lua_pushlstring(L, tileNameUtf8.constData(), tileNameUtf8.length());
+            vm->pushString(tileName);
             lua_call(L, 1, 1);
             GfxData& gfxData = vm->check<GfxData>(-1);
 
@@ -125,8 +124,7 @@ static int luaTilesetGetTileInfo(lua_State* L)
     if (it == obj.tiles.end())
         return 0;
 
-    QByteArray utf8 = it->second.name.toUtf8();
-    lua_pushlstring(L, utf8.constData(), utf8.length());
+    vm->pushString(it->second.name);
     lua_pushinteger(L, it->second.x);
     lua_pushinteger(L, it->second.y);
     return 3;

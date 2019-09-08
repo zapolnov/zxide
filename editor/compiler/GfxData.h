@@ -8,6 +8,7 @@
 enum class GfxFormat : int
 {
     None,
+    Monochrome,
     BTile16,
 };
 
