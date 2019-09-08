@@ -39,6 +39,8 @@ qt_add_sources(Compiler
         IErrorReporter.h
         Linker.cpp
         Linker.h
+        LuaBindings.cpp
+        LuaBindings.h
         MapData.cpp
         MapData.h
         MapFile.cpp

@@ -48,6 +48,7 @@ private:
     bool mCanClose;
 
     void updateUi();
+    void onDiagnosticMessage(const QString& message);
     void onCompilationEnded();
 
     Q_DISABLE_COPY(CompilerDialog)

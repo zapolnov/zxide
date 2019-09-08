@@ -1,6 +1,7 @@
 
 add_library(Lua STATIC ${src})
 set_target_properties(Lua PROPERTIES FOLDER "ThirdParty")
+target_link_libraries(Lua Scripting)
 target_include_directories(Lua PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 add_sources(Lua

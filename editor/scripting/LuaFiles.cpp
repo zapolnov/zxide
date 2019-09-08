@@ -4,12 +4,14 @@
 #include <QFileInfo>
 #include <lua.hpp>
 
-int luaWriteFile(lua_State* L, const char* fileName, const void* contents, size_t contentsLength)
+int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t contentsLength)
 {
     LuaVM* vm = LuaVM::fromLua(L);
 
     const QDir& dir = vm->generatedFilesDirectory();
-    QString filePath = dir.absoluteFilePath(QString::fromUtf8(fileName));
+    QString fileName = QString::fromUtf8(name);
+    QString filePath = dir.absoluteFilePath(fileName);
+    QString relativeName = vm->projectDirectory().relativeFilePath(filePath);
 
     QFileInfo fileInfo(filePath);
     QDir(fileInfo.absolutePath()).mkpath(QStringLiteral("."));
@@ -35,7 +37,7 @@ int luaWriteFile(lua_State* L, const char* fileName, const void* contents, size_
         return luaL_error(L, "unable to write file '%s'", fileName);
     }
 
-    vm->addGeneratedFile(filePath);
+    vm->addGeneratedFile(relativeName, filePath);
 
     return 0;
 }

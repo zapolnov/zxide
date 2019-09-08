@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDir>
+#include <QObject>
 #include <lua.hpp>
 #include <new>
 #include <type_traits>
@@ -22,10 +23,18 @@ private:
     int mLine;
 };
 
-class LuaVM
+class LuaVM : public QObject
 {
+    Q_OBJECT
+
 public:
-    LuaVM();
+    struct GeneratedFile
+    {
+        QString name;
+        QString path;
+    };
+
+    explicit LuaVM(QObject* parent = nullptr);
     ~LuaVM();
 
     static LuaVM* fromLua(lua_State* L);
@@ -41,8 +50,8 @@ public:
     const QDir& generatedFilesDirectory() const;
     void setGeneratedFilesDirectory(const QDir& dir);
 
-    const QStringList& generatedFiles() const { return mGeneratedFiles; }
-    void addGeneratedFile(const QString& file) { mGeneratedFiles << file; }
+    const std::vector<GeneratedFile>& generatedFiles() const { return mGeneratedFiles; }
+    void addGeneratedFile(const QString& name, const QString& path);
 
     void pushString(const std::string& str);
     void pushString(const QString& str);
@@ -98,11 +107,15 @@ public:
         return result;
     }
 
+signals:
+    void stringPrinted(const QString& str);
+    void errorPrinted(const QString& str);
+
 private:
     lua_State* mLua;
     QDir mProjectDirectory;
     QDir mGeneratedFilesDirectory;
-    QStringList mGeneratedFiles;
+    std::vector<GeneratedFile> mGeneratedFiles;
 
     Q_DISABLE_COPY(LuaVM)
 };

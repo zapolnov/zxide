@@ -8,6 +8,6 @@ struct luaL_Reg;
 
 extern const luaL_Reg LuaFiles[];
 
-int luaWriteFile(lua_State* L, const char* fileName, const void* contents, size_t contentsLength);
+int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t contentsLength);
 
 #endif

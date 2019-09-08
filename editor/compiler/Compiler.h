@@ -17,6 +17,13 @@ class Compiler : public QObject, public IErrorReporter
     Q_OBJECT
 
 public:
+    struct SourceFile
+    {
+        File* file; // should not be accessed by the compiler code as it is run from another thread
+        QString name;
+        QString path;
+    };
+
     explicit Compiler(QObject* parent = nullptr);
     ~Compiler() override;
 
@@ -30,25 +37,25 @@ public:
 
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
-    void addSourceFile(File* file, const QString& path);
+    void addSourceFile(File* file, const QString& fullName, const QString& path);
     void setSettings(CompileSettings settings);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
 
+    const std::vector<SourceFile>& basicSources() const { return mBasicSources; }
+    const std::vector<SourceFile>& assemblerSources() const { return mAssemblerSources; }
+    const std::vector<SourceFile>& maps() const { return mMaps; }
+    const std::vector<SourceFile>& buildScripts() const { return mBuildScripts; }
+
     void compile();
 
 signals:
+    void diagnosticMessage(const QString& message);
     void compilationEnded();
 
 private:
-    struct SourceFile
-    {
-        File* file;
-        QString path;
-    };
-
     mutable QMutex mMutex;
     std::unique_ptr<Program> mProgram;
     std::unique_ptr<ProgramBinary> mProgramBinary;
@@ -59,8 +66,9 @@ private:
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
     QByteArray mCompiledBasicCode;
-    std::vector<SourceFile> mSources;
     std::vector<SourceFile> mBasicSources;
+    std::vector<SourceFile> mAssemblerSources;
+    std::vector<SourceFile> mMaps;
     std::vector<SourceFile> mBuildScripts;
     CompileSettings mCompileSettings;
     File* mErrorFile;

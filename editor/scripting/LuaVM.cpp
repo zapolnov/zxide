@@ -6,19 +6,73 @@
 #include "LuaUtil.h"
 #include <QFile>
 #include <QCoreApplication>
+#include <cstdio>
+#include <sstream>
 
 static char ThisKey;
+static char StringBufferKey;
 
-LuaVM::LuaVM()
+namespace
+{
+    struct StringBuffer
+    {
+        std::stringstream stream;
+    };
+}
+
+#undef lua_writestring
+void lua_writestring(lua_State* L, const char* str, size_t length)
+{
+    lua_rawgetp(L, LUA_REGISTRYINDEX, &StringBufferKey);
+    StringBuffer* buffer = reinterpret_cast<StringBuffer*>(lua_touserdata(L, -1));
+    lua_pop(L, 1);
+
+    if (buffer)
+        buffer->stream.write(str, length);
+}
+
+#undef lua_writeline
+void lua_writeline(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    lua_rawgetp(L, LUA_REGISTRYINDEX, &StringBufferKey);
+    StringBuffer* buffer = reinterpret_cast<StringBuffer*>(lua_touserdata(L, -1));
+    lua_pop(L, 1);
+
+    if (buffer) {
+        std::string str = buffer->stream.str();
+        buffer->stream.str(std::string());
+        emit vm->stringPrinted(QString::fromUtf8(str.data(), int(str.length())));
+    }
+}
+
+#undef lua_writestringerror
+void lua_writestringerror(lua_State* L, const char* fmt, const char* arg)
+{
+    char buf[1024];
+    snprintf(buf, sizeof(buf), fmt, arg);
+    emit LuaVM::fromLua(L)->errorPrinted(QString::fromUtf8(buf));
+}
+
+LuaVM::LuaVM(QObject* parent)
+    : QObject(parent)
 {
     mLua = luaL_newstate();
     if (!mLua)
         throw LuaError("Unable to initialize Lua VM.", 0);
 
-    lua_pushlightuserdata(mLua, this);
-    lua_rawsetp(mLua, LUA_REGISTRYINDEX, &ThisKey);
-
     lua_atpanic(mLua, [](lua_State* L) -> int { throw LuaError(lua_tostring(L, -1), 0); });
+
+    try {
+        lua_pushlightuserdata(mLua, this);
+        lua_rawsetp(mLua, LUA_REGISTRYINDEX, &ThisKey);
+        pushNew<StringBuffer>();
+        lua_rawsetp(mLua, LUA_REGISTRYINDEX, &StringBufferKey);
+    } catch (const LuaError&) {
+        lua_close(mLua);
+        throw;
+    }
 }
 
 LuaVM::~LuaVM()
@@ -75,6 +129,11 @@ const QDir& LuaVM::generatedFilesDirectory() const
 void LuaVM::setGeneratedFilesDirectory(const QDir& dir)
 {
     mGeneratedFilesDirectory = dir;
+}
+
+void LuaVM::addGeneratedFile(const QString& name, const QString& path)
+{
+    mGeneratedFiles.emplace_back(GeneratedFile{name, path});
 }
 
 void LuaVM::pushString(const std::string& str)

@@ -5,6 +5,7 @@
 #include "compiler/ProgramBinary.h"
 #include "ui_CompilerDialog.h"
 #include <QCloseEvent>
+#include <QMessageBox>
 #include <QTimer>
 #include <QThread>
 
@@ -30,6 +31,7 @@ CompilerDialog::CompilerDialog(QWidget* parent)
     mCompiler->moveToThread(mThread);
     connect(mThread, &QThread::started, mCompiler, &Compiler::compile);
     connect(mThread, &QThread::finished, this, &CompilerDialog::onCompilationEnded);
+    connect(mCompiler, &Compiler::diagnosticMessage, this, &CompilerDialog::onDiagnosticMessage);
     connect(mCompiler, &Compiler::compilationEnded, mThread, &QThread::quit);
 }
 
@@ -53,7 +55,7 @@ std::unique_ptr<ProgramBinary> CompilerDialog::takeProgramBinary()
 
 void CompilerDialog::addSourceFile(File* file)
 {
-    mCompiler->addSourceFile(file, file->fileInfo().absoluteFilePath());
+    mCompiler->addSourceFile(file, file->relativeName(), file->fileInfo().absoluteFilePath());
 }
 
 void CompilerDialog::setOutputTapeFile(const QString& file)
@@ -103,6 +105,11 @@ void CompilerDialog::updateUi()
         mUi->statusLabel->setStyleSheet(QStringLiteral("color: red; font-weight: bold"));
     else if (mCanClose)
         mUi->statusLabel->setStyleSheet(QStringLiteral("color: green; font-weight: bold"));
+}
+
+void CompilerDialog::onDiagnosticMessage(const QString& message)
+{
+    QMessageBox::warning(parentWidget(), tr("Message"), message);
 }
 
 void CompilerDialog::onCompilationEnded()

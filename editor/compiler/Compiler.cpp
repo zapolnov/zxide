@@ -3,6 +3,7 @@
 #include "ProgramBinary.h"
 #include "Assembler.h"
 #include "Linker.h"
+#include "LuaBindings.h"
 #include "TapeFileWriter.h"
 #include "Util.h"
 #include "scripting/LuaVM.h"
@@ -12,6 +13,7 @@
 #include <QFileInfo>
 #include <cstdarg>
 #include <bas2tap.h>
+#include <lua.hpp>
 
 #ifndef emit
 #define emit
@@ -51,15 +53,17 @@ std::unique_ptr<ProgramBinary> Compiler::takeProgramBinary()
     return programBinary;
 }
 
-void Compiler::addSourceFile(File* file, const QString& path)
+void Compiler::addSourceFile(File* file, const QString& fullName, const QString& path)
 {
     QString ext = QFileInfo(path).suffix();
     if (ext == QStringLiteral("lua"))
-        mBuildScripts.emplace_back(SourceFile{ file, path });
+        mBuildScripts.emplace_back(SourceFile{ file, fullName, path });
     else if (ext == QStringLiteral("bas"))
-        mBasicSources.emplace_back(SourceFile{ file, path });
-    else if (ext == QStringLiteral("asm") || ext == QStringLiteral("gfx"))
-        mSources.emplace_back(SourceFile{ file, path });
+        mBasicSources.emplace_back(SourceFile{ file, fullName, path });
+    else if (ext == QStringLiteral("asm"))
+        mAssemblerSources.emplace_back(SourceFile{ file, fullName, path });
+    else if (ext == QStringLiteral("map"))
+        mMaps.emplace_back(SourceFile{ file, fullName, path });
 }
 
 void Compiler::setSettings(CompileSettings settings)
@@ -73,7 +77,7 @@ void Compiler::compile()
         if (!runBuildScripts())
             throw CompilationFailed();
 
-        for (const auto& source : mSources) {
+        for (const auto& source : mAssemblerSources) {
             QFileInfo info(source.path);
             setStatusText(tr("Compiling %1").arg(info.fileName()));
             QString extension = info.suffix();
@@ -87,10 +91,8 @@ void Compiler::compile()
             QByteArray fileData = file.readAll();
             file.close();
 
-            if (extension == QStringLiteral("asm")) {
-                if (!Assembler(mProgram.get(), this).parse(source.file, fileData))
-                    throw CompilationFailed();
-            }
+            if (!Assembler(mProgram.get(), this).parse(source.file, fileData))
+                throw CompilationFailed();
         }
 
         setStatusText(tr("Linking assembly code..."));
@@ -164,8 +166,15 @@ bool Compiler::runBuildScripts()
 {
     try {
         LuaVM lua;
+        connect(&lua, &LuaVM::stringPrinted, this, &Compiler::diagnosticMessage);
+        connect(&lua, &LuaVM::errorPrinted, this, &Compiler::diagnosticMessage);
 
         lua.openLibs();
+        lua.openLib(LuaBindings);
+
+        lua_pushlightuserdata(lua, this);
+        lua_rawsetp(lua, LUA_REGISTRYINDEX, &LuaBindings_CompilerKey);
+
         lua.setGeneratedFilesDirectory(mGeneratedFilesDirectory);
         lua.setProjectDirectory(mProjectDirectory);
 
@@ -181,7 +190,7 @@ bool Compiler::runBuildScripts()
         }
 
         for (const auto& file : lua.generatedFiles())
-            addSourceFile(nullptr, file); // <-- FIXME: proper file pointer
+            addSourceFile(nullptr, file.name, file.path); // <-- FIXME: proper file pointer
     } catch (const LuaError& e) {
         error(nullptr, 0, QStringLiteral("Lua: %1").arg(e.message()));
         return false;
