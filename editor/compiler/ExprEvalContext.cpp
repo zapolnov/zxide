@@ -76,7 +76,7 @@ quint8 ExprEvalContext::evaluateByteOffset(const std::unique_ptr<Expression>& ex
         value.truncateTo16Bit();
 
     qint64 offset = value.number - nextAddress(expr->token());
-    if (offset < -128 || offset > 255) {
+    if (offset < -128 || offset > 127) {
         auto token = expr->token();
         mErrorReporter->error(token.file, token.line,
             QCoreApplication::tr("value %1 (0x%2) does not fit into a byte").arg(offset).arg(offset, 0, 16));
