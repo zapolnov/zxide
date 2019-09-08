@@ -70,8 +70,8 @@ bool GfxFile::deserializeFromJson(GfxData* data)
 
     QString mode = root[JsonKey_ColorMode].toString();
     if (mode == JsonValue_ColorModeStandard) colorMode = GfxColorMode::Standard;
-    if (mode == JsonValue_ColorModeMulticolor) colorMode = GfxColorMode::Multicolor;
-    if (mode == JsonValue_ColorModeBicolor) colorMode = GfxColorMode::Bicolor;
+    else if (mode == JsonValue_ColorModeMulticolor) colorMode = GfxColorMode::Multicolor;
+    else if (mode == JsonValue_ColorModeBicolor) colorMode = GfxColorMode::Bicolor;
     else {
         mLastError = QCoreApplication::tr("invalid color mode \"%1\".").arg(mode);
         return false;
