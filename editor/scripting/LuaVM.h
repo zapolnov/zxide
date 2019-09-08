@@ -82,6 +82,22 @@ public:
         return result;
     }
 
+    template <typename T, typename... ARGS> T* pushNewNoDestructor(ARGS&&... args)
+    {
+        void* ptr = lua_newuserdata(mLua, sizeof(T));
+
+        luaL_getmetatable(mLua, typeid(T).name());
+        if (!lua_istable(mLua, -1)) {
+            lua_pop(mLua, 1);
+            luaL_newmetatable(mLua, typeid(T).name());
+        }
+
+        T* result = new(ptr) T(std::forward<ARGS>(args)...);
+        lua_setmetatable(mLua, -2);
+
+        return result;
+    }
+
 private:
     lua_State* mLua;
     QDir mProjectDirectory;

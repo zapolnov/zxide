@@ -1,7 +1,7 @@
 
 add_library(Scripting STATIC)
 set_target_properties(Scripting PROPERTIES FOLDER "Compiler")
-target_link_libraries(Scripting Lua Compiler)
+target_link_libraries(Scripting Lua Md5 Compiler)
 qt_link_libraries(Scripting Core)
 
 qt_add_sources(Scripting
@@ -13,6 +13,8 @@ qt_add_sources(Scripting
         LuaMap.h
         LuaTileSet.cpp
         LuaTileSet.h
+        LuaUtil.cpp
+        LuaUtil.h
         LuaVM.cpp
         LuaVM.h
     )
