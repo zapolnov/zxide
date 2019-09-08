@@ -316,6 +316,7 @@ int AssemblerLexer::readToken()
                 return T_NUMBER;
             }
 
+            case '_':
             case LETTER: {
                 std::stringstream ss;
                 bool hadAt = false;
