@@ -142,7 +142,7 @@ void AssemblerParser::parseLine()
         if (nameToken.id == T_IDENTIFIER)
             mContext->setLocalLabelsPrefix(name, nameToken, mReporter);
         (this->*(iter->second))();
-    } else if (lastTokenId() == T_IDENTIFIER && lower == "equ") {
+    } else if ((lastTokenId() == T_IDENTIFIER && lower == "equ") || lastTokenId() == T_ASSIGN) {
         auto expr = parseExpression(nextToken(), true);
         if (!expr)
             error(tr("expected expression after 'equ'"));
