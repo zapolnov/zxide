@@ -383,6 +383,7 @@ static input_key mapKey(int key, bool shift)
     switch (key) {
         default: return INPUT_KEY_NONE; break;
 
+        case Qt::Key_Pause: return INPUT_KEY_Break; break;
         case Qt::Key_Escape: return INPUT_KEY_Escape; break;
         case Qt::Key_1: return INPUT_KEY_1; break;
         case Qt::Key_2: return INPUT_KEY_2; break;

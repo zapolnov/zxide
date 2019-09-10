@@ -169,6 +169,8 @@ static struct spectrum_keys_wrapper spectrum_keys_table[] = {
   { INPUT_KEY_asciicircum, { KEYBOARD_h,     KEYBOARD_Symbol } },
   { INPUT_KEY_underscore,  { KEYBOARD_0,     KEYBOARD_Symbol } },
 
+  { INPUT_KEY_Break,       { KEYBOARD_space, KEYBOARD_Caps   } },
+
   { INPUT_KEY_NONE, { KEYBOARD_NONE, KEYBOARD_NONE } } /* End marker */
 
 };
