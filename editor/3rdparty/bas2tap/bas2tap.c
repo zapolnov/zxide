@@ -38,7 +38,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include <ctype.h>
 #include <math.h>
 
 #define BAS2TAP_EXTERN
@@ -69,6 +68,58 @@ typedef unsigned char  bool;                                              /* If 
 #define TRUE           1
 #define FALSE          0
 #endif
+
+static int IsDigit(int ch)
+{
+    switch (ch) {
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+            return 1;
+    }
+    return 0;
+}
+
+static int IsXDigit(int ch)
+{
+    switch (ch) {
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+            return 1;
+    }
+    return 0;
+}
+
+static int IsAlpha(int ch)
+{
+    switch (ch) {
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J':
+        case 'K': case 'L': case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
+        case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+            return 1;
+    }
+    return 0;
+}
+
+static int IsAlNum(int ch)
+{
+    switch (ch) {
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J':
+        case 'K': case 'L': case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
+        case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+            return 1;
+    }
+    return 0;
+}
 
 /**********************************************************************************************************************************/
 /* Define the global variables                                                                                                    */
@@ -392,7 +443,7 @@ int GetLineNumber (char **FirstAfter)
       else
         Continue = FALSE;
     }
-    else if (isdigit (*LineIndex))                                                                              /* Process number */
+    else if (IsDigit (*LineIndex))                                                                              /* Process number */
     {
       LineNo = LineNo * 10 + *(LineIndex ++) - '0';
       SkipSpaces = FALSE;
@@ -448,7 +499,7 @@ int MatchToken (int FileLineNo, bool WantKeyword, char **LineIndex, byte *Token)
   }
   if (!Match)
     return (0);                                                                                               /* Signal: no match */
-  if (isalpha (*(*LineIndex + LongestMatch - 1)) && isalpha (*(*LineIndex + LongestMatch)))         /* Continueing alpha string ? */
+  if (IsAlpha (*(*LineIndex + LongestMatch - 1)) && IsAlpha (*(*LineIndex + LongestMatch)))         /* Continueing alpha string ? */
     return (0);                                            /* Then there's no match after all! (eg. 'INT' must not match 'INTER') */
   *LineIndex += LongestMatch;                                                                                /* Go past the token */
   while ((**LineIndex) == ' ')                                                                            /* Skip trailing spaces */
@@ -490,16 +541,16 @@ int HandleNumbers (int FileLineNo, char **BasicLine, byte **SpectrumLine)
   byte    Sign    = 0x00;
   unsigned long Mantissa;
 
-  if (!isdigit (**BasicLine) &&                                                             /* Current character is not a digit ? */
+  if (!IsDigit (**BasicLine) &&                                                             /* Current character is not a digit ? */
       (**BasicLine) != '.')                                                               /* And not a decimal point (eg. '.5') ? */
     return (0);                                                                                 /* Then it can hardly be a number */
   StartOfNumber = *BasicLine;
-  while (isdigit (**BasicLine))                                                                    /* First read the integer part */
+  while (IsDigit (**BasicLine))                                                                    /* First read the integer part */
     Value = Value * 10 + *((*BasicLine) ++) - '0';
   if ((**BasicLine) == '.')                                                                                    /* Decimal point ? */
   {                                                                                                      /* Read the decimal part */
     (*BasicLine) ++;
-    while (isdigit (**BasicLine))
+    while (IsDigit (**BasicLine))
       Value = Value + (Divider /= 10) * (*((*BasicLine) ++) - '0');
   }
   if ((**BasicLine) == 'e' || (**BasicLine) == 'E')                                                                 /* Exponent ? */
@@ -512,7 +563,7 @@ int HandleNumbers (int FileLineNo, char **BasicLine, byte **SpectrumLine)
       Sign = 0xFF;
       (*BasicLine) ++;
     }
-    while (isdigit (**BasicLine))                                                                      /* Read the exponent value */
+    while (IsDigit (**BasicLine))                                                                      /* Read the exponent value */
       Exp = Exp * 10 + *((*BasicLine) ++) - '0';
     if (Sign == 0x00)                                                           /* Raise the resulting value to the read exponent */
       Value = Value * pow (10.0, Exp);
@@ -676,7 +727,7 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
         (*BasicLine) ++;
     return (1);
   }
-  if (isxdigit (*StartOfSequence) && isxdigit (*(StartOfSequence + 1)) && *(StartOfSequence + 2) == '}')
+  if (IsXDigit (*StartOfSequence) && IsXDigit (*(StartOfSequence + 1)) && *(StartOfSequence + 2) == '}')
   {                                                                                                    /* Form "{XX}" -> below 32 */
     if (*StartOfSequence <= '9')
       (**SpectrumLine) = *StartOfSequence - '0';
@@ -738,7 +789,7 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
     StartOfSequence += AttributeLength;
     while (*StartOfSequence == ' ')
       StartOfSequence ++;
-    while (isdigit (*StartOfSequence))
+    while (IsDigit (*StartOfSequence))
       AttributeVal1 = AttributeVal1 * 10 + *(StartOfSequence ++) - '0';
     if (Attribute == 0x16 || Attribute == 0x17)
     {
@@ -749,7 +800,7 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
         StartOfSequence ++;                                                                              /* (Step past the comma) */
         while (*StartOfSequence == ' ')
           StartOfSequence ++;
-        while (isdigit (*StartOfSequence))
+        while (IsDigit (*StartOfSequence))
           AttributeVal2 = AttributeVal2 * 10 + *(StartOfSequence ++) - '0';
       }
     }
@@ -934,13 +985,13 @@ bool ScanVariable (int FileLineNo, int StatementNo, int Keyword, byte **Index, b
   bool IsArray = FALSE;
   bool SetTokenBracket = FALSE;
 
-  Keyword = Keyword;                                                                                    /* (Keep compilers happy) */
+  /*Keyword = Keyword;*/                                                                                    /* (Keep compilers happy) */
   *Type = TRUE;                                                                                      /* Assume it will be numeric */
   *NameLen = 0;
-  if (!isalpha (**Index))                                                /* The first character must be alphabetic for a variable */
+  if (!IsAlpha (**Index))                                                /* The first character must be alphabetic for a variable */
     return (FALSE);
   *NameLen = 1;
-  while (isalnum (*(++ (*Index))))                                                              /* Read on, until end of the word */
+  while (IsAlNum (*(++ (*Index))))                                                              /* Read on, until end of the word */
     (*NameLen) ++;
   if (**Index == '$')                                                                                 /* It's a string variable ? */
   {
@@ -1083,7 +1134,7 @@ bool SliceDirectString (int FileLineNo, int StatementNo, int Keyword, byte **Ind
   bool SubType;
   bool SetTokenBracket = FALSE;
 
-  Keyword = Keyword;                                                                                    /* (Keep compilers happy) */
+  /*Keyword = Keyword;*/                                                                                    /* (Keep compilers happy) */
   (*Index) ++;                                                                                   /* Step past the opening bracket */
   if (**Index == ')')                                                                                /* Empty slice "abc"() is ok */
   {
@@ -1228,7 +1279,7 @@ bool ScanChannel (int FileLineNo, int StatementNo, int Keyword, byte **Index, by
     (*Index) ++;
     if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
-    if (!isalpha (**Index) &&                                                                               /* (Ordinary channel) */
+    if (!IsAlpha (**Index) &&                                                                               /* (Ordinary channel) */
         **Index != '#' &&                                                                        /* (Linked channel, OPEN # only) */
         **Index != 0xAF &&                                                                       /* ('CODE' channel, OPEN # only) */
         **Index != 0xCF)                                                                          /* ('CAT' channel, OPEN # only) */
@@ -1387,7 +1438,7 @@ bool ScanExpression (int FileLineNo, int StatementNo, int Keyword, byte **Index,
       }
       More = FALSE;
     }
-    else if (isdigit (**Index) || **Index == '.' || **Index == 0xC4)                                                  /* Number ? */
+    else if (IsDigit (**Index) || **Index == '.' || **Index == 0xC4)                                                  /* Number ? */
     {
       if (!TypeKnown)                                                                            /* Unknown expression type yet ? */
       {
@@ -3224,8 +3275,8 @@ int bas2tap_main (/*int argc, char **argv*/)
                           case 0 :  switch (ExpandSequences (LineCount, &BasicIndex, &ResultIndex, TRUE))        /* (No number) */
                                     {
                                       case -1 : AllOk = FALSE; break;                               /* (Error - already reported) */
-                                      case  0 : if (isalpha (*BasicIndex))                                 /* (No expansion made) */
-                                                  while (isalnum (*BasicIndex))                    /* Skip full strings in one go */
+                                      case  0 : if (IsAlpha (*BasicIndex))                                 /* (No expansion made) */
+                                                  while (IsAlNum (*BasicIndex))                    /* Skip full strings in one go */
                                                     *(ResultIndex ++) = *(BasicIndex ++);
                                                 else
                                                   *(ResultIndex ++) = *(BasicIndex ++);

@@ -20,7 +20,7 @@ int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t co
     if (!file.open(QFile::WriteOnly)) {
         QString error = file.errorString();
         QFile::remove(filePath);
-        return luaL_error(L, "unable to write file '%s': %s", fileName, error.toUtf8().constData());
+        return luaL_error(L, "unable to write file '%s': %s", name, error.toUtf8().constData());
     }
 
     qint64 bytesWritten = file.write(reinterpret_cast<const char*>(contents), qint64(contentsLength));
@@ -28,13 +28,13 @@ int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t co
         QString error = file.errorString();
         file.close();
         QFile::remove(filePath);
-        return luaL_error(L, "unable to write file '%s': %s", fileName, error.toUtf8().constData());
+        return luaL_error(L, "unable to write file '%s': %s", name, error.toUtf8().constData());
     }
 
     if (bytesWritten != qint64(contentsLength)) {
         file.close();
         QFile::remove(filePath);
-        return luaL_error(L, "unable to write file '%s'", fileName);
+        return luaL_error(L, "unable to write file '%s'", name);
     }
 
     vm->addGeneratedFile(relativeName, filePath);

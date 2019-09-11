@@ -16,8 +16,6 @@
 #include <functional>
 
 static const int IconScale = 2;
-static const int IconWidth = 16 * IconScale;
-static const int IconHeight = 16 * IconScale;
 static const int ButtonPadding = 8;
 
 namespace

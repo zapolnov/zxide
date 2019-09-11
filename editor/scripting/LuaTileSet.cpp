@@ -56,8 +56,6 @@ static int luaTilesetLoad(lua_State* L)
 
     for (int y = 0; y < TileSetData::GridHeight; y++) {
         for (int x = 0; x < TileSetData::GridWidth; x++) {
-            int index = y * TileSetData::GridWidth + x;
-
             QString tileName = obj->data.tileAt(x, y);
             if (tileName.isEmpty())
                 continue;

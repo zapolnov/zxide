@@ -261,7 +261,6 @@ bool Compiler::compileBasicCode()
 
             char lineIn[MAXLINELENGTH + 1];
             int d = 0;
-            const char* start = p;
             while (*p) {
                 char ch = *p++;
                 if (ch == '\r' && *p == '\n') {
