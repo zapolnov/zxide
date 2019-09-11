@@ -3192,6 +3192,7 @@ int bas2tap_main (/*int argc, char **argv*/)
   {
     if (bas2tap_fgets(&BasicIndex, &BasicLineNo))
     {
+      ++LineCount;
       if (BasicLineNo >= 10000)
       {
         bas2tap_error (LineCount, -1, "line number %d is larger than the maximum allowed", BasicLineNo);
