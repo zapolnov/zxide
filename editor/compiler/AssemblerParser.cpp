@@ -192,14 +192,15 @@ void AssemblerParser::parseSectionDecl()
             } else if (param == "file") {
                 if (nextToken() != T_STRING)
                     error(tr("expected string"));
-                std::string fileName = tokenText();
+                std::string fileName = lastTokenText();
                 if (fileName.length() > 10)
                     fileName = fileName.substr(0, 10);
-                if (section->hasFile() && section->file() != fileName) {
+                if (section->hasFileName() && section->fileName() != fileName) {
                     error(tr("conflicting file name for section '%1' ('%2' != '%3')")
                         .arg(section->nameCStr()).arg(fileName.c_str()).arg(section->fileName().c_str()));
                 }
                 section->setFileName(std::move(fileName));
+                nextToken();
             } else
                 error(tr("unexpected '%1'").arg(lastTokenCStr()));
 

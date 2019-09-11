@@ -34,12 +34,6 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
 {
     address = baseRelativeTo(address);
 
-    if (mHasBank && address < BankBaseAddress) {
-        reporter->error(mToken.file, mToken.line,
-            QCoreApplication::tr("section '%1' has invalid base address 0x%2").arg(nameCStr()).arg(address, 0, 16));
-        return false;
-    }
-
     if (!isEmpty() && address > 0xFFFF) {
         reporter->error(mToken.file, mToken.line,
             QCoreApplication::tr("section '%1' overflows 64K barrier").arg(nameCStr()));
@@ -51,9 +45,6 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
 
 void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
-    if (mHasBank)
-        Q_ASSERT(binary->endAddress() >= BankBaseAddress);
-
     if (hasCode(program, reporter)) {
         if (mHasBase) {
             if (mBase < binary->endAddress()) {

@@ -21,6 +21,7 @@ TEST_CASE("adc a, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, (ix+#)", "[opcodes]")
@@ -54,6 +55,7 @@ TEST_CASE("adc a, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, (iy+#)", "[opcodes]")
@@ -87,6 +89,7 @@ TEST_CASE("adc a, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, a", "[opcodes]")
@@ -106,6 +109,7 @@ TEST_CASE("adc a, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, b", "[opcodes]")
@@ -125,6 +129,7 @@ TEST_CASE("adc a, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, c", "[opcodes]")
@@ -144,6 +149,7 @@ TEST_CASE("adc a, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, d", "[opcodes]")
@@ -163,6 +169,7 @@ TEST_CASE("adc a, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, e", "[opcodes]")
@@ -182,6 +189,7 @@ TEST_CASE("adc a, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, h", "[opcodes]")
@@ -201,6 +209,7 @@ TEST_CASE("adc a, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, l", "[opcodes]")
@@ -220,6 +229,7 @@ TEST_CASE("adc a, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc a, #", "[opcodes]")
@@ -249,6 +259,7 @@ TEST_CASE("adc a, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc hl, bc", "[opcodes]")
@@ -269,6 +280,7 @@ TEST_CASE("adc hl, bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc hl, de", "[opcodes]")
@@ -289,6 +301,7 @@ TEST_CASE("adc hl, de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc hl, hl", "[opcodes]")
@@ -309,6 +322,7 @@ TEST_CASE("adc hl, hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("adc hl, sp", "[opcodes]")
@@ -329,6 +343,7 @@ TEST_CASE("adc hl, sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, (hl)", "[opcodes]")
@@ -348,6 +363,7 @@ TEST_CASE("add a, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, (ix+#)", "[opcodes]")
@@ -381,6 +397,7 @@ TEST_CASE("add a, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, (iy+#)", "[opcodes]")
@@ -414,6 +431,7 @@ TEST_CASE("add a, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, a", "[opcodes]")
@@ -433,6 +451,7 @@ TEST_CASE("add a, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, b", "[opcodes]")
@@ -452,6 +471,7 @@ TEST_CASE("add a, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, c", "[opcodes]")
@@ -471,6 +491,7 @@ TEST_CASE("add a, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, d", "[opcodes]")
@@ -490,6 +511,7 @@ TEST_CASE("add a, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, e", "[opcodes]")
@@ -509,6 +531,7 @@ TEST_CASE("add a, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, h", "[opcodes]")
@@ -528,6 +551,7 @@ TEST_CASE("add a, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, l", "[opcodes]")
@@ -547,6 +571,7 @@ TEST_CASE("add a, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add a, #", "[opcodes]")
@@ -576,6 +601,7 @@ TEST_CASE("add a, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add hl, bc", "[opcodes]")
@@ -595,6 +621,7 @@ TEST_CASE("add hl, bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add hl, de", "[opcodes]")
@@ -614,6 +641,7 @@ TEST_CASE("add hl, de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add hl, hl", "[opcodes]")
@@ -633,6 +661,7 @@ TEST_CASE("add hl, hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add hl, sp", "[opcodes]")
@@ -652,6 +681,7 @@ TEST_CASE("add hl, sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add ix, bc", "[opcodes]")
@@ -672,6 +702,7 @@ TEST_CASE("add ix, bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add ix, de", "[opcodes]")
@@ -692,6 +723,7 @@ TEST_CASE("add ix, de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add ix, ix", "[opcodes]")
@@ -712,6 +744,7 @@ TEST_CASE("add ix, ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add ix, sp", "[opcodes]")
@@ -732,6 +765,7 @@ TEST_CASE("add ix, sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add iy, bc", "[opcodes]")
@@ -752,6 +786,7 @@ TEST_CASE("add iy, bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add iy, de", "[opcodes]")
@@ -772,6 +807,7 @@ TEST_CASE("add iy, de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add iy, iy", "[opcodes]")
@@ -792,6 +828,7 @@ TEST_CASE("add iy, iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("add iy, sp", "[opcodes]")
@@ -812,6 +849,7 @@ TEST_CASE("add iy, sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and (hl)", "[opcodes]")
@@ -831,6 +869,7 @@ TEST_CASE("and (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and (ix+#)", "[opcodes]")
@@ -864,6 +903,7 @@ TEST_CASE("and (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and (iy+#)", "[opcodes]")
@@ -897,6 +937,7 @@ TEST_CASE("and (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and a", "[opcodes]")
@@ -916,6 +957,7 @@ TEST_CASE("and a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and b", "[opcodes]")
@@ -935,6 +977,7 @@ TEST_CASE("and b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and c", "[opcodes]")
@@ -954,6 +997,7 @@ TEST_CASE("and c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and d", "[opcodes]")
@@ -973,6 +1017,7 @@ TEST_CASE("and d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and e", "[opcodes]")
@@ -992,6 +1037,7 @@ TEST_CASE("and e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and h", "[opcodes]")
@@ -1011,6 +1057,7 @@ TEST_CASE("and h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and l", "[opcodes]")
@@ -1030,6 +1077,7 @@ TEST_CASE("and l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("and #", "[opcodes]")
@@ -1059,6 +1107,7 @@ TEST_CASE("and #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, (hl)", "[opcodes]")
@@ -1079,6 +1128,7 @@ TEST_CASE("bit 0, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, (ix+#)", "[opcodes]")
@@ -1116,6 +1166,7 @@ TEST_CASE("bit 0, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, (iy+#)", "[opcodes]")
@@ -1153,6 +1204,7 @@ TEST_CASE("bit 0, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, a", "[opcodes]")
@@ -1173,6 +1225,7 @@ TEST_CASE("bit 0, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, b", "[opcodes]")
@@ -1193,6 +1246,7 @@ TEST_CASE("bit 0, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, c", "[opcodes]")
@@ -1213,6 +1267,7 @@ TEST_CASE("bit 0, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, d", "[opcodes]")
@@ -1233,6 +1288,7 @@ TEST_CASE("bit 0, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, e", "[opcodes]")
@@ -1253,6 +1309,7 @@ TEST_CASE("bit 0, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, h", "[opcodes]")
@@ -1273,6 +1330,7 @@ TEST_CASE("bit 0, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 0, l", "[opcodes]")
@@ -1293,6 +1351,7 @@ TEST_CASE("bit 0, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, (hl)", "[opcodes]")
@@ -1313,6 +1372,7 @@ TEST_CASE("bit 1, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, (ix+#)", "[opcodes]")
@@ -1350,6 +1410,7 @@ TEST_CASE("bit 1, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, (iy+#)", "[opcodes]")
@@ -1387,6 +1448,7 @@ TEST_CASE("bit 1, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, a", "[opcodes]")
@@ -1407,6 +1469,7 @@ TEST_CASE("bit 1, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, b", "[opcodes]")
@@ -1427,6 +1490,7 @@ TEST_CASE("bit 1, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, c", "[opcodes]")
@@ -1447,6 +1511,7 @@ TEST_CASE("bit 1, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, d", "[opcodes]")
@@ -1467,6 +1532,7 @@ TEST_CASE("bit 1, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, e", "[opcodes]")
@@ -1487,6 +1553,7 @@ TEST_CASE("bit 1, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, h", "[opcodes]")
@@ -1507,6 +1574,7 @@ TEST_CASE("bit 1, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 1, l", "[opcodes]")
@@ -1527,6 +1595,7 @@ TEST_CASE("bit 1, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, (hl)", "[opcodes]")
@@ -1547,6 +1616,7 @@ TEST_CASE("bit 2, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, (ix+#)", "[opcodes]")
@@ -1584,6 +1654,7 @@ TEST_CASE("bit 2, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, (iy+#)", "[opcodes]")
@@ -1621,6 +1692,7 @@ TEST_CASE("bit 2, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, a", "[opcodes]")
@@ -1641,6 +1713,7 @@ TEST_CASE("bit 2, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, b", "[opcodes]")
@@ -1661,6 +1734,7 @@ TEST_CASE("bit 2, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, c", "[opcodes]")
@@ -1681,6 +1755,7 @@ TEST_CASE("bit 2, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, d", "[opcodes]")
@@ -1701,6 +1776,7 @@ TEST_CASE("bit 2, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, e", "[opcodes]")
@@ -1721,6 +1797,7 @@ TEST_CASE("bit 2, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, h", "[opcodes]")
@@ -1741,6 +1818,7 @@ TEST_CASE("bit 2, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 2, l", "[opcodes]")
@@ -1761,6 +1839,7 @@ TEST_CASE("bit 2, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, (hl)", "[opcodes]")
@@ -1781,6 +1860,7 @@ TEST_CASE("bit 3, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, (ix+#)", "[opcodes]")
@@ -1818,6 +1898,7 @@ TEST_CASE("bit 3, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, (iy+#)", "[opcodes]")
@@ -1855,6 +1936,7 @@ TEST_CASE("bit 3, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, a", "[opcodes]")
@@ -1875,6 +1957,7 @@ TEST_CASE("bit 3, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, b", "[opcodes]")
@@ -1895,6 +1978,7 @@ TEST_CASE("bit 3, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, c", "[opcodes]")
@@ -1915,6 +1999,7 @@ TEST_CASE("bit 3, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, d", "[opcodes]")
@@ -1935,6 +2020,7 @@ TEST_CASE("bit 3, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, e", "[opcodes]")
@@ -1955,6 +2041,7 @@ TEST_CASE("bit 3, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, h", "[opcodes]")
@@ -1975,6 +2062,7 @@ TEST_CASE("bit 3, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 3, l", "[opcodes]")
@@ -1995,6 +2083,7 @@ TEST_CASE("bit 3, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, (hl)", "[opcodes]")
@@ -2015,6 +2104,7 @@ TEST_CASE("bit 4, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, (ix+#)", "[opcodes]")
@@ -2052,6 +2142,7 @@ TEST_CASE("bit 4, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, (iy+#)", "[opcodes]")
@@ -2089,6 +2180,7 @@ TEST_CASE("bit 4, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, a", "[opcodes]")
@@ -2109,6 +2201,7 @@ TEST_CASE("bit 4, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, b", "[opcodes]")
@@ -2129,6 +2222,7 @@ TEST_CASE("bit 4, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, c", "[opcodes]")
@@ -2149,6 +2243,7 @@ TEST_CASE("bit 4, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, d", "[opcodes]")
@@ -2169,6 +2264,7 @@ TEST_CASE("bit 4, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, e", "[opcodes]")
@@ -2189,6 +2285,7 @@ TEST_CASE("bit 4, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, h", "[opcodes]")
@@ -2209,6 +2306,7 @@ TEST_CASE("bit 4, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 4, l", "[opcodes]")
@@ -2229,6 +2327,7 @@ TEST_CASE("bit 4, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, (hl)", "[opcodes]")
@@ -2249,6 +2348,7 @@ TEST_CASE("bit 5, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, (ix+#)", "[opcodes]")
@@ -2286,6 +2386,7 @@ TEST_CASE("bit 5, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, (iy+#)", "[opcodes]")
@@ -2323,6 +2424,7 @@ TEST_CASE("bit 5, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, a", "[opcodes]")
@@ -2343,6 +2445,7 @@ TEST_CASE("bit 5, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, b", "[opcodes]")
@@ -2363,6 +2466,7 @@ TEST_CASE("bit 5, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, c", "[opcodes]")
@@ -2383,6 +2487,7 @@ TEST_CASE("bit 5, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, d", "[opcodes]")
@@ -2403,6 +2508,7 @@ TEST_CASE("bit 5, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, e", "[opcodes]")
@@ -2423,6 +2529,7 @@ TEST_CASE("bit 5, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, h", "[opcodes]")
@@ -2443,6 +2550,7 @@ TEST_CASE("bit 5, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 5, l", "[opcodes]")
@@ -2463,6 +2571,7 @@ TEST_CASE("bit 5, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, (hl)", "[opcodes]")
@@ -2483,6 +2592,7 @@ TEST_CASE("bit 6, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, (ix+#)", "[opcodes]")
@@ -2520,6 +2630,7 @@ TEST_CASE("bit 6, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, (iy+#)", "[opcodes]")
@@ -2557,6 +2668,7 @@ TEST_CASE("bit 6, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, a", "[opcodes]")
@@ -2577,6 +2689,7 @@ TEST_CASE("bit 6, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, b", "[opcodes]")
@@ -2597,6 +2710,7 @@ TEST_CASE("bit 6, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, c", "[opcodes]")
@@ -2617,6 +2731,7 @@ TEST_CASE("bit 6, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, d", "[opcodes]")
@@ -2637,6 +2752,7 @@ TEST_CASE("bit 6, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, e", "[opcodes]")
@@ -2657,6 +2773,7 @@ TEST_CASE("bit 6, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, h", "[opcodes]")
@@ -2677,6 +2794,7 @@ TEST_CASE("bit 6, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 6, l", "[opcodes]")
@@ -2697,6 +2815,7 @@ TEST_CASE("bit 6, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, (hl)", "[opcodes]")
@@ -2717,6 +2836,7 @@ TEST_CASE("bit 7, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, (ix+#)", "[opcodes]")
@@ -2754,6 +2874,7 @@ TEST_CASE("bit 7, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, (iy+#)", "[opcodes]")
@@ -2791,6 +2912,7 @@ TEST_CASE("bit 7, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, a", "[opcodes]")
@@ -2811,6 +2933,7 @@ TEST_CASE("bit 7, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, b", "[opcodes]")
@@ -2831,6 +2954,7 @@ TEST_CASE("bit 7, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, c", "[opcodes]")
@@ -2851,6 +2975,7 @@ TEST_CASE("bit 7, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, d", "[opcodes]")
@@ -2871,6 +2996,7 @@ TEST_CASE("bit 7, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, e", "[opcodes]")
@@ -2891,6 +3017,7 @@ TEST_CASE("bit 7, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, h", "[opcodes]")
@@ -2911,6 +3038,7 @@ TEST_CASE("bit 7, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bit 7, l", "[opcodes]")
@@ -2931,6 +3059,7 @@ TEST_CASE("bit 7, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call ##", "[opcodes]")
@@ -2964,6 +3093,7 @@ TEST_CASE("call ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call c, ##", "[opcodes]")
@@ -2997,6 +3127,7 @@ TEST_CASE("call c, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call m, ##", "[opcodes]")
@@ -3030,6 +3161,7 @@ TEST_CASE("call m, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call nc, ##", "[opcodes]")
@@ -3063,6 +3195,7 @@ TEST_CASE("call nc, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call nz, ##", "[opcodes]")
@@ -3096,6 +3229,7 @@ TEST_CASE("call nz, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call p, ##", "[opcodes]")
@@ -3129,6 +3263,7 @@ TEST_CASE("call p, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call pe, ##", "[opcodes]")
@@ -3162,6 +3297,7 @@ TEST_CASE("call pe, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call po, ##", "[opcodes]")
@@ -3195,6 +3331,7 @@ TEST_CASE("call po, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("call z, ##", "[opcodes]")
@@ -3228,6 +3365,7 @@ TEST_CASE("call z, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ccf", "[opcodes]")
@@ -3247,6 +3385,7 @@ TEST_CASE("ccf", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp (hl)", "[opcodes]")
@@ -3266,6 +3405,7 @@ TEST_CASE("cp (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp (ix+#)", "[opcodes]")
@@ -3299,6 +3439,7 @@ TEST_CASE("cp (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp (iy+#)", "[opcodes]")
@@ -3332,6 +3473,7 @@ TEST_CASE("cp (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp a", "[opcodes]")
@@ -3351,6 +3493,7 @@ TEST_CASE("cp a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp b", "[opcodes]")
@@ -3370,6 +3513,7 @@ TEST_CASE("cp b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp c", "[opcodes]")
@@ -3389,6 +3533,7 @@ TEST_CASE("cp c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp d", "[opcodes]")
@@ -3408,6 +3553,7 @@ TEST_CASE("cp d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp e", "[opcodes]")
@@ -3427,6 +3573,7 @@ TEST_CASE("cp e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp h", "[opcodes]")
@@ -3446,6 +3593,7 @@ TEST_CASE("cp h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp l", "[opcodes]")
@@ -3465,6 +3613,7 @@ TEST_CASE("cp l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cp #", "[opcodes]")
@@ -3494,6 +3643,7 @@ TEST_CASE("cp #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cpd", "[opcodes]")
@@ -3514,6 +3664,7 @@ TEST_CASE("cpd", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cpdr", "[opcodes]")
@@ -3534,6 +3685,7 @@ TEST_CASE("cpdr", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cpir", "[opcodes]")
@@ -3554,6 +3706,7 @@ TEST_CASE("cpir", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cpi", "[opcodes]")
@@ -3574,6 +3727,7 @@ TEST_CASE("cpi", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("cpl", "[opcodes]")
@@ -3593,6 +3747,7 @@ TEST_CASE("cpl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("daa", "[opcodes]")
@@ -3612,6 +3767,7 @@ TEST_CASE("daa", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec (hl)", "[opcodes]")
@@ -3631,6 +3787,7 @@ TEST_CASE("dec (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec (ix+#)", "[opcodes]")
@@ -3664,6 +3821,7 @@ TEST_CASE("dec (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec (iy+#)", "[opcodes]")
@@ -3697,6 +3855,7 @@ TEST_CASE("dec (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec a", "[opcodes]")
@@ -3716,6 +3875,7 @@ TEST_CASE("dec a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec b", "[opcodes]")
@@ -3735,6 +3895,7 @@ TEST_CASE("dec b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec bc", "[opcodes]")
@@ -3754,6 +3915,7 @@ TEST_CASE("dec bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec c", "[opcodes]")
@@ -3773,6 +3935,7 @@ TEST_CASE("dec c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec d", "[opcodes]")
@@ -3792,6 +3955,7 @@ TEST_CASE("dec d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec de", "[opcodes]")
@@ -3811,6 +3975,7 @@ TEST_CASE("dec de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec e", "[opcodes]")
@@ -3830,6 +3995,7 @@ TEST_CASE("dec e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec h", "[opcodes]")
@@ -3849,6 +4015,7 @@ TEST_CASE("dec h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec hl", "[opcodes]")
@@ -3868,6 +4035,7 @@ TEST_CASE("dec hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec ix", "[opcodes]")
@@ -3888,6 +4056,7 @@ TEST_CASE("dec ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec iy", "[opcodes]")
@@ -3908,6 +4077,7 @@ TEST_CASE("dec iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec l", "[opcodes]")
@@ -3927,6 +4097,7 @@ TEST_CASE("dec l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("dec sp", "[opcodes]")
@@ -3946,6 +4117,7 @@ TEST_CASE("dec sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("di", "[opcodes]")
@@ -3965,6 +4137,7 @@ TEST_CASE("di", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("djnz $+#", "[opcodes]")
@@ -3994,6 +4167,7 @@ TEST_CASE("djnz $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ei", "[opcodes]")
@@ -4013,6 +4187,7 @@ TEST_CASE("ei", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ex (sp), hl", "[opcodes]")
@@ -4032,6 +4207,7 @@ TEST_CASE("ex (sp), hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ex (sp), ix", "[opcodes]")
@@ -4052,6 +4228,7 @@ TEST_CASE("ex (sp), ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ex (sp), iy", "[opcodes]")
@@ -4072,6 +4249,7 @@ TEST_CASE("ex (sp), iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ex af, af'", "[opcodes]")
@@ -4091,6 +4269,7 @@ TEST_CASE("ex af, af'", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ex de, hl", "[opcodes]")
@@ -4110,6 +4289,7 @@ TEST_CASE("ex de, hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("exx", "[opcodes]")
@@ -4129,6 +4309,7 @@ TEST_CASE("exx", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("halt", "[opcodes]")
@@ -4148,6 +4329,7 @@ TEST_CASE("halt", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("im 0", "[opcodes]")
@@ -4168,6 +4350,7 @@ TEST_CASE("im 0", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("im 1", "[opcodes]")
@@ -4188,6 +4371,7 @@ TEST_CASE("im 1", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("im 2", "[opcodes]")
@@ -4208,6 +4392,7 @@ TEST_CASE("im 2", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in a, (#)", "[opcodes]")
@@ -4237,6 +4422,7 @@ TEST_CASE("in a, (#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in a, (c)", "[opcodes]")
@@ -4257,6 +4443,7 @@ TEST_CASE("in a, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in b, (c)", "[opcodes]")
@@ -4277,6 +4464,7 @@ TEST_CASE("in b, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in c, (c)", "[opcodes]")
@@ -4297,6 +4485,7 @@ TEST_CASE("in c, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in d, (c)", "[opcodes]")
@@ -4317,6 +4506,7 @@ TEST_CASE("in d, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in e, (c)", "[opcodes]")
@@ -4337,6 +4527,7 @@ TEST_CASE("in e, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in h, (c)", "[opcodes]")
@@ -4357,6 +4548,7 @@ TEST_CASE("in h, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("in l, (c)", "[opcodes]")
@@ -4377,6 +4569,7 @@ TEST_CASE("in l, (c)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc (hl)", "[opcodes]")
@@ -4396,6 +4589,7 @@ TEST_CASE("inc (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc (ix+#)", "[opcodes]")
@@ -4429,6 +4623,7 @@ TEST_CASE("inc (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc (iy+#)", "[opcodes]")
@@ -4462,6 +4657,7 @@ TEST_CASE("inc (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc a", "[opcodes]")
@@ -4481,6 +4677,7 @@ TEST_CASE("inc a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc b", "[opcodes]")
@@ -4500,6 +4697,7 @@ TEST_CASE("inc b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc bc", "[opcodes]")
@@ -4519,6 +4717,7 @@ TEST_CASE("inc bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc c", "[opcodes]")
@@ -4538,6 +4737,7 @@ TEST_CASE("inc c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc d", "[opcodes]")
@@ -4557,6 +4757,7 @@ TEST_CASE("inc d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc de", "[opcodes]")
@@ -4576,6 +4777,7 @@ TEST_CASE("inc de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc e", "[opcodes]")
@@ -4595,6 +4797,7 @@ TEST_CASE("inc e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc h", "[opcodes]")
@@ -4614,6 +4817,7 @@ TEST_CASE("inc h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc hl", "[opcodes]")
@@ -4633,6 +4837,7 @@ TEST_CASE("inc hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc ix", "[opcodes]")
@@ -4653,6 +4858,7 @@ TEST_CASE("inc ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc iy", "[opcodes]")
@@ -4673,6 +4879,7 @@ TEST_CASE("inc iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc l", "[opcodes]")
@@ -4692,6 +4899,7 @@ TEST_CASE("inc l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inc sp", "[opcodes]")
@@ -4711,6 +4919,7 @@ TEST_CASE("inc sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ind", "[opcodes]")
@@ -4731,6 +4940,7 @@ TEST_CASE("ind", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("indr", "[opcodes]")
@@ -4751,6 +4961,7 @@ TEST_CASE("indr", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ini", "[opcodes]")
@@ -4771,6 +4982,7 @@ TEST_CASE("ini", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("inir", "[opcodes]")
@@ -4791,6 +5003,7 @@ TEST_CASE("inir", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp ##", "[opcodes]")
@@ -4824,6 +5037,7 @@ TEST_CASE("jp ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp c, ##", "[opcodes]")
@@ -4857,6 +5071,7 @@ TEST_CASE("jp c, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp m, ##", "[opcodes]")
@@ -4890,6 +5105,7 @@ TEST_CASE("jp m, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp nc, ##", "[opcodes]")
@@ -4923,6 +5139,7 @@ TEST_CASE("jp nc, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp nz, ##", "[opcodes]")
@@ -4956,6 +5173,7 @@ TEST_CASE("jp nz, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp p, ##", "[opcodes]")
@@ -4989,6 +5207,7 @@ TEST_CASE("jp p, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp pe, ##", "[opcodes]")
@@ -5022,6 +5241,7 @@ TEST_CASE("jp pe, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp po, ##", "[opcodes]")
@@ -5055,6 +5275,7 @@ TEST_CASE("jp po, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp z, ##", "[opcodes]")
@@ -5088,6 +5309,7 @@ TEST_CASE("jp z, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp (hl)", "[opcodes]")
@@ -5107,6 +5329,7 @@ TEST_CASE("jp (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp (ix)", "[opcodes]")
@@ -5127,6 +5350,7 @@ TEST_CASE("jp (ix)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jp (iy)", "[opcodes]")
@@ -5147,6 +5371,7 @@ TEST_CASE("jp (iy)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jr c, $+#", "[opcodes]")
@@ -5176,6 +5401,7 @@ TEST_CASE("jr c, $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jr nc, $+#", "[opcodes]")
@@ -5205,6 +5431,7 @@ TEST_CASE("jr nc, $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jr nz, $+#", "[opcodes]")
@@ -5234,6 +5461,7 @@ TEST_CASE("jr nz, $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jr z, $+#", "[opcodes]")
@@ -5263,6 +5491,7 @@ TEST_CASE("jr z, $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("jr $+#", "[opcodes]")
@@ -5292,6 +5521,7 @@ TEST_CASE("jr $+#", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (bc), a", "[opcodes]")
@@ -5311,6 +5541,7 @@ TEST_CASE("ld (bc), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (de), a", "[opcodes]")
@@ -5330,6 +5561,7 @@ TEST_CASE("ld (de), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), a", "[opcodes]")
@@ -5349,6 +5581,7 @@ TEST_CASE("ld (hl), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), b", "[opcodes]")
@@ -5368,6 +5601,7 @@ TEST_CASE("ld (hl), b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), c", "[opcodes]")
@@ -5387,6 +5621,7 @@ TEST_CASE("ld (hl), c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), d", "[opcodes]")
@@ -5406,6 +5641,7 @@ TEST_CASE("ld (hl), d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), e", "[opcodes]")
@@ -5425,6 +5661,7 @@ TEST_CASE("ld (hl), e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), h", "[opcodes]")
@@ -5444,6 +5681,7 @@ TEST_CASE("ld (hl), h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), l", "[opcodes]")
@@ -5463,6 +5701,7 @@ TEST_CASE("ld (hl), l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (hl), #", "[opcodes]")
@@ -5492,6 +5731,7 @@ TEST_CASE("ld (hl), #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), a", "[opcodes]")
@@ -5525,6 +5765,7 @@ TEST_CASE("ld (ix+#), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), b", "[opcodes]")
@@ -5558,6 +5799,7 @@ TEST_CASE("ld (ix+#), b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), c", "[opcodes]")
@@ -5591,6 +5833,7 @@ TEST_CASE("ld (ix+#), c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), d", "[opcodes]")
@@ -5624,6 +5867,7 @@ TEST_CASE("ld (ix+#), d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), e", "[opcodes]")
@@ -5657,6 +5901,7 @@ TEST_CASE("ld (ix+#), e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), h", "[opcodes]")
@@ -5690,6 +5935,7 @@ TEST_CASE("ld (ix+#), h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), l", "[opcodes]")
@@ -5723,6 +5969,7 @@ TEST_CASE("ld (ix+#), l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (ix+#), #", "[opcodes]")
@@ -5820,6 +6067,7 @@ TEST_CASE("ld (ix+#), #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), a", "[opcodes]")
@@ -5853,6 +6101,7 @@ TEST_CASE("ld (iy+#), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), b", "[opcodes]")
@@ -5886,6 +6135,7 @@ TEST_CASE("ld (iy+#), b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), c", "[opcodes]")
@@ -5919,6 +6169,7 @@ TEST_CASE("ld (iy+#), c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), d", "[opcodes]")
@@ -5952,6 +6203,7 @@ TEST_CASE("ld (iy+#), d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), e", "[opcodes]")
@@ -5985,6 +6237,7 @@ TEST_CASE("ld (iy+#), e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), h", "[opcodes]")
@@ -6018,6 +6271,7 @@ TEST_CASE("ld (iy+#), h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), l", "[opcodes]")
@@ -6051,6 +6305,7 @@ TEST_CASE("ld (iy+#), l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (iy+#), #", "[opcodes]")
@@ -6148,6 +6403,7 @@ TEST_CASE("ld (iy+#), #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), a", "[opcodes]")
@@ -6181,6 +6437,7 @@ TEST_CASE("ld (##), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), bc", "[opcodes]")
@@ -6218,6 +6475,7 @@ TEST_CASE("ld (##), bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), de", "[opcodes]")
@@ -6255,6 +6513,7 @@ TEST_CASE("ld (##), de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), hl", "[opcodes]")
@@ -6288,6 +6547,7 @@ TEST_CASE("ld (##), hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), ix", "[opcodes]")
@@ -6325,6 +6585,7 @@ TEST_CASE("ld (##), ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), iy", "[opcodes]")
@@ -6362,6 +6623,7 @@ TEST_CASE("ld (##), iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld (##), sp", "[opcodes]")
@@ -6399,6 +6661,7 @@ TEST_CASE("ld (##), sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (bc)", "[opcodes]")
@@ -6418,6 +6681,7 @@ TEST_CASE("ld a, (bc)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (de)", "[opcodes]")
@@ -6437,6 +6701,7 @@ TEST_CASE("ld a, (de)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (hl)", "[opcodes]")
@@ -6456,6 +6721,7 @@ TEST_CASE("ld a, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (ix+#)", "[opcodes]")
@@ -6489,6 +6755,7 @@ TEST_CASE("ld a, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (iy+#)", "[opcodes]")
@@ -6522,6 +6789,7 @@ TEST_CASE("ld a, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, (##)", "[opcodes]")
@@ -6555,6 +6823,7 @@ TEST_CASE("ld a, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, a", "[opcodes]")
@@ -6574,6 +6843,7 @@ TEST_CASE("ld a, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, b", "[opcodes]")
@@ -6593,6 +6863,7 @@ TEST_CASE("ld a, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, c", "[opcodes]")
@@ -6612,6 +6883,7 @@ TEST_CASE("ld a, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, d", "[opcodes]")
@@ -6631,6 +6903,7 @@ TEST_CASE("ld a, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, e", "[opcodes]")
@@ -6650,6 +6923,7 @@ TEST_CASE("ld a, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, h", "[opcodes]")
@@ -6669,6 +6943,7 @@ TEST_CASE("ld a, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, i", "[opcodes]")
@@ -6689,6 +6964,7 @@ TEST_CASE("ld a, i", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, l", "[opcodes]")
@@ -6708,6 +6984,7 @@ TEST_CASE("ld a, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, #", "[opcodes]")
@@ -6737,6 +7014,7 @@ TEST_CASE("ld a, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld a, r", "[opcodes]")
@@ -6757,6 +7035,7 @@ TEST_CASE("ld a, r", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, (hl)", "[opcodes]")
@@ -6776,6 +7055,7 @@ TEST_CASE("ld b, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, (ix+#)", "[opcodes]")
@@ -6809,6 +7089,7 @@ TEST_CASE("ld b, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, (iy+#)", "[opcodes]")
@@ -6842,6 +7123,7 @@ TEST_CASE("ld b, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, a", "[opcodes]")
@@ -6861,6 +7143,7 @@ TEST_CASE("ld b, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, b", "[opcodes]")
@@ -6880,6 +7163,7 @@ TEST_CASE("ld b, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, c", "[opcodes]")
@@ -6899,6 +7183,7 @@ TEST_CASE("ld b, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, d", "[opcodes]")
@@ -6918,6 +7203,7 @@ TEST_CASE("ld b, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, e", "[opcodes]")
@@ -6937,6 +7223,7 @@ TEST_CASE("ld b, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, h", "[opcodes]")
@@ -6956,6 +7243,7 @@ TEST_CASE("ld b, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, l", "[opcodes]")
@@ -6975,6 +7263,7 @@ TEST_CASE("ld b, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld b, #", "[opcodes]")
@@ -7004,6 +7293,7 @@ TEST_CASE("ld b, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld bc, (##)", "[opcodes]")
@@ -7041,6 +7331,7 @@ TEST_CASE("ld bc, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld bc, ##", "[opcodes]")
@@ -7074,6 +7365,7 @@ TEST_CASE("ld bc, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, (hl)", "[opcodes]")
@@ -7093,6 +7385,7 @@ TEST_CASE("ld c, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, (ix+#)", "[opcodes]")
@@ -7126,6 +7419,7 @@ TEST_CASE("ld c, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, (iy+#)", "[opcodes]")
@@ -7159,6 +7453,7 @@ TEST_CASE("ld c, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, a", "[opcodes]")
@@ -7178,6 +7473,7 @@ TEST_CASE("ld c, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, b", "[opcodes]")
@@ -7197,6 +7493,7 @@ TEST_CASE("ld c, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, c", "[opcodes]")
@@ -7216,6 +7513,7 @@ TEST_CASE("ld c, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, d", "[opcodes]")
@@ -7235,6 +7533,7 @@ TEST_CASE("ld c, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, e", "[opcodes]")
@@ -7254,6 +7553,7 @@ TEST_CASE("ld c, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, h", "[opcodes]")
@@ -7273,6 +7573,7 @@ TEST_CASE("ld c, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, l", "[opcodes]")
@@ -7292,6 +7593,7 @@ TEST_CASE("ld c, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld c, #", "[opcodes]")
@@ -7321,6 +7623,7 @@ TEST_CASE("ld c, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, (hl)", "[opcodes]")
@@ -7340,6 +7643,7 @@ TEST_CASE("ld d, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, (ix+#)", "[opcodes]")
@@ -7373,6 +7677,7 @@ TEST_CASE("ld d, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, (iy+#)", "[opcodes]")
@@ -7406,6 +7711,7 @@ TEST_CASE("ld d, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, a", "[opcodes]")
@@ -7425,6 +7731,7 @@ TEST_CASE("ld d, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, b", "[opcodes]")
@@ -7444,6 +7751,7 @@ TEST_CASE("ld d, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, c", "[opcodes]")
@@ -7463,6 +7771,7 @@ TEST_CASE("ld d, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, d", "[opcodes]")
@@ -7482,6 +7791,7 @@ TEST_CASE("ld d, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, e", "[opcodes]")
@@ -7501,6 +7811,7 @@ TEST_CASE("ld d, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, h", "[opcodes]")
@@ -7520,6 +7831,7 @@ TEST_CASE("ld d, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, l", "[opcodes]")
@@ -7539,6 +7851,7 @@ TEST_CASE("ld d, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld d, #", "[opcodes]")
@@ -7568,6 +7881,7 @@ TEST_CASE("ld d, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld de, (##)", "[opcodes]")
@@ -7605,6 +7919,7 @@ TEST_CASE("ld de, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld de, ##", "[opcodes]")
@@ -7638,6 +7953,7 @@ TEST_CASE("ld de, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, (hl)", "[opcodes]")
@@ -7657,6 +7973,7 @@ TEST_CASE("ld e, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, (ix+#)", "[opcodes]")
@@ -7690,6 +8007,7 @@ TEST_CASE("ld e, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, (iy+#)", "[opcodes]")
@@ -7723,6 +8041,7 @@ TEST_CASE("ld e, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, a", "[opcodes]")
@@ -7742,6 +8061,7 @@ TEST_CASE("ld e, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, b", "[opcodes]")
@@ -7761,6 +8081,7 @@ TEST_CASE("ld e, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, c", "[opcodes]")
@@ -7780,6 +8101,7 @@ TEST_CASE("ld e, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, d", "[opcodes]")
@@ -7799,6 +8121,7 @@ TEST_CASE("ld e, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, e", "[opcodes]")
@@ -7818,6 +8141,7 @@ TEST_CASE("ld e, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, h", "[opcodes]")
@@ -7837,6 +8161,7 @@ TEST_CASE("ld e, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, l", "[opcodes]")
@@ -7856,6 +8181,7 @@ TEST_CASE("ld e, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld e, #", "[opcodes]")
@@ -7885,6 +8211,7 @@ TEST_CASE("ld e, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, (hl)", "[opcodes]")
@@ -7904,6 +8231,7 @@ TEST_CASE("ld h, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, (ix+#)", "[opcodes]")
@@ -7937,6 +8265,7 @@ TEST_CASE("ld h, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, (iy+#)", "[opcodes]")
@@ -7970,6 +8299,7 @@ TEST_CASE("ld h, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, a", "[opcodes]")
@@ -7989,6 +8319,7 @@ TEST_CASE("ld h, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, b", "[opcodes]")
@@ -8008,6 +8339,7 @@ TEST_CASE("ld h, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, c", "[opcodes]")
@@ -8027,6 +8359,7 @@ TEST_CASE("ld h, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, d", "[opcodes]")
@@ -8046,6 +8379,7 @@ TEST_CASE("ld h, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, e", "[opcodes]")
@@ -8065,6 +8399,7 @@ TEST_CASE("ld h, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, h", "[opcodes]")
@@ -8084,6 +8419,7 @@ TEST_CASE("ld h, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, l", "[opcodes]")
@@ -8103,6 +8439,7 @@ TEST_CASE("ld h, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld h, #", "[opcodes]")
@@ -8132,6 +8469,7 @@ TEST_CASE("ld h, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld hl, (##)", "[opcodes]")
@@ -8165,6 +8503,7 @@ TEST_CASE("ld hl, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld hl, ##", "[opcodes]")
@@ -8198,6 +8537,7 @@ TEST_CASE("ld hl, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld i, a", "[opcodes]")
@@ -8218,6 +8558,7 @@ TEST_CASE("ld i, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld ix, (##)", "[opcodes]")
@@ -8255,6 +8596,7 @@ TEST_CASE("ld ix, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld ix, ##", "[opcodes]")
@@ -8292,6 +8634,7 @@ TEST_CASE("ld ix, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld iy, (##)", "[opcodes]")
@@ -8329,6 +8672,7 @@ TEST_CASE("ld iy, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld iy, ##", "[opcodes]")
@@ -8366,6 +8710,7 @@ TEST_CASE("ld iy, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, (hl)", "[opcodes]")
@@ -8385,6 +8730,7 @@ TEST_CASE("ld l, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, (ix+#)", "[opcodes]")
@@ -8418,6 +8764,7 @@ TEST_CASE("ld l, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, (iy+#)", "[opcodes]")
@@ -8451,6 +8798,7 @@ TEST_CASE("ld l, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, a", "[opcodes]")
@@ -8470,6 +8818,7 @@ TEST_CASE("ld l, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, b", "[opcodes]")
@@ -8489,6 +8838,7 @@ TEST_CASE("ld l, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, c", "[opcodes]")
@@ -8508,6 +8858,7 @@ TEST_CASE("ld l, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, d", "[opcodes]")
@@ -8527,6 +8878,7 @@ TEST_CASE("ld l, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, e", "[opcodes]")
@@ -8546,6 +8898,7 @@ TEST_CASE("ld l, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, h", "[opcodes]")
@@ -8565,6 +8918,7 @@ TEST_CASE("ld l, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, l", "[opcodes]")
@@ -8584,6 +8938,7 @@ TEST_CASE("ld l, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld l, #", "[opcodes]")
@@ -8613,6 +8968,7 @@ TEST_CASE("ld l, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld r, a", "[opcodes]")
@@ -8633,6 +8989,7 @@ TEST_CASE("ld r, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, (##)", "[opcodes]")
@@ -8670,6 +9027,7 @@ TEST_CASE("ld sp, (##)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, hl", "[opcodes]")
@@ -8689,6 +9047,7 @@ TEST_CASE("ld sp, hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, ix", "[opcodes]")
@@ -8709,6 +9068,7 @@ TEST_CASE("ld sp, ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, iy", "[opcodes]")
@@ -8729,6 +9089,7 @@ TEST_CASE("ld sp, iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, ##", "[opcodes]")
@@ -8762,6 +9123,7 @@ TEST_CASE("ld sp, ##", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, $", "[opcodes]")
@@ -8783,6 +9145,7 @@ TEST_CASE("ld sp, $", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, $+1", "[opcodes]")
@@ -8804,6 +9167,7 @@ TEST_CASE("ld sp, $+1", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, $-1", "[opcodes]")
@@ -8825,6 +9189,7 @@ TEST_CASE("ld sp, $-1", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ld sp, $-0x1235", "[opcodes]")
@@ -8846,6 +9211,7 @@ TEST_CASE("ld sp, $-0x1235", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ldd", "[opcodes]")
@@ -8866,6 +9232,7 @@ TEST_CASE("ldd", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("lddr", "[opcodes]")
@@ -8886,6 +9253,7 @@ TEST_CASE("lddr", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ldi", "[opcodes]")
@@ -8906,6 +9274,7 @@ TEST_CASE("ldi", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ldir", "[opcodes]")
@@ -8926,6 +9295,7 @@ TEST_CASE("ldir", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("neg", "[opcodes]")
@@ -8946,6 +9316,7 @@ TEST_CASE("neg", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("nop", "[opcodes]")
@@ -8965,6 +9336,7 @@ TEST_CASE("nop", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or (hl)", "[opcodes]")
@@ -8984,6 +9356,7 @@ TEST_CASE("or (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or (ix+#)", "[opcodes]")
@@ -9017,6 +9390,7 @@ TEST_CASE("or (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or (iy+#)", "[opcodes]")
@@ -9050,6 +9424,7 @@ TEST_CASE("or (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or a", "[opcodes]")
@@ -9069,6 +9444,7 @@ TEST_CASE("or a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or b", "[opcodes]")
@@ -9088,6 +9464,7 @@ TEST_CASE("or b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or c", "[opcodes]")
@@ -9107,6 +9484,7 @@ TEST_CASE("or c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or d", "[opcodes]")
@@ -9126,6 +9504,7 @@ TEST_CASE("or d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or e", "[opcodes]")
@@ -9145,6 +9524,7 @@ TEST_CASE("or e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or h", "[opcodes]")
@@ -9164,6 +9544,7 @@ TEST_CASE("or h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or l", "[opcodes]")
@@ -9183,6 +9564,7 @@ TEST_CASE("or l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("or #", "[opcodes]")
@@ -9212,6 +9594,7 @@ TEST_CASE("or #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("otdr", "[opcodes]")
@@ -9232,6 +9615,7 @@ TEST_CASE("otdr", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("otir", "[opcodes]")
@@ -9252,6 +9636,7 @@ TEST_CASE("otir", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), a", "[opcodes]")
@@ -9272,6 +9657,7 @@ TEST_CASE("out (c), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), b", "[opcodes]")
@@ -9292,6 +9678,7 @@ TEST_CASE("out (c), b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), c", "[opcodes]")
@@ -9312,6 +9699,7 @@ TEST_CASE("out (c), c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), d", "[opcodes]")
@@ -9332,6 +9720,7 @@ TEST_CASE("out (c), d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), e", "[opcodes]")
@@ -9352,6 +9741,7 @@ TEST_CASE("out (c), e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), h", "[opcodes]")
@@ -9372,6 +9762,7 @@ TEST_CASE("out (c), h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (c), l", "[opcodes]")
@@ -9392,6 +9783,7 @@ TEST_CASE("out (c), l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("out (#), a", "[opcodes]")
@@ -9421,6 +9813,7 @@ TEST_CASE("out (#), a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("outd", "[opcodes]")
@@ -9441,6 +9834,7 @@ TEST_CASE("outd", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("outi", "[opcodes]")
@@ -9461,6 +9855,7 @@ TEST_CASE("outi", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop af", "[opcodes]")
@@ -9480,6 +9875,7 @@ TEST_CASE("pop af", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop bc", "[opcodes]")
@@ -9499,6 +9895,7 @@ TEST_CASE("pop bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop de", "[opcodes]")
@@ -9518,6 +9915,7 @@ TEST_CASE("pop de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop hl", "[opcodes]")
@@ -9537,6 +9935,7 @@ TEST_CASE("pop hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop ix", "[opcodes]")
@@ -9557,6 +9956,7 @@ TEST_CASE("pop ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("pop iy", "[opcodes]")
@@ -9577,6 +9977,7 @@ TEST_CASE("pop iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push af", "[opcodes]")
@@ -9596,6 +9997,7 @@ TEST_CASE("push af", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push bc", "[opcodes]")
@@ -9615,6 +10017,7 @@ TEST_CASE("push bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push de", "[opcodes]")
@@ -9634,6 +10037,7 @@ TEST_CASE("push de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push hl", "[opcodes]")
@@ -9653,6 +10057,7 @@ TEST_CASE("push hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push ix", "[opcodes]")
@@ -9673,6 +10078,7 @@ TEST_CASE("push ix", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("push iy", "[opcodes]")
@@ -9693,6 +10099,7 @@ TEST_CASE("push iy", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, (hl)", "[opcodes]")
@@ -9713,6 +10120,7 @@ TEST_CASE("res 0, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, (ix+#)", "[opcodes]")
@@ -9750,6 +10158,7 @@ TEST_CASE("res 0, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, (iy+#)", "[opcodes]")
@@ -9787,6 +10196,7 @@ TEST_CASE("res 0, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, a", "[opcodes]")
@@ -9807,6 +10217,7 @@ TEST_CASE("res 0, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, b", "[opcodes]")
@@ -9827,6 +10238,7 @@ TEST_CASE("res 0, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, c", "[opcodes]")
@@ -9847,6 +10259,7 @@ TEST_CASE("res 0, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, d", "[opcodes]")
@@ -9867,6 +10280,7 @@ TEST_CASE("res 0, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, e", "[opcodes]")
@@ -9887,6 +10301,7 @@ TEST_CASE("res 0, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, h", "[opcodes]")
@@ -9907,6 +10322,7 @@ TEST_CASE("res 0, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 0, l", "[opcodes]")
@@ -9927,6 +10343,7 @@ TEST_CASE("res 0, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, (hl)", "[opcodes]")
@@ -9947,6 +10364,7 @@ TEST_CASE("res 1, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, (ix+#)", "[opcodes]")
@@ -9984,6 +10402,7 @@ TEST_CASE("res 1, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, (iy+#)", "[opcodes]")
@@ -10021,6 +10440,7 @@ TEST_CASE("res 1, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, a", "[opcodes]")
@@ -10041,6 +10461,7 @@ TEST_CASE("res 1, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, b", "[opcodes]")
@@ -10061,6 +10482,7 @@ TEST_CASE("res 1, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, c", "[opcodes]")
@@ -10081,6 +10503,7 @@ TEST_CASE("res 1, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, d", "[opcodes]")
@@ -10101,6 +10524,7 @@ TEST_CASE("res 1, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, e", "[opcodes]")
@@ -10121,6 +10545,7 @@ TEST_CASE("res 1, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, h", "[opcodes]")
@@ -10141,6 +10566,7 @@ TEST_CASE("res 1, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 1, l", "[opcodes]")
@@ -10161,6 +10587,7 @@ TEST_CASE("res 1, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, (hl)", "[opcodes]")
@@ -10181,6 +10608,7 @@ TEST_CASE("res 2, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, (ix+#)", "[opcodes]")
@@ -10218,6 +10646,7 @@ TEST_CASE("res 2, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, (iy+#)", "[opcodes]")
@@ -10255,6 +10684,7 @@ TEST_CASE("res 2, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, a", "[opcodes]")
@@ -10275,6 +10705,7 @@ TEST_CASE("res 2, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, b", "[opcodes]")
@@ -10295,6 +10726,7 @@ TEST_CASE("res 2, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, c", "[opcodes]")
@@ -10315,6 +10747,7 @@ TEST_CASE("res 2, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, d", "[opcodes]")
@@ -10335,6 +10768,7 @@ TEST_CASE("res 2, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, e", "[opcodes]")
@@ -10355,6 +10789,7 @@ TEST_CASE("res 2, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, h", "[opcodes]")
@@ -10375,6 +10810,7 @@ TEST_CASE("res 2, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 2, l", "[opcodes]")
@@ -10395,6 +10831,7 @@ TEST_CASE("res 2, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, (hl)", "[opcodes]")
@@ -10415,6 +10852,7 @@ TEST_CASE("res 3, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, (ix+#)", "[opcodes]")
@@ -10452,6 +10890,7 @@ TEST_CASE("res 3, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, (iy+#)", "[opcodes]")
@@ -10489,6 +10928,7 @@ TEST_CASE("res 3, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, a", "[opcodes]")
@@ -10509,6 +10949,7 @@ TEST_CASE("res 3, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, b", "[opcodes]")
@@ -10529,6 +10970,7 @@ TEST_CASE("res 3, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, c", "[opcodes]")
@@ -10549,6 +10991,7 @@ TEST_CASE("res 3, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, d", "[opcodes]")
@@ -10569,6 +11012,7 @@ TEST_CASE("res 3, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, e", "[opcodes]")
@@ -10589,6 +11033,7 @@ TEST_CASE("res 3, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, h", "[opcodes]")
@@ -10609,6 +11054,7 @@ TEST_CASE("res 3, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 3, l", "[opcodes]")
@@ -10629,6 +11075,7 @@ TEST_CASE("res 3, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, (hl)", "[opcodes]")
@@ -10649,6 +11096,7 @@ TEST_CASE("res 4, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, (ix+#)", "[opcodes]")
@@ -10686,6 +11134,7 @@ TEST_CASE("res 4, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, (iy+#)", "[opcodes]")
@@ -10723,6 +11172,7 @@ TEST_CASE("res 4, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, a", "[opcodes]")
@@ -10743,6 +11193,7 @@ TEST_CASE("res 4, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, b", "[opcodes]")
@@ -10763,6 +11214,7 @@ TEST_CASE("res 4, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, c", "[opcodes]")
@@ -10783,6 +11235,7 @@ TEST_CASE("res 4, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, d", "[opcodes]")
@@ -10803,6 +11256,7 @@ TEST_CASE("res 4, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, e", "[opcodes]")
@@ -10823,6 +11277,7 @@ TEST_CASE("res 4, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, h", "[opcodes]")
@@ -10843,6 +11298,7 @@ TEST_CASE("res 4, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 4, l", "[opcodes]")
@@ -10863,6 +11319,7 @@ TEST_CASE("res 4, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, (hl)", "[opcodes]")
@@ -10883,6 +11340,7 @@ TEST_CASE("res 5, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, (ix+#)", "[opcodes]")
@@ -10920,6 +11378,7 @@ TEST_CASE("res 5, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, (iy+#)", "[opcodes]")
@@ -10957,6 +11416,7 @@ TEST_CASE("res 5, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, a", "[opcodes]")
@@ -10977,6 +11437,7 @@ TEST_CASE("res 5, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, b", "[opcodes]")
@@ -10997,6 +11458,7 @@ TEST_CASE("res 5, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, c", "[opcodes]")
@@ -11017,6 +11479,7 @@ TEST_CASE("res 5, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, d", "[opcodes]")
@@ -11037,6 +11500,7 @@ TEST_CASE("res 5, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, e", "[opcodes]")
@@ -11057,6 +11521,7 @@ TEST_CASE("res 5, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, h", "[opcodes]")
@@ -11077,6 +11542,7 @@ TEST_CASE("res 5, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 5, l", "[opcodes]")
@@ -11097,6 +11563,7 @@ TEST_CASE("res 5, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, (hl)", "[opcodes]")
@@ -11117,6 +11584,7 @@ TEST_CASE("res 6, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, (ix+#)", "[opcodes]")
@@ -11154,6 +11622,7 @@ TEST_CASE("res 6, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, (iy+#)", "[opcodes]")
@@ -11191,6 +11660,7 @@ TEST_CASE("res 6, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, a", "[opcodes]")
@@ -11211,6 +11681,7 @@ TEST_CASE("res 6, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, b", "[opcodes]")
@@ -11231,6 +11702,7 @@ TEST_CASE("res 6, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, c", "[opcodes]")
@@ -11251,6 +11723,7 @@ TEST_CASE("res 6, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, d", "[opcodes]")
@@ -11271,6 +11744,7 @@ TEST_CASE("res 6, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, e", "[opcodes]")
@@ -11291,6 +11765,7 @@ TEST_CASE("res 6, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, h", "[opcodes]")
@@ -11311,6 +11786,7 @@ TEST_CASE("res 6, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 6, l", "[opcodes]")
@@ -11331,6 +11807,7 @@ TEST_CASE("res 6, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, (hl)", "[opcodes]")
@@ -11351,6 +11828,7 @@ TEST_CASE("res 7, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, (ix+#)", "[opcodes]")
@@ -11388,6 +11866,7 @@ TEST_CASE("res 7, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, (iy+#)", "[opcodes]")
@@ -11425,6 +11904,7 @@ TEST_CASE("res 7, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, a", "[opcodes]")
@@ -11445,6 +11925,7 @@ TEST_CASE("res 7, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, b", "[opcodes]")
@@ -11465,6 +11946,7 @@ TEST_CASE("res 7, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, c", "[opcodes]")
@@ -11485,6 +11967,7 @@ TEST_CASE("res 7, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, d", "[opcodes]")
@@ -11505,6 +11988,7 @@ TEST_CASE("res 7, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, e", "[opcodes]")
@@ -11525,6 +12009,7 @@ TEST_CASE("res 7, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, h", "[opcodes]")
@@ -11545,6 +12030,7 @@ TEST_CASE("res 7, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("res 7, l", "[opcodes]")
@@ -11565,6 +12051,7 @@ TEST_CASE("res 7, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret", "[opcodes]")
@@ -11584,6 +12071,7 @@ TEST_CASE("ret", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret c", "[opcodes]")
@@ -11603,6 +12091,7 @@ TEST_CASE("ret c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret m", "[opcodes]")
@@ -11622,6 +12111,7 @@ TEST_CASE("ret m", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret nc", "[opcodes]")
@@ -11641,6 +12131,7 @@ TEST_CASE("ret nc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret nz", "[opcodes]")
@@ -11660,6 +12151,7 @@ TEST_CASE("ret nz", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret p", "[opcodes]")
@@ -11679,6 +12171,7 @@ TEST_CASE("ret p", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret pe", "[opcodes]")
@@ -11698,6 +12191,7 @@ TEST_CASE("ret pe", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret po", "[opcodes]")
@@ -11717,6 +12211,7 @@ TEST_CASE("ret po", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ret z", "[opcodes]")
@@ -11736,6 +12231,7 @@ TEST_CASE("ret z", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("reti", "[opcodes]")
@@ -11756,6 +12252,7 @@ TEST_CASE("reti", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("retn", "[opcodes]")
@@ -11776,6 +12273,7 @@ TEST_CASE("retn", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl (hl)", "[opcodes]")
@@ -11796,6 +12294,7 @@ TEST_CASE("rl (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl (ix+#)", "[opcodes]")
@@ -11833,6 +12332,7 @@ TEST_CASE("rl (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl (iy+#)", "[opcodes]")
@@ -11870,6 +12370,7 @@ TEST_CASE("rl (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl a", "[opcodes]")
@@ -11890,6 +12391,7 @@ TEST_CASE("rl a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl b", "[opcodes]")
@@ -11910,6 +12412,7 @@ TEST_CASE("rl b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl c", "[opcodes]")
@@ -11930,6 +12433,7 @@ TEST_CASE("rl c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl d", "[opcodes]")
@@ -11950,6 +12454,7 @@ TEST_CASE("rl d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl e", "[opcodes]")
@@ -11970,6 +12475,7 @@ TEST_CASE("rl e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl h", "[opcodes]")
@@ -11990,6 +12496,7 @@ TEST_CASE("rl h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rl l", "[opcodes]")
@@ -12010,6 +12517,7 @@ TEST_CASE("rl l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rla", "[opcodes]")
@@ -12029,6 +12537,7 @@ TEST_CASE("rla", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc (hl)", "[opcodes]")
@@ -12049,6 +12558,7 @@ TEST_CASE("rlc (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc (ix+#)", "[opcodes]")
@@ -12086,6 +12596,7 @@ TEST_CASE("rlc (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc (iy+#)", "[opcodes]")
@@ -12123,6 +12634,7 @@ TEST_CASE("rlc (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc a", "[opcodes]")
@@ -12143,6 +12655,7 @@ TEST_CASE("rlc a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc b", "[opcodes]")
@@ -12163,6 +12676,7 @@ TEST_CASE("rlc b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc c", "[opcodes]")
@@ -12183,6 +12697,7 @@ TEST_CASE("rlc c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc d", "[opcodes]")
@@ -12203,6 +12718,7 @@ TEST_CASE("rlc d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc e", "[opcodes]")
@@ -12223,6 +12739,7 @@ TEST_CASE("rlc e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc h", "[opcodes]")
@@ -12243,6 +12760,7 @@ TEST_CASE("rlc h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlc l", "[opcodes]")
@@ -12263,6 +12781,7 @@ TEST_CASE("rlc l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rlca", "[opcodes]")
@@ -12282,6 +12801,7 @@ TEST_CASE("rlca", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rld", "[opcodes]")
@@ -12302,6 +12822,7 @@ TEST_CASE("rld", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr (hl)", "[opcodes]")
@@ -12322,6 +12843,7 @@ TEST_CASE("rr (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr (ix+#)", "[opcodes]")
@@ -12359,6 +12881,7 @@ TEST_CASE("rr (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr (iy+#)", "[opcodes]")
@@ -12396,6 +12919,7 @@ TEST_CASE("rr (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr a", "[opcodes]")
@@ -12416,6 +12940,7 @@ TEST_CASE("rr a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr b", "[opcodes]")
@@ -12436,6 +12961,7 @@ TEST_CASE("rr b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr c", "[opcodes]")
@@ -12456,6 +12982,7 @@ TEST_CASE("rr c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr d", "[opcodes]")
@@ -12476,6 +13003,7 @@ TEST_CASE("rr d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr e", "[opcodes]")
@@ -12496,6 +13024,7 @@ TEST_CASE("rr e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr h", "[opcodes]")
@@ -12516,6 +13045,7 @@ TEST_CASE("rr h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rr l", "[opcodes]")
@@ -12536,6 +13066,7 @@ TEST_CASE("rr l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rra", "[opcodes]")
@@ -12555,6 +13086,7 @@ TEST_CASE("rra", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc (hl)", "[opcodes]")
@@ -12575,6 +13107,7 @@ TEST_CASE("rrc (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc (ix+#)", "[opcodes]")
@@ -12612,6 +13145,7 @@ TEST_CASE("rrc (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc (iy+#)", "[opcodes]")
@@ -12649,6 +13183,7 @@ TEST_CASE("rrc (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc a", "[opcodes]")
@@ -12669,6 +13204,7 @@ TEST_CASE("rrc a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc b", "[opcodes]")
@@ -12689,6 +13225,7 @@ TEST_CASE("rrc b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc c", "[opcodes]")
@@ -12709,6 +13246,7 @@ TEST_CASE("rrc c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc d", "[opcodes]")
@@ -12729,6 +13267,7 @@ TEST_CASE("rrc d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc e", "[opcodes]")
@@ -12749,6 +13288,7 @@ TEST_CASE("rrc e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc h", "[opcodes]")
@@ -12769,6 +13309,7 @@ TEST_CASE("rrc h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrc l", "[opcodes]")
@@ -12789,6 +13330,7 @@ TEST_CASE("rrc l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrca", "[opcodes]")
@@ -12808,6 +13350,7 @@ TEST_CASE("rrca", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rrd", "[opcodes]")
@@ -12828,6 +13371,7 @@ TEST_CASE("rrd", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 0", "[opcodes]")
@@ -12847,6 +13391,7 @@ TEST_CASE("rst 0", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 8", "[opcodes]")
@@ -12866,6 +13411,7 @@ TEST_CASE("rst 8", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 16", "[opcodes]")
@@ -12885,6 +13431,7 @@ TEST_CASE("rst 16", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 24", "[opcodes]")
@@ -12904,6 +13451,7 @@ TEST_CASE("rst 24", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 32", "[opcodes]")
@@ -12923,6 +13471,7 @@ TEST_CASE("rst 32", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 40", "[opcodes]")
@@ -12942,6 +13491,7 @@ TEST_CASE("rst 40", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 48", "[opcodes]")
@@ -12961,6 +13511,7 @@ TEST_CASE("rst 48", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("rst 56", "[opcodes]")
@@ -12980,6 +13531,7 @@ TEST_CASE("rst 56", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, #", "[opcodes]")
@@ -13009,6 +13561,7 @@ TEST_CASE("sbc a, #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, (hl)", "[opcodes]")
@@ -13028,6 +13581,7 @@ TEST_CASE("sbc a, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, (ix+#)", "[opcodes]")
@@ -13061,6 +13615,7 @@ TEST_CASE("sbc a, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, (iy+#)", "[opcodes]")
@@ -13094,6 +13649,7 @@ TEST_CASE("sbc a, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, a", "[opcodes]")
@@ -13113,6 +13669,7 @@ TEST_CASE("sbc a, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, b", "[opcodes]")
@@ -13132,6 +13689,7 @@ TEST_CASE("sbc a, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, c", "[opcodes]")
@@ -13151,6 +13709,7 @@ TEST_CASE("sbc a, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, d", "[opcodes]")
@@ -13170,6 +13729,7 @@ TEST_CASE("sbc a, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, e", "[opcodes]")
@@ -13189,6 +13749,7 @@ TEST_CASE("sbc a, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, h", "[opcodes]")
@@ -13208,6 +13769,7 @@ TEST_CASE("sbc a, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc a, l", "[opcodes]")
@@ -13227,6 +13789,7 @@ TEST_CASE("sbc a, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc hl, bc", "[opcodes]")
@@ -13247,6 +13810,7 @@ TEST_CASE("sbc hl, bc", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc hl, de", "[opcodes]")
@@ -13267,6 +13831,7 @@ TEST_CASE("sbc hl, de", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc hl, hl", "[opcodes]")
@@ -13287,6 +13852,7 @@ TEST_CASE("sbc hl, hl", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sbc hl, sp", "[opcodes]")
@@ -13307,6 +13873,7 @@ TEST_CASE("sbc hl, sp", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("scf", "[opcodes]")
@@ -13326,6 +13893,7 @@ TEST_CASE("scf", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, (hl)", "[opcodes]")
@@ -13346,6 +13914,7 @@ TEST_CASE("set 0, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, (ix+#)", "[opcodes]")
@@ -13383,6 +13952,7 @@ TEST_CASE("set 0, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, (iy+#)", "[opcodes]")
@@ -13420,6 +13990,7 @@ TEST_CASE("set 0, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, a", "[opcodes]")
@@ -13440,6 +14011,7 @@ TEST_CASE("set 0, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, b", "[opcodes]")
@@ -13460,6 +14032,7 @@ TEST_CASE("set 0, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, c", "[opcodes]")
@@ -13480,6 +14053,7 @@ TEST_CASE("set 0, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, d", "[opcodes]")
@@ -13500,6 +14074,7 @@ TEST_CASE("set 0, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, e", "[opcodes]")
@@ -13520,6 +14095,7 @@ TEST_CASE("set 0, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, h", "[opcodes]")
@@ -13540,6 +14116,7 @@ TEST_CASE("set 0, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 0, l", "[opcodes]")
@@ -13560,6 +14137,7 @@ TEST_CASE("set 0, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, (hl)", "[opcodes]")
@@ -13580,6 +14158,7 @@ TEST_CASE("set 1, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, (ix+#)", "[opcodes]")
@@ -13617,6 +14196,7 @@ TEST_CASE("set 1, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, (iy+#)", "[opcodes]")
@@ -13654,6 +14234,7 @@ TEST_CASE("set 1, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, a", "[opcodes]")
@@ -13674,6 +14255,7 @@ TEST_CASE("set 1, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, b", "[opcodes]")
@@ -13694,6 +14276,7 @@ TEST_CASE("set 1, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, c", "[opcodes]")
@@ -13714,6 +14297,7 @@ TEST_CASE("set 1, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, d", "[opcodes]")
@@ -13734,6 +14318,7 @@ TEST_CASE("set 1, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, e", "[opcodes]")
@@ -13754,6 +14339,7 @@ TEST_CASE("set 1, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, h", "[opcodes]")
@@ -13774,6 +14360,7 @@ TEST_CASE("set 1, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 1, l", "[opcodes]")
@@ -13794,6 +14381,7 @@ TEST_CASE("set 1, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, (hl)", "[opcodes]")
@@ -13814,6 +14402,7 @@ TEST_CASE("set 2, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, (ix+#)", "[opcodes]")
@@ -13851,6 +14440,7 @@ TEST_CASE("set 2, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, (iy+#)", "[opcodes]")
@@ -13888,6 +14478,7 @@ TEST_CASE("set 2, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, a", "[opcodes]")
@@ -13908,6 +14499,7 @@ TEST_CASE("set 2, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, b", "[opcodes]")
@@ -13928,6 +14520,7 @@ TEST_CASE("set 2, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, c", "[opcodes]")
@@ -13948,6 +14541,7 @@ TEST_CASE("set 2, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, d", "[opcodes]")
@@ -13968,6 +14562,7 @@ TEST_CASE("set 2, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, e", "[opcodes]")
@@ -13988,6 +14583,7 @@ TEST_CASE("set 2, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, h", "[opcodes]")
@@ -14008,6 +14604,7 @@ TEST_CASE("set 2, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 2, l", "[opcodes]")
@@ -14028,6 +14625,7 @@ TEST_CASE("set 2, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, (hl)", "[opcodes]")
@@ -14048,6 +14646,7 @@ TEST_CASE("set 3, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, (ix+#)", "[opcodes]")
@@ -14085,6 +14684,7 @@ TEST_CASE("set 3, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, (iy+#)", "[opcodes]")
@@ -14122,6 +14722,7 @@ TEST_CASE("set 3, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, a", "[opcodes]")
@@ -14142,6 +14743,7 @@ TEST_CASE("set 3, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, b", "[opcodes]")
@@ -14162,6 +14764,7 @@ TEST_CASE("set 3, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, c", "[opcodes]")
@@ -14182,6 +14785,7 @@ TEST_CASE("set 3, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, d", "[opcodes]")
@@ -14202,6 +14806,7 @@ TEST_CASE("set 3, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, e", "[opcodes]")
@@ -14222,6 +14827,7 @@ TEST_CASE("set 3, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, h", "[opcodes]")
@@ -14242,6 +14848,7 @@ TEST_CASE("set 3, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 3, l", "[opcodes]")
@@ -14262,6 +14869,7 @@ TEST_CASE("set 3, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, (hl)", "[opcodes]")
@@ -14282,6 +14890,7 @@ TEST_CASE("set 4, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, (ix+#)", "[opcodes]")
@@ -14319,6 +14928,7 @@ TEST_CASE("set 4, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, (iy+#)", "[opcodes]")
@@ -14356,6 +14966,7 @@ TEST_CASE("set 4, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, a", "[opcodes]")
@@ -14376,6 +14987,7 @@ TEST_CASE("set 4, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, b", "[opcodes]")
@@ -14396,6 +15008,7 @@ TEST_CASE("set 4, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, c", "[opcodes]")
@@ -14416,6 +15029,7 @@ TEST_CASE("set 4, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, d", "[opcodes]")
@@ -14436,6 +15050,7 @@ TEST_CASE("set 4, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, e", "[opcodes]")
@@ -14456,6 +15071,7 @@ TEST_CASE("set 4, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, h", "[opcodes]")
@@ -14476,6 +15092,7 @@ TEST_CASE("set 4, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 4, l", "[opcodes]")
@@ -14496,6 +15113,7 @@ TEST_CASE("set 4, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, (hl)", "[opcodes]")
@@ -14516,6 +15134,7 @@ TEST_CASE("set 5, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, (ix+#)", "[opcodes]")
@@ -14553,6 +15172,7 @@ TEST_CASE("set 5, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, (iy+#)", "[opcodes]")
@@ -14590,6 +15210,7 @@ TEST_CASE("set 5, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, a", "[opcodes]")
@@ -14610,6 +15231,7 @@ TEST_CASE("set 5, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, b", "[opcodes]")
@@ -14630,6 +15252,7 @@ TEST_CASE("set 5, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, c", "[opcodes]")
@@ -14650,6 +15273,7 @@ TEST_CASE("set 5, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, d", "[opcodes]")
@@ -14670,6 +15294,7 @@ TEST_CASE("set 5, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, e", "[opcodes]")
@@ -14690,6 +15315,7 @@ TEST_CASE("set 5, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, h", "[opcodes]")
@@ -14710,6 +15336,7 @@ TEST_CASE("set 5, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 5, l", "[opcodes]")
@@ -14730,6 +15357,7 @@ TEST_CASE("set 5, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, (hl)", "[opcodes]")
@@ -14750,6 +15378,7 @@ TEST_CASE("set 6, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, (ix+#)", "[opcodes]")
@@ -14787,6 +15416,7 @@ TEST_CASE("set 6, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, (iy+#)", "[opcodes]")
@@ -14824,6 +15454,7 @@ TEST_CASE("set 6, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, a", "[opcodes]")
@@ -14844,6 +15475,7 @@ TEST_CASE("set 6, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, b", "[opcodes]")
@@ -14864,6 +15496,7 @@ TEST_CASE("set 6, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, c", "[opcodes]")
@@ -14884,6 +15517,7 @@ TEST_CASE("set 6, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, d", "[opcodes]")
@@ -14904,6 +15538,7 @@ TEST_CASE("set 6, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, e", "[opcodes]")
@@ -14924,6 +15559,7 @@ TEST_CASE("set 6, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, h", "[opcodes]")
@@ -14944,6 +15580,7 @@ TEST_CASE("set 6, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 6, l", "[opcodes]")
@@ -14964,6 +15601,7 @@ TEST_CASE("set 6, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, (hl)", "[opcodes]")
@@ -14984,6 +15622,7 @@ TEST_CASE("set 7, (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, (ix+#)", "[opcodes]")
@@ -15021,6 +15660,7 @@ TEST_CASE("set 7, (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, (iy+#)", "[opcodes]")
@@ -15058,6 +15698,7 @@ TEST_CASE("set 7, (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, a", "[opcodes]")
@@ -15078,6 +15719,7 @@ TEST_CASE("set 7, a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, b", "[opcodes]")
@@ -15098,6 +15740,7 @@ TEST_CASE("set 7, b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, c", "[opcodes]")
@@ -15118,6 +15761,7 @@ TEST_CASE("set 7, c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, d", "[opcodes]")
@@ -15138,6 +15782,7 @@ TEST_CASE("set 7, d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, e", "[opcodes]")
@@ -15158,6 +15803,7 @@ TEST_CASE("set 7, e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, h", "[opcodes]")
@@ -15178,6 +15824,7 @@ TEST_CASE("set 7, h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("set 7, l", "[opcodes]")
@@ -15198,6 +15845,7 @@ TEST_CASE("set 7, l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla (hl)", "[opcodes]")
@@ -15218,6 +15866,7 @@ TEST_CASE("sla (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla (ix+#)", "[opcodes]")
@@ -15255,6 +15904,7 @@ TEST_CASE("sla (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla (iy+#)", "[opcodes]")
@@ -15292,6 +15942,7 @@ TEST_CASE("sla (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla a", "[opcodes]")
@@ -15312,6 +15963,7 @@ TEST_CASE("sla a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla b", "[opcodes]")
@@ -15332,6 +15984,7 @@ TEST_CASE("sla b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla c", "[opcodes]")
@@ -15352,6 +16005,7 @@ TEST_CASE("sla c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla d", "[opcodes]")
@@ -15372,6 +16026,7 @@ TEST_CASE("sla d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla e", "[opcodes]")
@@ -15392,6 +16047,7 @@ TEST_CASE("sla e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla h", "[opcodes]")
@@ -15412,6 +16068,7 @@ TEST_CASE("sla h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sla l", "[opcodes]")
@@ -15432,6 +16089,7 @@ TEST_CASE("sla l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra (hl)", "[opcodes]")
@@ -15452,6 +16110,7 @@ TEST_CASE("sra (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra (ix+#)", "[opcodes]")
@@ -15489,6 +16148,7 @@ TEST_CASE("sra (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra (iy+#)", "[opcodes]")
@@ -15526,6 +16186,7 @@ TEST_CASE("sra (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra a", "[opcodes]")
@@ -15546,6 +16207,7 @@ TEST_CASE("sra a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra b", "[opcodes]")
@@ -15566,6 +16228,7 @@ TEST_CASE("sra b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra c", "[opcodes]")
@@ -15586,6 +16249,7 @@ TEST_CASE("sra c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra d", "[opcodes]")
@@ -15606,6 +16270,7 @@ TEST_CASE("sra d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra e", "[opcodes]")
@@ -15626,6 +16291,7 @@ TEST_CASE("sra e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra h", "[opcodes]")
@@ -15646,6 +16312,7 @@ TEST_CASE("sra h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sra l", "[opcodes]")
@@ -15666,6 +16333,7 @@ TEST_CASE("sra l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl (hl)", "[opcodes]")
@@ -15686,6 +16354,7 @@ TEST_CASE("srl (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl (ix+#)", "[opcodes]")
@@ -15723,6 +16392,7 @@ TEST_CASE("srl (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl (iy+#)", "[opcodes]")
@@ -15760,6 +16430,7 @@ TEST_CASE("srl (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl a", "[opcodes]")
@@ -15780,6 +16451,7 @@ TEST_CASE("srl a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl b", "[opcodes]")
@@ -15800,6 +16472,7 @@ TEST_CASE("srl b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl c", "[opcodes]")
@@ -15820,6 +16493,7 @@ TEST_CASE("srl c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl d", "[opcodes]")
@@ -15840,6 +16514,7 @@ TEST_CASE("srl d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl e", "[opcodes]")
@@ -15860,6 +16535,7 @@ TEST_CASE("srl e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl h", "[opcodes]")
@@ -15880,6 +16556,7 @@ TEST_CASE("srl h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("srl l", "[opcodes]")
@@ -15900,6 +16577,7 @@ TEST_CASE("srl l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub (hl)", "[opcodes]")
@@ -15919,6 +16597,7 @@ TEST_CASE("sub (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub (ix+#)", "[opcodes]")
@@ -15952,6 +16631,7 @@ TEST_CASE("sub (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub (iy+#)", "[opcodes]")
@@ -15985,6 +16665,7 @@ TEST_CASE("sub (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub a", "[opcodes]")
@@ -16004,6 +16685,7 @@ TEST_CASE("sub a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub b", "[opcodes]")
@@ -16023,6 +16705,7 @@ TEST_CASE("sub b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub c", "[opcodes]")
@@ -16042,6 +16725,7 @@ TEST_CASE("sub c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub d", "[opcodes]")
@@ -16061,6 +16745,7 @@ TEST_CASE("sub d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub e", "[opcodes]")
@@ -16080,6 +16765,7 @@ TEST_CASE("sub e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub h", "[opcodes]")
@@ -16099,6 +16785,7 @@ TEST_CASE("sub h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub l", "[opcodes]")
@@ -16118,6 +16805,7 @@ TEST_CASE("sub l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sub #", "[opcodes]")
@@ -16147,6 +16835,7 @@ TEST_CASE("sub #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor (hl)", "[opcodes]")
@@ -16166,6 +16855,7 @@ TEST_CASE("xor (hl)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor (ix+#)", "[opcodes]")
@@ -16199,6 +16889,7 @@ TEST_CASE("xor (ix+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor (iy+#)", "[opcodes]")
@@ -16232,6 +16923,7 @@ TEST_CASE("xor (iy+#)", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor a", "[opcodes]")
@@ -16251,6 +16943,7 @@ TEST_CASE("xor a", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor b", "[opcodes]")
@@ -16270,6 +16963,7 @@ TEST_CASE("xor b", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor c", "[opcodes]")
@@ -16289,6 +16983,7 @@ TEST_CASE("xor c", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor d", "[opcodes]")
@@ -16308,6 +17003,7 @@ TEST_CASE("xor d", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor e", "[opcodes]")
@@ -16327,6 +17023,7 @@ TEST_CASE("xor e", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor h", "[opcodes]")
@@ -16346,6 +17043,7 @@ TEST_CASE("xor h", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor l", "[opcodes]")
@@ -16365,6 +17063,7 @@ TEST_CASE("xor l", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("xor #", "[opcodes]")
@@ -16394,4 +17093,5 @@ TEST_CASE("xor #", "[opcodes]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
 }

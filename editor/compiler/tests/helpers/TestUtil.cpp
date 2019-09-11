@@ -23,11 +23,13 @@ static DataBlob link(IErrorReporter& errorConsumer, Program* program)
     if (!binary)
         return DataBlob();
 
+    binary->setCurrentFile(std::string());
     DataBlob result(binary->codeBytes(), binary->codeLength());
-    for (int i = 0; i <= ProgramSection::MaxBank; i++) {
-        if (binary->hasBank(i)) {
-            binary->setCurrentBank(i);
-            result.setBankData(i, DataBlob(binary->codeBytes(), binary->codeLength()));
+
+    for (const auto& it : binary->files()) {
+        if (!it.first.empty()) {
+            binary->setCurrentFile(it.first);
+            result.setFileData(it.first, DataBlob(binary->codeBytes(), binary->codeLength()));
         }
     }
 

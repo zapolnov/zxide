@@ -104,7 +104,7 @@ void Compiler::compile()
             throw CompilationFailed();
 
         setStatusText(tr("Writing bin files..."));
-        for (const auto& it : mProgram->files()) {
+        for (const auto& it : mProgramBinary->files()) {
             mProgramBinary->setCurrentFile(it.first);
             QString fileName = QStringLiteral("%1@%2.bin").arg(it.first.c_str()).arg(mProgramBinary->baseAddress(), 0, 16);
             fileName = QDir(QFileInfo(mOutputTapeFile).absolutePath()).absoluteFilePath(fileName);
@@ -113,7 +113,6 @@ void Compiler::compile()
             memcpy(data.data() + mProgramBinary->baseAddress(), mProgramBinary->codeBytes(), mProgramBinary->codeLength());
             writeFile(fileName, data.data(), data.size(), this);
         }
-        mProgramBinary->setCurrentFile(std::string());
 
         setStatusText(tr("Writing tape file..."));
         TapeFileWriter tapeWriter(mProgramBinary.get(), this);

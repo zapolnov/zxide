@@ -45,7 +45,7 @@ TEST_CASE("case insensitivity in instructions and operands", "[case]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("case sensitivity in names", "[case]")
@@ -107,5 +107,5 @@ TEST_CASE("case sensitivity in names", "[case]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }

@@ -12,9 +12,17 @@ class ProgramDebugInfo;
 class ProgramBinary
 {
 public:
+    struct File
+    {
+        std::vector<quint8> code;
+        std::unique_ptr<ProgramDebugInfo> debugInfo;
+        unsigned baseAddress;
+        unsigned endAddress;
+    };
+
     using FileMap = std::map<std::string, File>;
 
-    explicit ProgramBinary(unsigned baseAddr);
+    ProgramBinary();
     ~ProgramBinary();
 
     unsigned baseAddress() const { return mCurrentFile->second.baseAddress; }
@@ -31,20 +39,12 @@ public:
 
     const FileMap& files() const { return mFiles; }
 
-    void emitByte(File* file, int line, quint8 byte);
-    void emitWord(File* file, int line, quint16 word);
-    void emitDWord(File* file, int line, quint32 dword);
-    void emitQWord(File* file, int line, quint64 qword);
+    void emitByte(::File* file, int line, quint8 byte);
+    void emitWord(::File* file, int line, quint16 word);
+    void emitDWord(::File* file, int line, quint32 dword);
+    void emitQWord(::File* file, int line, quint64 qword);
 
 private:
-    struct File
-    {
-        std::vector<quint8> code;
-        std::unique_ptr<ProgramDebugInfo> debugInfo;
-        unsigned baseAddress;
-        unsigned endAddress;
-    };
-
     FileMap mFiles;
     FileMap::iterator mCurrentFile;
 

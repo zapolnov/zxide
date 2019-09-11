@@ -17,17 +17,17 @@ public:
 
     const std::string& data() const { return mData; }
 
-    bool hasBanks() const { return !mBankData.empty(); }
-    int numBanks() const { return int(mBankData.size()); }
-    const DataBlob& bankData(int index) const;
-    void setBankData(int index, DataBlob blob);
+    bool hasFiles() const { return !mFileData.empty(); }
+    int numFiles() const { return int(mFileData.size()); }
+    const DataBlob& fileData(const std::string& fileName) const;
+    void setFileData(const std::string& fileName, DataBlob blob);
 
     bool operator==(const DataBlob& other) const { return mData == other.mData; }
     bool operator!=(const DataBlob& other) const { return mData != other.mData; }
 
 private:
     std::string mData;
-    std::unordered_map<int, DataBlob> mBankData;
+    std::unordered_map<std::string, DataBlob> mFileData;
 };
 
 std::ostream& operator<<(std::ostream& stream, const DataBlob& str);

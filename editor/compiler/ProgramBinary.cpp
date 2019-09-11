@@ -2,9 +2,8 @@
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramSection.h"
 
-ProgramBinary::ProgramBinary(unsigned baseAddr)
+ProgramBinary::ProgramBinary()
 {
-    createFile(std::string(), baseAddr);
 }
 
 ProgramBinary::~ProgramBinary()
@@ -29,13 +28,13 @@ void ProgramBinary::setCurrentFile(const std::string& fileName, unsigned baseAdd
     mCurrentFile = it;
 }
 
-void ProgramBinary::emitByte(File* file, int line, quint8 byte)
+void ProgramBinary::emitByte(::File* file, int line, quint8 byte)
 {
     mCurrentFile->second.code.emplace_back(byte);
-    mCurrentFile->second.debugInfo->setSourceLocation(b.endAddress++, file, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
 }
 
-void ProgramBinary::emitWord(File* file, int line, quint16 word)
+void ProgramBinary::emitWord(::File* file, int line, quint16 word)
 {
     mCurrentFile->second.code.emplace_back(quint8(word & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((word >> 8) & 0xFF));
@@ -43,7 +42,7 @@ void ProgramBinary::emitWord(File* file, int line, quint16 word)
     mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
 }
 
-void ProgramBinary::emitDWord(File* file, int line, quint32 dword)
+void ProgramBinary::emitDWord(::File* file, int line, quint32 dword)
 {
     mCurrentFile->second.code.emplace_back(quint8(dword & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((dword >> 8) & 0xFF));
@@ -55,7 +54,7 @@ void ProgramBinary::emitDWord(File* file, int line, quint32 dword)
     mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
 }
 
-void ProgramBinary::emitQWord(File* file, int line, quint64 qword)
+void ProgramBinary::emitQWord(::File* file, int line, quint64 qword)
 {
     mCurrentFile->second.code.emplace_back(quint8(qword & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((qword >> 8) & 0xFF));

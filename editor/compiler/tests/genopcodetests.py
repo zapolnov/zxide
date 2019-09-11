@@ -869,7 +869,7 @@ for opcode in opcodes:
     src += '    REQUIRE(errorConsumer.lastErrorMessage() == "");\n'
     src += '    REQUIRE(errorConsumer.errorCount() == 0);\n'
     src += '    REQUIRE(actual == expected);\n'
-    src += '    REQUIRE(!actual.hasBanks());\n'
+    src += '    REQUIRE(!actual.hasFiles());\n'
     src += '}\n'
 
 with open("OpcodeTests.cpp", "w") as f:

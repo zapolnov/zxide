@@ -29,7 +29,7 @@ TEST_CASE("addition", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("8 bit addition overflow", "[expr]")
@@ -112,7 +112,7 @@ TEST_CASE("subtraction", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("8 bit subtraction overflow", "[expr]")
@@ -170,7 +170,7 @@ TEST_CASE("multiplication", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("division", "[expr]")
@@ -216,7 +216,7 @@ TEST_CASE("division", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("negation", "[expr]")
@@ -259,7 +259,7 @@ TEST_CASE("negation", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("8 bit negation overflow", "[expr]")
@@ -323,7 +323,7 @@ TEST_CASE("logical not", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bitwise not", "[expr]")
@@ -382,7 +382,7 @@ TEST_CASE("bitwise not", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("parentheses", "[expr]")
@@ -416,7 +416,7 @@ TEST_CASE("parentheses", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("shifts", "[expr]")
@@ -486,7 +486,7 @@ TEST_CASE("shifts", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("8 bit left shift overflow", "[expr]")
@@ -736,7 +736,7 @@ TEST_CASE("relational operators", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("bitwise operators", "[expr]")
@@ -805,7 +805,7 @@ TEST_CASE("bitwise operators", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("logical operators", "[expr]")
@@ -849,7 +849,7 @@ TEST_CASE("logical operators", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("conditional operator", "[expr]")
@@ -881,5 +881,5 @@ TEST_CASE("conditional operator", "[expr]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }

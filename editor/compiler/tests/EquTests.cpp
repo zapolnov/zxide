@@ -28,7 +28,7 @@ TEST_CASE("equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("referencing other equ", "[equ]")
@@ -56,7 +56,7 @@ TEST_CASE("referencing other equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("duplicate equ", "[equ]")
@@ -111,7 +111,7 @@ TEST_CASE("local equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("duplicate local equ", "[equ]")
@@ -184,7 +184,7 @@ TEST_CASE("equ arithmetics", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("conflicting equ name with label", "[equ]")
@@ -268,7 +268,7 @@ TEST_CASE("reference equ between multiple files", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("labels in equ", "[equ]")
@@ -328,7 +328,7 @@ TEST_CASE("labels in equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("circular reference", "[equ]")
@@ -396,7 +396,7 @@ TEST_CASE("'$' in equ", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("ensure unused equs are validated", "[equ]")
@@ -436,7 +436,7 @@ TEST_CASE("equ in bit instruction", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("equ in rst instruction", "[equ]")
@@ -457,5 +457,5 @@ TEST_CASE("equ in rst instruction", "[equ]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }

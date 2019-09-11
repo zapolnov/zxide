@@ -67,7 +67,7 @@ TEST_CASE("data byte definition", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("data byte overflow", "[data]")
@@ -177,7 +177,7 @@ TEST_CASE("data word definition", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("data word overflow", "[data]")
@@ -317,7 +317,7 @@ TEST_CASE("data dword definition", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("data dword overflow", "[data]")
@@ -393,7 +393,7 @@ TEST_CASE("'$' in data definition", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("character and string literals", "[data]")
@@ -439,5 +439,5 @@ TEST_CASE("character and string literals", "[data]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }

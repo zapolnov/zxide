@@ -11,19 +11,19 @@ TEST_CASE("empty program 1", "[sections]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "program has no code in primary memory space");
+    REQUIRE(errorConsumer.lastErrorMessage() == "program has no code in default file");
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
 TEST_CASE("empty program 2", "[sections]")
 {
     static const char source[] =
-        "section main [bank 3]\n"
+        "section main [file 'file3']\n"
         ;
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "program has no code in primary memory space");
+    REQUIRE(errorConsumer.lastErrorMessage() == "program has no code in default file");
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
@@ -36,31 +36,31 @@ TEST_CASE("require section with base address", "[sections]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "no sections with base address in primary memory space");
+    REQUIRE(errorConsumer.lastErrorMessage() == "no sections with base address in default file");
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("require section with base address in primary memory space", "[sections]")
+TEST_CASE("require section with base address in main file", "[sections]")
 {
     static const char source[] =
         "section main\n"
         "db 0\n"
-        "section bank [bank 1, base 0xc000]\n"
+        "section file [file 'file1', base 0xc000]\n"
         "db 1\n"
         ;
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "no sections with base address in primary memory space");
+    REQUIRE(errorConsumer.lastErrorMessage() == "no sections with base address in default file");
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("base address for bank", "[sections]")
+TEST_CASE("base address for file", "[sections]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
         "labl: dw labl\n"
-        "section bank [bank 1, base 0xdeda]\n"
+        "section file [file 'file1', base 0xdeda]\n"
         "label: dw label\n"
         ;
 
@@ -68,7 +68,7 @@ TEST_CASE("base address for bank", "[sections]")
         0x34,
         0x12,
         };
-    static const unsigned char binary_bank1[] = {
+    static const unsigned char binary_file1[] = {
         0xda,
         0xde,
         };
@@ -76,27 +76,27 @@ TEST_CASE("base address for bank", "[sections]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank1(binary_bank1, sizeof(binary_bank1));
+    DataBlob expected_file1(binary_file1, sizeof(binary_file1));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(1) == expected_bank1);
-    REQUIRE(actual.numBanks() == 1);
+    REQUIRE(actual.fileData("file1") == expected_file1);
+    REQUIRE(actual.numFiles() == 1);
 }
 
-TEST_CASE("default base address for bank", "[sections]")
+TEST_CASE("no default base address for file", "[sections]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
         "db 0xbb\n"
-        "section bank [bank 1]\n"
+        "section file [file 'file1', base 0xc000]\n"
         "label: dw label\n"
         ;
 
     static const unsigned char binary_main[] = {
         0xbb,
         };
-    static const unsigned char binary_bank1[] = {
+    static const unsigned char binary_file1[] = {
         0x00,
         0xc0,
         };
@@ -104,44 +104,12 @@ TEST_CASE("default base address for bank", "[sections]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank1(binary_bank1, sizeof(binary_bank1));
+    DataBlob expected_file1(binary_file1, sizeof(binary_file1));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(1) == expected_bank1);
-    REQUIRE(actual.numBanks() == 1);
-}
-
-TEST_CASE("default base address with alignment for bank", "[sections]")
-{
-    static const char source[] =
-        "section main [base 0x1234]\n"
-        "db 0xcc\n"
-        "section bank [bank 1, align 5]\n" // (0xC000 = 49152) % 5 != 0
-        "label1: dw label1\n"
-        "section abank [bank 1]\n"
-        "label2: dw label2\n"
-        ;
-
-    static const unsigned char binary_main[] = {
-        0xcc,
-        };
-    static const unsigned char binary_bank1[] = {
-        0x03, // (0xC003 = 49155) % 5 == 0
-        0xc0,
-        0x05,
-        0xc0,
-        };
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank1(binary_bank1, sizeof(binary_bank1));
-    REQUIRE(errorConsumer.lastErrorMessage() == "");
-    REQUIRE(errorConsumer.errorCount() == 0);
-    REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(1) == expected_bank1);
-    REQUIRE(actual.numBanks() == 1);
+    REQUIRE(actual.fileData("file1") == expected_file1);
+    REQUIRE(actual.numFiles() == 1);
 }
 
 TEST_CASE("label in empty section", "[sections]")
@@ -164,7 +132,7 @@ TEST_CASE("label in empty section", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("multiple declaration of section", "[sections]")
@@ -179,23 +147,35 @@ TEST_CASE("multiple declaration of section", "[sections]")
         "section main\n"
         "section other [base 0x1236]\n"
         "section other\n"
-        "section bank1 [bank 1]\n"
-        "section bank1\n"
-        "section bank3\n"
-        "section bank3 [bank 3]\n"
+        "section file1 [file 'file1', base 0x9000]\n"
+        "section file1\n"
+        "db 2\n"
+        "section file3\n"
+        "section file3 [file 'file3', base 0x8000]\n"
+        "db 4\n"
         ;
 
-    static const unsigned char binary[] = {
+    static const unsigned char binary_main[] = {
         0x00,
+        };
+    static const unsigned char binary_file1[] = {
+        0x02,
+        };
+    static const unsigned char binary_file3[] = {
+        0x04,
         };
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    DataBlob expected(binary, sizeof(binary));
+    DataBlob expected_main(binary_main, sizeof(binary_main));
+    DataBlob expected_file1(binary_file1, sizeof(binary_file1));
+    DataBlob expected_file3(binary_file3, sizeof(binary_file3));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
-    REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(actual == expected_main);
+    REQUIRE(actual.fileData("file1") == expected_file1);
+    REQUIRE(actual.fileData("file3") == expected_file3);
+    REQUIRE(actual.numFiles() == 2);
 }
 
 TEST_CASE("section alignment", "[sections]")
@@ -231,7 +211,7 @@ TEST_CASE("section alignment", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("section padding", "[sections]")
@@ -257,7 +237,7 @@ TEST_CASE("section padding", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("section ordering", "[sections]")
@@ -297,7 +277,7 @@ TEST_CASE("section ordering", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("can't change section base", "[sections]")
@@ -328,18 +308,18 @@ TEST_CASE("can't change section alignment", "[sections]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("can't change section bank", "[sections]")
+TEST_CASE("can't change section file", "[sections]")
 {
     static const char source[] =
         "section dummy [base 0x1234]\n"
-        "section main [bank 1]\n"
-        "section main [bank 3]\n"
+        "section main [file 'file1', base 0x4321]\n"
+        "section main [file 'file3']\n"
         "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "conflicting bank for section 'main' (3 != 1)");
+    REQUIRE(errorConsumer.lastErrorMessage() == "conflicting file name for section 'main' ('file3' != 'file1')");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
@@ -389,7 +369,7 @@ TEST_CASE("last byte fits well 1", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("last byte fits well 2", "[sections]")
@@ -414,7 +394,7 @@ TEST_CASE("last byte fits well 2", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("last byte fits well 3", "[sections]")
@@ -439,7 +419,7 @@ TEST_CASE("last byte fits well 3", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("address is too large 1", "[sections]")
@@ -510,7 +490,7 @@ TEST_CASE("nearby sections", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(!actual.hasFiles());
 }
 
 TEST_CASE("sections shouldn't overlap", "[sections]")
@@ -529,113 +509,105 @@ TEST_CASE("sections shouldn't overlap", "[sections]")
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("sections shouldn't overlap with banks", "[sections]")
-{
-    static const char source[] =
-        "section main [base 0x1234]\n"
-        "db 0xaa\n"
-        "section sec1 [base 0xc000, bank 1]\n"
-        "db 0xbb\n"
-        "section sec2 [base 0xc000, bank 1]\n"
-        "db 0xbb\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "section 'sec2' overlaps with address 0xc000 which belongs to another section");
-    REQUIRE(errorConsumer.lastErrorLine() == 5);
-    REQUIRE(errorConsumer.errorCount() == 1);
-}
-
-TEST_CASE("sections could overlap with banks", "[sections]")
+TEST_CASE("sections could overlap with files", "[sections]")
 {
     static const char source[] =
         "section main [base 0xc000]\n"
         "db 0xaa\n"
-        "section sec1 [base 0xc000, bank 1]\n"
+        "section sec1 [base 0xc000, file 'file1']\n"
         "db 0xbb\n"
         ;
 
     static const unsigned char binary_main[] = {
         0xaa,
         };
-    static const unsigned char binary_bank1[] = {
+    static const unsigned char binary_file1[] = {
         0xbb,
         };
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank1(binary_bank1, sizeof(binary_bank1));
+    DataBlob expected_file1(binary_file1, sizeof(binary_file1));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(1) == expected_bank1);
-    REQUIRE(actual.numBanks() == 1);
+    REQUIRE(actual.fileData("file1") == expected_file1);
+    REQUIRE(actual.numFiles() == 1);
 }
 
-TEST_CASE("section banks 1", "[sections]")
+TEST_CASE("section files 1", "[sections]")
 {
     static const char source[] =
         "section sec0 [base 0xbfff]\n"
         "db 0xaa\n"
-        "section sec1 [bank 3, base 0xc000]\n"
+        "section sec1 [file 'file3', base 0xc000]\n"
         "db 0xbb\n"
-        "section sec2 [base 0xc001, bank 3]\n"
+        "section sec2 [base 0xc001, file 'file3']\n"
         "db 0xcc\n"
-        "section sec3 [bank 4, base 0xc002]\n"
+        "section sec3 [file 'file4', base 0xc002]\n"
         "db 0xdd\n"
-        "section sec4 [base 0xc003, bank 4]\n"
+        "section sec4 [base 0xc003, file 'file4']\n"
         "db 0xee\n"
-        "section sec5 [bank 6]\n"
+        "section sec5 [file 'file6', base 0x1234]\n"
         "db 0xff\n"
         ;
 
     static const unsigned char binary_main[] = {
         0xaa,
         };
-    static const unsigned char binary_bank3[] = {
+    static const unsigned char binary_file3[] = {
         0xbb,
         0xcc,
         };
-    static const unsigned char binary_bank4[] = {
+    static const unsigned char binary_file4[] = {
         0xdd,
         0xee,
         };
-    static const unsigned char binary_bank6[] = {
+    static const unsigned char binary_file6[] = {
         0xff,
         };
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank3(binary_bank3, sizeof(binary_bank3));
-    DataBlob expected_bank4(binary_bank4, sizeof(binary_bank4));
-    DataBlob expected_bank6(binary_bank6, sizeof(binary_bank6));
+    DataBlob expected_file3(binary_file3, sizeof(binary_file3));
+    DataBlob expected_file4(binary_file4, sizeof(binary_file4));
+    DataBlob expected_file6(binary_file6, sizeof(binary_file6));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(3) == expected_bank3);
-    REQUIRE(actual.bankData(4) == expected_bank4);
-    REQUIRE(actual.bankData(6) == expected_bank6);
-    REQUIRE(actual.numBanks() == 3);
+    REQUIRE(actual.fileData("file3") == expected_file3);
+    REQUIRE(actual.fileData("file4") == expected_file4);
+    REQUIRE(actual.fileData("file6") == expected_file6);
+    REQUIRE(actual.numFiles() == 3);
 }
 
-TEST_CASE("section banks 2", "[sections]")
+TEST_CASE("section files 2", "[sections]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
         "db 0xcc\n"
-        "section bank1_start [bank 1, base 0xc000]\n"
-        "section bank1_end [bank 1, base 0xffff]\n"
-        "section bank3_start [bank 3, base 0xc000]\n"
-        "section bank3_end [bank 3, base 0xffff]\n"
-        "section bank4_start [bank 4, base 0xc000]\n"
-        "section bank4_end [bank 4, base 0xffff]\n"
-        "section bank6_start [bank 6, base 0xc000]\n"
-        "section bank6_end [bank 6, base 0xffff]\n"
-        "section bank7_start [bank 7, base 0xc000]\n"
-        "section bank7_end [bank 7, base 0xffff]\n"
+        "section file1_start [file 'file1', base 0xc000]\n"
+        "db 1\n"
+        "section file1_end [file 'file1', base 0xffff]\n"
+        "db 1\n"
+        "section file3_start [file 'file3', base 0xc000]\n"
+        "db 1\n"
+        "section file3_end [file 'file3', base 0xffff]\n"
+        "db 1\n"
+        "section file4_start [file 'file4', base 0xc000]\n"
+        "db 1\n"
+        "section file4_end [file 'file4', base 0xffff]\n"
+        "db 1\n"
+        "section file6_start [file 'file6', base 0xc000]\n"
+        "db 1\n"
+        "section file6_end [file 'file6', base 0xffff]\n"
+        "db 1\n"
+        "section file7_start [file 'file7', base 0xc000]\n"
+        "db 1\n"
+        "section file7_end [file 'file7', base 0xffff]\n"
+        "db 1\n"
         ;
 
     static const unsigned char binary[] = {
@@ -648,91 +620,39 @@ TEST_CASE("section banks 2", "[sections]")
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected);
-    REQUIRE(!actual.hasBanks());
+    REQUIRE(actual.numFiles() == 5);
 }
 
-TEST_CASE("sections can overlap in different banks", "[sections]")
+TEST_CASE("sections can overlap in different files", "[sections]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
         "db 0xaa\n"
-        "section sec1 [bank 3, base 0xc800]\n"
+        "section sec1 [file 'file3', base 0xc800]\n"
         "db 0xbb\n"
-        "section sec2 [bank 4, base 0xc800]\n"
+        "section sec2 [file 'file4', base 0xc800]\n"
         "db 0xcc\n"
         ;
 
     static const unsigned char binary_main[] = {
         0xaa,
         };
-    static const unsigned char binary_bank3[] = {
+    static const unsigned char binary_file3[] = {
         0xbb,
         };
-    static const unsigned char binary_bank4[] = {
+    static const unsigned char binary_file4[] = {
         0xcc,
         };
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     DataBlob expected_main(binary_main, sizeof(binary_main));
-    DataBlob expected_bank3(binary_bank3, sizeof(binary_bank3));
-    DataBlob expected_bank4(binary_bank4, sizeof(binary_bank4));
+    DataBlob expected_file3(binary_file3, sizeof(binary_file3));
+    DataBlob expected_file4(binary_file4, sizeof(binary_file4));
     REQUIRE(errorConsumer.lastErrorMessage() == "");
     REQUIRE(errorConsumer.errorCount() == 0);
     REQUIRE(actual == expected_main);
-    REQUIRE(actual.bankData(3) == expected_bank3);
-    REQUIRE(actual.bankData(4) == expected_bank4);
-    REQUIRE(actual.numBanks() == 2);
-}
-
-TEST_CASE("disallow bank 0", "[sections]")
-{
-    static const char source[] =
-        "section sec1 [base 0xC000, bank 0]\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "invalid bank 0");
-    REQUIRE(errorConsumer.lastErrorLine() == 1);
-    REQUIRE(errorConsumer.errorCount() == 1);
-}
-
-TEST_CASE("disallow bank 2", "[sections]")
-{
-    static const char source[] =
-        "section sec1 [base 0xC000, bank 2]\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "invalid bank 2");
-    REQUIRE(errorConsumer.lastErrorLine() == 1);
-    REQUIRE(errorConsumer.errorCount() == 1);
-}
-
-TEST_CASE("disallow bank 5", "[sections]")
-{
-    static const char source[] =
-        "section sec1 [base 0xC000, bank 5]\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "invalid bank 5");
-    REQUIRE(errorConsumer.lastErrorLine() == 1);
-    REQUIRE(errorConsumer.errorCount() == 1);
-}
-
-TEST_CASE("section bank invalid address", "[sections]")
-{
-    static const char source[] =
-        "section sec1 [base 0x8000, bank 6]\n"
-        ;
-
-    ErrorConsumer errorConsumer;
-    DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "invalid base address 0x8000 for section 'sec1' in bank 6");
-    REQUIRE(errorConsumer.lastErrorLine() == 1);
-    REQUIRE(errorConsumer.errorCount() == 1);
+    REQUIRE(actual.fileData("file3") == expected_file3);
+    REQUIRE(actual.fileData("file4") == expected_file4);
+    REQUIRE(actual.numFiles() == 2);
 }

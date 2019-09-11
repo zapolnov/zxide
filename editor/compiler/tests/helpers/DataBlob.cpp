@@ -15,15 +15,15 @@ DataBlob::~DataBlob()
 {
 }
 
-const DataBlob& DataBlob::bankData(int index) const
+const DataBlob& DataBlob::fileData(const std::string& fileName) const
 {
-    auto it = mBankData.find(index);
-    return (it != mBankData.end() ? it->second : dummy);
+    auto it = mFileData.find(fileName);
+    return (it != mFileData.end() ? it->second : dummy);
 }
 
-void DataBlob::setBankData(int index, DataBlob blob)
+void DataBlob::setFileData(const std::string& fileName, DataBlob blob)
 {
-    mBankData[index] = std::move(blob);
+    mFileData[fileName] = std::move(blob);
 }
 
 std::ostream& operator<<(std::ostream& stream, const DataBlob& str)

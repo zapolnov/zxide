@@ -25,8 +25,11 @@ Linker::~Linker()
 std::unique_ptr<ProgramBinary> Linker::emitCode()
 {
     try {
-        auto binary = std::make_unique<ProgramBinary>(sections[0]->base());
+        auto binary = std::make_unique<ProgramBinary>();
+
         auto sections = collectSections();
+        if (sections.empty())
+            error(tr("program has no sections"));
 
         for (const auto& it : sections) {
             if (it.first.empty()) {
@@ -35,34 +38,25 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 if (!it.second[0]->hasBase())
                     error(tr("no sections with base address in default file"));
             } else {
+                if (!hasCode(it.second))
+                    error(tr("program has no code in file '%1'").arg(it.first.c_str()));
+                if (!it.second[0]->hasBase())
+                    error(tr("no sections with base address in file '%1'").arg(it.first.c_str()));
             }
 
-            binary->setCurrentFile(it.first);
+            binary->setCurrentFile(it.first, it.second[0]->base());
             quint32 addr = binary->baseAddress();
 
             // Resolve addresses of labels
-            for (ProgramSection* section : sections) {
+            for (ProgramSection* section : it.second) {
                 if (!section->resolveAddresses(mReporter, mProgram, addr))
                     throw LinkerError();
             }
 
             // Emit code
-            for (ProgramSection* section : sections)
+            for (ProgramSection* section : it.second)
                 section->emitCode(mProgram, binary.get(), mReporter);
-
-            do {
-                ++bank;
-                if (ProgramSection::isValidBankNumber(bank)) {
-                    sections = collectSections(bank);
-                    if (!isEmpty(sections)) {
-                        addr = sections[0]->baseRelativeTo(ProgramSection::BankBaseAddress);
-                        binary->setCurrentBank(bank, addr);
-                        break;
-                    }
-                }
-            } while (bank <= ProgramSection::MaxBank);
-        } while (bank <= ProgramSection::MaxBank);
-        binary->setCurrentFile(std::string());
+        }
 
         // Ensure that all EQUs are validated
         mProgram->validateConstants(mReporter);
@@ -121,9 +115,9 @@ std::map<std::string, std::vector<ProgramSection*>> Linker::collectSections() co
     for (auto& it : map) {
         auto& vec = result[it.first];
         vec.reserve(mProgram->sectionCount());
-        for (const auto& jt : it.sectionsWithBaseAddress)
+        for (const auto& jt : it.second.sectionsWithBaseAddress)
             vec.emplace_back(jt.second);
-        for (const auto& jt : it.sectionsWithAlignment)
+        for (const auto& jt : it.second.sectionsWithAlignment)
             vec.emplace_back(jt.second);
     }
 
