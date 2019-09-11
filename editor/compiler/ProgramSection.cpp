@@ -10,10 +10,9 @@ ProgramSection::ProgramSection(Program* program, const Token& token, std::string
     , mName(std::move(name))
     , mBase(0)
     , mAlignment(1)
-    , mBank(0)
     , mHasBase(false)
     , mHasAlignment(false)
-    , mHasBank(false)
+    , mHasFileName(false)
 {
 }
 

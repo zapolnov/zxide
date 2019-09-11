@@ -25,17 +25,21 @@ Linker::~Linker()
 std::unique_ptr<ProgramBinary> Linker::emitCode()
 {
     try {
-        auto sections = collectSections(-1);
-        if (!hasCode(sections))
-            error(tr("program has no code in primary memory space"));
-        if (!sections[0]->hasBase())
-            error(tr("no sections with base address in primary memory space"));
-
         auto binary = std::make_unique<ProgramBinary>(sections[0]->base());
-        quint32 addr = binary->baseAddress();
-        int bank = -1;
+        auto sections = collectSections();
 
-        do {
+        for (const auto& it : sections) {
+            if (it.first.empty()) {
+                if (!hasCode(it.second))
+                    error(tr("program has no code in default file"));
+                if (!it.second[0]->hasBase())
+                    error(tr("no sections with base address in default file"));
+            } else {
+            }
+
+            binary->setCurrentFile(it.first);
+            quint32 addr = binary->baseAddress();
+
             // Resolve addresses of labels
             for (ProgramSection* section : sections) {
                 if (!section->resolveAddresses(mReporter, mProgram, addr))
@@ -58,7 +62,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 }
             } while (bank <= ProgramSection::MaxBank);
         } while (bank <= ProgramSection::MaxBank);
-        binary->setCurrentBank(-1);
+        binary->setCurrentFile(std::string());
 
         // Ensure that all EQUs are validated
         mProgram->validateConstants(mReporter);
@@ -91,39 +95,45 @@ bool Linker::hasCode(const std::vector<ProgramSection*>& sections) const
     return false;
 }
 
-std::vector<ProgramSection*> Linker::collectSections(int bank) const
+std::map<std::string, std::vector<ProgramSection*>> Linker::collectSections() const
 {
+    struct Interim
+    {
+        std::multimap<unsigned, ProgramSection*> sectionsWithBaseAddress;
+        std::multimap<unsigned, ProgramSection*, std::greater<unsigned>> sectionsWithAlignment;
+    };
+
+    std::map<std::string, Interim> map;
+    std::map<std::string, std::vector<ProgramSection*>> result;
+
     // First collect sections that have a base address and sort them by it
-    std::multimap<unsigned, ProgramSection*> sectionsWithBaseAddress;
-    mProgram->forEachSection([&sectionsWithBaseAddress, bank](ProgramSection* section) {
-            bool include = (bank < 0 ? !section->hasBank() : section->hasBank() && section->bank() == unsigned(bank));
-            if (section->hasBase() && include)
-                sectionsWithBaseAddress.emplace(section->base(), section);
+    mProgram->forEachSection([&map](ProgramSection* section) {
+            if (section->hasBase())
+                map[section->fileName()].sectionsWithBaseAddress.emplace(section->base(), section);
         });
 
     // Now collect sections without base address but with alignment and sort them by it
-    std::multimap<unsigned, ProgramSection*, std::greater<unsigned>> sectionsWithAlignment;
-    mProgram->forEachSection([&sectionsWithAlignment, bank](ProgramSection* section) {
-            bool include = (bank < 0 ? !section->hasBank() : section->hasBank() && section->bank() == unsigned(bank));
-            if (!section->hasBase() && section->hasAlignment() && include)
-                sectionsWithAlignment.emplace(section->alignment(), section);
+    mProgram->forEachSection([&map](ProgramSection* section) {
+            if (!section->hasBase() && section->hasAlignment())
+                map[section->fileName()].sectionsWithAlignment.emplace(section->alignment(), section);
         });
 
-    std::vector<ProgramSection*> sections;
-    sections.reserve(mProgram->sectionCount());
-    for (const auto& it : sectionsWithBaseAddress)
-        sections.emplace_back(it.second);
-    for (const auto& it : sectionsWithAlignment)
-        sections.emplace_back(it.second);
+    for (auto& it : map) {
+        auto& vec = result[it.first];
+        vec.reserve(mProgram->sectionCount());
+        for (const auto& jt : it.sectionsWithBaseAddress)
+            vec.emplace_back(jt.second);
+        for (const auto& jt : it.sectionsWithAlignment)
+            vec.emplace_back(jt.second);
+    }
 
     // Finally collect all other sections
-    mProgram->forEachSection([&sections, bank](ProgramSection* section) {
-        bool include = (bank < 0 ? !section->hasBank() : section->hasBank() && section->bank() == unsigned(bank));
-        if (!section->hasBase() && !section->hasAlignment() && include)
-            sections.emplace_back(section);
+    mProgram->forEachSection([&result](ProgramSection* section) {
+            if (!section->hasBase() && !section->hasAlignment())
+                result[section->fileName()].emplace_back(section);
         });
 
-    return sections;
+    return result;
 }
 
 void Linker::error(const QString& message)

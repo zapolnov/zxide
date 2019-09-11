@@ -26,7 +26,7 @@ private:
 
     bool isEmpty(const std::vector<ProgramSection*>& sections) const;
     bool hasCode(const std::vector<ProgramSection*>& sections) const;
-    std::vector<ProgramSection*> collectSections(int bank) const;
+    std::map<std::string, ProgramSection*> collectSections() const;
 
     void error(const QString& message);
 

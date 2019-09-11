@@ -8,11 +8,6 @@
 class ProgramSection : public CodeEmitter
 {
 public:
-    enum {
-        MaxBank = 7,
-        BankBaseAddress = 0xC000,
-    };
-
     ProgramSection(Program* program, const Token& token, std::string name);
     ~ProgramSection();
 
@@ -30,15 +25,12 @@ public:
     unsigned alignment() const { return mAlignment; }
     void setAlignment(unsigned value) { mAlignment = value; mHasAlignment = true; }
 
-    bool hasBank() const { return mHasBank; }
-    unsigned bank() const { Q_ASSERT(mHasBank); return mBank; }
-    void setBank(unsigned value) { mBank = value; mHasBank = true; }
+    bool hasFileName() const { return mHasFileName; }
+    const std::string& fileName() const { Q_ASSERT(mHasFileName || mFileName.empty()); return mFileName; }
+    void setFileName(std::string value) { mFileName = std::move(value); mHasFileName = true; }
 
     bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
     void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
-
-    static bool isValidBankNumber(unsigned bank) { return (bank >= 1 && bank <= MaxBank && bank != 2 && bank != 5); }
-    static bool isValidBaseForBank(unsigned bank, unsigned base) { return (base >= BankBaseAddress && base <= 0xFFFF); }
 
 private:
     Program* mProgram;
@@ -46,10 +38,10 @@ private:
     std::string mName;
     unsigned mBase;
     unsigned mAlignment;
-    unsigned mBank;
+    std::string mFileName;
     bool mHasBase;
     bool mHasAlignment;
-    bool mHasBank;
+    bool mHasFileName;
 
     Q_DISABLE_COPY(ProgramSection)
 };

@@ -188,24 +188,18 @@ void AssemblerParser::parseSectionDecl()
                     error(tr("base address 0x%2 of section '%1' is not aligned to %3")
                         .arg(section->nameCStr()).arg(base, 0, 16).arg(section->alignment()));
                 }
-                if (section->hasBank() && !ProgramSection::isValidBaseForBank(section->bank(), base)) {
-                    error(tr("invalid base address 0x%1 for section '%2' in bank %3")
-                        .arg(base, 0, 16).arg(section->nameCStr()).arg(section->bank()));
-                }
                 section->setBase(base);
-            } else if (param == "bank") {
-                auto bank = (unsigned)parseNumber(nextToken(), 0, 0xFFFFFFFF);
-                if (!ProgramSection::isValidBankNumber(bank))
-                    error(tr("invalid bank %1").arg(bank));
-                if (section->hasBank() && section->bank() != bank) {
-                    error(tr("conflicting bank for section '%1' (%2 != %3)")
-                        .arg(section->nameCStr()).arg(bank).arg(section->bank()));
+            } else if (param == "file") {
+                if (nextToken() != T_STRING)
+                    error(tr("expected string"));
+                std::string fileName = tokenText();
+                if (fileName.length() > 10)
+                    fileName = fileName.substr(0, 10);
+                if (section->hasFile() && section->file() != fileName) {
+                    error(tr("conflicting file name for section '%1' ('%2' != '%3')")
+                        .arg(section->nameCStr()).arg(fileName.c_str()).arg(section->fileName().c_str()));
                 }
-                if (section->hasBase() && !ProgramSection::isValidBaseForBank(bank, section->base())) {
-                    error(tr("invalid base address 0x%1 for section '%2' in bank %3")
-                        .arg(section->base(), 0, 16).arg(section->nameCStr()).arg(bank));
-                }
-                section->setBank(bank);
+                section->setFileName(std::move(fileName));
             } else
                 error(tr("unexpected '%1'").arg(lastTokenCStr()));
 
