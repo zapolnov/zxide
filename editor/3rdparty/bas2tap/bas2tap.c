@@ -47,15 +47,83 @@
 /* Some compilers don't define the following things, so I define them here...                                                     */
 /**********************************************************************************************************************************/
 
+static int toLower(int ch)
+{
+    switch (ch)
+    {
+        case 'A': return 'a';
+        case 'B': return 'b';
+        case 'C': return 'c';
+        case 'D': return 'd';
+        case 'E': return 'e';
+        case 'F': return 'f';
+        case 'G': return 'g';
+        case 'H': return 'h';
+        case 'I': return 'i';
+        case 'J': return 'j';
+        case 'K': return 'k';
+        case 'L': return 'l';
+        case 'M': return 'm';
+        case 'N': return 'n';
+        case 'O': return 'o';
+        case 'P': return 'p';
+        case 'Q': return 'q';
+        case 'R': return 'r';
+        case 'S': return 's';
+        case 'T': return 't';
+        case 'U': return 'u';
+        case 'V': return 'v';
+        case 'W': return 'w';
+        case 'X': return 'x';
+        case 'Y': return 'y';
+        case 'Z': return 'z';
+    }
+    return ch;
+}
+
+static int toUpper(int ch)
+{
+    switch (ch)
+    {
+    case 'a': return 'A';
+    case 'b': return 'B';
+    case 'c': return 'C';
+    case 'd': return 'D';
+    case 'e': return 'E';
+    case 'f': return 'F';
+    case 'g': return 'G';
+    case 'h': return 'H';
+    case 'i': return 'I';
+    case 'j': return 'J';
+    case 'k': return 'K';
+    case 'l': return 'L';
+    case 'm': return 'M';
+    case 'n': return 'N';
+    case 'o': return 'O';
+    case 'p': return 'P';
+    case 'q': return 'Q';
+    case 'r': return 'R';
+    case 's': return 'S';
+    case 't': return 'T';
+    case 'u': return 'U';
+    case 'v': return 'V';
+    case 'w': return 'W';
+    case 'x': return 'X';
+    case 'y': return 'Y';
+    case 'z': return 'Z';
+    }
+    return ch;
+}
+
 #ifdef __WATCOMC__
 #define x_strnicmp(_S1,_S2,_Len)  strnicmp (_S1, _S2, _Len)
 #define x_log2(_X)                log2 (_X)
 #else
 int x_strnicmp (char *_S1, char *_S2, int _Len)                                        /* Case independant partial string compare */
 {
-  for ( ; _Len && *_S1 && *_S2 && toupper (*_S1) == toupper (*_S2) ; _S1 ++, _S2 ++, _Len --)
+  for ( ; _Len && *_S1 && *_S2 && toUpper (*_S1) == toUpper (*_S2) ; _S1 ++, _S2 ++, _Len --)
     ;
-  return (_Len ? (int)toupper (*_S1) - (int)toupper (*_S2) : 0);
+  return (_Len ? (int)toUpper (*_S1) - (int)toUpper (*_S2) : 0);
 }
 #define x_log2(_X)                (log (_X) / log (2.0))                     /* If your compiler doesn't know the 'log2' function */
 #endif
@@ -709,9 +777,9 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
         (*BasicLine) ++;
     return (1);
   }
-  if (toupper (*StartOfSequence) >= 'A' && toupper (*StartOfSequence) <= 'U' && *(StartOfSequence + 1) == '}')
+  if (toUpper (*StartOfSequence) >= 'A' && toUpper (*StartOfSequence) <= 'U' && *(StartOfSequence + 1) == '}')
   {                                                                                                          /* Form "{X}" -> UDG */
-    if (toupper (*StartOfSequence) == 'T' || toupper (*StartOfSequence) == 'U')                                   /* 'T' or 'U' ? */
+    if (toUpper (*StartOfSequence) == 'T' || toUpper (*StartOfSequence) == 'U')                                   /* 'T' or 'U' ? */
       switch (Is48KProgram)                                                                       /* Then the program must be 48K */
       {
         case -1 : Is48KProgram = 1; break;                                                                        /* Set the flag */
@@ -720,7 +788,7 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
                   return (-1);
         case  1 : break;
       }
-    *((*SpectrumLine) ++) = 0x90 + toupper (*StartOfSequence) - 'A';
+    *((*SpectrumLine) ++) = 0x90 + toUpper (*StartOfSequence) - 'A';
     (*BasicLine) += 3;
     if (StripSpaces)
       while ((**BasicLine) == ' ')
@@ -732,11 +800,11 @@ int ExpandSequences (int FileLineNo, char **BasicLine, byte **SpectrumLine, bool
     if (*StartOfSequence <= '9')
       (**SpectrumLine) = *StartOfSequence - '0';
     else
-      (**SpectrumLine) = toupper (*StartOfSequence) - 'A' + 10;
+      (**SpectrumLine) = toUpper (*StartOfSequence) - 'A' + 10;
     if (*(StartOfSequence + 1) <= '9')
       (**SpectrumLine) = (**SpectrumLine) * 16 + *(StartOfSequence + 1) - '0';
     else
-      (**SpectrumLine) = (**SpectrumLine) * 16 + toupper (*(StartOfSequence + 1)) - 'A' + 10;
+      (**SpectrumLine) = (**SpectrumLine) * 16 + toUpper (*(StartOfSequence + 1)) - 'A' + 10;
     (*SpectrumLine) ++;
     (*BasicLine) += 4;
     if (StripSpaces)
@@ -1287,7 +1355,7 @@ bool ScanChannel (int FileLineNo, int StatementNo, int Keyword, byte **Index, by
       bas2tap_error (FileLineNo, StatementNo, "channel name must be alphanumeric");
       return (FALSE);
     }
-    *WhichChannel = tolower (**Index);
+    *WhichChannel = toLower (**Index);
     (*Index) ++;
     if (CheckEnd (FileLineNo, StatementNo, Index))
       return (FALSE);
@@ -1515,7 +1583,7 @@ bool ScanExpression (int FileLineNo, int StatementNo, int Keyword, byte **Index,
                  (*Index) ++;                                                                    /* (Step past the opening quote) */
                  if (CheckEnd (FileLineNo, StatementNo, Index))
                    return (FALSE);
-                 if (toupper (**Index) < 'A' || toupper (**Index) > 'U')                                   /* Bad UDG character ? */
+                 if (toUpper (**Index) < 'A' || toUpper (**Index) > 'U')                                   /* Bad UDG character ? */
                  {
                    bas2tap_error (FileLineNo, StatementNo, "bad UDG \"%s\"", TokenMap[**Index].Token);
                    return (FALSE);
@@ -1529,7 +1597,7 @@ bool ScanExpression (int FileLineNo, int StatementNo, int Keyword, byte **Index,
                    return (FALSE);
                  }
                  (*Index) --;
-                 if (toupper (**Index) == 'T' || toupper (**Index) == 'U')                        /* One of the UDGs 'T' or 'U' ? */
+                 if (toUpper (**Index) == 'T' || toUpper (**Index) == 'U')                        /* One of the UDGs 'T' or 'U' ? */
                    switch (Is48KProgram)                                                          /* Then the program must be 48K */
                    {
                      case -1 : Is48KProgram = 1; break;                                                           /* Set the flag */
