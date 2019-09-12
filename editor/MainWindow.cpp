@@ -71,7 +71,7 @@ MainWindow::MainWindow()
     mUi->statusBar->addPermanentWidget(mLineColumnLabel);
 
     mEmulatorSpeedLabel = new QLabel(mUi->statusBar);
-    mEmulatorSpeedLabel->setFixedWidth(50);
+    mEmulatorSpeedLabel->setFixedWidth(70);
     mEmulatorSpeedLabel->setFrameShape(QFrame::StyledPanel);
     mEmulatorSpeedLabel->setFrameShadow(QFrame::Sunken);
     mEmulatorSpeedLabel->setAlignment(Qt::AlignCenter);
@@ -451,7 +451,8 @@ void MainWindow::updateUi()
 
     mLineColumnLabel->setText(tab->lineColumnLabelText());
     mInsOverwriteLabel->setText(tab->insOverwriteLabelText());
-    mEmulatorSpeedLabel->setText(mEmulatorCore->currentSpeedString());
+    mEmulatorSpeedLabel->setText(QStringLiteral("%1 %2")
+        .arg(mEmulatorCore->currentSpeedString()).arg(mEmulatorCore->currentMachineShortName()));
 
     if (!mUi->displayDockWidget->isVisible() || emulatorRunning)
         mUi->displayDockWidget->setVisible(emulatorRunning);

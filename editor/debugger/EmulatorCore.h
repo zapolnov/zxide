@@ -109,10 +109,6 @@ enum class Machine : int
     SpectrumPlus2,
     SpectrumPlus2A,
     SpectrumPlus3,
-    Scorpion,
-    Pentagon,
-    Pentagon512,
-    Pentagon1024,
 };
 
 class File;
@@ -156,6 +152,11 @@ public:
     quint16 instructionPointer() const;
     quint16 stackPointer() const;
     void setRegister(Register reg, quint16 value);
+
+    Machine currentMachine() const;
+    QString currentMachineName() const;
+    QString currentMachineShortName() const;
+    static QString machineName(Machine machine);
 
     int currentSpeed() const;
     QString currentSpeedString() const;

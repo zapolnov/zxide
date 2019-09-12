@@ -25,10 +25,6 @@ static const QString MachineSpectrum128 = QStringLiteral("Spectrum128");
 static const QString MachineSpectrumPlus2 = QStringLiteral("SpectrumPlus2");
 static const QString MachineSpectrumPlus2A = QStringLiteral("SpectrumPlus2A");
 static const QString MachineSpectrumPlus3 = QStringLiteral("SpectrumPlus3");
-static const QString MachineScorpion = QStringLiteral("Scorpion");
-static const QString MachinePentagon = QStringLiteral("Pentagon");
-static const QString MachinePentagon512 = QStringLiteral("Pentagon512");
-static const QString MachinePentagon1024 = QStringLiteral("Pentagon1024");
 
 Settings::Settings()
 {
@@ -118,10 +114,6 @@ Machine Settings::emulatorMachine() const
     else if (str == MachineSpectrumPlus2) return Machine::SpectrumPlus2;
     else if (str == MachineSpectrumPlus2A) return Machine::SpectrumPlus2A;
     else if (str == MachineSpectrumPlus3) return Machine::SpectrumPlus3;
-    else if (str == MachineScorpion) return Machine::Scorpion;
-    else if (str == MachinePentagon) return Machine::Pentagon;
-    else if (str == MachinePentagon512) return Machine::Pentagon512;
-    else if (str == MachinePentagon1024) return Machine::Pentagon1024;
     else {
         qDebug("Unknown machine '%s'", qPrintable(str));
         return Machine::Spectrum48;
@@ -208,10 +200,6 @@ void Settings::setEmulatorMachine(Machine machine)
         case Machine::SpectrumPlus2: mSettings.setValue(SettingEmulatorMachine, MachineSpectrumPlus2); return;
         case Machine::SpectrumPlus2A: mSettings.setValue(SettingEmulatorMachine, MachineSpectrumPlus2A); return;
         case Machine::SpectrumPlus3: mSettings.setValue(SettingEmulatorMachine, MachineSpectrumPlus3); return;
-        case Machine::Scorpion: mSettings.setValue(SettingEmulatorMachine, MachineScorpion); return;
-        case Machine::Pentagon: mSettings.setValue(SettingEmulatorMachine, MachinePentagon); return;
-        case Machine::Pentagon512: mSettings.setValue(SettingEmulatorMachine, MachinePentagon512); return;
-        case Machine::Pentagon1024: mSettings.setValue(SettingEmulatorMachine, MachinePentagon1024); return;
     }
 
     Q_ASSERT(false);

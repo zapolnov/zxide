@@ -73,6 +73,7 @@ static bool emulatorPaused;
 static bool paused;
 static Registers registers;
 static QString tapeFile;
+static Machine currentMachine;
 static int emulatorSpeed;
 
 EmulatorCore* EmulatorCore::mInstance;
@@ -101,6 +102,7 @@ EmulatorCore::EmulatorCore(QObject* parent)
     connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
 
     connect(this, &EmulatorCore::internal_sendError, this, &EmulatorCore::error, Qt::QueuedConnection);
+    ::currentMachine = Settings().emulatorMachine();
 }
 
 EmulatorCore::~EmulatorCore()
@@ -335,6 +337,55 @@ void EmulatorCore::setRegister(Register reg, quint16 value)
 
     QMutexLocker lock(&mutex);
     commandQueue.emplace_back(std::move(cmd));
+}
+
+Machine EmulatorCore::currentMachine() const
+{
+    QMutexLocker lock(&mutex);
+    return ::currentMachine;
+}
+
+QString EmulatorCore::currentMachineName() const
+{
+    if (!mThread->isRunning())
+        return QString();
+
+    return machineName(currentMachine());
+}
+
+QString EmulatorCore::currentMachineShortName() const
+{
+    if (!mThread->isRunning())
+        return QString();
+
+    switch (currentMachine()) {
+        case Machine::Spectrum16: return QStringLiteral("16K");
+        case Machine::Spectrum48: return QStringLiteral("48K");
+        case Machine::Spectrum48NTSC: return QStringLiteral("NTSC");
+        case Machine::Spectrum128: return QStringLiteral("128");
+        case Machine::SpectrumPlus2: return QStringLiteral("+2");
+        case Machine::SpectrumPlus2A: return QStringLiteral("+2A");
+        case Machine::SpectrumPlus3: return QStringLiteral("+3");
+    }
+
+    Q_ASSERT(false);
+    return QStringLiteral("???");
+}
+
+QString EmulatorCore::machineName(Machine machine)
+{
+    switch (machine) {
+        case Machine::Spectrum16: return QStringLiteral("Spectrum 16K");
+        case Machine::Spectrum48: return QStringLiteral("Spectrum 48K");
+        case Machine::Spectrum48NTSC: return QStringLiteral("Spectrum 48K NTSC");
+        case Machine::Spectrum128: return QStringLiteral("Spectrum 128");
+        case Machine::SpectrumPlus2: return QStringLiteral("Spectrum +2");
+        case Machine::SpectrumPlus2A: return QStringLiteral("Spectrum +2A");
+        case Machine::SpectrumPlus3: return QStringLiteral("Spectrum +3");
+    }
+
+    Q_ASSERT(false);
+    return tr("Spectrum");
 }
 
 int EmulatorCore::currentSpeed() const
@@ -786,7 +837,8 @@ extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg,
     if (!tapeFile.isEmpty())
         SETSTRING(tape_file, tapeFile.toUtf8().constData());
 
-    switch (settings.emulatorMachine()) {
+    Machine machine = settings.emulatorMachine();
+    switch (machine) {
         case Machine::Spectrum16: SETSTRING(start_machine, "16"); break;
         case Machine::Spectrum48: SETSTRING(start_machine, "48"); break;
         case Machine::Spectrum48NTSC: SETSTRING(start_machine, "48_ntsc"); break;
@@ -794,11 +846,13 @@ extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg,
         case Machine::SpectrumPlus2: SETSTRING(start_machine, "plus2"); break;
         case Machine::SpectrumPlus2A: SETSTRING(start_machine, "plus2a"); break;
         case Machine::SpectrumPlus3: SETSTRING(start_machine, "plus3"); break;
-        case Machine::Scorpion: SETSTRING(start_machine, "scorpion"); break;
-        case Machine::Pentagon: SETSTRING(start_machine, "pentagon"); break;
-        case Machine::Pentagon512: SETSTRING(start_machine, "pentagon512"); break;
-        case Machine::Pentagon1024: SETSTRING(start_machine, "pentagon1024"); break;
         default: Q_ASSERT(false);
+    }
+
+    {
+        QMutexLocker lock(&mutex);
+        currentMachine = machine;
+        shouldUpdateUi = true;
     }
 
     *first_arg = 1;
