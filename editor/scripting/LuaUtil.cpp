@@ -25,8 +25,6 @@ static void md5Final(lua_State* L, MD5_CTX* ctx)
 
 static int luaMd5(lua_State* L)
 {
-    LuaVM* vm = LuaVM::fromLua(L);
-
     size_t length = 0;
     const char* data = luaL_checklstring(L, 1, &length);
 
