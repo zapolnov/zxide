@@ -38,7 +38,7 @@ protected:
 
 signals:
     void compilationSucceeded();
-    void compilationFailed(File* file, int line, const QString& message);
+    void compilationFailed(const QString& file, int line, const QString& message);
 
 private:
     std::unique_ptr<Ui_CompilerDialog> mUi;

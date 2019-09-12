@@ -55,7 +55,7 @@ std::unique_ptr<ProgramBinary> CompilerDialog::takeProgramBinary()
 
 void CompilerDialog::addSourceFile(File* file)
 {
-    mCompiler->addSourceFile(file, file->relativeName(), file->fileInfo().absoluteFilePath());
+    mCompiler->addSourceFile(file->relativeName(), file->fileInfo().absoluteFilePath());
 }
 
 void CompilerDialog::setOutputTapeFile(const QString& file)

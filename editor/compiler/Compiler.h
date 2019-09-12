@@ -12,24 +12,23 @@
 class Program;
 class ProgramBinary;
 
+struct SourceFile
+{
+    QString name;
+    QString path;
+};
+
 class Compiler : public QObject, public IErrorReporter
 {
     Q_OBJECT
 
 public:
-    struct SourceFile
-    {
-        File* file; // should not be accessed by the compiler code as it is run from another thread
-        QString name;
-        QString path;
-    };
-
     explicit Compiler(QObject* parent = nullptr);
     ~Compiler() override;
 
     bool wasError() const { QMutexLocker lock(&mMutex); return mWasError; }
     QString errorMessage() const { QMutexLocker lock(&mMutex); return mErrorMessage; }
-    File* errorFile() const { QMutexLocker lock(&mMutex); return mErrorFile; }
+    QString errorFile() const { QMutexLocker lock(&mMutex); return mErrorFile; }
     int errorLine() const { QMutexLocker lock(&mMutex); return mErrorLine; }
 
     std::unique_ptr<Program> takeProgram();
@@ -37,17 +36,17 @@ public:
 
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
-    void addSourceFile(File* file, const QString& fullName, const QString& path);
+    void addSourceFile(const QString& fullName, const QString& path);
     void setSettings(CompileSettings settings);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
 
-    const std::vector<SourceFile>& basicSources() const { return mBasicSources; }
-    const std::vector<SourceFile>& assemblerSources() const { return mAssemblerSources; }
-    const std::vector<SourceFile>& maps() const { return mMaps; }
-    const std::vector<SourceFile>& buildScripts() const { return mBuildScripts; }
+    const std::vector<std::unique_ptr<SourceFile>>& basicSources() const { return mBasicSources; }
+    const std::vector<std::unique_ptr<SourceFile>>& assemblerSources() const { return mAssemblerSources; }
+    const std::vector<std::unique_ptr<SourceFile>>& maps() const { return mMaps; }
+    const std::vector<std::unique_ptr<SourceFile>>& buildScripts() const { return mBuildScripts; }
 
     void compile();
 
@@ -60,22 +59,22 @@ private:
     std::unique_ptr<Program> mProgram;
     std::unique_ptr<ProgramBinary> mProgramBinary;
     QString mStatusText;
+    QString mErrorFile;
     QString mErrorMessage;
     QString mOutputTapeFile;
     QString mOutputWavFile;
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
     QByteArray mCompiledBasicCode;
-    std::vector<SourceFile> mBasicSources;
-    std::vector<SourceFile> mAssemblerSources;
-    std::vector<SourceFile> mMaps;
-    std::vector<SourceFile> mBuildScripts;
+    std::vector<std::unique_ptr<SourceFile>> mBasicSources;
+    std::vector<std::unique_ptr<SourceFile>> mAssemblerSources;
+    std::vector<std::unique_ptr<SourceFile>> mMaps;
+    std::vector<std::unique_ptr<SourceFile>> mBuildScripts;
     CompileSettings mCompileSettings;
-    File* mErrorFile;
     int mErrorLine;
     bool mWasError;
 
-    void error(File* file, int line, const QString& message) override;
+    void error(const QString& file, int line, const QString& message) override;
     void setStatusText(const QString& text);
 
     bool runBuildScripts();

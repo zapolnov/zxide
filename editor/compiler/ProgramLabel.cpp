@@ -1,4 +1,5 @@
 #include "ProgramLabel.h"
+#include "compiler/Compiler.h"
 #include "compiler/IErrorReporter.h"
 #include "compiler/Value.h"
 #include <unordered_map>
@@ -119,7 +120,8 @@ unsigned ProgramLabel::tstatesIfTaken(const Program*, IErrorReporter*) const
 bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* reporter)
 {
     if (address > 0xFFFF) {
-        reporter->error(token().file, token().line, QCoreApplication::tr("address is over 64K"));
+        QString fileName = (token().file ? token().file->name : QString());
+        reporter->error(fileName, token().line, QCoreApplication::tr("address is over 64K"));
         return false;
     }
 

@@ -13,7 +13,6 @@
 * Multiple file selection in the file list (?)
 * Implement support for unnamed sections
 * Implement elseif (?)
-* When error happens in the generated file we should open that file
 * Implement project settings
 * Search and search-with-replace in the text editor
 * Import and dither-to-monochrome images

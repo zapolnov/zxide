@@ -282,7 +282,9 @@ void CodeEditorTab::clearHighlight(Highlight highlight)
 
 void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)
 {
-    mUi->textEditor->updateTStates(debugInfo->tstatesForFile(file()));
+    File* f = file();
+    if (f)
+        mUi->textEditor->updateTStates(debugInfo->tstatesForFile(f->relativeName()));
 }
 
 void CodeEditorTab::reloadSettings()

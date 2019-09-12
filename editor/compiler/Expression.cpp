@@ -1,4 +1,5 @@
 #include "Expression.h"
+#include "Compiler.h"
 #include "ExprEvalContext.h"
 #include "IErrorReporter.h"
 #include "AssemblerContext.h"
@@ -56,7 +57,8 @@ Expression::~Expression()
 
 void Expression::error(ExprEvalContext& context, const QString& message) const
 {
-    context.errorReporter()->error(mToken.file, mToken.line, message);
+    QString fileName = (mToken.file ? mToken.file->name : QString());
+    context.errorReporter()->error(fileName, mToken.line, message);
     throw EvalError();
 }
 

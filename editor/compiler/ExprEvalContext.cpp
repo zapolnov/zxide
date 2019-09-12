@@ -1,4 +1,5 @@
 #include "ExprEvalContext.h"
+#include "Compiler.h"
 #include "ProgramOpcode.h"
 #include "AssemblerToken.h"
 #include "IErrorReporter.h"
@@ -29,7 +30,8 @@ ExprEvalContext::~ExprEvalContext()
 unsigned ExprEvalContext::baseAddress(const Token& token) const
 {
     if (mBaseAddress < 0) {
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("instruction address is not available in this context"));
         throw EvalError();
     }
@@ -40,7 +42,8 @@ unsigned ExprEvalContext::baseAddress(const Token& token) const
 unsigned ExprEvalContext::nextAddress(const Token& token) const
 {
     if (mNextAddress < 0) {
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("instruction address is not available in this context"));
         throw EvalError();
     }
@@ -57,7 +60,8 @@ quint8 ExprEvalContext::evaluateByte(const std::unique_ptr<Expression>& expr)
         value.truncateTo8Bit();
     else if (value.number < -128 || value.number > 255) {
         auto token = expr->token();
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("value %1 (0x%2) does not fit into a byte")
             .arg(value.number).arg(value.number, 0, 16));
         throw EvalError();
@@ -78,7 +82,8 @@ quint8 ExprEvalContext::evaluateByteOffset(const std::unique_ptr<Expression>& ex
     qint64 offset = value.number - nextAddress(expr->token());
     if (offset < -128 || offset > 127) {
         auto token = expr->token();
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("value %1 (0x%2) does not fit into a byte").arg(offset).arg(offset, 0, 16));
         throw EvalError();
     }
@@ -97,7 +102,8 @@ quint16 ExprEvalContext::evaluateWord(const std::unique_ptr<Expression>& expr)
         value.truncateTo16Bit();
     else if (value.number < -32768 || value.number > 65535) {
         auto token = expr->token();
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("value %1 (0x%2) does not fit into a word")
             .arg(value.number).arg(value.number, 0, 16));
         throw EvalError();
@@ -117,7 +123,8 @@ quint32 ExprEvalContext::evaluateDWord(const std::unique_ptr<Expression>& expr)
         value.truncateTo32Bit();
     else if (value.number < -qint64(0x80000000) || value.number > 0xffffffff) {
         auto token = expr->token();
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("value %1 (0x%2) does not fit into a dword")
             .arg(value.number).arg(value.number, 0, 16));
         throw EvalError();
@@ -133,7 +140,8 @@ Value ExprEvalContext::evaluate(const std::unique_ptr<Expression>& expr)
 {
     if (!mEvaluating.emplace(expr.get()).second) {
         auto token = expr->token();
-        mErrorReporter->error(token.file, token.line,
+        QString fileName = (token.file ? token.file->name : QString());
+        mErrorReporter->error(fileName, token.line,
             QCoreApplication::tr("hit circular dependency while evaluating expression"));
         throw EvalError();
     }

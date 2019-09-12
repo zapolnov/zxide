@@ -1,4 +1,5 @@
 #include "AssemblerContext.h"
+#include "compiler/Compiler.h"
 #include "compiler/IErrorReporter.h"
 #include "compiler/Program.h"
 #include "compiler/ProgramLabel.h"
@@ -49,7 +50,8 @@ bool AssemblerContext::hasElse() const
 void AssemblerContext::beginElse(IErrorReporter* reporter, const Token& token)
 {
     Q_ASSERT(false);
-    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+    QString fileName = (token.file ? token.file->name : QString());
+    reporter->error(fileName, token.line, QCoreApplication::tr("internal compiler error"));
 }
 
 bool AssemblerContext::isRepeat() const
@@ -89,7 +91,8 @@ Value AssemblerContext::resolveLocalValue(ExprEvalContext& context, const Token&
     ProgramLabel* label = context.program()->findLabel(name);
     if (label) {
         if (!label->hasAddress()) {
-            context.errorReporter()->error(token.file, token.line,
+            QString fileName = (token.file ? token.file->name : QString());
+            context.errorReporter()->error(fileName, token.line,
                 QCoreApplication::tr("value for '%1' is not available in this context").arg(name.c_str()));
             throw EvalError();
         }
@@ -104,8 +107,10 @@ Value AssemblerContext::resolveLocalValue(ExprEvalContext& context, const Token&
     if (previous)
         return previous->resolveLocalValue(context, token);
 
-    context.errorReporter()->error(token.file, token.line,
+    QString fileName = (token.file ? token.file->name : QString());
+    context.errorReporter()->error(fileName, token.line,
         QCoreApplication::tr("use of undeclared identifier '%1'").arg(name.c_str()));
+
     throw EvalError();
 }
 
@@ -194,7 +199,8 @@ std::string AssemblerRepeatContext::localLabelsPrefix() const
 void AssemblerRepeatContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
 {
     Q_ASSERT(false);
-    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+    QString fileName = (token.file ? token.file->name : QString());
+    reporter->error(fileName, token.line, QCoreApplication::tr("internal compiler error"));
 }
 
 bool AssemblerRepeatContext::areGlobalLabelsAllowed() const
@@ -262,7 +268,8 @@ std::string AssemblerIfContext::localLabelsPrefix() const
 void AssemblerIfContext::setLocalLabelsPrefix(std::string prefix, const Token& token, IErrorReporter* reporter)
 {
     Q_ASSERT(false);
-    reporter->error(token.file, token.line, QCoreApplication::tr("internal compiler error"));
+    QString fileName = (token.file ? token.file->name : QString());
+    reporter->error(fileName, token.line, QCoreApplication::tr("internal compiler error"));
 }
 
 bool AssemblerIfContext::areGlobalLabelsAllowed() const

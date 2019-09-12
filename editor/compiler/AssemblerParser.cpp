@@ -1,4 +1,5 @@
 #include "AssemblerParser.h"
+#include "Compiler.h"
 #include "AssemblerLexer.h"
 #include "AssemblerContext.h"
 #include "IErrorReporter.h"
@@ -484,6 +485,7 @@ void AssemblerParser::error(const QString& message)
 
 void AssemblerParser::error(const Token& token, const QString& message)
 {
-    mReporter->error(token.file, token.line, message);
+    QString fileName = (token.file ? token.file->name : QString());
+    mReporter->error(fileName, token.line, message);
     throw ParserError();
 }

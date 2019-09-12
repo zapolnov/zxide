@@ -1,11 +1,12 @@
 #ifndef COMPILER_PROGRAMDEBUGINFO_H
 #define COMPILER_PROGRAMDEBUGINFO_H
 
-#include <QtGlobal>
+#include <QHash>
+#include <QString>
 #include <map>
 #include <unordered_map>
 
-class File;
+struct SourceFile;
 
 struct TStates
 {
@@ -15,7 +16,7 @@ struct TStates
 
 struct SourceLocation
 {
-    File* file;
+    QString file;
     int line;
 };
 
@@ -26,16 +27,21 @@ public:
     ~ProgramDebugInfo();
 
     const SourceLocation& sourceLocationForAddress(unsigned address) const;
-    void setSourceLocation(unsigned address, File* file, int line);
+    void setSourceLocation(unsigned address, const QString& file, int line);
 
-    void setTStatesForLocation(const File* file, int line, unsigned taken, unsigned notTaken);
-    const std::map<int, TStates>& tstatesForFile(const File* file) const;
+    void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken);
+    const std::map<int, TStates>& tstatesForFile(const QString& file) const;
 
-    int resolveAddress(const File* file, int line) const;
+    int resolveAddress(const QString& file, int line) const;
 
 private:
-    std::unordered_map<const File*, std::map<int, unsigned>> mFileToMemory;
-    std::unordered_map<const File*, std::map<int, TStates>> mFileToTStates;
+    struct hash
+    {
+        size_t operator()(const QString& str) const { return qHash(str); }
+    };
+
+    std::unordered_map<QString, std::map<int, unsigned>, hash> mFileToMemory;
+    std::unordered_map<QString, std::map<int, TStates>, hash> mFileToTStates;
     // that's quite suboptimal use of memory, but who counts memory these days?!
     SourceLocation mSourceLocations[0x10000];
 

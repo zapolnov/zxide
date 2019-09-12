@@ -13,7 +13,7 @@ Assembler::~Assembler()
 {
 }
 
-bool Assembler::parse(File* file, const QByteArray& fileData)
+bool Assembler::parse(const SourceFile* file, const QByteArray& fileData)
 {
     try {
         AssemblerLexer lexer(file, fileData, mReporter);

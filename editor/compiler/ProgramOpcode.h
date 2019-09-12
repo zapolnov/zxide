@@ -9,7 +9,6 @@
 #undef emit
 #endif
 
-class File;
 class IErrorReporter;
 class ProgramBinary;
 class ProgramSection;
@@ -52,7 +51,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::unique_ptr<Expression> mValue;
 
     Q_DISABLE_COPY(DEFB)
@@ -71,7 +69,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::string mText;
 
     Q_DISABLE_COPY(DEFB_STRING)
@@ -90,7 +87,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::unique_ptr<Expression> mValue;
 
     Q_DISABLE_COPY(DEFW)
@@ -109,7 +105,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::unique_ptr<Expression> mValue;
 
     Q_DISABLE_COPY(DEFD)
@@ -130,7 +125,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::shared_ptr<CodeEmitter> mThenCodeEmitter;
     std::shared_ptr<CodeEmitter> mElseCodeEmitter;
     std::unique_ptr<Expression> mCondition;
@@ -154,7 +148,6 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    Token mToken;
     std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
 
     Q_DISABLE_COPY(RepeatMacro)

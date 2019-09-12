@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-class File;
+struct SourceFile;
 class ProgramDebugInfo;
 
 class ProgramBinary
@@ -40,10 +40,10 @@ public:
 
     const FileMap& files() const { return mFiles; }
 
-    void emitByte(::File* file, int line, quint8 byte);
-    void emitWord(::File* file, int line, quint16 word);
-    void emitDWord(::File* file, int line, quint32 dword);
-    void emitQWord(::File* file, int line, quint64 qword);
+    void emitByte(const SourceFile* file, int line, quint8 byte);
+    void emitWord(const SourceFile* file, int line, quint16 word);
+    void emitDWord(const SourceFile* file, int line, quint32 dword);
+    void emitQWord(const SourceFile* file, int line, quint64 qword);
 
 private:
     FileMap mFiles;

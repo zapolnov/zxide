@@ -3,13 +3,11 @@
 
 #include <QString>
 
-class File;
-
 class IErrorReporter
 {
 public:
     virtual ~IErrorReporter() = default;
-    virtual void error(File* file, int line, const QString& message) = 0;
+    virtual void error(const QString& file, int line, const QString& message) = 0;
 };
 
 #endif

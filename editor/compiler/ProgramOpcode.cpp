@@ -1,4 +1,5 @@
 #include "ProgramOpcode.h"
+#include "Compiler.h"
 #include "AssemblerToken.h"
 #include "Expression.h"
 #include "ExprEvalContext.h"
@@ -19,7 +20,8 @@ ProgramOpcode::~ProgramOpcode()
 bool ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
 {
     if (address > 0xFFFF) {
-        reporter->error(token().file, token().line, QCoreApplication::tr("address is over 64K"));
+        QString fileName = (token().file ? token().file->name : QString());
+        reporter->error(fileName, token().line, QCoreApplication::tr("address is over 64K"));
         return false;
     }
 
@@ -42,7 +44,7 @@ DEFB::~DEFB()
 void DEFB::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
-    binary->emitByte(mToken.file, mToken.line, context.evaluateByte(mValue));
+    binary->emitByte(token().file, token().line, context.evaluateByte(mValue));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +62,7 @@ DEFB_STRING::~DEFB_STRING()
 void DEFB_STRING::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     for (auto ch : mText)
-        binary->emitByte(mToken.file, mToken.line, ch);
+        binary->emitByte(token().file, token().line, ch);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +80,7 @@ DEFW::~DEFW()
 void DEFW::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
-    binary->emitWord(mToken.file, mToken.line, context.evaluateWord(mValue));
+    binary->emitWord(token().file, token().line, context.evaluateWord(mValue));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +98,7 @@ DEFD::~DEFD()
 void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
-    binary->emitDWord(mToken.file, mToken.line, context.evaluateDWord(mValue));
+    binary->emitDWord(token().file, token().line, context.evaluateDWord(mValue));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

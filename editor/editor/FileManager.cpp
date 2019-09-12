@@ -208,6 +208,17 @@ Directory* FileManager::selectedParentDirectory() const
     return directoryOrParent(selectedFileOrDirectory());
 }
 
+FileOrDirectory* FileManager::fileOrDirectory(const QString& fileName) const
+{
+    return mRootDirectory->findChild(fileName);
+}
+
+File* FileManager::file(const QString& fileName) const
+{
+    FileOrDirectory* fileOrDirectory = mRootDirectory->findChild(fileName);
+    return (fileOrDirectory && fileOrDirectory->type() == File::Type ? static_cast<File*>(fileOrDirectory) : nullptr);
+}
+
 bool FileManager::canCreateFile() const
 {
     auto selected = selectedParentDirectory();

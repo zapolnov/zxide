@@ -4,7 +4,7 @@
 #include <QtGlobal>
 #include <string>
 
-class File;
+struct SourceFile;
 
 enum TokenID
 {
@@ -54,7 +54,7 @@ enum TokenID
 
 struct Token
 {
-    File* file = nullptr;
+    const SourceFile* file = nullptr;
     int line = 0;
     int id = 0;
     std::string text;

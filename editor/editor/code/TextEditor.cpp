@@ -59,7 +59,7 @@ void TextEditor::setHighlight(Highlight highlight, int line)
             markerSetBack(index, 0x0000ff);
             break;
         case Highlight::MemoryLog:
-            markerDefine(index, SC_MARK_EMPTY);
+            markerDefine(index, SC_MARK_VERTICALBOOKMARK);
             markerSetFore(index, 0);
             markerSetBack(index, 0xffff00);
             break;

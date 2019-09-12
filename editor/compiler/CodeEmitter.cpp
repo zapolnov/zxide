@@ -1,4 +1,5 @@
 #include "CodeEmitter.h"
+#include "Compiler.h"
 #include "ProgramOpcode.h"
 #include "ProgramBinary.h"
 #include "Value.h"
@@ -58,7 +59,8 @@ bool CodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, q
 
         Q_ASSERT(address == old + opcode->lengthInBytes(program, reporter));
         if (address > 0x10000) {
-            reporter->error(opcode->token().file, opcode->token().line, QCoreApplication::tr("address is over 64K"));
+            QString fileName = (opcode->token().file ? opcode->token().file->name : QString());
+            reporter->error(fileName, opcode->token().line, QCoreApplication::tr("address is over 64K"));
             return false;
         }
     }
@@ -161,7 +163,8 @@ bool RepeatedCodeEmitter::evaluateRepeatCount(const Program* program, IErrorRepo
     value = context.evaluate(mRepeatCount).number;
     if (value < 0 || value > 0xffff) {
         const auto& token = mRepeatCount->token();
-        reporter->error(token.file, token.line, QCoreApplication::tr("invalid repeat count"));
+        QString fileName = (token.file ? token.file->name : QString());
+        reporter->error(fileName, token.line, QCoreApplication::tr("invalid repeat count"));
         return false;
     }
 

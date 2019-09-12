@@ -1,4 +1,5 @@
 #include "ProgramBinary.h"
+#include "compiler/Compiler.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramSection.h"
 
@@ -28,33 +29,33 @@ void ProgramBinary::setCurrentFile(const std::string& fileName, unsigned baseAdd
     mCurrentFile = it;
 }
 
-void ProgramBinary::emitByte(::File* file, int line, quint8 byte)
+void ProgramBinary::emitByte(const SourceFile* file, int line, quint8 byte)
 {
     mCurrentFile->second.code.emplace_back(byte);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
 }
 
-void ProgramBinary::emitWord(::File* file, int line, quint16 word)
+void ProgramBinary::emitWord(const SourceFile* file, int line, quint16 word)
 {
     mCurrentFile->second.code.emplace_back(quint8(word & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((word >> 8) & 0xFF));
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
 }
 
-void ProgramBinary::emitDWord(::File* file, int line, quint32 dword)
+void ProgramBinary::emitDWord(const SourceFile* file, int line, quint32 dword)
 {
     mCurrentFile->second.code.emplace_back(quint8(dword & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((dword >> 8) & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((dword >> 16) & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((dword >> 24) & 0xFF));
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
 }
 
-void ProgramBinary::emitQWord(::File* file, int line, quint64 qword)
+void ProgramBinary::emitQWord(const SourceFile* file, int line, quint64 qword)
 {
     mCurrentFile->second.code.emplace_back(quint8(qword & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((qword >> 8) & 0xFF));
@@ -64,14 +65,14 @@ void ProgramBinary::emitQWord(::File* file, int line, quint64 qword)
     mCurrentFile->second.code.emplace_back(quint8((qword >> 40) & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((qword >> 48) & 0xFF));
     mCurrentFile->second.code.emplace_back(quint8((qword >> 56) & 0xFF));
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
-    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
+    mCurrentFile->second.debugInfo->setSourceLocation(mCurrentFile->second.endAddress++, file->name, line);
 }
 
 ProgramBinary::FileMap::iterator ProgramBinary::createFile(std::string fileName, unsigned baseAddress)

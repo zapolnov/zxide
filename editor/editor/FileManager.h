@@ -103,6 +103,9 @@ public:
     Directory* directoryOrParent(FileOrDirectory* selected) const;
     Directory* selectedParentDirectory() const;
 
+    FileOrDirectory* fileOrDirectory(const QString& fileName) const;
+    File* file(const QString& fileName) const;
+
     bool canCreateFile() const;
     bool canCreateDirectory() const;
     bool canRename() const;

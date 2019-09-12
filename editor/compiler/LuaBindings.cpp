@@ -13,14 +13,14 @@ static Compiler* getCompiler(lua_State* L)
     return compiler;
 }
 
-static int pushFileList(lua_State* L, const std::vector<Compiler::SourceFile>& files)
+static int pushFileList(lua_State* L, const std::vector<std::unique_ptr<SourceFile>>& files)
 {
     LuaVM* vm = LuaVM::fromLua(L);
 
     int i = 0;
     lua_createtable(L, int(files.size()), 0);
     for (const auto& file : files) {
-        vm->pushString(file.name);
+        vm->pushString(file->name);
         lua_rawseti(L, -2, ++i);
     }
 

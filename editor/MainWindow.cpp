@@ -42,8 +42,9 @@ MainWindow::MainWindow()
         });
     connect(mEmulatorCore, &EmulatorCore::enterDebugger, this, [this](unsigned pc) {
             SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(pc);
-            if (loc.file) {
-                auto tab = setCurrentTab(loc.file);
+            File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
+            if (file) {
+                auto tab = setCurrentTab(file);
                 if (tab && tab->canGoToLine()) {
                     tab->goToLine(loc.line - 1);
                     tab->setHighlight(Highlight::CurrentPC, loc.line - 1);
@@ -353,7 +354,10 @@ bool MainWindow::build()
 
             mUi->fileManager->refresh();
         });
-    connect(&dlg, &CompilerDialog::compilationFailed, this, [this](File* file, int line, const QString& errorMessage) {
+    connect(&dlg, &CompilerDialog::compilationFailed, this,
+        [this](const QString& fileName, int line, const QString& errorMessage) {
+            File* file = (!fileName.isEmpty() ? mUi->fileManager->file(fileName) : nullptr);
+
             QString message;
             if (!file)
                 message = errorMessage;
@@ -371,15 +375,16 @@ bool MainWindow::build()
             mBuildResultLabel->setText(message);
             mBuildResultLabel->setToolTip(message);
             mBuildResultLabel->setStyleSheet(QStringLiteral("color: red; font-weight: bold; padding-right: 5px"));
-            connect(mBuildResultLabel, &ClickableLabel::doubleClicked, this, [this, file, line]{
+            connect(mBuildResultLabel, &ClickableLabel::doubleClicked, this, [this, fileName, line]{
                     clearHighlights(Highlight::Error);
-                    if (file && line <= 0)
-                        setCurrentTab(file); // FIXME: could be a dead pointer if file has been deleted
-                    else if (file) {
+                    File* file = (!fileName.isEmpty() ? mUi->fileManager->file(fileName) : nullptr);
+                    if (file) {
                         auto tab = setCurrentTab(file);
-                        tab->goToLine(line - 1);
-                        tab->setHighlight(Highlight::Error, line - 1);
-                        tab->setFocusToEditor();
+                        if (line > 0) {
+                            tab->goToLine(line - 1);
+                            tab->setHighlight(Highlight::Error, line - 1);
+                            tab->setFocusToEditor();
+                        }
                     }
                 });
 
@@ -748,8 +753,9 @@ void MainWindow::on_actionMemoryLog_triggered()
             this, std::bind(&MainWindow::clearHighlights, this, Highlight::MemoryLog));
         connect(mMemoryLogWindow, &MemoryLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
                 auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
-                if (loc.file) {
-                    auto tab = setCurrentTab(loc.file);
+                File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
+                if (file) {
+                    auto tab = setCurrentTab(file);
                     if (tab && tab->canGoToLine()) {
                         tab->goToLine(loc.line - 1);
                         tab->setHighlight(Highlight::MemoryLog, loc.line - 1);

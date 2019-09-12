@@ -1,4 +1,5 @@
 #include "AssemblerLexer.h"
+#include "Compiler.h"
 #include "IErrorReporter.h"
 #include <sstream>
 
@@ -79,7 +80,7 @@ namespace
     }
 }
 
-AssemblerLexer::AssemblerLexer(File* file, const QByteArray& fileData, IErrorReporter* reporter)
+AssemblerLexer::AssemblerLexer(const SourceFile* file, const QByteArray& fileData, IErrorReporter* reporter)
     : mReporter(reporter)
     , mFile(file)
     , mSource(fileData.constData())
@@ -532,6 +533,7 @@ void AssemblerLexer::skipMultilineComment()
 
 void AssemblerLexer::error(int line, const QString& message)
 {
-    mReporter->error(mFile, line, message);
+    QString fileName = (mFile ? mFile->name : QString());
+    mReporter->error(fileName, line, message);
     throw LexerError();
 }

@@ -1,6 +1,7 @@
 #include "EmulatorCore.h"
 #include "compiler/ProgramBinary.h"
 #include "compiler/ProgramDebugInfo.h"
+#include "editor/FileManager.h"
 #include "util/Settings.h"
 #include <QImage>
 #include <QFile>
@@ -207,7 +208,7 @@ void EmulatorCore::runTo(const File* file, int line)
         return;
     }
 
-    int addr = debugInfo->resolveAddress(file, line);
+    int addr = debugInfo->resolveAddress(file->relativeName(), line);
     if (addr < 0) {
         lock.unlock();
         emit error(tr("Selected location has no associated code."));
@@ -867,7 +868,7 @@ int ui_debugger_activate()
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr) {
             const auto& loc = debugInfo->sourceLocationForAddress(PC);
-            if (!loc.file)
+            if (loc.file.isEmpty())
                 return 0;
         }
 

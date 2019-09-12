@@ -31,7 +31,6 @@ Compiler::Compiler(QObject* parent)
     , mProgram(new Program)
     , mOutputTapeFile(QStringLiteral("out.tap"))
     , mOutputWavFile(QStringLiteral("out.wav"))
-    , mErrorFile(nullptr)
     , mErrorLine(0)
     , mWasError(false)
 {
@@ -53,17 +52,17 @@ std::unique_ptr<ProgramBinary> Compiler::takeProgramBinary()
     return programBinary;
 }
 
-void Compiler::addSourceFile(File* file, const QString& fullName, const QString& path)
+void Compiler::addSourceFile(const QString& fullName, const QString& path)
 {
     QString ext = QFileInfo(path).suffix();
     if (ext == QStringLiteral("lua"))
-        mBuildScripts.emplace_back(SourceFile{ file, fullName, path });
+        mBuildScripts.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("bas"))
-        mBasicSources.emplace_back(SourceFile{ file, fullName, path });
+        mBasicSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("asm"))
-        mAssemblerSources.emplace_back(SourceFile{ file, fullName, path });
+        mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("map"))
-        mMaps.emplace_back(SourceFile{ file, fullName, path });
+        mMaps.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
 }
 
 void Compiler::setSettings(CompileSettings settings)
@@ -78,20 +77,20 @@ void Compiler::compile()
             throw CompilationFailed();
 
         for (const auto& source : mAssemblerSources) {
-            QFileInfo info(source.path);
+            QFileInfo info(source->path);
             setStatusText(tr("Compiling %1").arg(info.fileName()));
             QString extension = info.suffix();
 
             QFile file(info.absoluteFilePath());
             if (!file.open(QFile::ReadOnly)) {
-                error(source.file, 0, file.errorString());
+                error(source->name, 0, file.errorString());
                 break;
             }
 
             QByteArray fileData = file.readAll();
             file.close();
 
-            if (!Assembler(mProgram.get(), this).parse(source.file, fileData))
+            if (!Assembler(mProgram.get(), this).parse(source.get(), fileData))
                 throw CompilationFailed();
         }
 
@@ -137,7 +136,7 @@ void Compiler::compile()
     emit compilationEnded();
 }
 
-void Compiler::error(File* file, int line, const QString& message)
+void Compiler::error(const QString& file, int line, const QString& message)
 {
     QMutexLocker lock(&mMutex);
     if (!mWasError) {
@@ -173,18 +172,18 @@ bool Compiler::runBuildScripts()
         lua.setProjectDirectory(mProjectDirectory);
 
         for (const auto& script : mBuildScripts) {
-            QFileInfo info(script.path);
+            QFileInfo info(script->path);
             setStatusText(tr("Running %1").arg(info.fileName()));
             try {
                 lua.runScript(info.absoluteFilePath());
             } catch (const LuaError& e) {
-                error(script.file, e.line(), e.message());
+                error(script->name, e.line(), e.message());
                 return false;
             }
         }
 
         for (const auto& file : lua.generatedFiles())
-            addSourceFile(nullptr, file.name, file.path); // <-- FIXME: proper file pointer
+            addSourceFile(file.name, file.path);
     } catch (const LuaError& e) {
         error(nullptr, 0, QStringLiteral("Lua: %1").arg(e.message()));
         return false;
@@ -197,7 +196,7 @@ namespace
 {
     struct Line
     {
-        File* file;
+        const SourceFile* file;
         int line;
         int basicIndex;
         QByteArray lineData;
@@ -207,13 +206,13 @@ namespace
     static std::map<int, Line> lines;
     static std::map<int, Line>::const_iterator linesIter;
     static std::unique_ptr<QDataStream> compiledBasicStream;
-    static File* basicFile;
+    static const SourceFile* basicFile;
     static int basicFileLine;
 }
 
 #define APPEND(C) \
     if (d >= MAXLINELENGTH) { \
-        error(source.file, line, tr("line is too long")); \
+        error(source->name, line, tr("line is too long")); \
         return false; \
     } else \
         lineIn[d++] = (C)
@@ -235,10 +234,10 @@ bool Compiler::compileBasicCode()
     bas2tap_reset();
 
     for (const auto& source : mBasicSources) {
-        QFileInfo info(source.path);
+        QFileInfo info(source->path);
         QFile file(info.absoluteFilePath());
         if (!file.open(QFile::ReadOnly)) {
-            error(source.file, 0, file.errorString());
+            error(source->name, 0, file.errorString());
             lines.clear();
             return false;
         }
@@ -250,7 +249,7 @@ bool Compiler::compileBasicCode()
         int line = 0;
         while (p < end) {
             ++line;
-            basicFile = source.file;
+            basicFile = source.get();
             basicFileLine = line;
 
             char lineIn[MAXLINELENGTH + 1];
@@ -302,12 +301,12 @@ bool Compiler::compileBasicCode()
             }
 
             Line l;
-            l.file = source.file;
+            l.file = source.get();
             l.line = line;
             l.basicIndex = int(basicIndex - bas2tap_ConvertedSpectrumLine);
             l.lineData = bas2tap_ConvertedSpectrumLine;
             if (!lines.emplace(basicLine, std::move(l)).second) {
-                error(source.file, line, tr("duplicate use of line number %1").arg(basicLine));
+                error(source->name, line, tr("duplicate use of line number %1").arg(basicLine));
                 lines.clear();
                 return false;
             }
@@ -337,7 +336,7 @@ void Compiler::bas2tapError(int line, int stmt, const char* fmt, ...)
     vsnprintf(buf, sizeof(buf), fmt, args);
     va_end(args);
 
-    compiler->error(basicFile, basicFileLine, QString::fromUtf8(buf));
+    compiler->error((basicFile ? basicFile->name : QString()), basicFileLine, QString::fromUtf8(buf));
 }
 
 int Compiler::bas2tapFGets(char** basicIndex, int* basicLineNo)

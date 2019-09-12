@@ -1,4 +1,5 @@
 #include "ProgramDebugInfo.h"
+#include "compiler/Compiler.h"
 #include <cstring>
 
 static const SourceLocation dummySourceLocation{};
@@ -6,7 +7,6 @@ static const std::map<int, TStates> dummyTStatesMap;
 
 ProgramDebugInfo::ProgramDebugInfo()
 {
-    memset(mSourceLocations, 0, sizeof(mSourceLocations));
 }
 
 ProgramDebugInfo::~ProgramDebugInfo()
@@ -21,7 +21,7 @@ const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned addres
     return dummySourceLocation;
 }
 
-void ProgramDebugInfo::setSourceLocation(unsigned address, File* file, int line)
+void ProgramDebugInfo::setSourceLocation(unsigned address, const QString& file, int line)
 {
     Q_ASSERT(address < 0x10000);
     if (address < 0x10000) {
@@ -32,21 +32,21 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, File* file, int line)
     }
 }
 
-void ProgramDebugInfo::setTStatesForLocation(const File* file, int line, unsigned taken, unsigned notTaken)
+void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
     TStates s;
     s.taken = taken;
     s.notTaken = notTaken;
-    mFileToTStates[file][line] = s;
+    mFileToTStates[file->name][line] = s;
 }
 
-const std::map<int, TStates>& ProgramDebugInfo::tstatesForFile(const File* file) const
+const std::map<int, TStates>& ProgramDebugInfo::tstatesForFile(const QString& file) const
 {
     auto it = mFileToTStates.find(file);
     return (it != mFileToTStates.end() ? it->second : dummyTStatesMap);
 }
 
-int ProgramDebugInfo::resolveAddress(const File* file, int line) const
+int ProgramDebugInfo::resolveAddress(const QString& file, int line) const
 {
     auto it = mFileToMemory.find(file);
     if (it == mFileToMemory.end())

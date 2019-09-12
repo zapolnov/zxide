@@ -4,7 +4,7 @@
 #include "AssemblerToken.h"
 #include <QObject>
 
-class File;
+struct SourceFile;
 class IErrorReporter;
 
 class LexerError
@@ -16,7 +16,7 @@ class AssemblerLexer : public QObject
     Q_OBJECT
 
 public:
-    explicit AssemblerLexer(File* file, const QByteArray& fileData, IErrorReporter* reporter);
+    AssemblerLexer(const SourceFile* file, const QByteArray& fileData, IErrorReporter* reporter);
     virtual ~AssemblerLexer();
 
     void save();
@@ -28,7 +28,7 @@ public:
 
 private:
     IErrorReporter* mReporter;
-    File* mFile;
+    const SourceFile* mFile;
     const char* mSource;
     const char* mSavedSource;
     const char* mEnd;

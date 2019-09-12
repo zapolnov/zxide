@@ -1,4 +1,5 @@
 #include "ProgramSection.h"
+#include "Compiler.h"
 #include "ProgramOpcode.h"
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
@@ -35,7 +36,8 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
     address = baseRelativeTo(address);
 
     if (!isEmpty() && address > 0xFFFF) {
-        reporter->error(mToken.file, mToken.line,
+        QString fileName = (mToken.file ? mToken.file->name : QString());
+        reporter->error(fileName, mToken.line,
             QCoreApplication::tr("section '%1' overflows 64K barrier").arg(nameCStr()));
         return false;
     }
@@ -48,16 +50,17 @@ void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorRep
     if (hasCode(program, reporter)) {
         if (mHasBase) {
             if (mBase < binary->endAddress()) {
-                reporter->error(mToken.file, mToken.line,
+                QString fileName = (mToken.file ? mToken.file->name : QString());
+                reporter->error(fileName, mToken.line,
                     QCoreApplication::tr("section '%1' overlaps with address 0x%2 which belongs to another section")
                     .arg(nameCStr()).arg(mBase, 0, 16));
             }
             while (binary->endAddress() < mBase)
-                binary->emitByte(nullptr, 0, 0); // NOP
+                binary->emitByte(mToken.file, mToken.line, 0); // NOP
         } else if (mHasAlignment && mAlignment > 1) {
             quint64 alignedAddress = (binary->endAddress() + mAlignment - 1) / mAlignment * mAlignment;
             while (binary->endAddress() < alignedAddress)
-                binary->emitByte(nullptr, 0, 0); // NOP
+                binary->emitByte(mToken.file, mToken.line, 0); // NOP
         }
     }
 

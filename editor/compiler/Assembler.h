@@ -4,8 +4,8 @@
 #include <QObject>
 
 class Program;
-class File;
 class IErrorReporter;
+struct SourceFile;
 
 class Assembler : public QObject
 {
@@ -15,7 +15,7 @@ public:
     Assembler(Program* program, IErrorReporter* reporter);
     ~Assembler() override;
 
-    bool parse(File* file, const QByteArray& fileData);
+    bool parse(const SourceFile* file, const QByteArray& fileData);
 
 private:
     Program* mProgram;
