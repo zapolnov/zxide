@@ -23,6 +23,9 @@ qt_add_sources(GameEditor
         debugger/EditRegisterDialog.ui
         debugger/EmulatorCore.cpp
         debugger/EmulatorCore.h
+        debugger/MemoryLogWindow.cpp
+        debugger/MemoryLogWindow.h
+        debugger/MemoryLogWindow.ui
         debugger/MemoryWidget.cpp
         debugger/MemoryWidget.h
         debugger/RegistersWidget.cpp

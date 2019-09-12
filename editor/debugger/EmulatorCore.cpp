@@ -56,11 +56,14 @@ static Color Palette[] = {
 static QElapsedTimer elapsedTimer;
 static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
+static std::vector<MemoryOperationInfo> memoryOperations;
+static std::vector<MemoryOperationInfo> memoryOperations_mainThread;
 static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
 static QImage screenFront;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
+static volatile bool collectMemoryOperations;
 static bool shouldUpdateUi;
 static bool shouldEmitPausedSignal;
 static bool shouldEmitUnpausedSignal;
@@ -261,6 +264,12 @@ SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
     }
 
     return dummySourceLocation;
+}
+
+void EmulatorCore::setCollectMemoryOperations(bool flag)
+{
+    QMutexLocker lock(&mutex);
+    collectMemoryOperations = flag;
 }
 
 Registers EmulatorCore::registers() const
@@ -537,6 +546,7 @@ void EmulatorCore::update()
         memoryWasChanged_ = memoryWasChanged;
         memoryWasChanged = false;
         pausePC_ = pausePC;
+        std::swap(::memoryOperations, memoryOperations_mainThread);
     }
 
     if (memoryWasChanged_)
@@ -547,6 +557,11 @@ void EmulatorCore::update()
         emit enterDebugger(pausePC_);
     if (shouldUpdateUi_)
         emit updateUi();
+
+    if (!memoryOperations_mainThread.empty()) {
+        emit memoryOperations(memoryOperations_mainThread);
+        memoryOperations_mainThread.clear();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -814,6 +829,21 @@ extern "C" void ui_notify_memory_page_changed(int page)
 {
     QMutexLocker lock(&mutex);
     memoryPageValid[page] = false;
+}
+
+extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigned codeAddress, unsigned value)
+{
+    if (collectMemoryOperations) {
+        MemoryOperationInfo info;
+        info.operation = MemoryOperation::WriteByte;
+        info.bank = bank;
+        info.memoryAddress = memoryAddress;
+        info.codeAddress = codeAddress;
+        info.value = value;
+
+        QMutexLocker lock(&mutex);
+        memoryOperations.emplace_back(std::move(info));
+    }
 }
 
 int uidisplay_init(int width, int height)

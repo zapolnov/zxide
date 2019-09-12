@@ -47,6 +47,8 @@
 #include "settings.h"
 #include "spectrum.h"
 #include "ui/ui.h"
+#include "z80/z80.h"
+#include "z80/z80_macros.h"
 #include "utils.h"
 
 /* The various sources of memory available to us */
@@ -99,6 +101,7 @@ static module_info_t memory_module_info = {
 };
 
 void ui_notify_memory_page_changed(int page);
+void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigned codeAddress, unsigned value);
 
 /* Set up the information about the normal page mappings.
    Memory contention and usable pages vary from machine to machine and must
@@ -475,6 +478,8 @@ writebyte_internal( libspectrum_word address, libspectrum_byte b )
 {
   libspectrum_word bank = address >> MEMORY_PAGE_SIZE_LOGARITHM;
   memory_page *mapping = &memory_map_write[ bank ];
+
+  ui_notify_memory_write(bank, address, PC, b);
   
   if( spectranet_paged ) {
     /* all writes need to be parsed by the flash rom emulation */

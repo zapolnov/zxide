@@ -57,6 +57,7 @@
    </attribute>
    <addaction name="actionNewProject"/>
    <addaction name="actionOpenProject"/>
+   <addaction name="actionRefreshFileList"/>
    <addaction name="separator"/>
    <addaction name="actionNewFile"/>
    <addaction name="actionNewDirectory"/>
@@ -90,6 +91,8 @@
    <addaction name="actionStepOver"/>
    <addaction name="actionRunToCursor"/>
    <addaction name="separator"/>
+   <addaction name="actionMemoryLog"/>
+   <addaction name="separator"/>
    <addaction name="actionSettings"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -107,6 +110,7 @@
     </property>
     <addaction name="actionNewProject"/>
     <addaction name="actionOpenProject"/>
+    <addaction name="actionRefreshFileList"/>
     <addaction name="separator"/>
     <addaction name="actionNewFile"/>
     <addaction name="actionNewDirectory"/>
@@ -119,8 +123,6 @@
     <addaction name="actionRenameFile"/>
     <addaction name="actionDuplicateFile"/>
     <addaction name="actionDeleteFile"/>
-    <addaction name="separator"/>
-    <addaction name="actionRefreshFileList"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -159,6 +161,8 @@
     <addaction name="actionStepOut"/>
     <addaction name="actionStepOver"/>
     <addaction name="actionRunToCursor"/>
+    <addaction name="separator"/>
+    <addaction name="actionMemoryLog"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -833,6 +837,15 @@
    </property>
    <property name="text">
     <string>Rotate co&amp;unterclockwise</string>
+   </property>
+  </action>
+  <action name="actionMemoryLog">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/table_layout_subtotals.png</normaloff>:/resources/fatcow16x16/table_layout_subtotals.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Memory log...</string>
    </property>
   </action>
  </widget>

@@ -3,6 +3,7 @@
 #include "AboutDialog.h"
 #include "SettingsDialog.h"
 #include "PlayAudioDialog.h"
+#include "debugger/MemoryLogWindow.h"
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
@@ -716,6 +717,27 @@ void MainWindow::on_actionRunToCursor_triggered()
 
         mEmulatorCore->runTo(file, line);
     }
+}
+
+void MainWindow::on_actionMemoryLog_triggered()
+{
+    if (!mMemoryLogWindow) {
+        mMemoryLogWindow = new MemoryLogWindow(this);
+        connect(mMemoryLogWindow, &MemoryLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
+                if (loc.file) {
+                    auto tab = setCurrentTab(loc.file);
+                    if (tab && tab->canGoToLine()) {
+                        tab->goToLine(loc.line - 1);
+                        tab->setFocusToEditor();
+                    }
+                }
+            });
+    }
+
+    mMemoryLogWindow->show();
+    qApp->setActiveWindow(mMemoryLogWindow);
+    mMemoryLogWindow->setFocus();
 }
 
 void MainWindow::on_actionDraw_triggered()

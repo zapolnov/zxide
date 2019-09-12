@@ -30,6 +30,7 @@
     <file>fatcow16x16/diskette.png</file>
     <file>fatcow16x16/door_in.png</file>
     <file>fatcow16x16/error.png</file>
+    <file>fatcow16x16/filter.png</file>
     <file>fatcow16x16/folder.png</file>
     <file>fatcow16x16/folder_add.png</file>
     <file>fatcow16x16/folder_blue.png</file>
@@ -60,6 +61,7 @@
     <file>fatcow16x16/shape_rotate_anticlockwise.png</file>
     <file>fatcow16x16/shape_rotate_clockwise.png</file>
     <file>fatcow16x16/sound_wave.png</file>
+    <file>fatcow16x16/table_layout_subtotals.png</file>
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
     <file>fugue16x16/arrow-step-out.png</file>

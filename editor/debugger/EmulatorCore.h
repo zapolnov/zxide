@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QThread>
+#include <vector>
 
 enum Register
 {
@@ -85,6 +86,20 @@ struct Registers
     bool halted;
 };
 
+enum class MemoryOperation
+{
+    WriteByte,
+};
+
+struct MemoryOperationInfo
+{
+    MemoryOperation operation;
+    int bank;
+    unsigned memoryAddress;
+    unsigned codeAddress;
+    unsigned value;
+};
+
 class File;
 class ProgramBinary;
 class QTimer;
@@ -120,6 +135,8 @@ public:
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
     SourceLocation sourceLocationForAddress(unsigned address) const;
 
+    void setCollectMemoryOperations(bool flag);
+
     Registers registers() const;
     quint16 instructionPointer() const;
     quint16 stackPointer() const;
@@ -140,6 +157,7 @@ signals:
     void leaveDebugger();
     void stopped();
     void memoryChanged();
+    void memoryOperations(std::vector<MemoryOperationInfo>& operations);
     void error(QString message);
     void updateUi();
 

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPointer>
 #include <unordered_map>
 #include <memory>
 
@@ -9,6 +10,7 @@ class File;
 class EditorTabFactory;
 class AbstractEditorTab;
 class Project;
+class MemoryLogWindow;
 class EmulatorCore;
 class Ui_MainWindow;
 class QLabel;
@@ -42,6 +44,7 @@ private:
     QLabel* mEmulatorSpeedLabel;
     QLabel* mBuildResultLabel;
     std::unique_ptr<Project> mProject;
+    QPointer<MemoryLogWindow> mMemoryLogWindow;
     EmulatorCore* mEmulatorCore;
     EditorTabFactory* mTabFactory;
 
@@ -90,6 +93,7 @@ private:
     Q_SLOT void on_actionStepOut_triggered();
     Q_SLOT void on_actionStepOver_triggered();
     Q_SLOT void on_actionRunToCursor_triggered();
+    Q_SLOT void on_actionMemoryLog_triggered();
 
     Q_SLOT void on_actionDraw_triggered();
     Q_SLOT void on_actionDrawRect_triggered();
