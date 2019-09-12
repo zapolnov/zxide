@@ -2,6 +2,7 @@
 #define COMPILER_TESTS_HELPERS_DATABLOB_H
 
 #include <string>
+#include <memory>
 #include <unordered_map>
 #include <ostream>
 
@@ -27,7 +28,7 @@ public:
 
 private:
     std::string mData;
-    std::unordered_map<std::string, DataBlob> mFileData;
+    std::unordered_map<std::string, std::unique_ptr<DataBlob>> mFileData;
 };
 
 std::ostream& operator<<(std::ostream& stream, const DataBlob& str);

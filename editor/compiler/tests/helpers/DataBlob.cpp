@@ -18,12 +18,12 @@ DataBlob::~DataBlob()
 const DataBlob& DataBlob::fileData(const std::string& fileName) const
 {
     auto it = mFileData.find(fileName);
-    return (it != mFileData.end() ? it->second : dummy);
+    return (it != mFileData.end() ? *it->second : dummy);
 }
 
 void DataBlob::setFileData(const std::string& fileName, DataBlob blob)
 {
-    mFileData[fileName] = std::move(blob);
+    mFileData[fileName] = std::make_unique<DataBlob>(std::move(blob));
 }
 
 std::ostream& operator<<(std::ostream& stream, const DataBlob& str)
