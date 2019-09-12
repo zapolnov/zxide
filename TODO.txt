@@ -1,5 +1,6 @@
 * Implement memory editing in the memory view
-* In the memory view highlight symbol when mouse is over a hexadecimal value and vise-versa
+* In the memory view highlight symbol when mouse is over a hexadecimal value and vise-versa; also show full address
+* Go to address in memory window
 * Implement breakpoints
 * Run to cursor is currently inaccurate
 * Disassembly window (?)
@@ -17,7 +18,7 @@
 * Search and search-with-replace in the text editor
 * Import and dither-to-monochrome images
 * Flip and rotation in the tile editor should work only on a selected area
-* Support memory banks in the debug info
+* Support different files in the debug info
 * Grid in the level editor
 * Tile selector in the level editor has overlapping name strings
 * Level editor is hardcoded to 16x16 tiles
@@ -29,3 +30,7 @@
 * Some 'equ in if' tests fail
 * Hardware selection in the settings (48K / 128K)
 * Cleanup old files in the 'generated' directory
+* Show memory addresses in the editor after successful build
+* Add option to show T-states and addresses
+* Add virtual keyboard widget
+* Highlight current row when you open it from the memory widget and when compiler error is reported
