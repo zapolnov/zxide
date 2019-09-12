@@ -3,6 +3,8 @@
 
 #include <QSettings>
 
+enum class Machine : int;
+
 class Settings
 {
 public:
@@ -23,6 +25,7 @@ public:
     bool enableSound() const;
     bool fastTapeLoading() const;
     bool playTapeSound() const;
+    Machine emulatorMachine() const;
 
     void setLastProjectFile(const QString& file);
     void setLoadLastProjectOnStart(bool flag);
@@ -38,6 +41,7 @@ public:
     void setEnableSound(bool flag);
     void setFastTapeLoading(bool flag);
     void setPlayTapeSound(bool flag);
+    void setEmulatorMachine(Machine machine);
 
 private:
     QSettings mSettings;

@@ -228,6 +228,49 @@
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="machineLayout">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="machineSpacer" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>15</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>15</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="machineLabel">
+           <property name="text">
+            <string>&amp;Machine:</string>
+           </property>
+           <property name="buddy">
+            <cstring>machineCombo</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="machineCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="emulatorTabSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -1,6 +1,7 @@
 #include "SettingsDialog.h"
 #include "debugger/EmulatorCore.h"
 #include "util/Settings.h"
+#include "util/ComboBox.h"
 #include "ScintillaEdit/ScintillaEdit.h"
 #include "ui_SettingsDialog.h"
 
@@ -25,6 +26,19 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     mUi->enableSoundCheck->setChecked(settings.enableSound());
     mUi->fastLoadCheck->setChecked(settings.fastTapeLoading());
     mUi->tapeSoundCheck->setChecked(settings.playTapeSound());
+
+    mUi->machineCombo->addItem(tr("Spectrum 16"), QVariant(int(Machine::Spectrum16)));
+    mUi->machineCombo->addItem(tr("Spectrum 48"), QVariant(int(Machine::Spectrum48)));
+    mUi->machineCombo->addItem(tr("Spectrum 48 NTSC"), QVariant(int(Machine::Spectrum48NTSC)));
+    mUi->machineCombo->addItem(tr("Spectrum 128"), QVariant(int(Machine::Spectrum128)));
+    mUi->machineCombo->addItem(tr("Spectrum +2"), QVariant(int(Machine::SpectrumPlus2)));
+    mUi->machineCombo->addItem(tr("Spectrum +2A"), QVariant(int(Machine::SpectrumPlus2A)));
+    mUi->machineCombo->addItem(tr("Spectrum +3"), QVariant(int(Machine::SpectrumPlus3)));
+    mUi->machineCombo->addItem(tr("Scorpion"), QVariant(int(Machine::Scorpion)));
+    mUi->machineCombo->addItem(tr("Pentagon"), QVariant(int(Machine::Pentagon)));
+    mUi->machineCombo->addItem(tr("Pentagon 512"), QVariant(int(Machine::Pentagon512)));
+    mUi->machineCombo->addItem(tr("Pentagon 1024"), QVariant(int(Machine::Pentagon1024)));
+    comboSelectItem(mUi->machineCombo, QVariant(int(settings.emulatorMachine())));
 
     mUi->emulatorRestartNotice->setVisible(EmulatorCore::instance()->isRunning());
     mUi->tabWidget->setCurrentWidget(mUi->generalTab);
@@ -53,6 +67,7 @@ void SettingsDialog::done(int r)
         settings.setEnableSound(mUi->enableSoundCheck->isChecked());
         settings.setFastTapeLoading(mUi->fastLoadCheck->isChecked());
         settings.setPlayTapeSound(mUi->tapeSoundCheck->isChecked());
+        settings.setEmulatorMachine(Machine(comboSelectedItem(mUi->machineCombo).toInt()));
     }
 
     QDialog::done(r);

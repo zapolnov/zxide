@@ -100,6 +100,21 @@ struct MemoryOperationInfo
     unsigned value;
 };
 
+enum class Machine : int
+{
+    Spectrum16,
+    Spectrum48,
+    Spectrum48NTSC,
+    Spectrum128,
+    SpectrumPlus2,
+    SpectrumPlus2A,
+    SpectrumPlus3,
+    Scorpion,
+    Pentagon,
+    Pentagon512,
+    Pentagon1024,
+};
+
 class File;
 class ProgramBinary;
 class QTimer;

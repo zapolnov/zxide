@@ -780,8 +780,27 @@ extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg,
     fuse->sound_load = (settings.playTapeSound() ? 1 : 0);
     fuse->tape_traps = 1;
     fuse->auto_load = 1;
+
+    #define SETSTRING(N, V) if (fuse->N) libspectrum_free(fuse->N); fuse->N = utils_safe_strdup(V)
+
     if (!tapeFile.isEmpty())
-        fuse->tape_file = utils_safe_strdup(tapeFile.toUtf8().constData());
+        SETSTRING(tape_file, tapeFile.toUtf8().constData());
+
+    switch (settings.emulatorMachine()) {
+        case Machine::Spectrum16: SETSTRING(start_machine, "16"); break;
+        case Machine::Spectrum48: SETSTRING(start_machine, "48"); break;
+        case Machine::Spectrum48NTSC: SETSTRING(start_machine, "48_ntsc"); break;
+        case Machine::Spectrum128: SETSTRING(start_machine, "128"); break;
+        case Machine::SpectrumPlus2: SETSTRING(start_machine, "plus2"); break;
+        case Machine::SpectrumPlus2A: SETSTRING(start_machine, "plus2a"); break;
+        case Machine::SpectrumPlus3: SETSTRING(start_machine, "plus3"); break;
+        case Machine::Scorpion: SETSTRING(start_machine, "scorpion"); break;
+        case Machine::Pentagon: SETSTRING(start_machine, "pentagon"); break;
+        case Machine::Pentagon512: SETSTRING(start_machine, "pentagon512"); break;
+        case Machine::Pentagon1024: SETSTRING(start_machine, "pentagon1024"); break;
+        default: Q_ASSERT(false);
+    }
+
     *first_arg = 1;
     return 0;
 }

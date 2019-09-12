@@ -5,6 +5,7 @@
 #include "compiler/TileSetFile.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
+#include "util/ComboBox.h"
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_TileSetEditorTab.h"
@@ -79,8 +80,8 @@ bool TileSetEditorTab::loadFile(File* f)
         return false;
     }
 
-    selectItem(mUi->tileWidthCombo, mData.tileWidth);
-    selectItem(mUi->tileHeightCombo, mData.tileHeight);
+    comboSelectItem(mUi->tileWidthCombo, mData.tileWidth);
+    comboSelectItem(mUi->tileHeightCombo, mData.tileHeight);
 
     setSaved();
     refresh();
@@ -139,7 +140,7 @@ bool TileSetEditorTab::save()
 
 void TileSetEditorTab::on_tileWidthCombo_currentIndexChanged(int)
 {
-    int w = selectedItem(mUi->tileWidthCombo).toInt();
+    int w = comboSelectedItem(mUi->tileWidthCombo).toInt();
     if (w != mData.tileWidth) {
         emit updateUi();
         refresh();
@@ -148,7 +149,7 @@ void TileSetEditorTab::on_tileWidthCombo_currentIndexChanged(int)
 
 void TileSetEditorTab::on_tileHeightCombo_currentIndexChanged(int)
 {
-    int h = selectedItem(mUi->tileHeightCombo).toInt();
+    int h = comboSelectedItem(mUi->tileHeightCombo).toInt();
     if (h != mData.tileHeight) {
         emit updateUi();
         refresh();
@@ -167,9 +168,9 @@ void TileSetEditorTab::reset()
     mSavedTileWidth = TileSetFile::MinTileWidth;
     mSavedTileHeight = TileSetFile::MinTileHeight;
 
-    selectItem(mUi->tileWidthCombo, mSavedTileWidth);
+    comboSelectItem(mUi->tileWidthCombo, mSavedTileWidth);
     mUi->tileWidthCombo->setEnabled(false);
-    selectItem(mUi->tileHeightCombo, mSavedTileHeight);
+    comboSelectItem(mUi->tileHeightCombo, mSavedTileHeight);
     mUi->tileHeightCombo->setEnabled(false);
     mUi->scrollArea->setEnabled(false);
 }
@@ -306,22 +307,4 @@ void TileSetEditorTab::onButtonClicked(QToolButton* button, int x, int y)
 
             button->setEnabled(true);
         });
-}
-
-bool TileSetEditorTab::selectItem(QComboBox* combo, const QVariant& value)
-{
-    int n = combo->count();
-    for (int i = 0; i < n; i++) {
-        if (combo->itemData(i) == value) {
-            combo->setCurrentIndex(i);
-            return true;
-        }
-    }
-    return false;
-}
-
-QVariant TileSetEditorTab::selectedItem(const QComboBox* combo)
-{
-    int selected = combo->currentIndex();
-    return (selected < 0 ? QVariant() : combo->itemData(selected));
 }

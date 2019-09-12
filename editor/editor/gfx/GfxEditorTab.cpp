@@ -3,6 +3,7 @@
 #include "editor/EditorTabFactory.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
+#include "util/ComboBox.h"
 #include "ui_GfxEditorTab.h"
 #include <QMessageBox>
 #include <QSaveFile>
@@ -57,10 +58,10 @@ bool GfxEditorTab::loadFile(File* f)
         return false;
     }
 
-    selectItem(mUi->formatCombo, int(fileData.format));
-    selectItem(mUi->colorModeCombo, int(fileData.colorMode));
-    selectItem(mUi->widthCombo, mUi->editorWidget->width());
-    selectItem(mUi->heightCombo, mUi->editorWidget->height());
+    comboSelectItem(mUi->formatCombo, int(fileData.format));
+    comboSelectItem(mUi->colorModeCombo, int(fileData.colorMode));
+    comboSelectItem(mUi->widthCombo, mUi->editorWidget->width());
+    comboSelectItem(mUi->heightCombo, mUi->editorWidget->height());
 
     mUi->formatCombo->setEnabled(true);
     mUi->widthCombo->setEnabled(true);
@@ -81,13 +82,13 @@ bool GfxEditorTab::isModified() const
     if (!file())
         return false;
 
-    if (mSavedFormat != GfxFormat(selectedItem(mUi->formatCombo).toInt()))
+    if (mSavedFormat != GfxFormat(comboSelectedItem(mUi->formatCombo).toInt()))
         return true;
-    if (mSavedColorMode != GfxColorMode(selectedItem(mUi->colorModeCombo).toInt()))
+    if (mSavedColorMode != GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt()))
         return true;
-    if (mSavedWidth != selectedItem(mUi->widthCombo).toInt())
+    if (mSavedWidth != comboSelectedItem(mUi->widthCombo).toInt())
         return true;
-    if (mSavedHeight != selectedItem(mUi->heightCombo).toInt())
+    if (mSavedHeight != comboSelectedItem(mUi->heightCombo).toInt())
         return true;
 
     return mUi->editorWidget->isModified();
@@ -218,8 +219,8 @@ bool GfxEditorTab::save()
     QString fileName = file()->fileInfo().absoluteFilePath();
 
     GfxFile file;
-    file.format = GfxFormat(selectedItem(mUi->formatCombo).toInt());
-    file.colorMode = GfxColorMode(selectedItem(mUi->colorModeCombo).toInt());
+    file.format = GfxFormat(comboSelectedItem(mUi->formatCombo).toInt());
+    file.colorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
     mUi->editorWidget->serialize(file);
 
     QSaveFile f(fileName);
@@ -375,27 +376,27 @@ void GfxEditorTab::reset()
 
 void GfxEditorTab::setSaved()
 {
-    mSavedFormat = GfxFormat(selectedItem(mUi->formatCombo).toInt());
-    mSavedColorMode = GfxColorMode(selectedItem(mUi->colorModeCombo).toInt());
-    mSavedWidth = selectedItem(mUi->widthCombo).toInt();
-    mSavedHeight = selectedItem(mUi->heightCombo).toInt();
+    mSavedFormat = GfxFormat(comboSelectedItem(mUi->formatCombo).toInt());
+    mSavedColorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
+    mSavedWidth = comboSelectedItem(mUi->widthCombo).toInt();
+    mSavedHeight = comboSelectedItem(mUi->heightCombo).toInt();
     mUi->editorWidget->setSaved();
 }
 
 void GfxEditorTab::on_editorWidget_sizeChanged()
 {
-    selectItem(mUi->widthCombo, mUi->editorWidget->width());
-    selectItem(mUi->heightCombo, mUi->editorWidget->height());
+    comboSelectItem(mUi->widthCombo, mUi->editorWidget->width());
+    comboSelectItem(mUi->heightCombo, mUi->editorWidget->height());
 }
 
 void GfxEditorTab::on_colorModeCombo_currentIndexChanged(int)
 {
-    mUi->editorWidget->setColorMode(GfxColorMode(selectedItem(mUi->colorModeCombo).toInt()));
+    mUi->editorWidget->setColorMode(GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt()));
 }
 
 void GfxEditorTab::on_widthCombo_currentIndexChanged(int)
 {
-    int w = selectedItem(mUi->widthCombo).toInt();
+    int w = comboSelectedItem(mUi->widthCombo).toInt();
     if (w != 0)
         mUi->editorWidget->setSize(w, mUi->editorWidget->height());
     emit updateUi();
@@ -403,28 +404,10 @@ void GfxEditorTab::on_widthCombo_currentIndexChanged(int)
 
 void GfxEditorTab::on_heightCombo_currentIndexChanged(int)
 {
-    int h = selectedItem(mUi->heightCombo).toInt();
+    int h = comboSelectedItem(mUi->heightCombo).toInt();
     if (h != 0)
         mUi->editorWidget->setSize(mUi->editorWidget->width(), h);
     emit updateUi();
-}
-
-bool GfxEditorTab::selectItem(QComboBox* combo, const QVariant& value)
-{
-    int n = combo->count();
-    for (int i = 0; i < n; i++) {
-        if (combo->itemData(i) == value) {
-            combo->setCurrentIndex(i);
-            return true;
-        }
-    }
-    return false;
-}
-
-QVariant GfxEditorTab::selectedItem(const QComboBox* combo)
-{
-    int selected = combo->currentIndex();
-    return (selected < 0 ? QVariant() : combo->itemData(selected));
 }
 
 void GfxEditorTab::setColor(int color, bool setTool)

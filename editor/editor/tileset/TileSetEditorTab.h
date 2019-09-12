@@ -47,9 +47,6 @@ private:
 
     void onButtonClicked(QToolButton* button, int x, int y);
 
-    static bool selectItem(QComboBox* combo, const QVariant& value);
-    static QVariant selectedItem(const QComboBox* combo);
-
     Q_DISABLE_COPY(TileSetEditorTab)
 };
 

@@ -88,9 +88,6 @@ private:
     Q_SLOT void on_widthCombo_currentIndexChanged(int);
     Q_SLOT void on_heightCombo_currentIndexChanged(int);
 
-    static bool selectItem(QComboBox* combo, const QVariant& value);
-    static QVariant selectedItem(const QComboBox* combo);
-
     void setColor(int color, bool setTool = true);
     Q_SLOT void on_blackButton_clicked() { setColor(0); }
     Q_SLOT void on_blueButton_clicked() { setColor(1); }

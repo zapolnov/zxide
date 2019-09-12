@@ -7,6 +7,7 @@
 #include "compiler/GfxFile.h"
 #include "compiler/TileSetData.h"
 #include "compiler/TileSetFile.h"
+#include "util/ComboBox.h"
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_MapEditorTab.h"
@@ -69,7 +70,7 @@ bool MapEditorTab::loadFile(File* f)
         return false;
     }
 
-    selectItem(mUi->formatCombo, int(fileData.format));
+    comboSelectItem(mUi->formatCombo, int(fileData.format));
     setTilesetButton(fileData.tileSetFile);
     mUi->widthSpin->setValue(mUi->editorWidget->width());
     mUi->heightSpin->setValue(mUi->editorWidget->height());
@@ -94,7 +95,7 @@ bool MapEditorTab::isModified() const
     if (!file())
         return false;
 
-    if (mSavedFormat != MapFormat(selectedItem(mUi->formatCombo).toInt()))
+    if (mSavedFormat != MapFormat(comboSelectedItem(mUi->formatCombo).toInt()))
         return true;
     if (mSavedTileset != tilesetButtonSelection())
         return true;
@@ -211,7 +212,7 @@ bool MapEditorTab::save()
     QString fileName = file()->fileInfo().absoluteFilePath();
 
     MapFile file;
-    file.format = MapFormat(selectedItem(mUi->formatCombo).toInt());
+    file.format = MapFormat(comboSelectedItem(mUi->formatCombo).toInt());
     file.tileSetFile = tilesetButtonSelection();
     mUi->editorWidget->serialize(file);
 
@@ -350,7 +351,7 @@ void MapEditorTab::reset()
 
 void MapEditorTab::setSaved()
 {
-    mSavedFormat = MapFormat(selectedItem(mUi->formatCombo).toInt());
+    mSavedFormat = MapFormat(comboSelectedItem(mUi->formatCombo).toInt());
     mSavedTileset = tilesetButtonSelection();
     mSavedWidth = mUi->widthSpin->value();
     mSavedHeight = mUi->heightSpin->value();
@@ -547,22 +548,4 @@ void MapEditorTab::refreshTileList()
     }
 
     mUi->editorWidget->setTiles(tiles);
-}
-
-bool MapEditorTab::selectItem(QComboBox* combo, const QVariant& value)
-{
-    int n = combo->count();
-    for (int i = 0; i < n; i++) {
-        if (combo->itemData(i) == value) {
-            combo->setCurrentIndex(i);
-            return true;
-        }
-    }
-    return false;
-}
-
-QVariant MapEditorTab::selectedItem(const QComboBox* combo)
-{
-    int selected = combo->currentIndex();
-    return (selected < 0 ? QVariant() : combo->itemData(selected));
 }

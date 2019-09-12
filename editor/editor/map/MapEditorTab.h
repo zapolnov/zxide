@@ -89,9 +89,6 @@ private:
 
     void refreshTileList();
 
-    static bool selectItem(QComboBox* combo, const QVariant& value);
-    static QVariant selectedItem(const QComboBox* combo);
-
     Q_DISABLE_COPY(MapEditorTab)
 };
 
