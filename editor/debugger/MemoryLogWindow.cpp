@@ -163,6 +163,7 @@ MemoryLogWindow::~MemoryLogWindow()
 void MemoryLogWindow::on_clearButton_clicked()
 {
     mModel->clear();
+    emit cleared();
 }
 
 void MemoryLogWindow::on_filtersButton_clicked()

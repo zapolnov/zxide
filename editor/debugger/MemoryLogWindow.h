@@ -17,6 +17,7 @@ public:
     ~MemoryLogWindow() override;
 
 signals:
+    void cleared();
     void addressDoubleClicked(unsigned address);
 
 private:

@@ -69,6 +69,8 @@ qt_add_sources(GameEditor
         editor/RenameDialog.h
         editor/RenameDialog.ui
         res/resources.qrc
+        util/ClickableLabel.cpp
+        util/ClickableLabel.h
         util/ComboBox.cpp
         util/ComboBox.h
         util/FileSelectorMenu.cpp

@@ -180,6 +180,20 @@ void LineMarker::Draw(Surface *surface, PRectangle &rcWhole, Font &fontForCharac
 			centreX + dimOn2,
 			centreY + dimOn2);
 		surface->Ellipse(rcCircle, fore, back);
+	} else if (markType == SC_MARK_EXCLAMATION) {
+		Point pts[] = {
+			Point::FromInts(centreX - 2, rc.top),
+			Point::FromInts(centreX + 2, rc.top),
+			Point::FromInts(centreX + 2, rc.bottom - 4 - 2),
+			Point::FromInts(centreX - 2, rc.bottom - 4 - 2),
+		};
+		surface->Polygon(pts, std::size(pts), fore, back);
+		const PRectangle rcCircle = PRectangle::FromInts(
+			centreX - 2,
+			rc.bottom - 4,
+			centreX + 2,
+			rc.bottom);
+		surface->Ellipse(rcCircle, fore, back);
 	} else if (markType == SC_MARK_ARROW) {
 		Point pts[] = {
     		Point::FromInts(centreX - dimOn4, centreY - dimOn2),

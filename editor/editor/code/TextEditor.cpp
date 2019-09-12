@@ -1,11 +1,11 @@
 #include "TextEditor.h"
+#include "editor/AbstractEditorTab.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
 #include <cstdio>
 
 TextEditor::TextEditor(QWidget* parent)
     : ScintillaEdit(parent)
-    , mHighlightVisible(false)
     , mTStatesVisible(false)
 {
     reloadSettings();
@@ -37,24 +37,45 @@ void TextEditor::setLineIndent(int line, int indent)
     }
 }
 
-void TextEditor::setHighlight(int line)
+void TextEditor::setHighlight(Highlight highlight, int line)
 {
-    if (mHighlightVisible)
-        markerDeleteHandle(mHighlightHandle);
+    auto& marker = mMarkers[highlight];
+    if (marker.visible) {
+        markerDeleteHandle(marker.handle);
+        marker.visible = false;
+    }
 
-    markerDefine(24, SC_MARK_SHORTARROW);
-    markerSetFore(24, 0);
-    markerSetBack(24, 0x00ffff);
+    int index = 24 - int(highlight);
 
-    mHighlightHandle = markerAdd(line, 24);
-    mHighlightVisible = true;
+    switch (highlight) {
+        case Highlight::CurrentPC:
+            markerDefine(index, SC_MARK_SHORTARROW);
+            markerSetFore(index, 0);
+            markerSetBack(index, 0x00ffff);
+            break;
+        case Highlight::Error:
+            markerDefine(index, SC_MARK_EXCLAMATION);
+            markerSetFore(index, 0);
+            markerSetBack(index, 0x0000ff);
+            break;
+        case Highlight::MemoryLog:
+            markerDefine(index, SC_MARK_EMPTY);
+            markerSetFore(index, 0);
+            markerSetBack(index, 0xffff00);
+            break;
+    }
+
+    marker.handle = markerAdd(line, index);
+    marker.line = line;
+    marker.visible = true;
 }
 
-void TextEditor::clearHighlight()
+void TextEditor::clearHighlight(Highlight highlight)
 {
-    if (mHighlightVisible) {
-        markerDeleteHandle(mHighlightHandle);
-        mHighlightVisible = false;
+    auto& marker = mMarkers[highlight];
+    if (marker.visible) {
+        markerDeleteHandle(marker.handle);
+        marker.visible = false;
     }
 }
 
@@ -106,7 +127,7 @@ void TextEditor::reloadSettings()
     setViewWS(settings.whitespaceVisibility());
     setViewEOL(settings.showEol());
 
-    setMarginMaskN(1, SC_MASK_FOLDERS | (1 << 24));
+    setMarginMaskN(1, SC_MASK_FOLDERS | (1 << 24) | (1 << 23) | (1 << 22));
     setMarginTypeN(3, SC_MARGIN_RTEXT);
     setMarginWidthN(3, mTStatesVisible ? textWidth(STYLE_LINENUMBER, "_9/99") : 0);
 
@@ -134,8 +155,18 @@ void TextEditor::charAdded(int ch)
 
 void TextEditor::textModified(int position, int length)
 {
-    if (mTStatesVisible) {
-        for (int i = position; i < position + length; i++)
-            marginSetText(lineFromPosition(i), "");
+    auto& errorMarker = mMarkers[Highlight::Error];
+    auto& memoryLogMarker = mMarkers[Highlight::MemoryLog];
+
+    for (int i = position; i < position + length; i++) {
+        int line = lineFromPosition(i);
+
+        if (errorMarker.line == line && errorMarker.visible)
+            clearHighlight(Highlight::Error);
+        if (memoryLogMarker.line == line && memoryLogMarker.visible)
+            clearHighlight(Highlight::MemoryLog);
+
+        if (mTStatesVisible)
+            marginSetText(line, "");
     }
 }

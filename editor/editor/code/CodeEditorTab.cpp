@@ -110,7 +110,7 @@ bool CodeEditorTab::loadFile(File* f)
         mUi->textEditor->styleSetItalic(3, 1);
         mUi->textEditor->styleSetFore(4, 0x808000); // number
         mUi->textEditor->styleSetFore(5, 0x800000); // keyword
-        mUi->textEditor->styleSetBold(5, SC_WEIGHT_BOLD);
+        mUi->textEditor->styleSetBold(5, true);
         mUi->textEditor->styleSetFore(6, 0x800080); // String
         mUi->textEditor->styleSetFore(7, 0x800080); // Character
         mUi->textEditor->styleSetFore(8, 0x804080); // UUID
@@ -269,15 +269,15 @@ void CodeEditorTab::goToLine(int line)
         mUi->textEditor->gotoLine(line);
 }
 
-void CodeEditorTab::setHighlight(int line)
+void CodeEditorTab::setHighlight(Highlight highlight, int line)
 {
     if (mDocument)
-        mUi->textEditor->setHighlight(line);
+        mUi->textEditor->setHighlight(highlight, line);
 }
 
-void CodeEditorTab::clearHighlight()
+void CodeEditorTab::clearHighlight(Highlight highlight)
 {
-    mUi->textEditor->clearHighlight();
+    mUi->textEditor->clearHighlight(highlight);
 }
 
 void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)

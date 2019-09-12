@@ -3,8 +3,10 @@
 
 #include "ScintillaEdit/ScintillaEdit.h"
 #include <map>
+#include <unordered_map>
 
 struct TStates;
+enum class Highlight : int;
 
 class TextEditor : public ScintillaEdit
 {
@@ -16,8 +18,8 @@ public:
 
     void setLineIndent(int line, int indent);
 
-    void setHighlight(int line);
-    void clearHighlight();
+    void setHighlight(Highlight highlight, int line);
+    void clearHighlight(Highlight highlight);
 
     void updateTStates(const std::map<int, TStates>& tstates);
     void clearTStates();
@@ -25,8 +27,14 @@ public:
     void reloadSettings();
 
 private:
-    sptr_t mHighlightHandle;
-    bool mHighlightVisible;
+    struct Marker
+    {
+        sptr_t handle = 0;
+        int line = -1;
+        bool visible = false;
+    };
+
+    std::unordered_map<Highlight, Marker> mMarkers;
     bool mTStatesVisible;
     bool mAutoIndent;
 

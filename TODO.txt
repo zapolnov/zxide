@@ -28,9 +28,7 @@
 * In the compiler when evaluating equ constants immediately, symbol from other files could be undefined
   (this is non-deterministic, depends on file order which maybe different between different runs)
 * Some 'equ in if' tests fail
-* Hardware selection in the settings (48K / 128K)
 * Cleanup old files in the 'generated' directory
 * Show memory addresses in the editor after successful build
 * Add option to show T-states and addresses
 * Add virtual keyboard widget
-* Highlight current row when you open it from the memory widget and when compiler error is reported

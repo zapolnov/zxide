@@ -12,8 +12,11 @@ class AbstractEditorTab;
 class Project;
 class MemoryLogWindow;
 class EmulatorCore;
+class ClickableLabel;
 class Ui_MainWindow;
 class QLabel;
+
+enum class Highlight : int;
 
 class MainWindow : public QMainWindow
 {
@@ -42,7 +45,7 @@ private:
     QLabel* mInsOverwriteLabel;
     QLabel* mLineColumnLabel;
     QLabel* mEmulatorSpeedLabel;
-    QLabel* mBuildResultLabel;
+    ClickableLabel* mBuildResultLabel;
     std::unique_ptr<Project> mProject;
     QPointer<MemoryLogWindow> mMemoryLogWindow;
     EmulatorCore* mEmulatorCore;
@@ -55,7 +58,7 @@ private:
     bool build();
     void clearBuildResult();
 
-    void clearHighlights();
+    void clearHighlights(Highlight highlight);
 
     void updateUi();
 

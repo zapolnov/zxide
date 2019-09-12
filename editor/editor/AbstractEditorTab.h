@@ -6,6 +6,13 @@
 class File;
 class ProgramDebugInfo;
 
+enum class Highlight : int
+{
+    CurrentPC = 0,
+    Error,
+    MemoryLog,
+};
+
 class AbstractEditorTab : public QWidget
 {
     Q_OBJECT
@@ -75,8 +82,8 @@ public:
     virtual void flipVertical() {}
     virtual void flipHorizontal() {}
 
-    virtual void setHighlight(int line) {}
-    virtual void clearHighlight() {}
+    virtual void setHighlight(Highlight highlight, int line) {}
+    virtual void clearHighlight(Highlight highlight) {}
 
     virtual void updateTStates(ProgramDebugInfo* debugInfo) {}
 
