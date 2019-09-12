@@ -90,7 +90,7 @@ public:
     {
         if (parent.isValid())
             return 0;
-        return 6;
+        return 4;
     }
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override
@@ -103,7 +103,6 @@ public:
             case 1: return tr("Address");
             case 2: return tr("Value");
             case 3: return tr("Code address");
-            case 4: return tr("Location");
             default: return QVariant();
         }
     }
@@ -130,7 +129,6 @@ public:
             case 1: return QStringLiteral("0x%1").arg(op.memoryAddress, 4, 16, QChar('0'));
             case 2: return QStringLiteral("0x%1").arg(op.value, 2, 16, QChar('0'));
             case 3: return QStringLiteral("0x%1").arg(op.codeAddress, 4, 16, QChar('0'));
-            case 4: return QVariant(); // FIXME
 
             default:
                 return QVariant();
