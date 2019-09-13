@@ -85,6 +85,8 @@ debugger_event_is_registered( const char *type, const char *detail )
   return 0;
 }
 
+void ui_runto_address_reached(void);
+
 void
 debugger_event( int event_code )
 {
@@ -111,6 +113,8 @@ debugger_event( int event_code )
 
     if( event_matches( &bp->value.event, event.type, event.detail ) &&
         debugger_breakpoint_trigger( bp ) ) {
+      if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+        ui_runto_address_reached();
       debugger_mode = DEBUGGER_MODE_HALTED;
       debugger_command_evaluate( bp->commands );
 

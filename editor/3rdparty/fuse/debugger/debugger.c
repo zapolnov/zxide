@@ -71,10 +71,14 @@ debugger_init( void *context )
   return 0;
 }
 
+void ui_runto_address_reached(void);
+
 void
 debugger_reset( void )
 {
   debugger_breakpoint_remove_all();
+  if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+    ui_runto_address_reached();
   debugger_mode = DEBUGGER_MODE_INACTIVE;
 }
 
@@ -111,6 +115,8 @@ debugger_trap( void )
 int
 debugger_step( void )
 {
+  if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+    ui_runto_address_reached();
   debugger_mode = DEBUGGER_MODE_HALTED;
   ui_debugger_deactivate( 0 );
   return 0;
@@ -149,6 +155,8 @@ debugger_next( void )
   /* Find out how long the current instruction is */
   debugger_disassemble( NULL, 0, &length, PC );
 
+  if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+    ui_runto_address_reached();
   debugger_mode = DEBUGGER_MODE_STEP_OVER;
   debugger_stepover_addr = (PC + length) & 0xffff;
   ui_debugger_deactivate( 0 );
@@ -160,6 +168,8 @@ debugger_next( void )
 int
 debugger_run( void )
 {
+  if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+    ui_runto_address_reached();
   debugger_mode = debugger_breakpoints ?
                   DEBUGGER_MODE_ACTIVE :
                   DEBUGGER_MODE_INACTIVE;
@@ -172,11 +182,15 @@ debugger_run( void )
 int
 debugger_breakpoint_exit( void )
 {
+  if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS)
+    ui_runto_address_reached();
   debugger_mode = DEBUGGER_MODE_STEP_OUT;
   ui_debugger_deactivate( 0 );
 
   return 0;
 }
+
+void ui_runto_address_activated(unsigned addr);
 
 int
 debugger_run_to_address( unsigned addr )
@@ -184,6 +198,7 @@ debugger_run_to_address( unsigned addr )
   debugger_mode = DEBUGGER_MODE_RUN_TO_ADDRESS;
   debugger_runto_addr = addr;
   ui_debugger_deactivate( 0 );
+  ui_runto_address_activated(addr);
 
   return 0;
 }

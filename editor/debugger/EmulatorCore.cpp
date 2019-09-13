@@ -68,6 +68,8 @@ static volatile bool collectMemoryOperations;
 static bool shouldUpdateUi;
 static bool shouldEmitPausedSignal;
 static bool shouldEmitUnpausedSignal;
+static int runtoAddress = -1;
+static int lastHighlightedRuntoAddress = -1;
 static unsigned pausePC;
 static bool memoryWasChanged;
 static bool emulatorPaused;
@@ -96,6 +98,7 @@ EmulatorCore::EmulatorCore(QObject* parent)
     connect(mTimer, &QTimer::timeout, this, &EmulatorCore::update);
     connect(mThread, &QThread::started, mTimer, QOverload<>::of(&QTimer::start));
     connect(mThread, &QThread::finished, mTimer, &QTimer::stop);
+    connect(mThread, &QThread::finished, this, &EmulatorCore::update);
 
     connect(mThread, &QThread::started, this, &EmulatorCore::started);
     connect(mThread, &QThread::started, this, &EmulatorCore::updateUi);
@@ -144,6 +147,10 @@ void EmulatorCore::pause()
         return;
 
     auto cmd = [] {
+            if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS) {
+                QMutexLocker lock(&mutex);
+                runtoAddress = -1;
+            }
             debugger_mode = DEBUGGER_MODE_HALTED;
         };
 
@@ -586,6 +593,7 @@ void EmulatorCore::update()
     bool shouldEmitPausedSignal_ = false;
     bool memoryWasChanged_ = false;
     unsigned pausePC_ = 0;
+    int runtoAddress_ = -1;
 
     {
         QMutexLocker lock(&mutex);
@@ -598,6 +606,7 @@ void EmulatorCore::update()
         memoryWasChanged_ = memoryWasChanged;
         memoryWasChanged = false;
         pausePC_ = pausePC;
+        runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
     }
 
@@ -609,6 +618,11 @@ void EmulatorCore::update()
         emit enterDebugger(pausePC_);
     if (shouldUpdateUi_)
         emit updateUi();
+
+    if (runtoAddress_ != lastHighlightedRuntoAddress) {
+        lastHighlightedRuntoAddress = runtoAddress_;
+        emit runtoAddressChanged(runtoAddress_);
+    }
 
     if (!memoryOperations_mainThread.empty()) {
         emit memoryOperations(memoryOperations_mainThread);
@@ -1076,4 +1090,16 @@ int ui_statusbar_update_speed(float speed)
     }
 
     return 0;
+}
+
+extern "C" void ui_runto_address_activated(unsigned addr)
+{
+    QMutexLocker lock(&mutex);
+    runtoAddress = int(addr);
+}
+
+extern "C" void ui_runto_address_reached()
+{
+    QMutexLocker lock(&mutex);
+    runtoAddress = -1;
 }

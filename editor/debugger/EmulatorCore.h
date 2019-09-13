@@ -176,6 +176,7 @@ signals:
     void memoryOperations(std::vector<MemoryOperationInfo>& operations);
     void error(QString message);
     void updateUi();
+    void runtoAddressChanged(int address);
 
     void internal_sendError(QString message);
 

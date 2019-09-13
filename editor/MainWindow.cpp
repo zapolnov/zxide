@@ -43,6 +43,18 @@ MainWindow::MainWindow()
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
+    connect(mEmulatorCore, &EmulatorCore::runtoAddressChanged, this, [this](int address) {
+            if (address >= 0) {
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(address);
+                File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
+                if (file) {
+                    HighlightManager::instance()->setHighlight(Highlight::RunToCursor, loc.file, loc.line);
+                    return;
+                }
+            }
+            HighlightManager::instance()->clearHighlight(Highlight::RunToCursor);
+        });
+
     connect(mEmulatorCore, &EmulatorCore::enterDebugger, this, [this](unsigned pc) {
             SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(pc);
             File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
@@ -52,8 +64,10 @@ MainWindow::MainWindow()
                     tab->goToLine(loc.line - 1);
                     HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
                     tab->setFocusToEditor();
+                    return;
                 }
             }
+            HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
         });
 
     mUi->setupUi(this);
@@ -752,8 +766,10 @@ void MainWindow::on_actionMemoryLog_triggered()
                         tab->goToLine(loc.line - 1);
                         HighlightManager::instance()->setHighlight(Highlight::MemoryLog, loc.file, loc.line);
                         tab->setFocusToEditor();
+                        return;
                     }
                 }
+                HighlightManager::instance()->clearHighlight(Highlight::MemoryLog);
             });
     }
 

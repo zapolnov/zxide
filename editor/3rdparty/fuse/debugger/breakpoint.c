@@ -229,6 +229,8 @@ breakpoint_add( debugger_breakpoint_type type, debugger_breakpoint_value value,
   return 0;
 }
 
+void ui_runto_address_reached(void);
+
 /* Check whether the debugger should become active at this point */
 int
 debugger_check( debugger_breakpoint_type type, libspectrum_dword value )
@@ -258,6 +260,7 @@ debugger_check( debugger_breakpoint_type type, libspectrum_dword value )
 
   case DEBUGGER_MODE_RUN_TO_ADDRESS:
     if (debugger_runto_addr == value) {
+        ui_runto_address_reached();
         debugger_mode = DEBUGGER_MODE_HALTED;
         break;
     }
