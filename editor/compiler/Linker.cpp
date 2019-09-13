@@ -44,7 +44,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                     error(tr("no sections with base address in file '%1'").arg(it.first.c_str()));
             }
 
-            binary->setCurrentFile(it.first, it.second[0]->base());
+            binary->setCurrentFile(it.first, it.second[0]->base(mReporter));
             quint32 addr = binary->baseAddress();
 
             // Resolve addresses of labels
@@ -101,15 +101,15 @@ std::map<std::string, std::vector<ProgramSection*>> Linker::collectSections() co
     std::map<std::string, std::vector<ProgramSection*>> result;
 
     // First collect sections that have a base address and sort them by it
-    mProgram->forEachSection([&map](ProgramSection* section) {
+    mProgram->forEachSection([this, &map](ProgramSection* section) {
             if (section->hasBase())
-                map[section->fileName()].sectionsWithBaseAddress.emplace(section->base(), section);
+                map[section->fileName()].sectionsWithBaseAddress.emplace(section->base(mReporter), section);
         });
 
     // Now collect sections without base address but with alignment and sort them by it
-    mProgram->forEachSection([&map](ProgramSection* section) {
+    mProgram->forEachSection([this, &map](ProgramSection* section) {
             if (!section->hasBase() && section->hasAlignment())
-                map[section->fileName()].sectionsWithAlignment.emplace(section->alignment(), section);
+                map[section->fileName()].sectionsWithAlignment.emplace(section->alignment(mReporter), section);
         });
 
     for (auto& it : map) {

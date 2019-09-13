@@ -34,6 +34,9 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, const QString& file, 
 
 void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
+    if (!file)
+        return;
+
     TStates s;
     s.taken = taken;
     s.notTaken = notTaken;

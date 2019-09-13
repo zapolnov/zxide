@@ -24,10 +24,9 @@
 * No code generation for tiles, tilesets and maps
 * When highlighting an error, set cursor to the first non-space character in the string
 * Do not open file after renaming if it was not previously open
-* In the compiler when evaluating equ constants immediately, symbol from other files could be undefined
-  (this is non-deterministic, depends on file order which maybe different between different runs)
 * Some 'equ in if' tests fail
 * Cleanup old files in the 'generated' directory
 * Show memory addresses in the editor after successful build
 * Add option to show T-states and addresses
 * Add virtual keyboard widget
+* Lazily evaluate byte constant in Z80 opcodes (see matchByte() and byteConstant() in the code)

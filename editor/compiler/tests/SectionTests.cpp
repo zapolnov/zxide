@@ -141,8 +141,6 @@ TEST_CASE("multiple declaration of section", "[sections]")
         "section main [base 0x1234]\n"
         "db 0\n"
         "section other [align 2]\n"
-        "section main [base 0x1234]\n"
-        "section other [align 2]\n"
         "section main [align 2]\n"
         "section main\n"
         "section other [base 0x1236]\n"
@@ -280,7 +278,7 @@ TEST_CASE("section ordering", "[sections]")
     REQUIRE(!actual.hasFiles());
 }
 
-TEST_CASE("can't change section base", "[sections]")
+TEST_CASE("section base multiple specification", "[sections]")
 {
     static const char source[] =
         "section main [base 0x1234]\n"
@@ -289,12 +287,12 @@ TEST_CASE("can't change section base", "[sections]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "conflicting base address for section 'main' (0x1236 != 0x1234)");
+    REQUIRE(errorConsumer.lastErrorMessage() == "multiple specification of base address for section 'main'");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
-TEST_CASE("can't change section alignment", "[sections]")
+TEST_CASE("section alignment multiple specification", "[sections]")
 {
     static const char source[] =
         "section main [align 2]\n"
@@ -303,7 +301,7 @@ TEST_CASE("can't change section alignment", "[sections]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "conflicting alignment for section 'main' (4 != 2)");
+    REQUIRE(errorConsumer.lastErrorMessage() == "multiple specification of alignment for section 'main'");
     REQUIRE(errorConsumer.lastErrorLine() == 2);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
@@ -329,12 +327,13 @@ TEST_CASE("alignment conflicts with base", "[sections]")
     static const char source[] =
         "section main [base 0x1235]\n"
         "section main [align 2]\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "base address 0x1235 of section 'main' is not aligned to 2");
-    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.lastErrorLine() == 1);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
@@ -343,12 +342,13 @@ TEST_CASE("base conflicts with alignment", "[sections]")
     static const char source[] =
         "section main [align 2]\n"
         "section main [base 0x1235]\n"
+        "db 0\n"
         ;
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "base address 0x1235 of section 'main' is not aligned to 2");
-    REQUIRE(errorConsumer.lastErrorLine() == 2);
+    REQUIRE(errorConsumer.lastErrorLine() == 1);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 

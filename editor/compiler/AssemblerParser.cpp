@@ -169,27 +169,19 @@ void AssemblerParser::parseSectionDecl()
         for (;;) {
             auto param = toLower(expectIdentifier(nextToken()));
             if (param == "align") {
-                auto alignment = (unsigned)parseNumber(nextToken(), 1, 0xFFFF);
-                if (section->hasAlignment() && section->alignment() != alignment) {
-                    error(tr("conflicting alignment for section '%1' (%2 != %3)")
-                        .arg(section->nameCStr()).arg(alignment).arg(section->alignment()));
-                }
-                if (section->hasBase() && (section->base() % alignment) != 0) {
-                    error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(section->nameCStr()).arg(section->base(), 0, 16).arg(alignment));
-                }
-                section->setAlignment(alignment);
+                auto expr = parseExpression(nextToken(), true);
+                if (!expr)
+                    error(mExpressionError);
+                if (section->hasAlignment())
+                    error(tr("multiple specification of alignment for section '%1'").arg(section->nameCStr()));
+                section->setAlignment(std::move(expr));
             } else if (param == "base") {
-                auto base = (unsigned)parseNumber(nextToken());
-                if (section->hasBase() && section->base() != base) {
-                    error(tr("conflicting base address for section '%1' (0x%2 != 0x%3)")
-                        .arg(section->nameCStr()).arg(base, 0, 16).arg(section->base(), 0, 16));
-                }
-                if (section->hasAlignment() && (base % section->alignment()) != 0) {
-                    error(tr("base address 0x%2 of section '%1' is not aligned to %3")
-                        .arg(section->nameCStr()).arg(base, 0, 16).arg(section->alignment()));
-                }
-                section->setBase(base);
+                auto expr = parseExpression(nextToken(), true);
+                if (!expr)
+                    error(mExpressionError);
+                if (section->hasBase())
+                    error(tr("multiple specification of base address for section '%1'").arg(section->nameCStr()));
+                section->setBase(std::move(expr));
             } else if (param == "file") {
                 if (nextToken() != T_STRING)
                     error(tr("expected string"));
@@ -369,22 +361,6 @@ std::string AssemblerParser::readLabelName(int tokenId)
     Q_ASSERT(false);
     error(tr("internal compiler error"));
     return std::string();
-}
-
-quint32 AssemblerParser::parseNumber(int tokenId, quint32 min, quint32 max)
-{
-    auto expr = parseExpression(tokenId, true);
-    if (!expr)
-        error(mExpressionError);
-
-    ExprEvalContext context(mProgram, mReporter);
-    Value value = context.evaluate(expr);
-    if (value.number < qint64(min) || value.number > qint64(max)) {
-        error(tr("numeric value 0x%1 is out of range (valid range is 0x%2..0x%3 inclusive)")
-            .arg(value.number, 0, 16).arg(min, 0, 16).arg(max, 0, 16));
-    }
-
-    return quint32(value.number);
 }
 
 std::string AssemblerParser::expectIdentifier(int tokenId)
