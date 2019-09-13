@@ -81,9 +81,11 @@ bool CodeEditorTab::loadFile(File* f)
         if (!mDummyDocument)
             mDummyDocument = std::make_unique<ScintillaDocument>(this);
         mUi->textEditor->set_doc(mDummyDocument.get());
+        mUi->textEditor->setFileName(QString());
         mUi->textEditor->setEnabled(false);
     } else {
         mUi->textEditor->set_doc(mDocument.get());
+        mUi->textEditor->setFileName(f->relativeName());
         mUi->textEditor->setEnabled(true);
 
         QString extension = f->fileInfo().suffix();
@@ -267,17 +269,6 @@ void CodeEditorTab::goToLine(int line)
 {
     if (mDocument)
         mUi->textEditor->gotoLine(line);
-}
-
-void CodeEditorTab::setHighlight(Highlight highlight, int line)
-{
-    if (mDocument)
-        mUi->textEditor->setHighlight(highlight, line);
-}
-
-void CodeEditorTab::clearHighlight(Highlight highlight)
-{
-    mUi->textEditor->clearHighlight(highlight);
 }
 
 void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)

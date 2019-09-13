@@ -13,6 +13,7 @@ class Project;
 class MemoryLogWindow;
 class EmulatorCore;
 class ClickableLabel;
+class HighlightManager;
 class Ui_MainWindow;
 class QLabel;
 
@@ -49,6 +50,7 @@ private:
     std::unique_ptr<Project> mProject;
     QPointer<MemoryLogWindow> mMemoryLogWindow;
     EmulatorCore* mEmulatorCore;
+    HighlightManager* mHighlightManager;
     EditorTabFactory* mTabFactory;
 
     bool confirmSaveAll();
@@ -57,8 +59,6 @@ private:
 
     bool build();
     void clearBuildResult();
-
-    void clearHighlights(Highlight highlight);
 
     void updateUi();
 

@@ -1,5 +1,6 @@
 #include "TextEditor.h"
 #include "editor/AbstractEditorTab.h"
+#include "editor/HighlightManager.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
 #include <cstdio>
@@ -9,10 +10,19 @@ TextEditor::TextEditor(QWidget* parent)
     , mTStatesVisible(false)
 {
     reloadSettings();
+    connect(HighlightManager::instance(), &HighlightManager::highlightsChanged, this, &TextEditor::updateHighlights);
 }
 
 TextEditor::~TextEditor()
 {
+}
+
+void TextEditor::setFileName(const QString& fileName)
+{
+    if (mFileName != fileName) {
+        mFileName = fileName;
+        updateHighlights();
+    }
 }
 
 void TextEditor::setLineIndent(int line, int indent)
@@ -34,48 +44,6 @@ void TextEditor::setLineIndent(int line, int indent)
             setSelectionStart(selStart < oldPos ? newPos : selStart + newPos - oldPos);
         if (selEnd >= newPos)
             setSelectionStart(selEnd < oldPos ? newPos : selEnd + newPos - oldPos);
-    }
-}
-
-void TextEditor::setHighlight(Highlight highlight, int line)
-{
-    auto& marker = mMarkers[highlight];
-    if (marker.visible) {
-        markerDeleteHandle(marker.handle);
-        marker.visible = false;
-    }
-
-    int index = 24 - int(highlight);
-
-    switch (highlight) {
-        case Highlight::CurrentPC:
-            markerDefine(index, SC_MARK_SHORTARROW);
-            markerSetFore(index, 0);
-            markerSetBack(index, 0x00ffff);
-            break;
-        case Highlight::Error:
-            markerDefine(index, SC_MARK_EXCLAMATION);
-            markerSetFore(index, 0);
-            markerSetBack(index, 0x0000ff);
-            break;
-        case Highlight::MemoryLog:
-            markerDefine(index, SC_MARK_VERTICALBOOKMARK);
-            markerSetFore(index, 0);
-            markerSetBack(index, 0xffff00);
-            break;
-    }
-
-    marker.handle = markerAdd(line, index);
-    marker.line = line;
-    marker.visible = true;
-}
-
-void TextEditor::clearHighlight(Highlight highlight)
-{
-    auto& marker = mMarkers[highlight];
-    if (marker.visible) {
-        markerDeleteHandle(marker.handle);
-        marker.visible = false;
     }
 }
 
@@ -102,6 +70,58 @@ void TextEditor::clearTStates()
     if (mTStatesVisible) {
         mTStatesVisible = false;
         marginTextClearAll();
+    }
+}
+
+void TextEditor::updateHighlights()
+{
+    for (auto highlight : { Highlight::CurrentPC, Highlight::Error, Highlight::RunToCursor, Highlight::MemoryLog }) {
+        auto& marker = mMarkers[highlight];
+        if (marker.visible) {
+            markerDeleteHandle(marker.handle);
+            marker.visible = false;
+        }
+
+        auto info = HighlightManager::instance()->highlight(highlight);
+        if (!info || info->file != mFileName)
+            continue;
+
+        int index = 24 - int(highlight);
+        switch (highlight) {
+            case Highlight::CurrentPC:
+                markerDefine(index, SC_MARK_SHORTARROW);
+                markerSetFore(index, 0);
+                markerSetBack(index, 0x00ffff);
+                break;
+            case Highlight::Error:
+                markerDefine(index, SC_MARK_EXCLAMATION);
+                markerSetFore(index, 0);
+                markerSetBack(index, 0x0000ff);
+                break;
+            case Highlight::RunToCursor:
+                markerDefine(index, SC_MARK_SHORTARROW);
+                markerSetFore(index, 0);
+                markerSetBack(index, 0xff80ff);
+                break;
+            case Highlight::MemoryLog:
+                markerDefine(index, SC_MARK_VERTICALBOOKMARK);
+                markerSetFore(index, 0);
+                markerSetBack(index, 0xffff00);
+                break;
+        }
+
+        marker.handle = markerAdd(info->line - 1, index);
+        marker.line = info->line - 1;
+        marker.visible = true;
+    }
+}
+
+void TextEditor::clearHighlight(Highlight highlight)
+{
+    auto& marker = mMarkers[highlight];
+    if (marker.visible) {
+        markerDeleteHandle(marker.handle);
+        marker.visible = false;
     }
 }
 

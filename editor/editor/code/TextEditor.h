@@ -16,10 +16,9 @@ public:
     explicit TextEditor(QWidget* parent = nullptr);
     ~TextEditor() override;
 
-    void setLineIndent(int line, int indent);
+    void setFileName(const QString& fileName);
 
-    void setHighlight(Highlight highlight, int line);
-    void clearHighlight(Highlight highlight);
+    void setLineIndent(int line, int indent);
 
     void updateTStates(const std::map<int, TStates>& tstates);
     void clearTStates();
@@ -35,8 +34,12 @@ private:
     };
 
     std::unordered_map<Highlight, Marker> mMarkers;
+    QString mFileName;
     bool mTStatesVisible;
     bool mAutoIndent;
+
+    void updateHighlights();
+    void clearHighlight(Highlight highlight);
 
     void charAdded(int ch) override;
     void textModified(int position, int length) override;

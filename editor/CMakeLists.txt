@@ -60,6 +60,8 @@ qt_add_sources(GameEditor
         editor/FileManager.cpp
         editor/FileManager.h
         editor/FileManager.ui
+        editor/HighlightManager.cpp
+        editor/HighlightManager.h
         editor/NewFileDialog.cpp
         editor/NewFileDialog.h
         editor/NewFileDialog.ui

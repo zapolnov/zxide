@@ -9,6 +9,7 @@
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/EditorTabFactory.h"
+#include "editor/HighlightManager.h"
 #include "editor/Project.h"
 #include "editor/FileManager.h"
 #include "compiler/Program.h"
@@ -31,12 +32,14 @@ MainWindow::MainWindow()
     , mDummyTab(new AbstractEditorTab(this))
     , mTabFactory(new EditorTabFactory(this))
 {
+    mHighlightManager = new HighlightManager(this);
+
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
-    connect(mEmulatorCore, &EmulatorCore::leaveDebugger, this,
-        std::bind(&MainWindow::clearHighlights, this, Highlight::CurrentPC));
-    connect(mEmulatorCore, &EmulatorCore::stopped, this,
-        std::bind(&MainWindow::clearHighlights, this, Highlight::CurrentPC));
+    connect(mEmulatorCore, &EmulatorCore::leaveDebugger,
+        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC));
+    connect(mEmulatorCore, &EmulatorCore::stopped,
+        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC));
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
@@ -47,7 +50,7 @@ MainWindow::MainWindow()
                 auto tab = setCurrentTab(file);
                 if (tab && tab->canGoToLine()) {
                     tab->goToLine(loc.line - 1);
-                    tab->setHighlight(Highlight::CurrentPC, loc.line - 1);
+                    HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
                     tab->setFocusToEditor();
                 }
             }
@@ -320,7 +323,7 @@ bool MainWindow::build()
         }
     }
 
-    clearHighlights(Highlight::Error);
+    HighlightManager::instance()->clearHighlight(Highlight::Error);
 
     mBuildResultLabel->setToolTip(QString());
     mBuildResultLabel->setText(tr("Compiling..."));
@@ -367,7 +370,7 @@ bool MainWindow::build()
             } else {
                 auto tab = setCurrentTab(file);
                 tab->goToLine(line - 1);
-                tab->setHighlight(Highlight::Error, line - 1);
+                HighlightManager::instance()->setHighlight(Highlight::Error, fileName, line);
                 tab->setFocusToEditor();
                 message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
             }
@@ -376,13 +379,13 @@ bool MainWindow::build()
             mBuildResultLabel->setToolTip(message);
             mBuildResultLabel->setStyleSheet(QStringLiteral("color: red; font-weight: bold; padding-right: 5px"));
             connect(mBuildResultLabel, &ClickableLabel::doubleClicked, this, [this, fileName, line]{
-                    clearHighlights(Highlight::Error);
+                    HighlightManager::instance()->clearHighlight(Highlight::Error);
                     File* file = (!fileName.isEmpty() ? mUi->fileManager->file(fileName) : nullptr);
                     if (file) {
                         auto tab = setCurrentTab(file);
                         if (line > 0) {
                             tab->goToLine(line - 1);
-                            tab->setHighlight(Highlight::Error, line - 1);
+                            HighlightManager::instance()->setHighlight(Highlight::Error, fileName, line);
                             tab->setFocusToEditor();
                         }
                     }
@@ -400,17 +403,6 @@ void MainWindow::clearBuildResult()
     mBuildResultLabel->setText(tr("Ready"));
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: black; font-weight: bold; padding-right: 5px"));
     mBuildResultLabel->disconnect(this);
-}
-
-void MainWindow::clearHighlights(Highlight highlight)
-{
-    int n = mUi->tabWidget->count();
-    for (int i = 0; i < n; i++) {
-        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
-        Q_ASSERT(tab != nullptr);
-        if (tab)
-            tab->clearHighlight(highlight);
-    }
 }
 
 void MainWindow::updateUi()
@@ -748,9 +740,9 @@ void MainWindow::on_actionMemoryLog_triggered()
     if (!mMemoryLogWindow) {
         mMemoryLogWindow = new MemoryLogWindow(this);
         connect(mMemoryLogWindow, &MemoryLogWindow::destroyed,
-            this, std::bind(&MainWindow::clearHighlights, this, Highlight::MemoryLog));
+            mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog));
         connect(mMemoryLogWindow, &MemoryLogWindow::cleared,
-            this, std::bind(&MainWindow::clearHighlights, this, Highlight::MemoryLog));
+            mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog));
         connect(mMemoryLogWindow, &MemoryLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
                 auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
                 File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
@@ -758,7 +750,7 @@ void MainWindow::on_actionMemoryLog_triggered()
                     auto tab = setCurrentTab(file);
                     if (tab && tab->canGoToLine()) {
                         tab->goToLine(loc.line - 1);
-                        tab->setHighlight(Highlight::MemoryLog, loc.line - 1);
+                        HighlightManager::instance()->setHighlight(Highlight::MemoryLog, loc.file, loc.line);
                         tab->setFocusToEditor();
                     }
                 }

@@ -30,3 +30,4 @@
 * Add option to show T-states and addresses
 * Add virtual keyboard widget
 * Lazily evaluate byte constant in Z80 opcodes (see matchByte() and byteConstant() in the code)
+* Allow constants like 'A' as operands

@@ -45,9 +45,6 @@ public:
     void clearSelection() override;
     void goToLine(int line) override;
 
-    void setHighlight(Highlight highlight, int line) override;
-    void clearHighlight(Highlight highlight) override;
-
     void updateTStates(ProgramDebugInfo* debugInfo) override;
 
     void reloadSettings() override;
