@@ -44,6 +44,7 @@ public:
     virtual bool canRotateCounterClockwise() const { return false; }
     virtual bool canFlipVertical() const { return false; }
     virtual bool canFlipHorizontal() const { return false; }
+    virtual bool canToggleBreakpoint() const { return false; }
 
     virtual bool isDrawToolActive() const { return false; }
     virtual bool isDrawRectToolActive() const { return false; }
@@ -74,6 +75,7 @@ public:
     virtual void rotateCounterClockwise() {}
     virtual void flipVertical() {}
     virtual void flipHorizontal() {}
+    virtual void toggleBreakpoint() {}
 
     virtual void updateTStates(ProgramDebugInfo* debugInfo) {}
 

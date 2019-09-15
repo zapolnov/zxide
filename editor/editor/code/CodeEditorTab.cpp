@@ -204,6 +204,12 @@ bool CodeEditorTab::canRunToCursor() const
     return mDocument != nullptr;
 }
 
+bool CodeEditorTab::canToggleBreakpoint() const
+{
+    // FIXME
+    return false; // mDocument != nullptr;
+}
+
 bool CodeEditorTab::save()
 {
     bool success = true;
@@ -269,6 +275,11 @@ void CodeEditorTab::goToLine(int line)
 {
     if (mDocument)
         mUi->textEditor->gotoLine(line);
+}
+
+void CodeEditorTab::toggleBreakpoint()
+{
+    // FIXME
 }
 
 void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)

@@ -19,6 +19,8 @@
     <file>fatcow16x16/modified/page_white+font_red_delete.png</file>
     <file>fatcow16x16/modified/page_white_stack+font_red_delete.png</file>
     <file>fatcow16x16/modified/script_php.png</file>
+    <file>fatcow16x16/modified/stop.png</file>
+    <file>fatcow16x16/modified/stop+processor+bullet_add.png</file>
     <file>fatcow16x16/arrow_refresh.png</file>
     <file>fatcow16x16/bin_closed.png</file>
     <file>fatcow16x16/book.png</file>
@@ -61,6 +63,7 @@
     <file>fatcow16x16/shape_rotate_anticlockwise.png</file>
     <file>fatcow16x16/shape_rotate_clockwise.png</file>
     <file>fatcow16x16/sound_wave.png</file>
+    <file>fatcow16x16/stop.png</file>
     <file>fatcow16x16/table_layout_subtotals.png</file>
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>

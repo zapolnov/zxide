@@ -33,6 +33,7 @@ public:
     bool canClearSelection() const override;
     bool canGoToLine() const override;
     bool canRunToCursor() const override;
+    bool canToggleBreakpoint() const override;
 
     bool save() override;
     void undo() override;
@@ -44,6 +45,7 @@ public:
     void selectAll() override;
     void clearSelection() override;
     void goToLine(int line) override;
+    void toggleBreakpoint() override;
 
     void updateTStates(ProgramDebugInfo* debugInfo) override;
 

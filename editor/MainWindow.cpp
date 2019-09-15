@@ -4,6 +4,7 @@
 #include "SettingsDialog.h"
 #include "PlayAudioDialog.h"
 #include "debugger/MemoryLogWindow.h"
+#include "debugger/BreakpointsWindow.h"
 #include "util/ClickableLabel.h"
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
@@ -469,6 +470,7 @@ void MainWindow::updateUi()
     mUi->actionStepOut->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
+    mUi->actionToggleBreakpoint->setEnabled(tab->canToggleBreakpoint());
 
     mUi->actionDraw->setChecked(tab->isDrawToolActive());
     mUi->actionDrawRect->setChecked(tab->isDrawRectToolActive());
@@ -747,6 +749,41 @@ void MainWindow::on_actionRunToCursor_triggered()
 
         mEmulatorCore->runTo(file, line);
     }
+}
+
+void MainWindow::on_actionToggleBreakpoint_triggered()
+{
+    currentTab()->toggleBreakpoint();
+}
+
+void MainWindow::on_actionAddDataBreakpoint_triggered()
+{
+    // FIXME
+}
+
+void MainWindow::on_actionManageBreakpoints_triggered()
+{
+    if (!mBreakpointsWindow) {
+        mBreakpointsWindow = new BreakpointsWindow(this);
+        connect(mBreakpointsWindow, &BreakpointsWindow::fileDoubleClicked, this,
+            [this](const QString& fileName, int line) {
+                File* file = (!fileName.isEmpty() ? mUi->fileManager->file(fileName) : nullptr);
+                if (!file)
+                    QMessageBox::critical(this, tr("Error"), tr("Selected file was not found."));
+                else {
+                    auto tab = setCurrentTab(file);
+                    if (tab && tab->canGoToLine()) {
+                        tab->goToLine(line - 1);
+                        tab->setFocusToEditor();
+                        return;
+                    }
+                }
+            });
+    }
+
+    mBreakpointsWindow->show();
+    qApp->setActiveWindow(mBreakpointsWindow);
+    mBreakpointsWindow->setFocus();
 }
 
 void MainWindow::on_actionMemoryLog_triggered()

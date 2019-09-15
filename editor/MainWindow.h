@@ -11,6 +11,7 @@ class EditorTabFactory;
 class AbstractEditorTab;
 class Project;
 class MemoryLogWindow;
+class BreakpointsWindow;
 class EmulatorCore;
 class ClickableLabel;
 class HighlightManager;
@@ -49,6 +50,7 @@ private:
     ClickableLabel* mBuildResultLabel;
     std::unique_ptr<Project> mProject;
     QPointer<MemoryLogWindow> mMemoryLogWindow;
+    QPointer<BreakpointsWindow> mBreakpointsWindow;
     EmulatorCore* mEmulatorCore;
     HighlightManager* mHighlightManager;
     EditorTabFactory* mTabFactory;
@@ -96,6 +98,9 @@ private:
     Q_SLOT void on_actionStepOut_triggered();
     Q_SLOT void on_actionStepOver_triggered();
     Q_SLOT void on_actionRunToCursor_triggered();
+    Q_SLOT void on_actionToggleBreakpoint_triggered();
+    Q_SLOT void on_actionAddDataBreakpoint_triggered();
+    Q_SLOT void on_actionManageBreakpoints_triggered();
     Q_SLOT void on_actionMemoryLog_triggered();
 
     Q_SLOT void on_actionDraw_triggered();

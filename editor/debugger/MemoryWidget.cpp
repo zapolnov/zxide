@@ -57,7 +57,7 @@ void MemoryWidget::paintGL()
     int pixW = width() - (AddressWidth + Spacing * 2) * CharWidth;
     int pixH = height();
 
-    int w = pixW / ((HexWidth + SymWidth) * CharWidth);
+    int w = qMax(pixW / ((HexWidth + SymWidth) * CharWidth), 1);
     int h = 1 + (pixH + CharHeight - 1) / CharHeight;
 
     int totalLines = (0x10000 + w - 1) / w;

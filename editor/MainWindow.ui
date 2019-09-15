@@ -91,6 +91,10 @@
    <addaction name="actionStepOver"/>
    <addaction name="actionRunToCursor"/>
    <addaction name="separator"/>
+   <addaction name="actionToggleBreakpoint"/>
+   <addaction name="actionAddDataBreakpoint"/>
+   <addaction name="actionManageBreakpoints"/>
+   <addaction name="separator"/>
    <addaction name="actionMemoryLog"/>
    <addaction name="separator"/>
    <addaction name="actionSettings"/>
@@ -161,6 +165,10 @@
     <addaction name="actionStepOut"/>
     <addaction name="actionStepOver"/>
     <addaction name="actionRunToCursor"/>
+    <addaction name="separator"/>
+    <addaction name="actionToggleBreakpoint"/>
+    <addaction name="actionAddDataBreakpoint"/>
+    <addaction name="actionManageBreakpoints"/>
     <addaction name="separator"/>
     <addaction name="actionMemoryLog"/>
    </widget>
@@ -846,6 +854,42 @@
    </property>
    <property name="text">
     <string>&amp;Memory log...</string>
+   </property>
+  </action>
+  <action name="actionToggleBreakpoint">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/stop.png</normaloff>:/resources/fatcow16x16/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle &amp;breakpoint</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="actionManageBreakpoints">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/modified/stop.png</normaloff>:/resources/fatcow16x16/modified/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mana&amp;ge breakpoints...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F9</string>
+   </property>
+  </action>
+  <action name="actionAddDataBreakpoint">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/modified/stop+processor+bullet_add.png</normaloff>:/resources/fatcow16x16/modified/stop+processor+bullet_add.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add &amp;data breakpoint...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F9</string>
    </property>
   </action>
  </widget>
