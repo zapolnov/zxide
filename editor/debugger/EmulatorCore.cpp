@@ -273,6 +273,12 @@ bool EmulatorCore::isPaused() const
     return paused;
 }
 
+bool EmulatorCore::hasProgramBinary() const
+{
+    QMutexLocker lock(&mutex);
+    return programBinary != nullptr;
+}
+
 void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
 {
     std::unique_ptr<ProgramBinary> old;

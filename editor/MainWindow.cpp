@@ -8,6 +8,7 @@
 #include "debugger/BreakpointsModel.h"
 #include "debugger/AddBreakpointDialog.h"
 #include "debugger/EmulatorCore.h"
+#include "debugger/MemoryMapDialog.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/EditorTabFactory.h"
 #include "editor/HighlightManager.h"
@@ -375,6 +376,7 @@ bool MainWindow::build()
             }
 
             mUi->fileManager->refresh();
+            updateUi();
         });
     connect(&dlg, &CompilerDialog::compilationFailed, this,
         [this](const QString& fileName, int line, const QString& errorMessage) {
@@ -413,6 +415,7 @@ bool MainWindow::build()
                 });
 
             mUi->fileManager->refresh();
+            updateUi();
         });
 
     return dlg.runCompiler();
@@ -467,6 +470,7 @@ void MainWindow::updateUi()
     mUi->actionFlipVertically->setEnabled(tab->canFlipVertical());
     mUi->actionFlipHorizontally->setEnabled(tab->canFlipHorizontal());
     mUi->actionBuild->setEnabled(mProject && !emulatorRunning);
+    mUi->actionViewMemoryMap->setEnabled(mProject && mEmulatorCore->hasProgramBinary());
     mUi->actionPlayAudio->setEnabled(mProject && !emulatorRunning);
     mUi->actionRun->setEnabled(mProject && (!emulatorRunning || mEmulatorCore->isPaused()));
     mUi->actionPause->setEnabled(emulatorRunning && !mEmulatorCore->isPaused());
@@ -680,6 +684,15 @@ void MainWindow::on_actionBuild_triggered()
 {
     if (mProject)
         build();
+}
+
+void MainWindow::on_actionViewMemoryMap_triggered()
+{
+    if (!mProject)
+        return;
+
+    MemoryMapDialog dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::on_actionPlayAudio_triggered()

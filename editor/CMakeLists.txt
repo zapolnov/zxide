@@ -34,6 +34,9 @@ qt_add_sources(GameEditor
         debugger/MemoryLogWindow.cpp
         debugger/MemoryLogWindow.h
         debugger/MemoryLogWindow.ui
+        debugger/MemoryMapDialog.cpp
+        debugger/MemoryMapDialog.h
+        debugger/MemoryMapDialog.ui
         debugger/MemoryWidget.cpp
         debugger/MemoryWidget.h
         debugger/RegistersWidget.cpp

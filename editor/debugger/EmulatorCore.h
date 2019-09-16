@@ -144,6 +144,7 @@ public:
 
     void setTapeFile(const QString& file) { mTapeFile = file; }
 
+    bool hasProgramBinary() const;
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
     SourceLocation sourceLocationForAddress(unsigned address) const;
     QString nameForAddress(unsigned address) const;

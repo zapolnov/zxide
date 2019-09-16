@@ -12,7 +12,6 @@ AddBreakpointDialog::AddBreakpointDialog(QWidget* parent)
     , mHexadecimal(hexadecimal)
 {
     mUi->setupUi(this);
-    setWindowFlags(windowFlags() & ~Qt::WindowCloseButtonHint);
 
     mUi->addressSpin->setValue(lastAddress);
 
