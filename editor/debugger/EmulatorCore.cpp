@@ -37,10 +37,9 @@ namespace
 {
     typedef struct { quint8 r, g, b; } Color;
 
-    struct AddressBreakpoint
+    struct Breakpoint
     {
         debugger_breakpoint_type type;
-        int source;
         int page;
         libspectrum_word offset;
         size_t ignore;
@@ -71,7 +70,7 @@ static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
 static std::vector<MemoryOperationInfo> memoryOperations;
 static std::vector<MemoryOperationInfo> memoryOperations_mainThread;
-static std::vector<AddressBreakpoint> addressBreakpoints;
+static std::vector<Breakpoint> breakpoints;
 static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
 static QImage screenFront;
@@ -621,7 +620,7 @@ void EmulatorCore::updateBreakpoints()
 {
     QMutexLocker lock(&mutex);
 
-    addressBreakpoints.clear();
+    breakpoints.clear();
 
     ProgramDebugInfo* debugInfo = nullptr;
     if (programBinary)
@@ -641,11 +640,21 @@ void EmulatorCore::updateBreakpoints()
                 } else {
                     notifyBreakpointsUpdated = true;
                     BreakpointsModel::instance()->setBreakpointValid(it, false);
-                    addressBreakpoints.emplace_back(AddressBreakpoint{
-                        DEBUGGER_BREAKPOINT_TYPE_EXECUTE, memory_source_any, 0, libspectrum_word(addr), 0 });
+                    breakpoints.emplace_back(Breakpoint{
+                        DEBUGGER_BREAKPOINT_TYPE_EXECUTE, 0, libspectrum_word(addr), 0 });
                 }
                 break;
             }
+
+            case BreakpointType::MemoryRead:
+                breakpoints.emplace_back(Breakpoint{
+                    DEBUGGER_BREAKPOINT_TYPE_READ, 0, libspectrum_word(it->address), 0 });
+                break;
+
+            case BreakpointType::MemoryWrite:
+                breakpoints.emplace_back(Breakpoint{
+                    DEBUGGER_BREAKPOINT_TYPE_WRITE, 0, libspectrum_word(it->address), 0 });
+                break;
 
             default:
                 Q_ASSERT(false);
@@ -784,8 +793,8 @@ static void syncWithMainThread()
     if (shouldUpdateBreakpoints) {
         shouldUpdateBreakpoints = false;
         debugger_breakpoint_remove_all();
-        for (const auto& it : addressBreakpoints) {
-            debugger_breakpoint_add_address(it.type, it.source, it.page, it.offset, it.ignore,
+        for (const auto& it : breakpoints) {
+            debugger_breakpoint_add_address(it.type, memory_source_any, it.page, it.offset, it.ignore,
                 DEBUGGER_BREAKPOINT_LIFE_PERMANENT, nullptr);
         }
     }

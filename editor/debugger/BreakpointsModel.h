@@ -7,6 +7,8 @@
 enum class BreakpointType
 {
     Code,
+    MemoryRead,
+    MemoryWrite,
 };
 
 enum class BreakpointValidity
@@ -29,6 +31,7 @@ public:
         BreakpointValidity valid;
         QString file;
         int line;
+        unsigned address;
     };
 
     explicit BreakpointsModel(QObject* parent);
@@ -42,6 +45,9 @@ public:
     void addCodeBreakpoint(QWidget* widget, const QString& file, int line, bool notify = true);
     bool removeCodeBreakpoint(const QString& file, int line, bool notify = true);
     void toggleCodeBreakpoint(QWidget* widget, const QString& file, int line);
+
+    void addMemoryReadBreakpoint(QWidget* widget, unsigned address, bool notify = true);
+    void addMemoryWriteBreakpoint(QWidget* widget, unsigned address, bool notify = true);
 
     void setBreakpointValid(std::vector<Item>::const_iterator& it, bool notify = true);
     void setBreakpointInvalid(std::vector<Item>::const_iterator& it, bool notify = true);

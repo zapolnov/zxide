@@ -18,6 +18,9 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 qt_add_sources(GameEditor
+        debugger/AddBreakpointDialog.cpp
+        debugger/AddBreakpointDialog.h
+        debugger/AddBreakpointDialog.ui
         debugger/BreakpointsModel.cpp
         debugger/BreakpointsModel.h
         debugger/BreakpointsWindow.cpp

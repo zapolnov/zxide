@@ -35,6 +35,7 @@ void BreakpointsModel::addCodeBreakpoint(QWidget* widget, const QString& file, i
     item.valid = BreakpointValidity::Unknown;
     item.file = file;
     item.line = line;
+    item.address = unsigned(-1);
 
     int n = int(mItems.size());
     beginInsertRows(QModelIndex(), n, n);
@@ -53,10 +54,11 @@ bool BreakpointsModel::removeCodeBreakpoint(const QString& file, int line, bool 
     for (auto it = start; it != end; ++it) {
         if (it->file == file && it->line == line) {
             int n = int(it - start);
+            Item item = *it;
 
             beginRemoveRows(QModelIndex(), n, n);
-            emit breakpointRemoved(*it);
             mItems.erase(it);
+            emit breakpointRemoved(item);
             endRemoveRows();
 
             if (notify)
@@ -75,6 +77,54 @@ void BreakpointsModel::toggleCodeBreakpoint(QWidget* widget, const QString& file
         return;
 
     addCodeBreakpoint(widget, file, line, true);
+}
+
+void BreakpointsModel::addMemoryReadBreakpoint(QWidget* widget, unsigned address, bool notify)
+{
+    if (mItems.size() >= MaxBreakpoints) {
+        QMessageBox::critical(widget, tr("Error"), tr("Too many breakpoints."));
+        return;
+    }
+
+    Item item;
+    item.type = BreakpointType::MemoryRead;
+    item.valid = BreakpointValidity::Valid;
+    item.file = QString();
+    item.line = -1;
+    item.address = address;
+
+    int n = int(mItems.size());
+    beginInsertRows(QModelIndex(), n, n);
+    mItems.emplace_back(item);
+    emit breakpointAdded(item);
+    endInsertRows();
+
+    if (notify)
+        emit breakpointsChanged();
+}
+
+void BreakpointsModel::addMemoryWriteBreakpoint(QWidget* widget, unsigned address, bool notify)
+{
+    if (mItems.size() >= MaxBreakpoints) {
+        QMessageBox::critical(widget, tr("Error"), tr("Too many breakpoints."));
+        return;
+    }
+
+    Item item;
+    item.type = BreakpointType::MemoryWrite;
+    item.valid = BreakpointValidity::Valid;
+    item.file = QString();
+    item.line = -1;
+    item.address = address;
+
+    int n = int(mItems.size());
+    beginInsertRows(QModelIndex(), n, n);
+    mItems.emplace_back(item);
+    emit breakpointAdded(item);
+    endInsertRows();
+
+    if (notify)
+        emit breakpointsChanged();
 }
 
 void BreakpointsModel::setBreakpointValid(std::vector<Item>::const_iterator& it, bool notify)
@@ -153,6 +203,8 @@ QVariant BreakpointsModel::data(const QModelIndex& index, int role) const
         case 0:
             switch (item.type) {
                 case BreakpointType::Code: return tr("Code");
+                case BreakpointType::MemoryRead: return tr("Memory Read");
+                case BreakpointType::MemoryWrite: return tr("Memory Write");
                 default: return tr("Other");
             }
             break;
@@ -168,8 +220,13 @@ QVariant BreakpointsModel::data(const QModelIndex& index, int role) const
 
         case 2:
             switch (item.type) {
-                case BreakpointType::Code: return QStringLiteral("%1:%2").arg(item.file).arg(item.line);
-                default: return QVariant();
+                case BreakpointType::Code:
+                    return QStringLiteral("%1:%2").arg(item.file).arg(item.line);
+                case BreakpointType::MemoryRead:
+                case BreakpointType::MemoryWrite:
+                    return QStringLiteral("%1 / 0x%2").arg(item.address).arg(item.address, 4, 16, QChar('0'));
+                default:
+                    return QVariant();
             }
             break;
 
@@ -190,8 +247,9 @@ bool BreakpointsModel::removeRows(int row, int count, const QModelIndex& parent)
 
     while (count-- > 0) {
         auto it = mItems.begin() + row + count;
-        emit breakpointRemoved(*it);
+        Item item = *it;
         mItems.erase(it);
+        emit breakpointRemoved(item);
     }
 
     endRemoveRows();

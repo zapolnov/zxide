@@ -6,8 +6,7 @@
 #include "debugger/MemoryLogWindow.h"
 #include "debugger/BreakpointsWindow.h"
 #include "debugger/BreakpointsModel.h"
-#include "util/ClickableLabel.h"
-#include "util/Settings.h"
+#include "debugger/AddBreakpointDialog.h"
 #include "debugger/EmulatorCore.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/EditorTabFactory.h"
@@ -17,6 +16,8 @@
 #include "compiler/Program.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramBinary.h"
+#include "util/ClickableLabel.h"
+#include "util/Settings.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
@@ -763,7 +764,8 @@ void MainWindow::on_actionToggleBreakpoint_triggered()
 
 void MainWindow::on_actionAddDataBreakpoint_triggered()
 {
-    // FIXME
+    AddBreakpointDialog dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::on_actionManageBreakpoints_triggered()
