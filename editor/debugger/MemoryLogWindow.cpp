@@ -26,14 +26,14 @@ public:
 
     int count() const
     {
-        return int(std::min<size_t>(m_operations.size(), size_t(MaxEntries)));
+        return int(std::min<size_t>(mOperations.size(), size_t(MaxEntries)));
     }
 
     void clear()
     {
         int n = count();
         emit beginRemoveRows(QModelIndex(), 0, n - 1);
-        m_operations.clear();
+        mOperations.clear();
         emit endRemoveRows();
     }
 
@@ -58,7 +58,7 @@ public:
         if (operations.empty())
             return;
 
-        size_t newSize = m_operations.size() + operations.size() - 1;
+        size_t newSize = mOperations.size() + operations.size() - 1;
         if (newSize > size_t(MaxEntries))
             return;
 
@@ -68,7 +68,7 @@ public:
             return;
 
         emit beginInsertRows(QModelIndex(), first, last);
-        m_operations.insert(m_operations.end(), operations.begin(), operations.end());
+        mOperations.insert(mOperations.end(), operations.begin(), operations.end());
         emit endInsertRows();
     }
 
@@ -76,7 +76,7 @@ public:
     {
         if (row < 0 || row >= count())
             return -1;
-        return int(m_operations[size_t(row)].codeAddress);
+        return int(mOperations[size_t(row)].codeAddress);
     }
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override
@@ -116,7 +116,7 @@ public:
         if (row < 0 || row >= count())
             return QVariant();
 
-        const auto& op = m_operations[size_t(row)];
+        const auto& op = mOperations[size_t(row)];
 
         switch (index.column()) {
             case 0:
@@ -136,7 +136,7 @@ public:
     }
 
 private:
-    std::vector<MemoryOperationInfo> m_operations;
+    std::vector<MemoryOperationInfo> mOperations;
 
     Q_DISABLE_COPY(Model)
 };

@@ -67,6 +67,7 @@ MainWindow::MainWindow()
                     tab->goToLine(loc.line - 1);
                     HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
                     tab->setFocusToEditor();
+                    QApplication::setActiveWindow(this);
                     return;
                 }
             }
@@ -389,6 +390,7 @@ bool MainWindow::build()
                 tab->goToLine(line - 1);
                 HighlightManager::instance()->setHighlight(Highlight::Error, fileName, line);
                 tab->setFocusToEditor();
+                QApplication::setActiveWindow(this);
                 message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
             }
 
@@ -404,6 +406,7 @@ bool MainWindow::build()
                             tab->goToLine(line - 1);
                             HighlightManager::instance()->setHighlight(Highlight::Error, fileName, line);
                             tab->setFocusToEditor();
+                            QApplication::setActiveWindow(this);
                         }
                     }
                 });
@@ -806,6 +809,7 @@ void MainWindow::on_actionMemoryLog_triggered()
                         tab->goToLine(loc.line - 1);
                         HighlightManager::instance()->setHighlight(Highlight::MemoryLog, loc.file, loc.line);
                         tab->setFocusToEditor();
+                        QApplication::setActiveWindow(this);
                         return;
                     }
                 }
