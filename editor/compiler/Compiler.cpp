@@ -123,6 +123,8 @@ void Compiler::compile()
                 || !tapeWriter.writeTapeFile(mOutputTapeFile)
                 || !tapeWriter.writeWavFile(mOutputWavFile))
             throw CompilationFailed();
+
+        mProgramBinary->setCurrentFile(std::string());
     } catch (const CompilationFailed&) {
         emit compilationEnded();
         return;

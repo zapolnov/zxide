@@ -27,7 +27,7 @@ public:
         friend class ProgramLabel;
     };
 
-    explicit ProgramLabel(const Token& token);
+    ProgramLabel(const Token& token, std::string name);
     ~ProgramLabel() override;
 
     bool hasAddress() const { return mAddress->isValid(); }
@@ -47,6 +47,7 @@ private:
     class CounterDependentAddress;
 
     std::shared_ptr<Address> mAddress;
+    std::string mName;
 
     Q_DISABLE_COPY(ProgramLabel)
 };

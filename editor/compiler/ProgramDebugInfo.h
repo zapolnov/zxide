@@ -29,6 +29,10 @@ public:
     const SourceLocation& sourceLocationForAddress(unsigned address) const;
     void setSourceLocation(unsigned address, const QString& file, int line);
 
+    int addressForName(const QString& name) const;
+    QString nameForAddress(unsigned address) const;
+    void setAddressForName(const QString& name, unsigned address);
+
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken);
     const std::map<int, TStates>& tstatesForFile(const QString& file) const;
 
@@ -42,6 +46,8 @@ private:
 
     std::unordered_map<QString, std::map<int, unsigned>, hash> mFileToMemory;
     std::unordered_map<QString, std::map<int, TStates>, hash> mFileToTStates;
+    std::unordered_map<QString, unsigned, hash> mNameToAddress;
+    std::map<unsigned, QString> mAddressToName;
     // that's quite suboptimal use of memory, but who counts memory these days?!
     SourceLocation mSourceLocations[0x10000];
 

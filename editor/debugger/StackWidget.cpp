@@ -5,6 +5,7 @@
 StackWidget::StackWidget(QWidget* parent)
     : QOpenGLWidget(parent)
 {
+    connect(EmulatorCore::instance(), &EmulatorCore::stackChanged, this, QOverload<>::of(&StackWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::memoryChanged, this, QOverload<>::of(&StackWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::started, this, QOverload<>::of(&StackWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, QOverload<>::of(&StackWidget::update));
@@ -44,14 +45,14 @@ void StackWidget::paintGL()
     if (dataBufferSize != mDataBuffer.size())
         mDataBuffer.resize(dataBufferSize);
 
-    unsigned lastAddr = (EmulatorCore::instance()->stackPointer()) & 0xffff;
-    unsigned firstAddr = (lastAddr - dataBufferSize) & 0xffff;
+    unsigned firstAddr = (EmulatorCore::instance()->stackPointer()) & 0xffff;
+    unsigned lastAddr = (firstAddr + dataBufferSize) & 0xffff;
+    unsigned addr = firstAddr;
     EmulatorCore::instance()->getMemory(firstAddr, mDataBuffer.data(), dataBufferSize);
 
     for (int i = 0; i < h; i++) {
-        lastAddr = (lastAddr - 2) & 0xffff;
-        quint16 b1 = quint8(mDataBuffer[(lastAddr + 0) - firstAddr]);
-        quint16 b2 = quint8(mDataBuffer[(lastAddr + 1) - firstAddr]);
+        quint16 b1 = quint8(mDataBuffer[(addr + 0) - firstAddr]);
+        quint16 b2 = quint8(mDataBuffer[(addr + 1) - firstAddr]);
         quint16 value = b1 | (b2 << 8);
 
         char current[2];
@@ -64,8 +65,20 @@ void StackWidget::paintGL()
         }
 
         int color = (i == 0 ? BLACK : GRAY);
-        sprintf(mLineBuffer.data(), " %c%c %04X  %04X", current[0], current[1], (unsigned)lastAddr, (unsigned)value);
+        sprintf(mLineBuffer.data(), " %c%c %04X  %04X", current[0], current[1], addr, unsigned(value));
 
-        drawText(&painter, 0, i * CharHeight, mLineBuffer.data(), 14, color);
+        size_t len = 14;
+        if (w > 16) {
+            QString name = EmulatorCore::instance()->nameForAddress(unsigned(value));
+            if (!name.isEmpty()) {
+                mLineBuffer[len++] = ' ';
+                mLineBuffer[len++] = ' ';
+                for (int j = 0; j < w - 16 && j < name.length(); j++)
+                    mLineBuffer[len++] = name[j].toLatin1();
+            }
+        }
+
+        drawText(&painter, 0, i * CharHeight, mLineBuffer.data(), len, color);
+        addr = (addr + 2) & 0xffff;
     }
 }

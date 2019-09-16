@@ -32,6 +32,34 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, const QString& file, 
     }
 }
 
+int ProgramDebugInfo::addressForName(const QString& name) const
+{
+    auto it = mNameToAddress.find(name);
+    return (it != mNameToAddress.end() ? it->second : -1);
+}
+
+QString ProgramDebugInfo::nameForAddress(unsigned address) const
+{
+    auto it = mAddressToName.lower_bound(address);
+    if (it == mAddressToName.end())
+        return QString();
+
+    if (it->first == address)
+        return it->second;
+
+    if (it == mAddressToName.begin())
+        return QString();
+
+    --it;
+    return QStringLiteral("%1+%2").arg(it->second).arg(address - it->first);
+}
+
+void ProgramDebugInfo::setAddressForName(const QString& name, unsigned address)
+{
+    mNameToAddress[name] = address;
+    mAddressToName.emplace(address, name);
+}
+
 void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
     if (!file)

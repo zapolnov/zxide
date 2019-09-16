@@ -64,7 +64,7 @@ ProgramLabel* Program::addLabel(const Token& token, CodeEmitter* codeEmitter, co
     if (isDeclared(name))
         return nullptr;
 
-    auto label = codeEmitter->emit<ProgramLabel>(token);
+    auto label = codeEmitter->emit<ProgramLabel>(token, name);
     mLabels[name] = label;
 
     return label;

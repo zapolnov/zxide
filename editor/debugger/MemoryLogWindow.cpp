@@ -128,7 +128,14 @@ public:
 
             case 1: return QStringLiteral("0x%1").arg(op.memoryAddress, 4, 16, QChar('0'));
             case 2: return QStringLiteral("0x%1").arg(op.value, 2, 16, QChar('0'));
-            case 3: return QStringLiteral("0x%1").arg(op.codeAddress, 4, 16, QChar('0'));
+
+            case 3: {
+                QString name = EmulatorCore::instance()->nameForAddress(op.codeAddress);
+                if (name.isEmpty())
+                    return QStringLiteral("0x%1").arg(op.codeAddress, 4, 16, QChar('0'));
+                else
+                    return QStringLiteral("0x%1 (%2)").arg(op.codeAddress, 4, 16, QChar('0')).arg(name);
+            }
 
             default:
                 return QVariant();

@@ -146,6 +146,7 @@ public:
 
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
     SourceLocation sourceLocationForAddress(unsigned address) const;
+    QString nameForAddress(unsigned address) const;
 
     void setCollectMemoryOperations(bool flag);
 
@@ -175,6 +176,7 @@ signals:
     void stopped();
     void memoryChanged();
     void memoryOperations(std::vector<MemoryOperationInfo>& operations);
+    void stackChanged();
     void error(QString message);
     void updateUi();
     void runtoAddressChanged(int address);

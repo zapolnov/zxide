@@ -84,6 +84,7 @@ static bool shouldEmitUnpausedSignal;
 static int runtoAddress = -1;
 static int lastHighlightedRuntoAddress = -1;
 static unsigned pausePC;
+static unsigned prevSP;
 static bool memoryWasChanged;
 static bool emulatorPaused;
 static bool paused;
@@ -142,6 +143,7 @@ bool EmulatorCore::start()
     updateBreakpoints();
 
     tapeFile = mTapeFile;
+    prevSP = unsigned(-1);
     mThread->start();
 
     return true;
@@ -292,6 +294,19 @@ SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
     }
 
     return dummySourceLocation;
+}
+
+QString EmulatorCore::nameForAddress(unsigned address) const
+{
+    Q_ASSERT(address < 0x10000);
+    if (address < 0x10000) {
+        QMutexLocker lock(&mutex);
+        ProgramDebugInfo* debugInfo;
+        if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
+            return debugInfo->nameForAddress(address);
+    }
+
+    return QString();
 }
 
 void EmulatorCore::setCollectMemoryOperations(bool flag)
@@ -676,6 +691,7 @@ void EmulatorCore::update()
     bool shouldEmitPausedSignal_ = false;
     bool memoryWasChanged_ = false;
     unsigned pausePC_ = 0;
+    unsigned SP_ = 0;
     int runtoAddress_ = -1;
 
     {
@@ -689,6 +705,7 @@ void EmulatorCore::update()
         memoryWasChanged_ = memoryWasChanged;
         memoryWasChanged = false;
         pausePC_ = pausePC;
+        SP_ = SP;
         runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
     }
@@ -710,6 +727,11 @@ void EmulatorCore::update()
     if (!memoryOperations_mainThread.empty()) {
         emit memoryOperations(memoryOperations_mainThread);
         memoryOperations_mainThread.clear();
+    }
+
+    if (prevSP != SP_) {
+        prevSP = SP_;
+        emit stackChanged();
     }
 }
 

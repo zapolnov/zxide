@@ -4,8 +4,6 @@
 * Disassembly window (?)
 * Watch window with symbols (?)
 * Navigation through source (?), back/forward buttons (?)
-* Show the corresponding label in the stack window
-* Show the corresponding label in the memory log window
 * Drag and drop in the file list
 * Remove non-empty directories in the file list
 * Multiple file selection in the file list (?)

@@ -2,6 +2,8 @@
 #include "compiler/Compiler.h"
 #include "compiler/IErrorReporter.h"
 #include "compiler/Value.h"
+#include "compiler/ProgramDebugInfo.h"
+#include "compiler/ProgramBinary.h"
 #include <unordered_map>
 #include <QCoreApplication>
 
@@ -87,9 +89,10 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ProgramLabel::ProgramLabel(const Token& token)
+ProgramLabel::ProgramLabel(const Token& token, std::string name)
     : ProgramOpcode(token)
     , mAddress(std::make_shared<SimpleAddress>())
+    , mName(std::move(name))
 {
 }
 
@@ -129,6 +132,7 @@ bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* re
     return true;
 }
 
-void ProgramLabel::emitBinary(Program*, ProgramBinary*, IErrorReporter*) const
+void ProgramLabel::emitBinary(Program*, ProgramBinary* binary, IErrorReporter*) const
 {
+    binary->debugInfo()->setAddressForName(QString::fromUtf8(mName.c_str(), int(mName.length())), mAddress->value());
 }
