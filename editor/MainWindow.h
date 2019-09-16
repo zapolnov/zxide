@@ -15,6 +15,7 @@ class BreakpointsWindow;
 class EmulatorCore;
 class ClickableLabel;
 class HighlightManager;
+class BreakpointsModel;
 class Ui_MainWindow;
 class QLabel;
 
@@ -53,6 +54,7 @@ private:
     QPointer<BreakpointsWindow> mBreakpointsWindow;
     EmulatorCore* mEmulatorCore;
     HighlightManager* mHighlightManager;
+    BreakpointsModel* mBreakpointsModel;
     EditorTabFactory* mTabFactory;
 
     bool confirmSaveAll();

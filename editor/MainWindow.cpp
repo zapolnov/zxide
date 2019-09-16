@@ -5,6 +5,7 @@
 #include "PlayAudioDialog.h"
 #include "debugger/MemoryLogWindow.h"
 #include "debugger/BreakpointsWindow.h"
+#include "debugger/BreakpointsModel.h"
 #include "util/ClickableLabel.h"
 #include "util/Settings.h"
 #include "debugger/EmulatorCore.h"
@@ -33,6 +34,7 @@ MainWindow::MainWindow()
     , mDummyTab(new AbstractEditorTab(this))
     , mTabFactory(new EditorTabFactory(this))
 {
+    mBreakpointsModel = new BreakpointsModel(this);
     mHighlightManager = new HighlightManager(this);
 
     mEmulatorCore = new EmulatorCore(this);
@@ -775,6 +777,7 @@ void MainWindow::on_actionManageBreakpoints_triggered()
                     if (tab && tab->canGoToLine()) {
                         tab->goToLine(line - 1);
                         tab->setFocusToEditor();
+                        QApplication::setActiveWindow(this);
                         return;
                     }
                 }

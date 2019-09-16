@@ -25,6 +25,9 @@ public:
 
     void reloadSettings();
 
+signals:
+    void marginClicked(int line);
+
 private:
     struct Marker
     {
@@ -34,6 +37,7 @@ private:
     };
 
     std::unordered_map<Highlight, Marker> mMarkers;
+    std::vector<sptr_t> mBreakpointMarkers;
     QString mFileName;
     bool mTStatesVisible;
     bool mAutoIndent;
@@ -42,6 +46,7 @@ private:
     void clearHighlight(Highlight highlight);
 
     void charAdded(int ch) override;
+    void marginClicked(int position, int modifiers, int margin) override;
     void textModified(int position, int length) override;
 
     Q_DISABLE_COPY(TextEditor)

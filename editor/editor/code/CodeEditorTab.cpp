@@ -1,6 +1,7 @@
 #include "CodeEditorTab.h"
 #include "editor/FileManager.h"
 #include "compiler/ProgramDebugInfo.h"
+#include "debugger/BreakpointsModel.h"
 #include "ui_CodeEditorTab.h"
 #include <SciLexer.h>
 
@@ -206,8 +207,7 @@ bool CodeEditorTab::canRunToCursor() const
 
 bool CodeEditorTab::canToggleBreakpoint() const
 {
-    // FIXME
-    return false; // mDocument != nullptr;
+    return mDocument != nullptr;
 }
 
 bool CodeEditorTab::save()
@@ -279,7 +279,11 @@ void CodeEditorTab::goToLine(int line)
 
 void CodeEditorTab::toggleBreakpoint()
 {
-    // FIXME
+    if (mDocument) {
+        auto pos = mUi->textEditor->currentPos();
+        int line = mUi->textEditor->lineFromPosition(pos) + 1;
+        BreakpointsModel::instance()->toggleCodeBreakpoint(this, file()->relativeName(), line);
+    }
 }
 
 void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)
@@ -297,4 +301,10 @@ void CodeEditorTab::reloadSettings()
 void CodeEditorTab::setFocusToEditor()
 {
     static_cast<QWidget*>(mUi->textEditor)->setFocus();
+}
+
+void CodeEditorTab::on_textEditor_marginClicked(int line)
+{
+    if (mDocument)
+        BreakpointsModel::instance()->toggleCodeBreakpoint(this, file()->relativeName(), line + 1);
 }

@@ -94,7 +94,6 @@ signals:
 	void modified(int type, int position, int length, int linesAdded,
 	              const QByteArray &text, int line, int foldNow, int foldPrev);
 	void macroRecord(int message, uptr_t wParam, sptr_t lParam);
-	void marginClicked(int position, int modifiers, int margin);
 	void textAreaClicked(int line, int modifiers);
 	void needShown(int position, int length);
 	void painted();
@@ -122,6 +121,7 @@ signals:
 
 protected:
 	virtual void charAdded(int ch) {}
+	virtual void marginClicked(int position, int modifiers, int margin) {}
 	virtual void textModified(int position, int length) {}
 
 	bool event(QEvent *event) override;

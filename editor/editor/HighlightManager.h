@@ -17,8 +17,6 @@ class HighlightManager : public QObject
     Q_OBJECT
 
 public:
-    enum { MaxBreakpoints = 20 };
-
     struct Info
     {
         QString file;
@@ -30,10 +28,6 @@ public:
 
     static HighlightManager* instance() { return mInstance; }
 
-    bool canAddBreakpoint() const;
-    void addCodeBreakpoint(const QString& file, int line);
-    void removeCodeBreakpoint(const QString& file, int line);
-
     const Info* highlight(Highlight highlight) const;
     void setHighlight(Highlight highlight, const QString& file, int line);
     void clearHighlight(Highlight highlight);
@@ -44,7 +38,6 @@ signals:
 private:
     static HighlightManager* mInstance;
     std::unordered_map<Highlight, Info> mHighlights;
-    std::vector<Info> mCodeBreakpoints;
 
     Q_DISABLE_COPY(HighlightManager)
 };

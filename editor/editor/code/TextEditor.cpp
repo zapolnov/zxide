@@ -1,6 +1,7 @@
 #include "TextEditor.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/HighlightManager.h"
+#include "debugger/BreakpointsModel.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
 #include <cstdio>
@@ -11,6 +12,7 @@ TextEditor::TextEditor(QWidget* parent)
 {
     reloadSettings();
     connect(HighlightManager::instance(), &HighlightManager::highlightsChanged, this, &TextEditor::updateHighlights);
+    connect(BreakpointsModel::instance(), &BreakpointsModel::breakpointsChanged, this, &TextEditor::updateHighlights);
 }
 
 TextEditor::~TextEditor()
@@ -19,10 +21,9 @@ TextEditor::~TextEditor()
 
 void TextEditor::setFileName(const QString& fileName)
 {
-    if (mFileName != fileName) {
+    if (mFileName != fileName)
         mFileName = fileName;
-        updateHighlights();
-    }
+    updateHighlights();
 }
 
 void TextEditor::setLineIndent(int line, int indent)
@@ -75,6 +76,21 @@ void TextEditor::clearTStates()
 
 void TextEditor::updateHighlights()
 {
+    while (!mBreakpointMarkers.empty()) {
+        markerDeleteHandle(mBreakpointMarkers.back());
+        mBreakpointMarkers.pop_back();
+    }
+
+    int index = 0;
+    for (const auto& it : BreakpointsModel::instance()->items()) {
+        if (it.type == BreakpointType::Code && it.file == mFileName) {
+            markerDefine(index, SC_MARK_CIRCLE);
+            markerSetFore(index, 0);
+            markerSetBack(index, 0x0000ff);
+            mBreakpointMarkers.emplace_back(markerAdd(it.line - 1, index++));
+        }
+    }
+
     for (auto highlight : { Highlight::CurrentPC, Highlight::Error, Highlight::RunToCursor, Highlight::MemoryLog }) {
         auto& marker = mMarkers[highlight];
         if (marker.visible) {
@@ -147,7 +163,9 @@ void TextEditor::reloadSettings()
     setViewWS(settings.whitespaceVisibility());
     setViewEOL(settings.showEol());
 
-    setMarginMaskN(1, SC_MASK_FOLDERS | (1 << 24) | (1 << 23) | (1 << 22));
+    setMarginMaskN(1, SC_MASK_FOLDERS | 0x1ffffff);
+    setMarginSensitiveN(1, true);
+
     setMarginTypeN(3, SC_MARGIN_RTEXT);
     setMarginWidthN(3, mTStatesVisible ? textWidth(STYLE_LINENUMBER, "_9/99") : 0);
 
@@ -171,6 +189,12 @@ void TextEditor::charAdded(int ch)
     }
 
     ScintillaEdit::charAdded(ch);
+}
+
+void TextEditor::marginClicked(int position, int modifiers, int margin)
+{
+    int line = lineFromPosition(position);
+    emit marginClicked(line);
 }
 
 void TextEditor::textModified(int position, int length)

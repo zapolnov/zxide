@@ -16,8 +16,6 @@ public:
     explicit BreakpointsWindow(QWidget* parent = nullptr);
     ~BreakpointsWindow() override;
 
-    void setModel(BreakpointsModel* model);
-
 signals:
     void fileDoubleClicked(const QString& file, int line);
 

@@ -60,6 +60,7 @@ private:
 
     Q_SLOT void on_textEditor_updateUi(int updated) { emit updateUi(); }
     Q_SLOT void on_textEditor_savePointChanged(bool dirty) { emit updateUi(); }
+    Q_SLOT void on_textEditor_marginClicked(int line);
 
     Q_DISABLE_COPY(CodeEditorTab)
 };
