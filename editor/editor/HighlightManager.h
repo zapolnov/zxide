@@ -30,7 +30,7 @@ public:
 
     const Info* highlight(Highlight highlight) const;
     void setHighlight(Highlight highlight, const QString& file, int line);
-    void clearHighlight(Highlight highlight);
+    void clearHighlight(Highlight highlight, bool notify = true);
 
 signals:
     void highlightsChanged();

@@ -28,8 +28,9 @@ void HighlightManager::setHighlight(Highlight highlight, const QString& file, in
     emit highlightsChanged();
 }
 
-void HighlightManager::clearHighlight(Highlight highlight)
+void HighlightManager::clearHighlight(Highlight highlight, bool notify)
 {
     mHighlights.erase(highlight);
-    emit highlightsChanged();
+    if (notify)
+        emit highlightsChanged();
 }

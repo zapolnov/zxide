@@ -36,8 +36,14 @@ private:
         bool visible = false;
     };
 
+    struct BreakpointMarker
+    {
+        sptr_t handle = 0;
+        int line = -1;
+    };
+
     std::unordered_map<Highlight, Marker> mMarkers;
-    std::vector<sptr_t> mBreakpointMarkers;
+    std::vector<BreakpointMarker> mBreakpointMarkers;
     QString mFileName;
     bool mTStatesVisible;
     bool mAutoIndent;

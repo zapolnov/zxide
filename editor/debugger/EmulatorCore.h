@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QThread>
+#include "debugger/BreakpointsModel.h"
 #include <vector>
 
 enum Register
@@ -194,6 +195,10 @@ private:
     QTimer* mTimer;
     Thread* mThread;
     bool mShiftPressed;
+
+    void onBreakpointAdded(const BreakpointsModel::Item& breakpoint);
+    void onBreakpointRemoved(const BreakpointsModel::Item& breakpoint);
+    void updateBreakpoints();
 
     void update();
 

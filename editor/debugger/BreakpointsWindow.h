@@ -2,6 +2,7 @@
 #define DEBUGGER_BREAKPOINTSWINDOW_H
 
 #include <QWidget>
+#include <QIcon>
 #include <memory>
 #include <vector>
 
@@ -21,8 +22,10 @@ signals:
 
 private:
     std::unique_ptr<Ui_BreakpointsWindow> mUi;
+    QIcon mDeleteIcon;
 
     Q_SLOT void on_tableView_doubleClicked(const QModelIndex& index);
+    Q_SLOT void on_tableView_customContextMenuRequested(const QPoint& pos);
 
     Q_DISABLE_COPY(BreakpointsWindow)
 };

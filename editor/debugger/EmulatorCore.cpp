@@ -33,7 +33,19 @@ int fuse_end(void);
 int debugger_run_to_address(unsigned addr);
 }
 
-typedef struct { quint8 r, g, b; } Color;
+namespace
+{
+    typedef struct { quint8 r, g, b; } Color;
+
+    struct AddressBreakpoint
+    {
+        debugger_breakpoint_type type;
+        int source;
+        int page;
+        libspectrum_word offset;
+        size_t ignore;
+    };
+}
 
 static Color Palette[] = {
     { 0x00, 0x00, 0x00 },
@@ -59,6 +71,7 @@ static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
 static std::vector<MemoryOperationInfo> memoryOperations;
 static std::vector<MemoryOperationInfo> memoryOperations_mainThread;
+static std::vector<AddressBreakpoint> addressBreakpoints;
 static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
 static QImage screenFront;
@@ -66,6 +79,7 @@ static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static volatile bool collectMemoryOperations;
 static bool shouldUpdateUi;
+static bool shouldUpdateBreakpoints = true;
 static bool shouldEmitPausedSignal;
 static bool shouldEmitUnpausedSignal;
 static int runtoAddress = -1;
@@ -105,6 +119,9 @@ EmulatorCore::EmulatorCore(QObject* parent)
     connect(mThread, &QThread::finished, this, &EmulatorCore::updateUi);
     connect(mThread, &QThread::finished, this, &EmulatorCore::stopped);
 
+    connect(BreakpointsModel::instance(), &BreakpointsModel::breakpointAdded, this, &EmulatorCore::onBreakpointAdded);
+    connect(BreakpointsModel::instance(), &BreakpointsModel::breakpointRemoved, this, &EmulatorCore::onBreakpointRemoved);
+
     connect(this, &EmulatorCore::internal_sendError, this, &EmulatorCore::error, Qt::QueuedConnection);
     ::currentMachine = Settings().emulatorMachine();
 }
@@ -122,6 +139,8 @@ bool EmulatorCore::start()
     Q_ASSERT(!mThread->isRunning());
     if (mThread->isRunning())
         return false;
+
+    updateBreakpoints();
 
     tapeFile = mTapeFile;
     mThread->start();
@@ -586,6 +605,61 @@ void EmulatorCore::releaseKey(int key)
     commandQueue.emplace_back(std::move(cmd));
 }
 
+void EmulatorCore::onBreakpointAdded(const BreakpointsModel::Item&)
+{
+    if (isRunning())
+        updateBreakpoints();
+}
+
+void EmulatorCore::onBreakpointRemoved(const BreakpointsModel::Item&)
+{
+    if (isRunning())
+        updateBreakpoints();
+}
+
+void EmulatorCore::updateBreakpoints()
+{
+    QMutexLocker lock(&mutex);
+
+    addressBreakpoints.clear();
+
+    ProgramDebugInfo* debugInfo = nullptr;
+    if (programBinary)
+        debugInfo = programBinary->debugInfo();
+
+    bool notifyBreakpointsUpdated = false;
+
+    const auto& items = BreakpointsModel::instance()->items();
+    auto end = items.end();
+    for (auto it = items.begin(); it != end; ++it) {
+        switch (it->type) {
+            case BreakpointType::Code: {
+                int addr = (debugInfo ? debugInfo->resolveAddress(it->file, it->line) : -1);
+                if (addr < 0) {
+                    notifyBreakpointsUpdated = true;
+                    BreakpointsModel::instance()->setBreakpointInvalid(it, false);
+                } else {
+                    notifyBreakpointsUpdated = true;
+                    BreakpointsModel::instance()->setBreakpointValid(it, false);
+                    addressBreakpoints.emplace_back(AddressBreakpoint{
+                        DEBUGGER_BREAKPOINT_TYPE_EXECUTE, memory_source_any, 0, libspectrum_word(addr), 0 });
+                }
+                break;
+            }
+
+            default:
+                Q_ASSERT(false);
+        }
+    }
+
+    shouldUpdateBreakpoints = true;
+
+    lock.unlock();
+
+    if (notifyBreakpointsUpdated)
+        emit BreakpointsModel::instance()->breakpointsChanged();
+}
+
 void EmulatorCore::update()
 {
     bool shouldUpdateUi_ = false;
@@ -706,6 +780,15 @@ static void syncWithMainThread()
         }
         offset += MEMORY_PAGE_SIZE;
     }
+
+    if (shouldUpdateBreakpoints) {
+        shouldUpdateBreakpoints = false;
+        debugger_breakpoint_remove_all();
+        for (const auto& it : addressBreakpoints) {
+            debugger_breakpoint_add_address(it.type, it.source, it.page, it.offset, it.ignore,
+                DEBUGGER_BREAKPOINT_LIFE_PERMANENT, nullptr);
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -726,13 +809,13 @@ void EmulatorCore::Thread::run()
     emulatorPaused = false;
 
     while (!isInterruptionRequested()) {
+        syncWithMainThread();
         if (paused) // no need to protect it with mutex as it is only set by this thread
             QThread::msleep(10);
         else {
             z80_do_opcodes();
             event_do_events();
         }
-        syncWithMainThread();
     }
 
     if (paused)

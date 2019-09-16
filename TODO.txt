@@ -1,8 +1,6 @@
 * Implement memory editing in the memory view
 * In the memory view highlight symbol when mouse is over a hexadecimal value and vise-versa; also show full address
 * Go to address in memory window
-* Implement breakpoints
-* Run to cursor is currently inaccurate
 * Disassembly window (?)
 * Watch window with symbols (?)
 * Navigation through source (?), back/forward buttons (?)
@@ -31,3 +29,4 @@
 * Add virtual keyboard widget
 * Lazily evaluate byte constant in Z80 opcodes (see matchByte() and byteConstant() in the code)
 * Allow constants like 'A' as operands
+* Step Out maybe incorrectly handles inner calls

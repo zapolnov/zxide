@@ -57,6 +57,7 @@ private:
     std::unique_ptr<Ui_CodeEditorTab> mUi;
     std::unique_ptr<ScintillaDocument> mDummyDocument;
     std::unique_ptr<ScintillaDocument> mDocument;
+    bool mCanToggleBreakpoint;
 
     Q_SLOT void on_textEditor_updateUi(int updated) { emit updateUi(); }
     Q_SLOT void on_textEditor_savePointChanged(bool dirty) { emit updateUi(); }

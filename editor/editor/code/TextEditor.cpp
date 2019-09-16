@@ -4,6 +4,7 @@
 #include "debugger/BreakpointsModel.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "util/Settings.h"
+#include <unordered_set>
 #include <cstdio>
 
 TextEditor::TextEditor(QWidget* parent)
@@ -77,7 +78,7 @@ void TextEditor::clearTStates()
 void TextEditor::updateHighlights()
 {
     while (!mBreakpointMarkers.empty()) {
-        markerDeleteHandle(mBreakpointMarkers.back());
+        markerDeleteHandle(mBreakpointMarkers.back().handle);
         mBreakpointMarkers.pop_back();
     }
 
@@ -86,8 +87,9 @@ void TextEditor::updateHighlights()
         if (it.type == BreakpointType::Code && it.file == mFileName) {
             markerDefine(index, SC_MARK_CIRCLE);
             markerSetFore(index, 0);
-            markerSetBack(index, 0x0000ff);
-            mBreakpointMarkers.emplace_back(markerAdd(it.line - 1, index++));
+            markerSetBack(index, (it.valid == BreakpointValidity::Invalid ? 0xc0c0c0 : 0x0000ff));
+            auto handle = markerAdd(it.line - 1, index++);
+            mBreakpointMarkers.emplace_back(BreakpointMarker{ handle, it.line - 1 });
         }
     }
 
@@ -199,18 +201,29 @@ void TextEditor::marginClicked(int position, int modifiers, int margin)
 
 void TextEditor::textModified(int position, int length)
 {
-    auto& errorMarker = mMarkers[Highlight::Error];
-    auto& memoryLogMarker = mMarkers[Highlight::MemoryLog];
+    bool highlightChanged = false;
+    std::unordered_set<int> lines;
 
-    for (int i = position; i < position + length; i++) {
+    for (int i = position; i <= position + length; i++) {
         int line = lineFromPosition(i);
+        if (!lines.emplace(line).second)
+            continue;
 
-        if (errorMarker.line == line && errorMarker.visible)
-            clearHighlight(Highlight::Error);
-        if (memoryLogMarker.line == line && memoryLogMarker.visible)
-            clearHighlight(Highlight::MemoryLog);
+        // Clear markers at this line
+        for (const auto& it : mMarkers) {
+            if (it.second.line == line && it.second.visible) {
+                HighlightManager::instance()->clearHighlight(it.first, false);
+                highlightChanged = true;
+            }
+        }
 
+        // Clear t-states counter at this line
         if (mTStatesVisible)
             marginSetText(line, "");
     }
+
+    if (highlightChanged)
+        emit HighlightManager::instance()->highlightsChanged();
+    else
+        updateHighlights();
 }

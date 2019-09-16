@@ -38,6 +38,7 @@ static const char LuaSystemAndIO[] =
 CodeEditorTab::CodeEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
     , mUi(new Ui_CodeEditorTab)
+    , mCanToggleBreakpoint(false)
 {
     mUi->setupUi(this);
     mUi->textEditor->setEnabled(false);
@@ -84,6 +85,7 @@ bool CodeEditorTab::loadFile(File* f)
         mUi->textEditor->set_doc(mDummyDocument.get());
         mUi->textEditor->setFileName(QString());
         mUi->textEditor->setEnabled(false);
+        mCanToggleBreakpoint = false;
     } else {
         mUi->textEditor->set_doc(mDocument.get());
         mUi->textEditor->setFileName(f->relativeName());
@@ -96,12 +98,17 @@ bool CodeEditorTab::loadFile(File* f)
             mUi->textEditor->setKeyWords(1, LuaBasicFunctions);
             mUi->textEditor->setKeyWords(2, LuaStringAndMath);
             mUi->textEditor->setKeyWords(3, LuaSystemAndIO);
-        } else if (extension == QStringLiteral("bas"))
+            mCanToggleBreakpoint = false;
+        } else if (extension == QStringLiteral("bas")) {
             mUi->textEditor->setLexer(SCLEX_FREEBASIC);
-        else if (extension == QStringLiteral("asm"))
+            mCanToggleBreakpoint = false;
+        } else if (extension == QStringLiteral("asm")) {
             mUi->textEditor->setLexer(SCLEX_ASM);
-        else
+            mCanToggleBreakpoint = true;
+        } else {
             mUi->textEditor->setLexer(SCLEX_NULL);
+            mCanToggleBreakpoint = false;
+        }
 
         mUi->textEditor->styleClearAll();
         mUi->textEditor->styleSetFore(0, 0x000000); // whitespace
@@ -207,7 +214,7 @@ bool CodeEditorTab::canRunToCursor() const
 
 bool CodeEditorTab::canToggleBreakpoint() const
 {
-    return mDocument != nullptr;
+    return mDocument != nullptr && mCanToggleBreakpoint;
 }
 
 bool CodeEditorTab::save()

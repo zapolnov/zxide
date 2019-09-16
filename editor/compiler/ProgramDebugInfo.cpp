@@ -28,7 +28,7 @@ void ProgramDebugInfo::setSourceLocation(unsigned address, const QString& file, 
         auto& loc = mSourceLocations[address];
         loc.file = file;
         loc.line = line;
-        mFileToMemory[file][line] = address;
+        mFileToMemory[file].emplace(line, address);
     }
 }
 

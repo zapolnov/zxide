@@ -40,9 +40,9 @@ MainWindow::MainWindow()
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
     connect(mEmulatorCore, &EmulatorCore::leaveDebugger,
-        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC));
+        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC, true));
     connect(mEmulatorCore, &EmulatorCore::stopped,
-        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC));
+        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC, true));
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
@@ -796,10 +796,10 @@ void MainWindow::on_actionMemoryLog_triggered()
 {
     if (!mMemoryLogWindow) {
         mMemoryLogWindow = new MemoryLogWindow(this);
-        connect(mMemoryLogWindow, &MemoryLogWindow::destroyed,
-            mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog));
-        connect(mMemoryLogWindow, &MemoryLogWindow::cleared,
-            mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog));
+        connect(mMemoryLogWindow, &MemoryLogWindow::destroyed, mHighlightManager,
+            std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog, true));
+        connect(mMemoryLogWindow, &MemoryLogWindow::cleared, mHighlightManager,
+            std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog, true));
         connect(mMemoryLogWindow, &MemoryLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
                 auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
                 File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
