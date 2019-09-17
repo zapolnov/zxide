@@ -63,7 +63,6 @@
     <file>fatcow16x16/shape_flip_vertical.png</file>
     <file>fatcow16x16/shape_rotate_anticlockwise.png</file>
     <file>fatcow16x16/shape_rotate_clockwise.png</file>
-    <file>fatcow16x16/sound_wave.png</file>
     <file>fatcow16x16/stop.png</file>
     <file>fatcow16x16/table_heatmap_cell.png</file>
     <file>fatcow16x16/table_layout_subtotals.png</file>
@@ -74,6 +73,7 @@
     <file>fugue16x16/arrow-step-out.png</file>
     <file>fugue16x16/arrow-step-over.png</file>
     <file>fugue16x16/arrow-step.png</file>
+    <file>fugue16x16/cassette--arrow.png</file>
     <file>fugue16x16/control.png</file>
     <file>fugue16x16/control-cursor.png</file>
     <file>fugue16x16/control-pause.png</file>

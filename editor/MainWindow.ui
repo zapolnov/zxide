@@ -829,7 +829,7 @@
   <action name="actionPlayAudio">
    <property name="icon">
     <iconset resource="res/resources.qrc">
-     <normaloff>:/resources/fatcow16x16/sound_wave.png</normaloff>:/resources/fatcow16x16/sound_wave.png</iconset>
+     <normaloff>:/resources/fugue16x16/cassette--arrow.png</normaloff>:/resources/fugue16x16/cassette--arrow.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Play audio</string>
