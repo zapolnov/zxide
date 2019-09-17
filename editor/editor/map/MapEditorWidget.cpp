@@ -13,9 +13,6 @@
 #include <QTimer>
 #include <QMouseEvent>
 
-static const int TileWidth = 16;
-static const int TileHeight = 16;
-
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-map");
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -288,8 +285,8 @@ public:
 
     static void drawOverlayTile(MapEditorWidget* widget, QPainter& painter, int x, int y)
     {
-        int x1 = x * TileWidth;
-        int y1 = y * TileHeight;
+        int x1 = x * widget->mTileWidth;
+        int y1 = y * widget->mTileHeight;
 
         const auto& tile = widget->mTiles[widget->mCurrentItem];
 
@@ -299,7 +296,7 @@ public:
 
         painter.setPen(Qt::white);
         painter.setBrush(Qt::transparent);
-        painter.drawRect(x1, y1, tile.width * TileWidth, tile.height * TileHeight);
+        painter.drawRect(x1, y1, tile.width * widget->mTileWidth, tile.height * widget->mTileHeight);
     }
 
     void drawOverlay(MapEditorWidget* widget, QPainter& painter, int x, int y) const override
@@ -371,7 +368,8 @@ public:
         }
 
         Rect r = makeMapRect(widget->mMapData);
-        QRect visualRect(r.x1 * TileWidth, r.y1 * TileHeight, r.width() * TileWidth, r.height() * TileHeight);
+        QRect visualRect(r.x1 * widget->mTileWidth, r.y1 * widget->mTileHeight,
+            r.width() * widget->mTileWidth, r.height() * widget->mTileHeight);
 
         const auto& tile = widget->mTiles[widget->mCurrentItem];
         int tileW = tile.width;
@@ -385,7 +383,7 @@ public:
             int tileX = 0;
             for (int x = r.x1; x <= r.x2; x++) {
                 int tileIndex = (tileOriginY + tileY) * TileSetData::GridWidth + (tileOriginX + tileX);
-                painter.drawPixmap(x * TileWidth, y * TileHeight, widget->mTiles[tileIndex].pixmap1);
+                painter.drawPixmap(x * widget->mTileWidth, y * widget->mTileHeight, widget->mTiles[tileIndex].pixmap1);
                 tileX = (tileX + 1) % tileW;
             }
             tileY = (tileY + 1) % tileH;
@@ -494,7 +492,7 @@ public:
     {
         painter.setPen(Qt::white);
         painter.setBrush(Qt::transparent);
-        painter.drawRect(x * TileWidth, y * TileHeight, TileWidth, TileHeight);
+        painter.drawRect(x * widget->mTileWidth, y * widget->mTileHeight, widget->mTileWidth, widget->mTileHeight);
     }
 
     void beginDrag(MapEditorWidget* widget, int x, int y) override
@@ -534,7 +532,7 @@ public:
     {
         painter.setPen(Qt::white);
         painter.setBrush(Qt::transparent);
-        painter.drawRect(x * TileWidth, y * TileHeight, TileWidth, TileHeight);
+        painter.drawRect(x * widget->mTileWidth, y * widget->mTileHeight, widget->mTileWidth, widget->mTileHeight);
     }
 
     void beginDrag(MapEditorWidget* widget, int x, int y) override
@@ -572,10 +570,12 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
-bool MapEditorWidget::mGridVisible = true;
+bool MapEditorWidget::mGridVisible = false;
 
 MapEditorWidget::MapEditorWidget(QWidget* parent)
     : QWidget(parent)
+    , mTileWidth(8)
+    , mTileHeight(8)
     , mCurrentTool(new DrawTool())
     , mUndoStackIndex(0)
     , mSavedIndex(0)
@@ -592,12 +592,7 @@ MapEditorWidget::MapEditorWidget(QWidget* parent)
     mTimer->start(1000 * 16 / 50);
     connect(mTimer, &QTimer::timeout, this, [this]{ mFlash = !mFlash; repaint(); });
 
-    auto onSizeChanged = [this] {
-            setFixedSize(mMapData->width() * TileWidth, mMapData->height() * TileHeight);
-            emit sizeChanged();
-        };
-
-    connect(mMapData, &MapData::sizeChanged, this, onSizeChanged);
+    connect(mMapData, &MapData::sizeChanged, this, &MapEditorWidget::onSizeChanged);
     onSizeChanged();
 }
 
@@ -621,9 +616,16 @@ void MapEditorWidget::setSize(int w, int h)
         pushOperation(new ResizeOperation(w, h));
 }
 
-void MapEditorWidget::setTiles(QHash<int, MapEditorTile> tiles)
+void MapEditorWidget::setTiles(QHash<int, MapEditorTile> tiles, int tileWidth, int tileHeight)
 {
     mTiles = tiles;
+
+    if (mTileWidth != tileWidth || mTileHeight != tileHeight) {
+        mTileWidth = tileWidth;
+        mTileHeight = tileHeight;
+        onSizeChanged();
+    }
+
     repaint();
 }
 
@@ -640,6 +642,9 @@ void MapEditorWidget::reset()
     mUndoStackIndex = 0;
     mSelection = Rect::empty();
     mSavedIndex = 0;
+    mTileWidth = 8;
+    mTileHeight = 8;
+    onSizeChanged();
     update();
     emit updateUi();
 }
@@ -910,17 +915,33 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
     for (int mapY = 0; mapY < mMapData->height(); mapY++) {
         for (int mapX = 0; mapX < mMapData->width(); mapX++) {
             const auto& tile = mTiles[mMapData->at(mapX, mapY)];
-            int x = mapX * TileWidth;
-            int y = mapY * TileHeight;
+            int x = mapX * mTileWidth;
+            int y = mapY * mTileHeight;
             painter.drawPixmap(x, y, (mFlash ? tile.pixmap2 : tile.pixmap1));
         }
     }
 
+    if (mGridVisible) {
+        painter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
+        painter.setBrush(Qt::transparent);
+        for (int gridY = 1; gridY < mMapData->height(); gridY++) {
+            int y = gridY * mTileHeight;
+            painter.setPen(QPen(QColor(255, 255, 255, 128), 1.0f));
+            painter.drawLine(0, y, QWidget::width(), y);
+        }
+        for (int gridX = 1; gridX < mMapData->width(); gridX++) {
+            int x = gridX * mTileWidth;
+            painter.setPen(QPen(QColor(255, 255, 255, 128), 1.0f));
+            painter.drawLine(x, 0, x, QWidget::height());
+        }
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    }
+
     if (!mSelection.isEmpty()) {
-        int x = mSelection.x1 * TileWidth;
-        int y = mSelection.y1 * TileHeight;
-        int w = mSelection.width() * TileWidth;
-        int h = mSelection.height() * TileHeight;
+        int x = mSelection.x1 * mTileWidth;
+        int y = mSelection.y1 * mTileHeight;
+        int w = mSelection.width() * mTileWidth;
+        int h = mSelection.height() * mTileHeight;
 
         painter.setPen(QPen(QColor(0, 0, 255), 1.5f, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QColor(0, 0, 255, 127));
@@ -997,8 +1018,8 @@ void MapEditorWidget::cancelInput()
 void MapEditorWidget::updateMousePosition(QMouseEvent* event)
 {
     QPoint pos = event->pos();
-    int x = pos.x() / TileWidth;
-    int y = pos.y() / TileHeight;
+    int x = pos.x() / mTileWidth;
+    int y = pos.y() / mTileHeight;
     if (x != mMousePosition.x() || y != mMousePosition.y()) {
         mMousePosition = QPoint(x, y);
         update();
@@ -1026,4 +1047,10 @@ void MapEditorWidget::pushOperation(std::unique_ptr<Operation>&& op)
 
     update();
     emit updateUi();
+}
+
+void MapEditorWidget::onSizeChanged()
+{
+    setFixedSize(mMapData->width() * mTileWidth, mMapData->height() * mTileHeight);
+    emit sizeChanged();
 }

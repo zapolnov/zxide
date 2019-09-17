@@ -142,6 +142,7 @@ void TileSetEditorTab::on_tileWidthCombo_currentIndexChanged(int)
 {
     int w = comboSelectedItem(mUi->tileWidthCombo).toInt();
     if (w != mData.tileWidth) {
+        mData.tileWidth = w;
         emit updateUi();
         refresh();
     }
@@ -151,6 +152,7 @@ void TileSetEditorTab::on_tileHeightCombo_currentIndexChanged(int)
 {
     int h = comboSelectedItem(mUi->tileHeightCombo).toInt();
     if (h != mData.tileHeight) {
+        mData.tileHeight = h;
         emit updateUi();
         refresh();
     }

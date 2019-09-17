@@ -41,7 +41,7 @@ public:
     int height() const;
     void setSize(int w, int h);
 
-    void setTiles(QHash<int, MapEditorTile> tiles);
+    void setTiles(QHash<int, MapEditorTile> tiles, int tileWidth, int tileHeight);
 
     bool isModified() const;
     void reset();
@@ -133,6 +133,8 @@ private:
 
     MapData* mMapData;
     QTimer* mTimer;
+    int mTileWidth;
+    int mTileHeight;
     std::unique_ptr<Tool> mCurrentTool;
     std::vector<std::unique_ptr<Operation>> mUndoStack;
     size_t mUndoStackIndex;
@@ -150,6 +152,8 @@ private:
 
     void pushOperation(Operation* op);
     void pushOperation(std::unique_ptr<Operation>&& op);
+
+    void onSizeChanged();
 
     Q_DISABLE_COPY(MapEditorWidget)
 };

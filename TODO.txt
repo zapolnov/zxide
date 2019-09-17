@@ -14,9 +14,6 @@
 * Import and dither-to-monochrome images
 * Flip and rotation in the tile editor should work only on a selected area
 * Support different files in the debug info
-* Grid in the level editor
-* Tile selector in the level editor has overlapping name strings
-* Level editor is hardcoded to 16x16 tiles
 * No code generation for tiles, tilesets and maps
 * When highlighting an error, set cursor to the first non-space character in the string
 * Do not open file after renaming if it was not previously open

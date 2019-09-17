@@ -13,6 +13,7 @@
 #include "ui_MapEditorTab.h"
 #include <QTimer>
 #include <QIcon>
+#include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
 
@@ -427,30 +428,30 @@ void MapEditorTab::refreshTileList()
     mUi->paletteListWidget->clear();
 
     if (!file()) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         return;
     }
 
     QString tilesetFile = tilesetButtonSelection();
     if (tilesetFile.isEmpty()) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         return;
     }
 
     Directory* rootDirectory = file()->rootDirectory();
     if (!rootDirectory) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         return;
     }
 
     FileOrDirectory* child = rootDirectory->findChild(tilesetFile);
     if (!child) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         QMessageBox::critical(this, tr("Error"), tr("File not found: \"%1\".").arg(tilesetFile));
         return;
     }
     if (child->type() != File::Type) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         QMessageBox::critical(this, tr("Error"), tr("Not a file: \"%1\".").arg(tilesetFile));
         return;
     }
@@ -458,7 +459,7 @@ void MapEditorTab::refreshTileList()
     File* f = static_cast<File*>(child);
     QFile file(f->fileInfo().absoluteFilePath());
     if (!file.open(QFile::ReadOnly)) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         QMessageBox::critical(this, tr("Error"),
             tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
         return;
@@ -470,11 +471,22 @@ void MapEditorTab::refreshTileList()
     TileSetFile loader(fileData);
     TileSetData tileSet;
     if (!loader.deserializeFromJson(&tileSet)) {
-        mUi->editorWidget->setTiles(tiles);
+        mUi->editorWidget->setTiles(tiles, 8, 8);
         QMessageBox::critical(this, tr("Error"),
             tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(loader.lastError()));
         return;
     }
+
+    struct Item
+    {
+        QString name;
+        QImage image;
+        int type;
+        bool current;
+    };
+
+    int iconSize = qMax(tileSet.tileWidth, tileSet.tileHeight);
+    std::vector<Item> items;
 
     GfxData tileData(tileSet.tileWidth, tileSet.tileHeight);
     for (int y = 0; y < TileSetData::GridHeight; y++) {
@@ -514,12 +526,7 @@ void MapEditorTab::refreshTileList()
             QString name = fileOrDirectory->fileInfo().completeBaseName();
             QImage image1 = gfxToQImage(&tileData, gfxFile.colorMode, 1, false);
             QImage image2 = gfxToQImage(&tileData, gfxFile.colorMode, 1, true);
-            QPixmap fullPixmap1 = QPixmap::fromImage(image1);
-            QPixmap fullPixmap2 = QPixmap::fromImage(image2);
-
-            auto item = new QListWidgetItem(fullPixmap1, name, mUi->paletteListWidget, type);
-            item->setSizeHint(QSize(64, 64));
-            item->setTextAlignment(Qt::AlignCenter);
+            iconSize = qMax(qMax(iconSize, image1.width()), image1.height());
 
             int tileW = tileSet.tileWidth;
             int tileH = tileSet.tileHeight;
@@ -535,17 +542,44 @@ void MapEditorTab::refreshTileList()
                     MapEditorTile tile;
                     tile.pixmap1 = QPixmap::fromImage(image1.copy(xx * tileW, yy * tileH, tileW, tileH));
                     tile.pixmap2 = QPixmap::fromImage(image2.copy(xx * tileW, yy * tileH, tileW, tileH));
-                    tile.fullPixmap = (xx == 0 && yy == 0 ? fullPixmap1 : tile.pixmap1);
+                    tile.fullPixmap = (xx == 0 && yy == 0 ? QPixmap::fromImage(image1) : tile.pixmap1);
                     tile.width = (xx == 0 && yy == 0 ? nx : 1);
                     tile.height = (xx == 0 && yy == 0 ? ny : 1);
                     tiles[(y + yy) * TileSetData::GridWidth + (x + xx)] = tile;
                 }
             }
 
-            if (tileIndex == selectedTile)
-                mUi->paletteListWidget->setCurrentItem(item);
+            items.emplace_back(Item{ name, image1, type, tileIndex == selectedTile });
         }
     }
 
-    mUi->editorWidget->setTiles(tiles);
+    if (iconSize > 48)
+        iconSize = 48;
+
+    for (const auto& it : items) {
+        QImage image = it.image;
+        if (image.width() != iconSize || image.height() != iconSize) {
+            QImage fullImage(iconSize, iconSize, QImage::Format_ARGB32);
+            fullImage.fill(qRgb(0x40, 0x40, 0x40));
+
+            if (image.width() > iconSize || image.height() > iconSize)
+                image = image.scaled(QSize(iconSize, iconSize), Qt::KeepAspectRatio, Qt::FastTransformation);
+
+            QPainter painter(&fullImage);
+            painter.drawImage((iconSize - image.width()) / 2, (iconSize - image.height()) / 2, image);
+            image = fullImage;
+        }
+
+        QPixmap pixmap = QPixmap::fromImage(image);
+
+        auto item = new QListWidgetItem(pixmap, it.name, mUi->paletteListWidget, it.type);
+        item->setSizeHint(QSize(iconSize + 2, iconSize + 2));
+        item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+        if (it.current)
+            mUi->paletteListWidget->setCurrentItem(item);
+    }
+
+    mUi->paletteListWidget->setIconSize(QSize(iconSize, iconSize));
+    mUi->editorWidget->setTiles(tiles, tileSet.tileWidth, tileSet.tileHeight);
 }
