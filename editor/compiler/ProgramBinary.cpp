@@ -4,6 +4,7 @@
 #include "compiler/ProgramSection.h"
 
 ProgramBinary::ProgramBinary()
+    : mCurrentSection(nullptr)
 {
 }
 

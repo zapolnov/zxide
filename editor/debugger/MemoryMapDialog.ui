@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>800</width>
     <height>500</height>
    </rect>
   </property>
@@ -59,7 +59,13 @@
       <bool>true</bool>
      </property>
      <attribute name="headerVisible">
-      <bool>false</bool>
+      <bool>true</bool>
+     </attribute>
+     <attribute name="headerDefaultSectionSize">
+      <number>400</number>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
      </attribute>
      <column>
       <property name="text">
@@ -74,7 +80,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Close</set>
      </property>
      <property name="centerButtons">
       <bool>true</bool>

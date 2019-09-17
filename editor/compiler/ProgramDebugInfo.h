@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 struct SourceFile;
+class ProgramSection;
 
 struct TStates
 {
@@ -20,6 +21,14 @@ struct SourceLocation
     int line;
 };
 
+struct ProgramSectionInfo
+{
+    QString name;
+    unsigned startAddress;
+    unsigned length;
+    std::map<unsigned, QString> symbols;
+};
+
 class ProgramDebugInfo
 {
 public:
@@ -31,7 +40,10 @@ public:
 
     int addressForName(const QString& name) const;
     QString nameForAddress(unsigned address) const;
-    void setAddressForName(const QString& name, unsigned address);
+    void setAddressForName(const ProgramSection* section, const QString& name, unsigned address);
+
+    const std::vector<ProgramSectionInfo>& sections() const { return mSections; }
+    void addSection(const ProgramSection* section, unsigned start, unsigned length);
 
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken);
     const std::map<int, TStates>& tstatesForFile(const QString& file) const;
@@ -44,6 +56,8 @@ private:
         size_t operator()(const QString& str) const { return qHash(str); }
     };
 
+    std::vector<ProgramSectionInfo> mSections;
+    std::unordered_map<const ProgramSection*, size_t> mSectionIndex;
     std::unordered_map<QString, std::map<int, unsigned>, hash> mFileToMemory;
     std::unordered_map<QString, std::map<int, TStates>, hash> mFileToTStates;
     std::unordered_map<QString, unsigned, hash> mNameToAddress;

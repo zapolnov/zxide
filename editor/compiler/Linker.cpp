@@ -2,6 +2,7 @@
 #include "Program.h"
 #include "ProgramSection.h"
 #include "ProgramBinary.h"
+#include "ProgramDebugInfo.h"
 #include "Expression.h"
 #include "IErrorReporter.h"
 
@@ -51,11 +52,19 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
             for (ProgramSection* section : it.second) {
                 if (!section->resolveAddresses(mReporter, mProgram, addr))
                     throw LinkerError();
+
+                unsigned start = section->resolvedBase();
+                unsigned length = addr - start;
+                binary->debugInfo()->addSection(section, start, length);
             }
 
             // Emit code
-            for (ProgramSection* section : it.second)
+            for (ProgramSection* section : it.second) {
+                binary->setCurrentSection(section);
                 section->emitCode(mProgram, binary.get(), mReporter);
+            }
+
+            binary->setCurrentSection(nullptr);
         }
 
         // Ensure that all EQUs are validated

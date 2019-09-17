@@ -1,4 +1,5 @@
 #include "ProgramDebugInfo.h"
+#include "compiler/ProgramSection.h"
 #include "compiler/Compiler.h"
 #include <cstring>
 
@@ -54,10 +55,22 @@ QString ProgramDebugInfo::nameForAddress(unsigned address) const
     return QStringLiteral("%1+%2").arg(it->second).arg(address - it->first);
 }
 
-void ProgramDebugInfo::setAddressForName(const QString& name, unsigned address)
+void ProgramDebugInfo::setAddressForName(const ProgramSection* section, const QString& name, unsigned address)
 {
     mNameToAddress[name] = address;
     mAddressToName.emplace(address, name);
+
+    auto it = mSectionIndex.find(section);
+    Q_ASSERT(it != mSectionIndex.end());
+    if (it != mSectionIndex.end())
+        mSections[it->second].symbols.emplace(address, name);
+}
+
+void ProgramDebugInfo::addSection(const ProgramSection* section, unsigned start, unsigned length)
+{
+    size_t index = mSections.size();
+    mSections.emplace_back(ProgramSectionInfo{ QString(section->nameCStr()), start, length });
+    mSectionIndex[section] = index;
 }
 
 void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)

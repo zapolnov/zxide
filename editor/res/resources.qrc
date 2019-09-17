@@ -51,6 +51,7 @@
     <file>fatcow16x16/picture.png</file>
     <file>fatcow16x16/pictures.png</file>
     <file>fatcow16x16/pipette.png</file>
+    <file>fatcow16x16/receipt.png</file>
     <file>fatcow16x16/select.png</file>
     <file>fatcow16x16/shape_square_edit.png</file>
     <file>fatcow16x16/redo.png</file>
@@ -66,6 +67,8 @@
     <file>fatcow16x16/stop.png</file>
     <file>fatcow16x16/table_heatmap_cell.png</file>
     <file>fatcow16x16/table_layout_subtotals.png</file>
+    <file>fatcow16x16/tag.png</file>
+    <file>fatcow16x16/tag_hash.png</file>
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
     <file>fugue16x16/arrow-step-out.png</file>

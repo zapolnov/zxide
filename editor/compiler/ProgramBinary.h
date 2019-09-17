@@ -9,6 +9,7 @@
 
 struct SourceFile;
 class ProgramDebugInfo;
+class ProgramSection;
 
 class ProgramBinary
 {
@@ -29,6 +30,9 @@ public:
     unsigned baseAddress() const { return mCurrentFile->second.baseAddress; }
     unsigned endAddress() const { return mCurrentFile->second.endAddress; }
 
+    ProgramSection* currentSection() const { return mCurrentSection; }
+    void setCurrentSection(ProgramSection* section) { mCurrentSection = section; }
+
     const std::string& currentFile() const { return mCurrentFile->first; }
     void setCurrentFile(const std::string& fileName);
     void setCurrentFile(const std::string& fileName, unsigned baseAddress);
@@ -48,6 +52,7 @@ public:
 private:
     FileMap mFiles;
     FileMap::iterator mCurrentFile;
+    ProgramSection* mCurrentSection;
 
     FileMap::iterator createFile(std::string fileName, unsigned baseAddress);
 

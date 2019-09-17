@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QThread>
 #include "debugger/BreakpointsModel.h"
+#include <map>
 #include <vector>
 
 enum Register
@@ -115,6 +116,7 @@ enum class Machine : int
 class File;
 class ProgramBinary;
 class QTimer;
+struct ProgramSectionInfo;
 struct SourceLocation;
 
 class EmulatorCore : public QObject
@@ -148,6 +150,7 @@ public:
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
     SourceLocation sourceLocationForAddress(unsigned address) const;
     QString nameForAddress(unsigned address) const;
+    std::map<QString, std::vector<ProgramSectionInfo>> programSectionInfo() const;
 
     void setCollectMemoryOperations(bool flag);
 

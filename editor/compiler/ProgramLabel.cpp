@@ -134,5 +134,7 @@ bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* re
 
 void ProgramLabel::emitBinary(Program*, ProgramBinary* binary, IErrorReporter*) const
 {
-    binary->debugInfo()->setAddressForName(QString::fromUtf8(mName.c_str(), int(mName.length())), mAddress->value());
+    Q_ASSERT(binary->currentSection() != nullptr);
+    binary->debugInfo()->setAddressForName(binary->currentSection(),
+        QString::fromUtf8(mName.c_str(), int(mName.length())), mAddress->value());
 }

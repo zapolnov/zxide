@@ -64,6 +64,8 @@ private:
     bool build();
     void clearBuildResult();
 
+    void navigateToAddress(unsigned address, bool setHighlight = false);
+
     void updateUi();
 
     Q_SLOT void on_actionNewProject_triggered();

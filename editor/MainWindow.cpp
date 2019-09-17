@@ -41,6 +41,8 @@ MainWindow::MainWindow()
 
     mEmulatorCore = new EmulatorCore(this);
     connect(mEmulatorCore, &EmulatorCore::updateUi, this, &MainWindow::updateUi);
+    connect(mEmulatorCore, &EmulatorCore::enterDebugger, this,
+        std::bind(&MainWindow::navigateToAddress, this, std::placeholders::_1, true));
     connect(mEmulatorCore, &EmulatorCore::leaveDebugger,
         mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC, true));
     connect(mEmulatorCore, &EmulatorCore::stopped,
@@ -58,22 +60,6 @@ MainWindow::MainWindow()
                 }
             }
             HighlightManager::instance()->clearHighlight(Highlight::RunToCursor);
-        });
-
-    connect(mEmulatorCore, &EmulatorCore::enterDebugger, this, [this](unsigned pc) {
-            SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(pc);
-            File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
-            if (file) {
-                auto tab = setCurrentTab(file);
-                if (tab && tab->canGoToLine()) {
-                    tab->goToLine(loc.line - 1);
-                    HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
-                    tab->setFocusToEditor();
-                    QApplication::setActiveWindow(this);
-                    return;
-                }
-            }
-            HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
         });
 
     mUi->setupUi(this);
@@ -429,6 +415,27 @@ void MainWindow::clearBuildResult()
     mBuildResultLabel->disconnect(this);
 }
 
+void MainWindow::navigateToAddress(unsigned address, bool setHighlight)
+{
+    SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(address);
+    File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
+
+    if (file) {
+        auto tab = setCurrentTab(file);
+        if (tab && tab->canGoToLine()) {
+            tab->goToLine(loc.line - 1);
+            if (setHighlight)
+                HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
+            tab->setFocusToEditor();
+            QApplication::setActiveWindow(this);
+            return;
+        }
+    }
+
+    if (setHighlight)
+        HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
+}
+
 void MainWindow::updateUi()
 {
     bool modified = hasModifiedFiles();
@@ -692,6 +699,8 @@ void MainWindow::on_actionViewMemoryMap_triggered()
         return;
 
     MemoryMapDialog dlg(this);
+    connect(&dlg, &MemoryMapDialog::addressClicked,
+        this, std::bind(&MainWindow::navigateToAddress, this, std::placeholders::_1, false));
     dlg.exec();
 }
 

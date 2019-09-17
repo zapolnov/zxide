@@ -11,6 +11,7 @@ ProgramSection::ProgramSection(Program* program, const Token& token, std::string
     : mProgram(program)
     , mToken(token)
     , mName(std::move(name))
+    , mResolvedBase(0)
     , mCalculatedBase(0)
     , mCalculatedAlignment(0)
     , mHasCalculatedBase(false)
@@ -94,6 +95,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
         return false;
     }
 
+    mResolvedBase = address;
     return CodeEmitter::resolveAddresses(reporter, program, address);
 }
 

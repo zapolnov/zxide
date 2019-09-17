@@ -315,6 +315,31 @@ QString EmulatorCore::nameForAddress(unsigned address) const
     return QString();
 }
 
+std::map<QString, std::vector<ProgramSectionInfo>> EmulatorCore::programSectionInfo() const
+{
+    std::map<QString, std::vector<ProgramSectionInfo>> result;
+
+    {
+        QMutexLocker lock(&mutex);
+        if (programBinary) {
+            auto saved = programBinary->currentFile();
+            try {
+                for (const auto& it : programBinary->files()) {
+                    programBinary->setCurrentFile(it.first);
+                    if (auto debugInfo = programBinary->debugInfo())
+                        result[QString::fromUtf8(it.first.c_str())] = debugInfo->sections();
+                }
+            } catch (...) {
+                programBinary->setCurrentFile(saved);
+                throw;
+            }
+            programBinary->setCurrentFile(saved);
+        }
+    }
+
+    return result;
+}
+
 void EmulatorCore::setCollectMemoryOperations(bool flag)
 {
     QMutexLocker lock(&mutex);

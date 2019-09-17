@@ -30,6 +30,7 @@ public:
     const std::string& fileName() const { Q_ASSERT(mHasFileName || mFileName.empty()); return mFileName; }
     void setFileName(std::string value) { mFileName = std::move(value); mHasFileName = true; }
 
+    unsigned resolvedBase() const { return mResolvedBase; }
     bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
     void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
 
@@ -40,6 +41,7 @@ private:
     std::unique_ptr<Expression> mBase;
     std::unique_ptr<Expression> mAlignment;
     std::string mFileName;
+    mutable unsigned mResolvedBase;
     mutable unsigned mCalculatedBase;
     mutable unsigned mCalculatedAlignment;
     mutable bool mHasCalculatedBase;
