@@ -26,6 +26,7 @@
 #include <QCheckBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QDesktopServices>
 #include <QTimer>
 #include <QLabel>
 #include <QApplication>
@@ -93,6 +94,9 @@ MainWindow::MainWindow()
     mBuildResultLabel = new ClickableLabel(mUi->statusBar);
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
+
+    for (QAction* action : mUi->menuUsefulLinks->actions())
+        connect(action, &QAction::triggered, this, &MainWindow::openUsefulLink);
 
     updateUi();
 }
@@ -990,4 +994,11 @@ void MainWindow::on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea a
             mUi->registersWidget->setOrientation(Qt::Horizontal);
             break;
     }
+}
+
+void MainWindow::openUsefulLink()
+{
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (action)
+        QDesktopServices::openUrl(action->whatsThis());
 }

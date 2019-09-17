@@ -125,6 +125,35 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <widget class="QMenu" name="menuUsefulLinks">
+     <property name="title">
+      <string>Useful &amp;links</string>
+     </property>
+     <property name="icon">
+      <iconset resource="res/resources.qrc">
+       <normaloff>:/resources/fatcow16x16/external.png</normaloff>:/resources/fatcow16x16/external.png</iconset>
+     </property>
+     <addaction name="actionHowToWriteZXSpectrumGames"/>
+     <addaction name="separator"/>
+     <addaction name="actionZ80InstructionSet"/>
+     <addaction name="actionZ80ShiftInstructions"/>
+     <addaction name="actionZ80FlagAffection"/>
+     <addaction name="actionZ80InstructionTimings"/>
+     <addaction name="separator"/>
+     <addaction name="actionSpectrumMemoryMap"/>
+     <addaction name="actionSpectrumScreenMemoryLayout"/>
+     <addaction name="actionSpectrumKeyboard"/>
+     <addaction name="actionSpectrumSound"/>
+     <addaction name="separator"/>
+     <addaction name="actionZXSpectrum128KReference"/>
+     <addaction name="actionSpectrumKeyboardCheatSheet"/>
+     <addaction name="actionZXSpectrumSystemVariables"/>
+     <addaction name="separator"/>
+     <addaction name="actionZ80MathRoutines"/>
+     <addaction name="actionTheCompleteZXSpectrumROMDisassembly"/>
+    </widget>
+    <addaction name="menuUsefulLinks"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuDebug">
@@ -923,6 +952,174 @@
    </property>
    <property name="text">
     <string>View &amp;memory map...</string>
+   </property>
+  </action>
+  <action name="actionSpectrumMemoryMap">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum &amp;memory map...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.breakintoprogram.co.uk/computers/zx-spectrum/memory-map</string>
+   </property>
+  </action>
+  <action name="actionSpectrumScreenMemoryLayout">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum &amp;screen memory layout...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.breakintoprogram.co.uk/computers/zx-spectrum/screen-memory-layout</string>
+   </property>
+  </action>
+  <action name="actionSpectrumKeyboard">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum &amp;keyboard...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.breakintoprogram.co.uk/computers/zx-spectrum/keyboard</string>
+   </property>
+  </action>
+  <action name="actionSpectrumSound">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum soun&amp;d...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.breakintoprogram.co.uk/computers/zx-spectrum/sound</string>
+   </property>
+  </action>
+  <action name="actionZ80InstructionSet">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z80 &amp;instruction set...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://z80-heaven.wikidot.com/instructions-set</string>
+   </property>
+  </action>
+  <action name="actionZ80ShiftInstructions">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z80 s&amp;hift instructions...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://jgmalcolm.com/z80/advanced/shif</string>
+   </property>
+  </action>
+  <action name="actionZ80FlagAffection">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z80 &amp;flag affection...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.z80.info/z80sflag.htm</string>
+   </property>
+  </action>
+  <action name="actionZ80InstructionTimings">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z80 instruction &amp;timings...</string>
+   </property>
+   <property name="whatsThis">
+    <string>https://sites.google.com/site/timeproofing/z80-instruction-set-1/timings</string>
+   </property>
+  </action>
+  <action name="actionSpectrumKeyboardCheatSheet">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum keyboard &amp;cheat sheet...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://slady.net/Sinclair-ZX-Spectrum-keyboard/</string>
+   </property>
+  </action>
+  <action name="actionHowToWriteZXSpectrumGames">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>How to &amp;write ZX Spectrum games...</string>
+   </property>
+   <property name="whatsThis">
+    <string>https://chuntey.arjunnair.in/?cat=61</string>
+   </property>
+  </action>
+  <action name="actionZXSpectrumSystemVariables">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum s&amp;ystem variables...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://www.worldofspectrum.org/ZXBasicManual/zxmanchap25.html</string>
+   </property>
+  </action>
+  <action name="actionZ80MathRoutines">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z80 math &amp;routines...</string>
+   </property>
+   <property name="whatsThis">
+    <string>http://z80-heaven.wikidot.com/math</string>
+   </property>
+  </action>
+  <action name="actionZXSpectrum128KReference">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>ZX Spectrum 12&amp;8K reference...</string>
+   </property>
+   <property name="whatsThis">
+    <string>https://www.worldofspectrum.org/faq/reference/128kreference.htm</string>
+   </property>
+  </action>
+  <action name="actionTheCompleteZXSpectrumROMDisassembly">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/world_link.png</normaloff>:/resources/fatcow16x16/world_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>The complete ZX Spectrum R&amp;OM disassembly...</string>
+   </property>
+   <property name="whatsThis">
+    <string>https://www.esocop.org/docs/CompleteSpectrumROMDisassemblyThe.pdf</string>
    </property>
   </action>
  </widget>

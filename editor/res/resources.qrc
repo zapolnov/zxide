@@ -32,6 +32,7 @@
     <file>fatcow16x16/diskette.png</file>
     <file>fatcow16x16/door_in.png</file>
     <file>fatcow16x16/error.png</file>
+    <file>fatcow16x16/external.png</file>
     <file>fatcow16x16/filter.png</file>
     <file>fatcow16x16/folder.png</file>
     <file>fatcow16x16/folder_add.png</file>
@@ -70,6 +71,7 @@
     <file>fatcow16x16/tag_hash.png</file>
     <file>fatcow16x16/text_edit.png</file>
     <file>fatcow16x16/undo.png</file>
+    <file>fatcow16x16/world_link.png</file>
     <file>fugue16x16/arrow-step-out.png</file>
     <file>fugue16x16/arrow-step-over.png</file>
     <file>fugue16x16/arrow-step.png</file>

@@ -137,6 +137,8 @@ private:
 
     Q_SLOT void on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area);
 
+    Q_SLOT void openUsefulLink();
+
     Q_DISABLE_COPY(MainWindow)
 };
 
