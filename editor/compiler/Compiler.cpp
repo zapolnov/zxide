@@ -1,11 +1,14 @@
 #include "Compiler.h"
 #include "Program.h"
 #include "ProgramBinary.h"
+#include "ProgramOpcode.h"
 #include "Assembler.h"
 #include "Linker.h"
 #include "LuaBindings.h"
 #include "TapeFileWriter.h"
 #include "Util.h"
+#include "GfxFile.h"
+#include "MapFile.h"
 #include "scripting/LuaVM.h"
 #include <exception>
 #include <QDataStream>
@@ -61,6 +64,8 @@ void Compiler::addSourceFile(const QString& fullName, const QString& path)
         mBasicSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("asm"))
         mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
+    else if (ext == QStringLiteral("gfx"))
+        mGraphics.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("map"))
         mMaps.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
 }
@@ -76,10 +81,10 @@ void Compiler::compile()
         if (!runBuildScripts())
             throw CompilationFailed();
 
+        // Compile assembler sources
         for (const auto& source : mAssemblerSources) {
             QFileInfo info(source->path);
             setStatusText(tr("Compiling %1").arg(info.fileName()));
-            QString extension = info.suffix();
 
             QFile file(info.absoluteFilePath());
             if (!file.open(QFile::ReadOnly)) {
@@ -92,6 +97,92 @@ void Compiler::compile()
 
             if (!Assembler(mProgram.get(), this).parse(source.get(), fileData))
                 throw CompilationFailed();
+        }
+
+        // Compile graphic files
+        for (const auto& source : mGraphics) {
+            QFileInfo info(source->path);
+            setStatusText(tr("Processing %1").arg(info.fileName()));
+
+            QFile file(info.absoluteFilePath());
+            if (!file.open(QFile::ReadOnly)) {
+                error(source->name, 0, file.errorString());
+                break;
+            }
+
+            GfxFile gfxFile(file.readAll());
+            file.close();
+
+            GfxData data(0, 0);
+            if (!gfxFile.deserializeFromJson(&data)) {
+                error(source->name, 0,
+                    tr("unable to load file '%1': %2").arg(file.fileName()).arg(gfxFile.lastError()));
+                break;
+            }
+
+            switch (gfxFile.format) {
+                case GfxFormat::None:
+                    continue;
+
+                case GfxFormat::Monochrome: {
+                    gfxFile.clearData();
+                    gfxFile.serializeToMonochrome(&data);
+                    break;
+                }
+
+                case GfxFormat::BTile16: {
+                    gfxFile.clearData();
+                    gfxFile.serializeToBTile16(&data);
+                    break;
+                }
+
+                default:
+                    Q_ASSERT(false);
+                    error(source->name, 0, tr("file '%1' has unknown output format"));
+                    continue;
+            }
+
+            includeBinaryFile(source.get(), info, gfxFile.data());
+        }
+
+        // Compile map files
+        for (const auto& source : mMaps) {
+            QFileInfo info(source->path);
+            setStatusText(tr("Processing %1").arg(info.fileName()));
+
+            QFile file(info.absoluteFilePath());
+            if (!file.open(QFile::ReadOnly)) {
+                error(source->name, 0, file.errorString());
+                break;
+            }
+
+            MapFile mapFile(file.readAll());
+            file.close();
+
+            MapData data(0, 0);
+            if (!mapFile.deserializeFromJson(&data)) {
+                error(source->name, 0,
+                    tr("unable to load file '%1': %2").arg(file.fileName()).arg(mapFile.lastError()));
+                break;
+            }
+
+            switch (mapFile.format) {
+                case MapFormat::None:
+                    continue;
+
+                case MapFormat::ByteArray: {
+                    mapFile.clearData();
+                    mapFile.serializeToByteArray(&data);
+                    break;
+                }
+
+                default:
+                    Q_ASSERT(false);
+                    error(source->name, 0, tr("file '%1' has unknown output format"));
+                    continue;
+            }
+
+            includeBinaryFile(source.get(), info, mapFile.data());
         }
 
         setStatusText(tr("Linking assembly code..."));
@@ -192,6 +283,23 @@ bool Compiler::runBuildScripts()
     }
 
     return true;
+}
+
+#ifdef emit
+#undef emit
+#endif
+
+void Compiler::includeBinaryFile(const SourceFile* source, const QFileInfo& inputFile, const QByteArray& data)
+{
+    Token token;
+    token.file = source;
+    token.line = 0;
+    token.id = T_IDENTIFIER;
+    token.text = identifierFromString(inputFile.fileName());
+
+    auto section = mProgram->getOrCreateSection(token.text, token);
+    mProgram->addLabel(token, section, token.text);
+    section->emit<DEFB_BYTEARRAY>(token, data);
 }
 
 namespace

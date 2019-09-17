@@ -21,6 +21,7 @@ public:
 
     const QByteArray& data() const { return mFileData; }
     void setData(const QByteArray& data) { mFileData = data; }
+    void clearData() { mFileData.clear(); }
 
     bool deserializeFromJson(TileSetData* data);
     void serializeToJson(const TileSetData* data);

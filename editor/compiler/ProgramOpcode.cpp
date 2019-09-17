@@ -67,6 +67,24 @@ void DEFB_STRING::emitBinary(Program* program, ProgramBinary* binary, IErrorRepo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DEFB_BYTEARRAY::DEFB_BYTEARRAY(const Token& token, const QByteArray& data)
+    : ProgramOpcode(token)
+    , mData(data)
+{
+}
+
+DEFB_BYTEARRAY::~DEFB_BYTEARRAY()
+{
+}
+
+void DEFB_BYTEARRAY::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    for (auto ch : mData)
+        binary->emitByte(token().file, token().line, ch);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 DEFW::DEFW(const Token& token, std::unique_ptr<Expression> value)
     : ProgramOpcode(token)
     , mValue(std::move(value))

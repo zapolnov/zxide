@@ -1,5 +1,6 @@
 #include "LuaUtil.h"
 #include "LuaVM.h"
+#include "compiler/Util.h"
 #include <QFileInfo>
 #include <lua.hpp>
 #include <sstream>
@@ -69,28 +70,7 @@ static int luaMd5Final(lua_State* L)
 
 static int pushIdentifierFromString(lua_State* L, const QString& str)
 {
-    if (str.length() == 0) {
-        lua_pushliteral(L, "_");
-        return 1;
-    }
-
-    std::stringstream ss;
-
-    if (str[0] >= '0' && str[0] <= '9')
-        ss << '_';
-
-    for (const QChar& ch : str) {
-        if (ch >= 'a' && ch <= 'z')
-            ss << ch.toLatin1();
-        else if (ch >= 'A' && ch <= 'Z')
-            ss << ch.toLatin1();
-        else if (ch >= '0' && ch <= '9')
-            ss << ch.toLatin1();
-        else
-            ss << '_';
-    }
-
-    LuaVM::fromLua(L)->pushString(ss.str());
+    LuaVM::fromLua(L)->pushString(identifierFromString(str));
     return 1;
 }
 

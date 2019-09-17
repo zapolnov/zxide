@@ -23,6 +23,7 @@ public:
 
     const QByteArray& data() const { return mFileData; }
     void setData(const QByteArray& data) { mFileData = data; }
+    void clearData() { mFileData.clear(); }
 
     bool deserializeFromJson(GfxData* data);
     void serializeToJson(const GfxData* data);

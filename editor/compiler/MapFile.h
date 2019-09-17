@@ -18,6 +18,7 @@ public:
 
     const QByteArray& data() const { return mFileData; }
     void setData(const QByteArray& data) { mFileData = data; }
+    void clearData() { mFileData.clear(); }
 
     bool deserializeFromJson(MapData* data);
     void serializeToJson(const MapData* data);

@@ -2,6 +2,7 @@
 #define COMPILER_PROGRAMOPCODE_H
 
 #include "AssemblerToken.h"
+#include <QByteArray>
 #include <memory>
 #include <vector>
 
@@ -72,6 +73,24 @@ private:
     std::string mText;
 
     Q_DISABLE_COPY(DEFB_STRING)
+};
+
+class DEFB_BYTEARRAY final : public ProgramOpcode
+{
+public:
+    DEFB_BYTEARRAY(const Token& token, const QByteArray& data);
+    ~DEFB_BYTEARRAY() override;
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return unsigned(mData.length()); }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    QByteArray mData;
+
+    Q_DISABLE_COPY(DEFB_BYTEARRAY)
 };
 
 class DEFW final : public ProgramOpcode
