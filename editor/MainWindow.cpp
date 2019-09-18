@@ -95,8 +95,10 @@ MainWindow::MainWindow()
     mUi->statusBar->addWidget(mBuildResultLabel);
     clearBuildResult();
 
-    for (QAction* action : mUi->menuUsefulLinks->actions())
-        connect(action, &QAction::triggered, this, &MainWindow::openUsefulLink);
+    for (QMenu* menu : { mUi->menuTutorials, mUi->menuReferences, mUi->menuBooks, mUi->menuCodeSnippets }) {
+        for (QAction* action : menu->actions())
+            connect(action, &QAction::triggered, this, &MainWindow::openUsefulLink);
+    }
 
     updateUi();
 }
