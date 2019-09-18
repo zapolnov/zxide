@@ -47,6 +47,9 @@ void AddBreakpointDialog::done(int r)
         hexadecimal = mHexadecimal;
 
         switch (lastBreakpointType) {
+            case BreakpointType::Code:
+                Q_ASSERT(false);
+                return;
             case BreakpointType::MemoryRead:
                 BreakpointsModel::instance()->addMemoryReadBreakpoint(this, lastAddress);
                 break;

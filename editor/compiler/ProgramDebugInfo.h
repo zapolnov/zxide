@@ -5,6 +5,7 @@
 #include <QString>
 #include <map>
 #include <unordered_map>
+#include <vector>
 
 struct SourceFile;
 class ProgramSection;
