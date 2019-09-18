@@ -23,3 +23,4 @@
 * Lazily evaluate byte constant in Z80 opcodes (see matchByte() and byteConstant() in the code)
 * Allow constants like 'A' as operands
 * Step Out maybe incorrectly handles inner calls
+* Support for undocumented Z80 instructions

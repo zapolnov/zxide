@@ -6,6 +6,7 @@
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QToolTip>
+#include <QTimer>
 #include <QDialog>
 
 static constexpr int AddressWidth = 4;
@@ -19,8 +20,13 @@ MemoryWidget::MemoryWidget(QWidget* parent)
     , mMouseX(INT_MIN)
     , mMouseY(INT_MIN)
     , mAddressUnderMouse(-1)
+    , mUpdateToolTip(false)
     , mShowingToolTip(false)
 {
+    mTimer = new QTimer(this);
+    connect(mTimer, &QTimer::timeout, this, &MemoryWidget::updateToolTip);
+    mTimer->start(100);
+
     setMouseTracking(true);
 
     connect(EmulatorCore::instance(), &EmulatorCore::memoryChanged, this, QOverload<>::of(&MemoryWidget::update));
@@ -163,12 +169,15 @@ void MemoryWidget::paintGL()
     if (addressUnderMouse != mAddressUnderMouse) {
         mAddressUnderMouse = addressUnderMouse;
         if (addressUnderMouse < 0)
-            hideToolTip();
+            mToolTip = QString();
         else {
-            showToolTip(tooltipX, tooltipY, QStringLiteral("0x%1 / %2")
+            mToolTipX = tooltipX;
+            mToolTipY = tooltipY;
+            mToolTip = QStringLiteral("0x%1 / %2")
                 .arg(QStringLiteral("%1").arg(addressUnderMouse, 4, 16, QChar('0')).toUpper())
-                .arg(addressUnderMouse));
+                .arg(addressUnderMouse);
         }
+        mUpdateToolTip = true;
     }
 }
 
@@ -201,11 +210,14 @@ void MemoryWidget::leaveEvent(QEvent* event)
     mMouseX = INT_MIN;
     mMouseY = INT_MIN;
     mAddressUnderMouse = -1;
+    mToolTip.clear();
+    hideToolTip();
     update();
 }
 
 void MemoryWidget::hideEvent(QHideEvent* event)
 {
+    mUpdateToolTip = false;
     hideToolTip();
 }
 
@@ -217,6 +229,17 @@ void MemoryWidget::keyPressEvent(QKeyEvent* event)
 void MemoryWidget::keyReleaseEvent(QKeyEvent* event)
 {
     mScrollBar->keyReleaseEvent(event);
+}
+
+void MemoryWidget::updateToolTip()
+{
+    if (mUpdateToolTip) {
+        mUpdateToolTip = false;
+        if (mToolTip.isEmpty())
+            hideToolTip();
+        else
+            showToolTip(mToolTipX, mToolTipY, mToolTip);
+    }
 }
 
 void MemoryWidget::showToolTip(int tooltipX, int tooltipY, const QString& text)

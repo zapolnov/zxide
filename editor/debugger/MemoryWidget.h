@@ -32,12 +32,19 @@ protected:
 
 private:
     ScrollBar* mScrollBar;
+    QTimer* mTimer;
+    QString mToolTip;
     std::vector<char> mDataBuffer;
     std::vector<char> mLineBuffer;
     int mMouseX;
     int mMouseY;
+    int mToolTipX;
+    int mToolTipY;
     int mAddressUnderMouse;
+    bool mUpdateToolTip;
     bool mShowingToolTip;
+
+    void updateToolTip();
 
     void showToolTip(int tooltipX, int tooltipY, const QString& text);
     void hideToolTip();
