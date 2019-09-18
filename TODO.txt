@@ -1,5 +1,4 @@
 * Implement memory editing in the memory view
-* In the memory view highlight symbol when mouse is over a hexadecimal value and vise-versa; also show full address
 * Go to address in memory window
 * Disassembly window (?)
 * Watch window with symbols (?)

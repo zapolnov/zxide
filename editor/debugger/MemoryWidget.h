@@ -24,6 +24,9 @@ protected:
 
     void wheelEvent(QWheelEvent* event) override;
     void contextMenuEvent(QContextMenuEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void leaveEvent(QEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
 
@@ -31,6 +34,13 @@ private:
     ScrollBar* mScrollBar;
     std::vector<char> mDataBuffer;
     std::vector<char> mLineBuffer;
+    int mMouseX;
+    int mMouseY;
+    int mAddressUnderMouse;
+    bool mShowingToolTip;
+
+    void showToolTip(int tooltipX, int tooltipY, const QString& text);
+    void hideToolTip();
 
     Q_DISABLE_COPY(MemoryWidget)
 };

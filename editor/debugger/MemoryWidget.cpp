@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QContextMenuEvent>
 #include <QMenu>
+#include <QToolTip>
 #include <QDialog>
 
 static constexpr int AddressWidth = 4;
@@ -15,7 +16,13 @@ static constexpr int SymWidth = 1;
 MemoryWidget::MemoryWidget(QWidget* parent)
     : QOpenGLWidget(parent)
     , mScrollBar(nullptr)
+    , mMouseX(INT_MIN)
+    , mMouseY(INT_MIN)
+    , mAddressUnderMouse(-1)
+    , mShowingToolTip(false)
 {
+    setMouseTracking(true);
+
     connect(EmulatorCore::instance(), &EmulatorCore::memoryChanged, this, QOverload<>::of(&MemoryWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::started, this, QOverload<>::of(&MemoryWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, QOverload<>::of(&MemoryWidget::update));
@@ -83,6 +90,10 @@ void MemoryWidget::paintGL()
     int dataOffset = 0;
     EmulatorCore::instance()->getMemory(firstAddr, mDataBuffer.data(), dataBufferSize);
 
+    int tooltipX = 0;
+    int tooltipY = 0;
+    int addressUnderMouse = -1;
+
     for (int n = 0; n < h; n++) {
         int mid = AddressWidth + Spacing + w * HexWidth - 1 + Spacing;
         int i = 0, j = mid;
@@ -98,6 +109,24 @@ void MemoryWidget::paintGL()
 
         for (int xx = 0; xx < w && address <= 0xffff; xx++) {
             char byte = mDataBuffer[dataOffset++];
+
+            int y1 = y;
+            int y2 = y + CharHeight;
+            int hexX1 = x + i * CharWidth - CharWidth / 2;
+            int hexX2 = hexX1 + 3 * CharWidth;
+            int txtX1 = x + j * CharWidth;
+            int txtX2 = txtX1 + 1 * CharWidth;
+
+            bool mouseOverHex = (mMouseX >= hexX1 && mMouseX < hexX2 && mMouseY >= y1 && mMouseY < y2);
+            bool mouseOverTxt = (mMouseX >= txtX1 && mMouseX < txtX2 && mMouseY >= y1 && mMouseY < y2);
+
+            if (mouseOverHex || mouseOverTxt) {
+                addressUnderMouse = int((dataOffset - 1) + firstAddr);
+                painter.fillRect(hexX1, y1, 3 * CharWidth, CharHeight, Qt::green);
+                painter.fillRect(txtX1, y1, 1 * CharWidth, CharHeight, Qt::green);
+                tooltipX = (mouseOverHex ? hexX1 : txtX1);
+                tooltipY = y1;
+            }
 
             sprintf(buf, "%02X", (unsigned char)byte);
             mLineBuffer[i++] = buf[0];
@@ -130,6 +159,17 @@ void MemoryWidget::paintGL()
     int lineX2 = startX2 + (Spacing * CharWidth - 1) / 2;
     painter.setPen(Qt::gray);
     painter.drawLine(lineX2, 0, lineX2, pixH);
+
+    if (addressUnderMouse != mAddressUnderMouse) {
+        mAddressUnderMouse = addressUnderMouse;
+        if (addressUnderMouse < 0)
+            hideToolTip();
+        else {
+            showToolTip(tooltipX, tooltipY, QStringLiteral("0x%1 / %2")
+                .arg(QStringLiteral("%1").arg(addressUnderMouse, 4, 16, QChar('0')).toUpper())
+                .arg(addressUnderMouse));
+        }
+    }
 }
 
 void MemoryWidget::wheelEvent(QWheelEvent* event)
@@ -149,6 +189,26 @@ void MemoryWidget::contextMenuEvent(QContextMenuEvent* event)
     // FIXME
 }
 
+void MemoryWidget::mouseMoveEvent(QMouseEvent* event)
+{
+    mMouseX = event->pos().x();
+    mMouseY = event->pos().y();
+    update();
+}
+
+void MemoryWidget::leaveEvent(QEvent* event)
+{
+    mMouseX = INT_MIN;
+    mMouseY = INT_MIN;
+    mAddressUnderMouse = -1;
+    update();
+}
+
+void MemoryWidget::hideEvent(QHideEvent* event)
+{
+    hideToolTip();
+}
+
 void MemoryWidget::keyPressEvent(QKeyEvent* event)
 {
     mScrollBar->keyPressEvent(event);
@@ -157,4 +217,35 @@ void MemoryWidget::keyPressEvent(QKeyEvent* event)
 void MemoryWidget::keyReleaseEvent(QKeyEvent* event)
 {
     mScrollBar->keyReleaseEvent(event);
+}
+
+void MemoryWidget::showToolTip(int tooltipX, int tooltipY, const QString& text)
+{
+    bool fadeWasEnabled = QApplication::isEffectEnabled(Qt::UI_FadeTooltip);
+    bool animateWasEnabled = QApplication::isEffectEnabled(Qt::UI_AnimateTooltip);
+    QApplication::setEffectEnabled(Qt::UI_FadeTooltip, false);
+    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip, false);
+
+    QToolTip::showText(mapToGlobal(QPoint(tooltipX + 5, tooltipY + 5)), text, this);
+    mShowingToolTip = true;
+
+    QApplication::setEffectEnabled(Qt::UI_FadeTooltip, fadeWasEnabled);
+    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip, animateWasEnabled);
+}
+
+void MemoryWidget::hideToolTip()
+{
+    if (!mShowingToolTip)
+        return;
+
+    bool fadeWasEnabled = QApplication::isEffectEnabled(Qt::UI_FadeTooltip);
+    bool animateWasEnabled = QApplication::isEffectEnabled(Qt::UI_AnimateTooltip);
+    QApplication::setEffectEnabled(Qt::UI_FadeTooltip, false);
+    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip, false);
+
+    QToolTip::hideText();
+    mShowingToolTip = false;
+
+    QApplication::setEffectEnabled(Qt::UI_FadeTooltip, fadeWasEnabled);
+    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip, animateWasEnabled);
 }
