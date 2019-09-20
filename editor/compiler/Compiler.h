@@ -68,6 +68,7 @@ private:
     QByteArray mCompiledBasicCode;
     std::vector<std::unique_ptr<SourceFile>> mBasicSources;
     std::vector<std::unique_ptr<SourceFile>> mAssemblerSources;
+    std::vector<std::unique_ptr<SourceFile>> mCSources;
     std::vector<std::unique_ptr<SourceFile>> mGraphics;
     std::vector<std::unique_ptr<SourceFile>> mMaps;
     std::vector<std::unique_ptr<SourceFile>> mBuildScripts;
@@ -81,6 +82,8 @@ private:
     bool runBuildScripts();
 
     void includeBinaryFile(const SourceFile* source, const QFileInfo& inputFile, const QByteArray& data);
+
+    bool compileCCode();
 
     bool compileBasicCode();
     static void bas2tapError(int line, int stmt, const char* fmt, ...);

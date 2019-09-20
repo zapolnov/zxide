@@ -32,6 +32,7 @@ qt_add_sources(Scintilla
         include/Sci_Position.h
         lexers/LexAsm.cxx
         lexers/LexBasic.cxx
+        lexers/LexCPP.cxx
         lexers/LexLua.cxx
         lexers/LexNull.cxx
         lexlib/Accessor.cxx

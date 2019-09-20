@@ -62,6 +62,8 @@ void Compiler::addSourceFile(const QString& fullName, const QString& path)
         mBuildScripts.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("bas"))
         mBasicSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
+    else if (ext == QStringLiteral("c"))
+        mCSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("asm"))
         mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("gfx"))
@@ -79,6 +81,8 @@ void Compiler::compile()
 {
     try {
         if (!runBuildScripts())
+            throw CompilationFailed();
+        if (!compileCCode())
             throw CompilationFailed();
 
         // Compile assembler sources
@@ -300,6 +304,29 @@ void Compiler::includeBinaryFile(const SourceFile* source, const QFileInfo& inpu
     auto section = mProgram->getOrCreateSection(token.text, token);
     mProgram->addLabel(token, section, token.text);
     section->emit<DEFB_BYTEARRAY>(token, data);
+}
+
+bool Compiler::compileCCode()
+{
+    for (const auto& source : mCSources) {
+        QFileInfo info(source->path);
+        setStatusText(tr("Compiling %1").arg(info.fileName()));
+
+        /*
+        QFile file(info.absoluteFilePath());
+        if (!file.open(QFile::ReadOnly)) {
+            error(source->name, 0, file.errorString());
+            lines.clear();
+            return false;
+        }
+        QByteArray fileData = file.readAll();
+        file.close();
+        */
+
+        // FIXME
+    }
+
+    return true;
 }
 
 namespace

@@ -35,6 +35,11 @@ static const char LuaSystemAndIO[] =
     "package.config package.searchers package.searchpath require package.cpath package.loaded package.loadlib "
     "package.path package.preload";
 
+static const char CKeywords[] =
+    "auto break case char const continue default do double else enum extern float for goto if inline "
+    "int long register restrict return short signed sizeof static struct switch typedef union unsigned "
+    "void volatile while";
+
 CodeEditorTab::CodeEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
     , mUi(new Ui_CodeEditorTab)
@@ -102,6 +107,10 @@ bool CodeEditorTab::loadFile(File* f)
         } else if (extension == QStringLiteral("bas")) {
             mUi->textEditor->setLexer(SCLEX_FREEBASIC);
             mCanToggleBreakpoint = false;
+        } else if (extension == QStringLiteral("c") || extension == QStringLiteral("h")) {
+            mUi->textEditor->setLexer(SCLEX_CPP);
+            mUi->textEditor->setKeyWords(0, CKeywords);
+            mCanToggleBreakpoint = true;
         } else if (extension == QStringLiteral("asm")) {
             mUi->textEditor->setLexer(SCLEX_ASM);
             mCanToggleBreakpoint = true;
