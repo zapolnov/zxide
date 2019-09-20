@@ -164,6 +164,74 @@ public:
     Q_DISABLE_COPY(ADC_A_mHL)
 };
 
+class ADC_A_IXH final : public ProgramOpcode
+{
+public:
+    ADC_A_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADC_A_IXH)
+};
+
+class ADC_A_IYH final : public ProgramOpcode
+{
+public:
+    ADC_A_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADC_A_IYH)
+};
+
+class ADC_A_IXL final : public ProgramOpcode
+{
+public:
+    ADC_A_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADC_A_IXL)
+};
+
+class ADC_A_IYL final : public ProgramOpcode
+{
+public:
+    ADC_A_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADC_A_IYL)
+};
+
 class ADC_A_mIXn final : public ProgramOpcode
 {
 public:
@@ -432,6 +500,74 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(ADD_A_mHL)
+};
+
+class ADD_A_IXH final : public ProgramOpcode
+{
+public:
+    ADD_A_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADD_A_IXH)
+};
+
+class ADD_A_IYH final : public ProgramOpcode
+{
+public:
+    ADD_A_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADD_A_IYH)
+};
+
+class ADD_A_IXL final : public ProgramOpcode
+{
+public:
+    ADD_A_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADD_A_IXL)
+};
+
+class ADD_A_IYL final : public ProgramOpcode
+{
+public:
+    ADD_A_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(ADD_A_IYL)
 };
 
 class ADD_A_mIXn final : public ProgramOpcode
@@ -882,6 +1018,74 @@ private:
     std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(AND_mIYn)
+};
+
+class AND_IXH final : public ProgramOpcode
+{
+public:
+    AND_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(AND_IXH)
+};
+
+class AND_IYH final : public ProgramOpcode
+{
+public:
+    AND_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(AND_IYH)
+};
+
+class AND_IXL final : public ProgramOpcode
+{
+public:
+    AND_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(AND_IXL)
+};
+
+class AND_IYL final : public ProgramOpcode
+{
+public:
+    AND_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(AND_IYL)
 };
 
 class BIT_0_mHL final : public ProgramOpcode
@@ -2741,6 +2945,74 @@ private:
     Q_DISABLE_COPY(CP_mIYn)
 };
 
+class CP_IXH final : public ProgramOpcode
+{
+public:
+    CP_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(CP_IXH)
+};
+
+class CP_IYH final : public ProgramOpcode
+{
+public:
+    CP_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(CP_IYH)
+};
+
+class CP_IXL final : public ProgramOpcode
+{
+public:
+    CP_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(CP_IXL)
+};
+
+class CP_IYL final : public ProgramOpcode
+{
+public:
+    CP_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(CP_IYL)
+};
+
 class CPD final : public ProgramOpcode
 {
 public:
@@ -3123,6 +3395,74 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(DEC_SP)
+};
+
+class DEC_IXH final : public ProgramOpcode
+{
+public:
+    DEC_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(DEC_IXH)
+};
+
+class DEC_IYH final : public ProgramOpcode
+{
+public:
+    DEC_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(DEC_IYH)
+};
+
+class DEC_IXL final : public ProgramOpcode
+{
+public:
+    DEC_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(DEC_IXL)
+};
+
+class DEC_IYL final : public ProgramOpcode
+{
+public:
+    DEC_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(DEC_IYL)
 };
 
 class DI final : public ProgramOpcode
@@ -3772,6 +4112,74 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(INC_SP)
+};
+
+class INC_IXH final : public ProgramOpcode
+{
+public:
+    INC_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(INC_IXH)
+};
+
+class INC_IYH final : public ProgramOpcode
+{
+public:
+    INC_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(INC_IYH)
+};
+
+class INC_IXL final : public ProgramOpcode
+{
+public:
+    INC_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(INC_IXL)
+};
+
+class INC_IYL final : public ProgramOpcode
+{
+public:
+    INC_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(INC_IYL)
 };
 
 class IND final : public ProgramOpcode
@@ -5857,6 +6265,94 @@ private:
     Q_DISABLE_COPY(LD_L_n)
 };
 
+class LD_IXH_n final : public ProgramOpcode
+{
+public:
+    LD_IXH_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(LD_IXH_n)
+};
+
+class LD_IYH_n final : public ProgramOpcode
+{
+public:
+    LD_IYH_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(LD_IYH_n)
+};
+
+class LD_IXL_n final : public ProgramOpcode
+{
+public:
+    LD_IXL_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(LD_IXL_n)
+};
+
+class LD_IYL_n final : public ProgramOpcode
+{
+public:
+    LD_IYL_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 3; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 11; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 11; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(LD_IYL_n)
+};
+
 class LD_A_A final : public ProgramOpcode
 {
 public:
@@ -6690,6 +7186,822 @@ public:
     Q_DISABLE_COPY(LD_L_L)
 };
 
+class LD_B_IXH final : public ProgramOpcode
+{
+public:
+    LD_B_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_B_IXH)
+};
+
+class LD_B_IYH final : public ProgramOpcode
+{
+public:
+    LD_B_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_B_IYH)
+};
+
+class LD_B_IXL final : public ProgramOpcode
+{
+public:
+    LD_B_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_B_IXL)
+};
+
+class LD_B_IYL final : public ProgramOpcode
+{
+public:
+    LD_B_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_B_IYL)
+};
+
+class LD_C_IXH final : public ProgramOpcode
+{
+public:
+    LD_C_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_C_IXH)
+};
+
+class LD_C_IYH final : public ProgramOpcode
+{
+public:
+    LD_C_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_C_IYH)
+};
+
+class LD_C_IXL final : public ProgramOpcode
+{
+public:
+    LD_C_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_C_IXL)
+};
+
+class LD_C_IYL final : public ProgramOpcode
+{
+public:
+    LD_C_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_C_IYL)
+};
+
+class LD_D_IXH final : public ProgramOpcode
+{
+public:
+    LD_D_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_D_IXH)
+};
+
+class LD_D_IYH final : public ProgramOpcode
+{
+public:
+    LD_D_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_D_IYH)
+};
+
+class LD_D_IXL final : public ProgramOpcode
+{
+public:
+    LD_D_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_D_IXL)
+};
+
+class LD_D_IYL final : public ProgramOpcode
+{
+public:
+    LD_D_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_D_IYL)
+};
+
+class LD_E_IXH final : public ProgramOpcode
+{
+public:
+    LD_E_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_E_IXH)
+};
+
+class LD_E_IYH final : public ProgramOpcode
+{
+public:
+    LD_E_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_E_IYH)
+};
+
+class LD_E_IXL final : public ProgramOpcode
+{
+public:
+    LD_E_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_E_IXL)
+};
+
+class LD_E_IYL final : public ProgramOpcode
+{
+public:
+    LD_E_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_E_IYL)
+};
+
+class LD_IXH_B final : public ProgramOpcode
+{
+public:
+    LD_IXH_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_B)
+};
+
+class LD_IYH_B final : public ProgramOpcode
+{
+public:
+    LD_IYH_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_B)
+};
+
+class LD_IXH_C final : public ProgramOpcode
+{
+public:
+    LD_IXH_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_C)
+};
+
+class LD_IYH_C final : public ProgramOpcode
+{
+public:
+    LD_IYH_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_C)
+};
+
+class LD_IXH_D final : public ProgramOpcode
+{
+public:
+    LD_IXH_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_D)
+};
+
+class LD_IYH_D final : public ProgramOpcode
+{
+public:
+    LD_IYH_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_D)
+};
+
+class LD_IXH_E final : public ProgramOpcode
+{
+public:
+    LD_IXH_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_E)
+};
+
+class LD_IYH_E final : public ProgramOpcode
+{
+public:
+    LD_IYH_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_E)
+};
+
+class LD_IXH_IXH final : public ProgramOpcode
+{
+public:
+    LD_IXH_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_IXH)
+};
+
+class LD_IYH_IYH final : public ProgramOpcode
+{
+public:
+    LD_IYH_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_IYH)
+};
+
+class LD_IXH_IXL final : public ProgramOpcode
+{
+public:
+    LD_IXH_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_IXL)
+};
+
+class LD_IYH_IYL final : public ProgramOpcode
+{
+public:
+    LD_IYH_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_IYL)
+};
+
+class LD_IXH_A final : public ProgramOpcode
+{
+public:
+    LD_IXH_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXH_A)
+};
+
+class LD_IYH_A final : public ProgramOpcode
+{
+public:
+    LD_IYH_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYH_A)
+};
+
+class LD_IXL_B final : public ProgramOpcode
+{
+public:
+    LD_IXL_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_B)
+};
+
+class LD_IYL_B final : public ProgramOpcode
+{
+public:
+    LD_IYL_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_B)
+};
+
+class LD_IXL_C final : public ProgramOpcode
+{
+public:
+    LD_IXL_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_C)
+};
+
+class LD_IYL_C final : public ProgramOpcode
+{
+public:
+    LD_IYL_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_C)
+};
+
+class LD_IXL_D final : public ProgramOpcode
+{
+public:
+    LD_IXL_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_D)
+};
+
+class LD_IYL_D final : public ProgramOpcode
+{
+public:
+    LD_IYL_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_D)
+};
+
+class LD_IXL_E final : public ProgramOpcode
+{
+public:
+    LD_IXL_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_E)
+};
+
+class LD_IYL_E final : public ProgramOpcode
+{
+public:
+    LD_IYL_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_E)
+};
+
+class LD_IXL_IXH final : public ProgramOpcode
+{
+public:
+    LD_IXL_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_IXH)
+};
+
+class LD_IYL_IYH final : public ProgramOpcode
+{
+public:
+    LD_IYL_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_IYH)
+};
+
+class LD_IXL_IXL final : public ProgramOpcode
+{
+public:
+    LD_IXL_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_IXL)
+};
+
+class LD_IYL_IYL final : public ProgramOpcode
+{
+public:
+    LD_IYL_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_IYL)
+};
+
+class LD_IXL_A final : public ProgramOpcode
+{
+public:
+    LD_IXL_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IXL_A)
+};
+
+class LD_IYL_A final : public ProgramOpcode
+{
+public:
+    LD_IYL_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_IYL_A)
+};
+
+class LD_A_IXH final : public ProgramOpcode
+{
+public:
+    LD_A_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_A_IXH)
+};
+
+class LD_A_IYH final : public ProgramOpcode
+{
+public:
+    LD_A_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_A_IYH)
+};
+
+class LD_A_IXL final : public ProgramOpcode
+{
+public:
+    LD_A_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_A_IXL)
+};
+
+class LD_A_IYL final : public ProgramOpcode
+{
+public:
+    LD_A_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(LD_A_IYL)
+};
+
 class LD_SP_HL final : public ProgramOpcode
 {
 public:
@@ -7043,6 +8355,74 @@ private:
     std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OR_mIYn)
+};
+
+class OR_IXH final : public ProgramOpcode
+{
+public:
+    OR_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_IXH)
+};
+
+class OR_IYH final : public ProgramOpcode
+{
+public:
+    OR_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_IYH)
+};
+
+class OR_IXL final : public ProgramOpcode
+{
+public:
+    OR_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_IXL)
+};
+
+class OR_IYL final : public ProgramOpcode
+{
+public:
+    OR_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_IYL)
 };
 
 class OTDR final : public ProgramOpcode
@@ -10313,6 +11693,74 @@ public:
     Q_DISABLE_COPY(SBC_HL_SP)
 };
 
+class SBC_A_IXH final : public ProgramOpcode
+{
+public:
+    SBC_A_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SBC_A_IXH)
+};
+
+class SBC_A_IYH final : public ProgramOpcode
+{
+public:
+    SBC_A_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SBC_A_IYH)
+};
+
+class SBC_A_IXL final : public ProgramOpcode
+{
+public:
+    SBC_A_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SBC_A_IXL)
+};
+
+class SBC_A_IYL final : public ProgramOpcode
+{
+public:
+    SBC_A_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SBC_A_IYL)
+};
+
 class SCF final : public ProgramOpcode
 {
 public:
@@ -11950,6 +13398,186 @@ private:
     Q_DISABLE_COPY(SLA_mIYn)
 };
 
+class SLL_B final : public ProgramOpcode
+{
+public:
+    SLL_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_B)
+};
+
+class SLL_C final : public ProgramOpcode
+{
+public:
+    SLL_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_C)
+};
+
+class SLL_D final : public ProgramOpcode
+{
+public:
+    SLL_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_D)
+};
+
+class SLL_E final : public ProgramOpcode
+{
+public:
+    SLL_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_E)
+};
+
+class SLL_H final : public ProgramOpcode
+{
+public:
+    SLL_H(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_H)
+};
+
+class SLL_L final : public ProgramOpcode
+{
+public:
+    SLL_L(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_L)
+};
+
+class SLL_mHL final : public ProgramOpcode
+{
+public:
+    SLL_mHL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 15; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 15; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_mHL)
+};
+
+class SLL_mIXn final : public ProgramOpcode
+{
+public:
+    SLL_mIXn(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(SLL_mIXn)
+};
+
+class SLL_mIYn final : public ProgramOpcode
+{
+public:
+    SLL_mIYn(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 23; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 23; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(SLL_mIYn)
+};
+
+class SLL_A final : public ProgramOpcode
+{
+public:
+    SLL_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SLL_A)
+};
+
 class SRA_A final : public ProgramOpcode
 {
 public:
@@ -12468,6 +14096,74 @@ public:
     Q_DISABLE_COPY(SUB_mHL)
 };
 
+class SUB_IXH final : public ProgramOpcode
+{
+public:
+    SUB_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SUB_IXH)
+};
+
+class SUB_IYH final : public ProgramOpcode
+{
+public:
+    SUB_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SUB_IYH)
+};
+
+class SUB_IXL final : public ProgramOpcode
+{
+public:
+    SUB_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SUB_IXL)
+};
+
+class SUB_IYL final : public ProgramOpcode
+{
+public:
+    SUB_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(SUB_IYL)
+};
+
 class SUB_mIXn final : public ProgramOpcode
 {
 public:
@@ -12712,6 +14408,74 @@ private:
     std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(XOR_mIYn)
+};
+
+class XOR_IXH final : public ProgramOpcode
+{
+public:
+    XOR_IXH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(XOR_IXH)
+};
+
+class XOR_IYH final : public ProgramOpcode
+{
+public:
+    XOR_IYH(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(XOR_IYH)
+};
+
+class XOR_IXL final : public ProgramOpcode
+{
+public:
+    XOR_IXL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(XOR_IXL)
+};
+
+class XOR_IYL final : public ProgramOpcode
+{
+public:
+    XOR_IYL(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 8; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 8; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(XOR_IYL)
 };
 
 #endif

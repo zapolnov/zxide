@@ -262,6 +262,90 @@ TEST_CASE("adc a, #", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("adc a, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "adc a, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x8c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("adc a, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "adc a, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x8c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("adc a, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "adc a, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x8d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("adc a, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "adc a, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x8d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("adc hl, bc", "[opcodes]")
 {
     static const char source[] =
@@ -593,6 +677,90 @@ TEST_CASE("add a, #", "[opcodes]")
         0x00,
         0xc6,
         0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("add a, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "add a, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x84,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("add a, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "add a, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x84,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("add a, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "add a, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x85,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("add a, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "add a, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x85,
         };
 
     ErrorConsumer errorConsumer;
@@ -1099,6 +1267,90 @@ TEST_CASE("and #", "[opcodes]")
         0x00,
         0xe6,
         0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("and ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "and ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xa4,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("and iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "and iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xa4,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("and ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "and ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xa5,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("and iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "and iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xa5,
         };
 
     ErrorConsumer errorConsumer;
@@ -3646,6 +3898,90 @@ TEST_CASE("cp #", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("cp ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "cp ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xbc,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("cp ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "cp ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xbd,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("cp iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "cp iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xbc,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("cp iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "cp iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xbd,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("cpd", "[opcodes]")
 {
     static const char source[] =
@@ -4109,6 +4445,90 @@ TEST_CASE("dec sp", "[opcodes]")
 
     static const unsigned char binary[] = {
         0x3b,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("dec ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "dec ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x25,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("dec iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "dec iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x25,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("dec ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "dec ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x2d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("dec iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "dec iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x2d,
         };
 
     ErrorConsumer errorConsumer;
@@ -4911,6 +5331,90 @@ TEST_CASE("inc sp", "[opcodes]")
 
     static const unsigned char binary[] = {
         0x33,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("inc ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "inc ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x24,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("inc iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "inc iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x24,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("inc ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "inc ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x2c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("inc iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "inc iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x2c,
         };
 
     ErrorConsumer errorConsumer;
@@ -8971,6 +9475,142 @@ TEST_CASE("ld l, #", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("ld ixh, #", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, 170\n"
+        "ld ixh, 85\n"
+        "ld ixh, 0\n"
+        "ld ixh, 255\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x26,
+        0xaa,
+        0xdd,
+        0x26,
+        0x55,
+        0xdd,
+        0x26,
+        0x00,
+        0xdd,
+        0x26,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, #", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, 170\n"
+        "ld iyh, 85\n"
+        "ld iyh, 0\n"
+        "ld iyh, 255\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x26,
+        0xaa,
+        0xfd,
+        0x26,
+        0x55,
+        0xfd,
+        0x26,
+        0x00,
+        0xfd,
+        0x26,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, #", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, 170\n"
+        "ld ixl, 85\n"
+        "ld ixl, 0\n"
+        "ld ixl, 255\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x2e,
+        0xaa,
+        0xdd,
+        0x2e,
+        0x55,
+        0xdd,
+        0x2e,
+        0x00,
+        0xdd,
+        0x2e,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, #", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, 170\n"
+        "ld iyl, 85\n"
+        "ld iyl, 0\n"
+        "ld iyl, 255\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x2e,
+        0xaa,
+        0xfd,
+        0x2e,
+        0x55,
+        0xfd,
+        0x2e,
+        0x00,
+        0xfd,
+        0x2e,
+        0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("ld r, a", "[opcodes]")
 {
     static const char source[] =
@@ -8981,6 +9621,1014 @@ TEST_CASE("ld r, a", "[opcodes]")
     static const unsigned char binary[] = {
         0xed,
         0x4f,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld b, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld b, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x44,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld b, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld b, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x44,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld b, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld b, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x45,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld b, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld b, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x45,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld c, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld c, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x4c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld c, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld c, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x4c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld c, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld c, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x4d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld c, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld c, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x4d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld d, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld d, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x54,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld d, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld d, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x54,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld d, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld d, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x55,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld d, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld d, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x55,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld e, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld e, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x5c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld e, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld e, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x5c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld e, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld e, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x5d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld e, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld e, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x5d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, b", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, b\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x60,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, b", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, b\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x60,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, c", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, c\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x61,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, c", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, c\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x61,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, d", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, d\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x62,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, d", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, d\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x62,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, e", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, e\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x63,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, e", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, e\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x63,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x64,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x64,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x65,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x65,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixh, a", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixh, a\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x67,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyh, a", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyh, a\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x67,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, b", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, b\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x68,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, b", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, b\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x68,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, c", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, c\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x69,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, c", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, c\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x69,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, d", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, d\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x6a,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, d", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, d\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x6a,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, e", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, e\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x6b,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, e", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, e\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x6b,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x6c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x6c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x6d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x6d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld ixl, a", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld ixl, a\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x6f,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld iyl, a", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld iyl, a\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x6f,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld a, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld a, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x7c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld a, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld a, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x7c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld a, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld a, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x7d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("ld a, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "ld a, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x7d,
         };
 
     ErrorConsumer errorConsumer;
@@ -9586,6 +11234,90 @@ TEST_CASE("or #", "[opcodes]")
         0x00,
         0xf6,
         0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("or ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "or ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xb4,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("or iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "or iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xb4,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("or ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "or ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xb5,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("or iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "or iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xb5,
         };
 
     ErrorConsumer errorConsumer;
@@ -13876,6 +15608,90 @@ TEST_CASE("sbc hl, sp", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("sbc a, ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sbc a, ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x9c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sbc a, iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sbc a, iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x9c,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sbc a, ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sbc a, ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x9d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sbc a, iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sbc a, iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x9d,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("scf", "[opcodes]")
 {
     static const char source[] =
@@ -16092,6 +17908,250 @@ TEST_CASE("sla l", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("sll (hl)", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll (hl)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x36,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll (ix+#)", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll (ix-43)\n"
+        "sll (ix+85)\n"
+        "sll (ix)\n"
+        "sll (ix-128)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xcb,
+        0xd5,
+        0x36,
+        0xdd,
+        0xcb,
+        0x55,
+        0x36,
+        0xdd,
+        0xcb,
+        0x00,
+        0x36,
+        0xdd,
+        0xcb,
+        0x80,
+        0x36,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll (iy+#)", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll (iy-43)\n"
+        "sll (iy+85)\n"
+        "sll (iy)\n"
+        "sll (iy-128)\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xcb,
+        0xd5,
+        0x36,
+        0xfd,
+        0xcb,
+        0x55,
+        0x36,
+        0xfd,
+        0xcb,
+        0x00,
+        0x36,
+        0xfd,
+        0xcb,
+        0x80,
+        0x36,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll a", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll a\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x37,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll b", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll b\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x30,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll c", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll c\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x31,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll d", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll d\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x32,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll e", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll e\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x33,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll h", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll h\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x34,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sll l", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sll l\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xcb,
+        0x35,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("sra (hl)", "[opcodes]")
 {
     static const char source[] =
@@ -16838,6 +18898,90 @@ TEST_CASE("sub #", "[opcodes]")
     REQUIRE(!actual.hasFiles());
 }
 
+TEST_CASE("sub ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sub ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x94,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sub iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sub iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x94,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sub ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sub ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0x95,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("sub iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "sub iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0x95,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
 TEST_CASE("xor (hl)", "[opcodes]")
 {
     static const char source[] =
@@ -17085,6 +19229,90 @@ TEST_CASE("xor #", "[opcodes]")
         0x00,
         0xee,
         0xff,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("xor ixh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "xor ixh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xac,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("xor iyh", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "xor iyh\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xac,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("xor ixl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "xor ixl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xdd,
+        0xad,
+        };
+
+    ErrorConsumer errorConsumer;
+    DataBlob actual = assemble(errorConsumer, source);
+    DataBlob expected(binary, sizeof(binary));
+    REQUIRE(errorConsumer.lastErrorMessage() == "");
+    REQUIRE(errorConsumer.errorCount() == 0);
+    REQUIRE(actual == expected);
+    REQUIRE(!actual.hasFiles());
+}
+
+TEST_CASE("xor iyl", "[opcodes]")
+{
+    static const char source[] =
+        "section main [base 0x1234]\n"
+        "xor iyl\n"
+        ;
+
+    static const unsigned char binary[] = {
+        0xfd,
+        0xad,
         };
 
     ErrorConsumer errorConsumer;

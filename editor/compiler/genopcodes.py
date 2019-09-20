@@ -114,6 +114,10 @@ opcodes = [
         Opcode( 'adc', [         'a',      'l' ], [ 0x8D                   ],  4),
         Opcode( 'adc', [         'a',      '#' ], [ 0xCE, '#'              ],  7),
         Opcode( 'adc', [         'a',   '(hl)' ], [ 0x8E                   ],  7),
+        Opcode( 'adc', [         'a',    'ixh' ], [ 0xDD, 0x8C             ],  8),  # undocumented
+        Opcode( 'adc', [         'a',    'iyh' ], [ 0xFD, 0x8C             ],  8),  # undocumented
+        Opcode( 'adc', [         'a',    'ixl' ], [ 0xDD, 0x8D             ],  8),  # undocumented
+        Opcode( 'adc', [         'a',    'iyl' ], [ 0xFD, 0x8D             ],  8),  # undocumented
         Opcode( 'adc', [         'a', '(ix+#)' ], [ 0xDD, 0x8E, '#'        ], 19),
         Opcode( 'adc', [         'a', '(iy+#)' ], [ 0xFD, 0x8E, '#'        ], 19),
         Opcode( 'adc', [        'hl',     'bc' ], [ 0xED, 0x4A             ], 15),
@@ -129,6 +133,10 @@ opcodes = [
         Opcode( 'add', [         'a',      'l' ], [ 0x85                   ],  4),
         Opcode( 'add', [         'a',      '#' ], [ 0xC6, '#'              ],  7),
         Opcode( 'add', [         'a',   '(hl)' ], [ 0x86                   ],  7),
+        Opcode( 'add', [         'a',    'ixh' ], [ 0xDD, 0x84             ],  8),  # undocumented
+        Opcode( 'add', [         'a',    'iyh' ], [ 0xFD, 0x84             ],  8),  # undocumented
+        Opcode( 'add', [         'a',    'ixl' ], [ 0xDD, 0x85             ],  8),  # undocumented
+        Opcode( 'add', [         'a',    'iyl' ], [ 0xFD, 0x85             ],  8),  # undocumented
         Opcode( 'add', [         'a', '(ix+#)' ], [ 0xDD, 0x86, '#'        ], 19),
         Opcode( 'add', [         'a', '(iy+#)' ], [ 0xFD, 0x86, '#'        ], 19),
         Opcode( 'add', [        'hl',     'bc' ], [ 0x09                   ], 11),
@@ -154,6 +162,10 @@ opcodes = [
         Opcode( 'and', [                '(hl)' ], [ 0xA6                   ],  7),
         Opcode( 'and', [              '(ix+#)' ], [ 0xDD, 0xA6, '#'        ], 19),
         Opcode( 'and', [              '(iy+#)' ], [ 0xFD, 0xA6, '#'        ], 19),
+        Opcode( 'and', [                 'ixh' ], [ 0xDD, 0xA4             ],  8),  # undocumented
+        Opcode( 'and', [                 'iyh' ], [ 0xFD, 0xA4             ],  8),  # undocumented
+        Opcode( 'and', [                 'ixl' ], [ 0xDD, 0xA5             ],  8),  # undocumented
+        Opcode( 'and', [                 'iyl' ], [ 0xFD, 0xA5             ],  8),  # undocumented
         Opcode( 'bit', [        '0',    '(hl)' ], [ 0xCB, 0x46             ], 12),
         Opcode( 'bit', [        '1',    '(hl)' ], [ 0xCB, 0x4E             ], 12),
         Opcode( 'bit', [        '2',    '(hl)' ], [ 0xCB, 0x56             ], 12),
@@ -255,6 +267,10 @@ opcodes = [
         Opcode(  'cp', [                '(hl)' ], [ 0xBE                   ],  7),
         Opcode(  'cp', [              '(ix+#)' ], [ 0xDD, 0xBE, '#'        ], 19),
         Opcode(  'cp', [              '(iy+#)' ], [ 0xFD, 0xBE, '#'        ], 19),
+        Opcode(  'cp', [                 'ixh' ], [ 0xDD, 0xBC             ],  8),  # undocumented
+        Opcode(  'cp', [                 'iyh' ], [ 0xFD, 0xBC             ],  8),  # undocumented
+        Opcode(  'cp', [                 'ixl' ], [ 0xDD, 0xBD             ],  8),  # undocumented
+        Opcode(  'cp', [                 'iyl' ], [ 0xFD, 0xBD             ],  8),  # undocumented
         Opcode( 'cpd', [                       ], [ 0xED, 0xA9             ], 16),
         Opcode('cpdr', [                       ], [ 0xED, 0xB9             ], [ 21, 16 ]),
         Opcode( 'cpi', [                       ], [ 0xED, 0xA1             ], 16),
@@ -277,6 +293,10 @@ opcodes = [
         Opcode( 'dec', [                  'de' ], [ 0x1B                   ],  6),
         Opcode( 'dec', [                  'hl' ], [ 0x2B                   ],  6),
         Opcode( 'dec', [                  'sp' ], [ 0x3B                   ],  6),
+        Opcode( 'dec', [                 'ixh' ], [ 0xDD, 0x25             ],  8),  # undocumented
+        Opcode( 'dec', [                 'iyh' ], [ 0xFD, 0x25             ],  8),  # undocumented
+        Opcode( 'dec', [                 'ixl' ], [ 0xDD, 0x2D             ],  8),  # undocumented
+        Opcode( 'dec', [                 'iyl' ], [ 0xFD, 0x2D             ],  8),  # undocumented
         Opcode(  'di', [                       ], [ 0xF3                   ],  4),
         Opcode('djnz', [                  'R#' ], [ 0x10, '#'              ], [ 8, 13 ]),
         Opcode(  'ei', [                       ], [ 0xFB                   ],  4),
@@ -314,6 +334,10 @@ opcodes = [
         Opcode( 'inc', [                  'de' ], [ 0x13                   ],  6),
         Opcode( 'inc', [                  'hl' ], [ 0x23                   ],  6),
         Opcode( 'inc', [                  'sp' ], [ 0x33                   ],  6),
+        Opcode( 'inc', [                 'ixh' ], [ 0xDD, 0x24             ],  8),  # undocumented
+        Opcode( 'inc', [                 'iyh' ], [ 0xFD, 0x24             ],  8),  # undocumented
+        Opcode( 'inc', [                 'ixl' ], [ 0xDD, 0x2C             ],  8),  # undocumented
+        Opcode( 'inc', [                 'iyl' ], [ 0xFD, 0x2C             ],  8),  # undocumented
         Opcode( 'ind', [                       ], [ 0xED, 0xAA             ], 16),
         Opcode('indr', [                       ], [ 0xED, 0xBA             ], [ 21, 16 ]),
         Opcode( 'ini', [                       ], [ 0xED, 0xA2             ], 16),
@@ -415,6 +439,10 @@ opcodes = [
         Opcode(  'ld', [         'e',      '#' ], [ 0x1E, '#'              ],  7),
         Opcode(  'ld', [         'h',      '#' ], [ 0x26, '#'              ],  7),
         Opcode(  'ld', [         'l',      '#' ], [ 0x2E, '#'              ],  7),
+        Opcode(  'ld', [       'ixh',      '#' ], [ 0xDD, 0x26, '#'        ], 11),  # undocumented
+        Opcode(  'ld', [       'iyh',      '#' ], [ 0xFD, 0x26, '#'        ], 11),  # undocumented
+        Opcode(  'ld', [       'ixl',      '#' ], [ 0xDD, 0x2E, '#'        ], 11),  # undocumented
+        Opcode(  'ld', [       'iyl',      '#' ], [ 0xFD, 0x2E, '#'        ], 11),  # undocumented
         Opcode(  'ld', [         'a',      'a' ], [ 0x7F                   ],  4),
         Opcode(  'ld', [         'b',      'a' ], [ 0x47                   ],  4),
         Opcode(  'ld', [         'c',      'a' ], [ 0x4F                   ],  4),
@@ -464,6 +492,54 @@ opcodes = [
         Opcode(  'ld', [         'e',      'l' ], [ 0x5D                   ],  4),
         Opcode(  'ld', [         'h',      'l' ], [ 0x65                   ],  4),
         Opcode(  'ld', [         'l',      'l' ], [ 0x6D                   ],  4),
+        Opcode(  'ld', [         'b',    'ixh' ], [ 0xDD, 0x44             ],  8),  # undocumented
+        Opcode(  'ld', [         'b',    'iyh' ], [ 0xFD, 0x44             ],  8),  # undocumented
+        Opcode(  'ld', [         'b',    'ixl' ], [ 0xDD, 0x45             ],  8),  # undocumented
+        Opcode(  'ld', [         'b',    'iyl' ], [ 0xFD, 0x45             ],  8),  # undocumented
+        Opcode(  'ld', [         'c',    'ixh' ], [ 0xDD, 0x4C             ],  8),  # undocumented
+        Opcode(  'ld', [         'c',    'iyh' ], [ 0xFD, 0x4C             ],  8),  # undocumented
+        Opcode(  'ld', [         'c',    'ixl' ], [ 0xDD, 0x4D             ],  8),  # undocumented
+        Opcode(  'ld', [         'c',    'iyl' ], [ 0xFD, 0x4D             ],  8),  # undocumented
+        Opcode(  'ld', [         'd',    'ixh' ], [ 0xDD, 0x54             ],  8),  # undocumented
+        Opcode(  'ld', [         'd',    'iyh' ], [ 0xFD, 0x54             ],  8),  # undocumented
+        Opcode(  'ld', [         'd',    'ixl' ], [ 0xDD, 0x55             ],  8),  # undocumented
+        Opcode(  'ld', [         'd',    'iyl' ], [ 0xFD, 0x55             ],  8),  # undocumented
+        Opcode(  'ld', [         'e',    'ixh' ], [ 0xDD, 0x5C             ],  8),  # undocumented
+        Opcode(  'ld', [         'e',    'iyh' ], [ 0xFD, 0x5C             ],  8),  # undocumented
+        Opcode(  'ld', [         'e',    'ixl' ], [ 0xDD, 0x5D             ],  8),  # undocumented
+        Opcode(  'ld', [         'e',    'iyl' ], [ 0xFD, 0x5D             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',      'b' ], [ 0xDD, 0x60             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',      'b' ], [ 0xFD, 0x60             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',      'c' ], [ 0xDD, 0x61             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',      'c' ], [ 0xFD, 0x61             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',      'd' ], [ 0xDD, 0x62             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',      'd' ], [ 0xFD, 0x62             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',      'e' ], [ 0xDD, 0x63             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',      'e' ], [ 0xFD, 0x63             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',    'ixh' ], [ 0xDD, 0x64             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',    'iyh' ], [ 0xFD, 0x64             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',    'ixl' ], [ 0xDD, 0x65             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',    'iyl' ], [ 0xFD, 0x65             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixh',      'a' ], [ 0xDD, 0x67             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyh',      'a' ], [ 0xFD, 0x67             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',      'b' ], [ 0xDD, 0x68             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',      'b' ], [ 0xFD, 0x68             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',      'c' ], [ 0xDD, 0x69             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',      'c' ], [ 0xFD, 0x69             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',      'd' ], [ 0xDD, 0x6A             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',      'd' ], [ 0xFD, 0x6A             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',      'e' ], [ 0xDD, 0x6B             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',      'e' ], [ 0xFD, 0x6B             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',    'ixh' ], [ 0xDD, 0x6C             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',    'iyh' ], [ 0xFD, 0x6C             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',    'ixl' ], [ 0xDD, 0x6D             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',    'iyl' ], [ 0xFD, 0x6D             ],  8),  # undocumented
+        Opcode(  'ld', [       'ixl',      'a' ], [ 0xDD, 0x6F             ],  8),  # undocumented
+        Opcode(  'ld', [       'iyl',      'a' ], [ 0xFD, 0x6F             ],  8),  # undocumented
+        Opcode(  'ld', [         'a',    'ixh' ], [ 0xDD, 0x7C             ],  8),  # undocumented
+        Opcode(  'ld', [         'a',    'iyh' ], [ 0xFD, 0x7C             ],  8),  # undocumented
+        Opcode(  'ld', [         'a',    'ixl' ], [ 0xDD, 0x7D             ],  8),  # undocumented
+        Opcode(  'ld', [         'a',    'iyl' ], [ 0xFD, 0x7D             ],  8),  # undocumented
         Opcode(  'ld', [        'sp',     'hl' ], [ 0xF9                   ],  6),
         Opcode(  'ld', [        'sp',     'ix' ], [ 0xDD, 0xF9             ], 10),
         Opcode(  'ld', [        'sp',     'iy' ], [ 0xFD, 0xF9             ], 10),
@@ -484,6 +560,10 @@ opcodes = [
         Opcode(  'or', [                '(hl)' ], [ 0xB6                   ],  7),
         Opcode(  'or', [              '(ix+#)' ], [ 0xDD, 0xB6, '#'        ], 19),
         Opcode(  'or', [              '(iy+#)' ], [ 0xFD, 0xB6, '#'        ], 19),
+        Opcode(  'or', [                 'ixh' ], [ 0xDD, 0xB4             ],  8),  # undocumented
+        Opcode(  'or', [                 'iyh' ], [ 0xFD, 0xB4             ],  8),  # undocumented
+        Opcode(  'or', [                 'ixl' ], [ 0xDD, 0xB5             ],  8),  # undocumented
+        Opcode(  'or', [                 'iyl' ], [ 0xFD, 0xB5             ],  8),  # undocumented
         Opcode('otdr', [                       ], [ 0xED, 0xBB             ], [ 21, 16 ]),
         Opcode('otir', [                       ], [ 0xED, 0xB3             ], [ 21, 16 ]),
         Opcode( 'out', [      '(#)',       'a' ], [ 0xD3, '#'              ], 11),
@@ -668,6 +748,10 @@ opcodes = [
         Opcode( 'sbc', [        'hl',     'de' ], [ 0xED, 0x52             ], 15),
         Opcode( 'sbc', [        'hl',     'hl' ], [ 0xED, 0x62             ], 15),
         Opcode( 'sbc', [        'hl',     'sp' ], [ 0xED, 0x72             ], 15),
+        Opcode( 'sbc', [         'a',    'ixh' ], [ 0xDD, 0x9C             ],  8),  # undocumented
+        Opcode( 'sbc', [         'a',    'iyh' ], [ 0xFD, 0x9C             ],  8),  # undocumented
+        Opcode( 'sbc', [         'a',    'ixl' ], [ 0xDD, 0x9D             ],  8),  # undocumented
+        Opcode( 'sbc', [         'a',    'iyl' ], [ 0xFD, 0x9D             ],  8),  # undocumented
         Opcode( 'scf', [                       ], [ 0x37                   ],  4),
         Opcode( 'set', [        '0',       'a' ], [ 0xCB, 0xC7             ],  8),
         Opcode( 'set', [        '0',       'b' ], [ 0xCB, 0xC0             ],  8),
@@ -759,6 +843,16 @@ opcodes = [
         Opcode( 'sla', [                '(hl)' ], [ 0xCB, 0x26             ], 15),
         Opcode( 'sla', [              '(ix+#)' ], [ 0xDD, 0xCB, '#', 0x26  ], 23),
         Opcode( 'sla', [              '(iy+#)' ], [ 0xFD, 0xCB, '#', 0x26  ], 23),
+        Opcode( 'sll', [                   'b' ], [ 0xCB, 0x30             ],  8),  # undocumented
+        Opcode( 'sll', [                   'c' ], [ 0xCB, 0x31             ],  8),  # undocumented
+        Opcode( 'sll', [                   'd' ], [ 0xCB, 0x32             ],  8),  # undocumented
+        Opcode( 'sll', [                   'e' ], [ 0xCB, 0x33             ],  8),  # undocumented
+        Opcode( 'sll', [                   'h' ], [ 0xCB, 0x34             ],  8),  # undocumented
+        Opcode( 'sll', [                   'l' ], [ 0xCB, 0x35             ],  8),  # undocumented
+        Opcode( 'sll', [                '(hl)' ], [ 0xCB, 0x36             ], 15),  # undocumented
+        Opcode( 'sll', [              '(ix+#)' ], [ 0xDD, 0xCB, '#', 0x36  ], 23),  # undocumented
+        Opcode( 'sll', [              '(iy+#)' ], [ 0xFD, 0xCB, '#', 0x36  ], 23),  # undocumented
+        Opcode( 'sll', [                   'a' ], [ 0xCB, 0x37             ],  8),  # undocumented
         Opcode( 'sra', [                   'a' ], [ 0xCB, 0x2F             ],  8),
         Opcode( 'sra', [                   'b' ], [ 0xCB, 0x28             ],  8),
         Opcode( 'sra', [                   'c' ], [ 0xCB, 0x29             ],  8),
@@ -788,6 +882,10 @@ opcodes = [
         Opcode( 'sub', [                   'l' ], [ 0x95                   ],  4),
         Opcode( 'sub', [                   '#' ], [ 0xD6, '#'              ],  7),
         Opcode( 'sub', [                '(hl)' ], [ 0x96                   ],  7),
+        Opcode( 'sub', [                 'ixh' ], [ 0xDD, 0x94             ],  8),  # undocumented
+        Opcode( 'sub', [                 'iyh' ], [ 0xFD, 0x94             ],  8),  # undocumented
+        Opcode( 'sub', [                 'ixl' ], [ 0xDD, 0x95             ],  8),  # undocumented
+        Opcode( 'sub', [                 'iyl' ], [ 0xFD, 0x95             ],  8),  # undocumented
         Opcode( 'sub', [              '(ix+#)' ], [ 0xDD, 0x96, '#'        ], 19),
         Opcode( 'sub', [              '(iy+#)' ], [ 0xFD, 0x96, '#'        ], 19),
         Opcode( 'xor', [                   'a' ], [ 0xAF                   ],  4),
@@ -801,6 +899,10 @@ opcodes = [
         Opcode( 'xor', [                '(hl)' ], [ 0xAE                   ],  7),
         Opcode( 'xor', [              '(ix+#)' ], [ 0xDD, 0xAE, '#'        ], 19),
         Opcode( 'xor', [              '(iy+#)' ], [ 0xFD, 0xAE, '#'        ], 19),
+        Opcode( 'xor', [                 'ixh' ], [ 0xDD, 0xAC             ],  8),  # undocumented
+        Opcode( 'xor', [                 'iyh' ], [ 0xFD, 0xAC             ],  8),  # undocumented
+        Opcode( 'xor', [                 'ixl' ], [ 0xDD, 0xAD             ],  8),  # undocumented
+        Opcode( 'xor', [                 'iyl' ], [ 0xFD, 0xAD             ],  8),  # undocumented
     ]
 
 hdr  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
@@ -909,7 +1011,7 @@ for opcode in opcodes:
         else:
             addCond(conds, 'token(T_COMMA)')
 
-        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af' ]:
+        if op in [ 'a', 'b', 'c', 'd', 'e', 'h', 'l', 'i', 'r', 'bc', 'de', 'hl', 'sp', 'ix', 'iy', 'af', 'ixh', 'ixl', 'iyh', 'iyl' ]:
             addCond(conds, 'ident("%s")' % op)
         elif op in [ 'c', 'nc', 'z', 'nz', 'm', 'p', 'pe', 'po' ]:
             addCond(conds, 'ident("%s")' % op)
