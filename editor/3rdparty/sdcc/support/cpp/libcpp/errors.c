@@ -60,7 +60,7 @@ cpp_diagnostic (cpp_reader * pfile, int level, int reason,
     }
 
   if (!pfile->cb.error)
-    abort ();
+    /*abort */sdcc_abort();
   ret = pfile->cb.error (pfile, level, reason, src_loc, 0, _(msgid), ap);
 
   return ret;
@@ -142,7 +142,7 @@ cpp_diagnostic_with_line (cpp_reader * pfile, int level, int reason,
   bool ret;
   
   if (!pfile->cb.error)
-    abort ();
+    /*abort */sdcc_abort();
   ret = pfile->cb.error (pfile, level, reason, src_loc, column, _(msgid), ap);
 
   return ret;

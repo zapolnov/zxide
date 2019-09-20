@@ -66,14 +66,14 @@ free_path (struct cpp_dir *path, int reason)
     {
     case REASON_DUP:
     case REASON_DUP_SYS:
-      fprintf (stderr, _("ignoring duplicate directory \"%s\"\n"), path->name);
+      /*fprintf (stderr, */sdcc_msg_printf(_("ignoring duplicate directory \"%s\"\n"), path->name);
       if (reason == REASON_DUP_SYS)
-	fprintf (stderr,
+	/*fprintf (stderr, */sdcc_msg_printf(
  _("  as it is a non-system directory that duplicates a system directory\n"));
       break;
 
     case REASON_NOENT:
-      fprintf (stderr, _("ignoring nonexistent directory \"%s\"\n"),
+      /*fprintf (stderr, */sdcc_msg_printf(_("ignoring nonexistent directory \"%s\"\n"),
 	       path->name);
       break;
 
@@ -288,16 +288,16 @@ merge_include_chains (cpp_reader *pfile, int verbose)
     {
       struct cpp_dir *p;
 
-      fprintf (stderr, _("#include \"...\" search starts here:\n"));
+      /*fprintf (stderr, */sdcc_msg_printf(_("#include \"...\" search starts here:\n"));
       for (p = heads[QUOTE];; p = p->next)
 	{
 	  if (p == heads[BRACKET])
-	    fprintf (stderr, _("#include <...> search starts here:\n"));
+	    /*fprintf (stderr, */sdcc_msg_printf(_("#include <...> search starts here:\n"));
 	  if (!p)
 	    break;
-	  fprintf (stderr, " %s\n", p->name);
+	  /*fprintf (stderr, */sdcc_msg_printf(" %s\n", p->name);
 	}
-      fprintf (stderr, _("End of search list.\n"));
+      /*fprintf (stderr, */sdcc_msg_printf(_("End of search list.\n"));
     }
 }
 

@@ -291,7 +291,7 @@ _obstack_free (struct obstack *h, void *obj)
     }
   else if (obj != 0)
     /* obj is not in any of the chunks! */
-    abort ();
+    /*abort */sdcc_abort();
 }
 
 _OBSTACK_SIZE_T

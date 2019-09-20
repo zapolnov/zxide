@@ -45,7 +45,7 @@ linemap_print_containing_files (struct line_maps *set,
   set->last_listed = map->included_from;
   map = INCLUDED_FROM (set, map);
 
-  fprintf (stderr,  _("In file included from %s:%u"),
+  /*fprintf (stderr,  */sdcc_msg_printf(_("In file included from %s:%u"),
            map->to_file, LAST_SOURCE_LINE (map));
 
   while (! MAIN_FILE_P (map))
@@ -63,11 +63,11 @@ linemap_print_containing_files (struct line_maps *set,
          with all the "from"s lined up.
          The trailing comma is at the beginning of this message,
          and the trailing colon is not translated.  */
-      fprintf (stderr, _(",\n                 from %s:%u"),
+      /*fprintf (stderr, */sdcc_msg_printf(_(",\n                 from %s:%u"),
                map->to_file, LAST_SOURCE_LINE (map));
     }
 
-  fputs (":\n", stderr);
+  /*fputs */sdcc_msg_puts(":\n"/*, stderr*/);
 }
 
 /* from libcpp/errors.c */
@@ -80,7 +80,7 @@ static void
 print_location (cpp_reader *pfile, source_location line, unsigned int col)
 {
   if (line == 0)
-    fprintf (stderr, "%s: ", progname);
+    /*fprintf (stderr, "%s: ", progname);*/sdcc_msg_puts("sdcpp: ");
   else
     {
       const struct line_map *map;
@@ -98,11 +98,11 @@ print_location (cpp_reader *pfile, source_location line, unsigned int col)
 	}
 
       if (lin == 0)
-	fprintf (stderr, "%s:", map->to_file);
+	/*fprintf(stderr, */sdcc_msg_printf("%s:", map->to_file);
       else
-	fprintf (stderr, "%s:%u:%u:", map->to_file, lin, col);
+	/*fprintf (stderr, */sdcc_msg_printf("%s:%u:%u:", map->to_file, lin, col);
 
-      fputc (' ', stderr);
+      /*fputc */sdcc_msg_putc(' '/*, stderr*/);
     }
 }
 
@@ -158,20 +158,20 @@ c_cpp_error (cpp_reader *pfile ATTRIBUTE_UNUSED, int level, int reason ATTRIBUTE
   print_location (pfile, location, column_override);
 
   if (CPP_DL_WARNING_P (level))
-    fputs (_("warning: "), stderr);
+    /*fputs */sdcc_msg_puts(_("warning: ")/*, stderr*/);
   else if (level == CPP_DL_ICE)
-    fputs (_("internal error: "), stderr);
+    /*fputs */sdcc_msg_puts(_("internal error: ")/*, stderr*/);
   else if (level == CPP_DL_FATAL)
-    fputs (_("fatal error: "), stderr);
+    /*fputs */sdcc_msg_puts(_("fatal error: ")/*, stderr*/);
   else
-    fputs (_("error: "), stderr);
+    /*fputs */sdcc_msg_puts(_("error: ")/*, stderr*/);
 
-  vfprintf (stderr, _(msg), *ap);
-  putc ('\n', stderr);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(_(msg), *ap);
+  /*putc */sdcc_msg_putc('\n'/*, stderr*/);
 
   if (level == CPP_DL_FATAL) {
-    fputs(_("compilation terminated.\n"), stderr);
-    exit (FATAL_EXIT_CODE);
+    /*fputs*/sdcc_msg_puts(_("compilation terminated.\n")/*, stderr*/);
+    /*exit (FATAL_EXIT_CODE);*/sdcc_fatal_exit();
   }
 
   return true;

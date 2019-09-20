@@ -329,19 +329,19 @@ deps_write (const struct deps *d, FILE *fp, unsigned int colmax)
 	{
 	  if (colmax && column > colmax)
 	    {
-	      fputs (" \\\n ", fp);
+	      /*fputs */sdcc_out_puts(" \\\n "/*, fp*/);
 	      column = 1 + size;
 	    }
 	  else
 	    {
-	      putc (' ', fp);
+	      /*putc */sdcc_out_putc(' '/*, fp*/);
 	      column++;
 	    }
 	}
-      fputs (d->targetv[i], fp);
+      /*fputs */sdcc_out_puts(d->targetv[i]/*, fp*/);
     }
 
-  putc (':', fp);
+  /*putc */sdcc_out_putc(':'/*, fp*/);
   column++;
 
   for (i = 0; i < d->ndeps; i++)
@@ -350,17 +350,17 @@ deps_write (const struct deps *d, FILE *fp, unsigned int colmax)
       column += size;
       if (colmax && column > colmax)
 	{
-	  fputs (" \\\n ", fp);
+	  /*fputs */sdcc_out_puts(" \\\n "/*, fp*/);
 	  column = 1 + size;
 	}
       else
 	{
-	  putc (' ', fp);
+	  /*putc */sdcc_out_putc(' '/*, fp*/);
 	  column++;
 	}
-      fputs (d->depv[i], fp);
+      /*fputs */sdcc_out_puts(d->depv[i]/*, fp*/);
     }
-  putc ('\n', fp);
+  /*putc */sdcc_out_putc('\n'/*, fp*/);
 }
 
 void
@@ -370,13 +370,14 @@ deps_phony_targets (const struct deps *d, FILE *fp)
 
   for (i = 1; i < d->ndeps; i++)
     {
-      putc ('\n', fp);
-      fputs (d->depv[i], fp);
-      putc (':', fp);
-      putc ('\n', fp);
+      /*putc */sdcc_out_putc('\n'/*, fp*/);
+      /*fputs */sdcc_out_puts(d->depv[i]/*, fp*/);
+      /*putc */sdcc_out_putc(':'/*, fp*/);
+      /*putc */sdcc_out_putc('\n'/*, fp*/);
     }
 }
 
+#if 0
 /* Write out a deps buffer to a file, in a form that can be read back
    with deps_restore.  Returns nonzero on error, in which case the
    error number will be in errno.  */
@@ -445,3 +446,4 @@ deps_restore (struct deps *deps, FILE *fd, const char *self)
   free (buf);
   return 0;
 }
+#endif

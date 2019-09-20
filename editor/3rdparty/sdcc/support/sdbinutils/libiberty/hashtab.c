@@ -186,8 +186,8 @@ higher_prime_index (unsigned long n)
   /* If we've run out of primes, abort.  */
   if (n > prime_tab[low].prime)
     {
-      fprintf (stderr, "Cannot find prime bigger than %lu\n", n);
-      abort ();
+      /*fprintf (stderr, */sdcc_msg_printf("Cannot find prime bigger than %lu\n", n);
+      /*abort ();*/sdcc_abort();
     }
 
   return low;
@@ -488,7 +488,7 @@ find_empty_slot_for_expand (htab_t htab, hashval_t hash)
   if (*slot == HTAB_EMPTY_ENTRY)
     return slot;
   else if (*slot == HTAB_DELETED_ENTRY)
-    abort ();
+    /*abort */sdcc_abort();
 
   hash2 = htab_mod_m2 (hash, htab);
   for (;;)
@@ -501,7 +501,7 @@ find_empty_slot_for_expand (htab_t htab, hashval_t hash)
       if (*slot == HTAB_EMPTY_ENTRY)
 	return slot;
       else if (*slot == HTAB_DELETED_ENTRY)
-	abort ();
+	/*abort */sdcc_abort();
     }
 }
 
@@ -744,7 +744,7 @@ htab_clear_slot (htab_t htab, PTR *slot)
 {
   if (slot < htab->entries || slot >= htab->entries + htab_size (htab)
       || *slot == HTAB_EMPTY_ENTRY || *slot == HTAB_DELETED_ENTRY)
-    abort ();
+    /*abort */sdcc_abort();
 
   if (htab->del_f)
     (*htab->del_f) (*slot);

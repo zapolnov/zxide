@@ -1,4 +1,6 @@
 
+#include "sdcc_bridge.h"
+
 #define PREFIX ""
 
 #cmakedefine WORDS_BIGENDIAN 1

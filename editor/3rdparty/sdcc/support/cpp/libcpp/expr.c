@@ -829,7 +829,7 @@ eval_token (cpp_reader *pfile, const cpp_token *token)
       break;
 
     default:
-      abort ();
+      /*abort */sdcc_abort();
     }
 
   result.unsignedp = !!unsignedp;

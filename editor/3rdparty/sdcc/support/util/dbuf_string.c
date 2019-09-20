@@ -306,6 +306,7 @@ dbuf_chomp (struct dbuf_s *dbuf)
 }
 
 
+#if 0
 /*
  * Write dynamic buffer to the file.
  */
@@ -328,3 +329,4 @@ dbuf_write_and_destroy (struct dbuf_s *dbuf, FILE *dest)
 
   dbuf_destroy (dbuf);
 }
+#endif

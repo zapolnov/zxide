@@ -343,7 +343,7 @@ common_handle_option (size_t scode, const char *arg,
   switch (code)
     {
     default:
-      abort ();
+      /*abort */sdcc_abort();
 
     case OPT__help:
       print_help ();
@@ -394,19 +394,19 @@ print_help (void)
 	columns = value;
     }
 
-  puts (_("The following options are language-independent:\n"));
+  /*puts */sdcc_msg_puts(_("The following options are language-independent:\n"));
 
   print_filtered_help (CL_COMMON);
 
   for (i = 0; lang_names[i]; i++)
     {
-      printf (_("The %s front end recognizes the following options:\n\n"),
+      /*printf */sdcc_msg_printf(_("The %s front end recognizes the following options:\n\n"),
 	      lang_names[i]);
       print_filtered_help (1U << i);
     }
 
-  printf (_("\nFor bug reporting instructions, please see:\n"));
-  printf ("%s.\n", bug_report_url);
+  /*printf */sdcc_msg_printf(_("\nFor bug reporting instructions, please see:\n"));
+  /*printf */sdcc_msg_printf("%s.\n", bug_report_url);
 }
 
 /* Print help for a specific front-end, etc.  */
@@ -450,8 +450,8 @@ print_filtered_help (unsigned int flag)
 
       if (duplicates)
 	{
-	  putchar ('\n');
-	  putchar ('\n');
+	  /*putchar */sdcc_msg_putc('\n');
+	  /*putchar */sdcc_msg_putc('\n');
 	}
     }
 
@@ -493,7 +493,7 @@ print_filtered_help (unsigned int flag)
       wrap_help (help, opt, len);
     }
 
-  putchar ('\n');
+  /*putchar */sdcc_msg_putc('\n');
 }
 
 /* Output ITEM, of length ITEM_WIDTH, in the left column, followed by
@@ -505,19 +505,19 @@ print_switch (const char *text, unsigned int indent)
 
   if (indent)
     {
-      putchar (',');
+      /*putchar */sdcc_msg_putc(',');
       if (indent + len > columns)
 	{
-	  putchar ('\n');
-	  putchar (' ');
+	  /*putchar */sdcc_msg_putc('\n');
+	  /*putchar */sdcc_msg_putc(' ');
 	  indent = 1;
 	}
     }
   else
-    putchar (' ');
+    /*putchar */sdcc_msg_putc(' ');
 
-  putchar (' ');
-  fputs (text, stdout);
+  /*putchar */sdcc_msg_putc(' ');
+  /*fputs */sdcc_msg_puts(text/*, stdout*/);
 
   return indent + len + 1;
 }
@@ -556,7 +556,7 @@ wrap_help (const char *help, const char *item, unsigned int item_width)
 	    }
 	}
 
-      printf( "  %-*.*s %.*s\n", col_width, item_width, item, len, help);
+      /*printf*/sdcc_msg_printf( "  %-*.*s %.*s\n", col_width, item_width, item, len, help);
       item_width = 0;
       while (help[len] == ' ')
 	len++;

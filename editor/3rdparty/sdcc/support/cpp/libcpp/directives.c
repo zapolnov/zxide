@@ -1260,7 +1260,7 @@ _cpp_init_internal_pragmas (cpp_reader *pfile)
   register_pragma_internal (pfile, "GCC", "poison", do_pragma_poison);
   register_pragma_internal (pfile, "GCC", "system_header",
 			    do_pragma_system_header);
-  register_pragma_internal (pfile, "GCC", "dependency", do_pragma_dependency);
+  /*register_pragma_internal (pfile, "GCC", "dependency", do_pragma_dependency);*/
 }
 
 /* Return the number of registered pragmas in PE.  */
@@ -1598,6 +1598,7 @@ do_pragma_system_header (cpp_reader *pfile)
     }
 }
 
+#if 0
 /* Check the modified date of the current include file against a specified
    file. Issue a diagnostic, if the specified file is newer. We use this to
    determine if a fixed header should be refixed.  */
@@ -1628,6 +1629,7 @@ do_pragma_dependency (cpp_reader *pfile)
 
   free ((void *) fname);
 }
+#endif
 
 /* Get a token but skip padding.  */
 static const cpp_token *
@@ -2408,11 +2410,11 @@ cpp_pop_definition (cpp_reader *pfile, struct def_pragma_macro *c)
 	_cpp_clean_line (pfile);
 	nbuf->sysp = 1;
 	if (!_cpp_create_definition (pfile, h))
-	  abort ();
+	  /*abort */sdcc_abort();
 	_cpp_pop_buffer (pfile);
       }
     else
-      abort ();
+      /*abort */sdcc_abort();
     h->value.macro->line = c->line;
     h->value.macro->syshdr = c->syshdr;
     h->value.macro->used = c->used;

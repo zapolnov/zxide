@@ -306,11 +306,52 @@ void Compiler::includeBinaryFile(const SourceFile* source, const QFileInfo& inpu
     section->emit<DEFB_BYTEARRAY>(token, data);
 }
 
+namespace
+{
+    class CommandLine
+    {
+    public:
+        int argc;
+        char** argv;
+
+        CommandLine() = default;
+
+        void add(std::string arg)
+        {
+            mArgs.emplace_back(std::move(arg));
+        }
+
+        void finalize()
+        {
+            argc = int(mArgs.size());
+            mArgv.clear();
+            mArgv.reserve(mArgs.size());
+            for (auto& it : mArgs)
+                mArgv.emplace_back(&it[0]);
+        }
+
+    private:
+        std::vector<std::string> mArgs;
+        std::vector<char*> mArgv;
+
+        Q_DISABLE_COPY(CommandLine)
+    };
+}
+
 bool Compiler::compileCCode()
 {
     for (const auto& source : mCSources) {
         QFileInfo info(source->path);
         setStatusText(tr("Compiling %1").arg(info.fileName()));
+
+        CommandLine cmdLine;
+        cmdLine.add("sdcpp");
+        cmdLine.add(info.absoluteFilePath().toUtf8().constData());
+        //cmdLine.add("-D...");
+        //cmdLine.add("-I...");
+        cmdLine.add("-fsigned-char");
+        cmdLine.add("-std=c11"); // c89, c99
+        cmdLine.finalize();
 
         /*
         QFile file(info.absoluteFilePath());

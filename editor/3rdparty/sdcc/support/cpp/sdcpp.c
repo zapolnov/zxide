@@ -243,12 +243,12 @@ sdcpp_init_options (unsigned int argc, const char **argv)
 void
 print_version (FILE *file, const char *indent)
 {
-  printf (_("%s %s%s\n"), progname, pkgversion_string, version_string);
-  printf ("Copyright %s 2011 Free Software Foundation, Inc.\n",
+  /*printf */sdcc_msg_printf(_("%s %s%s\n"), progname, pkgversion_string, version_string);
+  /*printf */sdcc_msg_printf("Copyright %s 2011 Free Software Foundation, Inc.\n",
     _("(C)"));
-  fputs (_("This is free software; see the source for copying conditions.  There is NO\n"
-    "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"),
-    stdout);
+  /*fputs */sdcc_msg_puts(_("This is free software; see the source for copying conditions.  There is NO\n"
+    "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n")/*,
+    stdout*/);
 }
 
 /* Initialization of the front end environment, before command line
@@ -259,10 +259,10 @@ general_init (const char *argv0)
 {
   const char *p;
 
-  p = argv0 + strlen (argv0);
+  /*p = argv0 + strlen (argv0);
   while (p != argv0 && !IS_DIR_SEPARATOR (p[-1]))
-    --p;
-  progname = p;
+    --p;*/
+  progname = /*p*/"sdcpp";
 
   xmalloc_set_program_name (progname);
 
@@ -320,9 +320,9 @@ inform (const char *gmsgid, ...)
   va_list ap;
 
   va_start (ap, gmsgid);
-  fprintf (stderr, "%s: note: ", progname);
-  vfprintf (stderr, gmsgid, ap);
-  putc('\n', stderr);
+  /*fprintf (stderr, */sdcc_msg_printf("%s: note: ", progname);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(gmsgid, ap);
+  /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 }
 
@@ -334,9 +334,9 @@ warning (int opt, const char *gmsgid, ...)
   va_list ap;
 
   va_start (ap, gmsgid);
-  fprintf (stderr, "%s: warning: ", progname);
-  vfprintf (stderr, gmsgid, ap);
-  putc('\n', stderr);
+  /*fprintf (stderr, */sdcc_msg_printf("%s: warning: ", progname);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(gmsgid, ap);
+  /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 }
 
@@ -350,9 +350,9 @@ error (const char *gmsgid, ...)
   ++errorcount;
 
   va_start (ap, gmsgid);
-  fprintf (stderr, "%s: error: ", progname);
-  vfprintf (stderr, gmsgid, ap);
-  putc('\n', stderr);
+  /*fprintf (stderr, */sdcc_msg_printf("%s: error: ", progname);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(gmsgid, ap);
+  /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 }
 
@@ -365,12 +365,12 @@ fatal_error (const char *gmsgid, ...)
   va_list ap;
 
   va_start (ap, gmsgid);
-  fprintf (stderr, "%s: fatal error: ", progname);
-  vfprintf (stderr, gmsgid, ap);
-  putc('\n', stderr);
+  /*fprintf (stderr, */sdcc_msg_printf("%s: fatal error: ", progname);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(gmsgid, ap);
+  /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 
-  exit (FATAL_EXIT_CODE);
+  /*exit (FATAL_EXIT_CODE);*/sdcc_fatal_exit();
 }
 
 /* An internal consistency check has failed.  We make no attempt to
@@ -383,12 +383,12 @@ internal_error (const char *gmsgid, ...)
   va_list ap;
 
   va_start (ap, gmsgid);
-  fprintf (stderr, "%s: internal compiler error: ", progname);
-  vfprintf (stderr, gmsgid, ap);
-  putc('\n', stderr);
+  /*fprintf (stderr, */sdcc_msg_printf("%s: internal compiler error: ", progname);
+  /*vfprintf (stderr, */sdcc_msg_vprintf(gmsgid, ap);
+  /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 
-  exit (FATAL_EXIT_CODE);
+  /*exit (FATAL_EXIT_CODE);*/sdcc_fatal_exit();
 }
 
 /* Report an internal compiler error in a friendly manner.  This is
@@ -444,7 +444,7 @@ do_compile (void)
    It is not safe to call this function more than once.  */
 
 int
-main (int argc, const char **argv)
+sdcpp_main (int argc, const char **argv)
 {
   /* Initialization of SDCPP's environment.  */
   general_init (argv[0]);

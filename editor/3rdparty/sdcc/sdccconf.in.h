@@ -1,5 +1,6 @@
 
 #include <stdint.h>
+#include "sdcc_bridge.h"
 
 #cmakedefine HAVE_UNISTD_H 1
 #cmakedefine HAVE_DIRECT_H 1

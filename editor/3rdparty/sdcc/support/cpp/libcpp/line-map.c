@@ -54,7 +54,7 @@ linemap_check_files_exited (struct line_maps *set)
      not, this can be a user error or an ICE.  */
   for (map = &set->maps[set->used - 1]; ! MAIN_FILE_P (map);
        map = INCLUDED_FROM (set, map))
-    fprintf (stderr, "line-map.c: file \"%s\" entered but not left\n",
+    /*fprintf (stderr, */sdcc_msg_printf("line-map.c: file \"%s\" entered but not left\n",
 	     map->to_file);
 }
  
@@ -92,7 +92,7 @@ linemap_add (struct line_maps *set, enum lc_reason reason,
   source_location start_location = set->highest_location + 1;
 
   if (set->used && start_location < set->maps[set->used - 1].start_location)
-    abort ();
+    /*abort */sdcc_abort();
 
   if (set->used == set->allocated)
     {
@@ -144,7 +144,7 @@ linemap_add (struct line_maps *set, enum lc_reason reason,
       /* Depending upon whether we are handling preprocessed input or
 	 not, this can be a user error or an ICE.  */
       if (error)
-	fprintf (stderr, "line-map.c: file \"%s\" left but not entered\n",
+	/*fprintf (stderr, */sdcc_msg_printf("line-map.c: file \"%s\" left but not entered\n",
 		 to_file);
 
       /* A TO_FILE of NULL is special - we use the natural values.  */
@@ -314,6 +314,6 @@ trace_include (const struct line_maps *set, const struct line_map *map)
   unsigned int i = set->depth;
 
   while (--i)
-    putc ('.', stderr);
-  fprintf (stderr, " %s\n", map->to_file);
+    /*putc */sdcc_msg_putc('.'/*, stderr*/);
+  /*fprintf (stderr, */sdcc_msg_printf(" %s\n", map->to_file);
 }

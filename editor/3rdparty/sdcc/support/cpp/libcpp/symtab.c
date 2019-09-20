@@ -310,31 +310,31 @@ ht_dump_statistics (hash_table *table)
   overhead = obstack_memory_used (&table->stack) - total_bytes;
   headers = table->nslots * sizeof (hashnode);
 
-  fprintf (stderr, "\nString pool\nentries\t\t%lu\n",
+  /*fprintf (stderr, */sdcc_msg_printf("\nString pool\nentries\t\t%lu\n",
 	   (unsigned long) nelts);
-  fprintf (stderr, "identifiers\t%lu (%.2f%%)\n",
+  /*fprintf (stderr, */sdcc_msg_printf("identifiers\t%lu (%.2f%%)\n",
 	   (unsigned long) nids, nids * 100.0 / nelts);
-  fprintf (stderr, "slots\t\t%lu\n",
+  /*fprintf (stderr, */sdcc_msg_printf("slots\t\t%lu\n",
 	   (unsigned long) table->nslots);
-  fprintf (stderr, "deleted\t\t%lu\n",
+  /*fprintf (stderr, */sdcc_msg_printf("deleted\t\t%lu\n",
 	   (unsigned long) deleted);
-  fprintf (stderr, "bytes\t\t%lu%c (%lu%c overhead)\n",
+  /*fprintf (stderr, */sdcc_msg_printf("bytes\t\t%lu%c (%lu%c overhead)\n",
 	   SCALE (total_bytes), LABEL (total_bytes),
 	   SCALE (overhead), LABEL (overhead));
-  fprintf (stderr, "table size\t%lu%c\n",
+  /*fprintf (stderr, */sdcc_msg_printf("table size\t%lu%c\n",
 	   SCALE (headers), LABEL (headers));
 
   exp_len = (double)total_bytes / (double)nelts;
   exp2_len = exp_len * exp_len;
   exp_len2 = (double) sum_of_squares / (double) nelts;
 
-  fprintf (stderr, "coll/search\t%.4f\n",
+  /*fprintf (stderr, */sdcc_msg_printf("coll/search\t%.4f\n",
 	   (double) table->collisions / (double) table->searches);
-  fprintf (stderr, "ins/search\t%.4f\n",
+  /*fprintf (stderr, */sdcc_msg_printf("ins/search\t%.4f\n",
 	   (double) nelts / (double) table->searches);
-  fprintf (stderr, "avg. entry\t%.2f bytes (+/- %.2f)\n",
+  /*fprintf (stderr, */sdcc_msg_printf("avg. entry\t%.2f bytes (+/- %.2f)\n",
 	   exp_len, approx_sqrt (exp_len2 - exp2_len));
-  fprintf (stderr, "longest entry\t%lu\n",
+  /*fprintf (stderr, */sdcc_msg_printf("longest entry\t%lu\n",
 	   (unsigned long) longest);
 #undef SCALE
 #undef LABEL
@@ -348,7 +348,7 @@ approx_sqrt (double x)
   double s, d;
 
   if (x < 0)
-    abort ();
+    /*abort */sdcc_abort();
   if (x == 0)
     return 0;
 

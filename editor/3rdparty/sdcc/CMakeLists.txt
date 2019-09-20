@@ -106,12 +106,16 @@ check_cxx_source_compiles("
 ######################################################################################################################
 # zsdcpp
 
-add_executable(ZSdCPP)
+add_library(ZSdCPP STATIC)
 set_target_properties(ZSdCPP PROPERTIES FOLDER "ThirdParty")
 
 target_compile_definitions(ZSdCPP PRIVATE
     _GNU_SOURCE
     HAVE_CONFIG_H
+    )
+
+target_include_directories(ZSdCPP PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}"
     )
 
 target_include_directories(ZSdCPP PRIVATE
@@ -212,6 +216,8 @@ add_sources(ZSdCPP
     support/sdbinutils/libiberty/xmemdup.c
     support/sdbinutils/libiberty/xstrdup.c
     support/sdbinutils/libiberty/xstrerror.c
+    sdcc_bridge.c
+    sdcc_bridge.h
     )
 
 ######################################################################################################################
@@ -219,6 +225,10 @@ add_sources(ZSdCPP
 
 add_executable(ZSdCC)
 set_target_properties(ZSdCC PROPERTIES FOLDER "ThirdParty")
+
+target_include_directories(ZSdCC PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    )
 
 target_include_directories(ZSdCC PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
@@ -366,4 +376,6 @@ add_sources(ZSdCC
     support/util/NewAlloc.c
     support/util/newalloc.h
     support/util/system.h
+    sdcc_bridge.c
+    sdcc_bridge.h
     )

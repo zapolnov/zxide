@@ -82,7 +82,7 @@ preprocess_file (cpp_reader *pfile)
 
   /* Flush any pending output.  */
   if (print.printed)
-    putc ('\n', print.outf);
+    /*putc */sdcc_out_putc('\n'/*, print.outf*/);
 }
 
 /* Set up the callbacks as appropriate.  */
@@ -166,16 +166,16 @@ scan_translation_unit (cpp_reader *pfile)
               || (print.prev
                   && cpp_avoid_paste (pfile, print.prev, token))
               || (print.prev == NULL && token->type == CPP_HASH))
-            putc (' ', print.outf);
+            /*putc */sdcc_out_putc(' '/*, print.outf*/);
           if (in_asm && print.source->flags & PREV_NL)
-            fputs ("\x87 ", print.outf);
+            /*fputs */sdcc_out_puts("\x87 "/*, print.outf*/);
         }
       else
         {
           if (token->flags & PREV_WHITE)
-            putc (' ', print.outf);
+            /*putc */sdcc_out_putc(' '/*, print.outf*/);
           if (in_asm && token->flags & PREV_NL)
-            fputs ("\x87 ", print.outf);
+            /*fputs */sdcc_out_puts("\x87 "/*, print.outf*/);
         }
 
       avoid_paste = false;
@@ -205,7 +205,7 @@ scan_translation_unit_trad (cpp_reader *pfile)
     {
       size_t len = pfile->out.cur - pfile->out.base;
       maybe_print_line (pfile->out.first_line);
-      fwrite (pfile->out.base, 1, len, print.outf);
+      /*fwrite */sdcc_out_write(pfile->out.base, /*1, */len/*, print.outf*/);
       print.printed = 1;
       if (!CPP_OPTION (pfile, discard_comments))
         account_for_newlines (pfile->out.base, len);
@@ -223,7 +223,7 @@ maybe_print_line (source_location src_loc)
   /* End the previous line of text.  */
   if (print.printed)
     {
-      putc ('\n', print.outf);
+      /*putc */sdcc_out_putc('\n'/*, print.outf*/);
       print.src_line++;
       print.printed = 0;
     }
@@ -233,7 +233,7 @@ maybe_print_line (source_location src_loc)
     {
       while (src_line > print.src_line)
         {
-          putc ('\n', print.outf);
+          /*putc */sdcc_out_putc('\n'/*, print.outf*/);
           print.src_line++;
         }
     }
@@ -248,7 +248,7 @@ print_line (source_location src_loc, const char *special_flags)
 {
   /* End any previous line of text.  */
   if (print.printed)
-    putc ('\n', print.outf);
+    /*putc */sdcc_out_putc('\n'/*, print.outf*/);
   print.printed = 0;
 
   if (!flag_no_line_commands)
@@ -267,16 +267,16 @@ print_line (source_location src_loc, const char *special_flags)
       p = cpp_quote_string (to_file_quoted,
                             (unsigned char *) map->to_file, to_file_len);
       *p = '\0';
-      fprintf (print.outf, "# %u \"%s\"%s",
+      /*fprintf (print.outf, */sdcc_out_printf("# %u \"%s\"%s",
                print.src_line == 0 ? 1 : print.src_line,
                to_file_quoted, special_flags);
 
       if (map->sysp == 2)
-        fputs (" 3 4", print.outf);
+        /*fputs */sdcc_out_puts(" 3 4"/*, print.outf*/);
       else if (map->sysp == 1)
-        fputs (" 3", print.outf);
+        /*fputs */sdcc_out_puts(" 3"/*, print.outf*/);
 
-      putc ('\n', print.outf);
+      /*putc */sdcc_out_putc('\n'/*, print.outf*/);
     }
 }
 
@@ -307,7 +307,7 @@ cb_line_change (cpp_reader *pfile, const cpp_token *token,
       print.printed = 1;
 
       while (-- spaces >= 0)
-        putc (' ', print.outf);
+        /*putc */sdcc_out_putc(' '/*, print.outf*/);
     }
 }
 
@@ -316,7 +316,7 @@ cb_ident (cpp_reader *pfile ATTRIBUTE_UNUSED, source_location line,
           const cpp_string *str)
 {
   maybe_print_line (line);
-  fprintf (print.outf, "#ident %s\n", str->text);
+  /*fprintf (print.outf, */sdcc_out_printf("#ident %s\n", str->text);
   print.src_line++;
 }
 
@@ -324,16 +324,16 @@ static void
 cb_define (cpp_reader *pfile, source_location line, cpp_hashnode *node)
 {
   maybe_print_line (line);
-  fputs ("#define ", print.outf);
+  /*fputs */sdcc_out_puts("#define "/*, print.outf*/);
 
   /* 'D' is whole definition; 'N' is name only.  */
   if (flag_dump_macros == 'D')
-    fputs ((const char *) cpp_macro_definition (pfile, node),
-           print.outf);
+    /*fputs */sdcc_out_puts((const char *) cpp_macro_definition (pfile, node)/*,
+           print.outf*/);
   else
-    fputs ((const char *) NODE_NAME (node), print.outf);
+    /*fputs */sdcc_out_puts((const char *) NODE_NAME (node)/*, print.outf*/);
 
-  putc ('\n', print.outf);
+  /*putc */sdcc_out_putc('\n'/*, print.outf*/);
   if (linemap_lookup (line_table, line)->to_line != 0)
     print.src_line++;
 }
@@ -343,7 +343,7 @@ cb_undef (cpp_reader *pfile ATTRIBUTE_UNUSED, source_location line,
           cpp_hashnode *node)
 {
   maybe_print_line (line);
-  fprintf (print.outf, "#undef %s\n", NODE_NAME (node));
+  /*fprintf (print.outf, */sdcc_out_printf("#undef %s\n", NODE_NAME (node));
   print.src_line++;
 }
 
@@ -354,22 +354,22 @@ cb_include (cpp_reader *pfile ATTRIBUTE_UNUSED, source_location line,
 {
   maybe_print_line (line);
   if (angle_brackets)
-    fprintf (print.outf, "#%s <%s>", dir, header);
+    /*fprintf (print.outf, */sdcc_out_printf("#%s <%s>", dir, header);
   else
-    fprintf (print.outf, "#%s \"%s\"", dir, header);
+    /*fprintf (print.outf, */sdcc_out_printf("#%s \"%s\"", dir, header);
 
   if (comments != NULL)
     {
       while (*comments != NULL)
         {
           if ((*comments)->flags & PREV_WHITE)
-            putc (' ', print.outf);
+            /*putc */sdcc_out_putc(' '/*, print.outf*/);
           cpp_output_token (*comments, print.outf);
           ++comments;
         }
     }
 
-  putc ('\n', print.outf);
+  /*putc */sdcc_out_putc('\n'/*, print.outf*/);
   print.src_line++;
 }
 
@@ -387,7 +387,7 @@ pp_dir_change (cpp_reader *pfile ATTRIBUTE_UNUSED, const char *dir)
   /* cpp_quote_string does not nul-terminate, so we have to do it ourselves.  */
   p = cpp_quote_string (to_file_quoted, (unsigned char *) dir, to_file_len);
   *p = '\0';
-  fprintf (print.outf, "# 1 \"%s//\"\n", to_file_quoted);
+  /*fprintf (print.outf, */sdcc_out_printf("# 1 \"%s//\"\n", to_file_quoted);
 }
 
 /* The file name, line number or system header flags have changed, as
@@ -432,7 +432,7 @@ static void
 cb_def_pragma (cpp_reader *pfile, source_location line)
 {
   maybe_print_line (line);
-  fputs ("#pragma ", print.outf);
+  /*fputs */sdcc_out_puts("#pragma "/*, print.outf*/);
   cpp_output_line (pfile, print.outf);
   print.src_line++;
 }
@@ -443,10 +443,10 @@ dump_macro (cpp_reader *pfile, cpp_hashnode *node, void *v ATTRIBUTE_UNUSED)
 {
   if (node->type == NT_MACRO && !(node->flags & NODE_BUILTIN))
     {
-      fputs ("#define ", print.outf);
-      fputs ((const char *) cpp_macro_definition (pfile, node),
-             print.outf);
-      putc ('\n', print.outf);
+      /*fputs */sdcc_out_puts("#define "/*, print.outf*/);
+      /*fputs */sdcc_out_puts((const char *) cpp_macro_definition (pfile, node)/*,
+             print.outf*/);
+      /*putc */sdcc_out_putc('\n'/*, print.outf*/);
       print.src_line++;
     }
 

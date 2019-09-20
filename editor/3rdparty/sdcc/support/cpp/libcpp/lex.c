@@ -502,7 +502,7 @@ _cpp_process_line_notes (cpp_reader *pfile, int in_comment)
       else if (note->type == 0)
 	/* Already processed in lex_raw_string.  */;
       else
-	abort ();
+	/*abort */sdcc_abort();
     }
   return ret;
 }
@@ -1366,7 +1366,7 @@ lex_raw_string (cpp_reader *pfile, cpp_token *token, const uchar *base,
 		    {
 		      if (note[1].type != '\\'
 			  && note[1].type != ' ')
-			abort ();
+			/*abort */sdcc_abort();
 		      BUF_APPEND ("/", 1);
 		      ++note;
 		      goto after_backslash;
@@ -1391,7 +1391,7 @@ lex_raw_string (cpp_reader *pfile, cpp_token *token, const uchar *base,
 		    }
 		}
 	      else
-		abort ();
+		/*abort */sdcc_abort();
 	      break;
 	    }
 	}
@@ -1841,7 +1841,7 @@ _cpp_lex_token (cpp_reader *pfile)
 	 run.  */
       if (pfile->cur_token < pfile->cur_run->base
 	  || pfile->cur_token >= pfile->cur_run->limit)
-	abort ();
+	/*abort */sdcc_abort();
 
       if (pfile->lookaheads)
 	{
@@ -2386,7 +2386,7 @@ utf8_to_ucn (unsigned char *buffer, const unsigned char *name)
       
       /* Ill-formed UTF-8.  */
       if ((*name & ~0x3F) != 0x80)
-	abort ();
+	/*abort */sdcc_abort();
     }
   
   *buffer++ = '\\';
@@ -2526,7 +2526,7 @@ cpp_output_token (const cpp_token *token, FILE *fp)
 
 	c = *spelling;
 	do
-	  putc (c, fp);
+	  /*putc */sdcc_out_putc(c/*, fp*/);
 	while ((c = *++spelling) != '\0');
       }
       break;
@@ -2542,15 +2542,15 @@ cpp_output_token (const cpp_token *token, FILE *fp)
 	    {
 	      unsigned char buffer[10];
 	      i += utf8_to_ucn (buffer, name + i) - 1;
-	      fwrite (buffer, 1, 10, fp);
+	      /*fwrite */sdcc_out_write(buffer, /*1, */10/*, fp*/);
 	    }
 	  else
-	    fputc (NODE_NAME (token->val.node.node)[i], fp);
+	    /*fputc */sdcc_out_putc(NODE_NAME (token->val.node.node)[i]/*, fp*/);
       }
       break;
 
     case SPELL_LITERAL:
-      fwrite (token->val.str.text, 1, token->val.str.len, fp);
+      /*fwrite */sdcc_out_write(token->val.str.text, /*1, */token->val.str.len/*, fp*/);
       break;
 
     case SPELL_NONE:
@@ -2657,12 +2657,12 @@ cpp_output_line (cpp_reader *pfile, FILE *fp)
       cpp_output_token (token, fp);
       token = cpp_get_token (pfile);
       if (token->flags & PREV_WHITE)
-	putc (' ', fp);
+	/*putc */sdcc_out_putc(' '/*, fp*/);
       if (in_asm && token->flags & PREV_NL)
-        fputs ("\x87 ", fp);
+        /*fputs */sdcc_out_puts("\x87 "/*, fp*/);
     }
 
-  putc ('\n', fp);
+  /*putc */sdcc_out_putc('\n'/*, fp*/);
 }
 
 /* Return a string representation of all the remaining tokens on the

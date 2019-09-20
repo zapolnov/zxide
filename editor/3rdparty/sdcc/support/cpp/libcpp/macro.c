@@ -140,7 +140,7 @@ _cpp_builtin_macro_text (cpp_reader *pfile, cpp_hashnode *node)
 		   the date and time of the last modification 
 		   of the current source file. The string constant 
 		   looks like "Sun Sep 16 01:03:52 1973".  */
-		struct tm *tb = NULL;
+		/*struct tm *tb = NULL;
 		struct stat *st = _cpp_get_file_stat (file);
 		if (st)
 		  tb = localtime (&st->st_mtime);
@@ -154,7 +154,7 @@ _cpp_builtin_macro_text (cpp_reader *pfile, cpp_hashnode *node)
 		    buf[len] = '"';
 		    pbuffer->timestamp = buf;
 		  }
-		else
+		else*/
 		  {
 		    cpp_errno (pfile, CPP_DL_WARNING,
 			"could not determine file timestamp");
@@ -535,7 +535,7 @@ paste_all_tokens (cpp_reader *pfile, const cpp_token *lhs)
       if (rhs->type == CPP_PADDING)
 	{
 	  if (rhs->flags & PASTE_LEFT)
-	    abort ();
+	    /*abort */sdcc_abort();
 	}
       if (!paste_tokens (pfile, &lhs, rhs))
 	break;
@@ -823,7 +823,7 @@ macro_real_token_count (const cpp_macro *macro)
   for (i = 0; i < macro->count; i++)
     if (macro->exp.tokens[i].type == CPP_PASTE)
       return i;
-  abort ();
+  /*abort */sdcc_abort();
   return 0; //makes compiler happy
 }
 
@@ -1431,7 +1431,7 @@ _cpp_backup_tokens (cpp_reader *pfile, unsigned int count)
   else
     {
       if (count != 1)
-	abort ();
+	/*abort */sdcc_abort();
       if (pfile->context->direct_p)
 	FIRST (pfile->context).token--;
       else

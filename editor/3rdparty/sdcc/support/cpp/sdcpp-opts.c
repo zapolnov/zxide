@@ -44,7 +44,7 @@ static const char *this_input_filename;
 
 /* Filename and stream for preprocessed output.  */
 static const char *out_fname;
-static FILE *out_stream;
+/*static FILE *out_stream;*/
 
 /* Append dependencies to deps_file.  */
 static bool deps_append;
@@ -558,7 +558,7 @@ sdcpp_common_post_options (const char **pfilename)
   /* Open the output now.  We must do so even if flag_no_output is
      on, because there may be other output than from the actual
      preprocessing (e.g. from -dM).  */
-  if (out_fname[0] == '\0')
+  /*if (out_fname[0] == '\0')
     out_stream = stdout;
   else
     out_stream = fopen (out_fname, "w");
@@ -567,13 +567,13 @@ sdcpp_common_post_options (const char **pfilename)
     {
       fatal_error ("opening output file %s: %s", out_fname, strerror(errno));
       return false;
-    }
+    }*/
 
   if (num_in_fnames > 2)
     error ("too many filenames given.  Type %s --help for usage",
            progname);
 
-  init_pp_output (out_stream);
+  init_pp_output (/*out_stream*/NULL);
 
   cb = cpp_get_callbacks (parse_in);
   cb->file_change = cb_file_change;
@@ -632,26 +632,26 @@ sdcpp_common_finish (void)
     {
       /* If -M or -MM was seen without -MF, default output to the
          output stream.  */
-      if (!deps_file)
+      /*if (!deps_file)
         deps_stream = out_stream;
       else
         {
           deps_stream = fopen (deps_file, deps_append ? "a": "w");
           if (!deps_stream)
             fatal_error ("opening dependency file %s: %s", deps_file, strerror(errno));
-        }
+        }*/
     }
 
   /* For performance, avoid tearing down cpplib's internal structures
      with cpp_destroy ().  */
   cpp_finish (parse_in, deps_stream);
 
-  if (deps_stream && deps_stream != out_stream
+  /*if (deps_stream && deps_stream != out_stream
       && (ferror (deps_stream) || fclose (deps_stream)))
     fatal_error ("closing dependency file %s: %s", deps_file, strerror(errno));
 
   if (out_stream && (ferror (out_stream) || fclose (out_stream)))
-    fatal_error ("when writing output to %s: %s", out_fname, strerror(errno));
+    fatal_error ("when writing output to %s: %s", out_fname, strerror(errno));*/
 }
 
 /* Either of two environment variables can specify output of
