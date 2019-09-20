@@ -218,6 +218,88 @@ static bool argCont(const char *arg, const char *what)
   return(arg[0] == '#') ? FALSE : StrStr(arg, what) != NULL;
 }
 
+/* z88dk special functions with register parameters listed */
+static char *special_funcs[][3] = {
+/* [0] = call function name, [1] = input registers, [2] = preserved registers */
+  {"call\t____sdcc_ll_copy_src_hlsp_dst_de", "dehl", "ay"},
+  {"call\t____sdcc_ll_copy_src_de_dst_hlsp", "dehl", "ay"},
+  {"call\t____sdcc_ll_add_deix_hlix", "dehl", "bcy"},
+  {"call\t____sdcc_ll_sub_deix_hlix", "dehl", "bcy"},
+  {"call\t____sdcc_ll_push_hlix", "hl", "bcy"},
+  {"call\t____sdcc_ll_copy_src_hlsp_dst_deixm", "dehl", "ay"},
+  {"call\t____sdcc_ll_copy_src_deixm_dst_hlsp", "dehl", "ay"},
+  {"call\t____sdcc_ll_asr_hlix_a", "ahl", "y"},
+  {"call\t____sdcc_ll_lsr_hlix_a", "ahl", "y"},
+  {"call\t____sdcc_ll_lsl_hlix_a", "ahl", "y"},
+  {"call\t____sdcc_ll_push_mhl", "hl", "bcy"},
+  {"call\t____sdcc_ll_copy_src_deix_dst_hl", "dehl", "ay"},
+  {"call\t____sdcc_ll_add_deix_bc_hl", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_deix_bc_hl", "bcdehl", "y"},
+  {"call\t____sdcc_ll_copy_src_desp_dst_hlsp", "dehl", "ay"},
+  {"call\t____sdcc_ll_copy_src_de_dst_hlix", "dehl", "ay"},
+  {"call\t____sdcc_ll_add_de_bc_hl", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_de_bc_hl", "bcdehl", "y"},
+  {"call\t____sdcc_ll_copy_src_hl_dst_de", "dehl", "ay"},
+  {"call\t____sdcc_ll_asr_mbc_a", "abc", "y"},
+  {"call\t____sdcc_ll_lsl_mbc_a", "abc", "y"},
+  {"call\t____sdcc_ll_lsr_mbc_a", "abc", "y"},
+  {"call\t____sdcc_ll_add_hlix_deix_bcix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_hlix_deix_bcix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_copy_src_deix_dst_hlix", "dehl", "ay"},
+  {"call\t____sdcc_ll_add_hlix_bc_deix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_hlix_bc_deix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_add_hlix_deix_bc", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_hlix_deix_bc", "bcdehl", "y"},
+  {"call\t____sdcc_ll_add_de_hlix_bcix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_de_hlix_bcix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_add_de_bc_hlix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_de_bc_hlix", "bcdehl", "y"},
+  {"call\t____sdcc_ll_add_de_hlix_bc", "bcdehl", "y"},
+  {"call\t____sdcc_ll_sub_de_hlix_bc", "bcdehl", "y"},
+  {"call\t____sdcc_cpu_push_di", "", "bcdehly"},
+  {"call\t____sdcc_cpu_pop_ei", "", "bcdehly"},
+  {"call\t____sdcc_lib_setmem_hl", "ahl", "abcdey"},
+  {"call\t____sdcc_load_debc_deix", "de", "ahly"},
+  {"call\t____sdcc_load_dehl_deix", "de", "bcy"},
+  {"call\t____sdcc_load_debc_mhl", "hl", "ay"},
+  {"call\t____sdcc_load_hlde_mhl", "hl", "bcy"},
+  {"call\t____sdcc_4_copy_src_mhl_dst_deix", "dehl", "bcy"},
+  {"call\t____sdcc_4_copy_src_mhl_dst_bcix", "bchl", "bcdey"},
+  {"call\t____sdcc_4_copy_src_mhl_dst_mbc", "bchl", "dey"},
+  {"call\t____sdcc_4_push_hlix", "hl", "bcdey"},
+  {"call\t____sdcc_4_push_mhl", "hl", "bcdey"},
+  {"call\t____sdcc_store_debc_hlix", "bcdehl", "abcdey"},
+  {"call\t____sdcc_store_debc_mhl", "bcdehl", "abcdey"},
+  {"call\t____sdcc_store_dehl_bcix", "bcdehl", "adehly"},
+  {"call\t____sdcc_2_copy_src_mhl_dst_deix", "dehl", "bcy"},
+  {"call\t____sdcc_2_copy_src_mhl_dst_bcix", "bchl", "debcy"},
+  {"call\t____sdcc_4_ldi_nosave_bc", "dehl", "y"},
+  {"call\t____sdcc_4_ldi_save_bc", "dehl", "bcy"},
+  {"call\t____sdcc_outi_128", "bchl", "acdey"},
+  {"call\t____sdcc_outi_256", "bchl", "acdey"},
+  {"call\t____sdcc_outi", "bchl", "acdey"},
+  {"call\t____sdcc_ldi_128", "bcdehl", "ay"},
+  {"call\t____sdcc_ldi_256", "bcdehl", "ay"},
+  {"call\t____sdcc_ldi", "bcdehl", "ay"},
+  {"call\t____sdcc_4_copy_srcd_hlix_dst_deix","dehl","y" },
+  {"call\t____sdcc_4_and_src_mbc_mhl_dst_deix","bcdehl","y" },
+  {"call\t____sdcc_4_or_src_mbc_mhl_dst_deix","bcdehl","y" },
+  {"call\t____sdcc_4_xor_src_mbc_mhl_dst_deix","bcdehl","y" },
+  {"call\t____sdcc_4_or_src_dehl_dst_bcix","bcdehl","dehly" },
+  {"call\t____sdcc_4_xor_src_dehl_dst_bcix","bcdehl","dehly" },
+  {"call\t____sdcc_4_and_src_dehl_dst_bcix","bcdehl","dehly" },
+  {"call\t____sdcc_4_xor_src_mbc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_or_src_mbc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_and_src_mbc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_cpl_src_mhl_dst_debc","hl","y" },
+  {"call\t____sdcc_4_xor_src_debc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_or_src_debc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_and_src_debc_mhl_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_and_src_debc_hlix_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_or_src_debc_hlix_dst_debc","bcdehl","y" },
+  {"call\t____sdcc_4_xor_src_debc_hlix_dst_debc","bcdehl","y" }
+};
+
 static bool
 z80MightBeParmInCallFromCurrentFunction(const char *what)
 {
@@ -242,10 +324,22 @@ z80MightBeParmInCallFromCurrentFunction(const char *what)
 static bool
 z80MightRead(const lineNode *pl, const char *what)
 {
+  int i;
+
   if(strcmp(what, "iyl") == 0 || strcmp(what, "iyh") == 0)
     what = "iy";
   if(strcmp(what, "ixl") == 0 || strcmp(what, "ixh") == 0)
     what = "ix";
+
+  /* look for z88dk special functions */
+  if (strstr(pl->line, "call\t____sdcc") != 0)
+  {
+    for (i = 0; i < sizeof(special_funcs) / (3 * sizeof(char *)); ++i)
+      {
+        if (strstr(pl->line, special_funcs[i][0]) != 0)
+          return (strchr(special_funcs[i][1], (what[1] == '\0') ? what[0] : what[1]) != 0);
+      }
+  }
 
   if(strcmp(pl->line, "call\t__initrleblock") == 0)
     return TRUE;
@@ -474,11 +568,22 @@ z80SurelyWrites(const lineNode *pl, const char *what)
     return(true);
   if(ISINST(pl->line, "call") && strchr(pl->line, ',') == 0)
     {
+      int i;
       const symbol *f = findSym (SymbolTab, 0, pl->line + 6);
       const bool *preserved_regs;
 
       if(!strcmp(what, "ix"))
         return(false);
+
+      /* z88dk special functions */
+      if(!f && (strstr(pl->line, "call\t____sdcc") != 0))
+        {
+           for (i = 0; i < sizeof(special_funcs) / (3*sizeof(char *)); ++i)
+             {
+                if (strstr(pl->line, special_funcs[i][0]) != 0)
+                  return (strchr(special_funcs[i][2], (what[1] == '\0') ? what[0] : what[1]) == 0);
+             }
+        }
 
       if(f)
           preserved_regs = f->type->funcAttrs.preserved_regs;
