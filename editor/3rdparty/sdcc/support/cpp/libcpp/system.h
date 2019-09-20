@@ -334,7 +334,11 @@ extern void abort (void);
 
 /* Test if something is a block special file.  */
 #ifndef S_ISBLK
+#ifdef S_IFBLK
 #define S_ISBLK(m) (((m) & S_IFMT) == S_IFBLK)
+#else
+#define S_ISBLK(m) (0)
+#endif
 #endif
 
 /* Test if something is a socket.  */
@@ -375,9 +379,9 @@ extern void abort (void);
    ??? C99 designated initializers are not supported by most C++
    compilers, including G++.  -- gdr, 2005-05-18  */
 #if !defined(HAVE_DESIGNATED_INITIALIZERS)
-#define HAVE_DESIGNATED_INITIALIZERS \
+/*#define HAVE_DESIGNATED_INITIALIZERS \
   (!defined(__cplusplus) \
-   && ((GCC_VERSION >= 2007) || (__STDC_VERSION__ >= 199901L)))
+   && ((GCC_VERSION >= 2007) || (__STDC_VERSION__ >= 199901L)))*/
 #endif
 
 #ifndef offsetof

@@ -1,4 +1,5 @@
-#include "auto-host.h"
+/*#include "auto-host.h"*/
+#include "generated_config.h"
 /* Provide three core typedefs used by everything, if we are compiling
    GCC.  These used to be found in rtl.h and tree.h, but this is no
    longer practical.  Providing these here rather that system.h allows

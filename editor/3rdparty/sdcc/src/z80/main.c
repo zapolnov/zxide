@@ -50,17 +50,17 @@ static char _z80_defaultRules[] = {
 
 static char _r2k_defaultRules[] = {
 #include "peeph.rul"
-#include "peeph-r2k.rul"
+/*#include "peeph-r2k.rul"*/
 };
 
 static char _tlcs90_defaultRules[] = {
 #include "peeph.rul"
-#include "peeph-tlcs90.rul"
+/*#include "peeph-tlcs90.rul"*/
 };
 
 static char _gbz80_defaultRules[] = {
 #include "peeph.rul"
-#include "peeph-gbz80.rul"
+/*#include "peeph-gbz80.rul"*/
 };
 
 

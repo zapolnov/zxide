@@ -65,7 +65,7 @@ function will be called to print an error message and terminate execution.
 #endif
 #include "ansidecl.h"
 #include "libiberty.h"
-#include "environ.h"
+/*#include "environ.h"*/
 
 #include <stdio.h>
 

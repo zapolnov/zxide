@@ -18,6 +18,7 @@
    <http://www.gnu.org/licenses/>.  */
 
 #include "config.h"
+#include "libiberty.h"
 #include "system.h"
 #include "cpplib.h"
 #include "../libcpp/internal.h"

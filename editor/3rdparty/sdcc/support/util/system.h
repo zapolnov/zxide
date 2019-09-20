@@ -27,7 +27,9 @@
 #define _SYSTEM_H
 
 /* findme.c is compiled only on *nix, so includes are *nix specific */
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

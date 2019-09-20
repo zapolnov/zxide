@@ -8,8 +8,12 @@
 
    alloca replaced with malloc()/free() pair */
 
+#include "sdccconf.h"
 #include "system.h"
 #include "findme.h"
+#ifdef HAVE_IO_H
+#include <io.h>
+#endif
 
 const char * findProgramPath(const char * argv0) {
     char * path = getenv("PATH");
@@ -40,7 +44,7 @@ const char * findProgramPath(const char * argv0) {
 	    *chptr = '\0';
 	sprintf(buf, "%s/%s", start, argv0);
 
-	if (!access(buf, X_OK)) {
+	if (!access(buf, /*X_OK*/1)) {
             free(pathbuf);
 	    return buf;
         }

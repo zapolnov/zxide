@@ -1,0 +1,66 @@
+
+#include <stdint.h>
+
+#cmakedefine HAVE_UNISTD_H 1
+#cmakedefine HAVE_DIRECT_H 1
+#cmakedefine HAVE_IO_H 1
+
+#define HAVE_SPRINTF 1
+#define HAVE_VSPRINTF 1
+#define HAVE_VSNPRINTF 1
+
+#define SDCC_VERSION_HI 3
+#define SDCC_VERSION_LO 6
+#define SDCC_VERSION_P 9
+#define SDCC_VERSION_STR "3.6.9"
+
+#ifdef _WIN32
+#define DIR_SEPARATOR_CHAR  '\\'
+#define DIR_SEPARATOR_STRING "\\"
+#else
+#define DIR_SEPARATOR_CHAR  '/'
+#define DIR_SEPARATOR_STRING "/"
+#endif
+
+#define SDCC_DIR_NAME "SDCC_HOME"
+#define SDCC_INCLUDE_NAME "SDCC_INCLUDE"
+#define SDCC_LIB_NAME "SDCC_LIB"
+
+#define DATADIR DIR_SEPARATOR_STRING "sdcc"
+#define PREFIX2BIN_DIR DIR_SEPARATOR_STRING "bin"
+#define BIN2DATA_DIR DIR_SEPARATOR_STRING ".."
+#define PREFIX2DATA_DIR ""
+
+#define INCLUDE_DIR_SUFFIX DIR_SEPARATOR_STRING "include"
+#define LIB_DIR_SUFFIX DIR_SEPARATOR_STRING "lib"
+#define NON_FREE_INCLUDE_DIR_SUFFIX DIR_SEPARATOR_STRING "non-free" DIR_SEPARATOR_STRING "include"
+#define NON_FREE_LIB_DIR_SUFFIX DIR_SEPARATOR_STRING "non-free" DIR_SEPARATOR_STRING "lib"
+
+#define TYPE_BYTE int8_t
+#define TYPE_WORD int16_t
+#define TYPE_DWORD int32_t
+#define TYPE_QWORD int64_t
+#define TYPE_UBYTE uint8_t
+#define TYPE_UWORD uint16_t
+#define TYPE_UDWORD uint32_t
+#define TYPE_UQWORD uint64_t
+
+#define OPT_DISABLE_MCS51 1
+#define OPT_DISABLE_Z80 0
+#define OPT_DISABLE_Z180 1
+#define OPT_DISABLE_R2K 1
+#define OPT_DISABLE_R3KA 1
+#define OPT_DISABLE_GBZ80 1
+#define OPT_DISABLE_TLCS90 1
+#define OPT_DISABLE_AVR 1
+#define OPT_DISABLE_DS390 1
+#define OPT_DISABLE_PIC14 1
+#define OPT_DISABLE_PIC16 1
+#define OPT_DISABLE_TININative 1
+#define OPT_DISABLE_DS400 1
+#define OPT_DISABLE_HC08 1
+#define OPT_DISABLE_S08 1
+#define OPT_DISABLE_STM8 1
+#define OPT_DISABLE_PDK13 1
+#define OPT_DISABLE_PDK14 1
+#define OPT_DISABLE_PDK15 1

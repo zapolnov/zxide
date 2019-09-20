@@ -16,6 +16,7 @@ if(MSVC)
         )
     add_definitions(
         -D_WINSOCK_DEPRECATED_NO_WARNINGS
+        -D_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
         )
 else()
     add_definitions(
@@ -32,4 +33,5 @@ add_subdirectory(libspectrum)
 add_subdirectory(lua)
 add_subdirectory(md5)
 add_subdirectory(scintilla)
+add_subdirectory(sdcc)
 add_subdirectory(zlib)
