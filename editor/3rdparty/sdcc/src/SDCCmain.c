@@ -2272,10 +2272,10 @@ setBinPaths (const char *argv0)
   /* do it in reverse mode, so that addSetHead() can be used
      instead of slower addSet() */
 
-  if ((p = getBinPath (argv0)) != NULL)
-    addSetHead (&binPathSet, (void *) p);
+  /*if ((p = getBinPath (argv0)) != NULL)
+    addSetHead (&binPathSet, (void *) p);*/
 
-  if ((p = getenv (SDCC_DIR_NAME)) != NULL)
+  /*if ((p = getenv (SDCC_DIR_NAME)) != NULL)
     {
       struct dbuf_s dbuf;
 
@@ -2283,7 +2283,7 @@ setBinPaths (const char *argv0)
       dbuf_append_str (&dbuf, p);
       dbuf_append_str (&dbuf, PREFIX2BIN_DIR);
       addSetHead (&binPathSet, dbuf_detach_c_str (&dbuf));
-    }
+    }*/
 }
 
 /* Set system include path */
@@ -2330,7 +2330,7 @@ setIncludePath (void)
           mergeSets (&includeDirsSet, tempSet1);
         }
 
-      if ((p = getenv (SDCC_INCLUDE_NAME)) != NULL)
+      /*if ((p = getenv (SDCC_INCLUDE_NAME)) != NULL)
         {
           struct dbuf_s dbuf;
 
@@ -2338,7 +2338,7 @@ setIncludePath (void)
           addSetHead (&includeDirsSet, p);
           dbuf_makePath (&dbuf, p, port->target);
           addSetHead (&includeDirsSet, dbuf_detach (&dbuf));
-        }
+        }*/
     }
 }
 
@@ -2380,7 +2380,7 @@ setLibPath (void)
           mergeSets (&libDirsSet, processStrSet (dataDirsSet, NULL, dbuf_c_str (&dbuf), NULL));
         }
 
-      if ((p = getenv (SDCC_LIB_NAME)) != NULL)
+      /*if ((p = getenv (SDCC_LIB_NAME)) != NULL)
         {
           addSetHead (&libDirsSet, Safe_strdup (p));
 
@@ -2388,7 +2388,7 @@ setLibPath (void)
           dbuf_makePath (&dbuf, p, port->general.get_model ? port->general.get_model () : targetname);
           addSetHead (&libDirsSet, dbuf_detach (&dbuf));
         }
-      else
+      else*/
         dbuf_destroy (&dbuf);
     }
 }
@@ -2407,7 +2407,7 @@ setDataPaths (const char *argv0)
    * 3. - DATADIR (only on *nix)
    */
 
-  if ((p = getenv (SDCC_DIR_NAME)) != NULL)
+  /*if ((p = getenv (SDCC_DIR_NAME)) != NULL)
     {
       struct dbuf_s dbuf;
 
@@ -2415,9 +2415,9 @@ setDataPaths (const char *argv0)
       dbuf_append_str (&dbuf, p);
       dbuf_append_str (&dbuf, PREFIX2DATA_DIR);
       addSetHead (&dataDirsSet, dbuf_detach_c_str (&dbuf));
-    }
+    }*/
 
-  if ((p = getBinPath (argv0)) != NULL)
+  /*if ((p = getBinPath (argv0)) != NULL)
     {
       struct dbuf_s dbuf;
 
@@ -2425,8 +2425,9 @@ setDataPaths (const char *argv0)
       dbuf_append_str (&dbuf, p);
       dbuf_append_str (&dbuf, BIN2DATA_DIR);
       addSetHead (&dataDirsSet, dbuf_detach_c_str (&dbuf));
-    }
+    }*/
 
+#if 0
 #ifdef _WIN32
   if (peekSet (dataDirsSet) == NULL)
     {
@@ -2435,6 +2436,7 @@ setDataPaths (const char *argv0)
     }
 #else
   addSet (&dataDirsSet, Safe_strdup (DATADIR));
+#endif
 #endif
 
   setIncludePath ();
@@ -2567,13 +2569,13 @@ main (int argc, char **argv, char **envp)
 
   /* install signal handler;
      it's only purpose is to call exit() to remove temp files */
-  if (!getenv ("SDCC_LEAVE_SIGNALS"))
+  /*if (!getenv ("SDCC_LEAVE_SIGNALS"))
     {
       signal (SIGABRT, sig_handler);
       signal (SIGTERM, sig_handler);
       signal (SIGINT, sig_handler);
       signal (SIGSEGV, sig_handler);
-    }
+    }*/
 
   /* Before parsing the command line options, do a
    * search for the port and processor and initialize

@@ -1286,8 +1286,8 @@ fillGaps ()
   symbol *sym = NULL;
   int key = 0;
 
-  if (getenv ("DISABLE_FILL_GAPS"))
-    return;
+  /*if (getenv ("DISABLE_FILL_GAPS"))
+    return;*/
 
   /* look for livernages that was spilt by the allocator */
   for (sym = hTabFirstItem (liveRanges, &key); sym; sym = hTabNextItem (liveRanges, &key))

@@ -4193,10 +4193,10 @@ initCSupport (void)
 
   int bwd, su, muldivmod, tofrom, slsr;
 
-  if (getenv ("SDCC_NO_C_SUPPORT"))
+  /*if (getenv ("SDCC_NO_C_SUPPORT"))*/
     {
       /* for debugging only */
-      return;
+      /*return;*/
     }
 
   for (bwd = 0; bwd < 4; bwd++)

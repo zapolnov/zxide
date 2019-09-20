@@ -223,7 +223,7 @@ get_path (const char *cmd)
           /* didn't found the command in predefined binary paths: try with PATH */
           char *envPath;
 
-          if (NULL != (envPath = getenv("PATH")))
+          if (/*NULL != (envPath = getenv("PATH"))*/0)
             {
               /* make a local copy; strtok() will modify it */
               envPath = Safe_strdup (envPath);

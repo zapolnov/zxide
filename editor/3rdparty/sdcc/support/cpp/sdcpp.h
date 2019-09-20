@@ -17,7 +17,7 @@
  * From defaults.h
  */
 #ifndef GET_ENVIRONMENT
-#define GET_ENVIRONMENT(VALUE, NAME) do { (VALUE) = getenv (NAME); } while (0)
+#define GET_ENVIRONMENT(VALUE, NAME) do { (VALUE) = NULL/*getenv (NAME)*/; } while (0)
 #endif
 
 /* Define results of standard character escape sequences.  */

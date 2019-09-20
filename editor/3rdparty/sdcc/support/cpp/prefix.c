@@ -99,8 +99,8 @@ get_key_value (char *key)
   prefix = lookup_key (key);
 #endif
 
-  if (prefix == 0)
-    prefix = getenv (temp = concat (key, "_ROOT", NULL));
+  /*if (prefix == 0)
+    prefix = getenv (temp = concat (key, "_ROOT", NULL));*/
 
   if (prefix == 0)
     prefix = std_prefix;
@@ -213,7 +213,7 @@ translate_name (char *name)
             prefix = std_prefix;
         }
       else
-        prefix = getenv (key);
+        prefix = NULL;/*getenv (key);*/
 
       if (prefix == 0)
         prefix = PREFIX;

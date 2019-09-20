@@ -16,7 +16,7 @@
 #endif
 
 const char * findProgramPath(const char * argv0) {
-    char * path = getenv("PATH");
+    char * path = NULL/*getenv("PATH")*/;
     char * pathbuf;
     char * start, * chptr;
     char * buf;
