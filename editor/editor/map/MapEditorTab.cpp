@@ -8,6 +8,7 @@
 #include "compiler/TileSetData.h"
 #include "compiler/TileSetFile.h"
 #include "util/ComboBox.h"
+#include "util/IO.h"
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_MapEditorTab.h"
@@ -217,28 +218,10 @@ bool MapEditorTab::save()
     file.tileSetFile = tilesetButtonSelection();
     mUi->editorWidget->serialize(file);
 
-    QSaveFile f(fileName);
-    if (!f.open(QFile::WriteOnly)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-
-    QByteArray fileData = file.data();
-    qint64 bytesWritten = f.write(fileData);
-    if (bytesWritten < 0) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-    if (bytesWritten != fileData.length()) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(fileName));
-        return false;
-    }
-
-    if (!f.commit()) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
+    try {
+        saveFile(fileName, file.data());
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
         return false;
     }
 
@@ -457,23 +440,23 @@ void MapEditorTab::refreshTileList()
     }
 
     File* f = static_cast<File*>(child);
-    QFile file(f->fileInfo().absoluteFilePath());
-    if (!file.open(QFile::ReadOnly)) {
+    QString fileName = f->fileInfo().absoluteFilePath();
+    QByteArray fileData;
+
+    try {
+        fileData = ::loadFile(fileName);
+    } catch (const IOException& e) {
         mUi->editorWidget->setTiles(tiles, 8, 8);
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+        QMessageBox::critical(this, tr("Error"), e.message());
         return;
     }
-
-    QByteArray fileData = file.readAll();
-    file.close();
 
     TileSetFile loader(fileData);
     TileSetData tileSet;
     if (!loader.deserializeFromJson(&tileSet)) {
         mUi->editorWidget->setTiles(tiles, 8, 8);
         QMessageBox::critical(this, tr("Error"),
-            tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(loader.lastError()));
+            tr("Unable to load file \"%1\": %2").arg(fileName).arg(loader.lastError()));
         return;
     }
 
@@ -505,19 +488,18 @@ void MapEditorTab::refreshTileList()
                 continue;
             }
 
-            file.setFileName(static_cast<File*>(fileOrDirectory)->fileInfo().absoluteFilePath());
-            if (!file.open(QFile::ReadOnly)) {
-                QMessageBox::critical(this, tr("Error"),
-                    tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString()));
+            fileName = static_cast<File*>(fileOrDirectory)->fileInfo().absoluteFilePath();
+            try {
+                fileData = ::loadFile(fileName);
+            } catch (const IOException& e) {
+                QMessageBox::critical(this, tr("Error"), e.message());
                 continue;
             }
 
-            GfxFile gfxFile(file.readAll());
-            file.close();
-
+            GfxFile gfxFile(fileData);
             if (!gfxFile.deserializeFromJson(&tileData)) {
                 QMessageBox::critical(this, tr("Error"),
-                    tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError()));
+                    tr("Unable to load file \"%1\": %2").arg(fileName).arg(gfxFile.lastError()));
                 continue;
             }
 

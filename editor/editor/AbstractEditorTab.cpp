@@ -1,8 +1,7 @@
 #include "AbstractEditorTab.h"
 #include "FileManager.h"
+#include "util/IO.h"
 #include <QMessageBox>
-#include <QFile>
-#include <QSaveFile>
 
 AbstractEditorTab::AbstractEditorTab(QWidget* parent)
     : QWidget(parent)
@@ -24,14 +23,12 @@ QByteArray AbstractEditorTab::loadFileData(File* file)
 
     mFile = file;
 
-    QFile f(file->fileInfo().absoluteFilePath());
-    if (!f.open(QFile::ReadOnly)) {
-        QMessageBox::critical(this,
-            tr("Error"), tr("Unable to open file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+    try {
+        return ::loadFile(file->fileInfo().absoluteFilePath());
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
         return QByteArray();
     }
-
-    return f.readAll();
 }
 
 bool AbstractEditorTab::writeFileData(const QByteArray& data)
@@ -42,28 +39,10 @@ bool AbstractEditorTab::writeFileData(const QByteArray& data)
         return false;
     }
 
-    QSaveFile f(mFile->fileInfo().absoluteFilePath());
-    if (!f.open(QFile::WriteOnly)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to save file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
-        return false;
-    }
-
-    qint64 bytesWritten = f.write(data.constData(), data.length());
-    if (bytesWritten < 0) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
-        return false;
-    }
-
-    if (bytesWritten != data.length()) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(f.fileName()));
-        return false;
-    }
-
-    if (!f.commit()) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to save file \"%1\": %2").arg(f.fileName()).arg(f.errorString()));
+    try {
+        saveFile(mFile->fileInfo().absoluteFilePath(), data);
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
         return false;
     }
 

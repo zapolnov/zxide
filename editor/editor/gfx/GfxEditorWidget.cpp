@@ -5,7 +5,6 @@
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
-#include <QFile>
 #include <QClipboard>
 #include <QMimeData>
 #include <QApplication>

@@ -6,6 +6,7 @@
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
 #include "util/ComboBox.h"
+#include "util/IO.h"
 #include "util/FileSelectorMenu.h"
 #include "util/GfxFileUtil.h"
 #include "ui_TileSetEditorTab.h"
@@ -106,28 +107,10 @@ bool TileSetEditorTab::save()
     TileSetFile serializer;
     serializer.serializeToJson(&mData);
 
-    QSaveFile f(fileName);
-    if (!f.open(QFile::WriteOnly)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-
-    QByteArray fileData = serializer.data();
-    qint64 bytesWritten = f.write(fileData);
-    if (bytesWritten < 0) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-    if (bytesWritten != fileData.length()) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(fileName));
-        return false;
-    }
-
-    if (!f.commit()) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
+    try {
+        saveFile(fileName, serializer.data());
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
         return false;
     }
 
@@ -253,17 +236,17 @@ void TileSetEditorTab::refresh()
 
 bool TileSetEditorTab::loadTile(const QString& fileName, GfxData* data, QStringList* errors, GfxColorMode* colorMode)
 {
-    QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
-        *errors << tr("Unable to open file \"%1\": %2").arg(file.fileName()).arg(file.errorString());
+    QByteArray fileData;
+    try {
+        fileData = ::loadFile(fileName);
+    } catch (const IOException& e) {
+        *errors << e.message();
         return false;
     }
 
-    GfxFile gfxFile(file.readAll());
-    file.close();
-
+    GfxFile gfxFile(fileData);
     if (!gfxFile.deserializeFromJson(data)) {
-        *errors << tr("Unable to load file \"%1\": %2").arg(file.fileName()).arg(gfxFile.lastError());
+        *errors << tr("Unable to load file \"%1\": %2").arg(fileName).arg(gfxFile.lastError());
         return false;
     }
 

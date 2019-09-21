@@ -3,6 +3,7 @@
 #include "editor/EditorTabFactory.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
+#include "util/IO.h"
 #include "util/ComboBox.h"
 #include "ui_GfxEditorTab.h"
 #include <QMessageBox>
@@ -223,28 +224,10 @@ bool GfxEditorTab::save()
     file.colorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
     mUi->editorWidget->serialize(file);
 
-    QSaveFile f(fileName);
-    if (!f.open(QFile::WriteOnly)) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-
-    QByteArray fileData = file.data();
-    qint64 bytesWritten = f.write(fileData);
-    if (bytesWritten < 0) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
-        return false;
-    }
-    if (bytesWritten != fileData.length()) {
-        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\".").arg(fileName));
-        return false;
-    }
-
-    if (!f.commit()) {
-        QMessageBox::critical(this, tr("Error"),
-            tr("Unable to write file \"%1\": %2").arg(fileName).arg(f.errorString()));
+    try {
+        saveFile(fileName, file.data());
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
         return false;
     }
 
