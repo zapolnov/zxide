@@ -110,7 +110,7 @@ bool CodeEditorTab::loadFile(File* f)
         } else if (extension == QStringLiteral("c") || extension == QStringLiteral("h")) {
             mUi->textEditor->setLexer(SCLEX_CPP);
             mUi->textEditor->setKeyWords(0, CKeywords);
-            mCanToggleBreakpoint = true;
+            mCanToggleBreakpoint = false;
         } else if (extension == QStringLiteral("asm")) {
             mUi->textEditor->setLexer(SCLEX_ASM);
             mCanToggleBreakpoint = true;

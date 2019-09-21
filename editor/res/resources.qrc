@@ -127,4 +127,9 @@
     <file alias="uchar.h">../3rdparty/sdcc/device/include/uchar.h</file>
     <file alias="wchar.h">../3rdparty/sdcc/device/include/wchar.h</file>
   </qresource>
+  <qresource prefix="z88dk">
+    <file alias="sdcc_opt.1">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.1</file>
+    <file alias="sdcc_opt.2">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.2</file>
+    <file alias="sdcc_opt.9">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.9</file>
+  </qresource>
 </RCC>

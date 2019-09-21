@@ -12,10 +12,18 @@ enum class CStandard
     C11,
 };
 
+enum class COptimization
+{
+    None,
+    Speed,
+    Size,
+};
+
 class ProjectSettings
 {
 public:
     CStandard standard;
+    COptimization optimization;
     std::vector<std::string> defines;
     bool charIsUnsigned;
 

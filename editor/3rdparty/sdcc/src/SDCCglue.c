@@ -2148,12 +2148,12 @@ printPublics (FILE * afile)
 {
   symbol *sym;
 
-  /*fprintf (afile, */sdcc_out_printf("%s", iComments2);
-  /*fprintf (afile, */sdcc_out_printf("; Public variables in this module\n");
-  /*fprintf (afile, */sdcc_out_printf("%s", iComments2);
+  ///*fprintf (afile, */sdcc_out_printf("%s", iComments2);
+  ///*fprintf (afile, */sdcc_out_printf("; Public variables in this module\n");
+  ///*fprintf (afile, */sdcc_out_printf("%s", iComments2);
 
-  for (sym = setFirstItem (publics); sym; sym = setNextItem (publics))
-    tfprintf (afile, "\t!global\n", sym->rname);
+  //for (sym = setFirstItem (publics); sym; sym = setNextItem (publics))
+  //  tfprintf (afile, "\t!global\n", sym->rname);
 }
 
 /*-----------------------------------------------------------------*/

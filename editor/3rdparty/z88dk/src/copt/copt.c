@@ -2,6 +2,7 @@
 /* Added out of memory checking and ANSI prototyping. DG 1999 */
 /* Added %L - %N variables, %activate, regexp, %check. Zrin Z. 2002 */
 
+#include "../../../sdcc/sdcc_bridge.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +53,7 @@ void printlines(struct lnode* beg, struct lnode* end, FILE* out)
 {
     struct lnode* p;
     for (p = beg; p != end; p = p->l_next)
-        fputs(p->l_text, out);
+        /*fputs*/sdcc_out_puts(p->l_text/*, out*/);
 }
 
 void printrule(struct onode* o, FILE* out)
@@ -68,12 +69,12 @@ void printrule(struct onode* o, FILE* out)
 /* error - report error and quit */
 void error(char* s)
 {
-    fputs(s, stderr);
+    /*fputs*/sdcc_msg_puts(s/*, stderr*/);
     if (activerule) {
-        fputs("active rule:\n", stderr);
-        printrule(activerule, stderr);
+        /*fputs("active rule:\n", stderr);
+        printrule(activerule, stderr);*/
     }
-    exit(1);
+    /*exit(1)*/sdcc_fatal_exit();
 }
 
 /* connect - connect p1 to p2 */
@@ -137,20 +138,20 @@ void getlst(FILE* fp, char* quit, struct lnode* p1, struct lnode* p2)
     char *install(), lin[MAXLINE];
 
     connect(p1, p2);
-    while (fgets(lin, MAXLINE, fp) != NULL && strcmp(lin, quit)) {
+    while (/*fgets*/sdcc_in_fgets(lin, MAXLINE, fp) != NULL && strcmp(lin, quit)) {
         insert(install(lin), p2);
     }
 }
 
 /* getlst_1 - link lines from fp in between p1 and p2 */
 /* skip blank lines and comments at the start */
-void getlst_1(FILE* fp, char* quit, struct lnode* p1, struct lnode* p2)
+void getlst_1(/*FILE*/void* fp, char* quit, struct lnode* p1, struct lnode* p2)
 {
     char *install(), lin[MAXLINE];
     int firstline = 1;
 
     connect(p1, p2);
-    while (fgets(lin, MAXLINE, fp) != NULL && strcmp(lin, quit)) {
+    while (/*fgets*/sdcc_in_fgets(lin, MAXLINE, fp) != NULL && strcmp(lin, quit)) {
         if (firstline) {
             char* p = lin;
             while (isspace(*p))
@@ -166,7 +167,7 @@ void getlst_1(FILE* fp, char* quit, struct lnode* p1, struct lnode* p2)
 }
 
 /* init - read patterns file */
-void init(FILE* fp)
+void init(/*FILE*/void* fp)
 {
     struct lnode head, tail;
     struct onode *p, **next;
@@ -174,7 +175,7 @@ void init(FILE* fp)
     next = &opts;
     while (*next)
         next = &((*next)->o_next);
-    while (!feof(fp)) {
+    while (!/*feof*/sdcc_in_eof(fp)) {
         p = (struct onode*)malloc((unsigned)sizeof(struct onode));
         if (p == NULL)
             error("init: out of memory\n");
@@ -209,12 +210,12 @@ int check(char* pat, char** vars)
     char v;
     x = sscanf(pat, "%d <= %%%c <= %d", &low, &v, &high);
     if (x != 3 || !('0' <= v && v <= '9')) {
-        fprintf(stderr, "warning: invalid use of '%%check' in \"%s\"\n", pat);
-        fprintf(stderr, "format is '%%check min <= %%n <= max'\n");
+        /*fprintf(stderr, */sdcc_msg_printf("warning: invalid use of '%%check' in \"%s\"\n", pat);
+        /*fprintf(stderr, */sdcc_msg_printf("format is '%%check min <= %%n <= max'\n");
         return 0;
     }
     if (vars[v - '0'] == 0) {
-        fprintf(stderr, "error in pattern \"%s\"\n", pat);
+        /*fprintf(stderr, */sdcc_msg_printf("error in pattern \"%s\"\n", pat);
         error("variable is not set\n");
     }
     if (sscanf(vars[v - '0'], "%d", &x) != 1)
@@ -229,8 +230,8 @@ int check_eval(char* pat, char** vars)
 
     x = sscanf(pat, "%d = %[^\n]s", &expected, expr);
     if (x != 2) {
-        fprintf(stderr, "warning: invalid use of '%%check_eval' in \"%s\"\n", pat);
-        fprintf(stderr, "format is '%%check_eval result = expr");
+        /*fprintf(stderr, */sdcc_msg_printf("warning: invalid use of '%%check_eval' in \"%s\"\n", pat);
+        /*fprintf(stderr, */sdcc_msg_printf("format is '%%check_eval result = expr");
         return 0;
     }
     return expected == rpn_eval(expr, vars);
@@ -264,7 +265,7 @@ int match(char* ins, char* pat, char** vars)
                 for (; *p && (*p != '"' || p[-1] == '\\'); ++p)
                     ;
                 if (*p != '"') {
-                    fprintf(stderr,
+                    /*fprintf(stderr,*/sdcc_msg_printf(
                         "warning: invalid use of '%%\"..\"n' in \"%s\"\n",
                         start);
                     break;
@@ -274,8 +275,8 @@ int match(char* ins, char* pat, char** vars)
                 else
                     var = 0;
                 if (var && vars[var - '0'] != 0) {
-                    fprintf(stderr, "warning: variable %%%c has already a value in \"%s\"\n", p[1], start);
-                    fprintf(stderr, "please use REGEXP only on the last occurance of a variable in the input pattern\n");
+                    /*fprintf(stderr, */sdcc_msg_printf("warning: variable %%%c has already a value in \"%s\"\n", p[1], start);
+                    /*fprintf(stderr, */sdcc_msg_printf("please use REGEXP only on the last occurance of a variable in the input pattern\n");
                     goto l_fallthrough;
                 }
                 strncpy(re, pat + 2, p - pat - 2);
@@ -284,7 +285,7 @@ int match(char* ins, char* pat, char** vars)
                 reerr = regcomp(&reg, re, REG_EXTENDED);
                 if (reerr != 0) {
                     regerror(reerr, &reg, re, sizeof(re));
-                    fprintf(stderr, "error in \"%s\": %s\n", start, re);
+                    /*fprintf(stderr, */sdcc_msg_printf("error in \"%s\": %s\n", start, re);
                     error("error: invalid rule\n");
                 }
                 eflags = 0;
@@ -293,7 +294,7 @@ int match(char* ins, char* pat, char** vars)
                 reerr = regexec(&reg, ins, NMATCH, match, eflags);
                 if (reerr != 0 && reerr != REG_NOMATCH) {
                     regerror(reerr, &reg, re, sizeof(re));
-                    fprintf(stderr, "error in \"%s\": %s\n", start, re);
+                    /*fprintf(stderr, */sdcc_msg_printf("error in \"%s\": %s\n", start, re);
                     error("error: while matching REGEXP\n");
                 }
                 regfree(&reg);
@@ -325,7 +326,7 @@ int match(char* ins, char* pat, char** vars)
             case '8':
             case '9':
                 if (pat[2] == '%' && pat[3] != '%') {
-                    fprintf(stderr, "error in \"%s\": ", start);
+                    /*fprintf(stderr, */sdcc_msg_printf("error in \"%s\": ", start);
                     error("input pattern %n% is not allowed\n");
                 }
                 for (p = lin; *ins && *ins != pat[2];)
@@ -610,9 +611,9 @@ struct lnode* opt(struct lnode* r)
 /* #define _TESTING */
 
 /* main - peephole optimizer */
-int main(int argc, char** argv)
+int copt_main(int argc, char** argv)
 {
-    FILE* fp;
+    /*FILE*/void* fp;
 #ifdef _TESTING
     FILE* inp;
 #endif
@@ -624,7 +625,7 @@ int main(int argc, char** argv)
             debug = 1;
         else if ( strcmp(argv[i], "-m8080") == 0 ) 
             c_cpu = argv[i] + 2;
-        else if ((fp = fopen(argv[i], "r")) == NULL)
+        else if ((fp = /*fopen*/sdcc_in_open(argv[i]/*, "r"*/)) == NULL)
             error("copt: can't open patterns file\n");
         else
             init(fp);
@@ -635,7 +636,7 @@ int main(int argc, char** argv)
 
     getlst(inp, "", &head, &tail);
 #else
-    getlst(stdin, "", &head, &tail);
+    getlst(/*stdin*/NULL, "", &head, &tail);
 #endif
     head.l_text = tail.l_text = "";
 
@@ -650,13 +651,13 @@ int main(int argc, char** argv)
     } while (global_again && pass < MAX_PASS);
 
     if (global_again) {
-        fprintf(stderr, "error: maximum of %d passes exceeded\n", MAX_PASS);
+        /*fprintf(stderr, */sdcc_msg_printf("error: maximum of %d passes exceeded\n", MAX_PASS);
         error("       check for recursive substitutions");
     }
 
     printlines(head.l_next, &tail, stdout);
-    exit(0);
-    return 1; /* make compiler happy */
+    /*exit(0);*/
+    return /*1*/0; /* make compiler happy */
 }
 
 #define STACKSIZE 20
@@ -708,8 +709,8 @@ int rpn_eval(const char* expr, char** vars)
         case '9':
             n = strtol(ptr - 1, &endptr, 0);
             if ( endptr == ptr - 1 ) {
-                fprintf(stderr,"Optimiser error, cannot parse number: %s\n",ptr-1);
-                exit(1);
+                /*fprintf(stderr,*/sdcc_msg_printf("Optimiser error, cannot parse number: %s\n",ptr-1);
+                /*exit(1)*/sdcc_fatal_exit();
             }
             ptr = endptr;
             push(n);
@@ -761,8 +762,8 @@ int rpn_eval(const char* expr, char** vars)
                 char *val = vars[v-'0'];
                 n = strtol(val, &endptr, 0);
                 if ( endptr == val ) {
-                    fprintf(stderr,"Optimiser error, cannot parse variable: %s\n",val);
-                    exit(1);
+                    /*fprintf(stderr,*/sdcc_msg_printf("Optimiser error, cannot parse variable: %s\n",val);
+                    /*exit(1)*/sdcc_fatal_exit();
                 }
                 push(n);
             } else if ( *ptr++ == '%' ) {

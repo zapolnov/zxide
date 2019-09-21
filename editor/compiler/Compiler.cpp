@@ -421,11 +421,53 @@ namespace
         f->seek(0);
     }
 
+    int sdccInEof(void* file)
+    {
+        auto f = reinterpret_cast<QFile*>(file);
+        return f->atEnd();
+    }
+
     int sdccYYInGetChar()
     {
         if (inputIndex >= input.length())
             return EOF;
         return input[inputIndex++];
+    }
+
+    char* sdccInFGetS(char* buf, size_t max, void* file)
+    {
+        if (!file) {
+            char* p = buf;
+            while (max-- > 1) {
+                int ch = sdccYYInGetChar();
+                if (ch == EOF) {
+                    if (p == buf)
+                        return NULL;
+                    break;
+                }
+                *p++ = ch;
+                if (ch == '\n')
+                    break;
+            }
+            if (p >= buf + 2 && p[-1] == '\n' && p[-2] == '\r') {
+                --p;
+                p[-1] = '\n';
+            }
+            if (max > 0)
+                *p = 0;
+            return buf;
+        }
+
+        auto f = reinterpret_cast<QFile*>(file);
+        if (f->atEnd())
+            return nullptr;
+        QByteArray line = f->readLine();
+        if (line.endsWith("\r\n"))
+            line = line.mid(0, line.length() - 2) + "\n";
+        size_t len = std::min<size_t>(max - 1, size_t(line.length()));
+        memcpy(buf, line.constData(), len);
+        buf[len] = 0;
+        return buf;
     }
 
     void sdccOutPutChar(char ch)
@@ -501,9 +543,32 @@ namespace
     }
 }
 
+extern "C" int copt_main(int argc, const char** argv);
+
 bool Compiler::compileCCode()
 {
     projectDir = mProjectDirectory;
+
+    sdcc_abort = sdccAbort;
+    sdcc_fatal_exit = sdccFatalExit;
+    sdcc_in_open = sdccInOpen;
+    sdcc_in_close = sdccInClose;
+    sdcc_in_read = sdccInRead;
+    sdcc_in_getc = sdccInGetChar;
+    sdcc_in_getfilesize = sdccInGetFileSize;
+    sdcc_in_rewind = sdccInRewind;
+    sdcc_in_eof = sdccInEof;
+    sdcc_in_fgets = sdccInFGetS;
+    sdcc_yyin_getc = sdccYYInGetChar;
+    sdcc_out_putc = sdccOutPutChar;
+    sdcc_out_puts = sdccOutPutString;
+    sdcc_out_printf = sdccOutPrintF;
+    sdcc_out_write = sdccOutWrite;
+    sdcc_msg_setlocation = sdccMsgSetLocation;
+    sdcc_msg_putc = sdccMsgPutChar;
+    sdcc_msg_puts = sdccMsgPutString;
+    sdcc_msg_printf = sdccMsgPrintF;
+    sdcc_msg_vprintf = sdccMsgVPrintF;
 
     for (const auto& source : mCSources) {
         QFileInfo info(source->path);
@@ -532,35 +597,17 @@ bool Compiler::compileCCode()
         cLineNumber = -1;
         cErrorReporter = this;
 
-        sdcc_abort = sdccAbort;
-        sdcc_fatal_exit = sdccFatalExit;
-        sdcc_in_open = sdccInOpen;
-        sdcc_in_close = sdccInClose;
-        sdcc_in_read = sdccInRead;
-        sdcc_in_getc = sdccInGetChar;
-        sdcc_in_getfilesize = sdccInGetFileSize;
-        sdcc_in_rewind = sdccInRewind;
-        sdcc_out_putc = sdccOutPutChar;
-        sdcc_out_puts = sdccOutPutString;
-        sdcc_out_printf = sdccOutPrintF;
-        sdcc_out_write = sdccOutWrite;
-        sdcc_msg_setlocation = sdccMsgSetLocation;
-        sdcc_msg_putc = sdccMsgPutChar;
-        sdcc_msg_puts = sdccMsgPutString;
-        sdcc_msg_printf = sdccMsgPrintF;
-        sdcc_msg_vprintf = sdccMsgVPrintF;
-
         try {
             int r = sdcpp_main(ppCmd.argc, ppCmd.argv);
             if (r != 0) {
-                error(source->name, 0, "internal compiler error");
+                error(source->name, 0, "internal preprocessor error");
                 return false;
             }
         } catch (const Aborted&) {
-            error(source->name, 0, "internal compiler error");
+            error(source->name, 0, "internal preprocessor error");
             return false;
         } catch (const Failed&) {
-            error(source->name, 0, "internal compiler error");
+            error(source->name, 0, "internal preprocessor error");
             return false;
         }
 
@@ -573,16 +620,19 @@ bool Compiler::compileCCode()
         ccCmd.add("-mz80");
         ccCmd.add("-pz80");
         switch (mProjectSettings->standard) {
-            case CStandard::C89: ppCmd.add("--std-sdcc89"); break;
-            case CStandard::C99: ppCmd.add("--std-sdcc99"); break;
-            case CStandard::C11: ppCmd.add("--std-sdcc11"); break;
+            case CStandard::C89: ccCmd.add("--std-sdcc89"); break;
+            case CStandard::C99: ccCmd.add("--std-sdcc99"); break;
+            case CStandard::C11: ccCmd.add("--std-sdcc11"); break;
+        }
+        switch (mProjectSettings->optimization) {
+            case COptimization::None: break;
+            case COptimization::Speed: ccCmd.add("--opt-code-speed"); break;
+            case COptimization::Size: ccCmd.add("--opt-code-size"); break;
         }
         ccCmd.add(mProjectSettings->charIsUnsigned ? "--funsigned-char" : "--fsigned-char");
-        // --opt-code-speed
-        // --opt-code-size
+        ccCmd.add("--no-optsdcc-in-asm");
         ccCmd.finalize();
 
-        sdcc_yyin_getc = sdccYYInGetChar;
         input = out.str();
         inputIndex = 0;
         cFileName = NULL;
@@ -604,9 +654,41 @@ bool Compiler::compileCCode()
             return false;
         }
 
-        QString outFileName = QStringLiteral("%1.asm").arg(info.completeBaseName());
-        if (!writeFile(mGeneratedFilesDirectory.absoluteFilePath(outFileName), out.str(), this))
+        for (const auto& it : { "1", "9", "2" }) {
+            CommandLine coptCmd;
+            coptCmd.add("copt");
+            coptCmd.add(std::string(":/z88dk/sdcc_opt.") + it);
+            coptCmd.finalize();
+
+            input = out.str();
+            inputIndex = 0;
+            cFileName = NULL;
+            cLineNumber = -1;
+            out.str(std::string());
+
+            try {
+                int r = copt_main(coptCmd.argc, coptCmd.argv);
+                if (r != 0) {
+                    error(source->name, 0, "internal optimizer error");
+                    return false;
+                }
+            } catch (const Aborted&) {
+                error(source->name, 0, "internal optimizer error");
+                return false;
+            } catch (const Failed&) {
+                error(source->name, 0, "internal optimizer error");
+                return false;
+            }
+        }
+
+        QFileInfo outInfo(source->name);
+        QString outFileName = QStringLiteral("%1/%2.asm").arg(outInfo.path()).arg(outInfo.completeBaseName());
+        QString outFilePath = mGeneratedFilesDirectory.absoluteFilePath(outFileName);
+        if (!writeFile(outFilePath, out.str(), this))
             return false;
+
+        outFileName = QStringLiteral("generated/%1").arg(outFileName);
+        mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ outFileName, outFilePath }));
     }
 
     return true;

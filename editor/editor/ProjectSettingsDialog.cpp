@@ -25,6 +25,11 @@ ProjectSettingsDialog::ProjectSettingsDialog(Project* project, QWidget* parent)
     mUi->standardCombo->addItem(QStringLiteral("C11"), int(CStandard::C11));
     comboSelectItem(mUi->standardCombo, QVariant(int(mSettings->standard)));
 
+    mUi->optimizationCombo->addItem(tr("None"), int(COptimization::None));
+    mUi->optimizationCombo->addItem(tr("Speed"), int(COptimization::Speed));
+    mUi->optimizationCombo->addItem(tr("Size"), int(COptimization::Size));
+    comboSelectItem(mUi->optimizationCombo, QVariant(int(mSettings->optimization)));
+
     bool first = true;
     for (const auto& it : mSettings->defines) {
         auto item = new QListWidgetItem(QString::fromLatin1(it.c_str()), mUi->definesList);
@@ -50,6 +55,7 @@ void ProjectSettingsDialog::done(int r)
             lastSelectedTab = mUi->tabWidget->currentIndex();
 
             mSettings->standard = CStandard(comboSelectedItem(mUi->standardCombo).toInt());
+            mSettings->optimization = COptimization(comboSelectedItem(mUi->optimizationCombo).toInt());
             mSettings->charIsUnsigned = mUi->charUnsignedCheck->isChecked();
 
             mSettings->defines.clear();

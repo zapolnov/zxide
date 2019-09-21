@@ -7,11 +7,15 @@
 
 static const QString JsonKey_Version = QStringLiteral("version");
 static const QString JsonKey_CStandard = QStringLiteral("Cstandard");
+static const QString JsonKey_COptimization = QStringLiteral("Coptimization");
 static const QString JsonKey_CDefines = QStringLiteral("Cdefines");
 static const QString JsonKey_CharIsUnsigned = QStringLiteral("charIsUnsigned");
 static const QString JsonValue_C89 = QStringLiteral("c89");
 static const QString JsonValue_C99 = QStringLiteral("c99");
 static const QString JsonValue_C11 = QStringLiteral("c11");
+static const QString JsonValue_None = QStringLiteral("none");
+static const QString JsonValue_Speed = QStringLiteral("speed");
+static const QString JsonValue_Size = QStringLiteral("size");
 static const int FileFormatVersion = 1;
 
 ProjectSettings::ProjectSettings()
@@ -42,6 +46,15 @@ void ProjectSettings::load(const QString& file)
             .arg(file).arg(standardString));
     }
 
+    QString optimizationString = root[JsonKey_COptimization].toString();
+    if (optimizationString == JsonValue_None) optimization = COptimization::None;
+    else if (optimizationString == JsonValue_Speed) optimization = COptimization::Speed;
+    else if (optimizationString == JsonValue_Size) optimization = COptimization::Size;
+    else {
+        throw IOException(QCoreApplication::tr("Unable to read file \"%1\": invalid optimization \"%2\".")
+            .arg(file).arg(optimizationString));
+    }
+
     defines.clear();
     for (const auto& it : root[JsonKey_CDefines].toArray())
         defines.emplace_back(it.toString().toLatin1());
@@ -61,6 +74,12 @@ void ProjectSettings::save(const QString& file)
         case CStandard::C89: root[JsonKey_CStandard] = JsonValue_C89; break;
         case CStandard::C99: root[JsonKey_CStandard] = JsonValue_C99; break;
         case CStandard::C11: root[JsonKey_CStandard] = JsonValue_C11; break;
+    }
+
+    switch (optimization) {
+        case COptimization::None: root[JsonKey_COptimization] = JsonValue_None; break;
+        case COptimization::Speed: root[JsonKey_COptimization] = JsonValue_Speed; break;
+        case COptimization::Size: root[JsonKey_COptimization] = JsonValue_Size; break;
     }
 
     QJsonArray definesArray;

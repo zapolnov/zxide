@@ -36,6 +36,12 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
 
         "<hr>"
 
+        "<p>This program embeds parts of Z88 Development Kit (Z88DK):<br>"
+        "<a href=\"https://www.z88dk.org/\">https://www.z88dk.org/</a><br>"
+        "Licensed under the Clarified Artistic License.<br>"
+
+        "<hr>"
+
         "<p>This program uses the Audio File library:<br>"
         "<a href=\"https://audiofile.68k.org/\">https://audiofile.68k.org/</a><br>"
         "Copyright &copy; 1998-2013, Michael Pruett.<br>"
@@ -117,6 +123,30 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
         "CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,<br>"
         "TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE<br>"
         "SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>"
+
+        "<hr>"
+
+        "<p>This program uses Henry Spencer's regex library (with Z88DK patches):<br>"
+        "Copyright &copy; 1992, 1993, 1994, 1997 Henry Spencer. All rights reserved.<br>"
+        "This software is not subject to any license of the American Telephone<br>"
+        "and Telegraph Company or of the Regents of the University of California.<br>"
+        "<br>"
+        "Permission is granted to anyone to use this software for any purpose on<br>"
+        "any computer system, and to alter it and redistribute it, subject<br>"
+        "to the following restrictions:<br>"
+        "<br>"
+        "1. The author is not responsible for the consequences of use of this<br>"
+        "   software, no matter how awful, even if they arise from flaws in it.<br>"
+        "<br>"
+        "2. The origin of this software must not be misrepresented, either by<br>"
+        "   explicit claim or by omission. Since few users ever read sources,<br>"
+        "   credits must appear in the documentation.<br>"
+        "<br>"
+        "3. Altered versions must be plainly marked as such, and must not be<br>"
+        "   misrepresented as being the original software. Since few users<br>"
+        "   ever read sources, credits must appear in the documentation.<br>"
+        "<br>"
+        "4. This notice may not be removed or altered.</p>"
 
         "</body></html>"
         ));

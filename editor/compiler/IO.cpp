@@ -3,6 +3,7 @@
 #include <QSaveFile>
 #include <QFile>
 #include <QFileInfo>
+#include <QDir>
 #include <QCoreApplication>
 #include <QJsonDocument>
 
@@ -33,6 +34,10 @@ bool writeFile(const QString& fileName, const std::string& str, IErrorReporter* 
 
 bool writeFile(const QString& fileName, const void* data, size_t size, IErrorReporter* reporter)
 {
+    QFileInfo info(fileName);
+    QDir dir = info.path();
+    dir.mkpath(QStringLiteral("."));
+
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly)) {
         reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
@@ -77,6 +82,10 @@ void saveFile(const QString& file, const void* data, size_t size, bool canOverwr
 {
     if (!canOverwrite && QFile::exists(file))
         throw IOException(QCoreApplication::tr("File \"%1\" already exists.").arg(file));
+
+    QFileInfo info(file);
+    QDir dir = info.path();
+    dir.mkpath(QStringLiteral("."));
 
     QSaveFile f(file);
     if (!f.open(QFile::WriteOnly))
