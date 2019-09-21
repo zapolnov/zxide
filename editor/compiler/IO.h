@@ -2,6 +2,7 @@
 #define COMPILER_IO_H
 
 #include <QString>
+#include <string>
 
 class QJsonDocument;
 class IErrorReporter;
@@ -21,6 +22,7 @@ private:
 QByteArray loadFile(const QString& file);
 QJsonDocument loadJson(const QString& file);
 
+bool writeFile(const QString& fileName, const std::string& str, IErrorReporter* reporter);
 bool writeFile(const QString& fileName, const void* data, size_t size, IErrorReporter* reporter);
 
 void saveFile(const QString& file, const QByteArray& data, bool canOverwrite = true);

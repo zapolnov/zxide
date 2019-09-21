@@ -26,12 +26,17 @@ QJsonDocument loadJson(const QString& file)
     return doc;
 }
 
+bool writeFile(const QString& fileName, const std::string& str, IErrorReporter* reporter)
+{
+    return writeFile(fileName, str.data(), str.length(), reporter);
+}
+
 bool writeFile(const QString& fileName, const void* data, size_t size, IErrorReporter* reporter)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly)) {
         reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
-            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+            .arg(fileName).arg(file.errorString()));
         QFile::remove(fileName);
         return false;
     }
@@ -39,15 +44,14 @@ bool writeFile(const QString& fileName, const void* data, size_t size, IErrorRep
     qint64 bytesWritten = file.write(reinterpret_cast<const char*>(data), qint64(size));
     if (bytesWritten < 0) {
         reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
-            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+            .arg(fileName).arg(file.errorString()));
         file.close();
         QFile::remove(fileName);
         return false;
     }
 
     if (bytesWritten != qint64(size)) {
-        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1'")
-            .arg(QFileInfo(fileName).fileName()));
+        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1'").arg(fileName));
         file.close();
         QFile::remove(fileName);
         return false;
@@ -55,7 +59,7 @@ bool writeFile(const QString& fileName, const void* data, size_t size, IErrorRep
 
     if (!file.flush()) {
         reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
-            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+            .arg(fileName).arg(file.errorString()));
         file.close();
         QFile::remove(fileName);
         return false;

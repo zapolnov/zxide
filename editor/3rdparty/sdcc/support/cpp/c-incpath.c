@@ -411,3 +411,11 @@ static void hook_void_charptr_charptr_int (const char *sysroot ATTRIBUTE_UNUSED,
 
 struct target_c_incpath_s target_c_incpath = { TARGET_EXTRA_PRE_INCLUDES, TARGET_EXTRA_INCLUDES };
 
+void c_incpath_init(void)
+{
+    memset(&heads, 0, sizeof(heads));
+    memset(&tails, 0, sizeof(tails));
+    quote_ignores_source_dir = 0;
+    target_c_incpath.extra_pre_includes = TARGET_EXTRA_PRE_INCLUDES;
+    target_c_incpath.extra_includes = TARGET_EXTRA_INCLUDES;
+}

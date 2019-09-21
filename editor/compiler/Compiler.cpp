@@ -16,8 +16,10 @@
 #include <QDataStream>
 #include <QFileInfo>
 #include <cstdarg>
+#include <sstream>
 #include <bas2tap.h>
 #include <lua.hpp>
+#include <sdcc_bridge.h>
 
 #ifndef emit
 #define emit
@@ -92,7 +94,7 @@ void Compiler::compile()
         // Compile assembler sources
         for (const auto& source : mAssemblerSources) {
             QFileInfo info(source->path);
-            setStatusText(tr("Compiling %1").arg(info.fileName()));
+            setStatusText(tr("Assembling %1").arg(info.fileName()));
 
             QByteArray fileData;
             try {
@@ -315,11 +317,19 @@ void Compiler::includeBinaryFile(const SourceFile* source, const QFileInfo& inpu
 
 namespace
 {
+    class Aborted
+    {
+    };
+
+    class Failed
+    {
+    };
+
     class CommandLine
     {
     public:
         int argc;
-        char** argv;
+        const char** argv;
 
         CommandLine() = default;
 
@@ -335,21 +345,119 @@ namespace
             mArgv.reserve(mArgs.size());
             for (auto& it : mArgs)
                 mArgv.emplace_back(&it[0]);
+            argv = &mArgv[0];
         }
 
     private:
         std::vector<std::string> mArgs;
-        std::vector<char*> mArgv;
+        std::vector<const char*> mArgv;
 
         Q_DISABLE_COPY(CommandLine)
     };
+
+    static std::stringstream msg;
+    static std::stringstream out;
+
+    static void sdccAbort()
+    {
+        throw Aborted();
+    }
+
+    static void sdccFatalExit()
+    {
+        throw Failed();
+    }
+
+    void* sdccInOpen(const char* fileName)
+    {
+        auto file = std::make_unique<QFile>(QString::fromUtf8(fileName));
+        if (!file->open(QFile::ReadOnly))
+            return nullptr;
+
+        return file.release();
+    }
+
+    void sdccInClose(void* file)
+    {
+        delete reinterpret_cast<QFile*>(file);
+    }
+
+    int sdccInRead(void* file, void* buffer, size_t size)
+    {
+        auto f = reinterpret_cast<QFile*>(file);
+        return int(f->read(reinterpret_cast<char*>(buffer), size));
+    }
+
+    long sdccInGetFileSize(void* file)
+    {
+        auto f = reinterpret_cast<QFile*>(file);
+        return long(f->size());
+    }
+
+    void sdccOutPutChar(char ch)
+    {
+        out << ch;
+    }
+
+    void sdccOutPutString(const char* str)
+    {
+        out << str;
+    }
+
+    void sdccOutPrintF(const char* fmt, ...)
+    {
+        char buf[16384];
+        va_list args;
+
+        va_start(args, fmt);
+        vsnprintf(buf, sizeof(buf), fmt, args);
+        va_end(args);
+
+        sdccOutPutString(buf);
+    }
+
+    void sdccOutWrite(const void* data, size_t size)
+    {
+        out.write(reinterpret_cast<const char*>(data), size);
+    }
+
+    void sdccMsgPutChar(char ch)
+    {
+        if (ch != '\n')
+            msg << ch;
+        else {
+            qDebug("%s", msg.str().c_str());
+            msg.str(std::string());
+        }
+    }
+
+    void sdccMsgPutString(const char* str)
+    {
+        while (*str)
+            sdccMsgPutChar(*str++);
+    }
+
+    void sdccMsgVPrintF(const char* fmt, va_list args)
+    {
+        char buf[16384];
+        vsnprintf(buf, sizeof(buf), fmt, args);
+        sdccMsgPutString(buf);
+    }
+
+    void sdccMsgPrintF(const char* fmt, ...)
+    {
+        va_list args;
+        va_start(args, fmt);
+        sdccMsgVPrintF(fmt, args);
+        va_end(args);
+    }
 }
 
 bool Compiler::compileCCode()
 {
     for (const auto& source : mCSources) {
         QFileInfo info(source->path);
-        setStatusText(tr("Compiling %1").arg(info.fileName()));
+        setStatusText(tr("Preprocessing %1").arg(info.fileName()));
 
         CommandLine cmdLine;
         cmdLine.add("sdcpp");
@@ -367,15 +475,41 @@ bool Compiler::compileCCode()
         //cmdLine.add("-I..."); // FIXME
         cmdLine.finalize();
 
-        /*
-        QByteArray fileData;
+        msg.str(std::string());
+        out.str(std::string());
+
+        sdcc_abort = sdccAbort;
+        sdcc_fatal_exit = sdccFatalExit;
+        sdcc_in_open = sdccInOpen;
+        sdcc_in_close = sdccInClose;
+        sdcc_in_read = sdccInRead;
+        sdcc_in_getfilesize = sdccInGetFileSize;
+        sdcc_out_putc = sdccOutPutChar;
+        sdcc_out_puts = sdccOutPutString;
+        sdcc_out_printf = sdccOutPrintF;
+        sdcc_out_write = sdccOutWrite;
+        sdcc_msg_putc = sdccMsgPutChar;
+        sdcc_msg_puts = sdccMsgPutString;
+        sdcc_msg_printf = sdccMsgPrintF;
+        sdcc_msg_vprintf = sdccMsgVPrintF;
+
         try {
-            fileData = loadFile(info.absoluteFilePath());
-        } catch (const IOException& e) {
-            error(source->name, 0, e.message());
+            int r = sdcpp_main(cmdLine.argc, cmdLine.argv);
+            if (r != 0) {
+                error(source->name, 0, "Exited with non-zero code."); // FIXME
+                return false;
+            }
+
+            writeFile(mGeneratedFilesDirectory.absoluteFilePath(QFileInfo(source->name).fileName()) + ".e", out.str(), this);
+        } catch (const Aborted&) {
+            error(source->name, 0, "Aborted."); // FIXME
+            return false;
+        } catch (const Failed&) {
+            error(source->name, 0, "Failed."); // FIXME
             return false;
         }
-        */
+
+        setStatusText(tr("Compiling %1").arg(info.fileName()));
 
         // FIXME
     }

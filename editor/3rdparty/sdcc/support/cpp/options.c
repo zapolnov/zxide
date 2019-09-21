@@ -410,3 +410,14 @@ const struct cl_option cl_options[] =
     CL_COMMON,
     &inhibit_warnings, CLVC_BOOLEAN, 0 }
 };
+
+void options_init(void)
+{
+    #ifdef GCC_DRIVER
+    target_flags = 0;
+    #endif
+    flag_fatal_errors = 0;
+    warn_traditional = 0;
+    pedantic = 0;
+    inhibit_warnings = 0;
+}

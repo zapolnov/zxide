@@ -439,13 +439,43 @@ do_compile (void)
 
 /* Entry point of sdcpp.
    Exit code is FATAL_EXIT_CODE if can't open files or if there were
-   any errors, or SUCCESS_EXIT_CODE if compilation succeeded.
+   any errors, or SUCCESS_EXIT_CODE if compilation succeeded. */
 
-   It is not safe to call this function more than once.  */
+void c_incpath_init(void);
+void c_ppoutput_init(void);
+void options_init(void);
+void opts_init(void);
+void prefix_init(void);
+void sdcpp_opts_init(void);
+extern int in_asm;
 
 int
 sdcpp_main (int argc, const char **argv)
 {
+  progname = NULL;
+  main_input_filename = NULL;
+  line_table = NULL;
+  in_system_header = 0;
+  flag_pedantic_errors = 0;
+  parse_in = NULL;
+  flag_signed_char = 0;
+  flag_no_line_commands = 0;
+  flag_no_output = 0;
+  flag_dump_macros = 0;
+  flag_dump_includes = 0;
+  flag_working_directory = -1;
+  src_pwd = NULL;
+  open_quote = "'";
+  close_quote = "'";
+  errorcount = 0;
+  in_asm = 0;
+  c_incpath_init();
+  c_ppoutput_init();
+  options_init();
+  opts_init();
+  prefix_init();
+  sdcpp_opts_init();
+
   /* Initialization of SDCPP's environment.  */
   general_init (argv[0]);
 

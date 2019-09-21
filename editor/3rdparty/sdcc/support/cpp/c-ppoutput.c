@@ -468,3 +468,8 @@ cb_read_pch (cpp_reader *pfile, const char *name,
   print.src_line++;
 }
 #endif
+
+void c_ppoutput_init(void)
+{
+    memset(&print, 0, sizeof(print));
+}

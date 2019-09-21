@@ -409,6 +409,8 @@ print_help (void)
   /*printf */sdcc_msg_printf("%s.\n", bug_report_url);
 }
 
+static char *printed;
+
 /* Print help for a specific front-end, etc.  */
 static void
 print_filtered_help (unsigned int flag)
@@ -416,7 +418,6 @@ print_filtered_help (unsigned int flag)
   unsigned int i, len, filter, indent = 0;
   bool duplicates = false;
   const char *help, *opt, *tab;
-  static char *printed;
 
   if (flag == CL_COMMON || flag == CL_TARGET)
     {
@@ -626,4 +627,15 @@ get_option_state (int option, struct cl_option_state *state)
       break;
     }
   return true;
+}
+
+void opts_init(void)
+{
+    exit_after_options = 0;
+    warnings_are_errors = 0;
+    warn_system_headers = 0;
+    columns = 80;
+    in_fnames = NULL;
+    num_in_fnames = 0;
+    printed = NULL;
 }

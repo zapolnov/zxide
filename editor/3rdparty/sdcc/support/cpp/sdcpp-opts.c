@@ -934,3 +934,24 @@ handle_OPT_d (const char *arg)
         break;
       }
 }
+
+void sdcpp_opts_init(void)
+{
+    cpp_opts = NULL;
+    this_input_filename = NULL;
+    out_fname = NULL;
+    deps_append = 0;
+    deps_seen = 0;
+    verbose = 0;
+    deps_file = NULL;
+    iprefix = NULL;
+    imultilib = NULL;
+    sysroot = TARGET_SYSTEM_ROOT;
+    std_inc = true;
+    quote_chain_split = 0;
+    warn_unused_macros = 0;
+    warn_variadic_macros = true;
+    deferred_count = 0;
+    include_cursor = 0;
+    deferred_opts = NULL;
+}

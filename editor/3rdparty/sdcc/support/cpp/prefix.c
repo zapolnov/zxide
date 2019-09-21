@@ -356,3 +356,11 @@ set_std_prefix (const char *prefix, int len)
 {
   std_prefix = save_string (prefix, len);
 }
+
+void prefix_init(void)
+{
+  std_prefix = PREFIX;
+  #if defined(_WIN32) && defined(ENABLE_WIN32_REGISTRY)
+  reg_key = (HKEY) INVALID_HANDLE_VALUE;
+  #endif
+}
