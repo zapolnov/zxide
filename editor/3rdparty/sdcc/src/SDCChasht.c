@@ -61,9 +61,9 @@ newHashTable (int size)
 
   if (!(htab->table = Safe_alloc ((size + 1) * sizeof (hashtItem *))))
     {
-      fprintf (stderr, "out of virtual memory %s %d\n",
+      /*fprintf (stderr, */sdcc_msg_printf("out of virtual memory %s %d\n",
 	       __FILE__, (size + 1) * (int) sizeof (hashtItem *));
-      exit (1);
+      /*exit (1)*/sdcc_fatal_exit();
     }
   htab->minKey = htab->size = size;
   return htab;

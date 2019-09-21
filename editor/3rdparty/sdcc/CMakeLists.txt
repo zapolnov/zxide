@@ -223,7 +223,7 @@ add_sources(ZSdCPP
 ######################################################################################################################
 # zsdcc
 
-add_executable(ZSdCC)
+add_library(ZSdCC STATIC)
 set_target_properties(ZSdCC PROPERTIES FOLDER "ThirdParty")
 
 target_include_directories(ZSdCC PUBLIC

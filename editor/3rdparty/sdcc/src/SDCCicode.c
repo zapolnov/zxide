@@ -4656,10 +4656,10 @@ validateOpType (operand * op, const char *macro, const char *args, OPTYPE type, 
     {
       return op;
     }
-  fprintf (stderr,
+  /*fprintf (stderr,*/sdcc_msg_printf(
            "Internal error: validateOpType failed in %s(%s) @ %s:%u:"
            " expected %s, got %s\n", macro, args, file, line, opTypeToStr (type), op ? opTypeToStr (op->type) : "null op");
-  exit (EXIT_FAILURE);
+  /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
   return op;                    // never reached, makes compiler happy.
 }
 
@@ -4670,9 +4670,9 @@ validateOpTypeConst (const operand * op, const char *macro, const char *args, OP
     {
       return op;
     }
-  fprintf (stderr,
+  /*fprintf (stderr,*/sdcc_msg_printf(
            "Internal error: validateOpType failed in %s(%s) @ %s:%u:"
            " expected %s, got %s\n", macro, args, file, line, opTypeToStr (type), op ? opTypeToStr (op->type) : "null op");
-  exit (EXIT_FAILURE);
+  /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
   return op;                    // never reached, makes compiler happy.
 }

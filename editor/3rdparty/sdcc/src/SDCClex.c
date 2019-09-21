@@ -845,9 +845,20 @@ static void count_char (int);
 static int process_pragma (const char *);
 static int check_type (void);
 static void checkCurrFile (const char *s);
+
+#define YY_INPUT(buf, result, max_size) \
+  do { \
+    int c = '*', n; \
+    for (n = 0; n < max_size && (c = sdcc_yyin_getc()) != EOF && c != '\n'; ++n) \
+      buf[n] = (char)c; \
+    if (c == '\n') \
+      buf[n++] = (char)c; \
+    result = n; \
+  } while (0)
+
 #define asm 1
 
-#line 851 "SDCClex.c"
+#line 862 "SDCClex.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -1001,9 +1012,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 77 "SDCC.lex"
+#line 88 "SDCC.lex"
 
-#line 1007 "SDCClex.c"
+#line 1018 "SDCClex.c"
 
 	if ( yy_init )
 		{
@@ -1089,7 +1100,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 78 "SDCC.lex"
+#line 89 "SDCC.lex"
 {
   count ();
   if (asmbuff.buf == NULL)
@@ -1102,7 +1113,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 87 "SDCC.lex"
+#line 98 "SDCC.lex"
 {
   count ();
   yylval.yystr = dbuf_c_str (&asmbuff);
@@ -1112,7 +1123,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 93 "SDCC.lex"
+#line 104 "SDCC.lex"
 {
   count ();
   dbuf_append_char(&asmbuff, *yytext);
@@ -1120,414 +1131,414 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 97 "SDCC.lex"
+#line 108 "SDCC.lex"
 {
   dbuf_append_char(&asmbuff, *yytext);
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 100 "SDCC.lex"
+#line 111 "SDCC.lex"
 { count (); return ASM; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 101 "SDCC.lex"
+#line 112 "SDCC.lex"
 { count (); TKEYWORD (AT); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 102 "SDCC.lex"
+#line 113 "SDCC.lex"
 { count (); return AUTO; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 103 "SDCC.lex"
+#line 114 "SDCC.lex"
 { count (); TKEYWORD (BIT); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 104 "SDCC.lex"
+#line 115 "SDCC.lex"
 { count (); TKEYWORD99 (SD_BOOL); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 105 "SDCC.lex"
+#line 116 "SDCC.lex"
 { count (); return BREAK; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 106 "SDCC.lex"
+#line 117 "SDCC.lex"
 { count (); return CASE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 107 "SDCC.lex"
+#line 118 "SDCC.lex"
 { count (); return SD_CHAR; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 108 "SDCC.lex"
+#line 119 "SDCC.lex"
 { count (); TKEYWORD (CODE); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 109 "SDCC.lex"
+#line 120 "SDCC.lex"
 { count (); return SD_CONST; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 110 "SDCC.lex"
+#line 121 "SDCC.lex"
 { count (); return CONTINUE; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 111 "SDCC.lex"
+#line 122 "SDCC.lex"
 { count (); TKEYWORD (CRITICAL); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 112 "SDCC.lex"
+#line 123 "SDCC.lex"
 { count (); TKEYWORD (DATA); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 113 "SDCC.lex"
+#line 124 "SDCC.lex"
 { count (); return DEFAULT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 114 "SDCC.lex"
+#line 125 "SDCC.lex"
 { count (); return DO; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 115 "SDCC.lex"
+#line 126 "SDCC.lex"
 { count (); werror (W_DOUBLE_UNSUPPORTED); return SD_FLOAT; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 116 "SDCC.lex"
+#line 127 "SDCC.lex"
 { count (); return ELSE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 117 "SDCC.lex"
+#line 128 "SDCC.lex"
 { count (); return ENUM; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 118 "SDCC.lex"
+#line 129 "SDCC.lex"
 { count (); return EXTERN; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 119 "SDCC.lex"
+#line 130 "SDCC.lex"
 { count (); TKEYWORD (XDATA); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 120 "SDCC.lex"
+#line 131 "SDCC.lex"
 { count (); TKEYWORD (EEPROM); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 121 "SDCC.lex"
+#line 132 "SDCC.lex"
 { count (); return SD_FLOAT; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 122 "SDCC.lex"
+#line 133 "SDCC.lex"
 { count (); TKEYWORD (FIXED16X16); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 123 "SDCC.lex"
+#line 134 "SDCC.lex"
 { count (); TKEYWORD (CODE); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 124 "SDCC.lex"
+#line 135 "SDCC.lex"
 { count (); return FOR; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 125 "SDCC.lex"
+#line 136 "SDCC.lex"
 { count (); return GOTO; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 126 "SDCC.lex"
+#line 137 "SDCC.lex"
 { count (); TKEYWORD (IDATA); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "SDCC.lex"
+#line 138 "SDCC.lex"
 { count (); return IF; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 128 "SDCC.lex"
+#line 139 "SDCC.lex"
 { count (); return SD_INT; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 129 "SDCC.lex"
+#line 140 "SDCC.lex"
 { count (); TKEYWORD (INTERRUPT); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 130 "SDCC.lex"
+#line 141 "SDCC.lex"
 { count (); TKEYWORD (NONBANKED); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 131 "SDCC.lex"
+#line 142 "SDCC.lex"
 { count (); TKEYWORD (BANKED); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 132 "SDCC.lex"
+#line 143 "SDCC.lex"
 { count (); TKEYWORD (TRAP); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 133 "SDCC.lex"
+#line 144 "SDCC.lex"
 { count (); return SD_LONG; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 134 "SDCC.lex"
+#line 145 "SDCC.lex"
 { count (); TKEYWORD (DATA); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 135 "SDCC.lex"
+#line 146 "SDCC.lex"
 { count (); TKEYWORD (PDATA); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 136 "SDCC.lex"
+#line 147 "SDCC.lex"
 { count (); TKEYWORD (REENTRANT); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 137 "SDCC.lex"
+#line 148 "SDCC.lex"
 { count (); TKEYWORD (SHADOWREGS); }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 138 "SDCC.lex"
+#line 149 "SDCC.lex"
 { count (); TKEYWORD (SD_WPARAM); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 139 "SDCC.lex"
+#line 150 "SDCC.lex"
 { count (); return REGISTER; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 140 "SDCC.lex"
+#line 151 "SDCC.lex"
 { count (); return RETURN; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 141 "SDCC.lex"
+#line 152 "SDCC.lex"
 { count (); TKEYWORD (SFR); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 142 "SDCC.lex"
+#line 153 "SDCC.lex"
 { count (); TKEYWORD (SFR16); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 143 "SDCC.lex"
+#line 154 "SDCC.lex"
 { count (); TKEYWORD (SFR32); }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 144 "SDCC.lex"
+#line 155 "SDCC.lex"
 { count (); TKEYWORD (SBIT); }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 145 "SDCC.lex"
+#line 156 "SDCC.lex"
 { count (); return SD_SHORT; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 146 "SDCC.lex"
+#line 157 "SDCC.lex"
 { count (); return SIGNED; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 147 "SDCC.lex"
+#line 158 "SDCC.lex"
 { count (); return SIZEOF; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 148 "SDCC.lex"
+#line 159 "SDCC.lex"
 { count (); return ALIGNOF; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 149 "SDCC.lex"
+#line 160 "SDCC.lex"
 { count (); return OFFSETOF; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 150 "SDCC.lex"
+#line 161 "SDCC.lex"
 { count (); TKEYWORD (XDATA); }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 151 "SDCC.lex"
+#line 162 "SDCC.lex"
 { count (); return STATIC; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 152 "SDCC.lex"
+#line 163 "SDCC.lex"
 { count (); return STRUCT; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 153 "SDCC.lex"
+#line 164 "SDCC.lex"
 { count (); return SWITCH; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 154 "SDCC.lex"
+#line 165 "SDCC.lex"
 { count (); return TYPEDEF; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 155 "SDCC.lex"
+#line 166 "SDCC.lex"
 { count (); return UNION; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 156 "SDCC.lex"
+#line 167 "SDCC.lex"
 { count (); return UNSIGNED; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 157 "SDCC.lex"
+#line 168 "SDCC.lex"
 { count (); return SD_VOID; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 158 "SDCC.lex"
+#line 169 "SDCC.lex"
 { count (); return VOLATILE; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 159 "SDCC.lex"
+#line 170 "SDCC.lex"
 { count (); TKEYWORD (USING); }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 160 "SDCC.lex"
+#line 171 "SDCC.lex"
 { count (); TKEYWORD (NAKED); }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 161 "SDCC.lex"
+#line 172 "SDCC.lex"
 { count (); return WHILE; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 162 "SDCC.lex"
+#line 173 "SDCC.lex"
 { count (); TKEYWORD (XDATA); }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 163 "SDCC.lex"
+#line 174 "SDCC.lex"
 { count (); return VAR_ARGS; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 164 "SDCC.lex"
+#line 175 "SDCC.lex"
 { count (); return TYPEOF; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 165 "SDCC.lex"
+#line 176 "SDCC.lex"
 { count (); TKEYWORD (JAVANATIVE); }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 166 "SDCC.lex"
+#line 177 "SDCC.lex"
 { count (); TKEYWORD (OVERLAY); }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 167 "SDCC.lex"
+#line 178 "SDCC.lex"
 { count (); TKEYWORD99 (INLINE); }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 168 "SDCC.lex"
+#line 179 "SDCC.lex"
 { count (); return NORETURN;}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 169 "SDCC.lex"
+#line 180 "SDCC.lex"
 { count (); TKEYWORD99 (RESTRICT); }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 170 "SDCC.lex"
+#line 181 "SDCC.lex"
 { count (); TKEYWORD (SMALLC); }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 171 "SDCC.lex"
+#line 182 "SDCC.lex"
 { count (); return PRESERVES_REGS; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 172 "SDCC.lex"
+#line 183 "SDCC.lex"
 { count (); TKEYWORD (Z88DK_FASTCALL); }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 173 "SDCC.lex"
+#line 184 "SDCC.lex"
 { count (); TKEYWORD (Z88DK_CALLEE); }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 174 "SDCC.lex"
+#line 185 "SDCC.lex"
 { count (); return Z88DK_SHORTCALL; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 175 "SDCC.lex"
+#line 186 "SDCC.lex"
 { count (); return Z88DK_PARAMS_OFFSET; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 176 "SDCC.lex"
+#line 187 "SDCC.lex"
 { count (); return ADDRESSMOD; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 177 "SDCC.lex"
+#line 188 "SDCC.lex"
 { count (); return STATIC_ASSERT; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 178 "SDCC.lex"
+#line 189 "SDCC.lex"
 { count (); return ALIGNAS; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 179 "SDCC.lex"
+#line 190 "SDCC.lex"
 { count (); return GENERIC; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 180 "SDCC.lex"
+#line 191 "SDCC.lex"
 {
   if (!options.dollars_in_ident && strchr (yytext, '$'))
     {
@@ -1539,7 +1550,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 188 "SDCC.lex"
+#line 199 "SDCC.lex"
 {
   if (!options.std_sdcc)
     {
@@ -1552,332 +1563,332 @@ YY_RULE_SETUP
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 197 "SDCC.lex"
+#line 208 "SDCC.lex"
 { count (); yylval.val = constIntVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 198 "SDCC.lex"
+#line 209 "SDCC.lex"
 { count (); yylval.val = constIntVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 199 "SDCC.lex"
+#line 210 "SDCC.lex"
 { count (); yylval.val = constIntVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 200 "SDCC.lex"
+#line 211 "SDCC.lex"
 { count (); yylval.val = charVal (yytext); return CONSTANT; /* ' make syntax highlighter happy */ }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 201 "SDCC.lex"
+#line 212 "SDCC.lex"
 { count (); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 202 "SDCC.lex"
+#line 213 "SDCC.lex"
 { count (); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 203 "SDCC.lex"
+#line 214 "SDCC.lex"
 { count (); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 204 "SDCC.lex"
+#line 215 "SDCC.lex"
 { count (); if (!options.std_c99) werror(E_HEXFLOAT_C99); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 205 "SDCC.lex"
+#line 216 "SDCC.lex"
 { count (); if (!options.std_c99) werror(E_HEXFLOAT_C99); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 206 "SDCC.lex"
+#line 217 "SDCC.lex"
 { count (); if (!options.std_c99) werror(E_HEXFLOAT_C99); yylval.val = constFloatVal (yytext); return CONSTANT; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 207 "SDCC.lex"
+#line 218 "SDCC.lex"
 { count (); yylval.yystr = stringLiteral (0); return STRING_LITERAL; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 208 "SDCC.lex"
+#line 219 "SDCC.lex"
 { count (); if (!options.std_c95) werror(E_WCHAR_STRING_C95); yylval.yystr = stringLiteral ('L'); return STRING_LITERAL; }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 209 "SDCC.lex"
+#line 220 "SDCC.lex"
 { count (); if (!options.std_c11) werror(E_WCHAR_STRING_C11); yylval.yystr = stringLiteral (0); return STRING_LITERAL; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 210 "SDCC.lex"
+#line 221 "SDCC.lex"
 { count (); if (!options.std_c11) werror(E_WCHAR_STRING_C11); yylval.yystr = stringLiteral ('u'); return STRING_LITERAL; }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 211 "SDCC.lex"
+#line 222 "SDCC.lex"
 { count (); if (!options.std_c11) werror(E_WCHAR_STRING_C11); yylval.yystr = stringLiteral ('U'); return STRING_LITERAL; }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 212 "SDCC.lex"
+#line 223 "SDCC.lex"
 { count (); yylval.yyint = RIGHT_ASSIGN; return RIGHT_ASSIGN; }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 213 "SDCC.lex"
+#line 224 "SDCC.lex"
 { count (); yylval.yyint = LEFT_ASSIGN; return LEFT_ASSIGN; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 214 "SDCC.lex"
+#line 225 "SDCC.lex"
 { count (); yylval.yyint = ADD_ASSIGN; return ADD_ASSIGN; }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 215 "SDCC.lex"
+#line 226 "SDCC.lex"
 { count (); yylval.yyint = SUB_ASSIGN; return SUB_ASSIGN; }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 216 "SDCC.lex"
+#line 227 "SDCC.lex"
 { count (); yylval.yyint = MUL_ASSIGN; return MUL_ASSIGN; }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 217 "SDCC.lex"
+#line 228 "SDCC.lex"
 { count (); yylval.yyint = DIV_ASSIGN; return DIV_ASSIGN; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 218 "SDCC.lex"
+#line 229 "SDCC.lex"
 { count (); yylval.yyint = MOD_ASSIGN; return MOD_ASSIGN; }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 219 "SDCC.lex"
+#line 230 "SDCC.lex"
 { count (); yylval.yyint = AND_ASSIGN; return AND_ASSIGN; }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 220 "SDCC.lex"
+#line 231 "SDCC.lex"
 { count (); yylval.yyint = XOR_ASSIGN; return XOR_ASSIGN; }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 221 "SDCC.lex"
+#line 232 "SDCC.lex"
 { count (); yylval.yyint = OR_ASSIGN; return OR_ASSIGN; }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 222 "SDCC.lex"
+#line 233 "SDCC.lex"
 { count (); return RIGHT_OP; }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 223 "SDCC.lex"
+#line 234 "SDCC.lex"
 { count (); return LEFT_OP; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 224 "SDCC.lex"
+#line 235 "SDCC.lex"
 { count (); return INC_OP; }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 225 "SDCC.lex"
+#line 236 "SDCC.lex"
 { count (); return DEC_OP; }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 226 "SDCC.lex"
+#line 237 "SDCC.lex"
 { count (); return PTR_OP; }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 227 "SDCC.lex"
+#line 238 "SDCC.lex"
 { count (); return AND_OP; }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 228 "SDCC.lex"
+#line 239 "SDCC.lex"
 { count (); return OR_OP; }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 229 "SDCC.lex"
+#line 240 "SDCC.lex"
 { count (); return LE_OP; }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 230 "SDCC.lex"
+#line 241 "SDCC.lex"
 { count (); return GE_OP; }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 231 "SDCC.lex"
+#line 242 "SDCC.lex"
 { count (); return EQ_OP; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 232 "SDCC.lex"
+#line 243 "SDCC.lex"
 { count (); return NE_OP; }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 233 "SDCC.lex"
+#line 244 "SDCC.lex"
 { count (); return ';'; }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 234 "SDCC.lex"
+#line 245 "SDCC.lex"
 { count (); ignoreTypedefType = 0; return '{'; }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 235 "SDCC.lex"
+#line 246 "SDCC.lex"
 { count (); return '}'; }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 236 "SDCC.lex"
+#line 247 "SDCC.lex"
 { count (); return ','; }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 237 "SDCC.lex"
+#line 248 "SDCC.lex"
 { count (); return ':'; }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 238 "SDCC.lex"
+#line 249 "SDCC.lex"
 { count (); return '='; }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 239 "SDCC.lex"
+#line 250 "SDCC.lex"
 { count (); ignoreTypedefType = 0; return '('; }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 240 "SDCC.lex"
+#line 251 "SDCC.lex"
 { count (); return ')'; }
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 241 "SDCC.lex"
+#line 252 "SDCC.lex"
 { count (); return '['; }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 242 "SDCC.lex"
+#line 253 "SDCC.lex"
 { count (); return ']'; }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 243 "SDCC.lex"
+#line 254 "SDCC.lex"
 { count (); return '.'; }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 244 "SDCC.lex"
+#line 255 "SDCC.lex"
 { count (); return '&'; }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 245 "SDCC.lex"
+#line 256 "SDCC.lex"
 { count (); return '!'; }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 246 "SDCC.lex"
+#line 257 "SDCC.lex"
 { count (); return '~'; }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 247 "SDCC.lex"
+#line 258 "SDCC.lex"
 { count (); return '-'; }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 248 "SDCC.lex"
+#line 259 "SDCC.lex"
 { count (); return '+'; }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 249 "SDCC.lex"
+#line 260 "SDCC.lex"
 { count (); return '*'; }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 250 "SDCC.lex"
+#line 261 "SDCC.lex"
 { count (); return '/'; }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 251 "SDCC.lex"
+#line 262 "SDCC.lex"
 { count (); return '%'; }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 252 "SDCC.lex"
+#line 263 "SDCC.lex"
 { count (); return '<'; }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 253 "SDCC.lex"
+#line 264 "SDCC.lex"
 { count (); return '>'; }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 254 "SDCC.lex"
+#line 265 "SDCC.lex"
 { count (); return '^'; }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 255 "SDCC.lex"
+#line 266 "SDCC.lex"
 { count (); return '|'; }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 256 "SDCC.lex"
+#line 267 "SDCC.lex"
 { count (); return '?'; }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 257 "SDCC.lex"
+#line 268 "SDCC.lex"
 { count (); process_pragma (yytext); }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 258 "SDCC.lex"
+#line 269 "SDCC.lex"
 { count (); checkCurrFile (yytext); }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 260 "SDCC.lex"
+#line 271 "SDCC.lex"
 { count (); }
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 261 "SDCC.lex"
+#line 272 "SDCC.lex"
 { count (); }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 262 "SDCC.lex"
+#line 273 "SDCC.lex"
 { count (); }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 263 "SDCC.lex"
+#line 274 "SDCC.lex"
 {
   int ch = input ();
 
@@ -1893,15 +1904,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 275 "SDCC.lex"
+#line 286 "SDCC.lex"
 { count (); }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 276 "SDCC.lex"
+#line 287 "SDCC.lex"
 ECHO;
 	YY_BREAK
-#line 1905 "SDCClex.c"
+#line 1916 "SDCClex.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(asm):
 	yyterminate();
@@ -2688,8 +2699,8 @@ static void yy_fatal_error( msg )
 char msg[];
 #endif
 	{
-	(void) fprintf( stderr, "%s\n", msg );
-	exit( YY_EXIT_FAILURE );
+	(void) /*fprintf( stderr, */sdcc_msg_printf("%s\n", msg );
+	/*exit( YY_EXIT_FAILURE )*/sdcc_fatal_exit();
 	}
 
 
@@ -2790,7 +2801,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 276 "SDCC.lex"
+#line 287 "SDCC.lex"
 
 
 /* flex 2.5.31 undefines yytext_ptr, so we have to define it again */

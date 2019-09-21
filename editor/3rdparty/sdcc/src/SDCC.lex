@@ -71,6 +71,17 @@ static void count_char (int);
 static int process_pragma (const char *);
 static int check_type (void);
 static void checkCurrFile (const char *s);
+
+#define YY_INPUT(buf, result, max_size) \
+  do { \
+    int c = '*', n; \
+    for (n = 0; n < max_size && (c = sdcc_yyin_getc()) != EOF && c != '\n'; ++n) \
+      buf[n] = (char)c; \
+    if (c == '\n') \
+      buf[n++] = (char)c; \
+    result = n; \
+  } while (0)
+
 %}
 
 %x asm

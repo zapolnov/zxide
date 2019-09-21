@@ -744,8 +744,8 @@ pointerTypeToGPByte (const int p_type, const char *iname, const char *oname)
     case PPOINTER:
       return GPTYPE_XSTACK;
     default:
-      fprintf (stderr, "*** internal error: unknown pointer type %d in GPByte.\n", p_type);
-      exit (EXIT_FAILURE);
+      /*fprintf (stderr, */sdcc_msg_printf("*** internal error: unknown pointer type %d in GPByte.\n", p_type);
+      /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
     }
   return -1;
 }
@@ -2135,9 +2135,9 @@ char *iComments2 = {
 void
 initialComments (FILE * afile)
 {
-  fprintf (afile, "%s", iComments1);
-  fprintf (afile, "; Version " SDCC_VERSION_STR " #%s (%s)\n", getBuildNumber (), getBuildEnvironment ());
-  fprintf (afile, "%s", iComments2);
+  /*fprintf (afile, */sdcc_out_printf("%s", iComments1);
+  /*fprintf (afile, */sdcc_out_printf("; Version " SDCC_VERSION_STR " #%s (%s)\n", getBuildNumber (), getBuildEnvironment ());
+  /*fprintf (afile, */sdcc_out_printf("%s", iComments2);
 }
 
 /*-----------------------------------------------------------------*/
@@ -2148,9 +2148,9 @@ printPublics (FILE * afile)
 {
   symbol *sym;
 
-  fprintf (afile, "%s", iComments2);
-  fprintf (afile, "; Public variables in this module\n");
-  fprintf (afile, "%s", iComments2);
+  /*fprintf (afile, */sdcc_out_printf("%s", iComments2);
+  /*fprintf (afile, */sdcc_out_printf("; Public variables in this module\n");
+  /*fprintf (afile, */sdcc_out_printf("%s", iComments2);
 
   for (sym = setFirstItem (publics); sym; sym = setNextItem (publics))
     tfprintf (afile, "\t!global\n", sym->rname);
@@ -2259,7 +2259,7 @@ glue (void)
   struct dbuf_s vBuf;
   struct dbuf_s ovrBuf;
   struct dbuf_s asmFileName;
-  FILE *asmFile;
+  /*FILE *asmFile;*/
   int mcs51_like;
   namedspacemap *nm;
 
@@ -2291,7 +2291,7 @@ glue (void)
   /* create the assembler file name */
 
   /* -o option overrides default name? */
-  dbuf_init (&asmFileName, PATH_MAX);
+  /*dbuf_init (&asmFileName, PATH_MAX);
   if ((noAssemble || options.c1mode) && fullDstFileName)
     {
       dbuf_append_str (&asmFileName, fullDstFileName);
@@ -2308,267 +2308,267 @@ glue (void)
       dbuf_destroy (&asmFileName);
       exit (EXIT_FAILURE);
     }
-  dbuf_destroy (&asmFileName);
+  dbuf_destroy (&asmFileName);*/
 
   /* initial comments */
-  initialComments (asmFile);
+  initialComments (/*asmFile*/NULL);
 
-  if (TARGET_IS_S08)
+  /*if (TARGET_IS_S08)
     fprintf (asmFile, "\t.cs08\n");
   else if (TARGET_IS_Z180)
     fprintf (asmFile, "\t.hd64\n");
   else if (TARGET_IS_R3KA)
     fprintf (asmFile, "\t.r3k\n");
   else if (TARGET_IS_EZ80_Z80)
-    fprintf (asmFile, "\t.ez80\n");
+    fprintf (asmFile, "\t.ez80\n");*/
 
   /* print module name */
-  tfprintf (asmFile, "\t!module\n", moduleName);
+  tfprintf (/*asmFile*/NULL, "\t!module\n", moduleName);
   if (mcs51_like)
     {
       if(!options.noOptsdccInAsm)
-        fprintf (asmFile, "\t.optsdcc -m%s", port->target);
+        fprintf (/*asmFile*/NULL, "\t.optsdcc -m%s", port->target);
 
       switch (options.model)
         {
         case MODEL_SMALL:
-          fprintf (asmFile, " --model-small");
+          fprintf (/*asmFile*/NULL, " --model-small");
           break;
         case MODEL_COMPACT:
-          fprintf (asmFile, " --model-compact");
+          fprintf (/*asmFile*/NULL, " --model-compact");
           break;
         case MODEL_MEDIUM:
-          fprintf (asmFile, " --model-medium");
+          fprintf (/*asmFile*/NULL, " --model-medium");
           break;
         case MODEL_LARGE:
-          fprintf (asmFile, " --model-large");
+          fprintf (/*asmFile*/NULL, " --model-large");
           break;
         case MODEL_FLAT24:
-          fprintf (asmFile, " --model-flat24");
+          fprintf (/*asmFile*/NULL, " --model-flat24");
           break;
         case MODEL_HUGE:
-          fprintf (asmFile, " --model-huge");
+          fprintf (/*asmFile*/NULL, " --model-huge");
           break;
         default:
           break;
         }
       /*if(options.stackAuto)      fprintf (asmFile, " --stack-auto"); */
       if (options.useXstack)
-        fprintf (asmFile, " --xstack");
+        fprintf (/*asmFile*/NULL, " --xstack");
       /*if(options.intlong_rent)   fprintf (asmFile, " --int-long-rent"); */
       /*if(options.float_rent)     fprintf (asmFile, " --float-rent"); */
       if (options.noRegParams)
-        fprintf (asmFile, " --no-reg-params");
+        fprintf (/*asmFile*/NULL, " --no-reg-params");
       if (options.parms_in_bank1)
-        fprintf (asmFile, " --parms-in-bank1");
+        fprintf (/*asmFile*/NULL, " --parms-in-bank1");
       if (options.all_callee_saves)
-        fprintf (asmFile, " --all-callee-saves");
-      fprintf (asmFile, "\n");
+        fprintf (/*asmFile*/NULL, " --all-callee-saves");
+      fprintf (/*asmFile*/NULL, "\n");
     }
   else if (!TARGET_PIC_LIKE && !options.noOptsdccInAsm)
     {
-      fprintf (asmFile, "\t.optsdcc -m%s\n", port->target);
+      /*fprintf (asmFile, */sdcc_out_printf("\t.optsdcc -m%s\n", port->target);
     }
 
-  tfprintf (asmFile, "\t!fileprelude\n");
+  tfprintf (/*asmFile*/NULL, "\t!fileprelude\n");
 
   /* Let the port generate any global directives, etc. */
   if (port->genAssemblerPreamble)
     {
-      port->genAssemblerPreamble (asmFile);
+      port->genAssemblerPreamble (/*asmFile*/NULL);
     }
 
   /* print the global variables in this module */
-  printPublics (asmFile);
+  printPublics (/*asmFile*/NULL);
   if (port->assembler.externGlobal)
-    printExterns (asmFile);
+    printExterns (/*asmFile*/NULL);
 
   if ((mcs51_like) || (TARGET_IS_Z80 || TARGET_IS_GBZ80 || TARGET_IS_Z180 || TARGET_IS_RABBIT || TARGET_IS_EZ80_Z80) || TARGET_PDK_LIKE)  /*.p.t.20030924 need to output SFR table for Z80 as well */
     {
       /* copy the sfr segment */
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; special function registers\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&sfr->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; special function registers\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&sfr->oBuf, /*asmFile*/NULL);
     }
 
   if (mcs51_like)
     {
       /* copy the sbit segment */
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; special function bits\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&sfrbit->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; special function bits\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&sfrbit->oBuf, /*asmFile*/NULL);
 
       /*JCF: Create the areas for the register banks */
       if (RegBankUsed[0] || RegBankUsed[1] || RegBankUsed[2] || RegBankUsed[3])
         {
-          fprintf (asmFile, "%s", iComments2);
-          fprintf (asmFile, "; overlayable register banks\n");
-          fprintf (asmFile, "%s", iComments2);
+          /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+          /*fprintf (asmFile, */sdcc_out_printf("; overlayable register banks\n");
+          /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
           if (RegBankUsed[0])
-            fprintf (asmFile, "\t.area REG_BANK_0\t(REL,OVR,DATA)\n\t.ds 8\n");
+            /*fprintf (asmFile, */sdcc_out_printf("\t.area REG_BANK_0\t(REL,OVR,DATA)\n\t.ds 8\n");
           if (RegBankUsed[1] || options.parms_in_bank1)
-            fprintf (asmFile, "\t.area REG_BANK_1\t(REL,OVR,DATA)\n\t.ds 8\n");
+            /*fprintf (asmFile, */sdcc_out_printf("\t.area REG_BANK_1\t(REL,OVR,DATA)\n\t.ds 8\n");
           if (RegBankUsed[2])
-            fprintf (asmFile, "\t.area REG_BANK_2\t(REL,OVR,DATA)\n\t.ds 8\n");
+            /*fprintf (asmFile, */sdcc_out_printf("\t.area REG_BANK_2\t(REL,OVR,DATA)\n\t.ds 8\n");
           if (RegBankUsed[3])
-            fprintf (asmFile, "\t.area REG_BANK_3\t(REL,OVR,DATA)\n\t.ds 8\n");
+            /*fprintf (asmFile, */sdcc_out_printf("\t.area REG_BANK_3\t(REL,OVR,DATA)\n\t.ds 8\n");
         }
       if (BitBankUsed)
         {
-          fprintf (asmFile, "%s", iComments2);
-          fprintf (asmFile, "; overlayable bit register bank\n");
-          fprintf (asmFile, "%s", iComments2);
-          fprintf (asmFile, "\t.area BIT_BANK\t(REL,OVR,DATA)\n");
-          fprintf (asmFile, "bits:\n\t.ds 1\n");
-          fprintf (asmFile, "\tb0 = bits[0]\n");
-          fprintf (asmFile, "\tb1 = bits[1]\n");
-          fprintf (asmFile, "\tb2 = bits[2]\n");
-          fprintf (asmFile, "\tb3 = bits[3]\n");
-          fprintf (asmFile, "\tb4 = bits[4]\n");
-          fprintf (asmFile, "\tb5 = bits[5]\n");
-          fprintf (asmFile, "\tb6 = bits[6]\n");
-          fprintf (asmFile, "\tb7 = bits[7]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+          /*fprintf (asmFile, */sdcc_out_printf("; overlayable bit register bank\n");
+          /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+          /*fprintf (asmFile, */sdcc_out_printf("\t.area BIT_BANK\t(REL,OVR,DATA)\n");
+          /*fprintf (asmFile, */sdcc_out_printf("bits:\n\t.ds 1\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb0 = bits[0]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb1 = bits[1]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb2 = bits[2]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb3 = bits[3]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb4 = bits[4]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb5 = bits[5]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb6 = bits[6]\n");
+          /*fprintf (asmFile, */sdcc_out_printf("\tb7 = bits[7]\n");
         }
     }
 
   /* copy the data segment */
-  fprintf (asmFile, "%s", iComments2);
-  fprintf (asmFile, ";%s ram data\n", mcs51_like ? " internal" : "");
-  fprintf (asmFile, "%s", iComments2);
-  dbuf_write_and_destroy (&data->oBuf, asmFile);
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+  /*fprintf (asmFile, */sdcc_out_printf(";%s ram data\n", mcs51_like ? " internal" : "");
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+  dbuf_write_and_destroy (&data->oBuf, /*asmFile*/NULL);
 
   /* copy the initialized segment */
   if (initialized)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, ";%s ram data\n", mcs51_like ? " internal" : "");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&initialized->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf(";%s ram data\n", mcs51_like ? " internal" : "");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&initialized->oBuf, /*asmFile*/NULL);
     }
 
   /* copy segments for named address spaces */
   for (nm = namedspacemaps; nm; nm = nm->next)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; %s %s data\n", nm->name, nm->is_const ? "rom" : "ram");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&nm->map->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; %s %s data\n", nm->name, nm->is_const ? "rom" : "ram");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&nm->map->oBuf, /*asmFile*/NULL);
     }
 
   /* create the overlay segments */
   if (overlay)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; overlayable items in%s ram \n", mcs51_like ? " internal" : "");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&ovrBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; overlayable items in%s ram \n", mcs51_like ? " internal" : "");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&ovrBuf, /*asmFile*/NULL);
     }
 
   /* create the stack segment MOF */
   if (mainf && IFFUNC_HASBODY (mainf->type))
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; Stack segment in internal ram \n");
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "\t.area\tSSEG\n" "__start__stack:\n\t.ds\t1\n\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; Stack segment in internal ram \n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("\t.area\tSSEG\n" "__start__stack:\n\t.ds\t1\n\n");
     }
 
   /* create the idata segment */
   if (idata)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; indirectly addressable internal ram data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&idata->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; indirectly addressable internal ram data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&idata->oBuf, /*asmFile*/NULL);
     }
 
   /* create the absolute idata/data segment */
   if (d_abs || i_abs)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; absolute%s ram data\n", mcs51_like ? " internal" : "");
-      fprintf (asmFile, "%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; absolute%s ram data\n", mcs51_like ? " internal" : "");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
       if (d_abs)
-        dbuf_write_and_destroy (&d_abs->oBuf, asmFile);
+        dbuf_write_and_destroy (&d_abs->oBuf, /*asmFile*/NULL);
       if (i_abs)
-        dbuf_write_and_destroy (&i_abs->oBuf, asmFile);
+        dbuf_write_and_destroy (&i_abs->oBuf, /*asmFile*/NULL);
     }
 
   /* copy the bit segment */
   if (bit)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; bit data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&bit->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; bit data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&bit->oBuf, /*asmFile*/NULL);
     }
 
   /* copy paged external ram data */
   if (pdata)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; paged external ram data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&pdata->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; paged external ram data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&pdata->oBuf, /*asmFile*/NULL);
     }
 
   /* if external stack then reserve space for it */
   if (mainf && IFFUNC_HASBODY (mainf->type) && options.useXstack)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; external stack \n");
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "\t.area XSTK (PAG,XDATA)\n" "__start__xstack:\n\t.ds\t1\n\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; external stack \n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("\t.area XSTK (PAG,XDATA)\n" "__start__xstack:\n\t.ds\t1\n\n");
     }
 
   /* copy external ram data */
   if (xdata && mcs51_like)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; external ram data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&xdata->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; external ram data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&xdata->oBuf, /*asmFile*/NULL);
     }
 
   /* create the absolute xdata segment */
   if (x_abs)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; absolute external ram data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&x_abs->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; absolute external ram data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&x_abs->oBuf, /*asmFile*/NULL);
     }
 
   /* copy external initialized ram data */
   if (xidata)
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; external initialized ram data\n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&xidata->oBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; external initialized ram data\n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&xidata->oBuf, /*asmFile*/NULL);
     }
 
   /* If the port wants to generate any extra areas, let it do so. */
   if (port->extraAreas.genExtraAreaDeclaration)
     {
-      port->extraAreas.genExtraAreaDeclaration (asmFile, mainf && IFFUNC_HASBODY (mainf->type));
+      port->extraAreas.genExtraAreaDeclaration (/*asmFile*/NULL, mainf && IFFUNC_HASBODY (mainf->type));
     }
 
   /* copy the interrupt vector table */
   if (mainf && IFFUNC_HASBODY (mainf->type))
     {
-      fprintf (asmFile, "%s", iComments2);
-      fprintf (asmFile, "; interrupt vector \n");
-      fprintf (asmFile, "%s", iComments2);
-      dbuf_write_and_destroy (&vBuf, asmFile);
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      /*fprintf (asmFile, */sdcc_out_printf("; interrupt vector \n");
+      /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+      dbuf_write_and_destroy (&vBuf, /*asmFile*/NULL);
     }
 
   /* copy global & static initialisations */
-  fprintf (asmFile, "%s", iComments2);
-  fprintf (asmFile, "; global & static initialisations\n");
-  fprintf (asmFile, "%s", iComments2);
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+  /*fprintf (asmFile, */sdcc_out_printf("; global & static initialisations\n");
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
 
   /* Everywhere we generate a reference to the static_name area,
    * (which is currently only here), we immediately follow it with a
@@ -2576,23 +2576,23 @@ glue (void)
    * the post_static_name area will immediately follow the static_name
    * area.
    */
-  tfprintf (asmFile, "\t!area\n", port->mem.home_name);
-  tfprintf (asmFile, "\t!area\n", port->mem.static_name);       /* MOF */
-  tfprintf (asmFile, "\t!area\n", port->mem.post_static_name);
-  tfprintf (asmFile, "\t!area\n", port->mem.static_name);
+  tfprintf (/*asmFile*/NULL, "\t!area\n", port->mem.home_name);
+  tfprintf (/*asmFile*/NULL, "\t!area\n", port->mem.static_name);       /* MOF */
+  tfprintf (/*asmFile*/NULL, "\t!area\n", port->mem.post_static_name);
+  tfprintf (/*asmFile*/NULL, "\t!area\n", port->mem.static_name);
 
   if (mainf && IFFUNC_HASBODY (mainf->type))
     {
       if (port->genInitStartup)
         {
-          port->genInitStartup (asmFile);
+          port->genInitStartup (/*asmFile*/NULL);
         }
       else
         {
           assert (0);
         }
     }
-  dbuf_write_and_destroy (&statsg->oBuf, asmFile);
+  dbuf_write_and_destroy (&statsg->oBuf, /*asmFile*/NULL);
 
   /* STM8 / PDK14 note: there are no such instructions supported.
      Also, we don't need this logic as well. */
@@ -2602,18 +2602,18 @@ glue (void)
        * This area is guaranteed to follow the static area
        * by the ugly shucking and jiving about 20 lines ago.
        */
-      tfprintf (asmFile, "\t!area\n", port->mem.post_static_name);
+      tfprintf (/*asmFile*/NULL, "\t!area\n", port->mem.post_static_name);
       if(TARGET_IS_STM8)
-        fprintf (asmFile, "\tjp\t__sdcc_program_startup\n");
+        /*fprintf (asmFile, */sdcc_out_puts("\tjp\t__sdcc_program_startup\n");
       else if(TARGET_PDK_LIKE)
-        fprintf (asmFile, "\tgoto\t__sdcc_program_startup\n");
+        /*fprintf (asmFile, */sdcc_out_puts("\tgoto\t__sdcc_program_startup\n");
       else
-        fprintf (asmFile, "\t%cjmp\t__sdcc_program_startup\n", options.acall_ajmp ? 'a' : 'l');
+        /*fprintf (asmFile, */sdcc_out_printf("\t%cjmp\t__sdcc_program_startup\n", options.acall_ajmp ? 'a' : 'l');
     }
 
-  fprintf (asmFile, "%s" "; Home\n" "%s", iComments2, iComments2);
-  tfprintf (asmFile, "\t!areahome\n", HOME_NAME);
-  dbuf_write_and_destroy (&home->oBuf, asmFile);
+  /*fprintf (asmFile, */sdcc_out_printf("%s" "; Home\n" "%s", iComments2, iComments2);
+  tfprintf (/*asmFile*/NULL, "\t!areahome\n", HOME_NAME);
+  dbuf_write_and_destroy (&home->oBuf, /*asmFile*/NULL);
 
   if (mainf && IFFUNC_HASBODY (mainf->type))
     {
@@ -2623,29 +2623,29 @@ glue (void)
        */
 
       /* entry point @ start of HOME */
-      fprintf (asmFile, "__sdcc_program_startup:\n");
+      /*fprintf (asmFile, */sdcc_out_puts("__sdcc_program_startup:\n");
 
       /* put in jump or call to main */
       if(TARGET_IS_STM8)
-        fprintf (asmFile, options.model == MODEL_LARGE ? "\tjpf\t_main\n" : "\tjp\t_main\n");
+        /*fprintf (asmFile, */sdcc_out_puts(options.model == MODEL_LARGE ? "\tjpf\t_main\n" : "\tjp\t_main\n");
       else if(TARGET_PDK_LIKE)
-        fprintf (asmFile, "\tgoto\t_main\n");
+        /*fprintf (asmFile, */sdcc_out_puts("\tgoto\t_main\n");
       else
-        fprintf (asmFile, "\t%cjmp\t_main\n", options.acall_ajmp ? 'a' : 'l');        /* needed? */
-      fprintf (asmFile, ";\treturn from main will return to caller\n");
+        /*fprintf (asmFile, */sdcc_out_printf("\t%cjmp\t_main\n", options.acall_ajmp ? 'a' : 'l');        /* needed? */
+      /*fprintf (asmFile, */sdcc_out_puts(";\treturn from main will return to caller\n");
     }
   /* copy over code */
-  fprintf (asmFile, "%s", iComments2);
-  fprintf (asmFile, "; code\n");
-  fprintf (asmFile, "%s", iComments2);
-  tfprintf (asmFile, "\t!areacode\n", options.code_seg);
-  dbuf_write_and_destroy (&code->oBuf, asmFile);
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+  /*fprintf (asmFile, */sdcc_out_printf("; code\n");
+  /*fprintf (asmFile, */sdcc_out_printf("%s", iComments2);
+  tfprintf (/*asmFile*/NULL, "\t!areacode\n", options.code_seg);
+  dbuf_write_and_destroy (&code->oBuf, /*asmFile*/NULL);
 
   if (port->genAssemblerEnd)
     {
-      port->genAssemblerEnd (asmFile);
+      port->genAssemblerEnd (/*asmFile*/NULL);
     }
-  fclose (asmFile);
+  /*fclose (asmFile);*/
 }
 
 /* will return 1 if the string is a part

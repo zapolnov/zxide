@@ -87,7 +87,7 @@
 #include "SDCCopt.h"
 
 extern int yyerror (char *);
-extern FILE     *yyin;
+/*extern FILE     *yyin;*/
 long NestLevel = 0;     /* current NestLevel       */
 int stackPtr  = 1;      /* stack pointer           */
 int xstackPtr = 0;      /* xstack pointer          */
@@ -3033,7 +3033,7 @@ yyreduce:
 #line 350 "SDCC.y"
     {
                        werror (E_OLD_STYLE, ((yyvsp[(1) - (2)].sym) ? (yyvsp[(1) - (2)].sym)->name: ""));
-                       exit (1);
+                       /*exit (1)*/sdcc_fatal_exit();
                      }
     break;
 

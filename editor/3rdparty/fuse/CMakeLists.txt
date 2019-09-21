@@ -19,7 +19,23 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
-add_definitions(-DHAVE_CONFIG_H)
+add_definitions(
+    -DHAVE_CONFIG_H
+    -Dyyin=fuse_yyin
+    -Dyyout=fuse_yyout
+    -Dyyrestart=fuse_yyrestart
+    -Dyy_switch_to_buffer=fuse_yy_switch_to_buffer
+    -Dyy_create_buffer=fuse_yy_create_buffer
+    -Dyy_delete_buffer=fuse_yy_delete_buffer
+    -Dyy_flush_buffer=fuse_yy_flush_buffer
+    -Dyy_scan_buffer=fuse_yy_scan_buffer
+    -Dyy_scan_string=fuse_yy_scan_string
+    -Dyy_scan_bytes=fuse_yy_scan_bytes
+    -Dyyerror=fuse_yyerror
+    -Dyywrap=fuse_yywrap
+    -Dyylex=fuse_yylex
+    -Dyyparse=fuse_yyparse
+    )
 
 if(NOT HAVE_UNISTD_H)
     add_definitions(-DYY_NO_UNISTD_H)

@@ -599,13 +599,13 @@ vwerror (int errNum, va_list marker)
 
   if (errNum > NELEM (ErrTab))
     {
-      fprintf (_SDCCERRG.out,
+      /*fprintf (_SDCCERRG.out,*/sdcc_msg_printf(
               "Internal error: bad error number %d.", errNum);
       return 0;
     }
   if (NELEM (ErrTab) != NUMBER_OF_ERROR_MESSAGES || ErrTab[errNum].errIndex != errNum)
     {
-      fprintf (_SDCCERRG.out,
+      /*fprintf (_SDCCERRG.out,*/sdcc_msg_printf(
               "Internal error: error table entry for %d inconsistent.", errNum);
       return 0;
     }
@@ -618,47 +618,47 @@ vwerror (int errNum, va_list marker)
       if (filename && lineno)
         {
           if (_SDCCERRG.style)
-            fprintf (_SDCCERRG.out, "%s(%d) : ", filename, lineno);
+            /*fprintf (_SDCCERRG.out, ("%s(%d) : ", filename, lineno);*/sdcc_msg_setlocation(filename, lineno);
           else
-            fprintf (_SDCCERRG.out, "%s:%d: ", filename, lineno);
-        }
+            /*fprintf (_SDCCERRG.out, ("%s:%d: ", filename, lineno);*/sdcc_msg_setlocation(filename, lineno);
+      }
       else if (lineno)
         {
-          fprintf (_SDCCERRG.out, "at %d: ", lineno);
+          /*fprintf (_SDCCERRG.out, "at %d: ", lineno);*/sdcc_msg_setlocation(NULL, lineno);
         }
       else
         {
-          fprintf (_SDCCERRG.out, "-:0: ");
+          /*fprintf (_SDCCERRG.out, */sdcc_msg_puts("-:0: ");
         }
 
       switch (ErrTab[errNum].errType)
         {
         case ERROR_LEVEL_SYNTAX_ERROR:
-          fprintf (_SDCCERRG.out, "syntax error: ");
+          /*fprintf (_SDCCERRG.out, */sdcc_msg_puts("syntax error: ");
           break;
 
         case ERROR_LEVEL_ERROR:
-          fprintf (_SDCCERRG.out, "error %d: ", errNum);
+          /*fprintf (_SDCCERRG.out, "error %d: ", errNum);*/sdcc_msg_puts("error: ");
           break;
 
         case ERROR_LEVEL_WARNING:
         case ERROR_LEVEL_PEDANTIC:
           if (_SDCCERRG.werror)
-            fprintf (_SDCCERRG.out, "error %d: ", errNum);
+            /*fprintf (_SDCCERRG.out, "error %d: ", errNum);*/sdcc_msg_puts("error: ");
           else
-            fprintf (_SDCCERRG.out, "warning %d: ", errNum);
+            /*fprintf (_SDCCERRG.out, "warning %d: ", errNum);*/sdcc_msg_puts("warning: ");
           break;
 
         case ERROR_LEVEL_INFO:
-          fprintf (_SDCCERRG.out, "info %d: ", errNum);
+          /*fprintf (_SDCCERRG.out, "info %d: ", errNum);*/sdcc_msg_puts("info: ");
           break;
 
         default:
           break;
         }
 
-      vfprintf (_SDCCERRG.out, ErrTab[errNum].errText, marker);
-      fprintf (_SDCCERRG.out, "\n");
+      /*vfprintf (_SDCCERRG.out, */sdcc_msg_vprintf(ErrTab[errNum].errText, marker);
+      /*fprintf (_SDCCERRG.out, */sdcc_msg_puts("\n");
       return 1;
     }
   else
@@ -744,7 +744,7 @@ fatal (int exitCode, int errNum, ...)
   vwerror (errNum, marker);
   va_end (marker);
 
-  exit (exitCode);
+  /*exit (exitCode)*/sdcc_fatal_exit();
 }
 
 /* -------------------------------------------------------------------------------

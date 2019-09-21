@@ -355,8 +355,14 @@ namespace
         Q_DISABLE_COPY(CommandLine)
     };
 
+    static QDir projectDir;
     static std::stringstream msg;
     static std::stringstream out;
+    static std::string input;
+    static size_t inputIndex;
+    static const char* cFileName;
+    static int cLineNumber = -1;
+    static IErrorReporter* cErrorReporter;
 
     static void sdccAbort()
     {
@@ -370,11 +376,17 @@ namespace
 
     void* sdccInOpen(const char* fileName)
     {
-        auto file = std::make_unique<QFile>(QString::fromUtf8(fileName));
-        if (!file->open(QFile::ReadOnly))
-            return nullptr;
+        QString name = QString::fromUtf8(fileName);
 
-        return file.release();
+        auto file = std::make_unique<QFile>(projectDir.absoluteFilePath(name));
+        if (file->open(QFile::ReadOnly))
+            return file.release();
+
+        file->setFileName(QStringLiteral(":/include/%1").arg(name));
+        if (file->open(QFile::ReadOnly))
+            return file.release();
+
+        return nullptr;
     }
 
     void sdccInClose(void* file)
@@ -392,6 +404,13 @@ namespace
     {
         auto f = reinterpret_cast<QFile*>(file);
         return long(f->size());
+    }
+
+    int sdccYYInGetChar()
+    {
+        if (inputIndex >= input.length())
+            return EOF;
+        return input[inputIndex++];
     }
 
     void sdccOutPutChar(char ch)
@@ -421,13 +440,27 @@ namespace
         out.write(reinterpret_cast<const char*>(data), size);
     }
 
+    void sdccMsgSetLocation(const char* filename, int line)
+    {
+        cFileName = filename;
+        cLineNumber = line;
+    }
+
     void sdccMsgPutChar(char ch)
     {
         if (ch != '\n')
             msg << ch;
         else {
-            qDebug("%s", msg.str().c_str());
+            std::string str = msg.str();
             msg.str(std::string());
+
+            if (cFileName)
+                cErrorReporter->error(QString::fromUtf8(cFileName), cLineNumber, QString::fromUtf8(str.c_str()));
+            else
+                qDebug("%s", str.c_str());
+
+            cFileName = NULL;
+            cLineNumber = -1;
         }
     }
 
@@ -455,28 +488,34 @@ namespace
 
 bool Compiler::compileCCode()
 {
+    projectDir = mProjectDirectory;
+
     for (const auto& source : mCSources) {
         QFileInfo info(source->path);
         setStatusText(tr("Preprocessing %1").arg(info.fileName()));
 
-        CommandLine cmdLine;
-        cmdLine.add("sdcpp");
-        cmdLine.add(info.absoluteFilePath().toUtf8().constData());
+        CommandLine ppCmd;
+        ppCmd.add("sdcpp");
+        ppCmd.add(source->name.toUtf8().constData());
         switch (mProjectSettings->standard) {
-            case CStandard::C89: cmdLine.add("-std=c89"); break;
-            case CStandard::C99: cmdLine.add("-std=c99"); break;
-            case CStandard::C11: cmdLine.add("-std=c11"); break;
+            case CStandard::C89: ppCmd.add("-std=c89"); break;
+            case CStandard::C99: ppCmd.add("-std=c99"); break;
+            case CStandard::C11: ppCmd.add("-std=c11"); break;
         }
-        cmdLine.add(mProjectSettings->charIsUnsigned ? "-funsigned-char" : "-fsigned-char");
+        ppCmd.add(mProjectSettings->charIsUnsigned ? "-funsigned-char" : "-fsigned-char");
+        ppCmd.add("-D__SDCC_z80");
         for (const auto& it : mProjectSettings->defines) {
             if (!it.empty())
-                cmdLine.add("-D" + it);
+                ppCmd.add("-D" + it);
         }
-        //cmdLine.add("-I..."); // FIXME
-        cmdLine.finalize();
+        ppCmd.add("-I.");
+        ppCmd.finalize();
 
         msg.str(std::string());
         out.str(std::string());
+        cFileName = NULL;
+        cLineNumber = -1;
+        cErrorReporter = this;
 
         sdcc_abort = sdccAbort;
         sdcc_fatal_exit = sdccFatalExit;
@@ -488,30 +527,69 @@ bool Compiler::compileCCode()
         sdcc_out_puts = sdccOutPutString;
         sdcc_out_printf = sdccOutPrintF;
         sdcc_out_write = sdccOutWrite;
+        sdcc_msg_setlocation = sdccMsgSetLocation;
         sdcc_msg_putc = sdccMsgPutChar;
         sdcc_msg_puts = sdccMsgPutString;
         sdcc_msg_printf = sdccMsgPrintF;
         sdcc_msg_vprintf = sdccMsgVPrintF;
 
         try {
-            int r = sdcpp_main(cmdLine.argc, cmdLine.argv);
+            int r = sdcpp_main(ppCmd.argc, ppCmd.argv);
             if (r != 0) {
-                error(source->name, 0, "Exited with non-zero code."); // FIXME
+                error(source->name, 0, "internal compiler error");
                 return false;
             }
-
-            writeFile(mGeneratedFilesDirectory.absoluteFilePath(QFileInfo(source->name).fileName()) + ".e", out.str(), this);
         } catch (const Aborted&) {
-            error(source->name, 0, "Aborted."); // FIXME
+            error(source->name, 0, "internal compiler error");
             return false;
         } catch (const Failed&) {
-            error(source->name, 0, "Failed."); // FIXME
+            error(source->name, 0, "internal compiler error");
             return false;
         }
 
         setStatusText(tr("Compiling %1").arg(info.fileName()));
 
-        // FIXME
+        CommandLine ccCmd;
+        ccCmd.add("sdcc");
+        ccCmd.add("--c1mode");
+        ccCmd.add("-o"); ccCmd.add("output");
+        ccCmd.add("-mz80");
+        ccCmd.add("-pz80");
+        switch (mProjectSettings->standard) {
+            case CStandard::C89: ppCmd.add("--std-sdcc89"); break;
+            case CStandard::C99: ppCmd.add("--std-sdcc99"); break;
+            case CStandard::C11: ppCmd.add("--std-sdcc11"); break;
+        }
+        ccCmd.add(mProjectSettings->charIsUnsigned ? "--funsigned-char" : "--fsigned-char");
+        // --opt-code-speed
+        // --opt-code-size
+        ccCmd.finalize();
+
+        sdcc_yyin_getc = sdccYYInGetChar;
+        input = out.str();
+        inputIndex = 0;
+        cFileName = NULL;
+        cLineNumber = -1;
+        out.str(std::string());
+
+        try {
+            char* envp[] = { NULL };
+            int r = sdcc_main(ccCmd.argc, ccCmd.argv, envp);
+            if (r != 0) {
+                error(source->name, 0, "internal compiler error");
+                return false;
+            }
+        } catch (const Aborted&) {
+            error(source->name, 0, "internal compiler error");
+            return false;
+        } catch (const Failed&) {
+            error(source->name, 0, "internal compiler error");
+            return false;
+        }
+
+        QString outFileName = QStringLiteral("%1.asm").arg(info.completeBaseName());
+        if (!writeFile(mGeneratedFilesDirectory.absoluteFilePath(outFileName), out.str(), this))
+            return false;
     }
 
     return true;

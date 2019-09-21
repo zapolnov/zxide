@@ -83,7 +83,7 @@ allocMap (char rspace,          /* sfr space                   */
   if (!(map = Safe_alloc (sizeof (memmap))))
     {
       werror (E_OUT_OF_MEM, __FILE__, sizeof (memmap));
-      exit (1);
+      /*exit (1)*/sdcc_fatal_exit();
     }
 
   memset (map, 0, sizeof (memmap));

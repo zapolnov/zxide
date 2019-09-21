@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+#include "sdcc_bridge.h"
 #include "dbuf_string.h"
 
 
@@ -306,7 +307,6 @@ dbuf_chomp (struct dbuf_s *dbuf)
 }
 
 
-#if 0
 /*
  * Write dynamic buffer to the file.
  */
@@ -314,7 +314,7 @@ dbuf_chomp (struct dbuf_s *dbuf)
 void
 dbuf_write (struct dbuf_s *dbuf, FILE *dest)
 {
-  fwrite (dbuf_get_buf (dbuf), 1, dbuf_get_length (dbuf), dest);
+  /*fwrite */sdcc_out_write(dbuf_get_buf (dbuf), /*1, */dbuf_get_length (dbuf)/*, dest*/);
 }
 
 
@@ -329,4 +329,3 @@ dbuf_write_and_destroy (struct dbuf_s *dbuf, FILE *dest)
 
   dbuf_destroy (dbuf);
 }
-#endif

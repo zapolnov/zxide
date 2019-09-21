@@ -206,4 +206,15 @@ for (i = 0; i < n_opts; i++) {
 }
 
 print "};"
+print ""
+print "void options_init(void)"
+print "{"
+print "    #ifdef GCC_DRIVER"
+print "    target_flags = 0;"
+print "    #endif"
+print "    flag_fatal_errors = 0;"
+print "    warn_traditional = 0;"
+print "    pedantic = 0;"
+print "    inhibit_warnings = 0;"
+print "}"
 }

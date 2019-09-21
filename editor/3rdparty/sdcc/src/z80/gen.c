@@ -1830,9 +1830,9 @@ aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
 
     default:
       dbuf_destroy (&dbuf);
-      fprintf (stderr, "aop->type: %d\n", aop->type);
+      /*fprintf (stderr, */sdcc_msg_printf("aop->type: %d\n", aop->type);
       wassertl (0, "aopGetLitWordLong got unsupported aop->type");
-      exit (0);
+      /*exit (0)*/sdcc_fatal_exit();
     }
   return dbuf_c_str (&dbuf);
 }
@@ -2656,9 +2656,9 @@ aopGet (asmop *aop, int offset, bool bit16)
 
         default:
           dbuf_destroy (&dbuf);
-          fprintf (stderr, "aop->type: %d\n", aop->type);
+          /*fprintf (stderr, */sdcc_msg_printf("aop->type: %d\n", aop->type);
           wassertl (0, "aopGet got unsupported aop->type");
-          exit (0);
+          /*exit (0)*/sdcc_fatal_exit();
         }
     }
   return dbuf_c_str (&dbuf);
@@ -2719,7 +2719,7 @@ aopPut (asmop *aop, const char *s, int offset)
   if (aop->size && offset > (aop->size - 1))
     {
       werror_bt (E_INTERNAL_ERROR, __FILE__, __LINE__, "aopPut got offset > aop->size");
-      exit (0);
+      /*exit (0)*/sdcc_fatal_exit();
     }
 
   // PENDING
@@ -2955,9 +2955,9 @@ aopPut (asmop *aop, const char *s, int offset)
 
     default:
       dbuf_destroy (&dbuf); fprintf (stderr, "AOP_DIR: %d\n",AOP_DIR);
-      fprintf (stderr, "aop->type: %d\n", aop->type);
+      /*fprintf (stderr, */sdcc_msg_printf("aop->type: %d\n", aop->type);
       werror (E_INTERNAL_ERROR, __FILE__, __LINE__, "aopPut got unsupported aop->type");
-      exit (0);
+      /*exit (0)*/sdcc_fatal_exit();
     }
   dbuf_destroy (&dbuf);
 }

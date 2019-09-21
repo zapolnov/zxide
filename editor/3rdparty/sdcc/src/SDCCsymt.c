@@ -4463,11 +4463,11 @@ validateLink (sym_link * l, const char *macro, const char *args, const char sele
     {
       return l;
     }
-  fprintf (stderr,
+  /*fprintf (stderr,*/sdcc_msg_printf(
            "Internal error: validateLink failed in %s(%s) @ %s:%u:"
            " expected %s, got %s\n",
            macro, args, file, line, DECLSPEC2TXT (select), l ? DECLSPEC2TXT (l->xclass) : "null-link");
-  exit (EXIT_FAILURE);
+  /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
   return l;                     // never reached, makes compiler happy.
 }
 

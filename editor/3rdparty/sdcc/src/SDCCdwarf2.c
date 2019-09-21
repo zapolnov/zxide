@@ -1037,7 +1037,7 @@ dwWriteAttr (dwattr * ap)
       default:
         werror (E_INTERNAL_ERROR, __FILE__, __LINE__,
                 "unsupported DWARF form");
-        exit (1);
+        /*exit (1)*/sdcc_fatal_exit();
     }
 }
 
@@ -1102,7 +1102,7 @@ dwSizeofAttr (dwattr * ap)
       default:
         werror (E_INTERNAL_ERROR, __FILE__, __LINE__,
                 "unsupported DWARF form");
-        exit (1);
+        /*exit (1)*/sdcc_fatal_exit();
     }
     
 }
@@ -2319,7 +2319,7 @@ dwTagFromType (sym_link * type, dwtag * parent)
             default:
               werror (E_INTERNAL_ERROR, __FILE__, __LINE__,
                       "unknown DCL_TYPE");
-              exit (1);
+              /*exit (1)*/sdcc_fatal_exit();
             }
         }
       else
@@ -2517,7 +2517,7 @@ dwTagFromType (sym_link * type, dwtag * parent)
                   werror (E_INTERNAL_ERROR, __FILE__, __LINE__,
                       "unhandled base type");
                   printTypeChain (type, NULL);
-                  exit (1);
+                  /*exit (1)*/sdcc_fatal_exit();
   
                 }
             }

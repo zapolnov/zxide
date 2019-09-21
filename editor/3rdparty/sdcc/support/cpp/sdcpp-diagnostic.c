@@ -98,11 +98,11 @@ print_location (cpp_reader *pfile, source_location line, unsigned int col)
 	}
 
       if (lin == 0)
-	/*fprintf(stderr, */sdcc_msg_printf("%s:", map->to_file);
+	/*fprintf(stderr, ("%s:", map->to_file);*/sdcc_msg_setlocation(map->to_file, 0);
       else
-	/*fprintf (stderr, */sdcc_msg_printf("%s:%u:%u:", map->to_file, lin, col);
+	/*fprintf (stderr, ("%s:%u:%u:", map->to_file, lin, col);*/sdcc_msg_setlocation(map->to_file, lin);
 
-      /*fputc */sdcc_msg_putc(' '/*, stderr*/);
+      /*fputc (' ', stderr);*/
     }
 }
 

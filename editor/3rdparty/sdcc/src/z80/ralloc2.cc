@@ -1558,8 +1558,8 @@ static bool tree_dec_ralloc(T_t &T, G_t &G, const I_t &I, SI_t &SI)
   // Todo: Make this an assertion
   if(winner.global.size() != boost::num_vertices(I))
     {
-      std::cerr << "ERROR: No Assignments at root\n";
-      exit(-1);
+      /*std::cerr << */sdcc_msg_puts("ERROR: No Assignments at root\n");
+      /*exit(-1)*/sdcc_fatal_exit();
     }
 
   for(unsigned int v = 0; v < boost::num_vertices(I); v++)

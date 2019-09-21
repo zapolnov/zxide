@@ -39,7 +39,7 @@
 #include "SDCCopt.h"
 
 extern int yyerror (char *);
-extern FILE     *yyin;
+/*extern FILE     *yyin;*/
 long NestLevel = 0;     /* current NestLevel       */
 int stackPtr  = 1;      /* stack pointer           */
 int xstackPtr = 0;      /* xstack pointer          */
@@ -349,7 +349,7 @@ function_body
    | declaration_list compound_statement
                      {
                        werror (E_OLD_STYLE, ($1 ? $1->name: ""));
-                       exit (1);
+                       /*exit (1)*/sdcc_fatal_exit();
                      }
    ;
 

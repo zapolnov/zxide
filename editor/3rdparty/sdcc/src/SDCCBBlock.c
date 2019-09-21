@@ -105,8 +105,8 @@ createDumpFile (int id)
 
   if (!dumpFilesPtr->id)
     {
-      fprintf (stdout, "internal error: createDumpFile: unknown dump file.\n");
-      exit (1);
+      /*fprintf (stdout, */sdcc_msg_puts("internal error: createDumpFile: unknown dump file.\n");
+      /*exit (1)*/sdcc_fatal_exit();
     }
 
   sprintf (dumpIndexStr, ".%d", dumpIndex);
@@ -127,7 +127,7 @@ createDumpFile (int id)
         {
           werror (E_FILE_OPEN_ERR, dbuf_c_str (&dumpFileName));
           dbuf_destroy (&dumpFileName);
-          exit (1);
+          /*exit (1)*/sdcc_fatal_exit();
         }
       dbuf_destroy (&dumpFileName);
     }

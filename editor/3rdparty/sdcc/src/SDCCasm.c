@@ -226,7 +226,7 @@ tfprintf (FILE *fp, const char *szFormat, ...)
   dbuf_tvprintf (&dbuf, szFormat, ap);
   va_end (ap);
 
-  fwrite (dbuf_get_buf (&dbuf), 1, dbuf_get_length (&dbuf), fp);
+  /*fwrite */sdcc_out_write(dbuf_get_buf (&dbuf), /*1, */dbuf_get_length (&dbuf)/*, fp*/);
   dbuf_destroy (&dbuf);
 }
 

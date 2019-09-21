@@ -164,7 +164,7 @@ static const OPTION optionsTable[] = {
   {'v', OPTION_VERSION, NULL, "Display sdcc's version"},
   {0,   "--verbose", &options.verbose, "Trace calls to the preprocessor, assembler, and linker"},
   {'V', NULL, &options.verboseExec, "Execute verbosely. Show sub commands as they are run"},
-  {'d', NULL, NULL, "Output list of mcaro definitions in effect. Use with -E"},
+  {'d', NULL, NULL, "Output list of macro definitions in effect. Use with -E"},
   {'D', NULL, NULL, "Define macro as in -Dmacro"},
   {'I', NULL, NULL, "Add to the include (*.h) path, as in -Ipath"},
   {'A', NULL, NULL, NULL},
@@ -388,7 +388,7 @@ _setPort (const char *name)
     }
   /* Error - didnt find */
   werror (E_UNKNOWN_TARGET, name);
-  exit (EXIT_FAILURE);
+  /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
 }
 
 /* Override the default processor with the one specified
@@ -596,10 +596,12 @@ setParseWithComma (set ** dest, const char *src)
 static void
 setStackSize (void)
 {
+/*
 #if defined (HAVE_SETRLIMIT) && defined (RLIMIT_STACK)
   struct rlimit rl = {4 * 1024 * 1024, 4 * 1024 * 1024};
   setrlimit (RLIMIT_STACK, &rl);
 #endif
+*/
 }
 
 /*-----------------------------------------------------------------*/
@@ -703,7 +705,7 @@ processFile (char *s)
 
           dbuf_destroy (&path);
 
-          exit (EXIT_FAILURE);
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
         }
 
       /* get rid of any path information
@@ -776,7 +778,7 @@ getStringArg (const char *szStart, char **argv, int *pi, int argc)
         {
           werror (E_ARGUMENT_MISSING, szStart);
           /* Die here rather than checking for errors later. */
-          exit (EXIT_FAILURE);
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
         }
       else
         {
@@ -800,7 +802,7 @@ getIntArg (const char *szStart, char **argv, int *pi, int argc)
     {
       werror (E_BAD_INT_ARGUMENT, szStart);
       /* Die here rather than checking for errors later. */
-      exit (EXIT_FAILURE);
+      /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
     }
   return val;
 }
@@ -1014,7 +1016,7 @@ parseCmdLine (int argc, char **argv)
           if (strcmp (argv[i], OPTION_HELP) == 0)
             {
               printUsage (FALSE);
-              exit (EXIT_SUCCESS);
+              /*exit (EXIT_SUCCESS)*/sdcc_fatal_exit();
             }
 
           if (strcmp (argv[i], OPTION_OUT_FMT_IHX) == 0)
@@ -1056,7 +1058,7 @@ parseCmdLine (int argc, char **argv)
           if (strcmp (argv[i], OPTION_VERSION) == 0)
             {
               printVersionInfo (stdout);
-              exit (EXIT_SUCCESS);
+              /*exit (EXIT_SUCCESS)*/sdcc_fatal_exit();
               continue;
             }
 
@@ -1307,7 +1309,7 @@ parseCmdLine (int argc, char **argv)
               verifyShortOption (argv[i]);
 
               printUsage (FALSE);
-              exit (EXIT_SUCCESS);
+              /*exit (EXIT_SUCCESS)*/sdcc_fatal_exit();
               break;
 
             case 'm':
@@ -1393,7 +1395,7 @@ parseCmdLine (int argc, char **argv)
               verifyShortOption (argv[i]);
 
               printVersionInfo (stdout);
-              exit (EXIT_SUCCESS);
+              /*exit (EXIT_SUCCESS)*/sdcc_fatal_exit();
               break;
 
               /* preprocessor options */
@@ -1516,7 +1518,7 @@ parseCmdLine (int argc, char **argv)
       if (!dstFileName)
         {
           werror (E_NEED_OPT_O_IN_C1);
-          exit (EXIT_FAILURE);
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
         }
       else
         {
@@ -1671,7 +1673,7 @@ linkEdit (char **envp)
       if (!(lnkfile = fopen (dbuf_c_str (&linkerScriptFileName), "w")))
         {
           werror (E_FILE_OPEN_ERR, dbuf_c_str (&linkerScriptFileName));
-          exit (EXIT_FAILURE);
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
         }
 
       if (TARGET_Z80_LIKE)
@@ -1922,7 +1924,7 @@ linkEdit (char **envp)
   dbuf_destroy (&binFileName);
 
   if (system_ret)
-    exit (EXIT_FAILURE);
+    /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
 }
 
 /*-----------------------------------------------------------------*/
@@ -1980,7 +1982,7 @@ assemble (char **envp)
         {
           Safe_free (buf);
           /* either system() or the assembler itself has reported an error */
-          exit (EXIT_FAILURE);
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
         }
       Safe_free (buf);
 
@@ -2014,6 +2016,7 @@ assemble (char **envp)
 static int
 preProcess (char **envp)
 {
+  #if 0
   if (options.c1mode)
     {
       yyin = stdin;
@@ -2250,6 +2253,7 @@ preProcess (char **envp)
           exit (EXIT_FAILURE);
         }
     }
+  #endif
 
   return 0;
 }
@@ -2539,8 +2543,8 @@ sig_handler (int signal)
       sig_string = "Unknown?";
       break;
     }
-  fprintf (stderr, "Caught signal %d: %s\n", signal, sig_string);
-  exit (EXIT_FAILURE);
+  /*fprintf (stderr, */sdcc_msg_printf("Caught signal %d: %s\n", signal, sig_string);
+  /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
 }
 
 /*
@@ -2548,9 +2552,14 @@ sig_handler (int signal)
  * initialises and calls the parser
  */
 
+extern long cNestLevel;
+
 int
-main (int argc, char **argv, char **envp)
+sdcc_main (int argc, const char **argv, char **envp)
 {
+  cNestLevel = 0;
+  fatalError = 0;
+
   /* get the prefix and the suffix of the sdcc command */
   getPrefixSuffix (argv[0]);
 
@@ -2562,8 +2571,8 @@ main (int argc, char **argv, char **envp)
 
   if (NUM_PORTS == 0)
     {
-      fprintf (stderr, "Build error: no ports are enabled.\n");
-      exit (EXIT_FAILURE);
+      /*fprintf (stderr, */sdcc_msg_printf("Build error: no ports are enabled.\n");
+      /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
     }
 
   /* install signal handler;
@@ -2628,9 +2637,9 @@ main (int argc, char **argv, char **envp)
   if (!options.c1mode && !fullSrcFileName && peekSet (relFilesSet) == NULL)
     {
       if (options.printSearchDirs)
-        exit (EXIT_SUCCESS);
+        /*exit (EXIT_SUCCESS)*/sdcc_fatal_exit();
       printUsage (TRUE);
-      exit (EXIT_FAILURE);
+      /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
     }
 
   /* initMem() is expensive, but
@@ -2660,12 +2669,12 @@ main (int argc, char **argv, char **envp)
 
       yyparse ();
 
-      if (!options.c1mode)
+      /*if (!options.c1mode)
         if (sdcc_pclose (yyin))
-          fatalError = 1;
+          fatalError = 1;*/
 
       if (fatalError)
-        exit (EXIT_FAILURE);
+        /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
 
       if (port->general.do_glue != NULL)
         (*port->general.do_glue) ();
@@ -2678,7 +2687,7 @@ main (int argc, char **argv, char **envp)
         }
 
       if (fatalError)
-        exit (EXIT_FAILURE);
+        /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
 
       if (!options.c1mode && !noAssemble)
         {

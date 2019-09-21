@@ -343,8 +343,8 @@ extern const char *dstFileName; /* destination file name without extension */
 extern const char *moduleName;  /* module name is source file without path and extension */
                                 /* can be NULL while linking without compiling */
 extern int seqPointNo;          /* current sequence point */
-extern FILE *yyin;              /* */
-extern FILE *asmFile;           /* assembly output file */
+/*extern FILE *yyin;*/              /* */
+/*extern FILE *asmFile;*/           /* assembly output file */
 extern FILE *cdbFile;           /* debugger symbol file */
 extern long NestLevel;          /* NestLevel                 SDCC.y */
 extern int stackPtr;            /* stack pointer             SDCC.y */

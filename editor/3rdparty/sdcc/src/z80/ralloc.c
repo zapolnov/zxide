@@ -186,7 +186,7 @@ regWithIdx (int idx)
     }
 
   wassertl (0, "regWithIdx not found");
-  exit (1);
+  /*exit (1)*/sdcc_fatal_exit();
 }
 
 /** Frees a register.
@@ -345,7 +345,7 @@ liveRangesWith (bitVect * lrs, int (func) (symbol *, eBBlock *, iCode *), eBBloc
       if (!(sym = hTabItemWithKey (liveRanges, i)))
         {
           wassertl (0, "liveRangesWith could not find liveRange");
-          exit (1);
+          /*exit (1)*/sdcc_fatal_exit();
         }
 
       if (func (sym, ebp, ic) && bitVectBitValue (_G.regAssigned, sym->key))
@@ -1441,7 +1441,7 @@ rUmaskForOp (const operand * op)
       if (!(sym->regs[j]) || sym->regs[j]->rIdx < 0 || sym->regs[j]->rIdx > CND_IDX)
         {
           werror (E_INTERNAL_ERROR, __FILE__, __LINE__, "rUmaskForOp: Register not found");
-          exit (0);
+          /*exit (0)*/sdcc_fatal_exit();
         }
       rumask = bitVectSetBit (rumask, sym->regs[j]->rIdx);
     }
@@ -1541,7 +1541,7 @@ createRegMask (eBBlock ** ebbs, int count)
               if (!(sym = hTabItemWithKey (liveRanges, j)))
                 {
                   werror (E_INTERNAL_ERROR, __FILE__, __LINE__, "createRegMask cannot find live range");
-                  exit (0);
+                  /*exit (0)*/sdcc_fatal_exit();
                 }
 
               /* if no register assigned to it */

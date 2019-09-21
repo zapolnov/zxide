@@ -450,7 +450,7 @@ _gbz80_rgblink (void)
     {
       werror (E_FILE_OPEN_ERR, dbuf_c_str (&lnkFileName));
       dbuf_destroy (&lnkFileName);
-      exit (1);
+      /*exit (1)*/sdcc_fatal_exit();
     }
   dbuf_destroy (&lnkFileName);
 
@@ -473,8 +473,8 @@ _gbz80_rgblink (void)
   if (sdcc_system (buffer))
     {
       Safe_free (buffer);
-      perror ("Cannot exec linker");
-      exit (1);
+      /*perror (*/sdcc_msg_puts("Cannot exec linker");
+      /*exit (1)*/sdcc_fatal_exit();
     }
   Safe_free (buffer);
 }
