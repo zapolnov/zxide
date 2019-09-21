@@ -11,6 +11,7 @@
 
 class Program;
 class ProgramBinary;
+class ProjectSettings;
 
 struct SourceFile
 {
@@ -41,6 +42,7 @@ public:
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
+    void setProjectFile(const QString& file) { mProjectFile = file; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
 
     const std::vector<std::unique_ptr<SourceFile>>& basicSources() const { return mBasicSources; }
@@ -58,11 +60,13 @@ private:
     mutable QMutex mMutex;
     std::unique_ptr<Program> mProgram;
     std::unique_ptr<ProgramBinary> mProgramBinary;
+    std::unique_ptr<ProjectSettings> mProjectSettings;
     QString mStatusText;
     QString mErrorFile;
     QString mErrorMessage;
     QString mOutputTapeFile;
     QString mOutputWavFile;
+    QString mProjectFile;
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
     QByteArray mCompiledBasicCode;

@@ -37,6 +37,8 @@ qt_add_sources(Compiler
         GfxFile.cpp
         GfxFile.h
         IErrorReporter.h
+        IO.cpp
+        IO.h
         Linker.cpp
         Linker.h
         LuaBindings.cpp
@@ -57,6 +59,8 @@ qt_add_sources(Compiler
         ProgramOpcode.h
         ProgramSection.cpp
         ProgramSection.h
+        ProjectSettings.cpp
+        ProjectSettings.h
         TapeFileWriter.cpp
         TapeFileWriter.h
         TileSetData.cpp

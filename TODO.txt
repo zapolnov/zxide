@@ -8,7 +8,6 @@
 * Multiple file selection in the file list (?)
 * Implement support for unnamed sections
 * Implement elseif (?)
-* Implement project settings
 * Search and search-with-replace in the text editor
 * Import and dither-to-monochrome images
 * Flip and rotation in the tile editor should work only on a selected area

@@ -57,6 +57,7 @@
    </attribute>
    <addaction name="actionNewProject"/>
    <addaction name="actionOpenProject"/>
+   <addaction name="actionEditProjectSettings"/>
    <addaction name="actionRefreshFileList"/>
    <addaction name="separator"/>
    <addaction name="actionNewFile"/>
@@ -88,6 +89,7 @@
     </property>
     <addaction name="actionNewProject"/>
     <addaction name="actionOpenProject"/>
+    <addaction name="actionEditProjectSettings"/>
     <addaction name="actionRefreshFileList"/>
     <addaction name="separator"/>
     <addaction name="actionNewFile"/>
@@ -120,6 +122,7 @@
     <addaction name="actionClearSelection"/>
     <addaction name="separator"/>
     <addaction name="actionGoToLine"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -1200,6 +1203,15 @@
    </property>
    <property name="whatsThis">
     <string>http://www.worldofspectrum.org/faq/reference/48kreference.htm</string>
+   </property>
+  </action>
+  <action name="actionEditProjectSettings">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/book_edit.png</normaloff>:/resources/fatcow16x16/book_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Edit project settings...</string>
    </property>
   </action>
  </widget>

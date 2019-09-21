@@ -24,14 +24,14 @@ QJsonDocument loadJson(const QString& file)
     return doc;
 }
 
-void saveFile(const QString& file, const QByteArray& data)
+void saveFile(const QString& file, const QByteArray& data, bool canOverwrite)
 {
-    saveFile(file, data.constData(), size_t(data.length()));
+    saveFile(file, data.constData(), size_t(data.length()), canOverwrite);
 }
 
-void saveFile(const QString& file, const void* data, size_t size)
+void saveFile(const QString& file, const void* data, size_t size, bool canOverwrite)
 {
-    if (QFile::exists(file))
+    if (!canOverwrite && QFile::exists(file))
         throw IOException(QCoreApplication::tr("File \"%1\" already exists.").arg(file));
 
     QSaveFile f(file);

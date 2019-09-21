@@ -9,6 +9,8 @@
 #include "Util.h"
 #include "GfxFile.h"
 #include "MapFile.h"
+#include "ProjectSettings.h"
+#include "IO.h"
 #include "scripting/LuaVM.h"
 #include <exception>
 #include <QDataStream>
@@ -80,6 +82,9 @@ void Compiler::setSettings(CompileSettings settings)
 void Compiler::compile()
 {
     try {
+        mProjectSettings = std::make_unique<ProjectSettings>();
+        mProjectSettings->load(mProjectFile);
+
         if (!runBuildScripts())
             throw CompilationFailed();
         if (!compileCCode())
@@ -223,6 +228,8 @@ void Compiler::compile()
     } catch (const CompilationFailed&) {
         emit compilationEnded();
         return;
+    } catch (const IOException& e) {
+        error(nullptr, 0, e.message());
     } catch (const std::exception& e) {
         error(nullptr, 0, tr("Exception: %1").arg(e.what()));
     } catch (...) {
@@ -347,10 +354,17 @@ bool Compiler::compileCCode()
         CommandLine cmdLine;
         cmdLine.add("sdcpp");
         cmdLine.add(info.absoluteFilePath().toUtf8().constData());
-        //cmdLine.add("-D...");
-        //cmdLine.add("-I...");
-        cmdLine.add("-fsigned-char");
-        cmdLine.add("-std=c11"); // c89, c99
+        switch (mProjectSettings->standard) {
+            case CStandard::C89: cmdLine.add("-std=c89"); break;
+            case CStandard::C99: cmdLine.add("-std=c99"); break;
+            case CStandard::C11: cmdLine.add("-std=c11"); break;
+        }
+        cmdLine.add(mProjectSettings->charIsUnsigned ? "-funsigned-char" : "-fsigned-char");
+        for (const auto& it : mProjectSettings->defines) {
+            if (!it.empty())
+                cmdLine.add("-D" + it);
+        }
+        //cmdLine.add("-I..."); // FIXME
         cmdLine.finalize();
 
         /*

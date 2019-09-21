@@ -13,10 +13,12 @@
 #include "editor/EditorTabFactory.h"
 #include "editor/HighlightManager.h"
 #include "editor/Project.h"
+#include "editor/ProjectSettingsDialog.h"
 #include "editor/FileManager.h"
 #include "compiler/Program.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramBinary.h"
+#include "compiler/IO.h"
 #include "util/ClickableLabel.h"
 #include "util/Settings.h"
 #include "ui_MainWindow.h"
@@ -342,6 +344,7 @@ bool MainWindow::build()
     mBuildResultLabel->setStyleSheet(QStringLiteral("color: #ccaa00; font-weight: bold; padding-right: 5px"));
 
     CompilerDialog dlg(this);
+    dlg.setProjectFile(mProject->file());
     dlg.setProjectDirectory(mProject->projectDirectory());
     dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
     dlg.setOutputWavFile(mProject->wavFileName());
@@ -569,6 +572,16 @@ void MainWindow::on_actionOpenProject_triggered()
         return;
 
     openProject(file);
+}
+
+void MainWindow::on_actionEditProjectSettings_triggered()
+{
+    try {
+        ProjectSettingsDialog dlg(mProject.get(), this);
+        dlg.exec();
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
+    }
 }
 
 void MainWindow::on_actionNewFile_triggered()

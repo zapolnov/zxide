@@ -1,9 +1,9 @@
 #include "GfxEditorTab.h"
 #include "editor/FileManager.h"
 #include "editor/EditorTabFactory.h"
+#include "compiler/IO.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
-#include "util/IO.h"
 #include "util/ComboBox.h"
 #include "ui_GfxEditorTab.h"
 #include <QMessageBox>

@@ -388,6 +388,10 @@ void FileManager::on_sourcesTree_customContextMenuRequested(const QPoint& pos)
     mUi->deleteAction->setEnabled(itemUnderMouse != mRootDirectory && !isProjectFile && !isGenerated);
 
     QMenu menu;
+    if (itemUnderMouse == mRootDirectory) {
+        menu.addAction(mUi->editProjectSettingsAction);
+        menu.addSeparator();
+    }
     menu.addAction(mUi->newFileAction);
     menu.addAction(mUi->newDirectoryAction);
     menu.addSeparator();
@@ -575,4 +579,9 @@ void FileManager::on_deleteAction_triggered()
     }
 
     refreshDirectory(parent);
+}
+
+void FileManager::on_editProjectSettingsAction_triggered()
+{
+    emit editProjectSettings();
 }

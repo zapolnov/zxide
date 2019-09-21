@@ -133,6 +133,7 @@ signals:
     void fileSelected(File* file);
     void fileDoubleClicked(File* file);
     void fileDisappeared(File* file);
+    void editProjectSettings();
 
 private:
     std::unique_ptr<Ui_FileManager> mUi;
@@ -149,6 +150,7 @@ private:
     Q_SLOT void on_renameAction_triggered();
     Q_SLOT void on_duplicateAction_triggered();
     Q_SLOT void on_deleteAction_triggered();
+    Q_SLOT void on_editProjectSettingsAction_triggered();
 
     Q_DISABLE_COPY(FileManager)
 };

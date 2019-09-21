@@ -78,6 +78,9 @@ qt_add_sources(GameEditor
         editor/NewFileDialog.ui
         editor/Project.cpp
         editor/Project.h
+        editor/ProjectSettingsDialog.cpp
+        editor/ProjectSettingsDialog.h
+        editor/ProjectSettingsDialog.ui
         editor/RenameDialog.cpp
         editor/RenameDialog.h
         editor/RenameDialog.ui
@@ -90,8 +93,6 @@ qt_add_sources(GameEditor
         util/FileSelectorMenu.h
         util/GfxFileUtil.cpp
         util/GfxFileUtil.h
-        util/IO.cpp
-        util/IO.h
         util/ScrollBar.cpp
         util/ScrollBar.h
         util/Settings.cpp

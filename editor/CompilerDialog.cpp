@@ -73,6 +73,11 @@ void CompilerDialog::setGeneratedFilesDirectory(const QDir& dir)
     mCompiler->setGeneratedFilesDirectory(dir);
 }
 
+void CompilerDialog::setProjectFile(const QString& file)
+{
+    mCompiler->setProjectFile(file);
+}
+
 void CompilerDialog::setProjectDirectory(const QDir& dir)
 {
     mCompiler->setProjectDirectory(dir);

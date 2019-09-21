@@ -70,6 +70,7 @@ private:
 
     Q_SLOT void on_actionNewProject_triggered();
     Q_SLOT void on_actionOpenProject_triggered();
+    Q_SLOT void on_actionEditProjectSettings_triggered();
     Q_SLOT void on_actionNewFile_triggered();
     Q_SLOT void on_actionNewDirectory_triggered();
     Q_SLOT void on_actionSave_triggered();
@@ -134,6 +135,7 @@ private:
     Q_SLOT void on_fileManager_willDuplicateFile(File* file, bool* shouldAbort);
     Q_SLOT void on_fileManager_fileDoubleClicked(File* file);
     Q_SLOT void on_fileManager_fileDisappeared(File* file);
+    Q_SLOT void on_fileManager_editProjectSettings() { on_actionEditProjectSettings_triggered(); }
 
     Q_SLOT void on_registersDockWidget_dockLocationChanged(Qt::DockWidgetArea area);
 

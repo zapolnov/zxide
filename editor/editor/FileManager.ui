@@ -147,6 +147,15 @@
     <string>D&amp;uplicate</string>
    </property>
   </action>
+  <action name="editProjectSettingsAction">
+   <property name="icon">
+    <iconset resource="../res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/book_edit.png</normaloff>:/resources/fatcow16x16/book_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Edit project settings...</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>sourcesTree</tabstop>
