@@ -103,7 +103,7 @@ initSymt (void)
   int i = 0;
 
   for (i = 0; i < 256; i++)
-    SymbolTab[i] = StructTab[i] = (void *) NULL;
+    SymbolTab[i] = StructTab[i] = TypedefTab[i] = LabelTab[i] = enumTab[i] = AddrspaceTab[i] = (void *) NULL;
 }
 
 /*-----------------------------------------------------------------*/
