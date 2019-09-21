@@ -17,7 +17,9 @@ extern void (*sdcc_fatal_exit)(void);
 extern void* (*sdcc_in_open)(const char* filename);
 extern void (*sdcc_in_close)(void* file);
 extern int  (*sdcc_in_read)(void* file, void* buffer, size_t size);
+extern int  (*sdcc_in_getc)(void* file);
 extern long (*sdcc_in_getfilesize)(void* file);
+extern void (*sdcc_in_rewind)(void* file);
 
 extern int (*sdcc_yyin_getc)(void);
 

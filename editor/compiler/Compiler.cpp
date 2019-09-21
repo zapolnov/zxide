@@ -400,10 +400,25 @@ namespace
         return int(f->read(reinterpret_cast<char*>(buffer), size));
     }
 
+    int sdccInGetChar(void* file)
+    {
+        char ch = 0;
+        auto f = reinterpret_cast<QFile*>(file);
+        if (f->read(&ch, 1) != 1)
+            return EOF;
+        return ch;
+    }
+
     long sdccInGetFileSize(void* file)
     {
         auto f = reinterpret_cast<QFile*>(file);
         return long(f->size());
+    }
+
+    void sdccInRewind(void* file)
+    {
+        auto f = reinterpret_cast<QFile*>(file);
+        f->seek(0);
     }
 
     int sdccYYInGetChar()
@@ -522,7 +537,9 @@ bool Compiler::compileCCode()
         sdcc_in_open = sdccInOpen;
         sdcc_in_close = sdccInClose;
         sdcc_in_read = sdccInRead;
+        sdcc_in_getc = sdccInGetChar;
         sdcc_in_getfilesize = sdccInGetFileSize;
+        sdcc_in_rewind = sdccInRewind;
         sdcc_out_putc = sdccOutPutChar;
         sdcc_out_puts = sdccOutPutString;
         sdcc_out_printf = sdccOutPrintF;

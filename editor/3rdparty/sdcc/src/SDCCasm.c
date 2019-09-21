@@ -277,7 +277,7 @@ printILine (iCode * ic)
 /* skipLine - skip the line from file infp                         */
 /*-----------------------------------------------------------------*/
 static int
-skipLine (FILE * infp)
+skipLine (/*FILE*/void * infp)
 {
   int c;
   static char is_eof = 0;
@@ -286,7 +286,7 @@ skipLine (FILE * infp)
   if (is_eof)
     return 0;
 
-  while ((c = getc (infp)) != '\n' && EOF != c)
+  while ((c = /*getc */sdcc_in_getc(infp)) != '\n' && EOF != c)
     ++len;
 
   if (EOF == c)
@@ -311,7 +311,7 @@ skipLine (FILE * infp)
 const char *
 printCLine (const char *srcFile, int lineno)
 {
-  static FILE *inFile = NULL;
+  static /*FILE*/void *inFile = NULL;
   static struct dbuf_s line;
   static struct dbuf_s lastSrcFile;
   static char dbufInitialized = 0;
@@ -334,7 +334,7 @@ printCLine (const char *srcFile, int lineno)
     {
       if (strcmp (dbuf_c_str (&lastSrcFile), srcFile) != 0)
         {
-          fclose (inFile);
+          /*fclose */sdcc_in_close(inFile);
           inFile = NULL;
           inLineNo = 0;
           dbuf_set_length (&lastSrcFile, 0);
@@ -344,11 +344,11 @@ printCLine (const char *srcFile, int lineno)
 
   if (!inFile)
     {
-      if (!(inFile = fopen (srcFile, "r")))
+      if (!(inFile = /*fopen */sdcc_in_open(srcFile/*, "r"*/)))
         {
           /* can't open the file:
              don't panic, just return the error message */
-          dbuf_printf (&line, "ERROR: %s", strerror (errno));
+          dbuf_printf (&line, "ERROR: %s", /*strerror (errno)*/"file not found");
 
           return dbuf_detach_c_str (&line);
         }
@@ -362,7 +362,7 @@ printCLine (const char *srcFile, int lineno)
   if (inLineNo > lineno)
     {
       /* past the lineno: rewind the file pointer */
-      rewind (inFile);
+      /*rewind */sdcc_in_rewind(inFile);
       inLineNo = 0;
       /* rewinds++; */
     }

@@ -247,12 +247,12 @@ dbuf_printf (struct dbuf_s *dbuf, const char *format, ...)
  */
 
 size_t
-dbuf_getline (struct dbuf_s *dbuf, FILE *infp)
+dbuf_getline (struct dbuf_s *dbuf, /*FILE*/void *infp)
 {
   int c;
   char chr;
 
-  while ((c = getc (infp)) != '\n' && c != EOF)
+  while ((c = /*getc */sdcc_in_getc(infp)) != '\n' && c != EOF)
     {
       chr = c;
 

@@ -6,7 +6,9 @@ void (*sdcc_fatal_exit)(void);
 void* (*sdcc_in_open)(const char* filename);
 void (*sdcc_in_close)(void* file);
 int  (*sdcc_in_read)(void* file, void* buffer, size_t size);
+int  (*sdcc_in_getc)(void* file);
 long (*sdcc_in_getfilesize)(void* file);
+void (*sdcc_in_rewind)(void* file);
 
 int (*sdcc_yyin_getc)(void);
 
