@@ -4,6 +4,7 @@
 #include <QString>
 
 class QJsonDocument;
+class IErrorReporter;
 
 class IOException
 {
@@ -19,6 +20,8 @@ private:
 
 QByteArray loadFile(const QString& file);
 QJsonDocument loadJson(const QString& file);
+
+bool writeFile(const QString& fileName, const void* data, size_t size, IErrorReporter* reporter);
 
 void saveFile(const QString& file, const QByteArray& data, bool canOverwrite = true);
 void saveFile(const QString& file, const void* data, size_t size, bool canOverwrite = true);

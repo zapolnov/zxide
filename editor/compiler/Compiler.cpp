@@ -14,7 +14,6 @@
 #include "scripting/LuaVM.h"
 #include <exception>
 #include <QDataStream>
-#include <QFile>
 #include <QFileInfo>
 #include <cstdarg>
 #include <bas2tap.h>
@@ -95,14 +94,13 @@ void Compiler::compile()
             QFileInfo info(source->path);
             setStatusText(tr("Compiling %1").arg(info.fileName()));
 
-            QFile file(info.absoluteFilePath());
-            if (!file.open(QFile::ReadOnly)) {
-                error(source->name, 0, file.errorString());
+            QByteArray fileData;
+            try {
+                fileData = loadFile(info.absoluteFilePath());
+            } catch (const IOException& e) {
+                error(source->name, 0, e.message());
                 break;
             }
-
-            QByteArray fileData = file.readAll();
-            file.close();
 
             if (!Assembler(mProgram.get(), this).parse(source.get(), fileData))
                 throw CompilationFailed();
@@ -113,19 +111,20 @@ void Compiler::compile()
             QFileInfo info(source->path);
             setStatusText(tr("Processing %1").arg(info.fileName()));
 
-            QFile file(info.absoluteFilePath());
-            if (!file.open(QFile::ReadOnly)) {
-                error(source->name, 0, file.errorString());
+            QByteArray fileData;
+            QString fileName = info.absoluteFilePath();
+            try {
+                fileData = loadFile(fileName);
+            } catch (const IOException& e) {
+                error(source->name, 0, e.message());
                 break;
             }
 
-            GfxFile gfxFile(file.readAll());
-            file.close();
-
+            GfxFile gfxFile(fileData);
             GfxData data(0, 0);
             if (!gfxFile.deserializeFromJson(&data)) {
                 error(source->name, 0,
-                    tr("unable to load file '%1': %2").arg(file.fileName()).arg(gfxFile.lastError()));
+                    tr("unable to load file '%1': %2").arg(fileName).arg(gfxFile.lastError()));
                 break;
             }
 
@@ -159,19 +158,20 @@ void Compiler::compile()
             QFileInfo info(source->path);
             setStatusText(tr("Processing %1").arg(info.fileName()));
 
-            QFile file(info.absoluteFilePath());
-            if (!file.open(QFile::ReadOnly)) {
-                error(source->name, 0, file.errorString());
+            QByteArray fileData;
+            QString fileName = info.absoluteFilePath();
+            try {
+                fileData = loadFile(info.absoluteFilePath());
+            } catch (const IOException& e) {
+                error(source->name, 0, e.message());
                 break;
             }
 
-            MapFile mapFile(file.readAll());
-            file.close();
-
+            MapFile mapFile(fileData);
             MapData data(0, 0);
             if (!mapFile.deserializeFromJson(&data)) {
                 error(source->name, 0,
-                    tr("unable to load file '%1': %2").arg(file.fileName()).arg(mapFile.lastError()));
+                    tr("unable to load file '%1': %2").arg(fileName).arg(mapFile.lastError()));
                 break;
             }
 
@@ -368,14 +368,13 @@ bool Compiler::compileCCode()
         cmdLine.finalize();
 
         /*
-        QFile file(info.absoluteFilePath());
-        if (!file.open(QFile::ReadOnly)) {
-            error(source->name, 0, file.errorString());
-            lines.clear();
+        QByteArray fileData;
+        try {
+            fileData = loadFile(info.absoluteFilePath());
+        } catch (const IOException& e) {
+            error(source->name, 0, e.message());
             return false;
         }
-        QByteArray fileData = file.readAll();
-        file.close();
         */
 
         // FIXME
@@ -427,14 +426,15 @@ bool Compiler::compileBasicCode()
 
     for (const auto& source : mBasicSources) {
         QFileInfo info(source->path);
-        QFile file(info.absoluteFilePath());
-        if (!file.open(QFile::ReadOnly)) {
-            error(source->name, 0, file.errorString());
+
+        QByteArray fileData;
+        try {
+            fileData = loadFile(info.absoluteFilePath());
+        } catch (const IOException& e) {
+            error(source->name, 0, e.message());
             lines.clear();
             return false;
         }
-        QByteArray fileData = file.readAll();
-        file.close();
 
         const char* p = fileData.constData();
         const char* end = p + fileData.length();
@@ -506,7 +506,7 @@ bool Compiler::compileBasicCode()
     }
 
     mCompiledBasicCode.clear();
-    compiledBasicStream = std::make_unique<QDataStream>(&mCompiledBasicCode, QFile::WriteOnly);
+    compiledBasicStream = std::make_unique<QDataStream>(&mCompiledBasicCode, QIODevice::WriteOnly);
 
     linesIter = lines.cbegin();
     basicFile = nullptr;

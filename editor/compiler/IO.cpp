@@ -1,6 +1,8 @@
 #include "IO.h"
+#include "IErrorReporter.h"
 #include <QSaveFile>
 #include <QFile>
+#include <QFileInfo>
 #include <QCoreApplication>
 #include <QJsonDocument>
 
@@ -22,6 +24,44 @@ QJsonDocument loadJson(const QString& file)
         throw IOException(QCoreApplication::tr("Unable to read file \"%1\": %2").arg(file).arg(error.errorString()));
 
     return doc;
+}
+
+bool writeFile(const QString& fileName, const void* data, size_t size, IErrorReporter* reporter)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly)) {
+        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
+            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+        QFile::remove(fileName);
+        return false;
+    }
+
+    qint64 bytesWritten = file.write(reinterpret_cast<const char*>(data), qint64(size));
+    if (bytesWritten < 0) {
+        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
+            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+        file.close();
+        QFile::remove(fileName);
+        return false;
+    }
+
+    if (bytesWritten != qint64(size)) {
+        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1'")
+            .arg(QFileInfo(fileName).fileName()));
+        file.close();
+        QFile::remove(fileName);
+        return false;
+    }
+
+    if (!file.flush()) {
+        reporter->error(nullptr, 0, QCoreApplication::tr("unable to write file '%1': %2")
+            .arg(QFileInfo(fileName).fileName()).arg(file.errorString()));
+        file.close();
+        QFile::remove(fileName);
+        return false;
+    }
+
+    return true;
 }
 
 void saveFile(const QString& file, const QByteArray& data, bool canOverwrite)

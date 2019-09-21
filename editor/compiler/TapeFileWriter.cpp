@@ -2,6 +2,7 @@
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
 #include "compiler/ProgramSection.h"
+#include "compiler/IO.h"
 #include "compiler/Util.h"
 #include <QFileInfo>
 #include <QCoreApplication>
