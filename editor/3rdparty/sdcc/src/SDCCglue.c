@@ -2327,43 +2327,43 @@ glue (void)
   if (mcs51_like)
     {
       if(!options.noOptsdccInAsm)
-        fprintf (/*asmFile*/NULL, "\t.optsdcc -m%s", port->target);
+        /*fprintf (asmFile, */sdcc_out_printf("\t.optsdcc -m%s", port->target);
 
       switch (options.model)
         {
         case MODEL_SMALL:
-          fprintf (/*asmFile*/NULL, " --model-small");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-small");
           break;
         case MODEL_COMPACT:
-          fprintf (/*asmFile*/NULL, " --model-compact");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-compact");
           break;
         case MODEL_MEDIUM:
-          fprintf (/*asmFile*/NULL, " --model-medium");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-medium");
           break;
         case MODEL_LARGE:
-          fprintf (/*asmFile*/NULL, " --model-large");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-large");
           break;
         case MODEL_FLAT24:
-          fprintf (/*asmFile*/NULL, " --model-flat24");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-flat24");
           break;
         case MODEL_HUGE:
-          fprintf (/*asmFile*/NULL, " --model-huge");
+          /*fprintf (asmFile, */sdcc_out_printf(" --model-huge");
           break;
         default:
           break;
         }
       /*if(options.stackAuto)      fprintf (asmFile, " --stack-auto"); */
       if (options.useXstack)
-        fprintf (/*asmFile*/NULL, " --xstack");
+        /*fprintf (asmFile, */sdcc_out_printf(" --xstack");
       /*if(options.intlong_rent)   fprintf (asmFile, " --int-long-rent"); */
       /*if(options.float_rent)     fprintf (asmFile, " --float-rent"); */
       if (options.noRegParams)
-        fprintf (/*asmFile*/NULL, " --no-reg-params");
+        /*fprintf (asmFile, */sdcc_out_printf(" --no-reg-params");
       if (options.parms_in_bank1)
-        fprintf (/*asmFile*/NULL, " --parms-in-bank1");
+        /*fprintf (asmFile, */sdcc_out_printf(" --parms-in-bank1");
       if (options.all_callee_saves)
-        fprintf (/*asmFile*/NULL, " --all-callee-saves");
-      fprintf (/*asmFile*/NULL, "\n");
+        /*fprintf (asmFile, */sdcc_out_printf(" --all-callee-saves");
+      /*fprintf (asmFile, */sdcc_out_printf("\n");
     }
   else if (!TARGET_PIC_LIKE && !options.noOptsdccInAsm)
     {

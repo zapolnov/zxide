@@ -3577,10 +3577,15 @@ doPragma (int id, const char *name, const char *cp)
             break;
           }
 
-        if (id == P_CODESEG)
+        if (id == P_CODESEG) {
+          if (options.code_seg)
+            Safe_free(options.code_seg);
           options.code_seg = dbuf_detach(&segname);
-        else
+        } else {
+          if (options.const_seg)
+            Safe_free(options.const_seg);
           options.const_seg = dbuf_detach(&segname);
+        }
       }
       break;
 

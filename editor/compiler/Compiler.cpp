@@ -19,6 +19,7 @@
 #include <sstream>
 #include <bas2tap.h>
 #include <lua.hpp>
+#include <unordered_set>
 #include <sdcc_bridge.h>
 
 #ifndef emit
@@ -325,6 +326,18 @@ namespace
     {
     };
 
+    class AutoCleanup
+    {
+    public:
+        explicit AutoCleanup(const std::function<void()>&& func) : mFunc(func) {}
+        ~AutoCleanup() { mFunc(); }
+
+    private:
+        std::function<void()> mFunc;
+
+        Q_DISABLE_COPY(AutoCleanup)
+    };
+
     class CommandLine
     {
     public:
@@ -356,6 +369,7 @@ namespace
     };
 
     static QDir projectDir;
+    static std::unordered_set<QFile*> openFiles;
     static std::stringstream msg;
     static std::stringstream out;
     static std::string input;
@@ -379,18 +393,23 @@ namespace
         QString name = QString::fromUtf8(fileName);
 
         auto file = std::make_unique<QFile>(projectDir.absoluteFilePath(name));
-        if (file->open(QFile::ReadOnly))
+        if (file->open(QFile::ReadOnly)) {
+            openFiles.emplace(file.get());
             return file.release();
+        }
 
         file->setFileName(QStringLiteral(":/include/%1").arg(name));
-        if (file->open(QFile::ReadOnly))
+        if (file->open(QFile::ReadOnly)) {
+            openFiles.emplace(file.get());
             return file.release();
+        }
 
         return nullptr;
     }
 
     void sdccInClose(void* file)
     {
+        openFiles.erase(reinterpret_cast<QFile*>(file));
         delete reinterpret_cast<QFile*>(file);
     }
 
@@ -541,12 +560,22 @@ namespace
         sdccMsgVPrintF(fmt, args);
         va_end(args);
     }
+
+    static void sdccCleanup()
+    {
+        while (!openFiles.empty()) {
+            void* file = *openFiles.begin();
+            sdccInClose(file);
+        }
+    }
 }
 
 extern "C" int copt_main(int argc, const char** argv);
 
 bool Compiler::compileCCode()
 {
+    AutoCleanup cleanup{sdccCleanup};
+
     projectDir = mProjectDirectory;
 
     sdcc_abort = sdccAbort;

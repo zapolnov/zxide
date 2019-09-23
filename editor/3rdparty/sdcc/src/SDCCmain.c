@@ -627,13 +627,20 @@ setDefaultOptions (void)
   options.std_c99 = 1;
   options.std_c11 = 1;          /* default to C11 (we want inline by default, so we need at least C99, and support for C11 is more complete than C99) */
   options.std_c2x = 0;
+  if (options.code_seg)
+    Safe_free(options.code_seg);
   options.code_seg = CODE_NAME ? Safe_strdup (CODE_NAME) : NULL;        /* default to CSEG for generated code */
+  if (options.const_seg)
+    Safe_free(options.const_seg);
   options.const_seg = CONST_NAME ? Safe_strdup (CONST_NAME) : NULL;     /* default to CONST for generated code */
+  if (options.data_seg)
+    Safe_free(options.data_seg);
   options.data_seg = DATA_NAME ? Safe_strdup (DATA_NAME) : NULL;        /* default to DATA for non-initialized data */
   options.stack10bit = 0;
   options.out_fmt = 0;
   options.dump_graphs = 0;
   options.dependencyFileOpt = 0;
+  options.noOptsdccInAsm = 0;
 
   /* now for the optimizations */
   /* turn on the everything */
