@@ -35,7 +35,7 @@ check_include_file("io.h" HAVE_IO_H)
 check_include_file("direct.h" HAVE_DIRECT_H)
 
 check_function_exists("getcwd" HAVE_GETCWD)
-check_function_exists("sbrk" HAVE_SBRK)
+#check_function_exists("sbrk" HAVE_SBRK)
 check_function_exists("__fsetlocking" HAVE___FSETLOCKING)
 check_function_exists("kill" HAVE_KILL)
 check_function_exists("strsignal" HAVE_STRSIGNAL)
@@ -58,11 +58,11 @@ check_cxx_source_compiles("
     int main() { char* p; int x = asprintf(&p, \"\"); return x; }
     " HAVE_DECL_ASPRINTF)
 
-check_cxx_source_compiles("
-    #define _GNU_SOURCE
-    #include <unistd.h>
-    int main() { void* p = sbrk(0); (void)p; return 0; }
-    " HAVE_DECL_SBRK)
+#check_cxx_source_compiles("
+#    #define _GNU_SOURCE
+#    #include <unistd.h>
+#    int main() { void* p = sbrk(0); (void)p; return 0; }
+#    " HAVE_DECL_SBRK)
 
 check_cxx_source_compiles("
     #define _GNU_SOURCE

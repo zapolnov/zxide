@@ -370,7 +370,7 @@ fatal_error (const char *gmsgid, ...)
   /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 
-  /*exit (FATAL_EXIT_CODE);*/sdcc_fatal_exit();
+  /*exit (FATAL_EXIT_CODE);*/for (;;) sdcc_fatal_exit();
 }
 
 /* An internal consistency check has failed.  We make no attempt to
@@ -388,7 +388,7 @@ internal_error (const char *gmsgid, ...)
   /*putc*/sdcc_msg_putc('\n'/*, stderr*/);
   va_end (ap);
 
-  /*exit (FATAL_EXIT_CODE);*/sdcc_fatal_exit();
+  /*exit (FATAL_EXIT_CODE);*/for (;;) sdcc_fatal_exit();
 }
 
 /* Report an internal compiler error in a friendly manner.  This is

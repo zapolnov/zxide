@@ -1105,6 +1105,7 @@ dwSizeofAttr (dwattr * ap)
         /*exit (1)*/sdcc_fatal_exit();
     }
     
+    return 0;
 }
 
 

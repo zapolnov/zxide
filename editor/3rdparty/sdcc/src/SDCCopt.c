@@ -2591,7 +2591,7 @@ optimizeStdLibCall (eBBlock ** ebbs, int count)
           // Look for call to puts().
           if (ic->op != CALL || !ic->prev || ic->prev->op != IPUSH && ic->prev->op != SEND)
             continue;
-          if (!IS_SYMOP (IC_LEFT (ic)) || !OP_SYMBOL (IC_LEFT (ic))->rname || strcmp (OP_SYMBOL (IC_LEFT (ic))->rname, "_puts"))
+          if (!IS_SYMOP (IC_LEFT (ic)) || /*!OP_SYMBOL (IC_LEFT (ic))->rname ||*/ strcmp (OP_SYMBOL (IC_LEFT (ic))->rname, "_puts"))
             continue;
 
           // Look for following call to puts().
@@ -2619,7 +2619,7 @@ optimizeStdLibCall (eBBlock ** ebbs, int count)
             }
           if (!nic || nic->op != CALL || nic->prev->op != IPUSH && nic->prev->op != SEND)
             continue;
-          if (!IS_SYMOP (IC_LEFT (nic)) || !OP_SYMBOL (IC_LEFT (nic))->rname || strcmp (OP_SYMBOL (IC_LEFT (nic))->rname, "_puts"))
+          if (!IS_SYMOP (IC_LEFT (nic)) || /*!OP_SYMBOL (IC_LEFT (nic))->rname ||*/ strcmp (OP_SYMBOL (IC_LEFT (nic))->rname, "_puts"))
             continue;
 
           // Check that the return values are unused

@@ -186,7 +186,7 @@ regWithIdx (int idx)
     }
 
   wassertl (0, "regWithIdx not found");
-  /*exit (1)*/sdcc_fatal_exit();
+  /*exit (1)*/sdcc_fatal_exit(); return NULL;
 }
 
 /** Frees a register.

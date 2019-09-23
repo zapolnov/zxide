@@ -641,7 +641,7 @@ bool Compiler::compileCCode()
 
         try {
             char* envp[] = { NULL };
-            int r = sdcc_main(ccCmd.argc, ccCmd.argv, envp);
+            int r = sdcc_main(ccCmd.argc, (char**)ccCmd.argv, envp);
             if (r != 0) {
                 error(source->name, 0, "internal compiler error");
                 return false;

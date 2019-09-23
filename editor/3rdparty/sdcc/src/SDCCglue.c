@@ -863,12 +863,12 @@ printIvalType (symbol * sym, sym_link * type, initList * ilist, struct dbuf_s *o
           for (i = (le ? 0 : size - 1); le ? (i < size) : (i > -1); i += (le ? 1 : -1))
             {
               if (i == 0)
-			    if (val->name && strlen (val->name) > 0)
+			    if (/*val->name &&*/ strlen (val->name) > 0)
                   dbuf_printf (oBuf, "%s", val->name);
 				else
                   dbuf_printf (oBuf, "#0x00");
               else if (0 < i && i < top)
-			    if (val->name && strlen (val->name) > 0)
+			    if (/*val->name &&*/ strlen (val->name) > 0)
                   dbuf_printf (oBuf, "(%s >> %d)", val->name, i * 8);
 				else
                   dbuf_printf (oBuf, "#0x00");				
@@ -1525,7 +1525,7 @@ printIvalCharPtr (symbol * sym, sym_link * type, value * val, struct dbuf_s *oBu
    */
   size = getSize (type);
 
-  if (val->name && strlen (val->name))
+  if (/*val->name && */strlen (val->name))
     {
       if (size == 1)            /* This appears to be Z80 specific?? */
         {

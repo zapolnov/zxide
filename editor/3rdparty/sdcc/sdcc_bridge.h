@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 int sdcpp_main(int argc, const char** argv);
-int sdcc_main(int argc, const char** argv, char** envp);
+int sdcc_main(int argc, char** argv, char** envp);
 
 extern void (*sdcc_abort)(void);
 extern void (*sdcc_fatal_exit)(void);

@@ -778,7 +778,7 @@ getStringArg (const char *szStart, char **argv, int *pi, int argc)
         {
           werror (E_ARGUMENT_MISSING, szStart);
           /* Die here rather than checking for errors later. */
-          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit();
+          /*exit (EXIT_FAILURE)*/sdcc_fatal_exit(); return NULL;
         }
       else
         {
@@ -2555,7 +2555,7 @@ sig_handler (int signal)
 extern long cNestLevel;
 
 int
-sdcc_main (int argc, const char **argv, char **envp)
+sdcc_main (int argc, char **argv, char **envp)
 {
   cNestLevel = 0;
   fatalError = 0;

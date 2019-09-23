@@ -57,7 +57,7 @@ int dbuf_append_char(struct dbuf_s *dbuf, char chr);
 int dbuf_prepend_char(struct dbuf_s *dbuf, char chr);
 int dbuf_vprintf(struct dbuf_s *dbuf, const char *format, va_list args);
 int dbuf_printf (struct dbuf_s *dbuf, const char *format, ...) ATTRIBUTE_PRINTF(2, 3);
-size_t dbuf_getline(struct dbuf_s *dbuf, FILE *infp);
+size_t dbuf_getline(struct dbuf_s *dbuf, /*FILE*/void *infp);
 size_t dbuf_chomp (struct dbuf_s *dbuf);
 void dbuf_write (struct dbuf_s *dbuf, FILE *dest);
 void dbuf_write_and_destroy (struct dbuf_s *dbuf, FILE *dest);

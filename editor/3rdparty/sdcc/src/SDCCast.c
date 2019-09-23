@@ -8601,7 +8601,7 @@ offsetofOp_rec (sym_link * type, ast * snd, sym_link ** result_type)
     }
 
   wassertl (0, "this should never have happened");
-  /*exit (1)*/sdcc_fatal_exit();
+  /*exit (1)*/sdcc_fatal_exit(); return NULL;
 }
 
 ast *

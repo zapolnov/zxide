@@ -1,6 +1,6 @@
 #include "sdcc_bridge.h"
 
-void (*sdcc_abort)(void);
+void (*sdcc_abort)(void) = NULL;
 void (*sdcc_fatal_exit)(void);
 
 void* (*sdcc_in_open)(const char* filename);
