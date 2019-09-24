@@ -7,7 +7,7 @@ class ErrorConsumer : public IErrorReporter
 {
 public:
     ErrorConsumer();
-    ~ErrorConsumer();
+    ~ErrorConsumer() override;
 
     void error(const QString& file, int line, const QString& message) override;
 

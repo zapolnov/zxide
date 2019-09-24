@@ -36,6 +36,14 @@ hTab *iCodeSeqhTab = NULL;
 #define IS_AUTOSYM(op) (IS_ITEMP(op) || \
                         (IS_SYMOP(op) && IS_AUTO(OP_SYMBOL (op)) && !IS_PARM(op)))
 
+void sdcc_cleanupLRange(void)
+{
+    iCodeSeq = 0;
+    liveRanges = NULL;
+    iCodehTab = NULL;
+    iCodeSeqhTab = NULL;
+}
+
 /*-----------------------------------------------------------------*/
 /* hashiCodeKeys - add all iCodes to the hash table                */
 /*-----------------------------------------------------------------*/

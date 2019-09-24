@@ -79,7 +79,7 @@ typedef enum
   NUM_PAIRS
 } PAIR_ID;
 
-static struct
+static const struct
 {
   const char *name;
   const char *l;
@@ -148,7 +148,7 @@ enum asminst
   A_SWAP
 };
 
-static const char *asminstnames[] =
+static const char * const asminstnames[] =
 {
   "add",
   "adc",
@@ -346,6 +346,42 @@ z80_init_asmops (void)
 
 static bool regalloc_dry_run;
 static unsigned int regalloc_dry_run_cost;
+
+static struct dbuf_s aopGet_dbuf = { 0 };
+static struct dbuf_s aopGetLitWordLong_dbuf = { 0 };
+
+void sdcc_cleanupZ80Gen(void)
+{
+    memset(&aopGet_dbuf, 0, sizeof(aopGet_dbuf));
+    memset(&aopGetLitWordLong_dbuf, 0, sizeof(aopGetLitWordLong_dbuf));
+    memset(&_G, 0, sizeof(_G));
+    memset(&z80_regs_used_as_parms_in_calls_from_current_function, 0, sizeof(z80_regs_used_as_parms_in_calls_from_current_function));
+    memset(&z80_regs_preserved_in_calls_from_current_function, 0, sizeof(z80_regs_preserved_in_calls_from_current_function));
+    memset(&asmop_a, 0, sizeof(asmop_a));
+    memset(&asmop_b, 0, sizeof(asmop_b));
+    memset(&asmop_c, 0, sizeof(asmop_c));
+    memset(&asmop_d, 0, sizeof(asmop_d));
+    memset(&asmop_e, 0, sizeof(asmop_e));
+    memset(&asmop_h, 0, sizeof(asmop_h));
+    memset(&asmop_l, 0, sizeof(asmop_l));
+    memset(&asmop_iyh, 0, sizeof(asmop_iyh));
+    memset(&asmop_iyl, 0, sizeof(asmop_iyl));
+    memset(&asmop_zero, 0, sizeof(asmop_zero));
+    memset(&asmop_one, 0, sizeof(asmop_one));
+    memset(&asmop_return, 0, sizeof(asmop_return));
+    asmopregs[0] = &asmop_a;
+    asmopregs[1] = &asmop_c;
+    asmopregs[2] = &asmop_b;
+    asmopregs[3] = &asmop_e;
+    asmopregs[4] = &asmop_d;
+    asmopregs[5] = &asmop_l;
+    asmopregs[6] = &asmop_h;
+    asmopregs[7] = &asmop_iyl;
+    asmopregs[8] = &asmop_iyh;
+    z80_symmParm_in_calls_from_current_function = 0;
+    regalloc_dry_run = 0;
+    regalloc_dry_run_cost = 0;
+}
 
 static void
 cost(unsigned int bytes, unsigned int cycles)
@@ -1749,15 +1785,13 @@ isLitWord (const asmop *aop)
 static const char *
 aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
 {
-  static struct dbuf_s dbuf = { 0 };
-
-  if (dbuf_is_initialized (&dbuf))
+  if (dbuf_is_initialized (&aopGetLitWordLong_dbuf))
     {
-      dbuf_set_length (&dbuf, 0);
+      dbuf_set_length (&aopGetLitWordLong_dbuf, 0);
     }
   else
     {
-      dbuf_init (&dbuf, 128);
+      dbuf_init (&aopGetLitWordLong_dbuf, 128);
     }
 
   /* depending on type */
@@ -1769,15 +1803,15 @@ aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
       /* PENDING: for re-target */
       if (with_hash)
         {
-          dbuf_tprintf (&dbuf, "!hashedstr + %d", aop->aopu.aop_immd, offset);
+          dbuf_tprintf (&aopGetLitWordLong_dbuf, "!hashedstr + %d", aop->aopu.aop_immd, offset);
         }
       else if (offset == 0)
         {
-          dbuf_tprintf (&dbuf, "%s", aop->aopu.aop_immd);
+          dbuf_tprintf (&aopGetLitWordLong_dbuf, "%s", aop->aopu.aop_immd);
         }
       else
         {
-          dbuf_tprintf (&dbuf, "%s + %d", aop->aopu.aop_immd, offset);
+          dbuf_tprintf (&aopGetLitWordLong_dbuf, "%s + %d", aop->aopu.aop_immd, offset);
         }
       break;
 
@@ -1792,7 +1826,7 @@ aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
 
           v >>= (offset * 8);
 
-          dbuf_tprintf (&dbuf, with_hash ? "!immedword" : "!constword", (unsigned long) (v & 0xffffull));
+          dbuf_tprintf (&aopGetLitWordLong_dbuf, with_hash ? "!immedword" : "!constword", (unsigned long) (v & 0xffffull));
         }
       else
         {
@@ -1812,7 +1846,7 @@ aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
 #else
           i = fl.c[offset] | (fl.c[offset + 1] << 8);
 #endif
-          dbuf_tprintf (&dbuf, with_hash ? "!immedword" : "!constword", i);
+          dbuf_tprintf (&aopGetLitWordLong_dbuf, with_hash ? "!immedword" : "!constword", i);
         }
     }
     break;
@@ -1829,12 +1863,12 @@ aopGetLitWordLong (const asmop *aop, int offset, bool with_hash)
       break;
 
     default:
-      dbuf_destroy (&dbuf);
+      dbuf_destroy (&aopGetLitWordLong_dbuf);
       /*fprintf (stderr, */sdcc_msg_printf("aop->type: %d\n", aop->type);
       wassertl (0, "aopGetLitWordLong got unsupported aop->type");
       /*exit (0)*/sdcc_fatal_exit();
     }
-  return dbuf_c_str (&dbuf);
+  return dbuf_c_str (&aopGetLitWordLong_dbuf);
 }
 
 static bool
@@ -2482,26 +2516,24 @@ emitLabelSpill (symbol *tlbl)
 static const char *
 aopGet (asmop *aop, int offset, bool bit16)
 {
-  static struct dbuf_s dbuf = { 0 };
-
   wassert_bt (!regalloc_dry_run);
 
-  if (dbuf_is_initialized (&dbuf))
+  if (dbuf_is_initialized (&aopGet_dbuf))
     {
       /* reuse the dynamically allocated buffer */
-      dbuf_set_length (&dbuf, 0);
+      dbuf_set_length (&aopGet_dbuf, 0);
     }
   else
     {
       /* first time: initialize the dynamically allocated buffer */
-      dbuf_init (&dbuf, 128);
+      dbuf_init (&aopGet_dbuf, 128);
     }
 
   /* offset is greater than size then zero */
   /* PENDING: this seems a bit screwed in some pointer cases. */
   if (offset > (aop->size - 1) && aop->type != AOP_LIT)
     {
-      dbuf_tprintf (&dbuf, "!zero");
+      dbuf_tprintf (&aopGet_dbuf, "!zero");
     }
   else
     {
@@ -2509,32 +2541,32 @@ aopGet (asmop *aop, int offset, bool bit16)
       switch (aop->type)
         {
         case AOP_DUMMY:
-          dbuf_append_char (&dbuf, 'a');
+          dbuf_append_char (&aopGet_dbuf, 'a');
           break;
 
         case AOP_IMMD:
           /* PENDING: re-target */
           if (bit16)
-            dbuf_tprintf (&dbuf, "!immedword", aop->aopu.aop_immd);
+            dbuf_tprintf (&aopGet_dbuf, "!immedword", aop->aopu.aop_immd);
           else
             {
               switch (offset)
                 {
                 case 2:
-                  // dbuf_tprintf (&dbuf, "!bankimmeds", aop->aopu.aop_immd); Bank support not fully implemented yet.
-                  dbuf_tprintf (&dbuf, "#0x00");
+                  // dbuf_tprintf (&aopGet_dbuf, "!bankimmeds", aop->aopu.aop_immd); Bank support not fully implemented yet.
+                  dbuf_tprintf (&aopGet_dbuf, "#0x00");
                   break;
 
                 case 1:
-                  dbuf_tprintf (&dbuf, "!msbimmeds", aop->aopu.aop_immd);
+                  dbuf_tprintf (&aopGet_dbuf, "!msbimmeds", aop->aopu.aop_immd);
                   break;
 
                 case 0:
-                  dbuf_tprintf (&dbuf, "!lsbimmeds", aop->aopu.aop_immd);
+                  dbuf_tprintf (&aopGet_dbuf, "!lsbimmeds", aop->aopu.aop_immd);
                   break;
 
                 default:
-                  dbuf_tprintf (&dbuf, "#0x00");
+                  dbuf_tprintf (&aopGet_dbuf, "#0x00");
                 }
             }
           break;
@@ -2543,7 +2575,7 @@ aopGet (asmop *aop, int offset, bool bit16)
           wassert (IS_GB);
           emit2 ("ld a, (%s+%d)", aop->aopu.aop_dir, offset);
           regalloc_dry_run_cost += 3;
-          dbuf_append_char (&dbuf, 'a');
+          dbuf_append_char (&aopGet_dbuf, 'a');
           break;
 
         case AOP_SFR:
@@ -2552,14 +2584,14 @@ aopGet (asmop *aop, int offset, bool bit16)
             {
               emit2 ("ldh a, (%s+%d)", aop->aopu.aop_dir, offset);
               regalloc_dry_run_cost += 2;
-              dbuf_append_char (&dbuf, 'a');
+              dbuf_append_char (&aopGet_dbuf, 'a');
             }
           else if (IS_RAB)
             {
               emit2 ("ioi");
               emit2 ("ld a, (%s)", aop->aopu.aop_dir);
               emit2 ("nop");    /* Workaround for Rabbit 2000 hardware bug. see TN302 for details. */
-              dbuf_append_char (&dbuf, 'a');
+              dbuf_append_char (&aopGet_dbuf, 'a');
             }
           else
             {
@@ -2582,23 +2614,23 @@ aopGet (asmop *aop, int offset, bool bit16)
                   emit2 ("in a, (%s)", aop->aopu.aop_dir);
                 }
 
-              dbuf_append_char (&dbuf, 'a');
+              dbuf_append_char (&aopGet_dbuf, 'a');
             }
           break;
 
         case AOP_REG:
-          dbuf_append_str (&dbuf, aop->aopu.aop_reg[offset]->name);
+          dbuf_append_str (&aopGet_dbuf, aop->aopu.aop_reg[offset]->name);
           break;
 
         case AOP_HL:
           setupPair (PAIR_HL, aop, offset);
-          dbuf_tprintf (&dbuf, "!*hl");
+          dbuf_tprintf (&aopGet_dbuf, "!*hl");
           break;
 
         case AOP_IY:
           wassert (!IS_GB);
           setupPair (PAIR_IY, aop, offset);
-          dbuf_tprintf (&dbuf, "!*iyx", offset);
+          dbuf_tprintf (&aopGet_dbuf, "!*iyx", offset);
           break;
 
         case AOP_EXSTK:
@@ -2606,7 +2638,7 @@ aopGet (asmop *aop, int offset, bool bit16)
             {
               wassert (!IS_GB);
               setupPair (PAIR_IY, aop, offset);
-              dbuf_tprintf (&dbuf, "!*iyx", offset);
+              dbuf_tprintf (&aopGet_dbuf, "!*iyx", offset);
               break;
             }
 
@@ -2614,20 +2646,20 @@ aopGet (asmop *aop, int offset, bool bit16)
           if (IS_GB || aop->type == AOP_EXSTK)
             {
               pointPairToAop (PAIR_HL, aop, offset);
-              dbuf_tprintf (&dbuf, "!*hl");
+              dbuf_tprintf (&aopGet_dbuf, "!*hl");
             }
           else if (_G.omitFramePtr)
             {
               if (aop->aopu.aop_stk >= 0)
                 offset += _G.stack.param_offset;
               setupPair (PAIR_IX, aop, offset);
-              dbuf_tprintf (&dbuf, "!*ixx", offset);
+              dbuf_tprintf (&aopGet_dbuf, "!*ixx", offset);
             }
           else
             {
               if (aop->aopu.aop_stk >= 0)
                 offset += _G.stack.param_offset;
-              dbuf_tprintf (&dbuf, "!*ixx", aop->aopu.aop_stk + offset);
+              dbuf_tprintf (&aopGet_dbuf, "!*ixx", aop->aopu.aop_stk + offset);
             }
           break;
 
@@ -2636,32 +2668,32 @@ aopGet (asmop *aop, int offset, bool bit16)
           break;
 
         case AOP_LIT:
-          dbuf_append_str (&dbuf, aopLiteral (aop->aopu.aop_lit, offset));
+          dbuf_append_str (&aopGet_dbuf, aopLiteral (aop->aopu.aop_lit, offset));
           break;
 
         case AOP_STR:
           aop->coff = offset;
-          dbuf_append_str (&dbuf, aop->aopu.aop_str[offset]);
+          dbuf_append_str (&aopGet_dbuf, aop->aopu.aop_str[offset]);
           break;
 
         case AOP_PAIRPTR:
           setupPair (aop->aopu.aop_pairId, aop, offset);
           if (aop->aopu.aop_pairId == PAIR_IX)
-            dbuf_tprintf (&dbuf, "!*ixx", offset);
+            dbuf_tprintf (&aopGet_dbuf, "!*ixx", offset);
           else if (aop->aopu.aop_pairId == PAIR_IY)
-            dbuf_tprintf (&dbuf, "!*iyx", offset);
+            dbuf_tprintf (&aopGet_dbuf, "!*iyx", offset);
           else
-            dbuf_printf (&dbuf, "(%s)", _pairs[aop->aopu.aop_pairId].name);
+            dbuf_printf (&aopGet_dbuf, "(%s)", _pairs[aop->aopu.aop_pairId].name);
           break;
 
         default:
-          dbuf_destroy (&dbuf);
+          dbuf_destroy (&aopGet_dbuf);
           /*fprintf (stderr, */sdcc_msg_printf("aop->type: %d\n", aop->type);
           wassertl (0, "aopGet got unsupported aop->type");
           /*exit (0)*/sdcc_fatal_exit();
         }
     }
-  return dbuf_c_str (&dbuf);
+  return dbuf_c_str (&aopGet_dbuf);
 }
 
 static bool

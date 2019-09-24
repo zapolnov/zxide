@@ -144,7 +144,7 @@ xmalloc (size_t size)
 
   if (size == 0)
     size = 1;
-  newmem = malloc (size);
+  newmem = /*malloc*/Safe_malloc (size);
   if (!newmem)
     xmalloc_failed (size);
 
@@ -159,10 +159,11 @@ xcalloc (size_t nelem, size_t elsize)
   if (nelem == 0 || elsize == 0)
     nelem = elsize = 1;
 
-  newmem = calloc (nelem, elsize);
+  newmem = /*calloc*/Safe_malloc (nelem/*,*/* elsize);
   if (!newmem)
     xmalloc_failed (nelem * elsize);
 
+  memset(newmem, 0, nelem * elsize);
   return (newmem);
 }
 
@@ -174,9 +175,9 @@ xrealloc (PTR oldmem, size_t size)
   if (size == 0)
     size = 1;
   if (!oldmem)
-    newmem = malloc (size);
+    newmem = /*malloc*/Safe_malloc (size);
   else
-    newmem = realloc (oldmem, size);
+    newmem = /*realloc*/Safe_realloc (oldmem, size);
   if (!newmem)
     xmalloc_failed (size);
 

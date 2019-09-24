@@ -50,7 +50,7 @@ class RepeatedCodeEmitter : public CodeEmitter
 {
 public:
     explicit RepeatedCodeEmitter(std::unique_ptr<Expression> repeatCount);
-    ~RepeatedCodeEmitter();
+    ~RepeatedCodeEmitter() override;
 
     const std::shared_ptr<Value>& counter() const { return mCounter; }
 

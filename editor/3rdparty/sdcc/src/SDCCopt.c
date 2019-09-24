@@ -36,6 +36,11 @@ int cseDefNum = 0;
 
 char flowChanged = 0;
 
+void sdcc_cleanupOpt(void)
+{
+    cseDefNum = 0;
+    flowChanged = 0;
+}
 
 /*-----------------------------------------------------------------*/
 /* printSymName - prints the symbol names                          */

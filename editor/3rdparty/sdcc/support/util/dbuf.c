@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include "newalloc.h"
 #include "dbuf.h"
 
 
@@ -51,7 +52,7 @@ int _dbuf_expand(struct dbuf_s *dbuf, size_t size)
     }
     while (dbuf->len + size > dbuf->alloc);
 
-    if ((dbuf->buf = realloc(dbuf->buf, dbuf->alloc)) == NULL)
+    if ((dbuf->buf = Safe_realloc(dbuf->buf, dbuf->alloc)) == NULL)
       return 0;
   }
 
@@ -73,7 +74,7 @@ int dbuf_init(struct dbuf_s *dbuf, size_t size)
 
   dbuf->len = 0;
   dbuf->alloc = size;
-  return ((dbuf->buf = malloc(dbuf->alloc)) != NULL);
+  return ((dbuf->buf = Safe_malloc(dbuf->alloc)) != NULL);
 }
 
 
@@ -111,10 +112,10 @@ struct dbuf_s *dbuf_new(size_t size)
 {
   struct dbuf_s *dbuf;
 
-  dbuf = (struct dbuf_s *)malloc(sizeof(struct dbuf_s));
+  dbuf = (struct dbuf_s *)Safe_malloc(sizeof(struct dbuf_s));
   if (dbuf != NULL) {
     if (dbuf_init(dbuf, size) == 0) {
-      free(dbuf);
+      Safe_free(dbuf);
       return NULL;
     }
   }
@@ -243,7 +244,7 @@ int dbuf_trim(struct dbuf_s *dbuf)
   assert(dbuf->alloc != 0);
   assert(dbuf->buf != NULL);
 
-  buf = realloc(dbuf->buf, dbuf->len);
+  buf = Safe_realloc(dbuf->buf, dbuf->len);
 
   if (buf != NULL) {
     dbuf->alloc = dbuf->len;
@@ -301,7 +302,7 @@ char *dbuf_detach_c_str(struct dbuf_s *dbuf)
 
 void dbuf_destroy(struct dbuf_s *dbuf)
 {
-  free(dbuf_detach(dbuf));
+  Safe_free(dbuf_detach(dbuf));
 }
 
 
@@ -318,7 +319,7 @@ void dbuf_destroy(struct dbuf_s *dbuf)
 void dbuf_delete(struct dbuf_s *dbuf)
 {
   dbuf_destroy(dbuf);
-  free(dbuf);
+  Safe_free(dbuf);
 }
 
 
@@ -330,5 +331,5 @@ void dbuf_delete(struct dbuf_s *dbuf)
 
 void dbuf_free(const void *buf)
 {
-  free((void *)buf);
+  Safe_free((void *)buf);
 }

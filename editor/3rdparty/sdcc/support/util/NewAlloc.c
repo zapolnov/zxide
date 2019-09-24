@@ -39,9 +39,94 @@
 
 #else
 
+/*
 #define MALLOC	malloc
 #define REALLOC realloc
 #define FREE	free
+*/
+
+#define MAGIC 0xcafebabe
+
+typedef struct block {
+    struct block* prev;
+    struct block* next;
+  #ifndef NDEBUG
+    size_t size;
+    size_t magic;
+  #endif
+} block;
+
+static block head = { &head, &head };
+
+static void* MALLOC(size_t size)
+{
+    block* b = (block*)malloc(sizeof(block) + size);
+    if (!b)
+        return NULL;
+
+    b->next = &head;
+    b->prev = head.prev;
+    b->next->prev = b;
+    b->prev->next = b;
+  #ifndef NDEBUG
+    b->size = size;
+    b->magic = MAGIC;
+  #endif
+
+    return b + 1;
+}
+
+static void* REALLOC(void* ptr, size_t size)
+{
+    if (!ptr)
+        return MALLOC(size);
+
+    block* b = (block*)ptr - 1;
+
+    assert(b->magic == MAGIC);
+    assert(b->next->prev == b);
+    assert(b->prev->next == b);
+    assert(b != &head);
+    assert(b->next != b);
+    assert(b->prev != b);
+
+    b = (block*)realloc(b, sizeof(block) + size);
+    b->size = size;
+    b->next->prev = b;
+    b->prev->next = b;
+
+    return b + 1;
+}
+
+void FREE(void* ptr)
+{
+    if (!ptr)
+        return;
+
+    block* b = (block*)ptr - 1;
+
+    assert(b->magic == MAGIC);
+    assert(b->next->prev == b);
+    assert(b->prev->next == b);
+    assert(b != &head);
+    assert(b->next != b);
+    assert(b->prev != b);
+
+    b->next->prev = b->prev;
+    b->prev->next = b->next;
+
+  #ifndef NDEBUG
+    memset(b, 0xcc, sizeof(block) + b->size);
+  #endif
+
+    free(b);
+}
+
+void sdcc_collectGarbage(void)
+{
+    while (head.next != &head)
+        FREE(head.next + 1);
+}
 
 #endif
 

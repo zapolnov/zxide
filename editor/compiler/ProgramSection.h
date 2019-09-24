@@ -11,7 +11,7 @@ class ProgramSection : public CodeEmitter
 {
 public:
     ProgramSection(Program* program, const Token& token, std::string name);
-    ~ProgramSection();
+    ~ProgramSection() override;
 
     Program* program() const { return mProgram; }
 

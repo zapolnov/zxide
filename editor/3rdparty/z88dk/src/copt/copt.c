@@ -19,6 +19,27 @@
 #endif
 #endif
 
+typedef struct node {
+    struct node* next;
+} node;
+
+static node* nodes;
+
+void* my_malloc(size_t size)
+{
+    node* p = (node*)malloc(sizeof(node) + size);
+    if (!p)
+        return NULL;
+    p->next = nodes;
+    nodes = p;
+    return p + 1;
+}
+
+void freeMemory(void);
+
+#define malloc my_malloc
+#define free(p) ((void)(p))
+
 #if defined(_MSC_VER) || defined(__TURBOC__)
 #define strcasecmp stricmp
 #endif
@@ -74,7 +95,7 @@ void error(char* s)
         /*fputs("active rule:\n", stderr);
         printrule(activerule, stderr);*/
     }
-    /*exit(1)*/sdcc_fatal_exit();
+    /*exit(1)*/freeMemory(); sdcc_fatal_exit();
 }
 
 /* connect - connect p1 to p2 */
@@ -86,16 +107,17 @@ void connect(struct lnode* p1, struct lnode* p2)
     p2->l_prev = p1;
 }
 
+static struct hnode {
+    char* h_str;
+    struct hnode* h_ptr;
+} * htab[HSIZE] = { 0 };
+
 /* install - install str in string table */
 char* install(char* str)
 {
     register struct hnode* p;
     register char *p1, *p2, *s;
     register int i;
-    static struct hnode {
-        char* h_str;
-        struct hnode* h_ptr;
-    } * htab[HSIZE] = { 0 };
 
     s = str;
     for (i = 0; *s; i += *s++)
@@ -491,7 +513,7 @@ struct lnode* opt(struct lnode* r)
     int i, lines;
     struct lnode *c, *p;
     struct onode* o;
-    static char* activated = "%activated ";
+    static char* const activated = "%activated ";
 
     for (o = opts; o; o = o->o_next) {
         activerule = o;
@@ -656,7 +678,7 @@ int copt_main(int argc, char** argv)
     }
 
     printlines(head.l_next, &tail, stdout);
-    /*exit(0);*/
+    /*exit(0);*/freeMemory();
     return /*1*/0; /* make compiler happy */
 }
 
@@ -710,7 +732,7 @@ int rpn_eval(const char* expr, char** vars)
             n = strtol(ptr - 1, &endptr, 0);
             if ( endptr == ptr - 1 ) {
                 /*fprintf(stderr,*/sdcc_msg_printf("Optimiser error, cannot parse number: %s\n",ptr-1);
-                /*exit(1)*/sdcc_fatal_exit();
+                /*exit(1)*/freeMemory(); sdcc_fatal_exit();
             }
             ptr = endptr;
             push(n);
@@ -763,7 +785,7 @@ int rpn_eval(const char* expr, char** vars)
                 n = strtol(val, &endptr, 0);
                 if ( endptr == val ) {
                     /*fprintf(stderr,*/sdcc_msg_printf("Optimiser error, cannot parse variable: %s\n",val);
-                    /*exit(1)*/sdcc_fatal_exit();
+                    /*exit(1)*/freeMemory(); sdcc_fatal_exit();
                 }
                 push(n);
             } else if ( *ptr++ == '%' ) {
@@ -778,4 +800,27 @@ int rpn_eval(const char* expr, char** vars)
         }
     }
     return top();
+}
+
+#undef free
+void freeMemory(void)
+{
+    for (;;) {
+        node* p = nodes;
+        if (!p)
+            break;
+        nodes = p->next;
+        free(p);
+    }
+
+    opts = NULL;
+    activerule = NULL;
+    debug = 0;
+    c_cpu = "z80";
+    global_again = 0;
+    nextlab = 1;
+    memset(labnum, 0, sizeof(labnum));
+    sp = 0;
+    memset(stack, 0, sizeof(stack));
+    memset(htab, 0, sizeof(htab));
 }

@@ -87,6 +87,22 @@ struct dbuf_s *codeOutBuf;
 extern int inCriticalFunction;
 extern int inCriticalBlock;
 
+void sdcc_cleanupAst(void)
+{
+    currLineno = 0;
+    astList = NULL;
+    operKeyReset = NULL;
+    staticAutos = NULL;
+    labelKey = 1;
+    memset(&inlineState, 0, sizeof(inlineState));
+    noLineno = 0;
+    noAlloc = 0;
+    currFunc = NULL;
+    inInitMode = 0;
+    GcurMemmap = NULL;
+    codeOutBuf = NULL;
+}
+
 int
 ptt (ast * tree)
 {

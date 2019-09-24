@@ -40,6 +40,7 @@ extern "C" {
 #endif
 
 #include "ansidecl.h"
+#include "newalloc.h"
 
 /* Get a definition for size_t.  */
 #include <stddef.h>
@@ -358,7 +359,7 @@ extern unsigned int xcrc32 (const unsigned char *, int, unsigned int);
 #define XCNEWVEC(T, N)		((T *) xcalloc ((N), sizeof (T)))
 #define XDUPVEC(T, P, N)	((T *) xmemdup ((P), sizeof (T) * (N), sizeof (T) * (N)))
 #define XRESIZEVEC(T, P, N)	((T *) xrealloc ((void *) (P), sizeof (T) * (N)))
-#define XDELETEVEC(P)		free ((void*) (P))
+#define XDELETEVEC(P)		/*free*/Safe_free ((void*) (P))
 
 /* Allocators for variable-sized structures and raw buffers.  */
 

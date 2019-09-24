@@ -43,9 +43,9 @@ signals:
 
 private:
     std::unique_ptr<Ui_CompilerDialog> mUi;
+    std::unique_ptr<Compiler> mCompiler;
     QThread* mThread;
     QTimer* mTimer;
-    Compiler* mCompiler;
     bool mCanClose;
 
     void updateUi();

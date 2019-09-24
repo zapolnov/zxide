@@ -563,10 +563,23 @@ namespace
 
     static void sdccCleanup()
     {
+        sdcc_closeInputFile();
+        sdcc_cleanupAst();
+        sdcc_cleanupLabel();
+        sdcc_cleanupGen();
+        sdcc_cleanupRAlloc();
+        sdcc_cleanupPeeph();
+        sdcc_cleanupHTab();
+        sdcc_cleanupLRange();
+        sdcc_cleanupOpt();
+        sdcc_cleanupZ80Gen();
+
         while (!openFiles.empty()) {
             void* file = *openFiles.begin();
             sdccInClose(file);
         }
+
+        sdcc_collectGarbage();
     }
 }
 
@@ -718,6 +731,8 @@ bool Compiler::compileCCode()
 
         outFileName = QStringLiteral("generated/%1").arg(outFileName);
         mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ outFileName, outFilePath }));
+
+        sdccCleanup();
     }
 
     return true;

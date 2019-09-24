@@ -36,6 +36,18 @@ extern void (*sdcc_msg_puts)(const char* str);
 extern void (*sdcc_msg_printf)(const char* fmt, ...);
 extern void (*sdcc_msg_vprintf)(const char* fmt, va_list args);
 
+void sdcc_cleanupHTab(void);
+void sdcc_cleanupAst(void);
+void sdcc_cleanupLabel(void);
+void sdcc_cleanupGen(void);
+void sdcc_cleanupRAlloc(void);
+void sdcc_cleanupPeeph(void);
+void sdcc_cleanupLRange(void);
+void sdcc_cleanupOpt(void);
+void sdcc_cleanupZ80Gen(void);
+void sdcc_collectGarbage(void);
+void sdcc_closeInputFile(void);
+
 #ifdef __cplusplus
 }
 #endif

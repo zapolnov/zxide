@@ -136,6 +136,12 @@ reg_info *regsZ80;
 #define Z80_MAX_REGS ((sizeof(_z80_regs)/sizeof(_z80_regs[0]))-1)
 #define GBZ80_MAX_REGS ((sizeof(_gbz80_regs)/sizeof(_gbz80_regs[0]))-1)
 
+void sdcc_cleanupRAlloc(void)
+{
+    regsZ80 = NULL;
+    memset(&_G, 0, sizeof(_G));
+}
+
 void z80SpillThis (symbol *);
 static void freeAllRegs ();
 

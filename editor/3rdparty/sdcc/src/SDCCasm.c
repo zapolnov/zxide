@@ -35,6 +35,11 @@
 
 static hTab *_h;
 
+void sdcc_cleanupHTab(void)
+{
+    _h = NULL;
+}
+
 const char *
 FileBaseName (const char *fileFullName)
 {
@@ -304,6 +309,29 @@ skipLine (/*FILE*/void * infp)
     return 1;
 }
 
+static /*FILE*/void *inFile = NULL;
+static int inLineNo = 0;
+static struct dbuf_s lastSrcFile;
+static struct dbuf_s line;
+static char dbufInitialized = 0;
+
+void sdcc_closeInputFile(void)
+{
+    if (inFile) {
+        /*fclose */sdcc_in_close(inFile);
+        inFile = NULL;
+        inLineNo = 0;
+        dbuf_set_length(&lastSrcFile, 0);
+    }
+
+    if (dbufInitialized) {
+        if (line.buf)
+            dbuf_destroy(&line);
+        dbuf_destroy(&lastSrcFile);
+        dbufInitialized = 0;
+    }
+}
+
 /*-----------------------------------------------------------------*/
 /* printCLine - return the c-code for this lineno                  */
 /*-----------------------------------------------------------------*/
@@ -311,11 +339,6 @@ skipLine (/*FILE*/void * infp)
 const char *
 printCLine (const char *srcFile, int lineno)
 {
-  static /*FILE*/void *inFile = NULL;
-  static struct dbuf_s line;
-  static struct dbuf_s lastSrcFile;
-  static char dbufInitialized = 0;
-  static int inLineNo = 0;
   size_t len;
 
   if (!dbufInitialized)
@@ -334,10 +357,7 @@ printCLine (const char *srcFile, int lineno)
     {
       if (strcmp (dbuf_c_str (&lastSrcFile), srcFile) != 0)
         {
-          /*fclose */sdcc_in_close(inFile);
-          inFile = NULL;
-          inLineNo = 0;
-          dbuf_set_length (&lastSrcFile, 0);
+          sdcc_closeInputFile();
           dbuf_append_str (&lastSrcFile, srcFile);
         }
     }

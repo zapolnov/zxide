@@ -1382,7 +1382,7 @@ _cpp_pop_file_buffer (cpp_reader *pfile, _cpp_file *file)
 
   if (file->buffer_start)
     {
-      free ((void *) file->buffer_start);
+      /*free*/Safe_free ((void *) file->buffer_start);
       file->buffer_start = NULL;
       file->buffer = NULL;
       file->buffer_valid = false;

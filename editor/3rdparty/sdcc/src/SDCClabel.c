@@ -27,6 +27,14 @@
 hTab *labelRef = NULL;
 hTab *labelDef = NULL;
 
+void sdcc_cleanupLabel(void)
+{
+    setToNull((void*)&labelRef);
+    setToNull((void*)&labelDef);
+    labelRef = NULL;
+    labelDef = NULL;
+}
+
 /*-----------------------------------------------------------------*/
 /* buildLabelRefTable - creates an hashTable of label references   */
 /*-----------------------------------------------------------------*/

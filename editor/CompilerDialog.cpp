@@ -16,6 +16,7 @@
 CompilerDialog::CompilerDialog(QWidget* parent)
     : QDialog(parent)
     , mUi(new Ui_CompilerDialog)
+    , mCompiler(new Compiler())
     , mCanClose(false)
 {
     mUi->setupUi(this);
@@ -25,20 +26,18 @@ CompilerDialog::CompilerDialog(QWidget* parent)
     connect(mTimer, &QTimer::timeout, this, &CompilerDialog::updateUi);
     mTimer->start(0);
 
-    mCompiler = new Compiler();
-
     mThread = new QThread(this);
     mCompiler->moveToThread(mThread);
-    connect(mThread, &QThread::started, mCompiler, &Compiler::compile);
+    connect(mThread, &QThread::started, mCompiler.get(), &Compiler::compile);
     connect(mThread, &QThread::finished, this, &CompilerDialog::onCompilationEnded);
-    connect(mCompiler, &Compiler::diagnosticMessage, this, &CompilerDialog::onDiagnosticMessage);
-    connect(mCompiler, &Compiler::compilationEnded, mThread, &QThread::quit);
+    connect(mCompiler.get(), &Compiler::diagnosticMessage, this, &CompilerDialog::onDiagnosticMessage);
+    connect(mCompiler.get(), &Compiler::compilationEnded, mThread, &QThread::quit);
 }
 
 CompilerDialog::~CompilerDialog()
 {
     mThread->wait();
-    delete mCompiler;
+    mCompiler.reset();
 }
 
 std::unique_ptr<Program> CompilerDialog::takeProgram()

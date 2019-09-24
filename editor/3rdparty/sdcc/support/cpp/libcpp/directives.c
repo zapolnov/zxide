@@ -2532,7 +2532,7 @@ _cpp_pop_buffer (cpp_reader *pfile)
   /* _cpp_do_file_change expects pfile->buffer to be the new one.  */
   pfile->buffer = buffer->prev;
 
-  free (buffer->notes);
+  /*free*/Safe_free (buffer->notes);
 
   /* Free the buffer object now; we may want to push a new buffer
      in _cpp_push_next_include_file.  */

@@ -124,6 +124,7 @@ target_include_directories(ZSdCPP PRIVATE
     "${CMAKE_CURRENT_SOURCE_DIR}/support/cpp/libcpp/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/support/cpp/libcpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/support/sdbinutils/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/support/util"
     )
 
 set(config_h "${CMAKE_CURRENT_BINARY_DIR}/sdccp_generated/generated_config.h")
@@ -216,6 +217,8 @@ add_sources(ZSdCPP
     support/sdbinutils/libiberty/xmemdup.c
     support/sdbinutils/libiberty/xstrdup.c
     support/sdbinutils/libiberty/xstrerror.c
+    support/util/NewAlloc.c
+    support/util/newalloc.h
     sdcc_bridge.c
     sdcc_bridge.h
     )

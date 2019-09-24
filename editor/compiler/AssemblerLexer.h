@@ -17,7 +17,7 @@ class AssemblerLexer : public QObject
 
 public:
     AssemblerLexer(const SourceFile* file, const QByteArray& fileData, IErrorReporter* reporter);
-    virtual ~AssemblerLexer();
+    ~AssemblerLexer() override;
 
     void save();
     void restore();

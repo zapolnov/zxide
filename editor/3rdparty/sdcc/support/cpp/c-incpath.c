@@ -82,8 +82,8 @@ free_path (struct cpp_dir *path, int reason)
       break;
     }
 
-  free (path->name);
-  free (path);
+  /*free*/Safe_free (path->name);
+  /*free*/Safe_free (path);
 }
 
 /* Read ENV_VAR for a PATH_SEPARATOR-separated list of file names; and

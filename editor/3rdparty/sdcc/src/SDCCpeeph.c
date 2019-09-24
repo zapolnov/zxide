@@ -56,6 +56,14 @@ void peepRules2pCode(peepRule *);
 void pic16_peepRules2pCode(peepRule *);
 #endif
 
+void sdcc_cleanupPeeph(void)
+{
+    rootRules = NULL;
+    currRule = NULL;
+    labelHash = NULL;
+    memset(&_G, 0, sizeof(_G));
+}
+
 /*-----------------------------------------------------------------*/
 /* getPatternVar - finds a pattern variable                        */
 /*-----------------------------------------------------------------*/

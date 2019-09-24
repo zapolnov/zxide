@@ -26,6 +26,11 @@
 
 genLine_t genLine;
 
+void sdcc_cleanupGen(void)
+{
+    memset(&genLine, 0, sizeof(genLine));
+}
+
 /*-----------------------------------------------------------------*/
 /* newLineNode - creates a new peep line                           */
 /*-----------------------------------------------------------------*/

@@ -180,7 +180,8 @@ namespace
     {
     public:
         VirtualFile()
-            : mSize(0)
+            : mOffset(0)
+            , mSize(0)
             , mDestroyed(0)
         {
             mHandle = af_virtual_file_new();
