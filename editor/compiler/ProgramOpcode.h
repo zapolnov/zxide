@@ -133,7 +133,7 @@ class IfMacro final : public ProgramOpcode
 {
 public:
     IfMacro(const Token& token, std::unique_ptr<Expression> condition,
-        std::shared_ptr<CodeEmitter> thenCodeEmitter, std::shared_ptr<CodeEmitter> elseCodeEmitter);
+        const std::shared_ptr<CodeEmitter>& thenCodeEmitter, const std::shared_ptr<CodeEmitter>& elseCodeEmitter);
     ~IfMacro() override;
 
     unsigned lengthInBytes(const Program*, IErrorReporter*) const final override;
@@ -144,8 +144,8 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    std::shared_ptr<CodeEmitter> mThenCodeEmitter;
-    std::shared_ptr<CodeEmitter> mElseCodeEmitter;
+    std::weak_ptr<CodeEmitter> mThenCodeEmitter;
+    std::weak_ptr<CodeEmitter> mElseCodeEmitter;
     std::unique_ptr<Expression> mCondition;
 
     CodeEmitter* codeEmitter(const Program* program, IErrorReporter* reporter) const;
@@ -156,7 +156,7 @@ private:
 class RepeatMacro final : public ProgramOpcode
 {
 public:
-    RepeatMacro(const Token& token, std::shared_ptr<RepeatedCodeEmitter> codeEmitter);
+    RepeatMacro(const Token& token, const std::shared_ptr<RepeatedCodeEmitter>& codeEmitter);
     ~RepeatMacro() override;
 
     unsigned lengthInBytes(const Program*, IErrorReporter*) const final override;
@@ -167,7 +167,7 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
-    std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
+    std::weak_ptr<RepeatedCodeEmitter> mCodeEmitter;
 
     Q_DISABLE_COPY(RepeatMacro)
 };

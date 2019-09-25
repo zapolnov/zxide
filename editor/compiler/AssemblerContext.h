@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+class Compiler;
 class Program;
 class ProgramSection;
 class ProgramLabel;
@@ -66,7 +67,7 @@ private:
 class AssemblerRepeatContext : public AssemblerContext
 {
 public:
-    AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev,
+    AssemblerRepeatContext(Compiler* compiler, std::unique_ptr<AssemblerContext> prev,
         const Token& token, std::string var, std::unique_ptr<Expression> count);
 
     std::unique_ptr<AssemblerContext> clone() const override;
@@ -81,18 +82,18 @@ public:
     void adjustLabel(ProgramLabel* label) override;
 
     CodeEmitter* codeEmitter() const override;
-    const std::shared_ptr<RepeatedCodeEmitter>& codeEmitterSharedPtr() const { return mCodeEmitter; }
+    std::shared_ptr<RepeatedCodeEmitter> codeEmitterSharedPtr() const { return mCodeEmitter.lock(); }
 
 private:
     std::string mVariable;
-    std::shared_ptr<RepeatedCodeEmitter> mCodeEmitter;
+    std::weak_ptr<RepeatedCodeEmitter> mCodeEmitter;
     Token mToken;
 };
 
 class AssemblerIfContext : public AssemblerContext
 {
 public:
-    AssemblerIfContext(std::unique_ptr<AssemblerContext> prev, const Token& token);
+    AssemblerIfContext(Compiler* compiler, std::unique_ptr<AssemblerContext> prev, const Token& token);
 
     std::unique_ptr<AssemblerContext> clone() const override;
 
@@ -105,12 +106,12 @@ public:
     bool areGlobalLabelsAllowed() const override;
 
     CodeEmitter* codeEmitter() const override;
-    const std::shared_ptr<CodeEmitter>& thenCodeEmitter() const { return mThenCodeEmitter; }
-    const std::shared_ptr<CodeEmitter>& elseCodeEmitter() const { return mElseCodeEmitter; }
+    std::shared_ptr<CodeEmitter> thenCodeEmitter() const { return mThenCodeEmitter.lock(); }
+    std::shared_ptr<CodeEmitter> elseCodeEmitter() const { return mElseCodeEmitter.lock(); }
 
 private:
-    std::shared_ptr<CodeEmitter> mThenCodeEmitter;
-    std::shared_ptr<CodeEmitter> mElseCodeEmitter;
+    std::weak_ptr<CodeEmitter> mThenCodeEmitter;
+    std::weak_ptr<CodeEmitter> mElseCodeEmitter;
     Token mIfToken;
     Token mElseToken;
     bool mHasElse;

@@ -105,7 +105,7 @@ void Compiler::compile()
                 break;
             }
 
-            if (!Assembler(mProgram.get(), this).parse(source.get(), fileData))
+            if (!Assembler(this, mProgram.get(), this).parse(source.get(), fileData))
                 throw CompilationFailed();
         }
 

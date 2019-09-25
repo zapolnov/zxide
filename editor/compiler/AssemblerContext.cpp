@@ -156,11 +156,11 @@ bool AssemblerDefaultContext::setCurrentSection(ProgramSection* section)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AssemblerRepeatContext::AssemblerRepeatContext(std::unique_ptr<AssemblerContext> prev,
+AssemblerRepeatContext::AssemblerRepeatContext(Compiler* compiler, std::unique_ptr<AssemblerContext> prev,
         const Token& token, std::string var, std::unique_ptr<Expression> count)
     : AssemblerContext(std::move(prev))
     , mVariable(std::move(var))
-    , mCodeEmitter(std::make_shared<RepeatedCodeEmitter>(std::move(count)))
+    , mCodeEmitter(compiler->allocCodeEmitter<RepeatedCodeEmitter>(std::move(count)))
     , mToken(token)
 {
 }
@@ -182,7 +182,7 @@ bool AssemblerRepeatContext::hasVariable(const std::string& name) const
 
 const std::shared_ptr<Value>& AssemblerRepeatContext::getVariable(const std::string& name) const
 {
-    return (mVariable == name ? mCodeEmitter->counter() : AssemblerContext::getVariable(name));
+    return (mVariable == name ? mCodeEmitter.lock()->counter() : AssemblerContext::getVariable(name));
 }
 
 std::string AssemblerRepeatContext::localLabelsPrefix() const
@@ -210,21 +210,21 @@ bool AssemblerRepeatContext::areGlobalLabelsAllowed() const
 
 void AssemblerRepeatContext::adjustLabel(ProgramLabel* label)
 {
-    label->addCounter(mCodeEmitter->counter());
+    label->addCounter(mCodeEmitter.lock()->counter());
     AssemblerContext::adjustLabel(label);
 }
 
 CodeEmitter* AssemblerRepeatContext::codeEmitter() const
 {
-    return mCodeEmitter.get();
+    return codeEmitterSharedPtr().get();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AssemblerIfContext::AssemblerIfContext(std::unique_ptr<AssemblerContext> prev, const Token& token)
+AssemblerIfContext::AssemblerIfContext(Compiler* compiler, std::unique_ptr<AssemblerContext> prev, const Token& token)
     : AssemblerContext(std::move(prev))
-    , mThenCodeEmitter(std::make_shared<CodeEmitter>())
-    , mElseCodeEmitter(std::make_shared<CodeEmitter>())
+    , mThenCodeEmitter(compiler->allocCodeEmitter<CodeEmitter>())
+    , mElseCodeEmitter(compiler->allocCodeEmitter<CodeEmitter>())
     , mIfToken(token)
     , mHasElse(false)
 {
@@ -279,5 +279,5 @@ bool AssemblerIfContext::areGlobalLabelsAllowed() const
 
 CodeEmitter* AssemblerIfContext::codeEmitter() const
 {
-    return (mHasElse ? mElseCodeEmitter.get() : mThenCodeEmitter.get());
+    return (mHasElse ? elseCodeEmitter().get() : thenCodeEmitter().get());
 }

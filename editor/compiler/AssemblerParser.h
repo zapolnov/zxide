@@ -6,6 +6,7 @@
 #include <memory>
 
 struct Token;
+class Compiler;
 class AssemblerLexer;
 class AssemblerContext;
 class Program;
@@ -30,12 +31,13 @@ public:
         SyntaxError,
     };
 
-    AssemblerParser(AssemblerLexer* lexer, Program* program, IErrorReporter* reporter);
+    AssemblerParser(Compiler* compiler, AssemblerLexer* lexer, Program* program, IErrorReporter* reporter);
     ~AssemblerParser() override;
 
     void parse();
 
 private:
+    Compiler* mCompiler;
     AssemblerLexer* mLexer;
     Program* mProgram;
     IErrorReporter* mReporter;

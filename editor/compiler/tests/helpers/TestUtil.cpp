@@ -1,4 +1,5 @@
 #include "TestUtil.h"
+#include "Compiler.h"
 #include "AssemblerLexer.h"
 #include "AssemblerParser.h"
 #include "Linker.h"
@@ -8,11 +9,11 @@
 #include "ErrorConsumer.h"
 #include "DataBlob.h"
 
-static void assemble(IErrorReporter& errorConsumer, Program* program, const char* source)
+static void assemble(IErrorReporter& errorConsumer, Compiler* compiler, Program* program, const char* source)
 {
     QByteArray fileData = source;
     AssemblerLexer lexer(nullptr, fileData, &errorConsumer);
-    AssemblerParser parser(&lexer, program, &errorConsumer);
+    AssemblerParser parser(compiler, &lexer, program, &errorConsumer);
     parser.parse();
 }
 
@@ -39,8 +40,9 @@ static DataBlob link(IErrorReporter& errorConsumer, Program* program)
 DataBlob assemble(IErrorReporter& errorConsumer, const char* source)
 {
     try {
+        Compiler compiler;
         Program program;
-        assemble(errorConsumer, &program, source);
+        assemble(errorConsumer, &compiler, &program, source);
         return link(errorConsumer, &program);
     } catch (const LexerError&) {
         return DataBlob();
@@ -52,9 +54,10 @@ DataBlob assemble(IErrorReporter& errorConsumer, const char* source)
 DataBlob assemble2(IErrorReporter& errorConsumer, const char* source1, const char* source2)
 {
     try {
+        Compiler compiler;
         Program program;
-        assemble(errorConsumer, &program, source1);
-        assemble(errorConsumer, &program, source2);
+        assemble(errorConsumer, &compiler, &program, source1);
+        assemble(errorConsumer, &compiler, &program, source2);
         return link(errorConsumer, &program);
     } catch (const LexerError&) {
         return DataBlob();
@@ -66,10 +69,11 @@ DataBlob assemble2(IErrorReporter& errorConsumer, const char* source1, const cha
 DataBlob assemble3(IErrorReporter& errorConsumer, const char* source1, const char* source2, const char* source3)
 {
     try {
+        Compiler compiler;
         Program program;
-        assemble(errorConsumer, &program, source1);
-        assemble(errorConsumer, &program, source2);
-        assemble(errorConsumer, &program, source3);
+        assemble(errorConsumer, &compiler, &program, source1);
+        assemble(errorConsumer, &compiler, &program, source2);
+        assemble(errorConsumer, &compiler, &program, source3);
         return link(errorConsumer, &program);
     } catch (const LexerError&) {
         return DataBlob();

@@ -11,6 +11,9 @@
 
 class Program;
 class ProgramBinary;
+class CodeEmitter;
+class AssemblerRepeatContext;
+class AssemblerIfContext;
 class ProjectSettings;
 
 struct SourceFile
@@ -70,6 +73,7 @@ private:
     QDir mGeneratedFilesDirectory;
     QDir mProjectDirectory;
     QByteArray mCompiledBasicCode;
+    std::vector<std::shared_ptr<CodeEmitter>> mCodeEmitters;
     std::vector<std::unique_ptr<SourceFile>> mBasicSources;
     std::vector<std::unique_ptr<SourceFile>> mAssemblerSources;
     std::vector<std::unique_ptr<SourceFile>> mCSources;
@@ -94,7 +98,16 @@ private:
     static int bas2tapFGets(char** basicIndex, int* basicLineNo);
     static void bas2tapOutput(const void* dst, size_t length);
 
+    template <typename T, typename... ARGS> std::shared_ptr<T> allocCodeEmitter(ARGS&&... args)
+    {
+        auto ptr = std::make_shared<T>(std::forward<ARGS>(args)...);
+        mCodeEmitters.emplace_back(ptr);
+        return ptr;
+    }
+
     Q_DISABLE_COPY(Compiler)
+    friend class AssemblerRepeatContext;
+    friend class AssemblerIfContext;
 };
 
 #endif

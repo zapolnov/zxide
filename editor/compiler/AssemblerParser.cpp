@@ -27,8 +27,9 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDi
         { "endif", &AssemblerParser::parseEndIfDecl },
     };
 
-AssemblerParser::AssemblerParser(AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
-    : mLexer(lexer)
+AssemblerParser::AssemblerParser(Compiler* compiler, AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
+    : mCompiler(compiler)
+    , mLexer(lexer)
     , mProgram(program)
     , mReporter(reporter)
     , mContext(new AssemblerDefaultContext(mProgram))
@@ -58,7 +59,7 @@ void AssemblerParser::parse()
 
 template <typename T, typename... ARGS> T* AssemblerParser::pushContext(ARGS&&... args)
 {
-    auto uniq = std::make_unique<T>(std::move(mContext), std::forward<ARGS>(args)...);
+    auto uniq = std::make_unique<T>(mCompiler, std::move(mContext), std::forward<ARGS>(args)...);
     auto ptr = uniq.get();
     mContext = std::move(uniq);
     return ptr;
