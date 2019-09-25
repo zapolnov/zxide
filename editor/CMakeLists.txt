@@ -26,6 +26,8 @@ qt_add_sources(GameEditor
         debugger/BreakpointsWindow.cpp
         debugger/BreakpointsWindow.h
         debugger/BreakpointsWindow.ui
+        debugger/DisassemblyWidget.cpp
+        debugger/DisassemblyWidget.h
         debugger/DisplayWidget.cpp
         debugger/DisplayWidget.h
         debugger/EditRegisterDialog.ui
@@ -48,6 +50,9 @@ qt_add_sources(GameEditor
         editor/code/CodeEditorTab.ui
         editor/code/TextEditor.cpp
         editor/code/TextEditor.h
+        editor/disasm/DisassemblyTab.cpp
+        editor/disasm/DisassemblyTab.h
+        editor/disasm/DisassemblyTab.ui
         editor/gfx/GfxEditorTab.cpp
         editor/gfx/GfxEditorTab.h
         editor/gfx/GfxEditorTab.ui

@@ -170,6 +170,8 @@ public:
     void getMemory(unsigned address, void* buffer, size_t bufferSize) const;
     QImage getScreen() const;
 
+    std::vector<std::string> disassemble(unsigned address, size_t count) const;
+
     void pressKey(int key);
     void releaseKey(int key);
 
@@ -181,6 +183,7 @@ signals:
     void memoryChanged();
     void memoryOperations(std::vector<MemoryOperationInfo>& operations);
     void stackChanged();
+    void instructionPointerChanged();
     void error(QString message);
     void updateUi();
     void runtoAddressChanged(int address);

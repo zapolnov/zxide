@@ -208,6 +208,7 @@
     <addaction name="actionAddDataBreakpoint"/>
     <addaction name="actionManageBreakpoints"/>
     <addaction name="separator"/>
+    <addaction name="actionDisassembly"/>
     <addaction name="actionMemoryLog"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -418,6 +419,7 @@
    <addaction name="actionAddDataBreakpoint"/>
    <addaction name="actionManageBreakpoints"/>
    <addaction name="separator"/>
+   <addaction name="actionDisassembly"/>
    <addaction name="actionMemoryLog"/>
   </widget>
   <action name="actionExit">
@@ -1212,6 +1214,15 @@
    </property>
    <property name="text">
     <string>&amp;Edit project settings...</string>
+   </property>
+  </action>
+  <action name="actionDisassembly">
+   <property name="icon">
+    <iconset resource="res/resources.qrc">
+     <normaloff>:/resources/fatcow16x16/text_padding_left.png</normaloff>:/resources/fatcow16x16/text_padding_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Dis&amp;assembly...</string>
    </property>
   </action>
  </widget>

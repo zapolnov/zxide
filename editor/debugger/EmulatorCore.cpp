@@ -85,6 +85,7 @@ static int runtoAddress = -1;
 static int lastHighlightedRuntoAddress = -1;
 static unsigned pausePC;
 static unsigned prevSP;
+static unsigned prevPC;
 static bool memoryWasChanged;
 static bool emulatorPaused;
 static bool paused;
@@ -144,6 +145,7 @@ bool EmulatorCore::start()
 
     tapeFile = mTapeFile;
     prevSP = unsigned(-1);
+    prevPC = unsigned(-1);
     mThread->start();
 
     return true;
@@ -510,6 +512,42 @@ QImage EmulatorCore::getScreen() const
     return screenBack;
 }
 
+static const char hex[] = "0123456789ABCDEF";
+
+std::vector<std::string> EmulatorCore::disassemble(unsigned address, size_t count) const
+{
+    enum { BufSize = 128 };
+    char buf[1024];
+    size_t len;
+
+    std::vector<std::string> result;
+    result.reserve(count);
+    for (size_t i = 0; i < count; i++) {
+        std::string s(BufSize, '\0');
+        s[4] = ' ';
+        s[5] = '|';
+        s[6] = ' ';
+        result.emplace_back(std::move(s));
+    }
+
+    {
+        QMutexLocker lock(&mutex);
+        for (size_t i = 0; i < count; i++) {
+            std::string& s = result[i];
+            s[0] = hex[(address >> 12) & 0xf];
+            s[1] = hex[(address >>  8) & 0xf];
+            s[2] = hex[(address >>  4) & 0xf];
+            s[3] = hex[(address      ) & 0xf];
+
+            len = 0;
+            debugger_disassemble(&s[7], BufSize - 7, &len, address);
+            address = (address + len) & 0xffff;
+        }
+    }
+
+    return result;
+}
+
 static input_key mapKey(int key, bool shift)
 {
     switch (key) {
@@ -723,6 +761,7 @@ void EmulatorCore::update()
     bool memoryWasChanged_ = false;
     unsigned pausePC_ = 0;
     unsigned SP_ = 0;
+    unsigned PC_ = 0;
     int runtoAddress_ = -1;
 
     {
@@ -737,6 +776,7 @@ void EmulatorCore::update()
         memoryWasChanged = false;
         pausePC_ = pausePC;
         SP_ = SP;
+        PC_ = PC;
         runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
     }
@@ -763,6 +803,11 @@ void EmulatorCore::update()
     if (prevSP != SP_) {
         prevSP = SP_;
         emit stackChanged();
+    }
+
+    if (prevPC != PC_) {
+        prevPC = PC_;
+        emit instructionPointerChanged();
     }
 }
 
@@ -1024,12 +1069,14 @@ int ui_debugger_activate()
     {
         QMutexLocker lock(&mutex);
 
+        /*
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr) {
             const auto& loc = debugInfo->sourceLocationForAddress(PC);
             if (loc.file.isEmpty())
                 return 0;
         }
+        */
 
         if (!paused) {
             paused = true;

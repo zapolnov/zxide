@@ -15,6 +15,7 @@
 #include "editor/Project.h"
 #include "editor/ProjectSettingsDialog.h"
 #include "editor/FileManager.h"
+#include "editor/disasm/DisassemblyTab.h"
 #include "compiler/Program.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramBinary.h"
@@ -48,8 +49,7 @@ MainWindow::MainWindow()
         std::bind(&MainWindow::navigateToAddress, this, std::placeholders::_1, true));
     connect(mEmulatorCore, &EmulatorCore::leaveDebugger,
         mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC, true));
-    connect(mEmulatorCore, &EmulatorCore::stopped,
-        mHighlightManager, std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::CurrentPC, true));
+    connect(mEmulatorCore, &EmulatorCore::stopped, this, &MainWindow::onEmulationStopped);
     connect(mEmulatorCore, &EmulatorCore::error, this, [this](QString message) {
             QMessageBox::critical(this, tr("Emulator error"), message);
         });
@@ -140,6 +140,21 @@ void MainWindow::openProject(const QString& file, bool mayLaunchNewInstance)
     }
 }
 
+DisassemblyTab* MainWindow::disassemblyTab() const
+{
+    int n = mUi->tabWidget->count();
+    for (int i = 0; i < n; i++) {
+        auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(i));
+        Q_ASSERT(tab != nullptr);
+        if (tab && tab->isDisassembly()) {
+            auto dtab = qobject_cast<DisassemblyTab*>(tab);
+            Q_ASSERT(dtab != nullptr);
+            return dtab;
+        }
+    }
+    return nullptr;
+}
+
 AbstractEditorTab* MainWindow::currentTab() const
 {
     QWidget* widget = mUi->tabWidget->currentWidget();
@@ -205,11 +220,15 @@ void MainWindow::closeTab(AbstractEditorTab* tab)
     Q_ASSERT(index >= 0);
     mUi->tabWidget->removeTab(index);
 
-    Q_ASSERT(tab->file());
-    if (tab->file())
-        tab->file()->destroyTab();
-    else
+    if (tab->isDisassembly())
         tab->deleteLater();
+    else {
+        Q_ASSERT(tab->file());
+        if (tab->file())
+            tab->file()->destroyTab();
+        else
+            tab->deleteLater();
+    }
 
     updateUi();
 }
@@ -429,20 +448,33 @@ void MainWindow::navigateToAddress(unsigned address, bool setHighlight)
     SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(address);
     File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
 
+    if (setHighlight) {
+        if (file)
+            HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
+        else
+            HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
+    }
+
+    auto disasm = disassemblyTab();
     if (file) {
         auto tab = setCurrentTab(file);
         if (tab && tab->canGoToLine()) {
             tab->goToLine(loc.line - 1);
-            if (setHighlight)
-                HighlightManager::instance()->setHighlight(Highlight::CurrentPC, loc.file, loc.line);
             tab->setFocusToEditor();
             QApplication::setActiveWindow(this);
             return;
         }
     }
 
-    if (setHighlight)
-        HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
+    on_actionDisassembly_triggered();
+}
+
+void MainWindow::onEmulationStopped()
+{
+    mHighlightManager->clearHighlight(Highlight::CurrentPC, true);
+    auto tab = disassemblyTab();
+    if (tab)
+        tab->deleteLater();
 }
 
 void MainWindow::updateUi()
@@ -497,6 +529,7 @@ void MainWindow::updateUi()
     mUi->actionStepOver->setEnabled(emulatorRunning && mEmulatorCore->isPaused());
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
     mUi->actionToggleBreakpoint->setEnabled(tab->canToggleBreakpoint());
+    mUi->actionDisassembly->setEnabled(emulatorRunning);
 
     mUi->actionDraw->setChecked(tab->isDrawToolActive());
     mUi->actionDrawRect->setChecked(tab->isDrawRectToolActive());
@@ -835,6 +868,18 @@ void MainWindow::on_actionManageBreakpoints_triggered()
     mBreakpointsWindow->setFocus();
 }
 
+void MainWindow::on_actionDisassembly_triggered()
+{
+    auto tab = disassemblyTab();
+    if (!tab) {
+        tab = new DisassemblyTab(this);
+        connect(tab, &AbstractEditorTab::updateUi, this, &MainWindow::updateUi);
+        mUi->tabWidget->addTab(tab, tr("Disassembly"));
+    }
+
+    mUi->tabWidget->setCurrentWidget(tab);
+}
+
 void MainWindow::on_actionMemoryLog_triggered()
 {
     if (!mMemoryLogWindow) {
@@ -954,7 +999,7 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
     auto tab = qobject_cast<AbstractEditorTab*>(mUi->tabWidget->widget(index));
     Q_ASSERT(tab != nullptr);
-    if (tab && confirmSave(tab->file()))
+    if (tab && (tab->isDisassembly() || confirmSave(tab->file())))
         closeTab(tab);
 }
 

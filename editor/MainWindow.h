@@ -15,6 +15,7 @@ class BreakpointsWindow;
 class EmulatorCore;
 class ClickableLabel;
 class HighlightManager;
+class DisassemblyTab;
 class BreakpointsModel;
 class Ui_MainWindow;
 class QLabel;
@@ -32,6 +33,7 @@ public:
     void openLastProject();
     void openProject(const QString& file, bool mayLaunchNewInstance = true);
 
+    DisassemblyTab* disassemblyTab() const;
     AbstractEditorTab* currentTab() const;
     AbstractEditorTab* setCurrentTab(File* file);
     void closeTab(File* file);
@@ -65,6 +67,8 @@ private:
     void clearBuildResult();
 
     void navigateToAddress(unsigned address, bool setHighlight = false);
+
+    void onEmulationStopped();
 
     void updateUi();
 
@@ -107,6 +111,7 @@ private:
     Q_SLOT void on_actionToggleBreakpoint_triggered();
     Q_SLOT void on_actionAddDataBreakpoint_triggered();
     Q_SLOT void on_actionManageBreakpoints_triggered();
+    Q_SLOT void on_actionDisassembly_triggered();
     Q_SLOT void on_actionMemoryLog_triggered();
 
     Q_SLOT void on_actionDraw_triggered();

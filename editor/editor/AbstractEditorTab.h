@@ -14,6 +14,8 @@ public:
     explicit AbstractEditorTab(QWidget* parent = nullptr);
     ~AbstractEditorTab() override;
 
+    virtual bool isDisassembly() const { return false; }
+
     File* file() const { return mFile; }
     virtual int line() const { return -1; }
 
