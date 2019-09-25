@@ -41,6 +41,7 @@ private:
     int mToolTipX;
     int mToolTipY;
     int mAddressUnderMouse;
+    bool mShowContextMenu;
     bool mUpdateToolTip;
     bool mShowingToolTip;
 

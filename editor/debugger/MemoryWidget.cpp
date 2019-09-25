@@ -1,5 +1,6 @@
 #include "MemoryWidget.h"
 #include "debugger/EmulatorCore.h"
+#include "debugger/EditMemoryDialog.h"
 #include "util/ScrollBar.h"
 #include "ui_EditRegisterDialog.h"
 #include <QPainter>
@@ -20,6 +21,7 @@ MemoryWidget::MemoryWidget(QWidget* parent)
     , mMouseX(INT_MIN)
     , mMouseY(INT_MIN)
     , mAddressUnderMouse(-1)
+    , mShowContextMenu(false)
     , mUpdateToolTip(false)
     , mShowingToolTip(false)
 {
@@ -99,6 +101,7 @@ void MemoryWidget::paintGL()
     int tooltipX = 0;
     int tooltipY = 0;
     int addressUnderMouse = -1;
+    int valueUnderMouse = -1;
 
     for (int n = 0; n < h; n++) {
         int mid = AddressWidth + Spacing + w * HexWidth - 1 + Spacing;
@@ -128,6 +131,7 @@ void MemoryWidget::paintGL()
 
             if (mouseOverHex || mouseOverTxt) {
                 addressUnderMouse = int((dataOffset - 1) + firstAddr);
+                valueUnderMouse = (unsigned char)byte;
                 painter.fillRect(hexX1, y1, 3 * CharWidth, CharHeight, Qt::green);
                 painter.fillRect(txtX1, y1, 1 * CharWidth, CharHeight, Qt::green);
                 tooltipX = (mouseOverHex ? hexX1 : txtX1);
@@ -179,6 +183,37 @@ void MemoryWidget::paintGL()
         }
         mUpdateToolTip = true;
     }
+
+    if (mShowContextMenu) {
+        mShowContextMenu = false;
+        int mouseX = mMouseX;
+        int mouseY = mMouseY;
+        QTimer::singleShot(0, this, [this, firstAddr, addressUnderMouse, valueUnderMouse, mouseX, mouseY, w]() {
+                QMenu menu;
+
+                QAction* editAction = menu.addAction(tr("&Edit value..."));
+                editAction->setEnabled(addressUnderMouse >= 0);
+                connect(editAction, &QAction::triggered, this, [this, addressUnderMouse, valueUnderMouse] {
+                        EditMemoryDialog dlg(unsigned(valueUnderMouse), 255, this);
+                        if (dlg.exec() == QDialog::Accepted)
+                            EmulatorCore::instance()->setMemory(addressUnderMouse, dlg.value());
+                    });
+
+                menu.addSeparator();
+
+                QAction* gotoAddressAction = menu.addAction(tr("&Go to address..."));
+                connect(gotoAddressAction, &QAction::triggered, this, [this, firstAddr, addressUnderMouse, w] {
+                        auto addr = unsigned(addressUnderMouse >= 0 ? addressUnderMouse : firstAddr);
+                        EditMemoryDialog dlg(addr, 65535, this);
+                        dlg.setWindowTitle(tr("Go to address"));
+                        dlg.setLabelText(tr("&Address:"));
+                        if (dlg.exec() == QDialog::Accepted)
+                            mScrollBar->setValue(dlg.value() / w * CharHeight);
+                    });
+
+                menu.exec(mapToGlobal(QPoint(mouseX, mouseY)));
+            });
+    }
 }
 
 void MemoryWidget::wheelEvent(QWheelEvent* event)
@@ -188,14 +223,10 @@ void MemoryWidget::wheelEvent(QWheelEvent* event)
 
 void MemoryWidget::contextMenuEvent(QContextMenuEvent* event)
 {
-    constexpr int charW = SimpleTextPainter::CharWidth;
-    constexpr int charH = SimpleTextPainter::CharHeight;
-
-    QPoint pos = event->pos();
-    int x = pos.x();
-    int y = pos.y();
-
-    // FIXME
+    mShowContextMenu = true;
+    mMouseX = event->pos().x();
+    mMouseY = event->pos().y();
+    update();
 }
 
 void MemoryWidget::mouseMoveEvent(QMouseEvent* event)

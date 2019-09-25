@@ -30,6 +30,9 @@ qt_add_sources(GameEditor
         debugger/DisassemblyWidget.h
         debugger/DisplayWidget.cpp
         debugger/DisplayWidget.h
+        debugger/EditMemoryDialog.cpp
+        debugger/EditMemoryDialog.h
+        debugger/EditMemoryDialog.ui
         debugger/EditRegisterDialog.ui
         debugger/EmulatorCore.cpp
         debugger/EmulatorCore.h

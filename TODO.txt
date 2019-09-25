@@ -1,5 +1,3 @@
-* Implement memory editing in the memory view
-* Go to address in memory window
 * Watch window with symbols (?)
 * Navigation through source (?), back/forward buttons (?)
 * Drag and drop in the file list

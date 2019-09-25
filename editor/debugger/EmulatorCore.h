@@ -168,6 +168,7 @@ public:
     QString currentSpeedString() const;
 
     void getMemory(unsigned address, void* buffer, size_t bufferSize) const;
+    void setMemory(unsigned address, unsigned value);
     QImage getScreen() const;
 
     std::vector<std::string> disassemble(unsigned address, size_t count) const;

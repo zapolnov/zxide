@@ -506,6 +506,16 @@ void EmulatorCore::getMemory(unsigned address, void* buffer, size_t bufferSize) 
     }
 }
 
+void EmulatorCore::setMemory(unsigned address, unsigned value)
+{
+    auto cmd = [address, value] {
+            debugger_poke(address & 0xffff, value & 0xff);
+        };
+
+    QMutexLocker lock(&mutex);
+    commandQueue.emplace_back(std::move(cmd));
+}
+
 QImage EmulatorCore::getScreen() const
 {
     QMutexLocker lock(&mutex);
