@@ -2,7 +2,7 @@
 if(MSVC)
     add_definitions(/wd4047 /wd4090 /wd4101 /wd4116 /wd4146 /wd4244 /wd4267 /wd4273)
 else()
-    add_definitions(-Wno-logical-op-parentheses -Wno-parentheses)
+    add_definitions(-Wno-logical-op-parentheses -Wno-parentheses -Wno-unused)
 endif()
 
 include(TestBigEndian)

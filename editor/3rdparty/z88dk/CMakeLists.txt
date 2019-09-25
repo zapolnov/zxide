@@ -3,6 +3,10 @@ add_definitions(
     -Derror=copt_error
     )
 
+if(NOT MSVC)
+    add_definitions(-Wno-unused)
+endif()
+
 add_library(COpt STATIC)
 set_target_properties(COpt PROPERTIES FOLDER "ThirdParty")
 

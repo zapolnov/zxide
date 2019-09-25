@@ -11,6 +11,10 @@ if(WIN32)
     add_definitions(-Dssize_t=ptrdiff_t)
 endif()
 
+if(NOT MSVC)
+    add_definitions(-Wno-unused)
+endif()
+
 include(TestBigEndian)
 include(CheckIncludeFile)
 test_big_endian(WORDS_BIGENDIAN)
