@@ -17,6 +17,7 @@ class ClickableLabel;
 class HighlightManager;
 class DisassemblyTab;
 class BreakpointsModel;
+class WatchModel;
 class Ui_MainWindow;
 class QLabel;
 
@@ -57,6 +58,7 @@ private:
     EmulatorCore* mEmulatorCore;
     HighlightManager* mHighlightManager;
     BreakpointsModel* mBreakpointsModel;
+    WatchModel* mWatchModel;
     EditorTabFactory* mTabFactory;
 
     bool confirmSaveAll();

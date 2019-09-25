@@ -48,6 +48,8 @@ qt_add_sources(GameEditor
         debugger/RegistersWidget.h
         debugger/StackWidget.cpp
         debugger/StackWidget.h
+        debugger/WatchModel.cpp
+        debugger/WatchModel.h
         editor/code/CodeEditorTab.cpp
         editor/code/CodeEditorTab.h
         editor/code/CodeEditorTab.ui

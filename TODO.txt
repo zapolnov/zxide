@@ -1,4 +1,3 @@
-* Watch window with symbols (?)
 * Navigation through source (?), back/forward buttons (?)
 * Drag and drop in the file list
 * Remove non-empty directories in the file list

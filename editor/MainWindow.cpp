@@ -9,6 +9,7 @@
 #include "debugger/AddBreakpointDialog.h"
 #include "debugger/EmulatorCore.h"
 #include "debugger/MemoryMapDialog.h"
+#include "debugger/WatchModel.h"
 #include "editor/AbstractEditorTab.h"
 #include "editor/EditorTabFactory.h"
 #include "editor/HighlightManager.h"
@@ -41,6 +42,7 @@ MainWindow::MainWindow()
     , mTabFactory(new EditorTabFactory(this))
 {
     mBreakpointsModel = new BreakpointsModel(this);
+    mWatchModel = new WatchModel(this);
     mHighlightManager = new HighlightManager(this);
 
     mEmulatorCore = new EmulatorCore(this);
@@ -68,9 +70,12 @@ MainWindow::MainWindow()
     mUi->setupUi(this);
 
     mUi->memoryWidget->setScrollBar(mUi->memoryWidgetScrollBar);
+    mUi->watchView->setModel(WatchModel::instance());
 
     tabifyDockWidget(mUi->registersDockWidget, mUi->stackDockWidget);
+    tabifyDockWidget(mUi->memoryDockWidget, mUi->watchDockWidget);
     QTimer::singleShot(0, mUi->registersDockWidget, &QDockWidget::raise);
+    QTimer::singleShot(0, mUi->memoryDockWidget, &QDockWidget::raise);
 
     mInsOverwriteLabel = new QLabel(mUi->statusBar);
     mInsOverwriteLabel->setFixedWidth(35);
@@ -567,6 +572,7 @@ void MainWindow::updateUi()
     mUi->registersDockWidget->setVisible(emulatorRunning);
     mUi->stackDockWidget->setVisible(emulatorRunning);
     mUi->memoryDockWidget->setVisible(emulatorRunning);
+    mUi->watchDockWidget->setVisible(emulatorRunning);
 
     mUi->fileManager->setEnabled(mProject != nullptr);
 }
