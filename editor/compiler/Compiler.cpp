@@ -392,6 +392,14 @@ namespace
     {
         QString name = QString::fromUtf8(fileName);
 
+        if (fileName[0] == ':') {
+            auto file = std::make_unique<QFile>(name);
+            if (file->open(QFile::ReadOnly)) {
+                openFiles.emplace(file.get());
+                return file.release();
+            }
+        }
+
         auto file = std::make_unique<QFile>(projectDir.absoluteFilePath(name));
         if (file->open(QFile::ReadOnly)) {
             openFiles.emplace(file.get());
