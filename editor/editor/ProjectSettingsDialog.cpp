@@ -25,9 +25,9 @@ ProjectSettingsDialog::ProjectSettingsDialog(Project* project, QWidget* parent)
     mUi->standardCombo->addItem(QStringLiteral("C11"), int(CStandard::C11));
     comboSelectItem(mUi->standardCombo, QVariant(int(mSettings->standard)));
 
-    mUi->optimizationCombo->addItem(tr("None"), int(COptimization::None));
-    mUi->optimizationCombo->addItem(tr("Speed"), int(COptimization::Speed));
-    mUi->optimizationCombo->addItem(tr("Size"), int(COptimization::Size));
+    mUi->optimizationCombo->addItem(tr("Default"), int(COptimization::Default));
+    mUi->optimizationCombo->addItem(tr("Favor speed"), int(COptimization::FavorSpeed));
+    mUi->optimizationCombo->addItem(tr("Favor size"), int(COptimization::FavorSize));
     comboSelectItem(mUi->optimizationCombo, QVariant(int(mSettings->optimization)));
 
     bool first = true;
@@ -39,7 +39,14 @@ ProjectSettingsDialog::ProjectSettingsDialog(Project* project, QWidget* parent)
         }
     }
 
+    mUi->codeSegEdit->setText(QString::fromLatin1(mSettings->codeSeg().c_str()));
+    mUi->constSegEdit->setText(QString::fromLatin1(mSettings->constSeg().c_str()));
+    mUi->dataSegEdit->setText(QString::fromLatin1(mSettings->dataSeg().c_str()));
+
     mUi->charUnsignedCheck->setChecked(mSettings->charIsUnsigned);
+    mUi->stackAutoVarsCheck->setChecked(mSettings->stackAutomaticVariables);
+    mUi->calleeSavesCheck->setChecked(mSettings->calleeSaves);
+    mUi->omitFramePointerCheck->setChecked(mSettings->omitFramePointer);
 
     updateUi();
 }
@@ -56,7 +63,13 @@ void ProjectSettingsDialog::done(int r)
 
             mSettings->standard = CStandard(comboSelectedItem(mUi->standardCombo).toInt());
             mSettings->optimization = COptimization(comboSelectedItem(mUi->optimizationCombo).toInt());
+            mSettings->setCodeSeg(mUi->codeSegEdit->text().toLatin1().constData());
+            mSettings->setConstSeg(mUi->constSegEdit->text().toLatin1().constData());
+            mSettings->setDataSeg(mUi->dataSegEdit->text().toLatin1().constData());
             mSettings->charIsUnsigned = mUi->charUnsignedCheck->isChecked();
+            mSettings->stackAutomaticVariables = mUi->stackAutoVarsCheck->isChecked();
+            mSettings->calleeSaves = mUi->calleeSavesCheck->isChecked();
+            mSettings->omitFramePointer = mUi->omitFramePointerCheck->isChecked();
 
             mSettings->defines.clear();
             int n = mUi->definesList->count();

@@ -14,26 +14,43 @@ enum class CStandard
 
 enum class COptimization
 {
-    None,
-    Speed,
-    Size,
+    Default,
+    FavorSpeed,
+    FavorSize,
 };
 
 class ProjectSettings
 {
 public:
+    static const std::string DefaultSegmentName;
+
     CStandard standard;
     COptimization optimization;
     std::vector<std::string> defines;
     bool charIsUnsigned;
+    bool stackAutomaticVariables;
+    bool calleeSaves;
+    bool omitFramePointer;
 
     ProjectSettings();
     ~ProjectSettings();
+
+    const std::string& codeSeg() const { return (!mCodeSeg.empty() ? mCodeSeg : DefaultSegmentName); }
+    const std::string& constSeg() const { return (!mConstSeg.empty() ? mConstSeg : DefaultSegmentName); }
+    const std::string& dataSeg() const { return (!mDataSeg.empty() ? mDataSeg : DefaultSegmentName); }
+
+    void setCodeSeg(std::string name);
+    void setConstSeg(std::string name);
+    void setDataSeg(std::string name);
 
     void load(const QString& file);
     void save(const QString& file);
 
 private:
+    std::string mCodeSeg;
+    std::string mConstSeg;
+    std::string mDataSeg;
+
     Q_DISABLE_COPY(ProjectSettings)
 };
 

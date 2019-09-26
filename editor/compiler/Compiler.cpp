@@ -675,11 +675,21 @@ bool Compiler::compileCCode()
             case CStandard::C11: ccCmd.add("--std-sdcc11"); break;
         }
         switch (mProjectSettings->optimization) {
-            case COptimization::None: break;
-            case COptimization::Speed: ccCmd.add("--opt-code-speed"); break;
-            case COptimization::Size: ccCmd.add("--opt-code-size"); break;
+            case COptimization::Default: break;
+            case COptimization::FavorSpeed: ccCmd.add("--opt-code-speed"); break;
+            case COptimization::FavorSize: ccCmd.add("--opt-code-size"); break;
         }
-        ccCmd.add(mProjectSettings->charIsUnsigned ? "--funsigned-char" : "--fsigned-char");
+        ccCmd.add("--codeseg"); ccCmd.add(mProjectSettings->codeSeg());
+        ccCmd.add("--constseg"); ccCmd.add(mProjectSettings->constSeg());
+        ccCmd.add("--dataseg"); ccCmd.add(mProjectSettings->dataSeg());
+        if (!mProjectSettings->charIsUnsigned)
+            ccCmd.add("--fsigned-char");
+        if (mProjectSettings->stackAutomaticVariables)
+            ccCmd.add("--stack-auto");
+        if (mProjectSettings->calleeSaves)
+            ccCmd.add("--all-callee-saves");
+        if (mProjectSettings->omitFramePointer)
+            ccCmd.add("--fomit-frame-pointer");
         ccCmd.add("--no-optsdcc-in-asm");
         ccCmd.finalize();
 
