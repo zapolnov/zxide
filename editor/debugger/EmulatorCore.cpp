@@ -530,7 +530,6 @@ static const char hex[] = "0123456789ABCDEF";
 std::vector<std::string> EmulatorCore::disassemble(unsigned address, size_t count) const
 {
     enum { BufSize = 128 };
-    char buf[1024];
     size_t len;
 
     std::vector<std::string> result;
@@ -538,7 +537,7 @@ std::vector<std::string> EmulatorCore::disassemble(unsigned address, size_t coun
     for (size_t i = 0; i < count; i++) {
         std::string s(BufSize, '\0');
         s[4] = ' ';
-        s[5] = '|';
+        s[5] = ' ';
         s[6] = ' ';
         result.emplace_back(std::move(s));
     }
