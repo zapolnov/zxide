@@ -28,6 +28,7 @@ extern "C" {
 #include <debugger/debugger_internals.h>
 #include <peripherals/ula.h>
 #include <../fuse/settings.h> // stupid, but works; otherwise Windows confuses it with Settings.h
+int dxsoundShouldAbort;
 int fuse_init(int argc, char** argv);
 int fuse_end(void);
 int debugger_run_to_address(unsigned addr);
@@ -146,6 +147,7 @@ bool EmulatorCore::start()
     tapeFile = mTapeFile;
     prevSP = unsigned(-1);
     prevPC = unsigned(-1);
+    dxsoundShouldAbort = 0;
     mThread->start();
 
     return true;
@@ -153,6 +155,7 @@ bool EmulatorCore::start()
 
 void EmulatorCore::stop()
 {
+    dxsoundShouldAbort = 1;
     mThread->requestInterruption();
     mThread->wait();
 }

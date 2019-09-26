@@ -145,6 +145,8 @@ sound_lowlevel_end( void )
   CoUninitialize();
 }
 
+extern int dxsoundShouldAbort;
+
 /* Copying data to the buffer */
 void
 sound_lowlevel_frame( libspectrum_signed_word *data, int len )
@@ -163,7 +165,7 @@ sound_lowlevel_frame( libspectrum_signed_word *data, int len )
     len *= 2;
 
   while( len ) {
-    while( 1 ) {
+    while( !dxsoundShouldAbort ) {
       IDirectSoundBuffer_GetCurrentPosition( lpDSBuffer, &playcursor, NULL );
 
       cursordiff = (long)nextpos - (long)playcursor;
