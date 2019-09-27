@@ -26,7 +26,6 @@ qt_add_sources(Compiler
         CodeEmitter.h
         Compiler.cpp
         Compiler.h
-        CompileSettings.h
         Expression.cpp
         Expression.h
         ExpressionParser.cpp

@@ -76,11 +76,6 @@ void Compiler::addSourceFile(const QString& fullName, const QString& path)
         mMaps.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
 }
 
-void Compiler::setSettings(CompileSettings settings)
-{
-    mCompileSettings = std::move(settings);
-}
-
 void Compiler::compile()
 {
     try {
@@ -219,9 +214,9 @@ void Compiler::compile()
         setStatusText(tr("Writing tape file..."));
         TapeFileWriter tapeWriter(mProgramBinary.get(), this);
         tapeWriter.setBasicCode(mCompiledBasicCode);
-        tapeWriter.setBasicStartLine(mCompileSettings.basicStartLine);
-        tapeWriter.setLoaderName(mCompileSettings.loaderName);
-        tapeWriter.setProgramName(mCompileSettings.programName);
+        tapeWriter.setBasicStartLine(mProjectSettings->basicStartLine);
+        tapeWriter.setLoaderName(mProjectSettings->loaderFileName());
+        tapeWriter.setProgramName(mProjectSettings->programFileName());
         if (!tapeWriter.makeTape()
                 || !tapeWriter.writeTapeFile(mOutputTapeFile)
                 || !tapeWriter.writeWavFile(mOutputWavFile))

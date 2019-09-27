@@ -2,7 +2,6 @@
 #define COMPILER_COMPILER_H
 
 #include "IErrorReporter.h"
-#include "CompileSettings.h"
 #include <vector>
 #include <memory>
 #include <QObject>
@@ -41,7 +40,6 @@ public:
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
     void addSourceFile(const QString& fullName, const QString& path);
-    void setSettings(CompileSettings settings);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
@@ -80,7 +78,6 @@ private:
     std::vector<std::unique_ptr<SourceFile>> mGraphics;
     std::vector<std::unique_ptr<SourceFile>> mMaps;
     std::vector<std::unique_ptr<SourceFile>> mBuildScripts;
-    CompileSettings mCompileSettings;
     int mErrorLine;
     bool mWasError;
 

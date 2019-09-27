@@ -25,10 +25,13 @@ static const QString JsonValue_Size = QStringLiteral("size");
 static const int FileFormatVersion = 1;
 
 const std::string ProjectSettings::DefaultSegmentName = "main";
+const std::string ProjectSettings::DefaultLoaderFileName = "loader";
+const std::string ProjectSettings::DefaultProgramFileName = "program";
 
 ProjectSettings::ProjectSettings()
     : standard(CStandard::C99)
     , optimization(COptimization::FavorSize)
+    , basicStartLine(10)
     , charIsUnsigned(false)
     , stackAutomaticVariables(false)
     , calleeSaves(false)
@@ -36,11 +39,29 @@ ProjectSettings::ProjectSettings()
     , mCodeSeg(DefaultSegmentName)
     , mConstSeg(DefaultSegmentName)
     , mDataSeg(DefaultSegmentName)
+    , mLoaderName(DefaultLoaderFileName)
+    , mProgramName(DefaultProgramFileName)
 {
 }
 
 ProjectSettings::~ProjectSettings()
 {
+}
+
+void ProjectSettings::setLoaderFileName(std::string name)
+{
+    if (!name.empty())
+        mLoaderName = std::move(name);
+    else
+        mLoaderName = DefaultLoaderFileName;
+}
+
+void ProjectSettings::setProgramFileName(std::string name)
+{
+    if (!name.empty())
+        mProgramName = std::move(name);
+    else
+        mProgramName = DefaultProgramFileName;
 }
 
 void ProjectSettings::setCodeSeg(std::string name)
