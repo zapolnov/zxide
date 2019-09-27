@@ -63,9 +63,9 @@ void ProjectSettingsDialog::done(int r)
 
             mSettings->standard = CStandard(comboSelectedItem(mUi->standardCombo).toInt());
             mSettings->optimization = COptimization(comboSelectedItem(mUi->optimizationCombo).toInt());
-            mSettings->setCodeSeg(mUi->codeSegEdit->text().toLatin1().constData());
-            mSettings->setConstSeg(mUi->constSegEdit->text().toLatin1().constData());
-            mSettings->setDataSeg(mUi->dataSegEdit->text().toLatin1().constData());
+            mSettings->setCodeSeg(mUi->codeSegEdit->text().trimmed().toLatin1().constData());
+            mSettings->setConstSeg(mUi->constSegEdit->text().trimmed().toLatin1().constData());
+            mSettings->setDataSeg(mUi->dataSegEdit->text().trimmed().toLatin1().constData());
             mSettings->charIsUnsigned = mUi->charUnsignedCheck->isChecked();
             mSettings->stackAutomaticVariables = mUi->stackAutoVarsCheck->isChecked();
             mSettings->calleeSaves = mUi->calleeSavesCheck->isChecked();
