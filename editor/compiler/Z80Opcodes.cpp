@@ -5671,6 +5671,12 @@ void XOR_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* 
     binary->emitByte(token().file, token().line, 0xAF);
 }
 
+void XOR_A_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xAF);
+}
+
 void XOR_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);

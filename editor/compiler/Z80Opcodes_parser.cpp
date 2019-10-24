@@ -7774,6 +7774,14 @@ public:
         if (ident("a")) {
             if (eol())
                 return mCodeEmitter->emit<XOR_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+            if (token(T_COMMA)) {
+                if (ident("a")) {
+                    if (eol())
+                        return mCodeEmitter->emit<XOR_A_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                return AssemblerParser::OpcodeParseResult::SyntaxError;
+            }
             return AssemblerParser::OpcodeParseResult::SyntaxError;
         }
         if (ident("b")) {

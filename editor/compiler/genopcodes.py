@@ -889,6 +889,7 @@ opcodes = [
         Opcode( 'sub', [              '(ix+#)' ], [ 0xDD, 0x96, '#'        ], 19),
         Opcode( 'sub', [              '(iy+#)' ], [ 0xFD, 0x96, '#'        ], 19),
         Opcode( 'xor', [                   'a' ], [ 0xAF                   ],  4),
+        Opcode( 'xor', [              'a', 'a' ], [ 0xAF                   ],  4), # alias for 'xor a'
         Opcode( 'xor', [                   'b' ], [ 0xA8                   ],  4),
         Opcode( 'xor', [                   'c' ], [ 0xA9                   ],  4),
         Opcode( 'xor', [                   'd' ], [ 0xAA                   ],  4),

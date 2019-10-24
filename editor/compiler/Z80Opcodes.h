@@ -14225,6 +14225,23 @@ public:
     Q_DISABLE_COPY(XOR_A)
 };
 
+class XOR_A_A final : public ProgramOpcode
+{
+public:
+    XOR_A_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(XOR_A_A)
+};
+
 class XOR_B final : public ProgramOpcode
 {
 public:
