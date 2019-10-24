@@ -45,6 +45,7 @@ void sdcc_cleanupPeeph(void);
 void sdcc_cleanupLRange(void);
 void sdcc_cleanupOpt(void);
 void sdcc_cleanupZ80Gen(void);
+void sdcc_cleanupGlue(void);
 void sdcc_collectGarbage(void);
 void sdcc_closeInputFile(void);
 

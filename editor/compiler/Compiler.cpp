@@ -576,6 +576,7 @@ namespace
         sdcc_cleanupLRange();
         sdcc_cleanupOpt();
         sdcc_cleanupZ80Gen();
+        sdcc_cleanupGlue();
 
         while (!openFiles.empty()) {
             void* file = *openFiles.begin();
@@ -686,7 +687,7 @@ bool Compiler::compileCCode()
         if (mProjectSettings->omitFramePointer)
             ccCmd.add("--fomit-frame-pointer");
         ccCmd.add("--no-optsdcc-in-asm");
-        ccCmd.add("--allow-unsafe-reads");
+        ccCmd.add("--allow-unsafe-read");
         ccCmd.finalize();
 
         input = out.str();

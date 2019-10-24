@@ -2683,3 +2683,15 @@ isTargetKeyword (const char *s)
   return 0;
 }
 
+void sdcc_cleanupGlue()
+{
+    memset(interrupts, 0, sizeof(interrupts));
+    publics = NULL;
+    externs = NULL;
+    strSym = NULL;
+    ccpStr = NULL;
+    maxInterrupts = 0;
+    allocInfo = 1;
+    mainf = NULL;
+    noInit = 0;
+}
