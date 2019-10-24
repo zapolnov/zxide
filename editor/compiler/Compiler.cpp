@@ -628,7 +628,6 @@ bool Compiler::compileCCode()
             case CStandard::C11: ppCmd.add("-std=c11"); break;
         }
         ppCmd.add(mProjectSettings->charIsUnsigned ? "-funsigned-char" : "-fsigned-char");
-        ppCmd.add("-allow-unsafe-reads");
         ppCmd.add("-D__SDCC_z80");
         for (const auto& it : mProjectSettings->defines) {
             if (!it.empty())
@@ -687,6 +686,7 @@ bool Compiler::compileCCode()
         if (mProjectSettings->omitFramePointer)
             ccCmd.add("--fomit-frame-pointer");
         ccCmd.add("--no-optsdcc-in-asm");
+        ccCmd.add("--allow-unsafe-reads");
         ccCmd.finalize();
 
         input = out.str();
