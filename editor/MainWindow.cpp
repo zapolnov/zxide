@@ -215,6 +215,8 @@ void MainWindow::closeTab(File* file)
 
 void MainWindow::closeTab(AbstractEditorTab* tab)
 {
+    // FIXME: check if saved !!!
+
     if (!tab || tab == mDummyTab)
         return;
 
@@ -490,8 +492,6 @@ void MainWindow::updateUi()
     setWindowModified(modified);
 
     AbstractEditorTab* tab = currentTab();
-    mUi->actionNewFile->setEnabled(mProject != nullptr);
-    mUi->actionNewDirectory->setEnabled(mProject != nullptr);
     mUi->actionSave->setEnabled(tab->isModified());
     mUi->actionSaveAll->setEnabled(modified);
     mUi->actionCloseWindow->setEnabled(tab != nullptr && tab != mDummyTab);
@@ -535,6 +535,7 @@ void MainWindow::updateUi()
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
     mUi->actionToggleBreakpoint->setEnabled(tab->canToggleBreakpoint());
     mUi->actionDisassembly->setEnabled(emulatorRunning);
+    mUi->actionEditProjectSettings->setEnabled(mProject != nullptr);
 
     mUi->actionDraw->setChecked(tab->isDrawToolActive());
     mUi->actionDrawRect->setChecked(tab->isDrawRectToolActive());

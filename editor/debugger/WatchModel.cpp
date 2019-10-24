@@ -33,7 +33,7 @@ int WatchModel::columnCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
         return 0;
-    return 3;
+    return 4;
 }
 
 QVariant WatchModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -44,14 +44,15 @@ QVariant WatchModel::headerData(int section, Qt::Orientation orientation, int ro
     switch (section) {
         case 0: return tr("Expression");
         case 1: return tr("Type");
-        case 2: return tr("Value");
+        case 2: return tr("Address");
+        case 3: return tr("Value");
         default: return QVariant();
     }
 }
 
 QVariant WatchModel::data(const QModelIndex& index, int role) const
 {
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
 
     int row = index.row();
@@ -77,6 +78,9 @@ QVariant WatchModel::data(const QModelIndex& index, int role) const
             break;
 
         case 2:
+            // FIXME
+
+        case 3:
             // FIXME
 
         default:
