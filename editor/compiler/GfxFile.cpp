@@ -184,6 +184,28 @@ void GfxFile::serializeToMonochrome(const GfxData* data)
     }
 }
 
+void GfxFile::serializeToStandard(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
+
+    for (int y = 0; y < data->height(); y++) {
+        for (int x = 0; x < data->width(); ) {
+            unsigned char byte = 0;
+            for (int i = 0; i < 8; i++, x++) {
+                char value = data->at(x, y);
+                if (value)
+                    byte |= (0x80 >> i);
+            }
+            stream << quint8(byte);
+        }
+    }
+
+    for (int x = 0; x < data->width(); x += 8) {
+        for (int y = 0; y < data->height(); y += 8)
+            stream << quint8(data->attribAt(x, y, GfxColorMode::Standard));
+    }
+}
+
 void GfxFile::serializeToStandardAttributes(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);

@@ -29,6 +29,7 @@ public:
     void serializeToJson(const GfxData* data);
 
     void serializeToMonochrome(const GfxData* data);
+    void serializeToStandard(const GfxData* data);
     void serializeToStandardAttributes(const GfxData* data);
     void serializeToBTile16(const GfxData* data);
     void serializeToBTile16Attributes(const GfxData* data);
