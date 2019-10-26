@@ -16,6 +16,7 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDa
         { "dd", &AssemblerParser::parseDefDWord },
         { "defb", &AssemblerParser::parseDefByte },
         { "defw", &AssemblerParser::parseDefWord },
+        { "defs", &AssemblerParser::parseDefSpace },
     };
 
 std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDirectives = {
@@ -315,6 +316,16 @@ void AssemblerParser::parseDefDWord()
             error(mExpressionError);
         mContext->codeEmitter()->emit<DEFD>(token, std::move(expr));
     } while (lastTokenId() == T_COMMA);
+    expectEol(lastTokenId());
+}
+
+void AssemblerParser::parseDefSpace()
+{
+    auto token = (nextToken(), lastToken());
+    auto expr = parseExpression(token.id, true);
+    if (!expr)
+        error(mExpressionError);
+    mContext->codeEmitter()->emit<DEFS>(token, std::move(expr));
     expectEol(lastTokenId());
 }
 

@@ -129,6 +129,24 @@ private:
     Q_DISABLE_COPY(DEFD)
 };
 
+class DEFS final : public ProgramOpcode
+{
+public:
+    DEFS(const Token& token, std::unique_ptr<Expression> value);
+    ~DEFS() override;
+
+    unsigned lengthInBytes(const Program* program, IErrorReporter* reporter) const final override;
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mValue;
+
+    Q_DISABLE_COPY(DEFS)
+};
+
 class IfMacro final : public ProgramOpcode
 {
 public:

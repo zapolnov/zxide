@@ -121,6 +121,46 @@ void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+DEFS::DEFS(const Token& token, std::unique_ptr<Expression> value)
+    : ProgramOpcode(token)
+    , mValue(std::move(value))
+{
+}
+
+DEFS::~DEFS()
+{
+}
+
+unsigned DEFS::lengthInBytes(const Program* program, IErrorReporter* reporter) const
+{
+    ExprEvalContext context(program, reporter);
+
+    auto value = context.evaluate(mValue);
+    if (value.number < 0)
+        value.number = 0;
+    if (value.number > 0xffff)
+        value.number = 0xffff;
+
+    return (unsigned)value.number;
+}
+
+void DEFS::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    ExprEvalContext context(program, reporter);
+
+    auto value = context.evaluate(mValue);
+    if (value.number < 0)
+        value.number = 0;
+    if (value.number > 0xffff)
+        value.number = 0xffff;
+
+    unsigned n = (unsigned)value.number;
+    for (unsigned i = 0; i < n; i++)
+        binary->emitByte(token().file, token().line, 0x3f); // '?'
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 IfMacro::IfMacro(const Token& token, std::unique_ptr<Expression> condition,
         const std::shared_ptr<CodeEmitter>& thenCodeEmitter, const std::shared_ptr<CodeEmitter>& elseCodeEmitter)
     : ProgramOpcode(token)

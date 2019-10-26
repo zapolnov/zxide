@@ -61,6 +61,7 @@ private:
     void parseDefByte();
     void parseDefWord();
     void parseDefDWord();
+    void parseDefSpace();
 
     bool parseOpcode(const std::string& str);
     OpcodeParseResult parseOpcode_generated(const std::string& opcode); // in Z80Opcodes_parser.cpp
