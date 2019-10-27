@@ -216,6 +216,49 @@ void GfxFile::serializeToStandardAttributes(const GfxData* data)
     }
 }
 
+void GfxFile::serializeToZigZag(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
+    bool wroteAttribs = false;
+
+    for (int y = 0; y < data->height(); y++) {
+        if ((y & 1) == 0) {
+            for (int x = 0; x < data->width(); ) {
+                unsigned char byte = 0;
+                for (int i = 0; i < 8; i++, x++) {
+                    char value = data->at(x, y);
+                    if (value)
+                        byte |= (0x80 >> i);
+                }
+                stream << quint8(byte);
+            }
+        } else {
+            for (int x = data->width(); x > 0; x -= 8) {
+                unsigned char byte = 0;
+                for (int i = 0; i < 8; i++) {
+                    char value = data->at(x - 8 + i, y);
+                    if (value)
+                        byte |= (0x80 >> i);
+                }
+                stream << quint8(byte);
+            }
+        }
+
+        if ((y & 7) != 7)
+            wroteAttribs = false;
+        else {
+            wroteAttribs = true;
+            for (int x = 0; x < data->width(); x += 8)
+                stream << quint8(data->attribAt(x, y, GfxColorMode::Standard));
+        }
+    }
+
+    if (!wroteAttribs) {
+        for (int x = 0; x < data->width(); x += 8)
+            stream << quint8(data->attribAt(x, data->height() - 1, GfxColorMode::Standard));
+    }
+}
+
 void GfxFile::serializeToBTile16(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);

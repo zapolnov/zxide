@@ -78,6 +78,21 @@ static std::string generateStandardAttributes(const GfxData& data)
     return ss.str();
 }
 
+static std::string generateZigZag(const GfxData& data)
+{
+    GfxFile file;
+    file.serializeToZigZag(&data);
+
+    std::stringstream ss;
+    for (char ch : file.data()) {
+        char buf[32];
+        snprintf(buf, sizeof(buf), "db 0x%02X\n", static_cast<unsigned char>(ch));
+        ss << buf;
+    }
+
+    return ss.str();
+}
+
 static std::string generateBTile16(const GfxData& data)
 {
     GfxFile file;
@@ -131,6 +146,15 @@ static int luaGfxGenerateStandardAttributesAssembly(lua_State* L)
     LuaVM* vm = LuaVM::fromLua(L);
     GfxData& data = vm->check<GfxData>(1);
     std::string result = generateStandardAttributes(data);
+    vm->pushString(result);
+    return 1;
+}
+
+static int luaGfxGenerateZigZagAssembly(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+    GfxData& data = vm->check<GfxData>(1);
+    std::string result = generateZigZag(data);
     vm->pushString(result);
     return 1;
 }
@@ -221,6 +245,7 @@ const luaL_Reg LuaGfx[] = {
     { "gfxGenerateMonochromeAssembly", luaGfxGenerateMonochromeAssembly },
     { "gfxGenerateStandardAssembly", luaGfxGenerateStandardAssembly },
     { "gfxGenerateStandardAttributesAssembly", luaGfxGenerateStandardAttributesAssembly },
+    { "gfxGenerateZigZagAssembly", luaGfxGenerateZigZagAssembly },
     { "gfxGenerateBTile16Assembly", luaGfxGenerateBTile16Assembly },
     { "gfxGenerateBTile16AttributesAssembly", luaGfxGenerateBTile16AttributesAssembly },
     { "gfxWriteMonochrome", luaGfxWriteMonochrome },
