@@ -257,12 +257,19 @@ opcodes = [
         Opcode('call', [        'z',      '##' ], [ 0xCC, '#'              ], [ 17, 10 ]),
         Opcode( 'ccf', [                       ], [ 0x3F                   ],  4),
         Opcode(  'cp', [                   'a' ], [ 0xBF                   ],  4),
+        Opcode(  'cp', [         'a',      'a' ], [ 0xBF                   ],  4),  # alias for 'cp a'
         Opcode(  'cp', [                   'b' ], [ 0xB8                   ],  4),
+        Opcode(  'cp', [         'a',      'b' ], [ 0xB8                   ],  4),  # alias for 'cp b'
         Opcode(  'cp', [                   'c' ], [ 0xB9                   ],  4),
+        Opcode(  'cp', [         'a',      'c' ], [ 0xB9                   ],  4),  # alias for 'cp c'
         Opcode(  'cp', [                   'd' ], [ 0xBA                   ],  4),
+        Opcode(  'cp', [         'a',      'd' ], [ 0xBA                   ],  4),  # alias for 'cp d'
         Opcode(  'cp', [                   'e' ], [ 0xBB                   ],  4),
+        Opcode(  'cp', [         'a',      'e' ], [ 0xBB                   ],  4),  # alias for 'cp e'
         Opcode(  'cp', [                   'h' ], [ 0xBC                   ],  4),
+        Opcode(  'cp', [         'a',      'h' ], [ 0xBC                   ],  4),  # alias for 'cp h'
         Opcode(  'cp', [                   'l' ], [ 0xBD                   ],  4),
+        Opcode(  'cp', [         'a',      'l' ], [ 0xBD                   ],  4),  # alias for 'cp l'
         Opcode(  'cp', [                   '#' ], [ 0xFE, '#'              ],  7),
         Opcode(  'cp', [                '(hl)' ], [ 0xBE                   ],  7),
         Opcode(  'cp', [              '(ix+#)' ], [ 0xDD, 0xBE, '#'        ], 19),

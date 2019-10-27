@@ -1579,6 +1579,44 @@ public:
         if (ident("a")) {
             if (eol())
                 return mCodeEmitter->emit<CP_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+            if (token(T_COMMA)) {
+                if (ident("a")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("b")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_B>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("c")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_C>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("d")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_D>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("e")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_E>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("h")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_H>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("l")) {
+                    if (eol())
+                        return mCodeEmitter->emit<CP_A_L>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                return AssemblerParser::OpcodeParseResult::SyntaxError;
+            }
             return AssemblerParser::OpcodeParseResult::SyntaxError;
         }
         if (ident("b")) {
