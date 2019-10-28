@@ -5697,6 +5697,14 @@ void SUB_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* 
     binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
 }
 
+void SUB_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 7, 7);
+    binary->emitByte(token().file, token().line, 0xD6);
+    binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
+}
+
 void SUB_mHL::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 7, 7);

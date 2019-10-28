@@ -14317,6 +14317,28 @@ private:
     Q_DISABLE_COPY(SUB_n)
 };
 
+class SUB_A_n final : public ProgramOpcode
+{
+public:
+    SUB_A_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(SUB_A_n)
+};
+
 class SUB_mHL final : public ProgramOpcode
 {
 public:

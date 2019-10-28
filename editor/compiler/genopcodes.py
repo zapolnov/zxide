@@ -895,6 +895,7 @@ opcodes = [
         Opcode( 'sub', [                   'l' ], [ 0x95                   ],  4),
         Opcode( 'sub', [              'a', 'l' ], [ 0x95                   ],  4), # alias for 'sub l'
         Opcode( 'sub', [                   '#' ], [ 0xD6, '#'              ],  7),
+        Opcode( 'sub', [              'a', '#' ], [ 0xD6, '#'              ],  7), # alias for 'sub #'
         Opcode( 'sub', [                '(hl)' ], [ 0x96                   ],  7),
         Opcode( 'sub', [                 'ixh' ], [ 0xDD, 0x94             ],  8),  # undocumented
         Opcode( 'sub', [                 'iyh' ], [ 0xFD, 0x94             ],  8),  # undocumented

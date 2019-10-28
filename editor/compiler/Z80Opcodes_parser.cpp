@@ -7712,6 +7712,11 @@ public:
                         return mCodeEmitter->emit<SUB_A_L>(mToken), AssemblerParser::OpcodeParseResult::Success;
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
+                if (byteLiteral(&mLiteral1)) {
+                    if (eol())
+                        return mCodeEmitter->emit<SUB_A_n>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
                 return AssemblerParser::OpcodeParseResult::SyntaxError;
             }
             return AssemblerParser::OpcodeParseResult::SyntaxError;
