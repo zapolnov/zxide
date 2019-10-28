@@ -4354,6 +4354,49 @@ public:
         if (ident("a")) {
             if (eol())
                 return mCodeEmitter->emit<OR_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+            if (token(T_COMMA)) {
+                if (ident("a")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_A>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("b")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_B>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("c")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_C>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("d")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_D>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("e")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_E>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("h")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_H>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (ident("l")) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_L>(mToken), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                if (byteLiteral(&mLiteral1)) {
+                    if (eol())
+                        return mCodeEmitter->emit<OR_A_n>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                    return AssemblerParser::OpcodeParseResult::SyntaxError;
+                }
+                return AssemblerParser::OpcodeParseResult::SyntaxError;
+            }
             return AssemblerParser::OpcodeParseResult::SyntaxError;
         }
         if (ident("b")) {

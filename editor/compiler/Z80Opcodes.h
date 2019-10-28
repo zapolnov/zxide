@@ -8291,6 +8291,23 @@ public:
     Q_DISABLE_COPY(OR_A)
 };
 
+class OR_A_A final : public ProgramOpcode
+{
+public:
+    OR_A_A(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_A)
+};
+
 class OR_B final : public ProgramOpcode
 {
 public:
@@ -8306,6 +8323,23 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(OR_B)
+};
+
+class OR_A_B final : public ProgramOpcode
+{
+public:
+    OR_A_B(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_B)
 };
 
 class OR_C final : public ProgramOpcode
@@ -8325,6 +8359,23 @@ public:
     Q_DISABLE_COPY(OR_C)
 };
 
+class OR_A_C final : public ProgramOpcode
+{
+public:
+    OR_A_C(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_C)
+};
+
 class OR_D final : public ProgramOpcode
 {
 public:
@@ -8340,6 +8391,23 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(OR_D)
+};
+
+class OR_A_D final : public ProgramOpcode
+{
+public:
+    OR_A_D(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_D)
 };
 
 class OR_E final : public ProgramOpcode
@@ -8359,6 +8427,23 @@ public:
     Q_DISABLE_COPY(OR_E)
 };
 
+class OR_A_E final : public ProgramOpcode
+{
+public:
+    OR_A_E(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_E)
+};
+
 class OR_H final : public ProgramOpcode
 {
 public:
@@ -8376,6 +8461,23 @@ public:
     Q_DISABLE_COPY(OR_H)
 };
 
+class OR_A_H final : public ProgramOpcode
+{
+public:
+    OR_A_H(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_H)
+};
+
 class OR_L final : public ProgramOpcode
 {
 public:
@@ -8391,6 +8493,23 @@ public:
     void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
 
     Q_DISABLE_COPY(OR_L)
+};
+
+class OR_A_L final : public ProgramOpcode
+{
+public:
+    OR_A_L(const Token& token)
+        : ProgramOpcode(token)
+    {
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 1; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 4; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 4; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+    Q_DISABLE_COPY(OR_A_L)
 };
 
 class OR_n final : public ProgramOpcode
@@ -8413,6 +8532,28 @@ private:
     std::unique_ptr<Expression> mLiteral1;
 
     Q_DISABLE_COPY(OR_n)
+};
+
+class OR_A_n final : public ProgramOpcode
+{
+public:
+    OR_A_n(const Token& token, std::unique_ptr<Expression> literal1)
+        : ProgramOpcode(token)
+        , mLiteral1(std::move(literal1))
+    {
+        Q_ASSERT(mLiteral1 != nullptr);
+    }
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 2; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 7; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 7; }
+
+    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mLiteral1;
+
+    Q_DISABLE_COPY(OR_A_n)
 };
 
 class OR_mHL final : public ProgramOpcode

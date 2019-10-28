@@ -3234,7 +3234,19 @@ void OR_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
     binary->emitByte(token().file, token().line, 0xB7);
 }
 
+void OR_A_A::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB7);
+}
+
 void OR_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB0);
+}
+
+void OR_A_B::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
     binary->emitByte(token().file, token().line, 0xB0);
@@ -3246,7 +3258,19 @@ void OR_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
     binary->emitByte(token().file, token().line, 0xB1);
 }
 
+void OR_A_C::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB1);
+}
+
 void OR_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB2);
+}
+
+void OR_A_D::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
     binary->emitByte(token().file, token().line, 0xB2);
@@ -3258,7 +3282,19 @@ void OR_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
     binary->emitByte(token().file, token().line, 0xB3);
 }
 
+void OR_A_E::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB3);
+}
+
 void OR_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB4);
+}
+
+void OR_A_H::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
     binary->emitByte(token().file, token().line, 0xB4);
@@ -3270,7 +3306,21 @@ void OR_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* r
     binary->emitByte(token().file, token().line, 0xB5);
 }
 
+void OR_A_L::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 4, 4);
+    binary->emitByte(token().file, token().line, 0xB5);
+}
+
 void OR_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+{
+    ExprEvalContext context1(program, reporter, binary->endAddress(), this);
+    binary->debugInfo()->setTStatesForLocation(token().file, token().line, 7, 7);
+    binary->emitByte(token().file, token().line, 0xF6);
+    binary->emitByte(token().file, token().line, context1.evaluateByte(mLiteral1));
+}
+
+void OR_A_n::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->debugInfo()->setTStatesForLocation(token().file, token().line, 7, 7);

@@ -557,13 +557,21 @@ opcodes = [
         Opcode( 'neg', [                       ], [ 0xED, 0x44             ],  8),
         Opcode( 'nop', [                       ], [ 0x00                   ],  4),
         Opcode(  'or', [                   'a' ], [ 0xB7                   ],  4),
+        Opcode(  'or', [         'a',      'a' ], [ 0xB7                   ],  4),  # alias for 'or a'
         Opcode(  'or', [                   'b' ], [ 0xB0                   ],  4),
+        Opcode(  'or', [         'a',      'b' ], [ 0xB0                   ],  4),  # alias for 'or b'
         Opcode(  'or', [                   'c' ], [ 0xB1                   ],  4),
+        Opcode(  'or', [         'a',      'c' ], [ 0xB1                   ],  4),  # alias for 'or c'
         Opcode(  'or', [                   'd' ], [ 0xB2                   ],  4),
+        Opcode(  'or', [         'a',      'd' ], [ 0xB2                   ],  4),  # alias for 'or d'
         Opcode(  'or', [                   'e' ], [ 0xB3                   ],  4),
+        Opcode(  'or', [         'a',      'e' ], [ 0xB3                   ],  4),  # alias for 'or e'
         Opcode(  'or', [                   'h' ], [ 0xB4                   ],  4),
+        Opcode(  'or', [         'a',      'h' ], [ 0xB4                   ],  4),  # alias for 'or h'
         Opcode(  'or', [                   'l' ], [ 0xB5                   ],  4),
+        Opcode(  'or', [         'a',      'l' ], [ 0xB5                   ],  4),  # alias for 'or l'
         Opcode(  'or', [                   '#' ], [ 0xF6, '#'              ],  7),
+        Opcode(  'or', [         'a',      '#' ], [ 0xF6, '#'              ],  7),  # alias for 'or #'
         Opcode(  'or', [                '(hl)' ], [ 0xB6                   ],  7),
         Opcode(  'or', [              '(ix+#)' ], [ 0xDD, 0xB6, '#'        ], 19),
         Opcode(  'or', [              '(iy+#)' ], [ 0xFD, 0xB6, '#'        ], 19),
