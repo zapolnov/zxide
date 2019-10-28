@@ -15,6 +15,7 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDa
         { "dw", &AssemblerParser::parseDefWord },
         { "dd", &AssemblerParser::parseDefDWord },
         { "defb", &AssemblerParser::parseDefByte },
+        { "defm", &AssemblerParser::parseDefByte },
         { "defw", &AssemblerParser::parseDefWord },
         { "defs", &AssemblerParser::parseDefSpace },
     };
