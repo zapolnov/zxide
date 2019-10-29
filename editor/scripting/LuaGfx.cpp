@@ -33,6 +33,40 @@ int luaGfxLoad(lua_State* L)
     return 1;
 }
 
+static int luaGfxGetDimensions(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+    GfxData& data = vm->check<GfxData>(1);
+    lua_pushinteger(L, data.width());
+    lua_pushinteger(L, data.height());
+    return 2;
+}
+
+static int luaGfxGetFragment(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+    int w = luaL_checkinteger(L, 4);
+    int h = luaL_checkinteger(L, 5);
+
+    if (w < 0)
+        return luaL_error(L, "invalid width.");
+    if (h < 0)
+        return luaL_error(L, "invalid height.");
+
+    QByteArray pixels = data.bytes(x, y, x + w - 1, y + h - 1);
+    QByteArray attrib = data.attrib(x, y, x + w - 1, y + h - 1);
+
+    GfxData* newData = vm->pushNew<GfxData>(w, h);
+    newData->setBytes(x, y, w, h, pixels);
+    newData->setAttrib(x, y, w, h, attrib);
+
+    return 1;
+}
+
 static std::string generateMonochrome(const GfxData& data)
 {
     GfxFile file;
@@ -242,6 +276,8 @@ static int luaGfxWriteBTile16Attributes(lua_State* L)
 
 const luaL_Reg LuaGfx[] = {
     { "gfxLoad", luaGfxLoad },
+    { "gfxGetDimensions", luaGfxGetDimensions },
+    { "gfxGetFragment", luaGfxGetFragment },
     { "gfxGenerateMonochromeAssembly", luaGfxGenerateMonochromeAssembly },
     { "gfxGenerateStandardAssembly", luaGfxGenerateStandardAssembly },
     { "gfxGenerateStandardAttributesAssembly", luaGfxGenerateStandardAttributesAssembly },
