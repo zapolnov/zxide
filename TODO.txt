@@ -19,5 +19,4 @@
 * Allow constants like 'A' as operands
 * Step Out maybe incorrectly handles inner calls
 * Support for undocumented Z80 instructions
-* Resizing map to smaller size and then doing Undo does not restore original content
-* Drawing multitile object on the map at the bottom border causes assertion failure
+* Changing value in map editor's dimensions SpinBox causes loss of map data (also it consumes Ctrl+Z which causes confusion)

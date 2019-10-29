@@ -51,7 +51,10 @@ public:
         int tileY = mNewValue / TileSetData::GridWidth;
         for (int y = 0; y < mHeight; y++) {
             for (int x = 0; x < mWidth; x++)
-                data->at(mX + x, mY + y) = (tileY + y) * TileSetData::GridWidth + (tileX + x);
+            {
+                if (data->isValidCoord(mX + x, mY + y))
+                    data->at(mX + x, mY + y) = (tileY + y) * TileSetData::GridWidth + (tileX + x);
+            }
         }
     }
 
