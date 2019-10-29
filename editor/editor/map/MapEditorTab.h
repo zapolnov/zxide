@@ -17,7 +17,7 @@ public:
     explicit MapEditorTab(QWidget* parent = nullptr);
     ~MapEditorTab() override;
 
-    void selectTile(char item);
+    void selectTile(unsigned char item);
 
     bool loadFile(File* f) override;
 
@@ -76,7 +76,7 @@ private:
     void setSaved();
 
     Q_SLOT void on_editorWidget_sizeChanged();
-    Q_SLOT void on_editorWidget_itemPicked(char item);
+    Q_SLOT void on_editorWidget_itemPicked(unsigned char item);
     Q_SLOT void on_editorWidget_updateUi() { emit updateUi(); }
     Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
     Q_SLOT void on_widthSpin_valueChanged(int);

@@ -21,4 +21,3 @@
 * Support for undocumented Z80 instructions
 * Resizing map to smaller size and then doing Undo does not restore original content
 * Drawing multitile object on the map at the bottom border causes assertion failure
-* Tiles with id greater than 127 are not handled correctly in the map editor

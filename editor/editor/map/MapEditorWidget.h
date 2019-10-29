@@ -71,11 +71,11 @@ public:
     void selectAll();
     void clearSelection();
 
-    char at(int x, int y) const;
-    char at(const QPoint& p) const;
+    unsigned char at(int x, int y) const;
+    unsigned char at(const QPoint& p) const;
 
-    char currentItem() const { return mCurrentItem; }
-    void setItem(char item);
+    unsigned char currentItem() const { return mCurrentItem; }
+    void setItem(unsigned char item);
 
     MapEditorTool currentTool() const;
     void setTool(MapEditorTool tool);
@@ -91,7 +91,7 @@ protected:
 signals:
     void updateUi();
     void sizeChanged();
-    void itemPicked(char item);
+    void itemPicked(unsigned char item);
 
 private:
     class Operation;
@@ -142,7 +142,7 @@ private:
     QHash<int, MapEditorTile> mTiles;
     Rect mSelection;
     QPoint mMousePosition;
-    char mCurrentItem;
+    unsigned char mCurrentItem;
     bool mMousePressed;
     bool mFlash;
     static bool mGridVisible;

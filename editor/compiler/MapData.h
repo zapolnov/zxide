@@ -26,10 +26,10 @@ public:
     bool isValidCoord(int x, int y) const;
     bool isValidCoord(const QPoint& pt) const;
 
-    char at(int x, int y) const;
-    char at(const QPoint& p) const;
-    char& at(int x, int y);
-    char& at(const QPoint& p);
+    unsigned char at(int x, int y) const;
+    unsigned char at(const QPoint& p) const;
+    unsigned char& at(int x, int y);
+    unsigned char& at(const QPoint& p);
 
     void clear();
     void clear(int x1, int y1, int x2, int y2);
@@ -44,7 +44,7 @@ signals:
     void sizeChanged();
 
 private:
-    std::unique_ptr<char[]> mData;
+    std::unique_ptr<unsigned char[]> mData;
     int mWidth;
     int mHeight;
 

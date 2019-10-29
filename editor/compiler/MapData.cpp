@@ -3,7 +3,7 @@
 
 MapData::MapData(int w, int h, QObject* parent)
     : QObject(parent)
-    , mData(new char[w * h])
+    , mData(new unsigned char[w * h])
     , mWidth(w)
     , mHeight(h)
 {
@@ -22,7 +22,7 @@ void MapData::resize(int w, int h)
     if (mWidth == w && mHeight == h)
         return;
 
-    std::unique_ptr<char[]> newData{new char[w * h]};
+    std::unique_ptr<unsigned char[]> newData{new unsigned char[w * h]};
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++)
             newData[y * w + x] = (isValidCoord(x, y) ? at(x, y) : 0);
@@ -45,7 +45,7 @@ bool MapData::isValidCoord(const QPoint& pt) const
     return isValidCoord(pt.x(), pt.y());
 }
 
-char MapData::at(int x, int y) const
+unsigned char MapData::at(int x, int y) const
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y))
@@ -54,16 +54,16 @@ char MapData::at(int x, int y) const
     return mData[y * mWidth + x];
 }
 
-char MapData::at(const QPoint& p) const
+unsigned char MapData::at(const QPoint& p) const
 {
     return at(p.x(), p.y());
 }
 
-char& MapData::at(int x, int y)
+unsigned char& MapData::at(int x, int y)
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y)) {
-        static char dummy;
+        static unsigned char dummy;
         dummy = 0;
         return dummy;
     }
@@ -71,7 +71,7 @@ char& MapData::at(int x, int y)
     return mData[y * mWidth + x];
 }
 
-char& MapData::at(const QPoint& p)
+unsigned char& MapData::at(const QPoint& p)
 {
     return at(p.x(), p.y());
 }
@@ -91,7 +91,7 @@ void MapData::clear(int x1, int y1, int x2, int y2)
 
 QByteArray MapData::bytes() const
 {
-    return QByteArray(mData.get(), mWidth * mHeight);
+    return QByteArray(reinterpret_cast<const char*>(mData.get()), mWidth * mHeight);
 }
 
 QByteArray MapData::bytes(int x1, int y1, int x2, int y2) const
