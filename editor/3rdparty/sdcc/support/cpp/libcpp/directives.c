@@ -1067,7 +1067,7 @@ do_diagnostic (cpp_reader *pfile, int code, int reason, int print_dir)
     cpp_warning_with_line (pfile, reason, src_loc, 0, "%s", line);
   else
     cpp_error_with_line (pfile, code, src_loc, 0, "%s", line);
-  free (line);
+  Safe_free (line);
 }
 
 static void
@@ -1319,7 +1319,7 @@ restore_registered_pragmas (cpp_reader *pfile, struct pragma_entry *pe,
       if (pe->is_nspace)
 	sd = restore_registered_pragmas (pfile, pe->u.space, sd);
       pe->pragma = cpp_lookup (pfile, UC *sd, strlen (*sd));
-      free (*sd);
+      Safe_free (*sd);
       sd++;
     }
   return sd;

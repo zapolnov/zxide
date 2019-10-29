@@ -91,7 +91,9 @@ static void* REALLOC(void* ptr, size_t size)
     assert(b->prev != b);
 
     b = (block*)realloc(b, sizeof(block) + size);
+  #ifndef NDEBUG
     b->size = size;
+  #endif
     b->next->prev = b;
     b->prev->next = b;
 
