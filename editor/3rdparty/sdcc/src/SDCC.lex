@@ -407,12 +407,13 @@ check_type (void)
  * to support ANSI hex and octal escape sequences in string literals
  */
 
+struct dbuf_s dbuf;  /* reusable string literal buffer */
+
 static const char *
 stringLiteral (char enc)
 {
 #define STR_BUF_CHUNCK_LEN  1024
   int ch;
-  static struct dbuf_s dbuf;  /* reusable string literal buffer */
 
   if (dbuf.alloc == 0)
     dbuf_init(&dbuf, STR_BUF_CHUNCK_LEN);
@@ -1060,9 +1061,17 @@ doPragma (int id, const char *name, const char *cp)
           }
 
         if (id == P_CODESEG)
+        {
+          if (options.code_seg)
+            Safe_free(options.code_seg);
           options.code_seg = dbuf_detach(&segname);
+        }
         else
+        {
+          if (options.const_seg)
+            Safe_free(options.const_seg);
           options.const_seg = dbuf_detach(&segname);
+        }
       }
       break;
 
@@ -1195,4 +1204,10 @@ yyerror (char *s)
   werror (S_SYNTAX_ERROR, yytext, column);
 
   return 0;
+}
+
+void sdcc_cleanupLex(void)
+{
+    memset(&dbuf, 0, sizeof(dbuf));
+    memset(&asmbuff, 0, sizeof(asmbuff));
 }

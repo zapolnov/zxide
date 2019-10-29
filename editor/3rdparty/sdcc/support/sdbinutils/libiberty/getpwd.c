@@ -95,7 +95,7 @@ getpwd (void)
 	for (s = GUESSPATHLEN;  !getcwd (p = XNEWVEC (char, s), s);  s *= 2)
 	  {
 	    int e = errno;
-	    free (p);
+	    /*free*/Safe_free (p);
 #ifdef ERANGE
 	    if (e != ERANGE)
 #endif

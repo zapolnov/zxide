@@ -1165,6 +1165,6 @@ _cpp_expansions_different_trad (const cpp_macro *macro1,
       mismatch = (len1 != len2 || memcmp (p1, p2, len1));
     }
 
-  free (p1);
+  /*free*/Safe_free (p1);
   return mismatch;
 }

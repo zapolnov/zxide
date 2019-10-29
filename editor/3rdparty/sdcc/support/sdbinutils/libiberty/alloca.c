@@ -181,7 +181,7 @@ C_alloca (size_t size)
 	{
 	  register header *np = hp->h.next;
 
-	  free ((PTR) hp);	/* Collect garbage.  */
+	  /*free*/Safe_free ((PTR) hp);	/* Collect garbage.  */
 
 	  hp = np;		/* -> next header.  */
 	}

@@ -36,6 +36,7 @@ extern void (*sdcc_msg_puts)(const char* str);
 extern void (*sdcc_msg_printf)(const char* fmt, ...);
 extern void (*sdcc_msg_vprintf)(const char* fmt, va_list args);
 
+void sdcc_cleanupLex(void);
 void sdcc_cleanupHTab(void);
 void sdcc_cleanupAst(void);
 void sdcc_cleanupLabel(void);

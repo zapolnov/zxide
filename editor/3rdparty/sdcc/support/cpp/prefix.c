@@ -171,7 +171,7 @@ lookup_key (char *key)
 
   if (type != REG_SZ || res != ERROR_SUCCESS)
     {
-      free (dst);
+      /*free*/Safe_free (dst);
       dst = 0;
     }
 
@@ -225,7 +225,7 @@ translate_name (char *name)
 
       old_name = name;
       name = concat (prefix, &name[keylen + 1], NULL);
-      free (old_name);
+      /*free*/Safe_free (old_name);
     }
 
   return name;
@@ -268,7 +268,7 @@ update_path (const char *path, const char *key)
 
       result = concat (key, &path[len], NULL);
       if (free_key)
-        free (CONST_CAST (char *, key));
+        /*free*/Safe_free (CONST_CAST (char *, key));
       result = translate_name (result);
     }
   else

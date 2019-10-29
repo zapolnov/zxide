@@ -188,7 +188,7 @@ reconcat (char *optr, const char *first, ...)
   va_start (args, first);
   vconcat_copy (newstr, first, args);
   if (optr) /* Done before VA_CLOSE so optr stays in scope for K&R C.  */
-    free (optr);
+    /*free*/Safe_free (optr);
   va_end (args);
 
   return newstr;

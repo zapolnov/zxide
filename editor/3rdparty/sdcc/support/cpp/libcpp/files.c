@@ -396,7 +396,7 @@ find_file_in_dir (cpp_reader *pfile, _cpp_file *file, bool *invalid_pch)
 	 heap.  */
       copy = (char *) obstack_copy0 (&pfile->nonexistent_file_ob, path,
 				     strlen (path));
-      free (path);
+      /*free*/Safe_free (path);
       pp = htab_find_slot_with_hash (pfile->nonexistent_file_hash,
 				     copy, hv, INSERT);
       *pp = copy;
@@ -427,7 +427,7 @@ search_path_exhausted (cpp_reader *pfile, const char *header, _cpp_file *file)
 	{
 	  if (open_file (file))
 	    return true;
-	  free ((void *)file->path);
+	  /*free*/Safe_free ((void *)file->path);
 	}
       file->path = file->name;
     }
@@ -534,8 +534,8 @@ _cpp_find_file (cpp_reader *pfile, const char *fname, cpp_dir *start_dir, bool f
   if (entry)
     {
       /* Cache for START_DIR too, sharing the _cpp_file structure.  */
-      free ((char *) file->name);
-      free (file);
+      /*free*/Safe_free ((char *) file->name);
+      /*free*/Safe_free (file);
       file = entry->u.file;
     }
   else
@@ -648,14 +648,14 @@ read_file_guts (cpp_reader *pfile, _cpp_file *file)
 
   if (count < 0)
     {
-      free(buf);
+      /*free*/Safe_free(buf);
       cpp_errno (pfile, CPP_DL_ERROR, file->path);
       return false;
     }
 
   if (/*regular &&*/ total != size /*&& STAT_SIZE_RELIABLE (file->st)*/)
     {
-      free(buf);
+      /*free*/Safe_free(buf);
     cpp_error (pfile, CPP_DL_WARNING,
 	       "%s is shorter than expected", file->path);
     }
@@ -1012,9 +1012,9 @@ static void
 destroy_cpp_file (_cpp_file *file)
 {
   if (file->buffer_start)
-    free ((void *) file->buffer_start);
-  free ((void *) file->name);
-  free (file);
+    /*free*/Safe_free ((void *) file->buffer_start);
+  /*free*/Safe_free ((void *) file->name);
+  /*free*/Safe_free (file);
 }
 
 /* Release all the files allocated by this reader.  */
@@ -1101,7 +1101,7 @@ free_file_hash_entries (cpp_reader *pfile)
   while (iter)
     {
       struct file_hash_entry_pool *next = iter->next;
-      free (iter);
+      /*free*/Safe_free (iter);
       iter = next;
     }
 }
@@ -1186,16 +1186,16 @@ void
 _cpp_init_files (cpp_reader *pfile)
 {
   pfile->file_hash = htab_create_alloc (127, file_hash_hash, file_hash_eq,
-					NULL, xcalloc, free);
+					NULL, xcalloc, /*free*/Safe_free);
   pfile->dir_hash = htab_create_alloc (127, file_hash_hash, file_hash_eq,
-					NULL, xcalloc, free);
+					NULL, xcalloc, /*free*/Safe_free);
   allocate_file_hash_entries (pfile);
   pfile->nonexistent_file_hash = htab_create_alloc (127, htab_hash_string,
 						    nonexistent_file_hash_eq,
-						    NULL, xcalloc, free);
+						    NULL, xcalloc, /*free*/Safe_free);
   _obstack_begin (&pfile->nonexistent_file_ob, 0, 0,
 		  (void *(*) (size_t)) xmalloc,
-		  (void (*) (void *)) free);
+		  (void (*) (void *)) /*free*/Safe_free);
 }
 
 /* Finalize everything in this source file.  */
@@ -1326,7 +1326,7 @@ _cpp_report_missing_guards (cpp_reader *pfile)
 	  /*fputs */sdcc_msg_puts(data.paths[i]/*, stderr*/);
 	  /*putc */sdcc_msg_putc('\n'/*, stderr*/);
 	}
-      free (data.paths);
+      /*free*/Safe_free (data.paths);
     }
 }
 

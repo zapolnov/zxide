@@ -230,7 +230,7 @@ cpp_create_reader (enum c_lang lang, hash_table *table,
   /* Initialize the buffer obstack.  */
   _obstack_begin (&pfile->buffer_ob, 0, 0,
 		  (void *(*) (size_t)) xmalloc,
-		  (void (*) (void *)) free);
+		  (void (*) (void *)) /*free*/Safe_free);
 
   _cpp_init_files (pfile);
 
@@ -257,17 +257,17 @@ cpp_destroy (cpp_reader *pfile)
   tokenrun *run, *runn;
   int i;
 
-  free (pfile->op_stack);
+  /*free*/Safe_free (pfile->op_stack);
 
   while (CPP_BUFFER (pfile) != NULL)
     _cpp_pop_buffer (pfile);
 
   if (pfile->out.base)
-    free (pfile->out.base);
+    /*free*/Safe_free (pfile->out.base);
 
   if (pfile->macro_buffer)
     {
-      free (pfile->macro_buffer);
+      /*free*/Safe_free (pfile->macro_buffer);
       pfile->macro_buffer = NULL;
       pfile->macro_buffer_len = 0;
     }
@@ -287,23 +287,23 @@ cpp_destroy (cpp_reader *pfile)
   for (run = &pfile->base_run; run; run = runn)
     {
       runn = run->next;
-      free (run->base);
+      /*free*/Safe_free (run->base);
       if (run != &pfile->base_run)
-	free (run);
+	/*free*/Safe_free (run);
     }
 
   for (context = pfile->base_context.next; context; context = contextn)
     {
       contextn = context->next;
-      free (context);
+      /*free*/Safe_free (context);
     }
 
   if (pfile->comments.entries)
     {
       for (i = 0; i < pfile->comments.count; i++)
-	free (pfile->comments.entries[i].comment);
+	/*free*/Safe_free (pfile->comments.entries[i].comment);
 
-      free (pfile->comments.entries);
+      /*free*/Safe_free (pfile->comments.entries);
     }
   if (pfile->pushed_macros)
     {
@@ -311,13 +311,13 @@ cpp_destroy (cpp_reader *pfile)
 	{
 	  pmacro = pfile->pushed_macros;
 	  pfile->pushed_macros = pmacro->next;
-	  free (pmacro->name);
-	  free (pmacro);
+	  /*free*/Safe_free (pmacro->name);
+	  /*free*/Safe_free (pmacro);
 	}
       while (pfile->pushed_macros);
     }
 
-  free (pfile);
+  /*free*/Safe_free (pfile);
 }
 
 /* This structure defines one built-in identifier.  A node will be

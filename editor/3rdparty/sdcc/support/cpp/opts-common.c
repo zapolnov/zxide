@@ -159,7 +159,7 @@ prune_options (int *argcp, char ***argvp)
           opt = dup;
           value = 0;
           opt_index = find_opt (opt + 1, -1);
-          free (dup);
+          /*free*/Safe_free (dup);
         }
 
       if (opt_index == cl_options_count)
@@ -228,8 +228,8 @@ keep:
   else
     {
 done:
-      free (argv);
+      /*free*/Safe_free (argv);
     }
 
-  free (options);
+  /*free*/Safe_free (options);
 }

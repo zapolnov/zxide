@@ -2825,7 +2825,7 @@ _cpp_free_buff (_cpp_buff *buff)
   for (; buff; buff = next)
     {
       next = buff->next;
-      free (buff->base);
+      /*free*/Safe_free (buff->base);
     }
 }
 

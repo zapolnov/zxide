@@ -1331,7 +1331,7 @@ void
 _cpp_restore_pragma_names (cpp_reader *pfile, char **saved)
 {
   (void) restore_registered_pragmas (pfile, pfile->pragmas, saved);
-  free (saved);
+  /*free*/Safe_free (saved);
 }
 
 /* Pragmata handling.  We handle some, and pass the rest on to the
@@ -1534,9 +1534,9 @@ do_pragma_pop_macro (cpp_reader *pfile)
 	  else
 	    l->next = c->next;
 	  cpp_pop_definition (pfile, c);
-	  free (c->definition);
-	  free (c->name);
-	  free (c);
+	  /*free*/Safe_free (c->definition);
+	  /*free*/Safe_free (c->name);
+	  /*free*/Safe_free (c);
 	  break;
 	}
       l = c;
@@ -2342,7 +2342,7 @@ cpp_define_formatted (cpp_reader *pfile, const char *fmt, ...)
   va_end (ap);
 
   cpp_define (pfile, ptr);
-  free (ptr);
+  /*free*/Safe_free (ptr);
 }
 
 

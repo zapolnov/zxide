@@ -350,7 +350,7 @@ extern unsigned int xcrc32 (const unsigned char *, int, unsigned int);
 #define XNEW(T)			((T *) xmalloc (sizeof (T)))
 #define XCNEW(T)		((T *) xcalloc (1, sizeof (T)))
 #define XDUP(T, P)		((T *) xmemdup ((P), sizeof (T), sizeof (T)))
-#define XDELETE(P)		free ((void*) (P))
+#define XDELETE(P)		/*free*/Safe_free ((void*) (P))
 
 /* Array allocators.  */
 

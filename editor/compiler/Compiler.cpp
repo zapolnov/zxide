@@ -577,6 +577,7 @@ namespace
         sdcc_cleanupOpt();
         sdcc_cleanupZ80Gen();
         sdcc_cleanupGlue();
+        sdcc_cleanupLex();
 
         while (!openFiles.empty()) {
             void* file = *openFiles.begin();

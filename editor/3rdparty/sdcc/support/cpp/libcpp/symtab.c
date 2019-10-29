@@ -64,7 +64,7 @@ ht_create (unsigned int order)
   /* Strings need no alignment.  */
   _obstack_begin (&table->stack, 0, 0,
 		  (void *(*) (size_t)) xmalloc,
-		  (void (*) (void *)) free);
+		  (void (*) (void *)) /*free*/Safe_free);
 
   obstack_alignment_mask (&table->stack) = 0;
 
@@ -81,8 +81,8 @@ ht_destroy (hash_table *table)
 {
   obstack_free (&table->stack, NULL);
   if (table->entries_owned)
-    free (table->entries);
-  free (table);
+    /*free*/Safe_free (table->entries);
+  /*free*/Safe_free (table);
 }
 
 /* Returns the hash entry for the a STR of length LEN.  If that string
@@ -215,7 +215,7 @@ ht_expand (hash_table *table)
   while (++p < limit);
 
   if (table->entries_owned)
-    free (table->entries);
+    /*free*/Safe_free (table->entries);
   table->entries_owned = true;
   table->entries = nentries;
   table->nslots = size;
@@ -264,7 +264,7 @@ ht_load (hash_table *ht, hashnode *entries,
 	 bool own)
 {
   if (ht->entries_owned)
-    free (ht->entries);
+    /*free*/Safe_free (ht->entries);
   ht->entries = entries;
   ht->nslots = nslots;
   ht->nelements = nelements;

@@ -806,7 +806,7 @@ cpp_host_to_exec_charset (cpp_reader *pfile, cppchar_t c)
       return 0;
     }
   c = tbuf.text[0];
-  free(tbuf.text);
+  /*free*/Safe_free(tbuf.text);
   return c;
 }
 
@@ -1442,7 +1442,7 @@ cpp_interpret_string (cpp_reader *pfile, const cpp_string *from, size_t count,
 
  fail:
   cpp_errno (pfile, CPP_DL_ERROR, "converting to execution character set");
-  free (tbuf.text);
+  /*free*/Safe_free (tbuf.text);
   return false;
 }
 
@@ -1622,7 +1622,7 @@ cpp_interpret_charconst (cpp_reader *pfile, const cpp_token *token,
     result = narrow_str_to_charconst (pfile, str, pchars_seen, unsignedp);
 
   if (str.text != token->val.str.text)
-    free ((void *)str.text);
+    /*free*/Safe_free ((void *)str.text);
 
   return result;
 }
@@ -1721,7 +1721,7 @@ _cpp_convert_input (cpp_reader *pfile, const char *input_charset,
 		   "failure to convert %s to %s",
 		   CPP_OPTION (pfile, input_charset), SOURCE_CHARSET);
 
-      free (input);
+      /*free*/Safe_free (input);
     }
 
   /* Clean up the mess.  */

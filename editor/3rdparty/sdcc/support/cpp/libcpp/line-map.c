@@ -67,7 +67,7 @@ linemap_free (struct line_maps *set)
     {
       linemap_check_files_exited (set);
 
-      free (set->maps);
+      /*free*/Safe_free (set->maps);
     }
 }
 

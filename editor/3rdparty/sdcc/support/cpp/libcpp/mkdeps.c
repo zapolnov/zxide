@@ -179,26 +179,26 @@ deps_free (struct deps *d)
   if (d->targetv)
     {
       for (i = 0; i < d->ntargets; i++)
-	free ((void *) d->targetv[i]);
-      free (d->targetv);
+	/*free*/Safe_free ((void *) d->targetv[i]);
+      /*free*/Safe_free (d->targetv);
     }
 
   if (d->depv)
     {
       for (i = 0; i < d->ndeps; i++)
-	free ((void *) d->depv[i]);
-      free (d->depv);
+	/*free*/Safe_free ((void *) d->depv[i]);
+      /*free*/Safe_free (d->depv);
     }
 
   if (d->vpathv)
     {
       for (i = 0; i < d->nvpaths; i++)
-	free ((void *) d->vpathv[i]);
-      free (d->vpathv);
-      free (d->vpathlv);
+	/*free*/Safe_free ((void *) d->vpathv[i]);
+      /*free*/Safe_free (d->vpathv);
+      /*free*/Safe_free (d->vpathlv);
     }
 
-  free (d);
+  /*free*/Safe_free (d);
 }
 
 /* Adds a target T.  We make a copy, so it need not be a permanent

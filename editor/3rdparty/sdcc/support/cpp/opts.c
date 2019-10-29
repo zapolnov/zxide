@@ -115,8 +115,8 @@ complain_wrong_lang (const char *text, const struct cl_option *option,
   warning (0, "command line option \"%s\" is valid for %s but not for %s",
 	   text, ok_langs, bad_lang);
 
-  free (ok_langs);
-  free (bad_lang);
+  /*free*/Safe_free (ok_langs);
+  /*free*/Safe_free (bad_lang);
 }
 
 /* Handle the switch beginning at ARGV for the language indicated by
@@ -268,7 +268,7 @@ handle_option (const char **argv, unsigned int lang_mask)
 
  done:
   if (dup)
-    free (dup);
+    /*free*/Safe_free (dup);
   return result;
 }
 

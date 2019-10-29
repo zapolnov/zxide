@@ -66,6 +66,8 @@ static void* MALLOC(size_t size)
 
     b->next = &head;
     b->prev = head.prev;
+    assert(b->next->prev == b->prev);
+    assert(b->prev->next == b->next);
     b->next->prev = b;
     b->prev->next = b;
   #ifndef NDEBUG
@@ -118,7 +120,8 @@ void FREE(void* ptr)
     b->prev->next = b->next;
 
   #ifndef NDEBUG
-    memset(b, 0xcc, sizeof(block) + b->size);
+    size_t size = b->size;
+    memset(b, 0xcc, sizeof(block) + size);
   #endif
 
     free(b);

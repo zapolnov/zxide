@@ -57,7 +57,7 @@ _cpp_init_hashtable (cpp_reader *pfile, hash_table *table)
 
       _obstack_begin (&pfile->hash_ob, 0, 0,
 		      (void *(*) (size_t)) xmalloc,
-		      (void (*) (void *)) free);
+		      (void (*) (void *)) /*free*/Safe_free);
     }
 
   table->pfile = pfile;
