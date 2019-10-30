@@ -271,13 +271,21 @@ opcodes = [
         Opcode(  'cp', [                   'l' ], [ 0xBD                   ],  4),
         Opcode(  'cp', [         'a',      'l' ], [ 0xBD                   ],  4),  # alias for 'cp l'
         Opcode(  'cp', [                   '#' ], [ 0xFE, '#'              ],  7),
+        Opcode(  'cp', [         'a',      '#' ], [ 0xFE, '#'              ],  7),  # alias for 'cp #'
         Opcode(  'cp', [                '(hl)' ], [ 0xBE                   ],  7),
+        Opcode(  'cp', [         'a',   '(hl)' ], [ 0xBE                   ],  7),  # alias for 'cp (hl)'
         Opcode(  'cp', [              '(ix+#)' ], [ 0xDD, 0xBE, '#'        ], 19),
+        Opcode(  'cp', [         'a', '(ix+#)' ], [ 0xDD, 0xBE, '#'        ], 19),  # alias for 'cp (ix+#)'
         Opcode(  'cp', [              '(iy+#)' ], [ 0xFD, 0xBE, '#'        ], 19),
+        Opcode(  'cp', [         'a', '(iy+#)' ], [ 0xFD, 0xBE, '#'        ], 19),  # alias for 'cp (iy+#)'
         Opcode(  'cp', [                 'ixh' ], [ 0xDD, 0xBC             ],  8),  # undocumented
+        Opcode(  'cp', [         'a',    'ixh' ], [ 0xDD, 0xBC             ],  8),  # alias for 'cp ixh'
         Opcode(  'cp', [                 'iyh' ], [ 0xFD, 0xBC             ],  8),  # undocumented
+        Opcode(  'cp', [         'a',    'iyh' ], [ 0xFD, 0xBC             ],  8),  # alias for 'cp iyh'
         Opcode(  'cp', [                 'ixl' ], [ 0xDD, 0xBD             ],  8),  # undocumented
+        Opcode(  'cp', [         'a',    'ixl' ], [ 0xDD, 0xBD             ],  8),  # alias for 'cp ixl'
         Opcode(  'cp', [                 'iyl' ], [ 0xFD, 0xBD             ],  8),  # undocumented
+        Opcode(  'cp', [         'a',    'iyl' ], [ 0xFD, 0xBD             ],  8),  # alias for 'cp iyl'
         Opcode( 'cpd', [                       ], [ 0xED, 0xA9             ], 16),
         Opcode('cpdr', [                       ], [ 0xED, 0xB9             ], [ 21, 16 ]),
         Opcode( 'cpi', [                       ], [ 0xED, 0xA1             ], 16),
@@ -573,12 +581,19 @@ opcodes = [
         Opcode(  'or', [                   '#' ], [ 0xF6, '#'              ],  7),
         Opcode(  'or', [         'a',      '#' ], [ 0xF6, '#'              ],  7),  # alias for 'or #'
         Opcode(  'or', [                '(hl)' ], [ 0xB6                   ],  7),
+        Opcode(  'or', [         'a',   '(hl)' ], [ 0xB6                   ],  7),  # alias for 'or (hl)'
         Opcode(  'or', [              '(ix+#)' ], [ 0xDD, 0xB6, '#'        ], 19),
+        Opcode(  'or', [         'a', '(ix+#)' ], [ 0xDD, 0xB6, '#'        ], 19),  # alias for 'or (ix+#)'
         Opcode(  'or', [              '(iy+#)' ], [ 0xFD, 0xB6, '#'        ], 19),
+        Opcode(  'or', [         'a', '(iy+#)' ], [ 0xFD, 0xB6, '#'        ], 19),  # alias for 'or (iy+#)'
         Opcode(  'or', [                 'ixh' ], [ 0xDD, 0xB4             ],  8),  # undocumented
+        Opcode(  'or', [         'a',    'ixh' ], [ 0xDD, 0xB4             ],  8),  # alias for 'or ixh'
         Opcode(  'or', [                 'iyh' ], [ 0xFD, 0xB4             ],  8),  # undocumented
+        Opcode(  'or', [         'a',    'iyh' ], [ 0xFD, 0xB4             ],  8),  # alias for 'or iyh'
         Opcode(  'or', [                 'ixl' ], [ 0xDD, 0xB5             ],  8),  # undocumented
+        Opcode(  'or', [         'a',    'ixl' ], [ 0xDD, 0xB5             ],  8),  # alias for 'or ixl'
         Opcode(  'or', [                 'iyl' ], [ 0xFD, 0xB5             ],  8),  # undocumented
+        Opcode(  'or', [         'a',    'iyl' ], [ 0xFD, 0xB5             ],  8),  # alias for 'or iyl'
         Opcode('otdr', [                       ], [ 0xED, 0xBB             ], [ 21, 16 ]),
         Opcode('otir', [                       ], [ 0xED, 0xB3             ], [ 21, 16 ]),
         Opcode( 'out', [      '(#)',       'a' ], [ 0xD3, '#'              ], 11),
@@ -889,50 +904,65 @@ opcodes = [
         Opcode( 'srl', [              '(ix+#)' ], [ 0xDD, 0xCB, '#', 0x3E  ], 23),
         Opcode( 'srl', [              '(iy+#)' ], [ 0xFD, 0xCB, '#', 0x3E  ], 23),
         Opcode( 'sub', [                   'a' ], [ 0x97                   ],  4),
-        Opcode( 'sub', [              'a', 'a' ], [ 0x97                   ],  4), # alias for 'sub a'
+        Opcode( 'sub', [        'a',       'a' ], [ 0x97                   ],  4),  # alias for 'sub a'
         Opcode( 'sub', [                   'b' ], [ 0x90                   ],  4),
-        Opcode( 'sub', [              'a', 'b' ], [ 0x90                   ],  4), # alias for 'sub b'
+        Opcode( 'sub', [        'a',       'b' ], [ 0x90                   ],  4),  # alias for 'sub b'
         Opcode( 'sub', [                   'c' ], [ 0x91                   ],  4),
-        Opcode( 'sub', [              'a', 'c' ], [ 0x91                   ],  4), # alias for 'sub c'
+        Opcode( 'sub', [        'a',       'c' ], [ 0x91                   ],  4),  # alias for 'sub c'
         Opcode( 'sub', [                   'd' ], [ 0x92                   ],  4),
-        Opcode( 'sub', [              'a', 'd' ], [ 0x92                   ],  4), # alias for 'sub d'
+        Opcode( 'sub', [        'a',       'd' ], [ 0x92                   ],  4),  # alias for 'sub d'
         Opcode( 'sub', [                   'e' ], [ 0x93                   ],  4),
-        Opcode( 'sub', [              'a', 'e' ], [ 0x93                   ],  4), # alias for 'sub e'
+        Opcode( 'sub', [        'a',       'e' ], [ 0x93                   ],  4),  # alias for 'sub e'
         Opcode( 'sub', [                   'h' ], [ 0x94                   ],  4),
-        Opcode( 'sub', [              'a', 'h' ], [ 0x94                   ],  4), # alias for 'sub h'
+        Opcode( 'sub', [        'a',       'h' ], [ 0x94                   ],  4),  # alias for 'sub h'
         Opcode( 'sub', [                   'l' ], [ 0x95                   ],  4),
-        Opcode( 'sub', [              'a', 'l' ], [ 0x95                   ],  4), # alias for 'sub l'
+        Opcode( 'sub', [        'a',       'l' ], [ 0x95                   ],  4),  # alias for 'sub l'
         Opcode( 'sub', [                   '#' ], [ 0xD6, '#'              ],  7),
-        Opcode( 'sub', [              'a', '#' ], [ 0xD6, '#'              ],  7), # alias for 'sub #'
+        Opcode( 'sub', [        'a',       '#' ], [ 0xD6, '#'              ],  7),  # alias for 'sub #'
         Opcode( 'sub', [                '(hl)' ], [ 0x96                   ],  7),
+        Opcode( 'sub', [        'a',    '(hl)' ], [ 0x96                   ],  7),  # alias for 'sub (hl)'
         Opcode( 'sub', [                 'ixh' ], [ 0xDD, 0x94             ],  8),  # undocumented
+        Opcode( 'sub', [        'a',     'ixh' ], [ 0xDD, 0x94             ],  8),  # alias for 'sub ixh'
         Opcode( 'sub', [                 'iyh' ], [ 0xFD, 0x94             ],  8),  # undocumented
+        Opcode( 'sub', [        'a',     'iyh' ], [ 0xFD, 0x94             ],  8),  # alias for 'sub iyh'
         Opcode( 'sub', [                 'ixl' ], [ 0xDD, 0x95             ],  8),  # undocumented
+        Opcode( 'sub', [        'a',     'ixl' ], [ 0xDD, 0x95             ],  8),  # alias for 'sub ixl'
         Opcode( 'sub', [                 'iyl' ], [ 0xFD, 0x95             ],  8),  # undocumented
+        Opcode( 'sub', [        'a',     'iyl' ], [ 0xFD, 0x95             ],  8),  # alias for 'sub iyl'
         Opcode( 'sub', [              '(ix+#)' ], [ 0xDD, 0x96, '#'        ], 19),
+        Opcode( 'sub', [        'a',  '(ix+#)' ], [ 0xDD, 0x96, '#'        ], 19),  # alias for 'sub (ix+#)'
         Opcode( 'sub', [              '(iy+#)' ], [ 0xFD, 0x96, '#'        ], 19),
+        Opcode( 'sub', [        'a',  '(iy+#)' ], [ 0xFD, 0x96, '#'        ], 19),  # alias for 'sub (iy+#)'
         Opcode( 'xor', [                   'a' ], [ 0xAF                   ],  4),
-        Opcode( 'xor', [              'a', 'a' ], [ 0xAF                   ],  4), # alias for 'xor a'
+        Opcode( 'xor', [        'a',       'a' ], [ 0xAF                   ],  4),  # alias for 'xor a'
         Opcode( 'xor', [                   'b' ], [ 0xA8                   ],  4),
-        Opcode( 'xor', [              'a', 'b' ], [ 0xA8                   ],  4), # alias for 'xor b'
+        Opcode( 'xor', [        'a',       'b' ], [ 0xA8                   ],  4),  # alias for 'xor b'
         Opcode( 'xor', [                   'c' ], [ 0xA9                   ],  4),
-        Opcode( 'xor', [              'a', 'c' ], [ 0xA9                   ],  4), # alias for 'xor c'
+        Opcode( 'xor', [        'a',       'c' ], [ 0xA9                   ],  4),  # alias for 'xor c'
         Opcode( 'xor', [                   'd' ], [ 0xAA                   ],  4),
-        Opcode( 'xor', [              'a', 'd' ], [ 0xAA                   ],  4), # alias for 'xor d'
+        Opcode( 'xor', [        'a',       'd' ], [ 0xAA                   ],  4),  # alias for 'xor d'
         Opcode( 'xor', [                   'e' ], [ 0xAB                   ],  4),
-        Opcode( 'xor', [              'a', 'e' ], [ 0xAB                   ],  4), # alias for 'xor e'
+        Opcode( 'xor', [        'a',       'e' ], [ 0xAB                   ],  4),  # alias for 'xor e'
         Opcode( 'xor', [                   'h' ], [ 0xAC                   ],  4),
-        Opcode( 'xor', [              'a', 'h' ], [ 0xAC                   ],  4), # alias for 'xor h'
+        Opcode( 'xor', [        'a',       'h' ], [ 0xAC                   ],  4),  # alias for 'xor h'
         Opcode( 'xor', [                   'l' ], [ 0xAD                   ],  4),
-        Opcode( 'xor', [              'a', 'l' ], [ 0xAD                   ],  4), # alias for 'xor l'
+        Opcode( 'xor', [        'a',       'l' ], [ 0xAD                   ],  4),  # alias for 'xor l'
         Opcode( 'xor', [                   '#' ], [ 0xEE, '#'              ],  7),
+        Opcode( 'xor', [        'a',       '#' ], [ 0xEE, '#'              ],  7),  # alias for 'xor #'
         Opcode( 'xor', [                '(hl)' ], [ 0xAE                   ],  7),
+        Opcode( 'xor', [        'a',    '(hl)' ], [ 0xAE                   ],  7),  # alias for 'xor (hl)'
         Opcode( 'xor', [              '(ix+#)' ], [ 0xDD, 0xAE, '#'        ], 19),
+        Opcode( 'xor', [        'a',  '(ix+#)' ], [ 0xDD, 0xAE, '#'        ], 19),  # alias for 'xor (ix+#)'
         Opcode( 'xor', [              '(iy+#)' ], [ 0xFD, 0xAE, '#'        ], 19),
+        Opcode( 'xor', [        'a',  '(iy+#)' ], [ 0xFD, 0xAE, '#'        ], 19),  # alias for 'xor (iy+#)'
         Opcode( 'xor', [                 'ixh' ], [ 0xDD, 0xAC             ],  8),  # undocumented
+        Opcode( 'xor', [        'a',     'ixh' ], [ 0xDD, 0xAC             ],  8),  # alias for 'xor ixh'
         Opcode( 'xor', [                 'iyh' ], [ 0xFD, 0xAC             ],  8),  # undocumented
+        Opcode( 'xor', [        'a',     'iyh' ], [ 0xFD, 0xAC             ],  8),  # alias for 'xor iyh'
         Opcode( 'xor', [                 'ixl' ], [ 0xDD, 0xAD             ],  8),  # undocumented
+        Opcode( 'xor', [        'a',     'ixl' ], [ 0xDD, 0xAD             ],  8),  # alias for 'xor ixl'
         Opcode( 'xor', [                 'iyl' ], [ 0xFD, 0xAD             ],  8),  # undocumented
+        Opcode( 'xor', [        'a',     'iyl' ], [ 0xFD, 0xAD             ],  8),  # alias for 'xor iyl'
     ]
 
 hdr  = '// THIS IS A GENERATED FILE. DO NOT EDIT!\n'
