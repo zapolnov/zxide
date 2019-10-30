@@ -148,7 +148,7 @@ bool uselessDecl = TRUE;
 file
    : /* empty */
         {
-          werror(W_EMPTY_SOURCE_FILE);
+          /*werror(W_EMPTY_SOURCE_FILE);*/
         }
    | program
    ;

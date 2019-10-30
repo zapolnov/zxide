@@ -2706,7 +2706,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 150 "SDCC.y"
     {
-          werror(W_EMPTY_SOURCE_FILE);
+          /*werror(W_EMPTY_SOURCE_FILE);*/
         }
     break;
 

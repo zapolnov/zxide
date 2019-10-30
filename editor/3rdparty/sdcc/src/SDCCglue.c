@@ -1823,6 +1823,7 @@ printIval (symbol * sym, sym_link * type, initList * ilist, struct dbuf_s *oBuf,
           if (ilist->init.deep->next)
             {
               werrorfl (sym->fileDef, sym->lineDef, W_EXCESS_INITIALIZERS, "scalar", sym->name);
+              return;
             }
           else
             {
