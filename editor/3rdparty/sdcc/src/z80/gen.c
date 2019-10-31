@@ -11864,7 +11864,7 @@ _dbFlush (DBEMITCTX * self)
   if (self->pos > 0)
     {
       int i;
-      sprintf (line, ".db 0x%02X", self->buffer[0]);
+      sprintf (line, "defb 0x%02X", self->buffer[0]);
 
       for (i = 1; i < self->pos; i++)
         {
@@ -11916,7 +11916,7 @@ _rleCommit (RLECTX * self)
       DBEMITCTX db;
       memset (&db, 0, sizeof (db));
 
-      emit2 (".db %u", self->pos);
+      emit2 ("defb %u", self->pos);
 
       for (i = 0; i < self->pos; i++)
         {
@@ -12080,7 +12080,7 @@ genArrayInit (iCode * ic)
 
   _rleFlush (&rle);
   /* Mark the end of the run. */
-  emit2 (".db 0");
+  emit2 ("defb 0");
 
   _restoreRegsAfterCall ();
 
