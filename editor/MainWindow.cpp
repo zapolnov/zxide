@@ -340,7 +340,7 @@ bool MainWindow::build()
                     .arg(tr("All modified files have to be saved before compiling the code."))
                     .arg(tr("Save all files now?")),
                 QMessageBox::NoButton, this);
-            auto btnSave = msgbox.addButton(tr("Save all and build"), QMessageBox::AcceptRole);
+            msgbox.addButton(tr("Save all and build"), QMessageBox::AcceptRole);
             auto btnCancel = msgbox.addButton(tr("Cancel"), QMessageBox::RejectRole);
             msgbox.setCheckBox(autoSaveCheck);
             msgbox.setDefaultButton(btnCancel);
@@ -462,7 +462,6 @@ void MainWindow::navigateToAddress(unsigned address, bool setHighlight)
             HighlightManager::instance()->clearHighlight(Highlight::CurrentPC);
     }
 
-    auto disasm = disassemblyTab();
     if (file) {
         auto tab = setCurrentTab(file);
         if (tab && tab->canGoToLine()) {

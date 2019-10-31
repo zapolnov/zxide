@@ -46,7 +46,7 @@ void StackWidget::paintGL()
         mDataBuffer.resize(dataBufferSize);
 
     unsigned firstAddr = (EmulatorCore::instance()->stackPointer()) & 0xffff;
-    unsigned lastAddr = (firstAddr + dataBufferSize) & 0xffff;
+    //unsigned lastAddr = (firstAddr + dataBufferSize) & 0xffff;
     unsigned addr = firstAddr;
     EmulatorCore::instance()->getMemory(firstAddr, mDataBuffer.data(), dataBufferSize);
 

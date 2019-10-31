@@ -31,10 +31,10 @@ void DisassemblyWidget::paintGL()
     if (!EmulatorCore::instance()->isRunning())
         return;
 
-    int pixW = width();
+    //int pixW = width();
     int pixH = height();
 
-    int w = qMax(14, (pixW + CharWidth  - 1) / CharWidth);
+    //int w = qMax(14, (pixW + CharWidth  - 1) / CharWidth);
     int h = qMax( 1, (pixH + CharHeight - 1) / CharHeight);
 
     unsigned addr = (EmulatorCore::instance()->instructionPointer()) & 0xffff;
