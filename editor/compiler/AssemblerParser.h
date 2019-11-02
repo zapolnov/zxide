@@ -91,7 +91,7 @@ private:
     bool matchEol();
     bool matchToken(int token);
     bool matchIdentifier(const char* ident);
-    bool matchExpression(std::unique_ptr<Expression>* out);
+    bool matchExpression(std::unique_ptr<Expression>* out, bool unambiguous = false);
     bool matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out);
     bool matchByte(quint8* out);
 

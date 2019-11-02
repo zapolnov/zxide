@@ -417,9 +417,9 @@ bool AssemblerParser::matchIdentifier(const char* ident)
     return true;
 }
 
-bool AssemblerParser::matchExpression(std::unique_ptr<Expression>* out)
+bool AssemblerParser::matchExpression(std::unique_ptr<Expression>* out, bool unambiguous)
 {
-    return tryParseExpression(lastTokenId(), out, false);
+    return tryParseExpression(lastTokenId(), out, unambiguous);
 }
 
 bool AssemblerParser::matchExpressionNegative(const Token& minusToken, std::unique_ptr<Expression>* out)

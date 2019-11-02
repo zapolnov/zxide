@@ -1112,8 +1112,14 @@ for opcode in opcodes:
             literalIndex += 1
         elif op == '(##)':
             addCond(conds, 'token(T_LPAREN)')
-            addCond(conds, 'wordLiteral(&mLiteral%d)' % literalIndex)
-            addCond(conds, 'token(T_RPAREN)')
+            orig = conds[:]
+            alt1 = forkConds(conds, orig)
+            addCond(orig, 'token(T_LPAREN)')
+            addCond(orig, 'wordLiteral(&mLiteral%d, true)' % literalIndex)
+            addCond(orig, 'token(T_RPAREN)')
+            addCond(orig, 'token(T_RPAREN)')
+            addCond(alt1, 'wordLiteral(&mLiteral%d)' % literalIndex)
+            addCond(alt1, 'token(T_RPAREN)')
             literalIndex += 1
         elif op == '#':
             addCond(conds, 'byteLiteral(&mLiteral%d)' % literalIndex)
@@ -1154,7 +1160,7 @@ src2 += '\n'
 src2 += '    bool byteLiteral(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
 src2 += '    bool byteLiteralNegative(std::unique_ptr<Expression>* out) const { return mParser->matchExpressionNegative(mMinusToken, out); }\n'
 src2 += '    bool byteOffset(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
-src2 += '    bool wordLiteral(std::unique_ptr<Expression>* out) const { return mParser->matchExpression(out); }\n'
+src2 += '    bool wordLiteral(std::unique_ptr<Expression>* out, bool unambiguous = false) const { return mParser->matchExpression(out, unambiguous); }\n'
 src2 += '\n'
 src2 += 'public:\n'
 src2 += '    explicit Z80OpcodeParser(AssemblerParser* parser)\n'
