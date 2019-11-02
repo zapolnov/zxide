@@ -23,6 +23,7 @@ protected:
 
 private:
     QTimer* mTimer;
+    int mScale;
 
     Q_DISABLE_COPY(DisplayWidget)
 };

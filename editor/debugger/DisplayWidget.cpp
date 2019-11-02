@@ -7,6 +7,7 @@
 DisplayWidget::DisplayWidget(QWidget* parent)
     : QOpenGLWidget(parent)
     , mTimer(new QTimer(this))
+    , mScale(1)
 {
     setFixedSize(EmulatorCore::ScreenWidth, EmulatorCore::ScreenHeight);
 
@@ -24,7 +25,7 @@ DisplayWidget::~DisplayWidget()
 
 QSize DisplayWidget::sizeHint() const
 {
-    return QSize(EmulatorCore::ScreenWidth, EmulatorCore::ScreenHeight);
+    return QSize(EmulatorCore::ScreenWidth * mScale, EmulatorCore::ScreenHeight * mScale);
 }
 
 void DisplayWidget::paintGL()
@@ -36,11 +37,25 @@ void DisplayWidget::paintGL()
         return;
     }
 
-    painter.drawImage(0, 0, EmulatorCore::instance()->getScreen());
+    QImage screen = EmulatorCore::instance()->getScreen();
+    if (mScale > 1) {
+        QSize size(screen.width() * mScale, screen.height() * mScale);
+        screen = screen.scaled(size, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    }
+
+    painter.drawImage(0, 0, screen);
 }
 
 void DisplayWidget::keyPressEvent(QKeyEvent* event)
 {
+    if (event->key() == Qt::Key_PageUp && mScale < 6) {
+        ++mScale;
+        setFixedSize(EmulatorCore::ScreenWidth * mScale, EmulatorCore::ScreenHeight * mScale);
+    } else if (event->key() == Qt::Key_PageDown && mScale > 1) {
+        --mScale;
+        setFixedSize(EmulatorCore::ScreenWidth * mScale, EmulatorCore::ScreenHeight * mScale);
+    }
+
     EmulatorCore::instance()->pressKey(event->key());
 }
 
