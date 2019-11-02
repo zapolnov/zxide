@@ -152,20 +152,35 @@ opcodes = [
         Opcode( 'add', [        'iy',     'iy' ], [ 0xFD, 0x29             ], 15),
         Opcode( 'add', [        'iy',     'sp' ], [ 0xFD, 0x39             ], 15),
         Opcode( 'and', [                   'a' ], [ 0xA7                   ],  4),
+        Opcode( 'and', [         'a',      'a' ], [ 0xA7                   ],  4),  # alias for 'and a'
         Opcode( 'and', [                   'b' ], [ 0xA0                   ],  4),
+        Opcode( 'and', [         'a',      'b' ], [ 0xA0                   ],  4),  # alias for 'and b'
         Opcode( 'and', [                   'c' ], [ 0xA1                   ],  4),
+        Opcode( 'and', [         'a',      'c' ], [ 0xA1                   ],  4),  # alias for 'and c'
         Opcode( 'and', [                   'd' ], [ 0xA2                   ],  4),
+        Opcode( 'and', [         'a',      'd' ], [ 0xA2                   ],  4),  # alias for 'and d'
         Opcode( 'and', [                   'e' ], [ 0xA3                   ],  4),
+        Opcode( 'and', [         'a',      'e' ], [ 0xA3                   ],  4),  # alias for 'and e'
         Opcode( 'and', [                   'h' ], [ 0xA4                   ],  4),
+        Opcode( 'and', [         'a',      'h' ], [ 0xA4                   ],  4),  # alias for 'and h'
         Opcode( 'and', [                   'l' ], [ 0xA5                   ],  4),
+        Opcode( 'and', [         'a',      'l' ], [ 0xA5                   ],  4),  # alias for 'and l'
         Opcode( 'and', [                   '#' ], [ 0xE6, '#'              ],  7),
+        Opcode( 'and', [         'a',      '#' ], [ 0xE6, '#'              ],  7),  # alias for 'and #'
         Opcode( 'and', [                '(hl)' ], [ 0xA6                   ],  7),
+        Opcode( 'and', [         'a',   '(hl)' ], [ 0xA6                   ],  7),  # alias for 'and (hl)'
         Opcode( 'and', [              '(ix+#)' ], [ 0xDD, 0xA6, '#'        ], 19),
+        Opcode( 'and', [         'a', '(ix+#)' ], [ 0xDD, 0xA6, '#'        ], 19),  # alias for 'and (ix+#)'
         Opcode( 'and', [              '(iy+#)' ], [ 0xFD, 0xA6, '#'        ], 19),
+        Opcode( 'and', [         'a', '(iy+#)' ], [ 0xFD, 0xA6, '#'        ], 19),  # alias for 'and (iy+#)'
         Opcode( 'and', [                 'ixh' ], [ 0xDD, 0xA4             ],  8),  # undocumented
+        Opcode( 'and', [         'a',    'ixh' ], [ 0xDD, 0xA4             ],  8),  # alias for 'and ixh'
         Opcode( 'and', [                 'iyh' ], [ 0xFD, 0xA4             ],  8),  # undocumented
+        Opcode( 'and', [         'a',    'iyh' ], [ 0xFD, 0xA4             ],  8),  # alias for 'and iyh'
         Opcode( 'and', [                 'ixl' ], [ 0xDD, 0xA5             ],  8),  # undocumented
+        Opcode( 'and', [         'a',    'ixl' ], [ 0xDD, 0xA5             ],  8),  # alias for 'and ixl'
         Opcode( 'and', [                 'iyl' ], [ 0xFD, 0xA5             ],  8),  # undocumented
+        Opcode( 'and', [         'a',    'iyl' ], [ 0xFD, 0xA5             ],  8),  # alias for 'and iyl'
         Opcode( 'bit', [        '0',    '(hl)' ], [ 0xCB, 0x46             ], 12),
         Opcode( 'bit', [        '1',    '(hl)' ], [ 0xCB, 0x4E             ], 12),
         Opcode( 'bit', [        '2',    '(hl)' ], [ 0xCB, 0x56             ], 12),
