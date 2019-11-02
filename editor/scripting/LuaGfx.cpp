@@ -61,8 +61,8 @@ static int luaGfxGetFragment(lua_State* L)
     QByteArray attrib = data.attrib(x, y, x + w - 1, y + h - 1);
 
     GfxData* newData = vm->pushNew<GfxData>(w, h);
-    newData->setBytes(x, y, w, h, pixels);
-    newData->setAttrib(x, y, w, h, attrib);
+    newData->setBytes(0, 0, w, h, pixels);
+    newData->setAttrib(0, 0, w, h, attrib);
 
     return 1;
 }
