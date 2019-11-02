@@ -7,6 +7,22 @@
 #include <sstream>
 #include <lua.hpp>
 
+int luaGfxCreate(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    int w = luaL_checkinteger(L, 1);
+    int h = luaL_checkinteger(L, 2);
+
+    if (w < 0)
+        return luaL_error(L, "invalid width.");
+    if (h < 0)
+        return luaL_error(L, "invalid height.");
+
+    vm->pushNew<GfxData>(w, h);
+    return 1;
+}
+
 int luaGfxLoad(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -65,6 +81,72 @@ static int luaGfxGetFragment(lua_State* L)
     newData->setAttrib(0, 0, w, h, attrib);
 
     return 1;
+}
+
+static int luaGfxGetPixel(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+
+    if (!data.isValidCoord(x, y))
+        return luaL_error(L, "invalid coordinates.");
+
+    char c = data.at(x, y);
+    lua_pushboolean(L, c != 0);
+    return 1;
+}
+
+static int luaGfxSetPixel(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+    int value = lua_isboolean(L, 4) ? lua_toboolean(L, 4) : luaL_checkinteger(L, 4);
+
+    if (!data.isValidCoord(x, y))
+        return luaL_error(L, "invalid coordinates.");
+
+    data.at(x, y) = (value ? 1 : 0);
+
+    return 0;
+}
+
+static int luaGfxGetStandardAttrib(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+
+    if (!data.isValidCoord(x, y))
+        return luaL_error(L, "invalid coordinates.");
+
+    char a = data.attribAt(x, y, GfxColorMode::Standard);
+    lua_pushinteger(L, (unsigned char)a);
+
+    return 1;
+}
+
+static int luaGfxSetStandardAttrib(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+    int value = luaL_checkinteger(L, 4);
+
+    if (!data.isValidCoord(x, y))
+        return luaL_error(L, "invalid coordinates.");
+
+    data.attribAt(x, y, GfxColorMode::Standard) = (char)(value & 0xff);
+    return 0;
 }
 
 static std::string generateMonochrome(const GfxData& data)
@@ -275,9 +357,14 @@ static int luaGfxWriteBTile16Attributes(lua_State* L)
 }
 
 const luaL_Reg LuaGfx[] = {
+    { "gfxCreate", luaGfxCreate },
     { "gfxLoad", luaGfxLoad },
     { "gfxGetDimensions", luaGfxGetDimensions },
     { "gfxGetFragment", luaGfxGetFragment },
+    { "gfxGetPixel", luaGfxGetPixel },
+    { "gfxSetPixel", luaGfxSetPixel },
+    { "gfxGetStandardAttrib", luaGfxGetStandardAttrib },
+    { "gfxSetStandardAttrib", luaGfxSetStandardAttrib },
     { "gfxGenerateMonochromeAssembly", luaGfxGenerateMonochromeAssembly },
     { "gfxGenerateStandardAssembly", luaGfxGenerateStandardAssembly },
     { "gfxGenerateStandardAttributesAssembly", luaGfxGenerateStandardAttributesAssembly },
