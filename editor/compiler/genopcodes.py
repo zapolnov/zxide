@@ -1114,9 +1114,8 @@ for opcode in opcodes:
             addCond(conds, 'token(T_LPAREN)')
             orig = conds[:]
             alt1 = forkConds(conds, orig)
-            addCond(orig, 'token(T_LPAREN)')
+            addCond(orig, 'mParser->lastTokenId() == T_LPAREN')
             addCond(orig, 'wordLiteral(&mLiteral%d, true)' % literalIndex)
-            addCond(orig, 'token(T_RPAREN)')
             addCond(orig, 'token(T_RPAREN)')
             addCond(alt1, 'wordLiteral(&mLiteral%d)' % literalIndex)
             addCond(alt1, 'token(T_RPAREN)')

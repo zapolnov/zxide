@@ -2683,14 +2683,11 @@ public:
                         }
                         return AssemblerParser::OpcodeParseResult::SyntaxError;
                     }
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_A_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_A_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3233,46 +3230,43 @@ public:
                 }
                 return AssemblerParser::OpcodeParseResult::SyntaxError;
             }
-            if (token(T_LPAREN)) {
+            if (mParser->lastTokenId() == T_LPAREN) {
                 if (wordLiteral(&mLiteral1, true)) {
                     if (token(T_RPAREN)) {
-                        if (token(T_RPAREN)) {
-                            if (token(T_COMMA)) {
-                                if (ident("a")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_A>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("bc")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_BC>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("de")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_DE>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("hl")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_HL>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("sp")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_SP>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("ix")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_IX>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
-                                if (ident("iy")) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_mnn_IY>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                        if (token(T_COMMA)) {
+                            if (ident("a")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_A>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("bc")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_BC>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("de")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_DE>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("hl")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_HL>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("sp")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_SP>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("ix")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_IX>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
+                                return AssemblerParser::OpcodeParseResult::SyntaxError;
+                            }
+                            if (ident("iy")) {
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_mnn_IY>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3337,14 +3331,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_BC_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_BC_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3373,14 +3364,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_DE_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_DE_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3409,14 +3397,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_HL_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_HL_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3445,14 +3430,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_SP_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_SP_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3507,14 +3489,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_IX_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_IX_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
@@ -3543,14 +3522,11 @@ public:
                     return AssemblerParser::OpcodeParseResult::SyntaxError;
                 }
                 if (token(T_LPAREN)) {
-                    if (token(T_LPAREN)) {
+                    if (mParser->lastTokenId() == T_LPAREN) {
                         if (wordLiteral(&mLiteral1, true)) {
                             if (token(T_RPAREN)) {
-                                if (token(T_RPAREN)) {
-                                    if (eol())
-                                        return mCodeEmitter->emit<LD_IY_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
-                                    return AssemblerParser::OpcodeParseResult::SyntaxError;
-                                }
+                                if (eol())
+                                    return mCodeEmitter->emit<LD_IY_mnn>(mToken, std::move(mLiteral1)), AssemblerParser::OpcodeParseResult::Success;
                                 return AssemblerParser::OpcodeParseResult::SyntaxError;
                             }
                             return AssemblerParser::OpcodeParseResult::SyntaxError;
