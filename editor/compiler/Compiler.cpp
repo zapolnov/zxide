@@ -795,6 +795,8 @@ bool Compiler::compileBasicCode()
     lines.clear();
     bas2tap_reset();
 
+    mProgramBinary->setCurrentFile("");
+
     for (const auto& source : mBasicSources) {
         QFileInfo info(source->path);
 
