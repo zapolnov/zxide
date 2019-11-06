@@ -37,6 +37,6 @@ typedef struct optimal_t {
     int len;
 } Optimal;
 
-Optimal *optimize(unsigned char *input_data, size_t input_size);
+Optimal *zx7_optimize(unsigned char *input_data, size_t input_size);
 
-unsigned char *compress(Optimal *optimal, unsigned char *input_data, size_t input_size, size_t *output_size);
+unsigned char *zx7_compress(Optimal *optimal, unsigned char *input_data, size_t input_size, size_t *output_size);

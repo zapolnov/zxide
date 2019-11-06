@@ -28,7 +28,7 @@
 
 #include "zx7.h"
 
-int elias_gamma_bits(int value) {
+static int elias_gamma_bits(int value) {
     int bits;
 
     bits = 1;
@@ -39,11 +39,11 @@ int elias_gamma_bits(int value) {
     return bits;
 }
 
-int count_bits(int offset, int len) {
+static int count_bits(int offset, int len) {
     return 1 + (offset > 128 ? 12 : 8) + elias_gamma_bits(len-1);
 }
 
-Optimal* optimize(unsigned char *input_data, size_t input_size) {
+Optimal* zx7_optimize(unsigned char *input_data, size_t input_size) {
     size_t *min;
     size_t *max;
     Match *matches;
