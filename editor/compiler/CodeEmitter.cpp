@@ -68,13 +68,17 @@ bool CodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, q
     return true;
 }
 
-void CodeEmitter::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+size_t CodeEmitter::emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
+    unsigned start = binary->endAddress();
+
     for (const auto& opcode : mOpcodes) {
         unsigned old = binary->endAddress();
         opcode->emitBinary(program, binary, reporter);
         Q_ASSERT(binary->endAddress() == old + opcode->lengthInBytes(program, reporter));
     }
+
+    return binary->endAddress() - start;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,8 +150,10 @@ bool RepeatedCodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* pr
     return true;
 }
 
-void RepeatedCodeEmitter::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+size_t RepeatedCodeEmitter::emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
+    unsigned start = binary->endAddress();
+
     qint64 count = 0;
     evaluateRepeatCount(program, reporter, count);
 
@@ -155,6 +161,8 @@ void RepeatedCodeEmitter::emitCode(Program* program, ProgramBinary* binary, IErr
         *mCounter = Value(i, Sign::Unsigned);
         CodeEmitter::emitCode(program, binary, reporter);
     }
+
+    return binary->endAddress() - start;
 }
 
 bool RepeatedCodeEmitter::evaluateRepeatCount(const Program* program, IErrorReporter* reporter, qint64& value) const

@@ -658,3 +658,4 @@ TEST_CASE("sections can overlap in different files", "[sections]")
 }
 
 // FIXME: test imaginary sections
+// FIXME: test compression modes

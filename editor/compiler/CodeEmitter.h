@@ -10,7 +10,7 @@
 #endif
 
 class Program;
-class ProgramBinary;
+class IProgramBinary;
 class ProgramOpcode;
 class Expression;
 class IErrorReporter;
@@ -38,7 +38,7 @@ public:
     virtual unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const;
 
     virtual bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const;
-    virtual void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const;
+    virtual size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const;
 
 private:
     std::vector<std::unique_ptr<ProgramOpcode>> mOpcodes;
@@ -59,7 +59,7 @@ public:
     unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const override;
 
     bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
-    void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
+    size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
     std::shared_ptr<Value> mCounter;

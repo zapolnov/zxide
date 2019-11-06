@@ -41,7 +41,7 @@ DEFB::~DEFB()
 {
 }
 
-void DEFB::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFB::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitByte(token().file, token().line, context.evaluateByte(mValue));
@@ -59,7 +59,7 @@ DEFB_STRING::~DEFB_STRING()
 {
 }
 
-void DEFB_STRING::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFB_STRING::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     for (auto ch : mText)
         binary->emitByte(token().file, token().line, ch);
@@ -77,7 +77,7 @@ DEFB_BYTEARRAY::~DEFB_BYTEARRAY()
 {
 }
 
-void DEFB_BYTEARRAY::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFB_BYTEARRAY::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     for (auto ch : mData)
         binary->emitByte(token().file, token().line, ch);
@@ -95,7 +95,7 @@ DEFW::~DEFW()
 {
 }
 
-void DEFW::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFW::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitWord(token().file, token().line, context.evaluateWord(mValue));
@@ -113,7 +113,7 @@ DEFD::~DEFD()
 {
 }
 
-void DEFD::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFD::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
     binary->emitDWord(token().file, token().line, context.evaluateDWord(mValue));
@@ -144,7 +144,7 @@ unsigned DEFS::lengthInBytes(const Program* program, IErrorReporter* reporter) c
     return (unsigned)value.number;
 }
 
-void DEFS::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void DEFS::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context(program, reporter);
 
@@ -194,7 +194,7 @@ bool IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter*
     return codeEmitter(program, reporter)->resolveAddresses(reporter, program, address);
 }
 
-void IfMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void IfMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     codeEmitter(program, reporter)->emitCode(program, binary, reporter);
 }
@@ -237,7 +237,7 @@ bool RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorRepor
     return mCodeEmitter.lock()->resolveAddresses(reporter, program, address);
 }
 
-void RepeatMacro::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+void RepeatMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     mCodeEmitter.lock()->emitCode(program, binary, reporter);
 }

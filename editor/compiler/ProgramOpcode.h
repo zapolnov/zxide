@@ -11,7 +11,7 @@
 #endif
 
 class IErrorReporter;
-class ProgramBinary;
+class IProgramBinary;
 class ProgramSection;
 class Program;
 class CodeEmitter;
@@ -31,7 +31,7 @@ public:
     virtual unsigned tstatesIfTaken(const Program* program, IErrorReporter* reporter) const = 0;
 
     virtual bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter);
-    virtual void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const = 0;
+    virtual void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const = 0;
 
 private:
     Token mToken;
@@ -49,7 +49,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::unique_ptr<Expression> mValue;
@@ -67,7 +67,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::string mText;
@@ -85,7 +85,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     QByteArray mData;
@@ -103,7 +103,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::unique_ptr<Expression> mValue;
@@ -121,7 +121,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::unique_ptr<Expression> mValue;
@@ -139,7 +139,7 @@ public:
     unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
 
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::unique_ptr<Expression> mValue;
@@ -159,7 +159,7 @@ public:
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override;
 
     bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::weak_ptr<CodeEmitter> mThenCodeEmitter;
@@ -182,7 +182,7 @@ public:
     unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override;
 
     bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) final override;
-    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
 
 private:
     std::weak_ptr<RepeatedCodeEmitter> mCodeEmitter;

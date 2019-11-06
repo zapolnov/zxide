@@ -132,7 +132,7 @@ bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* re
     return true;
 }
 
-void ProgramLabel::emitBinary(Program*, ProgramBinary* binary, IErrorReporter*) const
+void ProgramLabel::emitBinary(Program*, IProgramBinary* binary, IErrorReporter*) const
 {
     Q_ASSERT(binary->currentSection() != nullptr);
     binary->debugInfo()->setAddressForName(binary->currentSection(),

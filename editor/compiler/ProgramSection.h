@@ -6,6 +6,14 @@
 #include <string>
 
 class Expression;
+class IProgramBinary;
+
+enum class Compression
+{
+    Unspecified,
+    None,
+    Zx7,
+};
 
 class ProgramSection : public CodeEmitter
 {
@@ -26,6 +34,10 @@ public:
     void setAlignment(std::unique_ptr<Expression> expr);
     unsigned alignment(IErrorReporter* reporter) const;
 
+    Compression compression() const { return mCompression; }
+    bool isCompressed() const { return mCompression != Compression::None && mCompression != Compression::Unspecified; }
+    void setCompression(Compression compression) { mCompression = compression; }
+
     bool isImaginary() const { return mIsImaginary; }
     void setIsImaginary(bool flag) { mIsImaginary = flag; }
 
@@ -35,11 +47,12 @@ public:
 
     unsigned resolvedBase() const { return mResolvedBase; }
     bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
-    void emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const override;
+    size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:
     Program* mProgram;
     Token mToken;
+    Compression mCompression;
     std::string mName;
     std::unique_ptr<Expression> mBase;
     std::unique_ptr<Expression> mAlignment;

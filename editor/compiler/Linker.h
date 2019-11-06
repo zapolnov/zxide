@@ -24,6 +24,8 @@ private:
     Program* mProgram;
     IErrorReporter* mReporter;
 
+    size_t emitCodeForSection(ProgramBinary* binary, ProgramSection* section);
+
     bool isEmpty(const std::vector<ProgramSection*>& sections) const;
     bool hasCode(const std::vector<ProgramSection*>& sections) const;
     std::map<std::string, std::vector<ProgramSection*>> collectSections() const;

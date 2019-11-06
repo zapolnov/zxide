@@ -66,11 +66,19 @@ void ProgramDebugInfo::setAddressForName(const ProgramSection* section, const QS
         mSections[it->second].symbols.emplace(address, name);
 }
 
-void ProgramDebugInfo::addSection(const ProgramSection* section, unsigned start, unsigned length)
+void ProgramDebugInfo::addSection(const ProgramSection* section, unsigned start, unsigned originalLength)
 {
     size_t index = mSections.size();
-    mSections.emplace_back(ProgramSectionInfo{ QString(section->nameCStr()), start, length });
+    mSections.emplace_back(ProgramSectionInfo{ QString(section->nameCStr()), start, originalLength, 0 });
     mSectionIndex[section] = index;
+}
+
+void ProgramDebugInfo::setSectionCompressedLength(const ProgramSection* section, unsigned compressedLength)
+{
+    Q_ASSERT(mSectionIndex.find(section) != mSectionIndex.end());
+    size_t index = mSectionIndex[section];
+    Q_ASSERT(mSections[index].compressedLength == 0);
+    mSections[index].compressedLength = compressedLength;
 }
 
 void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)

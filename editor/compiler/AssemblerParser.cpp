@@ -185,6 +185,21 @@ void AssemblerParser::parseSectionDecl()
                 if (section->hasBase())
                     error(tr("multiple specification of base address for section '%1'").arg(section->nameCStr()));
                 section->setBase(std::move(expr));
+            } else if (param == "compress") {
+                if (nextToken() != T_ASSIGN)
+                    error(tr("expected '='"));
+                Compression comp;
+                std::string str = expectIdentifier(nextToken());
+                if (str == "none")
+                    comp = Compression::None;
+                else if (str == "zx7")
+                    comp = Compression::Zx7;
+                else
+                    error(tr("invalid compression mode '%1' (expected 'none' or 'zx7')").arg(str.c_str()));
+                if (section->compression() != comp && section->compression() != Compression::Unspecified)
+                    error(tr("conflicting compression mode for section '%1'").arg(section->nameCStr()));
+                section->setCompression(comp);
+                nextToken();
             } else if (param == "imaginary") {
                 section->setIsImaginary(true);
                 nextToken();

@@ -10,6 +10,7 @@
 ProgramSection::ProgramSection(Program* program, const Token& token, std::string name)
     : mProgram(program)
     , mToken(token)
+    , mCompression(Compression::Unspecified)
     , mName(std::move(name))
     , mResolvedBase(0)
     , mCalculatedBase(0)
@@ -100,7 +101,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
     return CodeEmitter::resolveAddresses(reporter, program, address);
 }
 
-void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const
+size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     if (hasCode(program, reporter)) {
         if (mHasCalculatedBase) {
@@ -119,8 +120,11 @@ void ProgramSection::emitCode(Program* program, ProgramBinary* binary, IErrorRep
         }
     }
 
+    Q_ASSERT(!mHasCalculatedBase || binary->endAddress() == mCalculatedBase);
+    Q_ASSERT(!mHasCalculatedAlignment || binary->endAddress() % mCalculatedAlignment == 0);
+
     mHasCalculatedBase = false;
     mHasCalculatedAlignment = false;
 
-    CodeEmitter::emitCode(program, binary, reporter);
+    return CodeEmitter::emitCode(program, binary, reporter);
 }

@@ -26,7 +26,8 @@ struct ProgramSectionInfo
 {
     QString name;
     unsigned startAddress;
-    unsigned length;
+    unsigned originalLength;
+    unsigned compressedLength;
     std::map<unsigned, QString> symbols;
 };
 
@@ -44,7 +45,8 @@ public:
     void setAddressForName(const ProgramSection* section, const QString& name, unsigned address);
 
     const std::vector<ProgramSectionInfo>& sections() const { return mSections; }
-    void addSection(const ProgramSection* section, unsigned start, unsigned length);
+    void addSection(const ProgramSection* section, unsigned start, unsigned originalLength);
+    void setSectionCompressedLength(const ProgramSection* section, unsigned compressedLength);
 
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken);
     const std::map<int, TStates>& tstatesForFile(const QString& file) const;

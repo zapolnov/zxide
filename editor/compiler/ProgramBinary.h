@@ -11,7 +11,20 @@ struct SourceFile;
 class ProgramDebugInfo;
 class ProgramSection;
 
-class ProgramBinary
+class IProgramBinary
+{
+public:
+    virtual ~IProgramBinary() = default;
+    virtual unsigned endAddress() const = 0;
+    virtual ProgramSection* currentSection() const = 0;
+    virtual ProgramDebugInfo* debugInfo() const = 0;
+    virtual void emitByte(const SourceFile* file, int line, quint8 byte) = 0;;
+    virtual void emitWord(const SourceFile* file, int line, quint16 word) = 0;
+    virtual void emitDWord(const SourceFile* file, int line, quint32 dword) = 0;
+    virtual void emitQWord(const SourceFile* file, int line, quint64 qword) = 0;
+};
+
+class ProgramBinary final : public IProgramBinary
 {
 public:
     struct File
@@ -25,12 +38,12 @@ public:
     using FileMap = std::map<std::string, File>;
 
     ProgramBinary();
-    ~ProgramBinary();
+    ~ProgramBinary() override;
 
     unsigned baseAddress() const { return mCurrentFile->second.baseAddress; }
-    unsigned endAddress() const { return mCurrentFile->second.endAddress; }
+    unsigned endAddress() const override { return mCurrentFile->second.endAddress; }
 
-    ProgramSection* currentSection() const { return mCurrentSection; }
+    ProgramSection* currentSection() const override { return mCurrentSection; }
     void setCurrentSection(ProgramSection* section) { mCurrentSection = section; }
 
     const std::string& currentFile() const { return mCurrentFile->first; }
@@ -40,14 +53,14 @@ public:
     const quint8* codeBytes() const { return mCurrentFile->second.code.data(); }
     size_t codeLength() const { return mCurrentFile->second.code.size(); }
 
-    ProgramDebugInfo* debugInfo() const { return mCurrentFile->second.debugInfo.get(); }
+    ProgramDebugInfo* debugInfo() const override { return mCurrentFile->second.debugInfo.get(); }
 
     const FileMap& files() const { return mFiles; }
 
-    void emitByte(const SourceFile* file, int line, quint8 byte);
-    void emitWord(const SourceFile* file, int line, quint16 word);
-    void emitDWord(const SourceFile* file, int line, quint32 dword);
-    void emitQWord(const SourceFile* file, int line, quint64 qword);
+    void emitByte(const SourceFile* file, int line, quint8 byte) override;
+    void emitWord(const SourceFile* file, int line, quint16 word) override;
+    void emitDWord(const SourceFile* file, int line, quint32 dword) override;
+    void emitQWord(const SourceFile* file, int line, quint64 qword) override;
 
 private:
     FileMap mFiles;
@@ -57,6 +70,7 @@ private:
     FileMap::iterator createFile(std::string fileName, unsigned baseAddress);
 
     Q_DISABLE_COPY(ProgramBinary)
+    friend class Compressor;
 };
 
 #endif

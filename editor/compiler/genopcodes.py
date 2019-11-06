@@ -1025,7 +1025,7 @@ for opcode in opcodes:
     hdr += '    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return %d; }\n' % opcode.tstatesIfNotTaken
     hdr += '    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return %d; }\n' % opcode.tstatesIfTaken
     hdr += '\n'
-    hdr += '    void emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const final override;\n'
+    hdr += '    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;\n'
     hdr += '\n'
     if opcode.numLiterals > 0:
         hdr += 'private:\n'
@@ -1036,7 +1036,7 @@ for opcode in opcodes:
     hdr += '};\n'
 
     src += '\n'
-    src += 'void %s::emitBinary(Program* program, ProgramBinary* binary, IErrorReporter* reporter) const\n' % opcode.className
+    src += 'void %s::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const\n' % opcode.className
     src += '{\n'
     src += opcode.codeForEmit()
     src += '}\n'

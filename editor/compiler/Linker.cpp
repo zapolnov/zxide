@@ -1,4 +1,5 @@
 #include "Linker.h"
+#include "Compressor.h"
 #include "Program.h"
 #include "ProgramSection.h"
 #include "ProgramBinary.h"
@@ -58,19 +59,35 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
 
             // Resolve addresses of labels
             for (ProgramSection* section : it.second) {
-                if (!section->resolveAddresses(mReporter, mProgram, addr))
-                    throw LinkerError();
+                if (!section->isCompressed()) {
+                    if (!section->resolveAddresses(mReporter, mProgram, addr))
+                        throw LinkerError();
 
-                unsigned start = section->resolvedBase();
-                unsigned length = addr - start;
-                binary->debugInfo()->addSection(section, start, length);
+                    unsigned start = section->resolvedBase();
+                    unsigned length = addr - start;
+                    binary->debugInfo()->addSection(section, start, length);
+                }
             }
 
             // Emit code
             for (ProgramSection* section : it.second) {
-                if (!section->isImaginary()) {
-                    binary->setCurrentSection(section);
-                    section->emitCode(mProgram, binary.get(), mReporter);
+                if (!section->isCompressed()) {
+                    if (!section->isImaginary())
+                        emitCodeForSection(binary.get(), section);
+                } else {
+                    if (!section->resolveAddresses(mReporter, mProgram, addr))
+                        throw LinkerError();
+
+                    unsigned start = section->resolvedBase();
+                    unsigned length = addr - start;
+                    binary->debugInfo()->addSection(section, start, length);
+
+                    if (section->isImaginary())
+                        addr = start;
+                    else {
+                        size_t compressedLength = emitCodeForSection(binary.get(), section);
+                        addr = unsigned(start + compressedLength);
+                    }
                 }
             }
 
@@ -86,6 +103,30 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
     } catch (const LinkerError&) {
         return {};
     }
+}
+
+size_t Linker::emitCodeForSection(ProgramBinary* binary, ProgramSection* section)
+{
+    size_t compressedLength = 0;
+
+    binary->setCurrentSection(section);
+
+    switch (section->compression()) {
+        case Compression::Unspecified:
+        case Compression::None:
+            compressedLength = section->emitCode(mProgram, binary, mReporter);
+            break;
+
+        case Compression::Zx7: {
+            Zx7Compressor compressor(binary);
+            section->emitCode(mProgram, &compressor, mReporter);
+            compressedLength = compressor.flush();
+            break;
+        }
+    }
+
+    binary->debugInfo()->setSectionCompressedLength(section, unsigned(compressedLength));
+    return compressedLength;
 }
 
 bool Linker::isEmpty(const std::vector<ProgramSection*>& sections) const
@@ -113,7 +154,8 @@ std::map<std::string, std::vector<ProgramSection*>> Linker::collectSections() co
     struct Interim
     {
         std::multimap<unsigned, ProgramSection*> sectionsWithBaseAddress;
-        std::multimap<unsigned, ProgramSection*, std::greater<unsigned>> sectionsWithAlignment;
+        std::multimap<unsigned, ProgramSection*, std::greater<unsigned>> uncompressedSectionsWithAlignment;
+        std::multimap<unsigned, ProgramSection*, std::greater<unsigned>> compressedSectionsWithAlignment;
     };
 
     std::map<std::string, Interim> map;
@@ -125,24 +167,43 @@ std::map<std::string, std::vector<ProgramSection*>> Linker::collectSections() co
                 map[section->fileName()].sectionsWithBaseAddress.emplace(section->base(mReporter), section);
         });
 
-    // Now collect sections without base address but with alignment and sort them by it
+    // Now collect non-compressed sections without base address but with alignment and sort them by it
     mProgram->forEachSection([this, &map](ProgramSection* section) {
-            if (!section->hasBase() && section->hasAlignment())
-                map[section->fileName()].sectionsWithAlignment.emplace(section->alignment(mReporter), section);
+            if (!section->hasBase() && section->hasAlignment() && !section->isCompressed())
+                map[section->fileName()].uncompressedSectionsWithAlignment.emplace(section->alignment(mReporter), section);
         });
 
     for (auto& it : map) {
         auto& vec = result[it.first];
-        vec.reserve(mProgram->sectionCount());
+        vec.reserve(vec.size() + mProgram->sectionCount());
         for (const auto& jt : it.second.sectionsWithBaseAddress)
             vec.emplace_back(jt.second);
-        for (const auto& jt : it.second.sectionsWithAlignment)
+        for (const auto& jt : it.second.uncompressedSectionsWithAlignment)
             vec.emplace_back(jt.second);
     }
 
-    // Finally collect all other sections
+    // Now collect other non-compressed sections
     mProgram->forEachSection([&result](ProgramSection* section) {
-            if (!section->hasBase() && !section->hasAlignment())
+            if (!section->hasBase() && !section->hasAlignment() && !section->isCompressed())
+                result[section->fileName()].emplace_back(section);
+        });
+
+    // Now collect compressed sections with alignment and sort them by it
+    mProgram->forEachSection([this, &map](ProgramSection* section) {
+            if (!section->hasBase() && section->hasAlignment() && section->isCompressed())
+                map[section->fileName()].compressedSectionsWithAlignment.emplace(section->alignment(mReporter), section);
+        });
+
+    for (auto& it : map) {
+        auto& vec = result[it.first];
+        vec.reserve(vec.size() + mProgram->sectionCount());
+        for (const auto& jt : it.second.compressedSectionsWithAlignment)
+            vec.emplace_back(jt.second);
+    }
+
+    // Finally collect other compressed sections
+    mProgram->forEachSection([&result](ProgramSection* section) {
+            if (!section->hasBase() && !section->hasAlignment() && section->isCompressed())
                 result[section->fileName()].emplace_back(section);
         });
 

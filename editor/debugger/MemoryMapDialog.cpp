@@ -31,18 +31,26 @@ MemoryMapDialog::MemoryMapDialog(QWidget* parent)
         for (const ProgramSectionInfo& section : it.second) {
             QString sectionName = section.name;
             if (sectionName.isEmpty()) {
-                if (section.length == 0)
+                if (section.originalLength == 0)
                     continue;
                 sectionName = tr("(untitled)");
             }
 
-            unsigned end = section.startAddress + qMax(section.length, 1u) - 1;
+            QString size;
+            if (section.originalLength == section.compressedLength)
+                size = tr("%1 byte(s)", nullptr, int(section.originalLength)).arg(section.originalLength);
+            else {
+                size = tr("%2 / %1 byte(s)", nullptr, int(section.compressedLength))
+                    .arg(section.compressedLength).arg(section.originalLength);
+            }
+
+            unsigned end = section.startAddress + qMax(section.compressedLength, 1u) - 1;
             QString address = QStringLiteral("0x%1/%2 .. 0x%3/%4  %5")
                 .arg(QStringLiteral("%1").arg(section.startAddress, 4, 16, QChar('0')).toUpper())
-                .arg(section.startAddress)
+                .arg(section.startAddress, -5, 10, QChar(' '))
                 .arg(QStringLiteral("%1").arg(end, 4, 16, QChar('0')).toUpper())
-                .arg(end)
-                .arg(tr("%1 byte(s)", nullptr, int(section.length)).arg(section.length))
+                .arg(end, -5, 10, QChar(' '))
+                .arg(size)
                 ;
 
             QTreeWidgetItem* sectionItem = new QTreeWidgetItem(fileItem, QStringList() << sectionName << address);
