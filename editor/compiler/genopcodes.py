@@ -71,7 +71,7 @@ class Opcode:
             for j in range(0, self.numLiterals):
                 code += '    ExprEvalContext context%d(program, reporter, binary->endAddress(), this);\n' % (j + 1)
 
-        code += '    binary->debugInfo()->setTStatesForLocation(token().file, token().line, %d, %d);\n' \
+        code += '    binary->setTStatesForLocation(token().file, token().line, %d, %d);\n' \
             % (self.tstatesIfTaken, self.tstatesIfNotTaken)
 
         for byte in self.bytes:

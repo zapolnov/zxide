@@ -30,6 +30,22 @@ void ProgramBinary::setCurrentFile(const std::string& fileName, unsigned baseAdd
     mCurrentFile = it;
 }
 
+void ProgramBinary::setAddressForName(const QString& name, unsigned address)
+{
+    Q_ASSERT(currentSection() != nullptr);
+    debugInfo()->setAddressForName(currentSection(), name, address);
+}
+
+void ProgramBinary::setSourceLocation(unsigned addr, const QString& fileName, int line)
+{
+    mCurrentFile->second.debugInfo->setSourceLocation(addr, fileName, line);
+}
+
+void ProgramBinary::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
+{
+    debugInfo()->setTStatesForLocation(file, line, taken, notTaken);
+}
+
 void ProgramBinary::emitByte(const SourceFile* file, int line, quint8 byte)
 {
     QString fileName = (file ? file->name : QString());

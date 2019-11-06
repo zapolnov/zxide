@@ -15,9 +15,12 @@ class IProgramBinary
 {
 public:
     virtual ~IProgramBinary() = default;
+    virtual std::vector<quint8>& code() = 0;
     virtual unsigned endAddress() const = 0;
-    virtual ProgramSection* currentSection() const = 0;
-    virtual ProgramDebugInfo* debugInfo() const = 0;
+    virtual void setEndAddress(unsigned address) = 0;
+    virtual void setAddressForName(const QString& name, unsigned address) = 0;
+    virtual void setSourceLocation(unsigned addr, const QString& fileName, int line) = 0;
+    virtual void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) = 0;
     virtual void emitByte(const SourceFile* file, int line, quint8 byte) = 0;;
     virtual void emitWord(const SourceFile* file, int line, quint16 word) = 0;
     virtual void emitDWord(const SourceFile* file, int line, quint32 dword) = 0;
@@ -40,10 +43,13 @@ public:
     ProgramBinary();
     ~ProgramBinary() override;
 
+    std::vector<quint8>& code() override { return mCurrentFile->second.code; }
+
     unsigned baseAddress() const { return mCurrentFile->second.baseAddress; }
     unsigned endAddress() const override { return mCurrentFile->second.endAddress; }
+    void setEndAddress(unsigned address) override { mCurrentFile->second.endAddress = address; }
 
-    ProgramSection* currentSection() const override { return mCurrentSection; }
+    ProgramSection* currentSection() const { return mCurrentSection; }
     void setCurrentSection(ProgramSection* section) { mCurrentSection = section; }
 
     const std::string& currentFile() const { return mCurrentFile->first; }
@@ -53,7 +59,10 @@ public:
     const quint8* codeBytes() const { return mCurrentFile->second.code.data(); }
     size_t codeLength() const { return mCurrentFile->second.code.size(); }
 
-    ProgramDebugInfo* debugInfo() const override { return mCurrentFile->second.debugInfo.get(); }
+    ProgramDebugInfo* debugInfo() const { return mCurrentFile->second.debugInfo.get(); }
+    void setAddressForName(const QString& name, unsigned address) override;
+    void setSourceLocation(unsigned addr, const QString& fileName, int line) override;
+    void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) override;
 
     const FileMap& files() const { return mFiles; }
 

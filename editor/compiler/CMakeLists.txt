@@ -48,6 +48,8 @@ qt_add_sources(Compiler
         MapData.h
         MapFile.cpp
         MapFile.h
+        NullOutput.cpp
+        NullOutput.h
         Program.cpp
         Program.h
         ProgramBinary.cpp

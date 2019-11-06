@@ -8,6 +8,7 @@
 class Program;
 class ProgramSection;
 class ProgramBinary;
+class IProgramBinary;
 class IErrorReporter;
 
 class Linker : public QObject
@@ -24,7 +25,7 @@ private:
     Program* mProgram;
     IErrorReporter* mReporter;
 
-    size_t emitCodeForSection(ProgramBinary* binary, ProgramSection* section);
+    size_t emitCodeForSection(IProgramBinary* binary, ProgramSection* section);
 
     bool isEmpty(const std::vector<ProgramSection*>& sections) const;
     bool hasCode(const std::vector<ProgramSection*>& sections) const;

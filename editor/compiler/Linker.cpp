@@ -1,5 +1,6 @@
 #include "Linker.h"
 #include "Compressor.h"
+#include "NullOutput.h"
 #include "Program.h"
 #include "ProgramSection.h"
 #include "ProgramBinary.h"
@@ -59,35 +60,25 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
 
             // Resolve addresses of labels
             for (ProgramSection* section : it.second) {
-                if (!section->isCompressed()) {
-                    if (!section->resolveAddresses(mReporter, mProgram, addr))
-                        throw LinkerError();
+                if (!section->resolveAddresses(mReporter, mProgram, addr))
+                    throw LinkerError();
 
-                    unsigned start = section->resolvedBase();
-                    unsigned length = addr - start;
-                    binary->debugInfo()->addSection(section, start, length);
+                if (section->isCompressed()) {
+                    NullOutput output(addr);
+                    addr = section->resolvedBase() + unsigned(emitCodeForSection(&output, section));
                 }
+
+                unsigned start = section->resolvedBase();
+                unsigned length = addr - start;
+                binary->debugInfo()->addSection(section, start, length);
             }
 
             // Emit code
             for (ProgramSection* section : it.second) {
-                if (!section->isCompressed()) {
-                    if (!section->isImaginary())
-                        emitCodeForSection(binary.get(), section);
-                } else {
-                    if (!section->resolveAddresses(mReporter, mProgram, addr))
-                        throw LinkerError();
-
-                    unsigned start = section->resolvedBase();
-                    unsigned length = addr - start;
-                    binary->debugInfo()->addSection(section, start, length);
-
-                    if (section->isImaginary())
-                        addr = start;
-                    else {
-                        size_t compressedLength = emitCodeForSection(binary.get(), section);
-                        addr = unsigned(start + compressedLength);
-                    }
+                if (!section->isImaginary()) {
+                    binary->setCurrentSection(section);
+                    size_t compressedLength = emitCodeForSection(binary.get(), section);
+                    binary->debugInfo()->setSectionCompressedLength(section, unsigned(compressedLength));
                 }
             }
 
@@ -105,11 +96,9 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
     }
 }
 
-size_t Linker::emitCodeForSection(ProgramBinary* binary, ProgramSection* section)
+size_t Linker::emitCodeForSection(IProgramBinary* binary, ProgramSection* section)
 {
     size_t compressedLength = 0;
-
-    binary->setCurrentSection(section);
 
     switch (section->compression()) {
         case Compression::Unspecified:
@@ -125,7 +114,6 @@ size_t Linker::emitCodeForSection(ProgramBinary* binary, ProgramSection* section
         }
     }
 
-    binary->debugInfo()->setSectionCompressedLength(section, unsigned(compressedLength));
     return compressedLength;
 }
 

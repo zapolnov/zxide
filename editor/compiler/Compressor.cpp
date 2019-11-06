@@ -6,7 +6,7 @@ extern "C" {
 #include <zx7.h>
 }
 
-Compressor::Compressor(ProgramBinary* binary)
+Compressor::Compressor(IProgramBinary* binary)
     : mBinary(binary)
     , mEndAddress(binary->endAddress())
 {
@@ -16,83 +16,94 @@ Compressor::~Compressor()
 {
 }
 
+std::vector<quint8>& Compressor::code()
+{
+    return mUncompressedCode;
+}
+
 unsigned Compressor::endAddress() const
 {
     return mEndAddress;
 }
 
-ProgramSection* Compressor::currentSection() const
+void Compressor::setEndAddress(unsigned address)
 {
-    return mBinary->currentSection();
+    mEndAddress = address;
 }
 
-ProgramDebugInfo* Compressor::debugInfo() const
+void Compressor::setAddressForName(const QString& name, unsigned address)
 {
-    return mBinary->debugInfo();
+    mBinary->setAddressForName(name, address);
+}
+
+void Compressor::setSourceLocation(unsigned addr, const QString& fileName, int line)
+{
+    mBinary->setSourceLocation(addr, fileName, line);
+}
+
+void Compressor::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
+{
+    mBinary->setTStatesForLocation(file, line, taken, notTaken);
 }
 
 void Compressor::emitByte(const SourceFile* file, int line, quint8 byte)
 {
-    auto currentFile = mBinary->mCurrentFile;
     QString fileName = (file ? file->name : QString());
-    mUncompressedData.emplace_back(byte);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
+    mUncompressedCode.emplace_back(byte);
+    setSourceLocation(mEndAddress++, fileName, line);
 }
 
 void Compressor::emitWord(const SourceFile* file, int line, quint16 word)
 {
-    auto currentFile = mBinary->mCurrentFile;
     QString fileName = (file ? file->name : QString());
-    mUncompressedData.emplace_back(quint8(word & 0xFF));
-    mUncompressedData.emplace_back(quint8((word >> 8) & 0xFF));
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
+    mUncompressedCode.emplace_back(quint8(word & 0xFF));
+    mUncompressedCode.emplace_back(quint8((word >> 8) & 0xFF));
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
 }
 
 void Compressor::emitDWord(const SourceFile* file, int line, quint32 dword)
 {
-    auto currentFile = mBinary->mCurrentFile;
     QString fileName = (file ? file->name : QString());
-    mUncompressedData.emplace_back(quint8(dword & 0xFF));
-    mUncompressedData.emplace_back(quint8((dword >> 8) & 0xFF));
-    mUncompressedData.emplace_back(quint8((dword >> 16) & 0xFF));
-    mUncompressedData.emplace_back(quint8((dword >> 24) & 0xFF));
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
+    mUncompressedCode.emplace_back(quint8(dword & 0xFF));
+    mUncompressedCode.emplace_back(quint8((dword >> 8) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((dword >> 16) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((dword >> 24) & 0xFF));
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
 }
 
 void Compressor::emitQWord(const SourceFile* file, int line, quint64 qword)
 {
-    auto currentFile = mBinary->mCurrentFile;
     QString fileName = (file ? file->name : QString());
-    mUncompressedData.emplace_back(quint8(qword & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 8) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 16) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 24) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 32) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 40) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 48) & 0xFF));
-    mUncompressedData.emplace_back(quint8((qword >> 56) & 0xFF));
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
-    currentFile->second.debugInfo->setSourceLocation(mEndAddress++, fileName, line);
+    mUncompressedCode.emplace_back(quint8(qword & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 8) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 16) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 24) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 32) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 40) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 48) & 0xFF));
+    mUncompressedCode.emplace_back(quint8((qword >> 56) & 0xFF));
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
+    setSourceLocation(mEndAddress++, fileName, line);
 }
 
 size_t Compressor::flush()
 {
-    auto& code = mBinary->mCurrentFile->second.code;
+    auto& code = mBinary->code();
     size_t oldSize = code.size();
-    compress(std::move(mUncompressedData), code);
-    mUncompressedData.clear();
+    compress(std::move(mUncompressedCode), code);
+    mUncompressedCode.clear();
     size_t newSize = code.size();
-    mBinary->mCurrentFile->second.endAddress += unsigned(newSize - oldSize);
+    mBinary->setEndAddress(mBinary->endAddress() + unsigned(newSize - oldSize));
     return newSize - oldSize;
 }
 
