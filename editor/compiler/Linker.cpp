@@ -81,10 +81,15 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
             binary->setCurrentFile(it.first);
 
             for (ProgramSection* section : it.second) {
+                binary->setCurrentSection(section);
+
                 if (!section->isImaginary()) {
-                    binary->setCurrentSection(section);
                     size_t compressedLength = emitCodeForSection(binary.get(), section);
                     binary->debugInfo()->setSectionCompressedLength(section, unsigned(compressedLength));
+                } else {
+                    ImaginaryOutput tmp(binary.get());
+                    tmp.setEndAddress(section->resolvedBase());
+                    emitCodeForSection(&tmp, section);
                 }
             }
 
