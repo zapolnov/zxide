@@ -72,8 +72,9 @@ unsigned char *compress(Optimal *optimal, unsigned char *input_data, size_t inpu
     *output_size = (optimal[input_index].bits+18+7)/8;
     output_data = (unsigned char *)malloc(*output_size);
     if (!output_data) {
-         fprintf(stderr, "Error: Insufficient memory\n");
-         exit(1);
+         /*fprintf(stderr, "Error: Insufficient memory\n");
+         exit(1);*/
+         return NULL;
     }
 
     /* un-reverse optimal sequence */

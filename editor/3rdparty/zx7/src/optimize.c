@@ -65,8 +65,14 @@ Optimal* optimize(unsigned char *input_data, size_t input_size) {
     optimal = (Optimal *)calloc(input_size, sizeof(Optimal));
 
     if (!min || !max || !matches || !match_slots || !optimal) {
-         fprintf(stderr, "Error: Insufficient memory\n");
-         exit(1);
+         if (min) free(min);
+         if (max) free(max);
+         if (matches) free(matches);
+         if (match_slots) free(match_slots);
+         if (optimal) free(optimal);
+         /*fprintf(stderr, "Error: Insufficient memory\n");
+         exit(1);*/
+         return NULL;
     }
 
     /* first byte is always literal */
@@ -112,7 +118,9 @@ Optimal* optimize(unsigned char *input_data, size_t input_size) {
         matches[match_index].next = &match_slots[i];
     }
 
-    /* save time by releasing the largest block only, the O.S. will clean everything else later */
+    free(min);
+    free(max);
+    free(matches);
     free(match_slots);
 
     return optimal;
