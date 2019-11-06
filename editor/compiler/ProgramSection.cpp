@@ -87,6 +87,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
             reporter->error(fileName, mToken.line,
                 QCoreApplication::tr("base address 0x%2 of section '%1' is not aligned to %3")
                 .arg(nameCStr()).arg(mCalculatedBase, 0, 16).arg(mCalculatedAlignment));
+            return false;
         }
     }
 
@@ -110,6 +111,7 @@ size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IError
                 reporter->error(fileName, mToken.line,
                     QCoreApplication::tr("section '%1' overlaps with address 0x%2 which belongs to another section")
                     .arg(nameCStr()).arg(mCalculatedBase, 0, 16));
+                return 0;
             }
             while (binary->endAddress() < mCalculatedBase)
                 binary->emitByte(mToken.file, mToken.line, 0); // NOP
@@ -118,10 +120,10 @@ size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IError
             while (binary->endAddress() < a)
                 binary->emitByte(mToken.file, mToken.line, 0); // NOP
         }
-    }
 
-    Q_ASSERT(!mHasCalculatedBase || binary->endAddress() == mCalculatedBase);
-    Q_ASSERT(!mHasCalculatedAlignment || binary->endAddress() % mCalculatedAlignment == 0);
+        Q_ASSERT(!mHasCalculatedBase || binary->endAddress() == mCalculatedBase);
+        Q_ASSERT(!mHasCalculatedAlignment || binary->endAddress() % mCalculatedAlignment == 0);
+    }
 
     mHasCalculatedBase = false;
     mHasCalculatedAlignment = false;
