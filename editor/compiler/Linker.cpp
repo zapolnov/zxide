@@ -63,17 +63,23 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 if (!section->resolveAddresses(mReporter, mProgram, addr))
                     throw LinkerError();
 
+                unsigned start = section->resolvedBase();
+                unsigned length = addr - start;
+                binary->debugInfo()->addSection(section, start, length);
+
                 if (section->isCompressed()) {
                     NullOutput output(addr);
                     addr = section->resolvedBase() + unsigned(emitCodeForSection(&output, section));
                 }
-
-                unsigned start = section->resolvedBase();
-                unsigned length = addr - start;
-                binary->debugInfo()->addSection(section, start, length);
             }
 
-            // Emit code
+            binary->setCurrentSection(nullptr);
+        }
+
+        // Emit code
+        for (const auto& it : sections) {
+            binary->setCurrentFile(it.first);
+
             for (ProgramSection* section : it.second) {
                 if (!section->isImaginary()) {
                     binary->setCurrentSection(section);
