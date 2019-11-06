@@ -185,6 +185,9 @@ void AssemblerParser::parseSectionDecl()
                 if (section->hasBase())
                     error(tr("multiple specification of base address for section '%1'").arg(section->nameCStr()));
                 section->setBase(std::move(expr));
+            } else if (param == "imaginary") {
+                section->setIsImaginary(true);
+                nextToken();
             } else if (param == "file") {
                 if (nextToken() != T_STRING)
                     error(tr("expected string"));

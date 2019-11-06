@@ -26,6 +26,9 @@ public:
     void setAlignment(std::unique_ptr<Expression> expr);
     unsigned alignment(IErrorReporter* reporter) const;
 
+    bool isImaginary() const { return mIsImaginary; }
+    void setIsImaginary(bool flag) { mIsImaginary = flag; }
+
     bool hasFileName() const { return mHasFileName; }
     const std::string& fileName() const { Q_ASSERT(mHasFileName || mFileName.empty()); return mFileName; }
     void setFileName(std::string value) { mFileName = std::move(value); mHasFileName = true; }
@@ -47,6 +50,7 @@ private:
     mutable bool mHasCalculatedBase;
     mutable bool mHasCalculatedAlignment;
     bool mHasFileName;
+    bool mIsImaginary;
 
     Q_DISABLE_COPY(ProgramSection)
 };

@@ -656,3 +656,5 @@ TEST_CASE("sections can overlap in different files", "[sections]")
     REQUIRE(actual.fileData("file4") == expected_file4);
     REQUIRE(actual.numFiles() == 2);
 }
+
+// FIXME: test imaginary sections

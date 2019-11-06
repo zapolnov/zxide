@@ -33,19 +33,27 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
             error(tr("program has no sections"));
 
         for (const auto& it : sections) {
+            ProgramSection* firstSectionWithBaseAddress = nullptr;
+            for (const auto& jt : it.second) {
+                if (!jt->isImaginary() && jt->hasBase()) {
+                    firstSectionWithBaseAddress = jt;
+                    break;
+                }
+            }
+
             if (it.first.empty()) {
                 if (!hasCode(it.second))
                     error(tr("program has no code in default file"));
-                if (!it.second[0]->hasBase())
+                if (!firstSectionWithBaseAddress)
                     error(tr("no sections with base address in default file"));
             } else {
                 if (!hasCode(it.second))
                     error(tr("program has no code in file '%1'").arg(it.first.c_str()));
-                if (!it.second[0]->hasBase())
+                if (!firstSectionWithBaseAddress)
                     error(tr("no sections with base address in file '%1'").arg(it.first.c_str()));
             }
 
-            binary->setCurrentFile(it.first, it.second[0]->base(mReporter));
+            binary->setCurrentFile(it.first, firstSectionWithBaseAddress->base(mReporter));
             quint32 addr = binary->baseAddress();
 
             // Resolve addresses of labels
@@ -60,8 +68,10 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
 
             // Emit code
             for (ProgramSection* section : it.second) {
-                binary->setCurrentSection(section);
-                section->emitCode(mProgram, binary.get(), mReporter);
+                if (!section->isImaginary()) {
+                    binary->setCurrentSection(section);
+                    section->emitCode(mProgram, binary.get(), mReporter);
+                }
             }
 
             binary->setCurrentSection(nullptr);
@@ -91,7 +101,7 @@ bool Linker::isEmpty(const std::vector<ProgramSection*>& sections) const
 bool Linker::hasCode(const std::vector<ProgramSection*>& sections) const
 {
     for (const auto& section : sections) {
-        if (section->hasCode(mProgram, mReporter))
+        if (!section->isImaginary() && section->hasCode(mProgram, mReporter))
             return true;
     }
 

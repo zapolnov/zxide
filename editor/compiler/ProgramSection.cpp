@@ -17,6 +17,7 @@ ProgramSection::ProgramSection(Program* program, const Token& token, std::string
     , mHasCalculatedBase(false)
     , mHasCalculatedAlignment(false)
     , mHasFileName(false)
+    , mIsImaginary(false)
 {
 }
 
