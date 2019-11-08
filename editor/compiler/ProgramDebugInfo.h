@@ -28,7 +28,7 @@ struct ProgramSectionInfo
     unsigned startAddress;
     unsigned originalLength;
     unsigned compressedLength;
-    std::map<unsigned, QString> symbols;
+    std::multimap<unsigned, QString> symbols;
 };
 
 class ProgramDebugInfo
