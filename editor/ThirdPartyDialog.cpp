@@ -80,6 +80,12 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
 
         "<hr>"
 
+        "<p>This program uses ZX7:<br>"
+        "<a href=\"http://www.worldofspectrum.org/infoseekid.cgi?id=0027996\">http://www.worldofspectrum.org/infoseekid.cgi?id=0027996</a><br>"
+        "Licensed under the 3-clause BSD license.</p>"
+
+        "<hr>"
+
         "<p>This program uses Scintilla:<br>"
         "<a href=\"https://www.scintilla.org/\">https://www.scintilla.org/</a><br>"
         "Copyright &copy; 1998-2003 by Neil Hodgson. All Rights Reserved.<br>"
