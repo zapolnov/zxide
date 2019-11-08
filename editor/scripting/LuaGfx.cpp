@@ -46,7 +46,9 @@ int luaGfxLoad(lua_State* L)
         return luaL_error(L, "unable to load file '%s': %s", fileName, error.toUtf8().constData());
     }
 
-    return 1;
+    lua_pushboolean(L, gfxFile.walkable);
+
+    return 2;
 }
 
 static int luaGfxGetDimensions(lua_State* L)

@@ -77,6 +77,7 @@ private:
     int mSavedWidth;
     int mSavedHeight;
     int mSelectedColor;
+    bool mSavedWalkable;
 
     void reset();
     void setSaved();
@@ -87,6 +88,7 @@ private:
     Q_SLOT void on_colorModeCombo_currentIndexChanged(int);
     Q_SLOT void on_widthCombo_currentIndexChanged(int);
     Q_SLOT void on_heightCombo_currentIndexChanged(int);
+    Q_SLOT void on_walkableCheck_toggled(bool checked);
 
     void setColor(int color, bool setTool = true);
     Q_SLOT void on_blackButton_clicked() { setColor(0); }

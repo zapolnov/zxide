@@ -10,6 +10,7 @@ static const int FileFormatVersion = 1;
 static const QString JsonKey_Version = QStringLiteral("version");
 static const QString JsonKey_Format = QStringLiteral("format");
 static const QString JsonKey_ColorMode = QStringLiteral("color_mode");
+static const QString JsonKey_Walkable = QStringLiteral("walkable");
 static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
 static const QString JsonKey_Pixels = QStringLiteral("pixels");
@@ -24,6 +25,7 @@ static const QString JsonValue_FormatBTile16 = QStringLiteral("btile16");
 GfxFile::GfxFile()
     : format(GfxFormat::None)
     , colorMode(GfxColorMode::Standard)
+    , walkable(false)
 {
 }
 
@@ -79,6 +81,7 @@ bool GfxFile::deserializeFromJson(GfxData* data)
         return false;
     }
 
+    walkable = root[JsonKey_Walkable].toBool();
     int width = root[JsonKey_Width].toInt();
     int height = root[JsonKey_Height].toInt();
     QJsonArray pixels = root[JsonKey_Pixels].toArray();
@@ -130,6 +133,7 @@ void GfxFile::serializeToJson(const GfxData* data)
     QJsonObject root;
 
     root[JsonKey_Version] = FileFormatVersion;
+    root[JsonKey_Walkable] = walkable;
     root[JsonKey_Width] = data->width();
     root[JsonKey_Height] = data->height();
 
