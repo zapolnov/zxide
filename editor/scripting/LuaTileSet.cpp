@@ -19,6 +19,7 @@ namespace
         std::unique_ptr<GfxData> gfx;
         int x;
         int y;
+        bool walkable;
     };
 
     struct TileSetObject
@@ -62,8 +63,10 @@ static int luaTilesetLoad(lua_State* L)
 
             lua_pushcfunction(L, &luaGfxLoad);
             vm->pushString(tileName);
-            lua_call(L, 1, 1);
-            GfxData& gfxData = vm->check<GfxData>(-1);
+            lua_call(L, 1, 2);
+
+            bool isWalkable = lua_toboolean(L, -1);
+            GfxData& gfxData = vm->check<GfxData>(-2);
 
             int nx = (gfxData.width() + tileW - 1) / tileW;
             int ny = (gfxData.height() + tileH - 1) / tileH;
@@ -77,6 +80,7 @@ static int luaTilesetLoad(lua_State* L)
                     tileData.gfx = std::make_unique<GfxData>(tileW, tileH);
                     tileData.x = xx;
                     tileData.y = yy;
+                    tileData.walkable = isWalkable;
 
                     for (int gfxY = 0; gfxY < tileH; gfxY++) {
                         for (int gfxX = 0; gfxX < tileW; gfxX++) {
@@ -98,7 +102,7 @@ static int luaTilesetLoad(lua_State* L)
                 }
             }
 
-            lua_pop(L, 1);
+            lua_pop(L, 2);
         }
     }
 
@@ -123,9 +127,11 @@ static int luaTilesetGetTileInfo(lua_State* L)
         return 0;
 
     vm->pushString(it->second.name);
+    lua_pushboolean(L, it->second.walkable);
     lua_pushinteger(L, it->second.x);
     lua_pushinteger(L, it->second.y);
-    return 3;
+
+    return 4;
 }
 
 static int luaTilesetGetTileGraphic(lua_State* L)
