@@ -105,7 +105,7 @@ static int luaTilesetLoad(lua_State* L)
                 }
             }
 
-            lua_pop(L, 2);
+            lua_pop(L, 3);
         }
     }
 
