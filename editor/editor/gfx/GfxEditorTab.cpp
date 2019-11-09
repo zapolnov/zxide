@@ -65,6 +65,7 @@ bool GfxEditorTab::loadFile(File* f)
     comboSelectItem(mUi->widthCombo, mUi->editorWidget->width());
     comboSelectItem(mUi->heightCombo, mUi->editorWidget->height());
     mUi->walkableCheck->setChecked(fileData.walkable);
+    mUi->entityEdit->setText(fileData.entity);
 
     mUi->formatCombo->setEnabled(true);
     mUi->widthCombo->setEnabled(true);
@@ -73,6 +74,7 @@ bool GfxEditorTab::loadFile(File* f)
     mUi->editScrollArea->setEnabled(true);
     mUi->previewScrollArea->setEnabled(true);
     mUi->walkableCheck->setEnabled(true);
+    mUi->entityEdit->setEnabled(true);
 
     reloadSettings();
     setSaved();
@@ -95,6 +97,8 @@ bool GfxEditorTab::isModified() const
     if (mSavedHeight != comboSelectedItem(mUi->heightCombo).toInt())
         return true;
     if (mSavedWalkable != mUi->walkableCheck->isChecked())
+        return true;
+    if (mSavedEntity != mUi->entityEdit->text())
         return true;
 
     return mUi->editorWidget->isModified();
@@ -228,6 +232,7 @@ bool GfxEditorTab::save()
     file.format = GfxFormat(comboSelectedItem(mUi->formatCombo).toInt());
     file.colorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
     file.walkable = mUi->walkableCheck->isChecked();
+    file.entity = mUi->entityEdit->text();
     mUi->editorWidget->serialize(file);
 
     try {
@@ -360,6 +365,8 @@ void GfxEditorTab::reset()
     mUi->colorModeCombo->setEnabled(false);
     mUi->walkableCheck->setChecked(false);
     mUi->walkableCheck->setEnabled(false);
+    mUi->entityEdit->setText(QString());
+    mUi->entityEdit->setEnabled(false);
     mUi->editScrollArea->setEnabled(false);
     mUi->previewScrollArea->setEnabled(false);
     mUi->editorWidget->reset();
@@ -372,6 +379,7 @@ void GfxEditorTab::setSaved()
     mSavedWidth = comboSelectedItem(mUi->widthCombo).toInt();
     mSavedHeight = comboSelectedItem(mUi->heightCombo).toInt();
     mSavedWalkable = mUi->walkableCheck->isChecked();
+    mSavedEntity = mUi->entityEdit->text();
     mUi->editorWidget->setSaved();
 }
 
@@ -405,6 +413,11 @@ void GfxEditorTab::on_heightCombo_currentIndexChanged(int)
 }
 
 void GfxEditorTab::on_walkableCheck_toggled(bool)
+{
+    emit updateUi();
+}
+
+void GfxEditorTab::on_entityEdit_textChanged(const QString&)
 {
     emit updateUi();
 }

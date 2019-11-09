@@ -47,8 +47,9 @@ int luaGfxLoad(lua_State* L)
     }
 
     lua_pushboolean(L, gfxFile.walkable);
+    vm->pushString(gfxFile.entity);
 
-    return 2;
+    return 3;
 }
 
 static int luaGfxGetDimensions(lua_State* L)

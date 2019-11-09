@@ -14,6 +14,7 @@ public:
 
     GfxFormat format;
     GfxColorMode colorMode;
+    QString entity;
     bool walkable;
 
     GfxFile();

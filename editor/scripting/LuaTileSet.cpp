@@ -16,6 +16,7 @@ namespace
     struct TileData
     {
         QString name;
+        QString entity;
         std::unique_ptr<GfxData> gfx;
         int x;
         int y;
@@ -63,10 +64,11 @@ static int luaTilesetLoad(lua_State* L)
 
             lua_pushcfunction(L, &luaGfxLoad);
             vm->pushString(tileName);
-            lua_call(L, 1, 2);
+            lua_call(L, 1, 3);
 
             bool isWalkable = lua_toboolean(L, -1);
-            GfxData& gfxData = vm->check<GfxData>(-2);
+            QString entity = lua_tostring(L, -2);
+            GfxData& gfxData = vm->check<GfxData>(-3);
 
             int nx = (gfxData.width() + tileW - 1) / tileW;
             int ny = (gfxData.height() + tileH - 1) / tileH;
@@ -77,6 +79,7 @@ static int luaTilesetLoad(lua_State* L)
 
                     TileData tileData;
                     tileData.name = tileName;
+                    tileData.entity = entity;
                     tileData.gfx = std::make_unique<GfxData>(tileW, tileH);
                     tileData.x = xx;
                     tileData.y = yy;
@@ -128,10 +131,11 @@ static int luaTilesetGetTileInfo(lua_State* L)
 
     vm->pushString(it->second.name);
     lua_pushboolean(L, it->second.walkable);
+    vm->pushString(it->second.entity);
     lua_pushinteger(L, it->second.x);
     lua_pushinteger(L, it->second.y);
 
-    return 4;
+    return 5;
 }
 
 static int luaTilesetGetTileGraphic(lua_State* L)

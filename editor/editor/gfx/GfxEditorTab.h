@@ -74,6 +74,7 @@ private:
     std::unique_ptr<Ui_GfxEditorTab> mUi;
     GfxFormat mSavedFormat;
     GfxColorMode mSavedColorMode;
+    QString mSavedEntity;
     int mSavedWidth;
     int mSavedHeight;
     int mSelectedColor;
@@ -89,6 +90,7 @@ private:
     Q_SLOT void on_widthCombo_currentIndexChanged(int);
     Q_SLOT void on_heightCombo_currentIndexChanged(int);
     Q_SLOT void on_walkableCheck_toggled(bool checked);
+    Q_SLOT void on_entityEdit_textChanged(const QString& text);
 
     void setColor(int color, bool setTool = true);
     Q_SLOT void on_blackButton_clicked() { setColor(0); }
