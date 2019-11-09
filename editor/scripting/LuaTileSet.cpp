@@ -66,8 +66,8 @@ static int luaTilesetLoad(lua_State* L)
             vm->pushString(tileName);
             lua_call(L, 1, 3);
 
-            bool isWalkable = lua_toboolean(L, -1);
-            QString entity = lua_tostring(L, -2);
+            QString entity = lua_tostring(L, -1);
+            bool isWalkable = lua_toboolean(L, -2);
             GfxData& gfxData = vm->check<GfxData>(-3);
 
             int nx = (gfxData.width() + tileW - 1) / tileW;
