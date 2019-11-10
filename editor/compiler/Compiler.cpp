@@ -533,10 +533,12 @@ namespace
             std::string str = msg.str();
             msg.str(std::string());
 
-            if (cFileName)
-                cErrorReporter->error(QString::fromUtf8(cFileName), cLineNumber, QString::fromUtf8(str.c_str()));
-            else
+            if (!cFileName)
                 qDebug("%s", str.c_str());
+            else {
+                cErrorReporter->error(QString::fromUtf8(cFileName), cLineNumber, QString::fromUtf8(str.c_str()));
+                qDebug("%s(%d): %s", cFileName, cLineNumber, str.c_str());
+            }
 
             cFileName = NULL;
             cLineNumber = -1;
