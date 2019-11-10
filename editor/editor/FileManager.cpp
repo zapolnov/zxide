@@ -32,7 +32,6 @@ FileOrDirectory::FileOrDirectory(const QIcon& icon, const QFileInfo& fileInfo, i
     , mIsGenerated(false)
 {
     setIcon(0, icon);
-    setExpanded(true);
 }
 
 QString FileOrDirectory::relativeName() const
