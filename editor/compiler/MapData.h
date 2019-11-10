@@ -31,6 +31,11 @@ public:
     unsigned char& at(int x, int y);
     unsigned char& at(const QPoint& p);
 
+    const std::string& entityAt(int x, int y) const;
+    const std::string& entityAt(const QPoint& p) const;
+    std::string& entityAt(int x, int y);
+    std::string& entityAt(const QPoint& p);
+
     void clear();
     void clear(int x1, int y1, int x2, int y2);
 
@@ -45,6 +50,7 @@ signals:
 
 private:
     std::unique_ptr<unsigned char[]> mData;
+    std::unique_ptr<std::string[]> mEntities;
     int mWidth;
     int mHeight;
 

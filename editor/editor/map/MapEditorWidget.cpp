@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QDataStream>
 #include <QTimer>
+#include <QInputDialog>
 #include <QMouseEvent>
 
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-map");
@@ -255,6 +256,34 @@ private:
     int mOldHeight;
     int mNewWidth;
     int mNewHeight;
+};
+
+class MapEditorWidget::SetEntityOperation : public Operation
+{
+public:
+    SetEntityOperation(MapEditorWidget* widget, int x, int y, std::string value)
+        : mX(x)
+        , mY(y)
+        , mNewValue(std::move(value))
+    {
+    }
+
+    void redo(MapData* data) override
+    {
+        mOldValue = data->entityAt(mX, mY);
+        data->entityAt(mX, mY) = mNewValue;
+    }
+
+    void undo(MapData* data) override
+    {
+        data->entityAt(mX, mY) = mOldValue;
+    }
+
+private:
+    int mX;
+    int mY;
+    std::string mOldValue;
+    std::string mNewValue;
 };
 
 
@@ -920,6 +949,13 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
             int x = mapX * mTileWidth;
             int y = mapY * mTileHeight;
             painter.drawPixmap(x, y, (mFlash ? tile.pixmap2 : tile.pixmap1));
+
+            const auto& e = mMapData->entityAt(mapX, mapY);
+            if (!e.empty()) {
+                painter.setPen(QPen(QColor(255, 255, 0), 0.5f, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+                painter.setBrush(QColor(255, 255, 0, 127));
+                painter.drawRect(x, y, mTileWidth, mTileHeight);
+            }
         }
     }
 
@@ -962,6 +998,7 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
 void MapEditorWidget::mousePressEvent(QMouseEvent* event)
 {
     updateMousePosition(event);
+
     if (event->button() == Qt::LeftButton && mCurrentTool && !mMousePressed) {
         mMousePressed = true;
         mCurrentTool->beginDrag(this, mMousePosition.x(), mMousePosition.y());
@@ -973,6 +1010,7 @@ void MapEditorWidget::mousePressEvent(QMouseEvent* event)
 void MapEditorWidget::mouseReleaseEvent(QMouseEvent* event)
 {
     updateMousePosition(event);
+
     if (event->button() == Qt::LeftButton && mMousePressed) {
         mMousePressed = false;
         if (mCurrentTool) {
@@ -981,6 +1019,25 @@ void MapEditorWidget::mouseReleaseEvent(QMouseEvent* event)
         }
         update();
         emit updateUi();
+    }
+
+    if (event->button() == Qt::RightButton && !mMousePressed) {
+        auto pos = mMousePosition;
+        if (mMapData->isValidCoord(pos)) {
+            QString entity = QString::fromUtf8(mMapData->entityAt(pos).c_str());
+
+            QInputDialog dlg(this);
+            dlg.setInputMode(QInputDialog::TextInput);
+            dlg.setWindowTitle(tr("Edit entity"));
+            dlg.setLabelText(tr("Entity:"));
+            dlg.setTextValue(entity);
+            if (dlg.exec() != QDialog::Accepted)
+                return;
+
+            QString newEntity = dlg.textValue().trimmed();
+            if (newEntity != entity)
+                pushOperation(new SetEntityOperation(this, pos.x(), pos.y(), newEntity.toUtf8().constData()));
+        }
     }
 }
 

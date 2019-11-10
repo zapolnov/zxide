@@ -78,6 +78,23 @@ static int luaMapGetTileAt(lua_State* L)
     return 1;
 }
 
+static int luaMapGetEntityAt(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    MapObject& obj = vm->check<MapObject>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+
+    if (x < 0 || x >= obj.data.width())
+        return luaL_error(L, "x coordinate is out of range.");
+    if (y < 0 || y >= obj.data.height())
+        return luaL_error(L, "y coordinate is out of range.");
+
+    vm->pushString(obj.data.entityAt(x, y));
+    return 1;
+}
+
 static int luaMapWriteByteArray(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -112,6 +129,7 @@ const luaL_Reg LuaMap[] = {
     { "mapGetSize", luaMapGetSize },
     { "mapGetTilesetFile", luaMapGetTilesetFile },
     { "mapGetTileAt", luaMapGetTileAt },
+    { "mapGetEntityAt", luaMapGetEntityAt },
     { "mapWriteByteArray", luaMapWriteByteArray },
     { nullptr, nullptr }
 };

@@ -5,7 +5,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-static const int FileFormatVersion = 1;
+static const int FileFormatVersion = 2;
 
 static const QString JsonKey_Version = QStringLiteral("version");
 static const QString JsonKey_Format = QStringLiteral("format");
@@ -13,6 +13,7 @@ static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
 static const QString JsonKey_TileSet = QStringLiteral("tileset");
 static const QString JsonKey_Tiles = QStringLiteral("tiles");
+static const QString JsonKey_Entities = QStringLiteral("entities");
 static const QString JsonValue_FormatNone = QStringLiteral("none");
 static const QString JsonValue_FormatByteArray = QStringLiteral("bytearray");
 
@@ -66,10 +67,23 @@ bool MapFile::deserializeFromJson(MapData* data)
     int height = root[JsonKey_Height].toInt();
     tileSetFile = root[JsonKey_TileSet].toString();
     QJsonArray tiles = root[JsonKey_Tiles].toArray();
+    QJsonArray entities = root[JsonKey_Entities].toArray();
 
     if (tiles.size() != height) {
         mLastError = QCoreApplication::tr("file is corrupt.");
         return false;
+    }
+
+    if (formatVersion == 1) {
+        if (entities.size() != 0) {
+            mLastError = QCoreApplication::tr("file is corrupt.");
+            return false;
+        }
+    } else {
+        if (entities.size() != height) {
+            mLastError = QCoreApplication::tr("file is corrupt.");
+            return false;
+        }
     }
 
     data->resize(width, height);
@@ -84,6 +98,17 @@ bool MapFile::deserializeFromJson(MapData* data)
 
         for (int x = 0; x < width; x++)
             data->at(x, y) = char(line[x].toInt() & 0xff);
+
+        if (formatVersion > 1) {
+            line = entities[y].toArray();
+            if (line.size() != width) {
+                mLastError = QCoreApplication::tr("file is corrupt.");
+                return false;
+            }
+
+            for (int x = 0; x < width; x++)
+                data->entityAt(x, y) = line[x].toString().toUtf8().constData();
+        }
     }
 
     return true;
@@ -112,6 +137,15 @@ void MapFile::serializeToJson(const MapData* data)
         tiles.append(line);
     }
     root[JsonKey_Tiles] = tiles;
+
+    QJsonArray entities;
+    for (int y = 0; y < data->height(); y++) {
+        QJsonArray line;
+        for (int x = 0; x < data->width(); x++)
+            line.append(QString::fromUtf8(data->entityAt(x, y).c_str()));
+        entities.append(line);
+    }
+    root[JsonKey_Entities] = entities;
 
     doc.setObject(root);
     mFileData = doc.toJson(QJsonDocument::Indented);

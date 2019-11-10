@@ -101,6 +101,7 @@ private:
     class ClearOperation;
     class PasteOperation;
     class ResizeOperation;
+    class SetEntityOperation;
 
     class Tool;
     class DrawTool;
