@@ -323,7 +323,10 @@ void sdcc_closeInputFile(void)
         inLineNo = 0;
         dbuf_set_length(&lastSrcFile, 0);
     }
+}
 
+void sdcc_cleanupAsm(void)
+{
     if (dbufInitialized) {
         if (line.buf)
             dbuf_destroy(&line);

@@ -2463,3 +2463,26 @@ identifier
    : IDENTIFIER   { $$ = newSymbol ($1, NestLevel); }
    ;
 %%
+
+void sdcc_cleanupY(void)
+{
+    NestLevel = 0;
+    stackPtr  = 1;
+    xstackPtr = 0;
+    reentrant = 0;
+    blockNo = 0;
+    currBlockno = 0;
+    inCriticalFunction = 0;
+    inCriticalBlock = 0;
+    seqPointNo = 1;
+    ignoreTypedefType = 0;
+    lbuff[0] = 0;
+    function_name[0] = 0;
+    p_continueStack = continueStack - 1;
+    p_breakStack = breakStack - 1;
+    p_forStack = forStack - 1;
+    p_swStk = swStk - 1;
+    p_blockNum = blockNum - 1;
+    cenum = NULL;
+    uselessDecl = TRUE;
+}

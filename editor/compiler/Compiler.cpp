@@ -569,6 +569,7 @@ namespace
     static void sdccCleanup()
     {
         sdcc_closeInputFile();
+        sdcc_cleanupAsm();
         sdcc_cleanupAst();
         sdcc_cleanupLabel();
         sdcc_cleanupGen();
@@ -579,6 +580,7 @@ namespace
         sdcc_cleanupOpt();
         sdcc_cleanupZ80Gen();
         sdcc_cleanupGlue();
+        sdcc_cleanupY();
         sdcc_cleanupLex();
 
         while (!openFiles.empty()) {

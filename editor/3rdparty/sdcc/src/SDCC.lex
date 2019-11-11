@@ -1210,4 +1210,7 @@ void sdcc_cleanupLex(void)
 {
     memset(&dbuf, 0, sizeof(dbuf));
     memset(&asmbuff, 0, sizeof(asmbuff));
+    column = 0;
+    lexFilename = NULL;
+    lexLineno = 1;
 }
