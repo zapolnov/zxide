@@ -30,6 +30,12 @@ QString Project::tapeFileName() const
     return mDir.absoluteFilePath(QStringLiteral("%1/%2.tap")).arg(OutDirectory).arg(name());
 }
 
+QString Project::diskFileName() const
+{
+    mDir.mkpath(OutDirectory);
+    return mDir.absoluteFilePath(QStringLiteral("%1/%2.scl")).arg(OutDirectory).arg(name());
+}
+
 QString Project::wavFileName() const
 {
     mDir.mkpath(OutDirectory);

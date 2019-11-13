@@ -375,6 +375,7 @@ bool MainWindow::build()
     dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
     dlg.setOutputWavFile(mProject->wavFileName());
     dlg.setOutputTapeFile(mProject->tapeFileName());
+    dlg.setOutputDiskFile(mProject->diskFileName());
 
     std::vector<File*> files;
     mUi->fileManager->enumerateFiles(files, false);

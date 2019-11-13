@@ -62,6 +62,11 @@ void CompilerDialog::setOutputTapeFile(const QString& file)
     mCompiler->setOutputTapeFile(file);
 }
 
+void CompilerDialog::setOutputDiskFile(const QString& file)
+{
+    mCompiler->setOutputDiskFile(file);
+}
+
 void CompilerDialog::setOutputWavFile(const QString& file)
 {
     mCompiler->setOutputWavFile(file);

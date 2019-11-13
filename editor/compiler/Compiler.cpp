@@ -6,6 +6,7 @@
 #include "Linker.h"
 #include "LuaBindings.h"
 #include "TapeFileWriter.h"
+#include "DiskFileWriter.h"
 #include "Util.h"
 #include "GfxFile.h"
 #include "MapFile.h"
@@ -37,6 +38,7 @@ Compiler::Compiler(QObject* parent)
     : QObject(parent)
     , mProgram(new Program)
     , mOutputTapeFile(QStringLiteral("out.tap"))
+    , mOutputDiskFile(QStringLiteral("out.scl"))
     , mOutputWavFile(QStringLiteral("out.wav"))
     , mErrorLine(0)
     , mWasError(false)
@@ -220,6 +222,15 @@ void Compiler::compile()
         if (!tapeWriter.makeTape()
                 || !tapeWriter.writeTapeFile(mOutputTapeFile)
                 || !tapeWriter.writeWavFile(mOutputWavFile))
+            throw CompilationFailed();
+
+        setStatusText(tr("Writing disk file..."));
+        DiskFileWriter diskWriter(mProgramBinary.get(), this);
+        diskWriter.setBasicCode(mCompiledBasicCode);
+        diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
+        diskWriter.setLoaderName(mProjectSettings->loaderFileName());
+        diskWriter.setProgramName(mProjectSettings->programFileName());
+        if (!diskWriter.writeSclFile(mOutputDiskFile))
             throw CompilationFailed();
 
         mProgramBinary->setCurrentFile(std::string());

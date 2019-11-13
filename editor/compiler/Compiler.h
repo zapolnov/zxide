@@ -41,6 +41,7 @@ public:
 
     void addSourceFile(const QString& fullName, const QString& path);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
+    void setOutputDiskFile(const QString& file) { mOutputDiskFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectFile(const QString& file) { mProjectFile = file; }
@@ -66,6 +67,7 @@ private:
     QString mErrorFile;
     QString mErrorMessage;
     QString mOutputTapeFile;
+    QString mOutputDiskFile;
     QString mOutputWavFile;
     QString mProjectFile;
     QDir mGeneratedFilesDirectory;

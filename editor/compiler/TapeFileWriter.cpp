@@ -1,6 +1,7 @@
 #include "TapeFileWriter.h"
 #include "ProgramBinary.h"
 #include "IErrorReporter.h"
+#include "compiler/ProjectSettings.h"
 #include "compiler/ProgramSection.h"
 #include "compiler/IO.h"
 #include "compiler/Util.h"
@@ -359,7 +360,7 @@ namespace
     class TapeProgramHeader
     {
     public:
-        explicit TapeProgramHeader()
+        TapeProgramHeader()
             : mInMemorySize(0)
             , mOnTapeSize(0)
             , mAutoStartLine(32768) // no autostart
@@ -424,7 +425,7 @@ namespace
     class TapeCodeHeader
     {
     public:
-        explicit TapeCodeHeader()
+        TapeCodeHeader()
             : mSize(0)
             , mStartAddress(0)
         {
@@ -480,8 +481,8 @@ namespace
 TapeFileWriter::TapeFileWriter(ProgramBinary* program, IErrorReporter* reporter)
     : mProgram(program)
     , mReporter(reporter)
-    , mLoaderName("loader")
-    , mProgramName("program")
+    , mLoaderName(ProjectSettings::DefaultLoaderFileName)
+    , mProgramName(ProjectSettings::DefaultProgramFileName)
     , mBasicStartLine(-1)
 {
 }

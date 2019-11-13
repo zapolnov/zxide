@@ -26,6 +26,7 @@ public:
 
     void addSourceFile(File* file);
     void setOutputTapeFile(const QString& file);
+    void setOutputDiskFile(const QString& file);
     void setOutputWavFile(const QString& file);
     void setGeneratedFilesDirectory(const QDir& dir);
     void setProjectFile(const QString& file);

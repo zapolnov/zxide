@@ -28,6 +28,8 @@ qt_add_sources(Compiler
         Compiler.h
         Compressor.cpp
         Compressor.h
+        DiskFileWriter.cpp
+        DiskFileWriter.h
         Expression.cpp
         Expression.h
         ExpressionParser.cpp
