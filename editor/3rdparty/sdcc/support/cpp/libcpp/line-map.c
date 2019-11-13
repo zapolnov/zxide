@@ -311,9 +311,13 @@ linemap_lookup (struct line_maps *set, source_location line)
 static void
 trace_include (const struct line_maps *set, const struct line_map *map)
 {
+  #if 0
   unsigned int i = set->depth;
 
   while (--i)
     /*putc */sdcc_msg_putc('.'/*, stderr*/);
   /*fprintf (stderr, */sdcc_msg_printf(" %s\n", map->to_file);
+  #else
+  sdcc_print_include(map->to_file);
+  #endif
 }

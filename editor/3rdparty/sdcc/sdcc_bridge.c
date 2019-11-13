@@ -24,3 +24,5 @@ void (*sdcc_msg_putc)(char ch);
 void (*sdcc_msg_puts)(const char* str);
 void (*sdcc_msg_printf)(const char* fmt, ...);
 void (*sdcc_msg_vprintf)(const char* fmt, va_list args);
+
+void (*sdcc_print_include)(const char* file);

@@ -1300,6 +1300,7 @@ report_missing_guard_cmp (const void *p1, const void *p2)
   return strcmp (*(const char *const *) p1, *(const char *const *) p2);
 }
 
+#if 0
 /* Report on all files that might benefit from a multiple include guard.
    Triggered by -H.  */
 void
@@ -1330,7 +1331,6 @@ _cpp_report_missing_guards (cpp_reader *pfile)
     }
 }
 
-#if 0
 /* Locate HEADER, and determine whether it is newer than the current
    file.  If it cannot be located or dated, return -1, if it is
    newer, return 1, otherwise 0.  */

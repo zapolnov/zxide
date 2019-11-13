@@ -694,8 +694,8 @@ cpp_finish (cpp_reader *pfile, FILE *deps_stream)
     }
 
   /* Report on headers that could use multiple include guards.  */
-  if (CPP_OPTION (pfile, print_include_names))
-    _cpp_report_missing_guards (pfile);
+  /*if (CPP_OPTION (pfile, print_include_names))
+    _cpp_report_missing_guards (pfile);*/
 }
 
 static void

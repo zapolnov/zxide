@@ -14,6 +14,7 @@
 #include "IO.h"
 #include "scripting/LuaVM.h"
 #include <exception>
+#include <QDateTime>
 #include <QDataStream>
 #include <QFileInfo>
 #include <cstdarg>
@@ -375,6 +376,7 @@ namespace
     };
 
     static QDir projectDir;
+    static std::vector<std::string> includeFiles;
     static std::unordered_set<QFile*> openFiles;
     static std::stringstream msg;
     static std::stringstream out;
@@ -577,6 +579,17 @@ namespace
         va_end(args);
     }
 
+    void sdccPrintInclude(const char* file)
+    {
+        if (file[0] == '.' && file[1] == '/')
+            file += 2;
+      #ifdef _WIN32
+        else if (file[0] == '.' && file[1] == '\\')
+            file += 2;
+      #endif
+        includeFiles.emplace_back(file);
+    }
+
     static void sdccCleanup()
     {
         sdcc_closeInputFile();
@@ -631,9 +644,41 @@ bool Compiler::compileCCode()
     sdcc_msg_puts = sdccMsgPutString;
     sdcc_msg_printf = sdccMsgPrintF;
     sdcc_msg_vprintf = sdccMsgVPrintF;
+    sdcc_print_include = sdccPrintInclude;
 
     for (const auto& source : mCSources) {
         QFileInfo info(source->path);
+        setStatusText(tr("Checking dependencies for %1").arg(info.fileName()));
+
+        QFileInfo outInfo(source->name);
+        QString outFileName = QStringLiteral("%1/%2.asm").arg(outInfo.path()).arg(outInfo.completeBaseName());
+        QString outFilePath = mGeneratedFilesDirectory.absoluteFilePath(outFileName);
+        QString depFileName = QStringLiteral("%1/%2.asm.dep").arg(outInfo.path()).arg(outInfo.completeBaseName());
+        QString depFilePath = mGeneratedFilesDirectory.absoluteFilePath(depFileName);
+
+        mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{
+                QStringLiteral("generated/%1").arg(outFileName),
+                outFilePath
+            }));
+
+        if (QFile::exists(outFilePath) && QFile::exists(depFilePath)) {
+            QFileInfo outFileInfo(outFilePath);
+            if (info.lastModified() < outFileInfo.lastModified()) {
+                bool changed = false;
+                QList<QByteArray> deps = loadFile(depFilePath).split('\n');
+                for (const auto& dep : deps) {
+                    QFileInfo depInfo(mProjectDirectory.absoluteFilePath(dep));
+                    if (!depInfo.exists() || depInfo.lastModified() >= outFileInfo.lastModified()) {
+                        changed = true;
+                        break;
+                    }
+                }
+
+                if (!changed)
+                    continue;
+            }
+         }
+
         setStatusText(tr("Preprocessing %1").arg(info.fileName()));
 
         CommandLine ppCmd;
@@ -645,6 +690,7 @@ bool Compiler::compileCCode()
             case CStandard::C11: ppCmd.add("-std=c11"); break;
         }
         ppCmd.add(mProjectSettings->charIsUnsigned ? "-funsigned-char" : "-fsigned-char");
+        ppCmd.add("-H");
         ppCmd.add("-D__SDCC_z80");
         for (const auto& it : mProjectSettings->defines) {
             if (!it.empty())
@@ -653,6 +699,7 @@ bool Compiler::compileCCode()
         ppCmd.add("-I.");
         ppCmd.finalize();
 
+        includeFiles.clear();
         msg.str(std::string());
         out.str(std::string());
         cFileName = NULL;
@@ -754,14 +801,14 @@ bool Compiler::compileCCode()
             }
         }
 
-        QFileInfo outInfo(source->name);
-        QString outFileName = QStringLiteral("%1/%2.asm").arg(outInfo.path()).arg(outInfo.completeBaseName());
-        QString outFilePath = mGeneratedFilesDirectory.absoluteFilePath(outFileName);
         if (!writeFile(outFilePath, out.str(), this))
             return false;
 
-        outFileName = QStringLiteral("generated/%1").arg(outFileName);
-        mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ outFileName, outFilePath }));
+        std::stringstream dep;
+        for (const auto& file : includeFiles)
+            dep << file << '\n';
+        if (!writeFile(depFilePath, dep.str(), this))
+            return false;
 
         sdccCleanup();
     }
