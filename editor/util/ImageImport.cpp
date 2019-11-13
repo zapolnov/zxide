@@ -15,13 +15,17 @@ namespace
 
 static Colors chooseColors(const QImage& image, int x, int y, int paletteStart, int paletteEnd)
 {
-    Colors c;
-
     unsigned histogram[NUM_COLORS] = {0};
 
     // Create histogram
     for (int yy = 0; yy < 8; yy++) {
+        if (y + yy >= image.height())
+            break;
+
         for (int xx = 0; xx < 8; xx++) {
+            if (x + xx >= image.width())
+                break;
+
             int closestColor = -1, minDist = -1;
 
             // Find closest color from the spectrum palette
@@ -100,7 +104,7 @@ std::unique_ptr<GfxData> importImage(const QImage& image, bool dither)
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
             QRgb rgb = image.pixel(x, y);
-            const Colors& c = colors[(y >> 3) * w + (x >> 3)];
+            const Colors& c = colors[(y >> 3) * charsW + (x >> 3)];
 
             quint8 attrib = 0;
             attrib  = (c.ink & 7);
