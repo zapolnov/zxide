@@ -12,6 +12,7 @@ public:
     ~Settings();
 
     QString lastProjectFile() const;
+    QString lastImportedPNG() const;
     bool loadLastProjectOnStart() const;
     bool autoIndent() const;
     bool tabIndents() const;
@@ -28,6 +29,7 @@ public:
     Machine emulatorMachine() const;
 
     void setLastProjectFile(const QString& file);
+    void setLastImportedPNG(const QString& file);
     void setLoadLastProjectOnStart(bool flag);
     void setAutoIndent(bool flag);
     void setTabIndents(bool flag);

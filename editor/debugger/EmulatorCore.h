@@ -7,6 +7,11 @@
 #include <map>
 #include <vector>
 
+struct Color
+{
+    quint8 r, g, b;
+};
+
 enum Register
 {
     Reg_None,
@@ -214,5 +219,7 @@ private:
 
     Q_DISABLE_COPY(EmulatorCore)
 };
+
+extern const Color ZXPalette[];
 
 #endif

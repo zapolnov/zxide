@@ -21,8 +21,10 @@
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/ProgramBinary.h"
 #include "compiler/IO.h"
+#include "compiler/GfxFile.h"
 #include "util/ClickableLabel.h"
 #include "util/Settings.h"
+#include "util/ImageImport.h"
 #include "ui_MainWindow.h"
 #include <QMessageBox>
 #include <QPushButton>
@@ -30,6 +32,7 @@
 #include <QCheckBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QSaveFile>
 #include <QDesktopServices>
 #include <QTimer>
 #include <QLabel>
@@ -498,6 +501,7 @@ void MainWindow::updateUi()
     mUi->actionCloseAllWindows->setEnabled(mUi->tabWidget->count() > 0);
     mUi->actionNewFile->setEnabled(mProject && mUi->fileManager->canCreateFile());
     mUi->actionNewDirectory->setEnabled(mProject && mUi->fileManager->canCreateDirectory());
+    mUi->actionImportPNG->setEnabled(mProject && mUi->fileManager->canCreateFile());
     mUi->actionRenameFile->setEnabled(mProject && mUi->fileManager->canRename());
     mUi->actionDuplicateFile->setEnabled(mProject && mUi->fileManager->canDuplicate());
     mUi->actionDeleteFile->setEnabled(mProject && mUi->fileManager->canDelete());
@@ -661,6 +665,78 @@ void MainWindow::on_actionCloseAllWindows_triggered()
         if (!tab)
             break;
         closeTab(tab);
+    }
+}
+
+void MainWindow::on_actionImportPNG_triggered()
+{
+    Directory* parent = mUi->fileManager->selectedParentDirectory();
+    if (!parent)
+        return;
+
+    Settings settings;
+    auto filter = QStringLiteral("%1 (*.png)").arg(tr("PNG files"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Import image"), settings.lastImportedPNG(), filter);
+    if (fileName.isEmpty())
+        return;
+
+    settings.setLastImportedPNG(fileName);
+
+    QImage image;
+    if (!image.load(fileName)) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to load image \"%1\".").arg(fileName));
+        return;
+    }
+
+    // FIXME: extension should go from a constant
+    QString name = QStringLiteral("%1.gfx").arg(QFileInfo(fileName).completeBaseName());
+
+    QDir dir(parent->fileInfo().absoluteFilePath());
+    QSaveFile file(dir.absoluteFilePath(name));
+    if (QFileInfo(file.fileName()).exists()) {
+        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(name));
+        return;
+    }
+
+    if (!file.open(QFile::WriteOnly)) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to create file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+
+    auto gfxData = importImage(image, true);
+
+    GfxFile gfxFile;
+    gfxFile.format = GfxFormat::None;
+    gfxFile.colorMode = GfxColorMode::Standard;
+    gfxFile.serializeToJson(gfxData.get());
+    const QByteArray& data = gfxFile.data();
+
+    qint64 bytesWritten = file.write(data.constData(), data.length());
+    if (bytesWritten < 0) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+    if (bytesWritten != data.length()) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(tr("incomplete write.")));
+        return;
+    }
+
+    if (!file.commit()) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+
+    mUi->fileManager->refreshDirectory(parent);
+
+    File* newFile = parent->file(name);
+    Q_ASSERT(newFile);
+    if (newFile) {
+        mUi->fileManager->selectFileOrDirectory(newFile);
+        on_fileManager_fileCreated(newFile);
     }
 }
 

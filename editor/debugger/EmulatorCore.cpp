@@ -36,8 +36,6 @@ int debugger_run_to_address(unsigned addr);
 
 namespace
 {
-    typedef struct { quint8 r, g, b; } Color;
-
     struct Breakpoint
     {
         debugger_breakpoint_type type;
@@ -47,7 +45,7 @@ namespace
     };
 }
 
-static Color Palette[] = {
+const Color ZXPalette[] = {
     { 0x00, 0x00, 0x00 },
     { 0x00, 0x00, 0xc0 },
     { 0xc0, 0x00, 0x00 },
@@ -1149,7 +1147,7 @@ static void setPixel(uchar* line, int x, int color)
     if (x < 0 || x >= EmulatorCore::ScreenWidth)
         return;
 
-    const Color* c = &Palette[color];
+    const Color* c = &ZXPalette[color];
     uchar* dst = &line[x * 4];
     *dst++ = c->b;
     *dst++ = c->g;

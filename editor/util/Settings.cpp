@@ -4,6 +4,7 @@
 
 static const QString SettingLoadLastProject = QStringLiteral("LoadLastProject");
 static const QString SettingLastProjectFile = QStringLiteral("LastProjectFile");
+static const QString SettingLastImportedPNG = QStringLiteral("LastImportedPNG");
 static const QString SettingAutoIndent = QStringLiteral("AutoIndent");
 static const QString SettingTabIndents = QStringLiteral("TabIndents");
 static const QString SettingBackspaceUnindents = QStringLiteral("BackspaceUnindents");
@@ -37,6 +38,11 @@ Settings::~Settings()
 QString Settings::lastProjectFile() const
 {
     return mSettings.value(SettingLastProjectFile).toString();
+}
+
+QString Settings::lastImportedPNG() const
+{
+    return mSettings.value(SettingLastImportedPNG).toString();
 }
 
 bool Settings::loadLastProjectOnStart() const
@@ -123,6 +129,11 @@ Machine Settings::emulatorMachine() const
 void Settings::setLastProjectFile(const QString& file)
 {
     mSettings.setValue(SettingLastProjectFile, file);
+}
+
+void Settings::setLastImportedPNG(const QString& file)
+{
+    mSettings.setValue(SettingLastImportedPNG, file);
 }
 
 void Settings::setLoadLastProjectOnStart(bool flag)
