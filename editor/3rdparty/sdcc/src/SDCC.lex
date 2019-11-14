@@ -1213,4 +1213,26 @@ void sdcc_cleanupLex(void)
     column = 0;
     lexFilename = NULL;
     lexLineno = 1;
+    yy_current_buffer = 0;
+    yy_hold_char = 0;
+    yy_n_chars = 0;
+    yyleng = 0;
+    yy_c_buf_p = NULL;
+    yy_init = 1;
+    yy_start = 0;
+    yy_did_buffer_switch_on_eof = 0;
+    yyin = NULL;
+    yyout = NULL;
+    yytext = NULL;
+    yy_last_accepting_state = 0;
+    yy_last_accepting_cpos = 0;
+    yytext = NULL;
+  #if YY_STACK_USED
+    yy_start_stack_ptr = 0;
+    yy_start_stack_depth = 0;
+    yy_start_stack = 0;
+  #endif
+    p_options_stack = options_stack - 1;
+    p_optimize_stack = optimize_stack - 1;
+    p_SDCCERRG_stack = SDCCERRG_stack - 1;
 }

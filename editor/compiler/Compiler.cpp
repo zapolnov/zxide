@@ -606,6 +606,7 @@ namespace
         sdcc_cleanupOpt();
         sdcc_cleanupZ80Gen();
         sdcc_cleanupGlue();
+        sdcc_cleanupLoop();
         sdcc_cleanupY();
         sdcc_cleanupLex();
 

@@ -1423,3 +1423,8 @@ loopOptimizations (hTab * orderedLoops, ebbIndex * ebbi)
 
   return change;
 }
+
+void sdcc_cleanupLoop(void)
+{
+    p_regionStack = regionStack - 1;
+}
