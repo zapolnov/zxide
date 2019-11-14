@@ -549,6 +549,8 @@ namespace
             if (!cFileName)
                 qDebug("%s", str.c_str());
             else {
+                if (cFileName[0] == '.' && cFileName[1] == '/')
+                    cFileName += 2;
                 cErrorReporter->error(QString::fromUtf8(cFileName), cLineNumber, QString::fromUtf8(str.c_str()));
                 qDebug("%s(%d): %s", cFileName, cLineNumber, str.c_str());
             }
