@@ -228,7 +228,7 @@ bool astHasVolatile (ast *tree);
 bool hasSEFcalls (ast *);
 void addSymToBlock (symbol *, ast *);
 void freeStringSymbol (symbol *);
-value *stringToSymbol (value *val);
+value *stringToSymbol (value *val, const char* filename);
 DEFSETFUNC (resetParmKey);
 int astErrors (ast *);
 RESULT_TYPE getResultTypeFromType (sym_link *);

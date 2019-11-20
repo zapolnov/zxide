@@ -25,6 +25,7 @@
 #define DEBUG_CF(x)             /* puts(x); */
 
 #include <stdint.h>
+#include <md5.h>
 
 #include "common.h"
 #include "dbuf_string.h"
@@ -1665,10 +1666,10 @@ freeStringSymbol (symbol *sym)
 /* stringToSymbol - creates a symbol from a literal string         */
 /*-----------------------------------------------------------------*/
 value *
-stringToSymbol (value *val)
+stringToSymbol (value *val, const char* filename)
 {
   struct dbuf_s dbuf;
-  static int charLbl = 0;
+  /*static int charLbl = 0;*/
   symbol *sym;
   set *sp;
   unsigned int size;
@@ -1687,8 +1688,17 @@ stringToSymbol (value *val)
         }
     }
 
+  MD5_CTX md5ctx;
+  unsigned char md5[16];
+  MD5_Init(&md5ctx);
+  MD5_Update(&md5ctx, filename, strlen(filename) + 1);
+  MD5_Update(&md5ctx, SPEC_CVAL(val->etype).v_char, getSize(val->type));
+  MD5_Final(md5, &md5ctx);
+
   dbuf_init (&dbuf, 128);
-  dbuf_printf (&dbuf, "__str_%d", charLbl++);
+  dbuf_printf (&dbuf, "__str_%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x", /*charLbl++*/
+    md5[0], md5[1], md5[2], md5[3], md5[4], md5[5], md5[6], md5[7],
+    md5[8], md5[9], md5[10], md5[11], md5[12], md5[13], md5[14], md5[15]);
   sym = newSymbol (dbuf_c_str (&dbuf), 0);      /* make it @ level 0 */
   strncpyz (sym->rname, dbuf_c_str (&dbuf), SDCC_NAME_MAX);
   dbuf_destroy (&dbuf);
@@ -3248,7 +3258,7 @@ optStdLibCall (ast *tree, RESULT_TYPE resulttype)
 	wassert (dbuf_append (&dbuf, SPEC_CVAL (strlink).v_char, strlength - 1));
         ((char *)(dbuf_get_buf (&dbuf)))[strlength - 2] = 0;
 
-        parm->opval.val = stringToSymbol (rawStrVal (dbuf_get_buf (&dbuf), strlength - 1));
+        parm->opval.val = stringToSymbol (rawStrVal (dbuf_get_buf (&dbuf), strlength - 1), parm->filename);
 	dbuf_destroy (&dbuf);
 
         freeStringSymbol (strsym);
@@ -3444,7 +3454,7 @@ decorateType (ast *tree, RESULT_TYPE resultType)
         {
           /* if this is a character array then declare it */
           if (IS_ARRAY (tree->opval.val->type))
-            tree->opval.val = stringToSymbol (tree->opval.val);
+            tree->opval.val = stringToSymbol (tree->opval.val, tree->filename);
 
           /* otherwise just copy the type information */
           COPYTYPE (TTYPE (tree), TETYPE (tree), tree->opval.val->type);

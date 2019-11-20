@@ -274,6 +274,7 @@ endforeach()
 set(gen "${version_h}" "${sdccconf_h}" "${sdcc_vc_h}" "${SDCClex_c}" "${SDCCy_c}" "${SDCCy_h}")
 source_group("Generated Files" FILES ${gen})
 target_sources(ZSdCC PRIVATE ${gen} ${rul})
+target_link_libraries(ZSdCC Md5)
 
 if(WIN32)
     set_source_files_properties(

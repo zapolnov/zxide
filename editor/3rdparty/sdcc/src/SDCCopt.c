@@ -2658,7 +2658,7 @@ optimizeStdLibCall (eBBlock ** ebbs, int count)
           dbuf_append_str(&dbuf, SPEC_CVAL (strlink).v_char);
           dbuf_append_str(&dbuf, "\n");
           dbuf_append_str(&dbuf, SPEC_CVAL (nstrlink).v_char);
-          cstrsym = stringToSymbol (rawStrVal (dbuf_c_str (&dbuf), dbuf_get_length (&dbuf) + 1))->sym;
+          cstrsym = stringToSymbol (rawStrVal (dbuf_c_str (&dbuf), dbuf_get_length (&dbuf) + 1), ic->filename)->sym;
           freeStringSymbol (nstrsym);
           dbuf_destroy (&dbuf);
 
