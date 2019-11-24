@@ -509,6 +509,8 @@ bool TapeFileWriter::makeTape()
 
         for (const auto& it : mProgram->files()) {
             mProgram->setCurrentFile(it.first);
+            if (mProgram->codeLength() == 0)
+                continue;
 
             TapeCodeHeader programHeader;
             programHeader.setName(it.first.empty() ? mProgramName : it.first);

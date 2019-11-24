@@ -49,8 +49,8 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 if (!firstSectionWithBaseAddress)
                     error(tr("no sections with base address in default file"));
             } else {
-                if (!hasCode(it.second))
-                    error(tr("program has no code in file '%1'").arg(it.first.c_str()));
+                //if (!hasCode(it.second))
+                //    error(tr("program has no code in file '%1'").arg(it.first.c_str()));
                 if (!firstSectionWithBaseAddress)
                     error(tr("no sections with base address in file '%1'").arg(it.first.c_str()));
             }

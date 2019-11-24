@@ -86,7 +86,7 @@ namespace
         void writeData(QDataStream& stream)
         {
             mData.resize(sizeInSectors() * SECTOR_SIZE);
-            stream.writeRawData(mData.data(), qint64(mData.size()));
+            stream.writeRawData(mData.data(), int(mData.size()));
         }
 
     protected:
@@ -206,6 +206,8 @@ bool DiskFileWriter::writeSclFile(const QString& fileName)
 
     for (const auto& it : mProgram->files()) {
         mProgram->setCurrentFile(it.first);
+        if (mProgram->codeLength() == 0)
+            continue;
 
         auto codeFile = std::make_unique<CodeFile>();
         codeFile->setName(it.first.empty() ? mProgramName : it.first);
