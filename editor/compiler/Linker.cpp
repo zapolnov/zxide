@@ -60,6 +60,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
 
             // Resolve addresses of labels
             for (ProgramSection* section : it.second) {
+                quint32 startAddr = addr;
                 if (!section->resolveAddresses(mReporter, mProgram, addr))
                     throw LinkerError();
 
@@ -68,7 +69,7 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 binary->debugInfo()->addSection(section, start, length);
 
                 if (section->isCompressed()) {
-                    NullOutput output(addr);
+                    NullOutput output(startAddr);
                     addr = section->resolvedBase() + unsigned(emitCodeForSection(&output, section));
                 }
             }
