@@ -614,6 +614,8 @@ MapEditorWidget::MapEditorWidget(QWidget* parent)
     , mMousePosition(-1, -1)
     , mCurrentItem(0)
     , mMousePressed(false)
+    , mEntitiesVisible(true)
+    , mEntityNamesVisible(true)
     , mFlash(false)
 {
     mMapData = new MapData(1, 1, this);
@@ -687,6 +689,18 @@ void MapEditorWidget::setGridVisible(bool visible)
         update();
         emit updateUi();
     }
+    repaint();
+}
+
+void MapEditorWidget::setEntitiesVisible(bool flag)
+{
+    mEntitiesVisible = flag;
+    repaint();
+}
+
+void MapEditorWidget::setEntityNamesVisible(bool flag)
+{
+    mEntityNamesVisible = flag;
     repaint();
 }
 
@@ -943,18 +957,45 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
 
+    if (mEntitiesVisible && mEntityNamesVisible) {
+        QFont font = painter.font();
+        font.setPixelSize(8);
+        painter.setFont(font);
+    }
+
+    QFontMetrics metrics(painter.font());
+
     for (int mapY = 0; mapY < mMapData->height(); mapY++) {
         for (int mapX = 0; mapX < mMapData->width(); mapX++) {
             const auto& tile = mTiles[mMapData->at(mapX, mapY)];
             int x = mapX * mTileWidth;
             int y = mapY * mTileHeight;
             painter.drawPixmap(x, y, (mFlash ? tile.pixmap2 : tile.pixmap1));
+        }
+    }
 
-            const auto& e = mMapData->entityAt(mapX, mapY);
-            if (!e.empty()) {
-                painter.setPen(QPen(QColor(255, 255, 0), 0.5f, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-                painter.setBrush(QColor(255, 255, 0, 127));
-                painter.drawRect(x, y, mTileWidth, mTileHeight);
+    if (mEntitiesVisible) {
+        for (int mapY = 0; mapY < mMapData->height(); mapY++) {
+            for (int mapX = 0; mapX < mMapData->width(); mapX++) {
+                int x = mapX * mTileWidth;
+                int y = mapY * mTileHeight;
+
+                const auto& e = mMapData->entityAt(mapX, mapY);
+                if (!e.empty()) {
+                    painter.setPen(QPen(QColor(255, 255, 0), 0.5f, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+                    painter.setBrush(QColor(255, 255, 0, 127));
+                    painter.drawRect(x, y, mTileWidth, mTileHeight);
+
+                    if (mEntityNamesVisible) {
+                        QString text = QString::fromUtf8(e.c_str());
+                        QRect rect = metrics.boundingRect(text);
+                        rect.moveCenter(QPoint(x + mTileWidth / 2, y + mTileHeight / 2));
+
+                        painter.fillRect(rect, QColor(0, 0, 0, 127));
+                        painter.setPen(QPen(QColor(255, 255, 255)));
+                        painter.drawText(rect, Qt::AlignCenter, text);
+                    }
+                }
             }
         }
     }

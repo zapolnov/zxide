@@ -35,6 +35,10 @@ MapEditorTab::MapEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("None"), int(MapFormat::None));
     mUi->formatCombo->addItem(tr("Byte array"), int(MapFormat::ByteArray));
 
+    mUi->entitiesVisibleCheck->setChecked(mUi->editorWidget->entitiesVisible());
+    mUi->entityNamesVisibleCheck->setEnabled(mUi->editorWidget->entitiesVisible());
+    mUi->entityNamesVisibleCheck->setChecked(mUi->editorWidget->entityNamesVisible());
+
     connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged, this, &MapEditorTab::refreshTileList);
     connect(EditorTabFactory::instance(), &EditorTabFactory::tileSetChanged, this, &MapEditorTab::refreshTileList);
 
@@ -365,6 +369,17 @@ void MapEditorTab::on_heightSpin_valueChanged(int)
     int h = mUi->heightSpin->value();
     mUi->editorWidget->setSize(mUi->editorWidget->width(), h);
     emit updateUi();
+}
+
+void MapEditorTab::on_entitiesVisibleCheck_toggled(bool flag)
+{
+    mUi->editorWidget->setEntitiesVisible(flag);
+    mUi->entityNamesVisibleCheck->setEnabled(flag);
+}
+
+void MapEditorTab::on_entityNamesVisibleCheck_toggled(bool flag)
+{
+    mUi->editorWidget->setEntityNamesVisible(flag);
 }
 
 void MapEditorTab::on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)

@@ -49,6 +49,12 @@ public:
     bool gridVisible() const { return mGridVisible; }
     void setGridVisible(bool visible);
 
+    bool entitiesVisible() const { return mEntitiesVisible; }
+    void setEntitiesVisible(bool flag);
+
+    bool entityNamesVisible() const { return mEntityNamesVisible; }
+    void setEntityNamesVisible(bool flag);
+
     void serialize(MapFile& file);
     bool deserialize(MapFile& file);
     void setSaved();
@@ -145,6 +151,8 @@ private:
     QPoint mMousePosition;
     unsigned char mCurrentItem;
     bool mMousePressed;
+    bool mEntitiesVisible;
+    bool mEntityNamesVisible;
     bool mFlash;
     static bool mGridVisible;
 

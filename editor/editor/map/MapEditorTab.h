@@ -81,6 +81,8 @@ private:
     Q_SLOT void on_formatCombo_currentIndexChanged(int) { emit updateUi(); }
     Q_SLOT void on_widthSpin_valueChanged(int);
     Q_SLOT void on_heightSpin_valueChanged(int);
+    Q_SLOT void on_entitiesVisibleCheck_toggled(bool flag);
+    Q_SLOT void on_entityNamesVisibleCheck_toggled(bool flag);
     Q_SLOT void on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     Q_SLOT void on_tilesetButton_clicked();
 
