@@ -91,6 +91,8 @@ private:
     Q_SLOT void on_heightCombo_currentIndexChanged(int);
     Q_SLOT void on_walkableCheck_toggled(bool checked);
     Q_SLOT void on_entityEdit_textChanged(const QString& text);
+    Q_SLOT void on_backgroundImageVisibleCheck_toggled(bool flag);
+    Q_SLOT void on_browseBackgroundImageButton_clicked();
 
     void setColor(int color, bool setTool = true);
     Q_SLOT void on_blackButton_clicked() { setColor(0); }

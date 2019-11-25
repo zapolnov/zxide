@@ -6,6 +6,7 @@
 #include "compiler/GfxFile.h"
 #include "util/ComboBox.h"
 #include "ui_GfxEditorTab.h"
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QSaveFile>
 
@@ -36,6 +37,8 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("None"), int(GfxFormat::None));
     mUi->formatCombo->addItem(tr("Monochrome"), int(GfxFormat::Monochrome));
     mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
+
+    mUi->backgroundImageVisibleCheck->setEnabled(false);
 
     reset();
     setColor(0, false);
@@ -420,6 +423,30 @@ void GfxEditorTab::on_walkableCheck_toggled(bool)
 void GfxEditorTab::on_entityEdit_textChanged(const QString&)
 {
     emit updateUi();
+}
+
+void GfxEditorTab::on_backgroundImageVisibleCheck_toggled(bool flag)
+{
+    mUi->editorWidget->setBackgroundImageVisible(flag);
+}
+
+void GfxEditorTab::on_browseBackgroundImageButton_clicked()
+{
+    auto filter = QStringLiteral("%1 (*.bmp *.gif *.jpg *.jpeg *.png)").arg(tr("Image files"));
+    QString file = QFileDialog::getOpenFileName(this, tr("Open image"), QString(), filter);
+    if (file.isEmpty())
+        return;
+
+    QImage image;
+    if (!image.load(file)) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to load image \"%1\".").arg(file));
+        return;
+    }
+
+    mUi->backgroundImageVisibleCheck->setChecked(true);
+    mUi->backgroundImageVisibleCheck->setEnabled(true);
+    mUi->editorWidget->setBackgroundImage(image);
+    mUi->editorWidget->setBackgroundImageVisible(true);
 }
 
 void GfxEditorTab::setColor(int color, bool setTool)

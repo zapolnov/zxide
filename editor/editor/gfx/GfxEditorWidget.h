@@ -49,6 +49,10 @@ public:
     bool gridVisible() const { return mGridVisible; }
     void setGridVisible(bool visible);
 
+    bool backgroundImageVisible() const { return mBackgroundImageVisible; }
+    void setBackgroundImageVisible(bool flag);
+    void setBackgroundImage(QImage image);
+
     void serialize(GfxFile& file);
     bool deserialize(GfxFile& file);
     void setSaved();
@@ -148,8 +152,10 @@ private:
     QPoint mMousePosition;
     GfxColorMode mColorMode;
     Qt::MouseButton mMousePressed;
+    QImage mBackgroundImage;
     int mSelectedColor;
     bool mFlash;
+    bool mBackgroundImageVisible;
     static bool mGridVisible;
 
     void cancelInput();

@@ -792,6 +792,7 @@ GfxEditorWidget::GfxEditorWidget(QWidget* parent)
     , mColorMode(GfxColorMode::Standard)
     , mMousePressed(Qt::NoButton)
     , mSelectedColor(0)
+    , mBackgroundImageVisible(false)
     , mFlash(false)
 {
     mGfxData = new GfxData(8, 8, this);
@@ -883,6 +884,18 @@ void GfxEditorWidget::setGridVisible(bool visible)
         update();
         emit updateUi();
     }
+    repaint();
+}
+
+void GfxEditorWidget::setBackgroundImageVisible(bool flag)
+{
+    mBackgroundImageVisible = flag;
+    repaint();
+}
+
+void GfxEditorWidget::setBackgroundImage(QImage image)
+{
+    mBackgroundImage = image;
     repaint();
 }
 
@@ -1150,6 +1163,11 @@ void GfxEditorWidget::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     QImage image(mGfxData->width() * 2, mGfxData->height() * 2, QImage::Format_ARGB32);
 
+    if (mBackgroundImageVisible) {
+        painter.drawImage(0, 0, mBackgroundImage);
+        painter.setOpacity(0.5f);
+    }
+
     for (int gfxY = 0; gfxY < mGfxData->height(); gfxY++) {
         for (int gfxX = 0; gfxX < mGfxData->width(); gfxX++) {
             int x = gfxX * PixelWidth;
@@ -1176,6 +1194,9 @@ void GfxEditorWidget::paintEvent(QPaintEvent* event)
             painter.fillRect(x, y, PixelWidth, PixelHeight, colorRef);
         }
     }
+
+    if (mBackgroundImageVisible)
+        painter.setOpacity(1.0f);
 
     if (mPreview)
         mPreview->setPixmap(QPixmap::fromImage(image));
