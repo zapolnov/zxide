@@ -704,7 +704,7 @@ void MainWindow::on_actionImportPNG_triggered()
         return;
     }
 
-    auto gfxData = importImage(image, true);
+    auto gfxData = importMonochromeImage(image);
 
     GfxFile gfxFile;
     gfxFile.format = GfxFormat::None;

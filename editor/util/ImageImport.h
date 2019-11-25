@@ -5,6 +5,6 @@
 #include <QImage>
 #include <memory>
 
-std::unique_ptr<GfxData> importImage(const QImage& image, bool dither);
+std::unique_ptr<GfxData> importMonochromeImage(const QImage& image);
 
 #endif

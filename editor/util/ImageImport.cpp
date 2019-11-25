@@ -2,6 +2,7 @@
 #include "debugger/EmulatorCore.h"
 #include "compiler/GfxFile.h"
 
+/*
 #define NUM_COLORS 16
 
 static QRgb spectrumColor(int index)
@@ -16,6 +17,7 @@ static int colorDistance(QRgb c1, QRgb c2)
     int distB = int(qBlue(c1)) - int(qBlue(c2));
     return distR * distR + distG * distG + distB * distB;
 }
+*/
 
 static quint8 toGrayscale(QRgb color)
 {
@@ -25,6 +27,8 @@ static quint8 toGrayscale(QRgb color)
     int i = int((dR * 0.2126 + dG * 0.7152 + dB * 0.0722) * 255.0);
     return (i < 0 ? 0 : (i > 255 ? 255 : i));
 }
+
+#if 0
 
 namespace
 {
@@ -219,6 +223,34 @@ std::unique_ptr<GfxData> importImage(const QImage& image, bool dither)
             adjustPixel(grayscale, x,     y + 1, w, h, error / 8);
             adjustPixel(grayscale, x + 1, y + 1, w, h, error / 8);
             adjustPixel(grayscale, x,     y + 2, w, h, error / 8);
+        }
+    }
+
+    return result;
+}
+
+#endif
+
+std::unique_ptr<GfxData> importMonochromeImage(const QImage& image)
+{
+    int w = (image.width() + 7) & ~7;
+    int h = (image.height() + 7) & ~7;
+    int charsW = w >> 3;
+    int charsH = h >> 3;
+
+    std::unique_ptr<quint8[]> grayscale{new quint8[w * h]};
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++)
+            grayscale[y * w + x] = toGrayscale(image.pixel(x, y));
+    }
+
+    auto result = std::make_unique<GfxData>(w, h);
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            quint8 luminance = grayscale[y * w + x];
+            quint8 resultPixel = (luminance < 128 ? 0 : 255);
+            result->at(x, y) = resultPixel;
+            result->attribAt(x, y, GfxColorMode::Standard) = 0x07;
         }
     }
 
