@@ -31,8 +31,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>72</width>
-         <height>568</height>
+         <width>69</width>
+         <height>574</height>
         </rect>
        </property>
       </widget>
@@ -174,6 +174,16 @@
           <widget class="QCheckBox" name="backgroundImageVisibleCheck">
            <property name="text">
             <string>Background image</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="backgroundImageOpacitySlider">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -559,8 +569,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>587</width>
-            <height>123</height>
+            <width>598</width>
+            <height>179</height>
            </rect>
           </property>
           <property name="text">

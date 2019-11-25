@@ -39,6 +39,7 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
 
     mUi->backgroundImageVisibleCheck->setEnabled(false);
+    mUi->backgroundImageOpacitySlider->setEnabled(false);
 
     reset();
     setColor(0, false);
@@ -430,6 +431,11 @@ void GfxEditorTab::on_backgroundImageVisibleCheck_toggled(bool flag)
     mUi->editorWidget->setBackgroundImageVisible(flag);
 }
 
+void GfxEditorTab::on_backgroundImageOpacitySlider_valueChanged(int value)
+{
+    mUi->editorWidget->setBackgroundImageOpacity(value);
+}
+
 void GfxEditorTab::on_browseBackgroundImageButton_clicked()
 {
     auto filter = QStringLiteral("%1 (*.bmp *.gif *.jpg *.jpeg *.png)").arg(tr("Image files"));
@@ -445,8 +451,11 @@ void GfxEditorTab::on_browseBackgroundImageButton_clicked()
 
     mUi->backgroundImageVisibleCheck->setChecked(true);
     mUi->backgroundImageVisibleCheck->setEnabled(true);
+    mUi->backgroundImageOpacitySlider->setValue(128);
+    mUi->backgroundImageOpacitySlider->setEnabled(true);
     mUi->editorWidget->setBackgroundImage(image);
     mUi->editorWidget->setBackgroundImageVisible(true);
+    mUi->editorWidget->setBackgroundImageOpacity(128);
 }
 
 void GfxEditorTab::setColor(int color, bool setTool)

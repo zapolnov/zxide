@@ -51,6 +51,7 @@ public:
 
     bool backgroundImageVisible() const { return mBackgroundImageVisible; }
     void setBackgroundImageVisible(bool flag);
+    void setBackgroundImageOpacity(int opacity);
     void setBackgroundImage(QImage image);
 
     void serialize(GfxFile& file);
@@ -154,8 +155,9 @@ private:
     Qt::MouseButton mMousePressed;
     QImage mBackgroundImage;
     int mSelectedColor;
-    bool mFlash;
+    int mBackgroundImageOpacity;
     bool mBackgroundImageVisible;
+    bool mFlash;
     static bool mGridVisible;
 
     void cancelInput();
