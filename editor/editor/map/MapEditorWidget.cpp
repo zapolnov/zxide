@@ -1,4 +1,5 @@
 #include "MapEditorWidget.h"
+#include "editor/map/EditEntityDialog.h"
 #include "compiler/MapData.h"
 #include "compiler/MapFile.h"
 #include "compiler/TileSetData.h"
@@ -10,7 +11,6 @@
 #include <QApplication>
 #include <QDataStream>
 #include <QTimer>
-#include <QInputDialog>
 #include <QMouseEvent>
 
 static const QString MimeType = QStringLiteral("application/x-zxspectrum-map");
@@ -1026,15 +1026,11 @@ void MapEditorWidget::mouseReleaseEvent(QMouseEvent* event)
         if (mMapData->isValidCoord(pos)) {
             QString entity = QString::fromUtf8(mMapData->entityAt(pos).c_str());
 
-            QInputDialog dlg(this);
-            dlg.setInputMode(QInputDialog::TextInput);
-            dlg.setWindowTitle(tr("Edit entity"));
-            dlg.setLabelText(tr("Entity:"));
-            dlg.setTextValue(entity);
+            EditEntityDialog dlg(entity, this);
             if (dlg.exec() != QDialog::Accepted)
                 return;
 
-            QString newEntity = dlg.textValue().trimmed();
+            QString newEntity = dlg.entity();
             if (newEntity != entity)
                 pushOperation(new SetEntityOperation(this, pos.x(), pos.y(), newEntity.toUtf8().constData()));
         }

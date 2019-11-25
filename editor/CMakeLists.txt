@@ -63,6 +63,9 @@ qt_add_sources(GameEditor
         editor/gfx/GfxEditorTab.ui
         editor/gfx/GfxEditorWidget.cpp
         editor/gfx/GfxEditorWidget.h
+        editor/map/EditEntityDialog.cpp
+        editor/map/EditEntityDialog.h
+        editor/map/EditEntityDialog.ui
         editor/map/MapEditorTab.cpp
         editor/map/MapEditorTab.h
         editor/map/MapEditorTab.ui
