@@ -1,0 +1,7 @@
+Without TRDOS connected user RAM commence at:-
+ (a) address 23755 (0x5CCB) without Interface 1 connected,
+ (b) address 23813 (0x5D05) with Interface 1 connected.
+
+With TRDOS connected user RAM commences at:-
+ (a) address 23867 (0x5D3B) without Interface 1 conencted,
+ (b) address 23925 (0x5D75) with Interface 1 connected.
