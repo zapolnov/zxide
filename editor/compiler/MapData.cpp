@@ -152,19 +152,23 @@ QByteArray MapData::bytes(int x1, int y1, int x2, int y2) const
     for (int y = y1; y <= y2; y++) {
         for (int x = x1; x <= x2; x++) {
             qint32 index;
-            const auto& e = entityAt(x, y);
-            if (!isValidCoord(x, y) || e.empty())
+            if (!isValidCoord(x, y))
                 index = -1;
             else {
-                index = strings.length();
-                strings.append(e.data(), int(e.length() + 1));
+                const auto& e = entityAt(x, y);
+                if (e.empty())
+                    index = -1;
+                else {
+                    index = strings.length();
+                    strings.append(e.data(), int(e.length() + 1));
+                }
             }
 
             int offset = w * h + ((y - y1) * w + (x - x1)) * 4;
-            result[offset+0] = index & 0xff;
-            result[offset+1] = (index >>  8) & 0xff;
-            result[offset+2] = (index >> 16) & 0xff;
-            result[offset+3] = (index >> 24) & 0xff;
+            result[offset+0] = char(quint8( quint32(index) & 0xff));
+            result[offset+1] = char(quint8((quint32(index) >>  8) & 0xff));
+            result[offset+2] = char(quint8((quint32(index) >> 16) & 0xff));
+            result[offset+3] = char(quint8((quint32(index) >> 24) & 0xff));
         }
     }
 
@@ -192,16 +196,19 @@ void MapData::setBytes(int x, int y, int w, int h, const QByteArray& data)
             int xx = x + ix;
             int yy = y + iy;
             if (isValidCoord(xx, yy)) {
-                qint32 index;
+                quint32 uindex;
                 int offset = w * h + (iy * w + ix) * 4;
-                index  = qint32(data[offset+0]);
-                index |= qint32(data[offset+1]) <<  8;
-                index |= qint32(data[offset+2]) << 16;
-                index |= qint32(data[offset+3]) << 24;
+                uindex  = quint32(quint8(data[offset+0]));
+                uindex |= quint32(quint8(data[offset+1])) <<  8;
+                uindex |= quint32(quint8(data[offset+2])) << 16;
+                uindex |= quint32(quint8(data[offset+3])) << 24;
+                qint32 index = qint32(uindex);
                 if (index == -1)
                     entityAt(xx, yy).clear();
-                else
+                else {
+                    Q_ASSERT(index >= 0);
                     entityAt(xx, yy) = data.constData() + w * h * 5 + index;
+                }
             }
         }
     }
