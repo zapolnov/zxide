@@ -35,8 +35,12 @@ public:
             return;
 
         size_t newSize = mControlFlow.size() + operations.size() - 1;
-        if (newSize > size_t(MaxEntries))
-            return;
+        if (newSize > size_t(MaxEntries)) {
+            size_t numToRemove = newSize - MaxEntries;
+            emit beginRemoveRows(QModelIndex(), 0, (int)numToRemove);
+            mControlFlow.erase(mControlFlow.begin(), mControlFlow.begin() + numToRemove);
+            emit endRemoveRows();
+        }
 
         int first = count();
         int last = int(std::min<size_t>(newSize, size_t(MaxEntries)));
