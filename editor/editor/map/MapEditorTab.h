@@ -83,8 +83,10 @@ private:
     Q_SLOT void on_heightSpin_valueChanged(int);
     Q_SLOT void on_entitiesVisibleCheck_toggled(bool flag);
     Q_SLOT void on_entityNamesVisibleCheck_toggled(bool flag);
+    Q_SLOT void on_flashingCheck_toggled(bool flag);
     Q_SLOT void on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     Q_SLOT void on_tilesetButton_clicked();
+    Q_SLOT void on_exportImageButton_clicked();
 
     QString tilesetButtonSelection() const;
     void setTilesetButton(const QString& file);

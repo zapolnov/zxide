@@ -14,6 +14,7 @@
 #include "ui_MapEditorTab.h"
 #include <QTimer>
 #include <QIcon>
+#include <QFileDialog>
 #include <QPainter>
 #include <QMessageBox>
 #include <QSaveFile>
@@ -38,6 +39,7 @@ MapEditorTab::MapEditorTab(QWidget* parent)
     mUi->entitiesVisibleCheck->setChecked(mUi->editorWidget->entitiesVisible());
     mUi->entityNamesVisibleCheck->setEnabled(mUi->editorWidget->entitiesVisible());
     mUi->entityNamesVisibleCheck->setChecked(mUi->editorWidget->entityNamesVisible());
+    mUi->flashingCheck->setChecked(mUi->editorWidget->enableFlashing());
 
     connect(EditorTabFactory::instance(), &EditorTabFactory::tileChanged, this, &MapEditorTab::refreshTileList);
     connect(EditorTabFactory::instance(), &EditorTabFactory::tileSetChanged, this, &MapEditorTab::refreshTileList);
@@ -382,6 +384,11 @@ void MapEditorTab::on_entityNamesVisibleCheck_toggled(bool flag)
     mUi->editorWidget->setEntityNamesVisible(flag);
 }
 
+void MapEditorTab::on_flashingCheck_toggled(bool flag)
+{
+    mUi->editorWidget->setEnableFlashing(flag);
+}
+
 void MapEditorTab::on_paletteListWidget_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
     if (!current || current->type() < QListWidgetItem::UserType)
@@ -400,6 +407,25 @@ void MapEditorTab::on_tilesetButton_clicked()
                 emit updateUi();
             }
         });
+}
+
+void MapEditorTab::on_exportImageButton_clicked()
+{
+    QString name = QStringLiteral("%1.png").arg(file()->fileInfo().completeBaseName());
+
+    auto filter = QStringLiteral("%1 (*.png)").arg(tr("PNG files"));
+    QString file = QFileDialog::getSaveFileName(this, tr("Save image"), name, filter);
+    if (file.isEmpty())
+        return;
+
+    QImage image(mUi->editorWidget->size(), QImage::Format_RGB32);
+    QPainter painter(&image);
+    mUi->editorWidget->paint(painter);
+
+    if (!image.save(file, "PNG")) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
+        return;
+    }
 }
 
 QString MapEditorTab::tilesetButtonSelection() const

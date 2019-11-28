@@ -616,6 +616,7 @@ MapEditorWidget::MapEditorWidget(QWidget* parent)
     , mMousePressed(false)
     , mEntitiesVisible(true)
     , mEntityNamesVisible(true)
+    , mEnableFlashing(false)
     , mFlash(false)
 {
     mMapData = new MapData(1, 1, this);
@@ -701,6 +702,12 @@ void MapEditorWidget::setEntitiesVisible(bool flag)
 void MapEditorWidget::setEntityNamesVisible(bool flag)
 {
     mEntityNamesVisible = flag;
+    repaint();
+}
+
+void MapEditorWidget::setEnableFlashing(bool flag)
+{
+    mEnableFlashing = flag;
     repaint();
 }
 
@@ -953,6 +960,18 @@ void MapEditorWidget::setTool(MapEditorTool tool)
     emit updateUi();
 }
 
+void MapEditorWidget::paint(QPainter& painter, bool flashState)
+{
+    for (int mapY = 0; mapY < mMapData->height(); mapY++) {
+        for (int mapX = 0; mapX < mMapData->width(); mapX++) {
+            const auto& tile = mTiles[mMapData->at(mapX, mapY)];
+            int x = mapX * mTileWidth;
+            int y = mapY * mTileHeight;
+            painter.drawPixmap(x, y, (flashState ? tile.pixmap2 : tile.pixmap1));
+        }
+    }
+}
+
 void MapEditorWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
@@ -965,14 +984,7 @@ void MapEditorWidget::paintEvent(QPaintEvent* event)
 
     QFontMetrics metrics(painter.font());
 
-    for (int mapY = 0; mapY < mMapData->height(); mapY++) {
-        for (int mapX = 0; mapX < mMapData->width(); mapX++) {
-            const auto& tile = mTiles[mMapData->at(mapX, mapY)];
-            int x = mapX * mTileWidth;
-            int y = mapY * mTileHeight;
-            painter.drawPixmap(x, y, (mFlash ? tile.pixmap2 : tile.pixmap1));
-        }
-    }
+    paint(painter, mFlash && mEnableFlashing);
 
     if (mEntitiesVisible) {
         for (int mapY = 0; mapY < mMapData->height(); mapY++) {

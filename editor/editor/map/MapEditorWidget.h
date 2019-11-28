@@ -9,6 +9,7 @@
 
 class MapData;
 class MapFile;
+class QPainter;
 
 enum class MapEditorTool
 {
@@ -55,6 +56,9 @@ public:
     bool entityNamesVisible() const { return mEntityNamesVisible; }
     void setEntityNamesVisible(bool flag);
 
+    bool enableFlashing() const { return mEnableFlashing; }
+    void setEnableFlashing(bool flag);
+
     void serialize(MapFile& file);
     bool deserialize(MapFile& file);
     void setSaved();
@@ -85,6 +89,8 @@ public:
 
     MapEditorTool currentTool() const;
     void setTool(MapEditorTool tool);
+
+    void paint(QPainter& painter, bool flashState = false);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -153,6 +159,7 @@ private:
     bool mMousePressed;
     bool mEntitiesVisible;
     bool mEntityNamesVisible;
+    bool mEnableFlashing;
     bool mFlash;
     static bool mGridVisible;
 
