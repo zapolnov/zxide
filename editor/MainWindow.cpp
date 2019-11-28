@@ -4,6 +4,7 @@
 #include "SettingsDialog.h"
 #include "PlayAudioDialog.h"
 #include "debugger/MemoryLogWindow.h"
+#include "debugger/ControlFlowLogWindow.h"
 #include "debugger/BreakpointsWindow.h"
 #include "debugger/BreakpointsModel.h"
 #include "debugger/AddBreakpointDialog.h"
@@ -991,6 +992,36 @@ void MainWindow::on_actionMemoryLog_triggered()
     mMemoryLogWindow->show();
     qApp->setActiveWindow(mMemoryLogWindow);
     mMemoryLogWindow->setFocus();
+}
+
+void MainWindow::on_actionControlFlowLog_triggered()
+{
+    if (!mControlFlowLogWindow) {
+        mControlFlowLogWindow = new ControlFlowLogWindow(this);
+        connect(mControlFlowLogWindow, &ControlFlowLogWindow::destroyed, mHighlightManager,
+            std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::ControlFlowLog, true));
+        connect(mControlFlowLogWindow, &ControlFlowLogWindow::cleared, mHighlightManager,
+            std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::ControlFlowLog, true));
+        connect(mControlFlowLogWindow, &ControlFlowLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
+                File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
+                if (file) {
+                    auto tab = setCurrentTab(file);
+                    if (tab && tab->canGoToLine()) {
+                        tab->goToLine(loc.line - 1);
+                        HighlightManager::instance()->setHighlight(Highlight::ControlFlowLog, loc.file, loc.line);
+                        tab->setFocusToEditor();
+                        QApplication::setActiveWindow(this);
+                        return;
+                    }
+                }
+                HighlightManager::instance()->clearHighlight(Highlight::ControlFlowLog);
+            });
+    }
+
+    mControlFlowLogWindow->show();
+    qApp->setActiveWindow(mControlFlowLogWindow);
+    mControlFlowLogWindow->setFocus();
 }
 
 void MainWindow::on_actionDraw_triggered()

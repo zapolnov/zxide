@@ -108,6 +108,8 @@ enum {
 static libspectrum_byte opcode = 0x00;
 #endif
 
+void ui_notify_control_flow(unsigned address);
+
 /* Execute Z80 opcodes until the next event */
 void
 z80_do_opcodes( void )
@@ -157,6 +159,8 @@ z80_do_opcodes( void )
     }
 
     END_CHECK
+
+    ui_notify_control_flow(PC);
 
     /* Check if the debugger should become active at this point */
     CHECK( debugger, debugger_mode != DEBUGGER_MODE_INACTIVE )

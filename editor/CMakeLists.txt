@@ -26,6 +26,9 @@ qt_add_sources(GameEditor
         debugger/BreakpointsWindow.cpp
         debugger/BreakpointsWindow.h
         debugger/BreakpointsWindow.ui
+        debugger/ControlFlowLogWindow.cpp
+        debugger/ControlFlowLogWindow.h
+        debugger/ControlFlowLogWindow.ui
         debugger/DisassemblyWidget.cpp
         debugger/DisassemblyWidget.h
         debugger/DisplayWidget.cpp

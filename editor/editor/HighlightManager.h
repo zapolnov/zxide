@@ -10,6 +10,7 @@ enum class Highlight : int
     Error,
     RunToCursor,
     MemoryLog,
+    ControlFlowLog,
 };
 
 class HighlightManager : public QObject

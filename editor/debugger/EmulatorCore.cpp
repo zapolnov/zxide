@@ -69,6 +69,8 @@ static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
 static std::vector<MemoryOperationInfo> memoryOperations;
 static std::vector<MemoryOperationInfo> memoryOperations_mainThread;
+static std::vector<ControlFlowInfo> controlFlows;
+static std::vector<ControlFlowInfo> controlFlows_mainThread;
 static std::vector<Breakpoint> breakpoints;
 static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
@@ -76,6 +78,7 @@ static QImage screenFront;
 static char memory[0x10000];
 static bool memoryPageValid[MEMORY_PAGES_IN_64K];
 static volatile bool collectMemoryOperations;
+static volatile bool collectControlFlow;
 static bool shouldUpdateUi;
 static bool shouldUpdateBreakpoints = true;
 static bool shouldEmitPausedSignal;
@@ -347,6 +350,12 @@ void EmulatorCore::setCollectMemoryOperations(bool flag)
 {
     QMutexLocker lock(&mutex);
     collectMemoryOperations = flag;
+}
+
+void EmulatorCore::setCollectControlFlow(bool flag)
+{
+    QMutexLocker lock(&mutex);
+    collectControlFlow = flag;
 }
 
 Registers EmulatorCore::registers() const
@@ -789,6 +798,7 @@ void EmulatorCore::update()
         PC_ = PC;
         runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
+        std::swap(::controlFlows, controlFlows_mainThread);
     }
 
     if (memoryWasChanged_)
@@ -808,6 +818,11 @@ void EmulatorCore::update()
     if (!memoryOperations_mainThread.empty()) {
         emit memoryOperations(memoryOperations_mainThread);
         memoryOperations_mainThread.clear();
+    }
+
+    if (!controlFlows_mainThread.empty()) {
+        emit controlFlow(controlFlows_mainThread);
+        controlFlows_mainThread.clear();
     }
 
     if (prevSP != SP_) {
@@ -1133,6 +1148,18 @@ extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigne
 
         QMutexLocker lock(&mutex);
         memoryOperations.emplace_back(std::move(info));
+    }
+}
+
+extern "C" void ui_notify_control_flow(unsigned address)
+{
+    if (collectControlFlow) {
+        ControlFlowInfo info;
+        info.bank = -1; // FIXME
+        info.codeAddress = address;
+
+        QMutexLocker lock(&mutex);
+        controlFlows.emplace_back(std::move(info));
     }
 }
 

@@ -93,7 +93,13 @@ void TextEditor::updateHighlights()
         }
     }
 
-    for (auto highlight : { Highlight::CurrentPC, Highlight::Error, Highlight::RunToCursor, Highlight::MemoryLog }) {
+    for (auto highlight : {
+                Highlight::CurrentPC,
+                Highlight::Error,
+                Highlight::RunToCursor,
+                Highlight::MemoryLog,
+                Highlight::ControlFlowLog
+            }) {
         auto& marker = mMarkers[highlight];
         if (marker.visible) {
             markerDeleteHandle(marker.handle);

@@ -107,6 +107,12 @@ struct MemoryOperationInfo
     unsigned value;
 };
 
+struct ControlFlowInfo
+{
+    int bank;
+    unsigned codeAddress;
+};
+
 enum class Machine : int
 {
     Spectrum16,
@@ -158,6 +164,7 @@ public:
     std::map<QString, std::vector<ProgramSectionInfo>> programSectionInfo() const;
 
     void setCollectMemoryOperations(bool flag);
+    void setCollectControlFlow(bool flag);
 
     Registers registers() const;
     quint16 instructionPointer() const;
@@ -188,6 +195,7 @@ signals:
     void stopped();
     void memoryChanged();
     void memoryOperations(std::vector<MemoryOperationInfo>& operations);
+    void controlFlow(std::vector<ControlFlowInfo>& operations);
     void stackChanged();
     void instructionPointerChanged();
     void error(QString message);
