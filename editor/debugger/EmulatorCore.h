@@ -111,6 +111,7 @@ struct ControlFlowInfo
 {
     int bank;
     unsigned codeAddress;
+    char instruction[64];
 };
 
 enum class Machine : int

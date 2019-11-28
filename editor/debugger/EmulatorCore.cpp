@@ -1151,12 +1151,14 @@ extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigne
     }
 }
 
-extern "C" void ui_notify_control_flow(unsigned address)
+extern "C" void ui_notify_control_flow(int bank, unsigned address)
 {
     if (collectControlFlow) {
         ControlFlowInfo info;
-        info.bank = -1; // FIXME
+        info.bank = bank;
         info.codeAddress = address;
+        size_t len = 0;
+        debugger_disassemble(info.instruction, sizeof(info.instruction), &len, info.codeAddress);
 
         QMutexLocker lock(&mutex);
         controlFlows.emplace_back(std::move(info));

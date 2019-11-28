@@ -66,7 +66,7 @@ public:
     {
         if (parent.isValid())
             return 0;
-        return 1;
+        return 3;
     }
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override
@@ -75,7 +75,9 @@ public:
             return QAbstractTableModel::headerData(section, orientation, role);
 
         switch (section) {
-            case 0: return tr("Code address");
+            case 0: return tr("Bank");
+            case 1: return tr("Code address");
+            case 2: return tr("Instruction");
             default: return QVariant();
         }
     }
@@ -92,13 +94,19 @@ public:
         const auto& op = mControlFlow[size_t(row)];
 
         switch (index.column()) {
-            case 0: {
+            case 0:
+                return QStringLiteral("%1").arg(op.bank);
+
+            case 1: {
                 QString name = EmulatorCore::instance()->nameForAddress(op.codeAddress);
                 if (name.isEmpty())
                     return QStringLiteral("0x%1").arg(op.codeAddress, 4, 16, QChar('0'));
                 else
                     return QStringLiteral("0x%1 (%2)").arg(op.codeAddress, 4, 16, QChar('0')).arg(name);
             }
+
+            case 2:
+                return QString::fromLatin1(op.instruction);
 
             default:
                 return QVariant();
