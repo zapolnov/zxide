@@ -73,6 +73,13 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
     if (mBase) {
         mCalculatedBase = base(reporter);
         mHasCalculatedBase = true;
+        if (!isImaginary() && mCalculatedBase < address) {
+            QString fileName = (mToken.file ? mToken.file->name : QString());
+            reporter->error(fileName, mToken.line,
+                QCoreApplication::tr("section '%1' overlaps with another section (expected base address 0x%2, got 0x%3)")
+                .arg(nameCStr()).arg(mCalculatedBase, 0, 16).arg(address, 0, 16));
+            return false;
+        }
         address = mCalculatedBase;
     }
 
@@ -128,5 +135,6 @@ size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IError
     mHasCalculatedBase = false;
     mHasCalculatedAlignment = false;
 
+    Q_ASSERT(mResolvedBase == binary->endAddress());
     return CodeEmitter::emitCode(program, binary, reporter);
 }

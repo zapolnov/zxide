@@ -68,7 +68,9 @@ std::unique_ptr<ProgramBinary> Linker::emitCode()
                 unsigned length = addr - start;
                 binary->debugInfo()->addSection(section, start, length);
 
-                if (section->isCompressed()) {
+                if (section->isImaginary())
+                    addr = startAddr;
+                else if (section->isCompressed()) {
                     NullOutput output(startAddr);
                     addr = section->resolvedBase() + unsigned(emitCodeForSection(&output, section));
                 }
