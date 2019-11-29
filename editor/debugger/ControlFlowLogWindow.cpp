@@ -5,8 +5,40 @@
 #include <QAbstractTableModel>
 #include <QMenu>
 #include <QAction>
+#include <QThread>
+#include <QMutex>
 
 static const int MaxEntries = 104857600;
+
+// FIXME !!!
+extern QMutex cfLock;
+extern std::vector<std::function<void(FILE*)>> cfProducer;
+extern std::vector<std::function<void(FILE*)>> cfConsumer;
+
+class Thread : public QThread
+{
+public:
+    void run() override
+    {
+        FILE* f = fopen("D:/Work/zxrpg_3/log.txt", "wb");
+        while (!isInterruptionRequested()) {
+            {
+                QMutexLocker lock(&cfLock);
+                auto v = std::move(cfProducer);
+                cfProducer = std::move(cfConsumer);
+                cfConsumer = std::move(v);
+            }
+
+            for (const auto& it : cfConsumer)
+                it(f);
+
+            cfConsumer.clear();
+        }
+        fclose(f);
+    }
+};
+
+static Thread xthread;
 
 class ControlFlowLogWindow::Model : public QAbstractTableModel
 {
@@ -14,6 +46,13 @@ public:
     explicit Model(QObject* parent)
         : QAbstractTableModel(parent)
     {
+        if (!xthread.isRunning())
+            xthread.start();
+    }
+
+    ~Model()
+    {
+        xthread.requestInterruption();
     }
 
     int count() const
@@ -34,6 +73,7 @@ public:
         if (operations.empty())
             return;
 
+        /* FIXME
         size_t newSize = mControlFlow.size() + operations.size() - 1;
         if (newSize > size_t(MaxEntries)) {
             size_t numToRemove = newSize - MaxEntries;
@@ -50,6 +90,7 @@ public:
         emit beginInsertRows(QModelIndex(), first, last);
         mControlFlow.insert(mControlFlow.end(), operations.begin(), operations.end());
         emit endInsertRows();
+        */
     }
 
     int getCodeAddress(int row) const
@@ -130,16 +171,25 @@ ControlFlowLogWindow::ControlFlowLogWindow(QWidget* parent)
     mUi->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    mModel = new Model(this);
+    mModel = new ControlFlowLogWindow::Model(this);
     mUi->tableView->setModel(mModel);
 
-    connect(EmulatorCore::instance(), &EmulatorCore::controlFlow, mModel, &ControlFlowLogWindow::Model::addOperations);
+    //qRegisterMetaType<std::vector<MemoryOperationInfo>>();
+    //qRegisterMetaType<std::vector<ControlFlowInfo>>();
+
+    // FIXME
+    //connect(EmulatorCore::instance(), &EmulatorCore::controlFlow, mModel, &ControlFlowLogWindow::Model::addOperations);
+    //connect(EmulatorCore::instance(), &EmulatorCore::controlFlow, writer, &ControlFlowWriter::addOperations, Qt::QueuedConnection);
     EmulatorCore::instance()->setCollectControlFlow(true);
+    //connect(EmulatorCore::instance(), &EmulatorCore::memoryOperations, mModel, &ControlFlowLogWindow::Model::addMemOperations);
+    //connect(EmulatorCore::instance(), &EmulatorCore::memoryOperations, writer, &ControlFlowWriter::addMemOperations, Qt::QueuedConnection);
+    EmulatorCore::instance()->setCollectMemoryOperations(true);
 }
 
 ControlFlowLogWindow::~ControlFlowLogWindow()
 {
     EmulatorCore::instance()->setCollectControlFlow(false);
+    EmulatorCore::instance()->setCollectMemoryOperations(false);
 }
 
 void ControlFlowLogWindow::on_clearButton_clicked()

@@ -297,8 +297,8 @@ void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
 
 SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
 {
-    Q_ASSERT(address < 0x10000);
-    if (address < 0x10000) {
+    Q_ASSERT(address < 0x10000 * 8);
+    if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
@@ -310,8 +310,8 @@ SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
 
 QString EmulatorCore::nameForAddress(unsigned address) const
 {
-    Q_ASSERT(address < 0x10000);
-    if (address < 0x10000) {
+    Q_ASSERT(address < 0x10000 * 8);
+    if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
@@ -838,6 +838,53 @@ void EmulatorCore::update()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void getRegisters(Registers& regs)
+{
+    regs.tstates = tstates;
+    regs.af = AF;
+    regs.bc = BC;
+    regs.de = DE;
+    regs.hl = HL;
+    regs.ix = IX;
+    regs.iy = IY;
+    regs.sp = SP;
+    regs.pc = PC;
+    regs.pc |= (quint32)(machine_current->ram.current_page) << 16;
+    regs.af_ = AF_;
+    regs.bc_ = BC_;
+    regs.de_ = DE_;
+    regs.hl_ = HL_;
+    regs.a = A;
+    regs.b = B;
+    regs.c = C;
+    regs.d = D;
+    regs.e = E;
+    regs.h = H;
+    regs.l = L;
+    regs.f = F;
+    regs.i = I;
+    regs.r = R;
+    regs.a_ = A_;
+    regs.b_ = B_;
+    regs.c_ = C_;
+    regs.d_ = D_;
+    regs.e_ = E_;
+    regs.h_ = H_;
+    regs.l_ = L_;
+    regs.f_ = F_;
+    regs.im = IM;
+    regs.iff1 = IFF1;
+    regs.iff2 = IFF2;
+    regs.ula = ula_last_byte();
+    regs.sf = (regs.f & FLAG_S) != 0;
+    regs.zf = (regs.f & FLAG_Z) != 0;
+    regs.hf = (regs.f & FLAG_H) != 0;
+    regs.pf = (regs.f & FLAG_P) != 0;
+    regs.nf = (regs.f & FLAG_N) != 0;
+    regs.cf = (regs.f & FLAG_C) != 0;
+    regs.halted = z80.halted;
+}
+
 static void syncWithMainThread()
 {
     if (emulatorPaused != paused) {
@@ -860,48 +907,7 @@ static void syncWithMainThread()
         lock.relock();
     }
 
-    registers.tstates = tstates;
-    registers.af = AF;
-    registers.bc = BC;
-    registers.de = DE;
-    registers.hl = HL;
-    registers.ix = IX;
-    registers.iy = IY;
-    registers.sp = SP;
-    registers.pc = PC;
-    registers.af_ = AF_;
-    registers.bc_ = BC_;
-    registers.de_ = DE_;
-    registers.hl_ = HL_;
-    registers.a = A;
-    registers.b = B;
-    registers.c = C;
-    registers.d = D;
-    registers.e = E;
-    registers.h = H;
-    registers.l = L;
-    registers.f = F;
-    registers.i = I;
-    registers.r = R;
-    registers.a_ = A_;
-    registers.b_ = B_;
-    registers.c_ = C_;
-    registers.d_ = D_;
-    registers.e_ = E_;
-    registers.h_ = H_;
-    registers.l_ = L_;
-    registers.f_ = F_;
-    registers.im = IM;
-    registers.iff1 = IFF1;
-    registers.iff2 = IFF2;
-    registers.ula = ula_last_byte();
-    registers.sf = (registers.f & FLAG_S) != 0;
-    registers.zf = (registers.f & FLAG_Z) != 0;
-    registers.hf = (registers.f & FLAG_H) != 0;
-    registers.pf = (registers.f & FLAG_P) != 0;
-    registers.nf = (registers.f & FLAG_N) != 0;
-    registers.cf = (registers.f & FLAG_C) != 0;
-    registers.halted = z80.halted;
+    getRegisters(registers);
 
     int offset = 0;
     for (int i = 0; i < MEMORY_PAGES_IN_64K; i++) {
@@ -1136,8 +1142,16 @@ extern "C" void ui_notify_memory_page_changed(int page)
     memoryPageValid[page] = false;
 }
 
+QMutex cfLock;
+std::vector<std::function<void(FILE*)>> cfProducer;
+std::vector<std::function<void(FILE*)>> cfConsumer;
+
 extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigned codeAddress, unsigned value)
 {
+    if (!collectMemoryOperations)
+        return;
+
+/*
     if (collectMemoryOperations) {
         MemoryOperationInfo info;
         info.operation = MemoryOperation::WriteByte;
@@ -1149,20 +1163,87 @@ extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigne
         QMutexLocker lock(&mutex);
         memoryOperations.emplace_back(std::move(info));
     }
+*/
+
+    std::function<void(FILE*)> fn = [bank, memoryAddress, codeAddress, value](FILE* f) {
+            if (codeAddress < 0x4000) {
+                fprintf(f, "-[ROM]----------------\n");
+                fprintf(f, "%04X WRITE %02X => %04X [bank %d]\n", codeAddress, value, memoryAddress, bank);
+            } else {
+                fprintf(f, "----------------------\n");
+                fprintf(f, "%04X WRITE %02X => %04X [bank %d]\n", codeAddress, value, memoryAddress, bank);
+
+                QString name = EmulatorCore::instance()->nameForAddress(codeAddress | (bank << 16));
+                if (!name.isEmpty())
+                    fprintf(f, "%s\n", name.toLatin1().constData());
+
+                name = EmulatorCore::instance()->nameForAddress(memoryAddress | (bank << 16));
+                if (!name.isEmpty())
+                    fprintf(f, "=> %s\n", name.toLatin1().constData());
+            }
+        };
+
+    QMutexLocker lock(&cfLock);
+    cfProducer.emplace_back(std::move(fn));
+
 }
+
+static unsigned prevAddr = 0xffffffff;
 
 extern "C" void ui_notify_control_flow(int bank, unsigned address)
 {
+    if (!collectControlFlow)
+        return;
+
+    /*
     if (collectControlFlow) {
         ControlFlowInfo info;
         info.bank = bank;
         info.codeAddress = address;
         size_t len = 0;
         debugger_disassemble(info.instruction, sizeof(info.instruction), &len, info.codeAddress);
+        getRegisters(info.regs);
 
         QMutexLocker lock(&mutex);
         controlFlows.emplace_back(std::move(info));
     }
+    */
+
+    if (address == prevAddr)
+        return;
+    prevAddr = address;
+
+    ControlFlowInfo it;
+    it.bank = bank;
+    it.codeAddress = address;
+    size_t len = 0;
+    debugger_disassemble(it.instruction, sizeof(it.instruction), &len, it.codeAddress);
+    getRegisters(it.regs);
+
+    std::function<void(FILE*)> fn = [it](FILE* f) {
+            if (it.codeAddress < 0x4000) {
+                fprintf(f, "-[ROM]----------------\n");
+                fprintf(f, "%04X %s [bank %d]\n", it.codeAddress, it.instruction, it.bank);
+            } else {
+                fprintf(f, "----------------------\n");
+                fprintf(f, "%04X %s [bank %d]\n", it.codeAddress, it.instruction, it.bank);
+
+                QString name = EmulatorCore::instance()->nameForAddress(it.codeAddress | (it.bank << 16));
+                if (!name.isEmpty())
+                    fprintf(f, "%s\n", name.toLatin1().constData());
+
+                fprintf(f, "A =%02X B =%02X C =%02X D =%02X E =%02X H =%02X L =%02X AF =%04X BC =%04X DE =%04X HL =%04X IX =%04X IY =%04X SP=%04X\n",
+                    it.regs.a, it.regs.b, it.regs.c, it.regs.d, it.regs.e, it.regs.h, it.regs.l,
+                    it.regs.af, it.regs.bc, it.regs.de, it.regs.hl, it.regs.ix, it.regs.iy, it.regs.sp);
+                fprintf(f, "A'=%02X B'=%02X C'=%02X D'=%02X E'=%02X H'=%02X L'=%02X AF'=%04X BC'=%04X DE'=%04X HL'=%04X [S%d Z%d H%d P%d N%d C%d]\n",
+                    it.regs.a_, it.regs.b_, it.regs.c_, it.regs.d_, it.regs.e_, it.regs.h_, it.regs.l_,
+                    it.regs.af_, it.regs.bc_, it.regs.de_, it.regs.hl_,
+                    it.regs.sf, it.regs.zf, it.regs.hf, it.regs.pf, it.regs.nf, it.regs.cf);
+            }
+        };
+
+    QMutexLocker lock(&cfLock);
+    cfProducer.emplace_back(std::move(fn));
 }
 
 int uidisplay_init(int width, int height)

@@ -479,7 +479,7 @@ writebyte_internal( libspectrum_word address, libspectrum_byte b )
   libspectrum_word bank = address >> MEMORY_PAGE_SIZE_LOGARITHM;
   memory_page *mapping = &memory_map_write[ bank ];
 
-  ui_notify_memory_write(bank, address, PC, b);
+  ui_notify_memory_write(machine_current->ram.current_page, address, PC, b);
   
   if( spectranet_paged ) {
     /* all writes need to be parsed by the flash rom emulation */

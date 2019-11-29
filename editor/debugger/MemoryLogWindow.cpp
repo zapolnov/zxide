@@ -158,7 +158,7 @@ MemoryLogWindow::MemoryLogWindow(QWidget* parent)
     mModel = new Model(this);
     mUi->tableView->setModel(mModel);
 
-    connect(EmulatorCore::instance(), &EmulatorCore::memoryOperations, mModel, &MemoryLogWindow::Model::addOperations);
+    //connect(EmulatorCore::instance(), &EmulatorCore::memoryOperations, mModel, &MemoryLogWindow::Model::addOperations);
     EmulatorCore::instance()->setCollectMemoryOperations(true);
 }
 

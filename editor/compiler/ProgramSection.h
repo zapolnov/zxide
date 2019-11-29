@@ -25,6 +25,7 @@ public:
 
     const std::string& name() const { return mName; }
     const char* nameCStr() const { return mName.c_str(); }
+    unsigned bankAddress() const { return mBankAddress; }
 
     bool hasBase() const { return mBase != nullptr; }
     void setBase(std::unique_ptr<Expression> expr);
@@ -62,6 +63,7 @@ private:
     mutable unsigned mCalculatedAlignment;
     mutable bool mHasCalculatedBase;
     mutable bool mHasCalculatedAlignment;
+    unsigned mBankAddress;
     bool mHasFileName;
     bool mIsImaginary;
 
