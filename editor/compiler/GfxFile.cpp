@@ -207,8 +207,8 @@ void GfxFile::serializeToStandard(const GfxData* data)
         }
     }
 
-    for (int x = 0; x < data->width(); x += 8) {
-        for (int y = 0; y < data->height(); y += 8)
+    for (int y = 0; y < data->height(); y += 8) {
+        for (int x = 0; x < data->width(); x += 8)
             stream << quint8(data->attribAt(x, y, GfxColorMode::Standard));
     }
 }
@@ -217,8 +217,8 @@ void GfxFile::serializeToStandardAttributes(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);
 
-    for (int x = 0; x < data->width(); x += 8) {
-        for (int y = 0; y < data->height(); y += 8)
+    for (int y = 0; y < data->height(); y += 8) {
+        for (int x = 0; x < data->width(); x += 8)
             stream << quint8(data->attribAt(x, y, GfxColorMode::Standard));
     }
 }
@@ -282,8 +282,8 @@ void GfxFile::serializeToBTile16(const GfxData* data)
         }
     }
 
-    for (int x = 0; x < data->width(); x += 8) {
-        for (int y = 0; y < data->height(); y += 2)
+    for (int y = 0; y < data->height(); y += 2) {
+        for (int x = 0; x < data->width(); x += 8)
             stream << quint8(data->attribAt(x, y, GfxColorMode::Bicolor));
     }
 }
@@ -292,8 +292,8 @@ void GfxFile::serializeToBTile16Attributes(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);
 
-    for (int x = 0; x < data->width(); x += 8) {
-        for (int y = 0; y < data->height(); y += 2)
+    for (int y = 0; y < data->height(); y += 2) {
+        for (int x = 0; x < data->width(); x += 8)
             stream << quint8(data->attribAt(x, y, GfxColorMode::Bicolor));
     }
 }
