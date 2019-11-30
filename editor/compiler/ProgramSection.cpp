@@ -77,7 +77,7 @@ unsigned ProgramSection::alignment(IErrorReporter* reporter) const
     return quint32(value.number);
 }
 
-bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const
+bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const
 {
     mHasCalculatedBase = false;
     mHasCalculatedAlignment = false;
@@ -118,7 +118,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
     }
 
     mResolvedBase = address;
-    return CodeEmitter::resolveAddresses(reporter, program, address);
+    return CodeEmitter::resolveAddresses(reporter, program, address, compressed);
 }
 
 size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const

@@ -37,7 +37,7 @@ public:
     virtual unsigned totalTStatesIfNotTaken(const Program* program, IErrorReporter* reporter) const;
     virtual unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const;
 
-    virtual bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const;
+    virtual bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const;
     virtual size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const;
 
 private:
@@ -58,7 +58,7 @@ public:
     unsigned totalTStatesIfNotTaken(const Program* program, IErrorReporter* reporter) const override;
     unsigned totalTStatesIfTaken(const Program* program, IErrorReporter* reporter) const override;
 
-    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
+    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const override;
     size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:

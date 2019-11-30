@@ -47,7 +47,7 @@ public:
     void setFileName(std::string value) { mFileName = std::move(value); mHasFileName = true; }
 
     unsigned resolvedBase() const { return mResolvedBase; }
-    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const override;
+    bool resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const override;
     size_t emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:

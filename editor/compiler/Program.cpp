@@ -35,7 +35,7 @@ void Program::validateConstants(IErrorReporter* reporter)
         // Provide a dummy NOP instruction to the evaluation context to allow evaluation of '$' operands
         NOP nop(it.second->token());
         quint32 address = 0x8000;
-        nop.resolveAddress(address, this, reporter);
+        nop.resolveAddress(address, this, reporter, false);
 
         ExprEvalContext context(this, reporter, 0x8000, &nop);
         context.evaluate(it.second);

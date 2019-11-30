@@ -17,7 +17,7 @@ ProgramOpcode::~ProgramOpcode()
 {
 }
 
-bool ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool ProgramOpcode::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter, bool compressed)
 {
     if (address > 0xFFFF) {
         QString fileName = (token().file ? token().file->name : QString());
@@ -189,9 +189,9 @@ unsigned IfMacro::tstatesIfTaken(const Program* program, IErrorReporter* reporte
     return codeEmitter(program, reporter)->totalTStatesIfTaken(program, reporter);
 }
 
-bool IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool IfMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter, bool compressed)
 {
-    return codeEmitter(program, reporter)->resolveAddresses(reporter, program, address);
+    return codeEmitter(program, reporter)->resolveAddresses(reporter, program, address, compressed);
 }
 
 void IfMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
@@ -232,9 +232,9 @@ unsigned RepeatMacro::tstatesIfTaken(const Program* program, IErrorReporter* rep
     return mCodeEmitter.lock()->totalTStatesIfTaken(program, reporter);
 }
 
-bool RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter)
+bool RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorReporter* reporter, bool compressed)
 {
-    return mCodeEmitter.lock()->resolveAddresses(reporter, program, address);
+    return mCodeEmitter.lock()->resolveAddresses(reporter, program, address, compressed);
 }
 
 void RepeatMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const

@@ -120,7 +120,7 @@ unsigned ProgramLabel::tstatesIfTaken(const Program*, IErrorReporter*) const
     return 0;
 }
 
-bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* reporter)
+bool ProgramLabel::resolveAddress(quint32& address, Program*, IErrorReporter* reporter, bool compressed)
 {
     if (address > 0xFFFF) {
         QString fileName = (token().file ? token().file->name : QString());

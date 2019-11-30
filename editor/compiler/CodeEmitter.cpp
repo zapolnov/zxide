@@ -50,15 +50,18 @@ unsigned CodeEmitter::totalTStatesIfTaken(const Program* program, IErrorReporter
     return n;
 }
 
-bool CodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const
+bool CodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const
 {
     for (const auto& opcode : mOpcodes) {
-        quint32 old = address;
-        if (!opcode->resolveAddress(address, program, reporter))
+        quint32 oldAddr = address & 0xffff;
+        quint32 newAddr = address & 0xffff;
+        if (!opcode->resolveAddress(newAddr, program, reporter, compressed))
             return false;
 
-        Q_ASSERT(address == old + opcode->lengthInBytes(program, reporter));
-        if (address > 0x10000) {
+        Q_ASSERT(newAddr == oldAddr + opcode->lengthInBytes(program, reporter));
+
+        address += newAddr - oldAddr;
+        if (address > 0x10000 && !compressed) {
             QString fileName = (opcode->token().file ? opcode->token().file->name : QString());
             reporter->error(fileName, opcode->token().line, QCoreApplication::tr("address is over 64K"));
             return false;
@@ -135,7 +138,7 @@ unsigned RepeatedCodeEmitter::totalTStatesIfTaken(const Program* program, IError
     return unsigned(std::min<qint64>(total, std::numeric_limits<unsigned>::max()));
 }
 
-bool RepeatedCodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const
+bool RepeatedCodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const
 {
     qint64 count = 0;
     if (!evaluateRepeatCount(program, reporter, count))
@@ -143,7 +146,7 @@ bool RepeatedCodeEmitter::resolveAddresses(IErrorReporter* reporter, Program* pr
 
     for (qint64 i = 0; i < count; i++) {
         *mCounter = Value(i, Sign::Unsigned);
-        if (!CodeEmitter::resolveAddresses(reporter, program, address))
+        if (!CodeEmitter::resolveAddresses(reporter, program, address, compressed))
             return false;
     }
 
