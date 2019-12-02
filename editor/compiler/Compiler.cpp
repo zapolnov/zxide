@@ -731,6 +731,7 @@ bool Compiler::compileCCode()
         ccCmd.add("-o"); ccCmd.add("output");
         ccCmd.add("-mz80");
         ccCmd.add("-pz80");
+        ccCmd.add("--no-c-code-in-asm");
         switch (mProjectSettings->standard) {
             case CStandard::C89: ccCmd.add("--std-sdcc89"); break;
             case CStandard::C99: ccCmd.add("--std-sdcc99"); break;
