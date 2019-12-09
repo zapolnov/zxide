@@ -201,6 +201,41 @@
         </layout>
        </item>
        <item>
+        <widget class="QFrame" name="frame2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>5</width>
+           <height>5</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>5</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::HLine</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exportImageButton">
+         <property name="text">
+          <string>Export as PNG...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QFrame" name="paletteFrame">
          <property name="frameShape">
           <enum>QFrame::WinPanel</enum>
@@ -570,7 +605,7 @@
             <x>0</x>
             <y>0</y>
             <width>598</width>
-            <height>179</height>
+            <height>139</height>
            </rect>
           </property>
           <property name="text">

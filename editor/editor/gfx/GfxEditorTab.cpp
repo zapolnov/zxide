@@ -458,6 +458,38 @@ void GfxEditorTab::on_browseBackgroundImageButton_clicked()
     mUi->editorWidget->setBackgroundImageOpacity(128);
 }
 
+static QString lastPath;
+
+void GfxEditorTab::on_exportImageButton_clicked()
+{
+    QString name = QStringLiteral("%1.png").arg(file()->fileInfo().completeBaseName());
+
+    auto filter = QStringLiteral("%1 (*.png)").arg(tr("PNG files"));
+    QString file = QFileDialog::getSaveFileName(this, tr("Save image"), QDir(lastPath).absoluteFilePath(name), filter);
+    if (file.isEmpty())
+        return;
+
+    lastPath = QFileInfo(file).absolutePath();
+
+    QImage image = mUi->editorWidget->toImage(4, false);
+    if (!image.save(file, "PNG")) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
+        return;
+    }
+
+    if (mUi->editorWidget->hasFlash()) {
+        image = mUi->editorWidget->toImage(4, true);
+        QFileInfo info(file);
+        QString path = info.absolutePath();
+        QString name = info.completeBaseName();
+        file = QDir(path).absoluteFilePath(name + QStringLiteral("_1.") + info.suffix());
+        if (!image.save(file, "PNG")) {
+            QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
+            return;
+        }
+    }
+}
+
 void GfxEditorTab::setColor(int color, bool setTool)
 {
     if (mUi->blinkingCheck->isChecked())

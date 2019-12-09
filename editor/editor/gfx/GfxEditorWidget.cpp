@@ -1165,6 +1165,50 @@ void GfxEditorWidget::setTool(GfxEditorTool tool)
     emit updateUi();
 }
 
+QSize GfxEditorWidget::paintSize() const
+{
+    return QSize(mGfxData->width(), mGfxData->height());
+}
+
+bool GfxEditorWidget::hasFlash() const
+{
+    for (int gfxY = 0; gfxY < mGfxData->height(); gfxY++) {
+        for (int gfxX = 0; gfxX < mGfxData->width(); gfxX++) {
+            char attrib = mGfxData->attribAt(gfxX, gfxY, mColorMode);
+            if ((attrib & 0x80) != 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+QImage GfxEditorWidget::toImage(int scale, bool flashState) const
+{
+    QImage image(mGfxData->width() * scale, mGfxData->height() * scale, QImage::Format_ARGB32);
+    for (int gfxY = 0; gfxY < mGfxData->height(); gfxY++) {
+        for (int gfxX = 0; gfxX < mGfxData->width(); gfxX++) {
+            char value = mGfxData->at(gfxX, gfxY);
+            char attrib = mGfxData->attribAt(gfxX, gfxY, mColorMode);
+
+            if ((attrib & 0x80) != 0 && flashState)
+                value = !value;
+
+            int color = (value ? attrib & 7 : (attrib & 0x38) >> 3);
+            if (attrib & 0x40)
+                color += 8;
+
+            const QColor& colorRef = GfxFilePalette[color];
+            uint rgb = colorRef.rgb();
+
+            for (int yy = 0; yy < scale; yy++) {
+                for (int xx = 0; xx < scale; xx++)
+                    image.setPixel(gfxX * scale + xx, gfxY * scale + yy, rgb);
+            }
+        }
+    }
+    return image;
+}
+
 void GfxEditorWidget::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
