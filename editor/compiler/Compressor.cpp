@@ -33,17 +33,18 @@ void Compressor::setEndAddress(unsigned address)
 
 void Compressor::setAddressForName(const QString& name, unsigned address)
 {
-    mBinary->setAddressForName(name, address);
+    if (address < 0x10000)
+        mBinary->setAddressForName(name, address);
 }
 
 void Compressor::setSourceLocation(unsigned addr, const QString& fileName, int line)
 {
-    mBinary->setSourceLocation(addr, fileName, line);
+    //mBinary->setSourceLocation(addr, fileName, line);
 }
 
 void Compressor::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
-    mBinary->setTStatesForLocation(file, line, taken, notTaken);
+    //mBinary->setTStatesForLocation(file, line, taken, notTaken);
 }
 
 void Compressor::emitByte(const SourceFile* file, int line, quint8 byte)

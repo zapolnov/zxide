@@ -20,6 +20,18 @@ ProgramSection::ProgramSection(Program* program, const Token& token, std::string
     , mHasFileName(false)
     , mIsImaginary(false)
 {
+    if (mName.find("BANK1") != std::string::npos)
+        mBankAddress = 0x10000;
+    else if (mName.find("BANK3") != std::string::npos)
+        mBankAddress = 0x30000;
+    else if (mName.find("BANK4") != std::string::npos)
+        mBankAddress = 0x40000;
+    else if (mName.find("BANK6") != std::string::npos)
+        mBankAddress = 0x60000;
+    else if (mName.find("BANK7") != std::string::npos)
+        mBankAddress = 0x70000;
+    else
+        mBankAddress = 0;
 }
 
 ProgramSection::~ProgramSection()
@@ -65,7 +77,7 @@ unsigned ProgramSection::alignment(IErrorReporter* reporter) const
     return quint32(value.number);
 }
 
-bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address) const
+bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program, quint32& address, bool compressed) const
 {
     mHasCalculatedBase = false;
     mHasCalculatedAlignment = false;
@@ -106,7 +118,7 @@ bool ProgramSection::resolveAddresses(IErrorReporter* reporter, Program* program
     }
 
     mResolvedBase = address;
-    return CodeEmitter::resolveAddresses(reporter, program, address);
+    return CodeEmitter::resolveAddresses(reporter, program, address, compressed);
 }
 
 size_t ProgramSection::emitCode(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const

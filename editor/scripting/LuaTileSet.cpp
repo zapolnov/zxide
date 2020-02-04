@@ -27,6 +27,7 @@ namespace
     {
         TileSetData data;
         std::map<std::pair<int, int>, TileData> tiles;
+        std::map<std::pair<int, int>, std::pair<int, int>> tileOff;
     };
 }
 
@@ -102,6 +103,7 @@ static int luaTilesetLoad(lua_State* L)
                     }
 
                     obj->tiles.emplace(std::make_pair(x + xx, y + yy), std::move(tileData));
+                    obj->tileOff.emplace(std::make_pair(x + xx, y + yy), std::make_pair(xx * tileW, yy * tileH));
                 }
             }
 
@@ -161,7 +163,11 @@ static int luaTilesetGetTileGraphic(lua_State* L)
     GfxData* gfxData = vm->pushNew<GfxData>(w, h);
     gfxData->setBytes(it->second.gfx->bytes());
     gfxData->setAttrib(0, 0, w, h, it->second.gfx->attrib(0, 0, w - 1, h - 1));
-    return 1;
+
+    lua_pushinteger(L, obj.tileOff[std::make_pair(x, y)].first);
+    lua_pushinteger(L, obj.tileOff[std::make_pair(x, y)].second);
+
+    return 3;
 }
 
 const luaL_Reg LuaTileSet[] = {

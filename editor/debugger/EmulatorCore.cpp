@@ -297,8 +297,8 @@ void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
 
 SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
 {
-    Q_ASSERT(address < 0x10000);
-    if (address < 0x10000) {
+    Q_ASSERT(address < 0x10000 * 8);
+    if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
@@ -310,8 +310,8 @@ SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
 
 QString EmulatorCore::nameForAddress(unsigned address) const
 {
-    Q_ASSERT(address < 0x10000);
-    if (address < 0x10000) {
+    Q_ASSERT(address < 0x10000 * 8);
+    if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
@@ -838,6 +838,53 @@ void EmulatorCore::update()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void getRegisters(Registers& regs)
+{
+    regs.tstates = tstates;
+    regs.af = AF;
+    regs.bc = BC;
+    regs.de = DE;
+    regs.hl = HL;
+    regs.ix = IX;
+    regs.iy = IY;
+    regs.sp = SP;
+    regs.pc = PC;
+    regs.pc |= (quint32)(machine_current->ram.current_page) << 16;
+    regs.af_ = AF_;
+    regs.bc_ = BC_;
+    regs.de_ = DE_;
+    regs.hl_ = HL_;
+    regs.a = A;
+    regs.b = B;
+    regs.c = C;
+    regs.d = D;
+    regs.e = E;
+    regs.h = H;
+    regs.l = L;
+    regs.f = F;
+    regs.i = I;
+    regs.r = R;
+    regs.a_ = A_;
+    regs.b_ = B_;
+    regs.c_ = C_;
+    regs.d_ = D_;
+    regs.e_ = E_;
+    regs.h_ = H_;
+    regs.l_ = L_;
+    regs.f_ = F_;
+    regs.im = IM;
+    regs.iff1 = IFF1;
+    regs.iff2 = IFF2;
+    regs.ula = ula_last_byte();
+    regs.sf = (regs.f & FLAG_S) != 0;
+    regs.zf = (regs.f & FLAG_Z) != 0;
+    regs.hf = (regs.f & FLAG_H) != 0;
+    regs.pf = (regs.f & FLAG_P) != 0;
+    regs.nf = (regs.f & FLAG_N) != 0;
+    regs.cf = (regs.f & FLAG_C) != 0;
+    regs.halted = z80.halted;
+}
+
 static void syncWithMainThread()
 {
     if (emulatorPaused != paused) {
@@ -860,48 +907,7 @@ static void syncWithMainThread()
         lock.relock();
     }
 
-    registers.tstates = tstates;
-    registers.af = AF;
-    registers.bc = BC;
-    registers.de = DE;
-    registers.hl = HL;
-    registers.ix = IX;
-    registers.iy = IY;
-    registers.sp = SP;
-    registers.pc = PC;
-    registers.af_ = AF_;
-    registers.bc_ = BC_;
-    registers.de_ = DE_;
-    registers.hl_ = HL_;
-    registers.a = A;
-    registers.b = B;
-    registers.c = C;
-    registers.d = D;
-    registers.e = E;
-    registers.h = H;
-    registers.l = L;
-    registers.f = F;
-    registers.i = I;
-    registers.r = R;
-    registers.a_ = A_;
-    registers.b_ = B_;
-    registers.c_ = C_;
-    registers.d_ = D_;
-    registers.e_ = E_;
-    registers.h_ = H_;
-    registers.l_ = L_;
-    registers.f_ = F_;
-    registers.im = IM;
-    registers.iff1 = IFF1;
-    registers.iff2 = IFF2;
-    registers.ula = ula_last_byte();
-    registers.sf = (registers.f & FLAG_S) != 0;
-    registers.zf = (registers.f & FLAG_Z) != 0;
-    registers.hf = (registers.f & FLAG_H) != 0;
-    registers.pf = (registers.f & FLAG_P) != 0;
-    registers.nf = (registers.f & FLAG_N) != 0;
-    registers.cf = (registers.f & FLAG_C) != 0;
-    registers.halted = z80.halted;
+    getRegisters(registers);
 
     int offset = 0;
     for (int i = 0; i < MEMORY_PAGES_IN_64K; i++) {

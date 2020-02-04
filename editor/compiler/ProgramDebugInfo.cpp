@@ -16,16 +16,17 @@ ProgramDebugInfo::~ProgramDebugInfo()
 
 const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned address) const
 {
-    Q_ASSERT(address < 0x10000);
-    if (address < 0x10000)
+    Q_ASSERT(address < 0x10000 * 8);
+    if (address < 0x10000 * 8)
         return mSourceLocations[address];
     return dummySourceLocation;
 }
 
-void ProgramDebugInfo::setSourceLocation(unsigned address, const QString& file, int line)
+void ProgramDebugInfo::setSourceLocation(const ProgramSection* section, unsigned address, const QString& file, int line)
 {
     Q_ASSERT(address < 0x10000);
     if (address < 0x10000) {
+        address |= section->bankAddress();
         auto& loc = mSourceLocations[address];
         loc.file = file;
         loc.line = line;
@@ -57,6 +58,8 @@ QString ProgramDebugInfo::nameForAddress(unsigned address) const
 
 void ProgramDebugInfo::setAddressForName(const ProgramSection* section, const QString& name, unsigned address)
 {
+    address |= section->bankAddress();
+
     mNameToAddress[name] = address;
     mAddressToName.emplace(address, name);
 

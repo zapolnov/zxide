@@ -512,6 +512,23 @@ bool TapeFileWriter::makeTape()
             if (mProgram->codeLength() == 0)
                 continue;
 
+            if (it.first == "INTRO") {
+                TapeCodeHeader programHeader;
+                programHeader.setName(it.first);
+                programHeader.setSize(mProgram->codeLength());
+                programHeader.setStartAddress(mProgram->baseAddress());
+                mTape->appendBlockString(programHeader.toBinary(), 0);
+                mTape->appendBlockRaw(mProgram->codeBytes(), mProgram->codeLength(), 255, 100);
+            }
+        }
+
+        for (const auto& it : mProgram->files()) {
+            mProgram->setCurrentFile(it.first);
+            if (mProgram->codeLength() == 0)
+                continue;
+            if (it.first == "INTRO")
+                continue;
+
             TapeCodeHeader programHeader;
             programHeader.setName(it.first.empty() ? mProgramName : it.first);
             programHeader.setSize(mProgram->codeLength());

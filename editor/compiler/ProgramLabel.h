@@ -39,7 +39,7 @@ public:
     unsigned tstatesIfNotTaken(const Program* program, IErrorReporter* reporter) const override;
     unsigned tstatesIfTaken(const Program* program, IErrorReporter* reporter) const override;
 
-    bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter) override;
+    bool resolveAddress(quint32& address, Program* program, IErrorReporter* reporter, bool compressed) override;
     void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const override;
 
 private:

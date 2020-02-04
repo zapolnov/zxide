@@ -87,6 +87,10 @@ public:
     GfxEditorTool currentTool() const;
     void setTool(GfxEditorTool tool);
 
+    QSize paintSize() const;
+    bool hasFlash() const;
+    QImage toImage(int scale, bool flashState) const;
+
 protected:
     void paintEvent(QPaintEvent* event) override;
 

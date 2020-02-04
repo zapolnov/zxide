@@ -57,7 +57,7 @@ struct Registers
     quint16 ix;
     quint16 iy;
     quint16 sp;
-    quint16 pc;
+    quint32 pc;
     quint16 af_;
     quint16 bc_;
     quint16 de_;
@@ -112,6 +112,7 @@ struct ControlFlowInfo
     int bank;
     unsigned codeAddress;
     char instruction[64];
+    Registers regs;
 };
 
 enum class Machine : int

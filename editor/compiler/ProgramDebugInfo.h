@@ -38,7 +38,7 @@ public:
     ~ProgramDebugInfo();
 
     const SourceLocation& sourceLocationForAddress(unsigned address) const;
-    void setSourceLocation(unsigned address, const QString& file, int line);
+    void setSourceLocation(const ProgramSection* section, unsigned address, const QString& file, int line);
 
     int addressForName(const QString& name) const;
     QString nameForAddress(unsigned address) const;
@@ -66,7 +66,7 @@ private:
     std::unordered_map<QString, unsigned, hash> mNameToAddress;
     std::map<unsigned, QString> mAddressToName;
     // that's quite suboptimal use of memory, but who counts memory these days?!
-    SourceLocation mSourceLocations[0x10000];
+    SourceLocation mSourceLocations[0x10000 * 8];
 
     Q_DISABLE_COPY(ProgramDebugInfo)
 };
