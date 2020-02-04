@@ -25,6 +25,7 @@ MemoryWidget::MemoryWidget(QWidget* parent)
     , mUpdateToolTip(false)
     , mShowingToolTip(false)
 {
+    /*
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &MemoryWidget::updateToolTip);
     mTimer->start(100);
@@ -34,6 +35,7 @@ MemoryWidget::MemoryWidget(QWidget* parent)
     connect(EmulatorCore::instance(), &EmulatorCore::memoryChanged, this, QOverload<>::of(&MemoryWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::started, this, QOverload<>::of(&MemoryWidget::update));
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, QOverload<>::of(&MemoryWidget::update));
+    */
 
     setMinimumWidth((AddressWidth + Spacing + HexWidth - 1 + Spacing + SymWidth) * CharWidth);
     setMinimumHeight(CharHeight);

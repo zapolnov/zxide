@@ -11,7 +11,7 @@ DisplayWidget::DisplayWidget(QWidget* parent)
 {
     setFixedSize(EmulatorCore::ScreenWidth, EmulatorCore::ScreenHeight);
 
-    mTimer->setInterval(1000 / 50);
+    mTimer->setInterval(1000 / 25);
     connect(mTimer, &QTimer::timeout, this, QOverload<>::of(&DisplayWidget::update));
 
     connect(EmulatorCore::instance(), &EmulatorCore::started, this, QOverload<>::of(&DisplayWidget::setFocus));
@@ -40,7 +40,9 @@ void DisplayWidget::paintGL()
     QImage screen = EmulatorCore::instance()->getScreen();
     if (mScale > 1) {
         QSize size(screen.width() * mScale, screen.height() * mScale);
-        screen = screen.scaled(size, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+        // screen = screen.scaled(size, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+        painter.drawImage(QRect(0, 0, size.width(), size.height()), screen);
+        return;
     }
 
     painter.drawImage(0, 0, screen);

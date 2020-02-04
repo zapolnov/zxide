@@ -117,7 +117,7 @@ settings_info settings_default = {
   /* drive_plusd1_type */ (char *)NULL,
   /* drive_plusd2_type */ (char *)NULL,
   /* embed_snapshot */ 1,
-  /* emulation_speed */ 100,
+  /* emulation_speed */ 140,
   /* fastload */ 1,
   /* fb_mode */ 320,
   /* frame_rate */ 1,

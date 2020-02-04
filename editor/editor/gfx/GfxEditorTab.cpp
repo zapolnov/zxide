@@ -471,14 +471,14 @@ void GfxEditorTab::on_exportImageButton_clicked()
 
     lastPath = QFileInfo(file).absolutePath();
 
-    QImage image = mUi->editorWidget->toImage(4, false);
+    QImage image = mUi->editorWidget->toImage(2, false);
     if (!image.save(file, "PNG")) {
         QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
         return;
     }
 
     if (mUi->editorWidget->hasFlash()) {
-        image = mUi->editorWidget->toImage(4, true);
+        image = mUi->editorWidget->toImage(2, true);
         QFileInfo info(file);
         QString path = info.absolutePath();
         QString name = info.completeBaseName();

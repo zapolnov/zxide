@@ -73,6 +73,7 @@ RegistersWidget::RegistersWidget(QWidget* parent)
     UREG(   56, 5,  2, 16, ula,   "ULA", 3);
     TSTATES(56, 6, 18, 16, tstates, "T", 1);
 
+    /*
     mTimer->setInterval(1000 / 4);
     connect(mTimer, &QTimer::timeout, this, &RegistersWidget::refresh);
 
@@ -80,6 +81,7 @@ RegistersWidget::RegistersWidget(QWidget* parent)
     connect(EmulatorCore::instance(), &EmulatorCore::started, this, &RegistersWidget::refresh);
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, mTimer, &QTimer::stop);
     connect(EmulatorCore::instance(), &EmulatorCore::stopped, this, &RegistersWidget::reset);
+    */
 }
 
 RegistersWidget::~RegistersWidget()
