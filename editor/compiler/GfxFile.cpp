@@ -266,6 +266,77 @@ void GfxFile::serializeToZigZag(const GfxData* data)
     }
 }
 
+void GfxFile::serializeToZigZag2(const GfxData* data)
+{
+    QDataStream stream(&mFileData, QIODevice::WriteOnly);
+    bool wroteAttribs = false;
+
+    for (int yy = 0; yy < data->height(); ) {
+        int yend = qMin(yy + 8, data->height());
+        if (yy % 16 == 0) {
+            for (int y = yy; y < yend; y++) {
+                if ((y & 1) == 0) {
+                    for (int x = 0; x < data->width(); ) {
+                        unsigned char byte = 0;
+                        for (int i = 0; i < 8; i++, x++) {
+                            char value = data->at(x, y);
+                            if (value)
+                                byte |= (0x80 >> i);
+                        }
+                        stream << quint8(byte);
+                    }
+                } else {
+                    for (int x = data->width(); x > 0; x -= 8) {
+                        unsigned char byte = 0;
+                        for (int i = 0; i < 8; i++) {
+                            char value = data->at(x - 8 + i, y);
+                            if (value)
+                                byte |= (0x80 >> i);
+                        }
+                        stream << quint8(byte);
+                    }
+                }
+            }
+            yy += 8;
+        } else {
+            for (int y = yend - 1; y >= yy; y--) {
+                if ((y & 1) != 0) {
+                    for (int x = 0; x < data->width(); ) {
+                        unsigned char byte = 0;
+                        for (int i = 0; i < 8; i++, x++) {
+                            char value = data->at(x, y);
+                            if (value)
+                                byte |= (0x80 >> i);
+                        }
+                        stream << quint8(byte);
+                    }
+                } else {
+                    for (int x = data->width(); x > 0; x -= 8) {
+                        unsigned char byte = 0;
+                        for (int i = 0; i < 8; i++) {
+                            char value = data->at(x - 8 + i, y);
+                            if (value)
+                                byte |= (0x80 >> i);
+                        }
+                        stream << quint8(byte);
+                    }
+                }
+            }
+            yy += 8;
+        }
+    }
+
+    for (int y = (data->height() + 7) & ~7; y > 0; y -= 8) {
+        if (y % 16 == 0) {
+            for (int x = 0; x < data->width(); x += 8)
+                stream << quint8(data->attribAt(x, y - 1, GfxColorMode::Standard));
+        } else {
+            for (int x = data->width(); x > 0; x -= 8)
+                stream << quint8(data->attribAt(x - 8, y - 1, GfxColorMode::Standard));
+        }
+    }
+}
+
 void GfxFile::serializeToBTile16(const GfxData* data)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);
