@@ -18,6 +18,7 @@ static bool isReservedName(const QString& name)
     static const QSet<QString> reservedNames = {
             QStringLiteral(".git"),
             QStringLiteral(".gitignore"),
+            QStringLiteral("prototype"),
         };
 
     return reservedNames.contains(name);
