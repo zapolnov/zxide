@@ -6,5 +6,6 @@
 #include <memory>
 
 std::unique_ptr<GfxData> importMonochromeImage(const QImage& image);
+std::unique_ptr<GfxData> importScrFile(const QByteArray& data);
 
 #endif

@@ -5,6 +5,7 @@
 static const QString SettingLoadLastProject = QStringLiteral("LoadLastProject");
 static const QString SettingLastProjectFile = QStringLiteral("LastProjectFile");
 static const QString SettingLastImportedPNG = QStringLiteral("LastImportedPNG");
+static const QString SettingLastImportedSCR = QStringLiteral("LastImportedSCR");
 static const QString SettingAutoIndent = QStringLiteral("AutoIndent");
 static const QString SettingTabIndents = QStringLiteral("TabIndents");
 static const QString SettingBackspaceUnindents = QStringLiteral("BackspaceUnindents");
@@ -43,6 +44,11 @@ QString Settings::lastProjectFile() const
 QString Settings::lastImportedPNG() const
 {
     return mSettings.value(SettingLastImportedPNG).toString();
+}
+
+QString Settings::lastImportedSCR() const
+{
+    return mSettings.value(SettingLastImportedSCR).toString();
 }
 
 bool Settings::loadLastProjectOnStart() const
@@ -134,6 +140,11 @@ void Settings::setLastProjectFile(const QString& file)
 void Settings::setLastImportedPNG(const QString& file)
 {
     mSettings.setValue(SettingLastImportedPNG, file);
+}
+
+void Settings::setLastImportedSCR(const QString& file)
+{
+    mSettings.setValue(SettingLastImportedSCR, file);
 }
 
 void Settings::setLoadLastProjectOnStart(bool flag)

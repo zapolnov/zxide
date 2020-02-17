@@ -503,6 +503,7 @@ void MainWindow::updateUi()
     mUi->actionNewFile->setEnabled(mProject && mUi->fileManager->canCreateFile());
     mUi->actionNewDirectory->setEnabled(mProject && mUi->fileManager->canCreateDirectory());
     mUi->actionImportPNG->setEnabled(mProject && mUi->fileManager->canCreateFile());
+    mUi->actionImportSCR->setEnabled(mProject && mUi->fileManager->canCreateFile());
     mUi->actionRenameFile->setEnabled(mProject && mUi->fileManager->canRename());
     mUi->actionDuplicateFile->setEnabled(mProject && mUi->fileManager->canDuplicate());
     mUi->actionDeleteFile->setEnabled(mProject && mUi->fileManager->canDelete());
@@ -706,6 +707,80 @@ void MainWindow::on_actionImportPNG_triggered()
     }
 
     auto gfxData = importMonochromeImage(image);
+
+    GfxFile gfxFile;
+    gfxFile.format = GfxFormat::None;
+    gfxFile.colorMode = GfxColorMode::Standard;
+    gfxFile.serializeToJson(gfxData.get());
+    const QByteArray& data = gfxFile.data();
+
+    qint64 bytesWritten = file.write(data.constData(), data.length());
+    if (bytesWritten < 0) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+    if (bytesWritten != data.length()) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(tr("incomplete write.")));
+        return;
+    }
+
+    if (!file.commit()) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to write file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+
+    mUi->fileManager->refreshDirectory(parent);
+
+    File* newFile = parent->file(name);
+    Q_ASSERT(newFile);
+    if (newFile) {
+        mUi->fileManager->selectFileOrDirectory(newFile);
+        on_fileManager_fileCreated(newFile);
+    }
+}
+
+void MainWindow::on_actionImportSCR_triggered()
+{
+    Directory* parent = mUi->fileManager->selectedParentDirectory();
+    if (!parent)
+        return;
+
+    Settings settings;
+    auto filter = QStringLiteral("%1 (*.scr)").arg(tr("SCR files"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Import screen"), settings.lastImportedSCR(), filter);
+    if (fileName.isEmpty())
+        return;
+
+    settings.setLastImportedSCR(fileName);
+
+    QByteArray scrData;
+    try {
+        scrData = loadFile(fileName);
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to load file \"%1\": %2").arg(fileName).arg(e.message()));
+        return;
+    }
+
+    // FIXME: extension should go from a constant
+    QString name = QStringLiteral("%1.gfx").arg(QFileInfo(fileName).completeBaseName());
+
+    QDir dir(parent->fileInfo().absoluteFilePath());
+    QSaveFile file(dir.absoluteFilePath(name));
+    if (QFileInfo(file.fileName()).exists()) {
+        QMessageBox::critical(this, tr("Error"), tr("File or directory \"%1\" already exists.").arg(name));
+        return;
+    }
+
+    if (!file.open(QFile::WriteOnly)) {
+        QMessageBox::critical(this, tr("Error"), tr("Unable to create file \"%1\" in \"%2\": %3")
+            .arg(name).arg(dir.absolutePath()).arg(file.errorString()));
+        return;
+    }
+
+    auto gfxData = importScrFile(scrData);
 
     GfxFile gfxFile;
     gfxFile.format = GfxFormat::None;

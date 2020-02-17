@@ -256,3 +256,22 @@ std::unique_ptr<GfxData> importMonochromeImage(const QImage& image)
 
     return result;
 }
+
+std::unique_ptr<GfxData> importScrFile(const QByteArray& data)
+{
+    int w = 256;
+    int h = 192;
+
+    auto result = std::make_unique<GfxData>(w, h);
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            int offset = ((y & 7) << 8) | ((y << 2) & 0xe0) | ((y << 5) & 0x1800) | (x >> 3);
+            bool pixel = data.at(offset) & (0x80 >> (x & 7));
+            uint8_t attrib = data.at(0x1800 + (y / 8) * 32 + (x / 8));
+            result->at(x, y) = (pixel ? 255 : 0);
+            result->attribAt(x, y, GfxColorMode::Standard) = attrib;
+        }
+    }
+
+    return result;
+}

@@ -80,7 +80,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -101,6 +101,7 @@
     <addaction name="actionCloseAllWindows"/>
     <addaction name="separator"/>
     <addaction name="actionImportPNG"/>
+    <addaction name="actionImportSCR"/>
     <addaction name="separator"/>
     <addaction name="actionRenameFile"/>
     <addaction name="actionDuplicateFile"/>
@@ -1279,6 +1280,11 @@
   <action name="actionControlFlowLog">
    <property name="text">
     <string>Control flow log...</string>
+   </property>
+  </action>
+  <action name="actionImportSCR">
+   <property name="text">
+    <string>Import SCR graphic...</string>
    </property>
   </action>
  </widget>

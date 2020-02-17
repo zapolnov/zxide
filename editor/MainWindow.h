@@ -86,6 +86,7 @@ private:
     Q_SLOT void on_actionCloseWindow_triggered();
     Q_SLOT void on_actionCloseAllWindows_triggered();
     Q_SLOT void on_actionImportPNG_triggered();
+    Q_SLOT void on_actionImportSCR_triggered();
     Q_SLOT void on_actionRenameFile_triggered();
     Q_SLOT void on_actionDuplicateFile_triggered();
     Q_SLOT void on_actionDeleteFile_triggered();
