@@ -25,7 +25,7 @@ static const QString JsonValue_Size = QStringLiteral("size");
 static const int FileFormatVersion = 1;
 
 const std::string ProjectSettings::DefaultSegmentName = "main";
-const std::string ProjectSettings::DefaultLoaderFileName = "LOADER";
+const std::string ProjectSettings::DefaultLoaderFileName = "BOOT";
 const std::string ProjectSettings::DefaultProgramFileName = "GAME";
 
 ProjectSettings::ProjectSettings()

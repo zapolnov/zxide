@@ -886,6 +886,17 @@ bool Compiler::compileBasicCode()
             int d = 0;
             while (*p) {
                 char ch = *p++;
+
+                if (ch == '/' && *p == '/') {
+                    ++p;
+                    while (*p && *p != '\n')
+                        ++p;
+                    if (*p == '\n')
+                        ++p;
+                    APPEND('\n');
+                    break;
+                }
+
                 if (ch == '\r' && *p == '\n') {
                     ++p;
                     ch = '\n';
