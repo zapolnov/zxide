@@ -266,10 +266,9 @@ void GfxFile::serializeToZigZag(const GfxData* data)
     }
 }
 
-void GfxFile::serializeToZigZag2(const GfxData* data)
+void GfxFile::serializeToZigZag2(const GfxData* data, bool withAttribs)
 {
     QDataStream stream(&mFileData, QIODevice::WriteOnly);
-    bool wroteAttribs = false;
 
     for (int yy = 0; yy < data->height(); ) {
         int yend = qMin(yy + 8, data->height());
@@ -326,13 +325,15 @@ void GfxFile::serializeToZigZag2(const GfxData* data)
         }
     }
 
-    for (int y = (data->height() + 7) & ~7; y > 0; y -= 8) {
-        if (y % 16 == 0) {
-            for (int x = 0; x < data->width(); x += 8)
-                stream << quint8(data->attribAt(x, y - 1, GfxColorMode::Standard));
-        } else {
-            for (int x = data->width(); x > 0; x -= 8)
-                stream << quint8(data->attribAt(x - 8, y - 1, GfxColorMode::Standard));
+    if (withAttribs) {
+        for (int y = (data->height() + 7) & ~7; y > 0; y -= 8) {
+            if (y % 16 == 0) {
+                for (int x = 0; x < data->width(); x += 8)
+                    stream << quint8(data->attribAt(x, y - 1, GfxColorMode::Standard));
+            } else {
+                for (int x = data->width(); x > 0; x -= 8)
+                    stream << quint8(data->attribAt(x - 8, y - 1, GfxColorMode::Standard));
+            }
         }
     }
 }

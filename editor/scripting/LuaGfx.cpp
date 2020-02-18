@@ -212,10 +212,10 @@ static std::string generateZigZag(const GfxData& data)
     return ss.str();
 }
 
-static std::string generateZigZag2(const GfxData& data)
+static std::string generateZigZag2(const GfxData& data, bool withAttribs)
 {
     GfxFile file;
-    file.serializeToZigZag2(&data);
+    file.serializeToZigZag2(&data, withAttribs);
 
     std::stringstream ss;
     for (char ch : file.data()) {
@@ -297,7 +297,8 @@ static int luaGfxGenerateZigZagAssembly2(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
     GfxData& data = vm->check<GfxData>(1);
-    std::string result = generateZigZag2(data);
+    bool withAttribs = lua_toboolean(L, 2);
+    std::string result = generateZigZag2(data, withAttribs);
     vm->pushString(result);
     return 1;
 }
