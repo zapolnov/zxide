@@ -20,3 +20,4 @@
 * Step Out maybe incorrectly handles inner calls
 * Support for undocumented Z80 instructions
 * Changing value in map editor's dimensions SpinBox causes loss of map data (also it consumes Ctrl+Z which causes confusion)
+* BIT X,r where X is a repeat variable doesn't work
