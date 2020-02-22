@@ -160,6 +160,14 @@ void AssemblerParser::parseLine()
     }
 }
 
+// FIXME: duplicate of one in TapeFileWriter
+static bool endsWith(const std::string& str, const std::string& end)
+{
+    if (str.length() < end.length())
+        return false;
+    return memcmp(str.data() + str.length() - end.length(), end.data(), end.length()) == 0;
+}
+
 void AssemblerParser::parseSectionDecl()
 {
     std::string sectionName = expectIdentifier(nextToken());
@@ -207,7 +215,7 @@ void AssemblerParser::parseSectionDecl()
                 if (nextToken() != T_STRING)
                     error(tr("expected string"));
                 std::string fileName = lastTokenText();
-                if (fileName.length() > 10)
+                if (fileName.length() > 10 && !endsWith(fileName, ":imaginary"))
                     fileName = fileName.substr(0, 10);
                 if (section->hasFileName() && section->fileName() != fileName) {
                     error(tr("conflicting file name for section '%1' ('%2' != '%3')")

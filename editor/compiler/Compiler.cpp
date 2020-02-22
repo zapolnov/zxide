@@ -79,6 +79,14 @@ void Compiler::addSourceFile(const QString& fullName, const QString& path)
         mMaps.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
 }
 
+// FIXME: duplicate of one in AssemblerParser
+static bool endsWith(const std::string& str, const std::string& end)
+{
+    if (str.length() < end.length())
+        return false;
+    return memcmp(str.data() + str.length() - end.length(), end.data(), end.length()) == 0;
+}
+
 void Compiler::compile()
 {
     try {
@@ -205,6 +213,8 @@ void Compiler::compile()
 
         setStatusText(tr("Writing bin files..."));
         for (const auto& it : mProgramBinary->files()) {
+            if (endsWith(it.first, ":imaginary"))
+                continue;
             mProgramBinary->setCurrentFile(it.first);
             QString fileName = QStringLiteral("%1@%2.bin").arg(it.first.c_str()).arg(mProgramBinary->baseAddress(), 0, 16);
             fileName = QDir(QFileInfo(mOutputTapeFile).absolutePath()).absoluteFilePath(fileName);

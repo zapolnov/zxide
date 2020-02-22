@@ -10,6 +10,14 @@
 #undef max
 #endif
 
+// FIXME: duplicate of one in TapeFileWriter
+static bool endsWith(const std::string& str, const std::string& end)
+{
+    if (str.length() < end.length())
+        return false;
+    return memcmp(str.data() + str.length() - end.length(), end.data(), end.length()) == 0;
+}
+
 namespace
 {
     #define SECTOR_SIZE 256
@@ -207,6 +215,8 @@ bool DiskFileWriter::writeSclFile(const QString& fileName)
     for (const auto& it : mProgram->files()) {
         mProgram->setCurrentFile(it.first);
         if (mProgram->codeLength() == 0)
+            continue;
+        if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary"))
             continue;
 
         auto codeFile = std::make_unique<CodeFile>();

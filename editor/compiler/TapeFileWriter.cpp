@@ -27,6 +27,14 @@ int write_tape(AFvirtualfile* vf, libspectrum_tape* tape, int sample_rate); // t
 #undef max
 #endif
 
+// FIXME: duplicate of one in DiskFileWriter
+static bool endsWith(const std::string& str, const std::string& end)
+{
+    if (str.length() < end.length())
+        return false;
+    return memcmp(str.data() + str.length() - end.length(), end.data(), end.length()) == 0;
+}
+
 class TapeFileWriter::ILibSpectrum
 {
 public:
@@ -512,7 +520,7 @@ bool TapeFileWriter::makeTape()
             if (mProgram->codeLength() == 0)
                 continue;
 
-            if (it.first == "INTRO") {
+            if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary")) {
                 TapeCodeHeader programHeader;
                 programHeader.setName(it.first);
                 programHeader.setSize(mProgram->codeLength());
@@ -526,7 +534,7 @@ bool TapeFileWriter::makeTape()
             mProgram->setCurrentFile(it.first);
             if (mProgram->codeLength() == 0)
                 continue;
-            if (it.first == "INTRO")
+            if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary"))
                 continue;
 
             TapeCodeHeader programHeader;
