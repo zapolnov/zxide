@@ -520,7 +520,7 @@ bool TapeFileWriter::makeTape()
             if (mProgram->codeLength() == 0)
                 continue;
 
-            if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary")) {
+            if (it.first == "INTRO") {
                 TapeCodeHeader programHeader;
                 programHeader.setName(it.first);
                 programHeader.setSize(mProgram->codeLength());

@@ -216,7 +216,7 @@ bool DiskFileWriter::writeSclFile(const QString& fileName)
         mProgram->setCurrentFile(it.first);
         if (mProgram->codeLength() == 0)
             continue;
-        if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary"))
+        if (it.first == "LOADER" || endsWith(it.first, ":imaginary"))
             continue;
 
         auto codeFile = std::make_unique<CodeFile>();
