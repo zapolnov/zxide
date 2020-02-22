@@ -99,7 +99,9 @@ void ProgramBinary::emitQWord(const SourceFile* file, int line, quint64 qword)
 ProgramBinary::FileMap::iterator ProgramBinary::createFile(std::string fileName, unsigned baseAddress)
 {
     File f;
-    f.debugInfo = std::make_unique<ProgramDebugInfo>();
+    f.debugInfo = std::make_shared<ProgramDebugInfo>();
+    if (!fileName.empty())
+        mFiles[std::string()].debugInfo->addAuxiliaryDebugInfo(f.debugInfo);
     f.baseAddress = baseAddress;
     f.endAddress = baseAddress;
     return mFiles.emplace(std::move(fileName), std::move(f)).first;

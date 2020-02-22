@@ -61,7 +61,7 @@ MainWindow::MainWindow()
         });
     connect(mEmulatorCore, &EmulatorCore::runtoAddressChanged, this, [this](int address) {
             if (address >= 0) {
-                auto loc = EmulatorCore::instance()->sourceLocationForAddress(address);
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(address, true);
                 File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
                 if (file) {
                     HighlightManager::instance()->setHighlight(Highlight::RunToCursor, loc.file, loc.line);
@@ -457,7 +457,7 @@ void MainWindow::clearBuildResult()
 
 void MainWindow::navigateToAddress(unsigned address, bool setHighlight)
 {
-    SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(address);
+    SourceLocation loc = EmulatorCore::instance()->sourceLocationForAddress(address, true);
     File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
 
     if (setHighlight) {
@@ -1048,7 +1048,7 @@ void MainWindow::on_actionMemoryLog_triggered()
         connect(mMemoryLogWindow, &MemoryLogWindow::cleared, mHighlightManager,
             std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::MemoryLog, true));
         connect(mMemoryLogWindow, &MemoryLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
-                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr, true);
                 File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
                 if (file) {
                     auto tab = setCurrentTab(file);
@@ -1078,7 +1078,7 @@ void MainWindow::on_actionControlFlowLog_triggered()
         connect(mControlFlowLogWindow, &ControlFlowLogWindow::cleared, mHighlightManager,
             std::bind(&HighlightManager::clearHighlight, mHighlightManager, Highlight::ControlFlowLog, true));
         connect(mControlFlowLogWindow, &ControlFlowLogWindow::addressDoubleClicked, this, [this](unsigned addr) {
-                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr);
+                auto loc = EmulatorCore::instance()->sourceLocationForAddress(addr, true);
                 File* file = (!loc.file.isEmpty() ? mUi->fileManager->file(loc.file) : nullptr);
                 if (file) {
                     auto tab = setCurrentTab(file);

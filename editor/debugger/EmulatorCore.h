@@ -161,8 +161,8 @@ public:
 
     bool hasProgramBinary() const;
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
-    SourceLocation sourceLocationForAddress(unsigned address) const;
-    QString nameForAddress(unsigned address) const;
+    SourceLocation sourceLocationForAddress(unsigned address, bool withAux) const;
+    QString nameForAddress(unsigned address, bool withAux) const;
     std::map<QString, std::vector<ProgramSectionInfo>> programSectionInfo() const;
 
     void setCollectMemoryOperations(bool flag);

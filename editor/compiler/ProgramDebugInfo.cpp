@@ -14,11 +14,25 @@ ProgramDebugInfo::~ProgramDebugInfo()
 {
 }
 
-const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned address) const
+const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned address, bool withAux) const
 {
     Q_ASSERT(address < 0x10000 * 8);
-    if (address < 0x10000 * 8)
-        return mSourceLocations[address];
+    if (address < 0x10000 * 8) {
+        const auto& loc = mSourceLocations[address];
+        if (!loc.file.isEmpty())
+            return loc;
+
+        if (withAux) {
+            for (const auto& aux : mAuxiliaryInfos) {
+                const auto& loc1 = mSourceLocations[address];
+                if (!loc1.file.isEmpty())
+                    return loc1;
+            }
+        }
+
+        return loc;
+    }
+
     return dummySourceLocation;
 }
 
@@ -34,26 +48,44 @@ void ProgramDebugInfo::setSourceLocation(const ProgramSection* section, unsigned
     }
 }
 
-int ProgramDebugInfo::addressForName(const QString& name) const
+int ProgramDebugInfo::addressForName(const QString& name, bool withAux) const
 {
     auto it = mNameToAddress.find(name);
-    return (it != mNameToAddress.end() ? it->second : -1);
-}
-
-QString ProgramDebugInfo::nameForAddress(unsigned address) const
-{
-    auto it = mAddressToName.lower_bound(address);
-    if (it == mAddressToName.end())
-        return QString();
-
-    if (it->first == address)
+    if (it != mNameToAddress.end())
         return it->second;
 
-    if (it == mAddressToName.begin())
-        return QString();
+    if (withAux) {
+        for (const auto& aux : mAuxiliaryInfos) {
+            int addr = aux->addressForName(name, withAux);
+            if (addr != -1)
+                return addr;
+        }
+    }
 
-    --it;
-    return QStringLiteral("%1+%2").arg(it->second).arg(address - it->first);
+    return -1;
+}
+
+QString ProgramDebugInfo::nameForAddress(unsigned address, bool withAux) const
+{
+    auto it = mAddressToName.lower_bound(address);
+    if (it != mAddressToName.end()) {
+        if (it->first == address)
+            return it->second;
+        if (it != mAddressToName.begin()) {
+            --it;
+            return QStringLiteral("%1+%2").arg(it->second).arg(address - it->first);
+        }
+    }
+
+    if (withAux) {
+        for (const auto& aux : mAuxiliaryInfos) {
+            QString str = aux->nameForAddress(address, withAux);
+            if (!str.isEmpty())
+                return str;
+        }
+    }
+
+    return QString();
 }
 
 void ProgramDebugInfo::setAddressForName(const ProgramSection* section, const QString& name, unsigned address)
@@ -95,21 +127,39 @@ void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, u
     mFileToTStates[file->name][line] = s;
 }
 
-const std::map<int, TStates>& ProgramDebugInfo::tstatesForFile(const QString& file) const
+const std::map<int, TStates>& ProgramDebugInfo::tstatesForFile(const QString& file, bool withAux) const
 {
     auto it = mFileToTStates.find(file);
-    return (it != mFileToTStates.end() ? it->second : dummyTStatesMap);
+    if (it != mFileToTStates.end())
+        return it->second;
+
+    if (withAux) {
+        for (const auto& aux : mAuxiliaryInfos) {
+            const auto& map = aux->tstatesForFile(file, withAux);
+            if (&map != &dummyTStatesMap)
+                return map;
+        }
+    }
+
+    return dummyTStatesMap;
 }
 
-int ProgramDebugInfo::resolveAddress(const QString& file, int line) const
+int ProgramDebugInfo::resolveAddress(const QString& file, int line, bool withAux) const
 {
     auto it = mFileToMemory.find(file);
-    if (it == mFileToMemory.end())
-        return -1;
+    if (it != mFileToMemory.end()) {
+        auto jt = it->second.lower_bound(line);
+        if (jt != it->second.end())
+            return jt->second;
+    }
 
-    auto jt = it->second.lower_bound(line);
-    if (jt == it->second.end())
-        return -1;
+    if (withAux) {
+        for (const auto& aux : mAuxiliaryInfos) {
+            int addr = aux->resolveAddress(file, line, withAux);
+            if (addr != -1)
+                return addr;
+        }
+    }
 
-    return jt->second;
+    return -1;
 }

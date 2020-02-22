@@ -306,7 +306,7 @@ void CodeEditorTab::updateTStates(ProgramDebugInfo* debugInfo)
 {
     File* f = file();
     if (f)
-        mUi->textEditor->updateTStates(debugInfo->tstatesForFile(f->relativeName()));
+        mUi->textEditor->updateTStates(debugInfo->tstatesForFile(f->relativeName(), true));
 }
 
 void CodeEditorTab::reloadSettings()

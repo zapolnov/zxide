@@ -130,7 +130,7 @@ public:
             case 2: return QStringLiteral("0x%1").arg(op.value, 2, 16, QChar('0'));
 
             case 3: {
-                QString name = EmulatorCore::instance()->nameForAddress(op.codeAddress);
+                QString name = EmulatorCore::instance()->nameForAddress(op.codeAddress, true);
                 if (name.isEmpty())
                     return QStringLiteral("0x%1").arg(op.codeAddress, 4, 16, QChar('0'));
                 else

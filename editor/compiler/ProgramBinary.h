@@ -33,7 +33,7 @@ public:
     struct File
     {
         std::vector<quint8> code;
-        std::unique_ptr<ProgramDebugInfo> debugInfo;
+        std::shared_ptr<ProgramDebugInfo> debugInfo;
         unsigned baseAddress;
         unsigned endAddress;
     };

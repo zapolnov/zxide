@@ -241,7 +241,7 @@ void EmulatorCore::runTo(const File* file, int line)
         return;
     }
 
-    int addr = debugInfo->resolveAddress(file->relativeName(), line);
+    int addr = debugInfo->resolveAddress(file->relativeName(), line, true);
     if (addr < 0) {
         lock.unlock();
         emit error(tr("Selected location has no associated code."));
@@ -295,27 +295,27 @@ void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
     }
 }
 
-SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address) const
+SourceLocation EmulatorCore::sourceLocationForAddress(unsigned address, bool withAux) const
 {
     Q_ASSERT(address < 0x10000 * 8);
     if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
-            return debugInfo->sourceLocationForAddress(address);
+            return debugInfo->sourceLocationForAddress(address, withAux);
     }
 
     return dummySourceLocation;
 }
 
-QString EmulatorCore::nameForAddress(unsigned address) const
+QString EmulatorCore::nameForAddress(unsigned address, bool withAux) const
 {
     Q_ASSERT(address < 0x10000 * 8);
     if (address < 0x10000 * 8) {
         QMutexLocker lock(&mutex);
         ProgramDebugInfo* debugInfo;
         if (programBinary && (debugInfo = programBinary->debugInfo()) != nullptr)
-            return debugInfo->nameForAddress(address);
+            return debugInfo->nameForAddress(address, withAux);
     }
 
     return QString();
@@ -736,7 +736,7 @@ void EmulatorCore::updateBreakpoints()
     for (auto it = items.begin(); it != end; ++it) {
         switch (it->type) {
             case BreakpointType::Code: {
-                int addr = (debugInfo ? debugInfo->resolveAddress(it->file, it->line) : -1);
+                int addr = (debugInfo ? debugInfo->resolveAddress(it->file, it->line, true) : -1);
                 if (addr < 0) {
                     notifyBreakpointsUpdated = true;
                     BreakpointsModel::instance()->setBreakpointInvalid(it, false);

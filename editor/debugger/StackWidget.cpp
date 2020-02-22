@@ -69,7 +69,7 @@ void StackWidget::paintGL()
 
         size_t len = 14;
         if (w > 16) {
-            QString name = EmulatorCore::instance()->nameForAddress(unsigned(value));
+            QString name = EmulatorCore::instance()->nameForAddress(unsigned(value), true);
             if (!name.isEmpty()) {
                 mLineBuffer[len++] = ' ';
                 mLineBuffer[len++] = ' ';
