@@ -5,6 +5,56 @@
 #include <QFileInfo>
 #include <lua.hpp>
 
+int luaReadFile(lua_State* L, const char* name)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    const QDir& dir = vm->projectDirectory();
+    QString fileName = QString::fromUtf8(name);
+    QString filePath = dir.absoluteFilePath(fileName);
+
+    QByteArray data = loadFile(filePath);
+    vm->pushByteArray(data);
+
+    return 1;
+}
+
+int luaReadCsvFile(lua_State* L, const char* name)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    const QDir& dir = vm->projectDirectory();
+    QString fileName = QString::fromUtf8(name);
+    QString filePath = dir.absoluteFilePath(fileName);
+
+    QByteArray data = loadFile(filePath);
+    const char* p = data.constData();
+
+    lua_newtable(L);
+    int row = 1;
+    while (*p) {
+        lua_newtable(L);
+        const char* start = p;
+        int col = 1;
+        while (*p && *p != '\r' && *p != '\n') {
+            if (*p++ == ',') {
+                lua_pushlstring(L, start, p - start - 1);
+                start = p;
+                lua_rawseti(L, -2, col++);
+            }
+        }
+        lua_pushlstring(L, start, p - start);
+        lua_rawseti(L, -2, col);
+        if (*p == '\n')
+            ++p;
+        else if (*p == '\r' && p[1] == '\n')
+            p += 2;
+        lua_rawseti(L, -2, row++);
+    }
+
+    return 1;
+}
+
 int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t contentsLength)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -52,6 +102,18 @@ int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t co
     return 0;
 }
 
+static int luaReadFile(lua_State* L)
+{
+    const char* fileName = luaL_checkstring(L, 1);
+    return luaReadFile(L, fileName);
+}
+
+static int luaReadCsvFile(lua_State* L)
+{
+    const char* fileName = luaL_checkstring(L, 1);
+    return luaReadCsvFile(L, fileName);
+}
+
 static int luaWriteFile(lua_State* L)
 {
     size_t contentsLength = 0;
@@ -62,6 +124,8 @@ static int luaWriteFile(lua_State* L)
 }
 
 const luaL_Reg LuaFiles[] = {
+    { "readFile", luaReadFile },
+    { "readCsvFile", luaReadCsvFile },
     { "writeFile", luaWriteFile },
     { nullptr, nullptr }
 };
