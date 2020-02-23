@@ -930,6 +930,17 @@ bool Compiler::compileBasicCode()
                             APPENDSTR(buf);
                             p = pend + 1;
                             continue;
+                        } else if (n == 6 && !strncmp(p + 1, "loader", n)) {
+                            mProgramBinary->setCurrentFile("LOADER");
+                            const quint8* bytes = mProgramBinary->codeBytes();
+                            size_t len = mProgramBinary->codeLength();
+                            for (size_t i = 0; i < len; i++) {
+                                char buf[8];
+                                snprintf(buf, sizeof(buf), "{%02X}", *bytes++);
+                                APPENDSTR(buf);
+                            }
+                            p = pend + 1;
+                            continue;
                         }
                     }
                 }

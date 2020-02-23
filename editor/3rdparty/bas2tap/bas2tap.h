@@ -5,7 +5,7 @@
 #define BAS2TAP_EXTERN extern
 #endif
 
-#define MAXLINELENGTH 1024
+#define MAXLINELENGTH 10240
 
 #ifdef __cplusplus
 extern "C" {
