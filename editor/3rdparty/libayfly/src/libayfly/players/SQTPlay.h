@@ -57,7 +57,7 @@ bool SQT_PreInit(AYSongInfo &info)
     unsigned char *module = info.module;
     SQT_File *header = (SQT_File *)module;
     int i, i1, i2;
-    unsigned long j2;
+    /*unsigned long*/uintptr_t j2;
     unsigned short *pwrd;
     i = SQT_SamplesPointer - 10;
     if(i < 0)
@@ -80,14 +80,14 @@ bool SQT_PreInit(AYSongInfo &info)
             i1 = module[i2] & 0x7f;
         i2 += 3;
     }
-    j2 = (unsigned long)(&module[65535]);
+    j2 = (/*unsigned long*/uintptr_t)(&module[65535]);
     pwrd = MAKE_PWORD(&header->SQT_SamplesPointer0);
     i1 = (SQT_PatternsPointer - i + i1 * 2) / 2;
     if(i1 < 1)
         return false;
     for(i2 = 1; i2 <= i1; i2++)
     {
-        if((unsigned long)(pwrd) >= j2)
+        if((/*unsigned long*/uintptr_t)(pwrd) >= j2)
             return false;
         if(*pwrd < i)
             return false;
