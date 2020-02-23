@@ -3,8 +3,11 @@ if(MSVC)
     add_definitions(/wd4305)    # truncation from double to float
 endif()
 
+add_definitions(-D_WIN32 -DWINDOWS)
+
 add_library(LibAyFly STATIC)
 target_compile_definitions(LibAyFly PUBLIC AYFLY_STATIC)
+target_compile_definitions(LibAyFly PRIVATE DISABLE_AUDIO)
 set_target_properties(LibAyFly PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "AyFly")
 
 target_include_directories(LibAyFly PUBLIC
@@ -78,3 +81,7 @@ set_source_files_properties(
     src/libayfly/z80ex/opcodes/opcodes_fdcb.c
     src/libayfly/z80ex/ptables.c
     PROPERTIES HEADER_FILE_ONLY TRUE)
+
+if(WIN32)
+    target_link_libraries(LibAyFly winmm dxguid)
+endif()

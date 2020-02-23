@@ -3,6 +3,7 @@
 #include "LuaGfx.h"
 #include "LuaTileSet.h"
 #include "LuaMap.h"
+#include "LuaMusic.h"
 #include "LuaUtil.h"
 #include <QFile>
 #include <QCoreApplication>
@@ -95,6 +96,7 @@ void LuaVM::openLibs()
     openLib(LuaGfx);
     openLib(LuaTileSet);
     openLib(LuaMap);
+    openLib(LuaMusic);
     openLib(LuaUtil);
 }
 
