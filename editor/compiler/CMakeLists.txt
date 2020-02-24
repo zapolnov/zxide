@@ -50,6 +50,7 @@ qt_add_sources(Compiler
         MapData.h
         MapFile.cpp
         MapFile.h
+        MusicCompiler.h
         NullOutput.cpp
         NullOutput.h
         Program.cpp
