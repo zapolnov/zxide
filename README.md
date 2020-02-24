@@ -71,10 +71,10 @@ License is GNU GPL v2 or any later version.
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 Please note that the license covers only the IDE itself. Any programs you would create with the IDE belong to you
-and maybe distributed under your own terms. As a special exception GPL Author explicitly gives permission to use
+and maybe distributed under your own terms. As a special exception to GPL, Author explicitly gives permission to use
 any source files that IDE may create in the project directory (for example, the default `loader.bas` or files in
 the `generated` directory) for any purpose, including (but not limited to) personal, commercial and educational use,
-modification and redistribution, without time and territory limitations.
+modification and redistribution, free of charge and without time and territory limitations.
 
 This software also includes a bunch of 3rd party software. Please consult licensing for this software in the
 corresponding directories inside `editor/3rdparty`.
