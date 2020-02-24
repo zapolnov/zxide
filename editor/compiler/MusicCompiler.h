@@ -156,7 +156,7 @@ namespace
         uint16_t trk_size,p_size;
 
         // Options
-        uint8_t max_block_size = 128;
+        uint8_t max_block_size = 2;
         int block_size_index = 0;
         bool flag_loop = false;
         bool flag_fixed_t = false;
@@ -1134,20 +1134,20 @@ namespace
             ss << "@@TRACK:\n";
             for (i = 0; i < track_a_count; i++) {
                 ADR = track_a[i];
-                ss << "dw @@PATT + " << ADR << "\n";
+                ss << "dw @@PATTERNS + " << ADR << "\n";
                 ADR = track_b[i] + channel_a_size;
-                ss << "dw @@PATT + " << ADR << "\n";
+                ss << "dw @@PATTERNS + " << ADR << "\n";
                 ADR = track_c[i] + channel_a_size + channel_b_size;
-                ss << "dw @@PATT + " << ADR << "\n";
+                ss << "dw @@PATTERNS + " << ADR << "\n";
                 ADR = track_e[i] + channel_a_size + channel_b_size + channel_c_size;
-                ss << "dw @@PATT + " << ADR << "\n";
+                ss << "dw @@PATTERNS + " << ADR << "\n";
                 ADR = track_r[i] + channel_a_size + channel_b_size + channel_c_size + channel_e_size;
-                ss << "dw @@PATT + " << ADR << "\n";
+                ss << "dw @@PATTERNS + " << ADR << "\n";
             }
             ss << "dw 0\n";
             //--------------------------------------------------------
             //-- ch_a
-            ss << "@@PATTERN:\ndb ";
+            ss << "@@PATTERNS:\ndb ";
             const char* prefix = "";
             for (i = 0; i < int(cha_patt_count); i++) {
                 for (j = 0; j < temp_block_size; j++) {
