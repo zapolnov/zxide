@@ -94,8 +94,10 @@ static int luaGfxGetPixel(lua_State* L)
     int x = luaL_checkinteger(L, 2);
     int y = luaL_checkinteger(L, 3);
 
-    if (!data.isValidCoord(x, y))
-        return luaL_error(L, "invalid coordinates.");
+    if (!data.isValidCoord(x, y)) {
+        return luaL_error(L,
+            "invalid coordinates (%d, %d) for dimensions (%d, %d).", x, y, data.width(), data.height());
+    }
 
     char c = data.at(x, y);
     lua_pushboolean(L, c != 0);

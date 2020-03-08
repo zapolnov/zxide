@@ -5,6 +5,18 @@
 #include <QFileInfo>
 #include <lua.hpp>
 
+int luaFileExists(lua_State* L, const char* name)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    const QDir& dir = vm->projectDirectory();
+    QString fileName = QString::fromUtf8(name);
+    QString filePath = dir.absoluteFilePath(fileName);
+
+    lua_pushboolean(L, QFileInfo::exists(filePath));
+    return 1;
+}
+
 int luaReadFile(lua_State* L, const char* name)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -102,6 +114,12 @@ int luaWriteFile(lua_State* L, const char* name, const void* contents, size_t co
     return 0;
 }
 
+static int luaFileExists(lua_State* L)
+{
+    const char* fileName = luaL_checkstring(L, 1);
+    return luaFileExists(L, fileName);
+}
+
 static int luaReadFile(lua_State* L)
 {
     const char* fileName = luaL_checkstring(L, 1);
@@ -124,6 +142,7 @@ static int luaWriteFile(lua_State* L)
 }
 
 const luaL_Reg LuaFiles[] = {
+    { "fileExists", luaFileExists },
     { "readFile", luaReadFile },
     { "readCsvFile", luaReadCsvFile },
     { "writeFile", luaWriteFile },
