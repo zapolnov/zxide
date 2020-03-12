@@ -118,6 +118,7 @@ public:
                 return volume2;
             default:
                 assert(0);
+                return 0;
         }
     }
     ;

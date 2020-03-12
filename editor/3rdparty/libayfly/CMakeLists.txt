@@ -1,13 +1,16 @@
 
 if(MSVC)
     add_definitions(/wd4305)    # truncation from double to float
+else()
+    add_definitions(-w)
 endif()
 
-add_definitions(-D_WIN32 -DWINDOWS)
+if(WIN32)
+    add_definitions(-D_WIN32 -DWINDOWS)
+endif()
 
 add_library(LibAyFly STATIC)
-target_compile_definitions(LibAyFly PUBLIC AYFLY_STATIC)
-target_compile_definitions(LibAyFly PRIVATE DISABLE_AUDIO)
+target_compile_definitions(LibAyFly PUBLIC AYFLY_STATIC DISABLE_AUDIO)
 set_target_properties(LibAyFly PROPERTIES FOLDER "ThirdParty" OUTPUT_NAME "AyFly")
 
 target_include_directories(LibAyFly PUBLIC

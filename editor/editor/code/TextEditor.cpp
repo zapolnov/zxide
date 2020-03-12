@@ -128,6 +128,7 @@ void TextEditor::updateHighlights()
                 markerSetBack(index, 0xff80ff);
                 break;
             case Highlight::MemoryLog:
+            case Highlight::ControlFlowLog:
                 markerDefine(index, SC_MARK_VERTICALBOOKMARK);
                 markerSetFore(index, 0);
                 markerSetBack(index, 0xffff00);

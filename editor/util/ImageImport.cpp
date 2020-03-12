@@ -268,7 +268,7 @@ std::unique_ptr<GfxData> importScrFile(const QByteArray& data)
             int offset = ((y & 7) << 8) | ((y << 2) & 0xe0) | ((y << 5) & 0x1800) | (x >> 3);
             bool pixel = data.at(offset) & (0x80 >> (x & 7));
             uint8_t attrib = data.at(0x1800 + (y / 8) * 32 + (x / 8));
-            result->at(x, y) = (pixel ? 255 : 0);
+            result->at(x, y) = (char)(unsigned char)(pixel ? 255 : 0);
             result->attribAt(x, y, GfxColorMode::Standard) = attrib;
         }
     }
