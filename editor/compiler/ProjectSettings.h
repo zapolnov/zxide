@@ -2,6 +2,7 @@
 #define COMPILER_PROJECTSETTINGS_H
 
 #include <QString>
+#include <set>
 #include <vector>
 #include <string>
 
@@ -29,6 +30,7 @@ public:
     CStandard standard;
     COptimization optimization;
     std::vector<std::string> defines;
+    std::set<std::string> dontObfuscate;
     int basicStartLine;
     bool charIsUnsigned;
     bool stackAutomaticVariables;

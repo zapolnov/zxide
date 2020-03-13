@@ -3,8 +3,10 @@
 
 #include <QObject>
 
+class QDir;
 class Compiler;
 class Program;
+class ProjectSettings;
 class IErrorReporter;
 struct SourceFile;
 
@@ -27,6 +29,7 @@ private:
     Q_DISABLE_COPY(Assembler)
 };
 
-void initObfuscator();
+void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings);
+void saveObfuscatorData(IErrorReporter* errorReporter);
 
 #endif

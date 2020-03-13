@@ -16,6 +16,7 @@ static const QString JsonKey_OmitFramePointer = QStringLiteral("omitFramePointer
 static const QString JsonKey_CodeSeg = QStringLiteral("codeSeg");
 static const QString JsonKey_ConstSeg = QStringLiteral("constSeg");
 static const QString JsonKey_DataSeg = QStringLiteral("dataSeg");
+static const QString JsonKey_DontObfuscate = QStringLiteral("dontObfuscate");
 static const QString JsonValue_C89 = QStringLiteral("c89");
 static const QString JsonValue_C99 = QStringLiteral("c99");
 static const QString JsonValue_C11 = QStringLiteral("c11");
@@ -119,6 +120,10 @@ void ProjectSettings::load(const QString& file)
     for (const auto& it : root[JsonKey_CDefines].toArray())
         defines.emplace_back(it.toString().toLatin1());
 
+    dontObfuscate.clear();
+    for (const auto& it : root[JsonKey_DontObfuscate].toArray())
+        dontObfuscate.emplace(it.toString().toLatin1());
+
     charIsUnsigned = root[JsonKey_CharIsUnsigned].toBool();
     stackAutomaticVariables = root[JsonKey_StackAutomaticVariables].toBool();
     calleeSaves = root[JsonKey_CalleeSaves].toBool();
@@ -158,6 +163,11 @@ void ProjectSettings::save(const QString& file)
     for (const auto& it : defines)
         definesArray.append(QString::fromLatin1(it.c_str()));
     root[JsonKey_CDefines] = definesArray;
+
+    QJsonArray dontObfuscateArray;
+    for (const auto& it : dontObfuscate)
+        dontObfuscateArray.append(QString::fromLatin1(it.c_str()));
+    root[JsonKey_DontObfuscate] = dontObfuscateArray;
 
     doc.setObject(root);
     saveJson(file, doc);

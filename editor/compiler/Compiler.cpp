@@ -96,7 +96,7 @@ void Compiler::compile()
         mProjectSettings = std::make_unique<ProjectSettings>();
         mProjectSettings->load(mProjectFile);
 
-        initObfuscator();
+        initObfuscator(mGeneratedFilesDirectory, *mProjectSettings);
 
         if (!runBuildScripts())
             throw CompilationFailed();
@@ -292,6 +292,7 @@ void Compiler::compile()
         mProgramBinary->setCurrentFile(std::string());
     } catch (const CompilationFailed&) {
         emit compilationEnded();
+        saveObfuscatorData(this);
         return;
     } catch (const IOException& e) {
         error(nullptr, 0, e.message());
@@ -303,6 +304,8 @@ void Compiler::compile()
 
     setStatusText(tr("Compilation succeeded!"));
     emit compilationEnded();
+
+    saveObfuscatorData(this);
 }
 
 void Compiler::error(const QString& file, int line, const QString& message)

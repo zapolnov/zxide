@@ -3,11 +3,14 @@
 #include "AssemblerParser.h"
 #include "Compiler.h"
 #include "Expression.h"
+#include "ProjectSettings.h"
 #include "IO.h"
 #include "Util.h"
 #include <sstream>
 #include <vector>
 #include <unordered_map>
+#include <QDir>
+#include <QDataStream>
 
 bool generateBlobs = true;
 
@@ -160,11 +163,48 @@ static void initStringMapping()
 
 static size_t nextObfuscated = 0;
 static std::unordered_map<std::string, std::string> obfuscatedNames;
+static QString obfuscatorDatFile;
 
-void initObfuscator()
+void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings)
 {
     nextObfuscated = 0;
     obfuscatedNames.clear();
+
+    obfuscatorDatFile = generatedFilesDir.absoluteFilePath(QStringLiteral("obfuscator.dat"));
+    if (QFileInfo::exists(obfuscatorDatFile)) {
+        QByteArray data = loadFile(obfuscatorDatFile);
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        quint32 n = 0;
+        stream >> n;
+        quint32 next = 0;
+        stream >> next;
+        nextObfuscated = next;
+        while (n-- > 0) {
+            QByteArray name, mapping;
+            stream >> name;
+            stream >> mapping;
+            obfuscatedNames[std::string(name.constData(), name.length())] =
+                std::string(mapping.constData(), mapping.length());
+        }
+    }
+
+    for (const auto& it : settings.dontObfuscate)
+        obfuscatedNames[it] = it;
+}
+
+void saveObfuscatorData(IErrorReporter* errorReporter)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << quint32(obfuscatedNames.size());
+    stream << quint32(nextObfuscated);
+    for (const auto& it : obfuscatedNames) {
+        stream << QByteArray(it.first.c_str());
+        stream << QByteArray(it.second.c_str());
+    }
+
+    if (!writeFile(obfuscatorDatFile, data.constData(), data.length(), errorReporter))
+        throw std::runtime_error("Can't write obfuscator.dat.");
 }
 
 static const char table[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
@@ -185,8 +225,6 @@ static std::string nextObfuscatedName()
 
 static std::string obfuscateString(const std::string& name)
 {
-    return name;
-    /*
     auto it = obfuscatedNames.find(name);
     if (it != obfuscatedNames.end())
         return it->second;
@@ -195,7 +233,6 @@ static std::string obfuscateString(const std::string& name)
     obfuscatedNames[name] = oname;
 
     return oname;
-    */
 }
 
 static std::string obfuscateName(std::string name)
@@ -234,7 +271,12 @@ Assembler::~Assembler()
 bool Assembler::parse(const SourceFile* file, const QByteArray& fileData)
 {
     try {
-        if (generateBlobs && !file->name.startsWith(QStringLiteral("generated/"))) {
+        bool noBlob = false;
+        if (fileData.length() > 7 && memcmp(fileData.constData(), ";NOBLOB", 7) == 0
+                && (fileData[7] == '\r' || fileData[7] == '\n'))
+            noBlob = true;
+
+        if (generateBlobs && !noBlob) {
             AssemblerLexer lexer(file, fileData, mReporter);
             initStringMapping();
 
@@ -334,7 +376,8 @@ bool Assembler::parse(const SourceFile* file, const QByteArray& fileData)
             ss.write(reinterpret_cast<const char*>(tokenBytes.data()), tokenBytes.size());
 
             QString filePath = mCompiler->projectDirectory().absoluteFilePath(QStringLiteral("blobs/%1.blob").arg(file->name));
-            writeFile(filePath, ss.str(), mReporter);
+            if (!writeFile(filePath, ss.str(), mReporter))
+                throw std::runtime_error("Can't write blob file.");
         }
 
         AssemblerLexer lexer(file, fileData, mReporter);
@@ -357,8 +400,8 @@ bool Assembler::parseBlob(const SourceFile* file, const QByteArray& fileData)
         {
         public:
             FakeLexer(const SourceFile* file, const QByteArray& fileData)
-                : mIndex(0)
-                , mSavedIndex(0)
+                : mIndex(-1)
+                , mSavedIndex(-1)
             {
                 initStringMapping();
 
@@ -487,6 +530,7 @@ bool Assembler::parseBlob(const SourceFile* file, const QByteArray& fileData)
 
             const Token& lastToken() const override
             {
+                Q_ASSERT(mIndex >= 0);
                 return mTokens[mIndex];
             }
 
@@ -506,8 +550,8 @@ bool Assembler::parseBlob(const SourceFile* file, const QByteArray& fileData)
 
         private:
             std::vector<Token> mTokens;
-            size_t mIndex;
-            size_t mSavedIndex;
+            int mIndex;
+            int mSavedIndex;
         };
 
         FakeLexer lexer(file, fileData);
