@@ -84,6 +84,7 @@ static void initStringMapping()
     stringId("file");
     stringId("halt");
     stringId("i");
+    stringId("if");
     stringId("im");
     stringId("imaginary");
     stringId("in");
@@ -199,7 +200,7 @@ static std::string obfuscateString(const std::string& name)
 
 static std::string obfuscateName(std::string name)
 {
-    auto it = stringMapping.find(name);
+    auto it = stringMapping.find(toLower(name));
     if (it != stringMapping.end() && it->second < numPredefinedStrings)
         return name;
 
