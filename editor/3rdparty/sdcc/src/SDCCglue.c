@@ -923,7 +923,7 @@ printIvalType (symbol * sym, sym_link * type, initList * ilist, struct dbuf_s *o
             {
               dbuf_tprintf (oBuf, "\t!dbs\t; % d", aopLiteral (val, 0), (int) ulVal);
             }
-          if (isalnum ((int) ulVal))
+          if ((int)ulVal >= 0 && isalnum ((int) ulVal))
             dbuf_tprintf (oBuf, "\t'%c'\n", (int) ulVal);
           else
             dbuf_tprintf (oBuf, "\n");

@@ -105,9 +105,9 @@ void Compiler::compile()
 
         // Use blobs if present and up to date
         if (mAssemblerBlobs.size() > 0) {
-            QHash<QString, QString> blobMap;
+            QHash<QString, const SourceFile*> blobMap;
             for (const auto& source : mAssemblerBlobs)
-                blobMap.insert(source->name, source->path);
+                blobMap.insert(source->name, source.get());
 
             size_t n = mAssemblerSources.size();
             while (n-- > 0) {
@@ -115,7 +115,7 @@ void Compiler::compile()
                 auto it = blobMap.find(blobName);
                 if (it != blobMap.end()) {
                     QFileInfo asmInfo(mAssemblerSources[n]->path);
-                    QFileInfo blobInfo(it.value());
+                    QFileInfo blobInfo(it.value()->path);
 
                     if (asmInfo.lastModified() < blobInfo.lastModified())
                         mAssemblerSources.erase(mAssemblerSources.begin() + n);
@@ -125,7 +125,8 @@ void Compiler::compile()
             }
 
             for (const auto& source : mAssemblerBlobs) {
-                if (blobMap.find(source->name) != blobMap.end()) {
+                auto it = blobMap.find(source->name);
+                if (it != blobMap.end()) {
                     QFileInfo info(source->path);
                     setStatusText(tr("Loading blob %1").arg(info.fileName()));
 

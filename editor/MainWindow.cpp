@@ -416,9 +416,11 @@ bool MainWindow::build()
                 message = tr("%1: %2").arg(file->fileInfo().fileName()).arg(errorMessage);
             } else {
                 auto tab = setCurrentTab(file);
-                tab->goToLine(line - 1);
+                if (tab)
+                    tab->goToLine(line - 1);
                 HighlightManager::instance()->setHighlight(Highlight::Error, fileName, line);
-                tab->setFocusToEditor();
+                if (tab)
+                    tab->setFocusToEditor();
                 QApplication::setActiveWindow(this);
                 message = tr("%1(%2): %3").arg(file->fileInfo().fileName()).arg(line).arg(errorMessage);
             }
