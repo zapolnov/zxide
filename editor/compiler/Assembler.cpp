@@ -7,12 +7,14 @@
 #include "IO.h"
 #include "Util.h"
 #include <sstream>
+#include <map>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <QDir>
 #include <QDataStream>
 
-bool generateBlobs = true;
+bool generateBlobs = false;
 
 static std::vector<std::string> stringTable;
 static std::unordered_map<std::string, uint16_t> stringMapping;
@@ -170,6 +172,9 @@ void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings)
     nextObfuscated = 0;
     obfuscatedNames.clear();
 
+    if (!generateBlobs)
+        return;
+
     obfuscatorDatFile = generatedFilesDir.absoluteFilePath(QStringLiteral("obfuscator.dat"));
     if (QFileInfo::exists(obfuscatorDatFile)) {
         QByteArray data = loadFile(obfuscatorDatFile);
@@ -192,8 +197,26 @@ void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings)
         obfuscatedNames[it] = it;
 }
 
+void dontObfuscate(const std::string& id)
+{
+    if (!generateBlobs)
+        return;
+
+    auto it = obfuscatedNames.find(id);
+    if (it != obfuscatedNames.end() && it->second != id) {
+        std::stringstream ss;
+        ss << "Can't prevent obfuscation of id \"" << id << "\" because it is already obfuscated.";
+        throw std::runtime_error(ss.str());
+    }
+
+    obfuscatedNames[id] = id;
+}
+
 void saveObfuscatorData(IErrorReporter* errorReporter)
 {
+    if (!generateBlobs)
+        return;
+
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << quint32(obfuscatedNames.size());
@@ -228,6 +251,11 @@ static std::string obfuscateString(const std::string& name)
     auto it = obfuscatedNames.find(name);
     if (it != obfuscatedNames.end())
         return it->second;
+
+    if (name.length() > 4 && memcmp(name.data(), "bank", 4) == 0) {
+        obfuscatedNames[name] = name;
+        return name;
+    }
 
     std::string oname = nextObfuscatedName();
     obfuscatedNames[name] = oname;

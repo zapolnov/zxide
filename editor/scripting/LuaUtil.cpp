@@ -1,5 +1,6 @@
 #include "LuaUtil.h"
 #include "LuaVM.h"
+#include "compiler/Assembler.h"
 #include "compiler/Util.h"
 #include <QFileInfo>
 #include <lua.hpp>
@@ -87,6 +88,13 @@ static int luaMakeValidIdentifierFromFileName(lua_State* L)
     return pushIdentifierFromString(L, info.completeBaseName());
 }
 
+static int luaDontObfuscate(lua_State* L)
+{
+    const char* name = luaL_checkstring(L, 1);
+    dontObfuscate(name);
+    return 0;
+}
+
 const luaL_Reg LuaUtil[] = {
     { "md5", luaMd5 },
     { "md5Init", luaMd5Init },
@@ -94,5 +102,6 @@ const luaL_Reg LuaUtil[] = {
     { "md5Final", luaMd5Final },
     { "makeValidIdentifier", luaMakeValidIdentifier },
     { "makeValidIdentifierFromFileName", luaMakeValidIdentifierFromFileName },
+    { "dontObfuscate", luaDontObfuscate },
     { nullptr, nullptr }
 };

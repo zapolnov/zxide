@@ -30,6 +30,7 @@ private:
 };
 
 void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings);
+void dontObfuscate(const std::string& id);
 void saveObfuscatorData(IErrorReporter* errorReporter);
 
 #endif
