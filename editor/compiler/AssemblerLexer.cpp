@@ -149,6 +149,25 @@ int AssemblerLexer::readToken()
             case '\n':
                 ++mSource;
                 ++mLine;
+                for (;;) {
+                    if (*mSource == '\n') {
+                        ++mSource;
+                        ++mLine;
+                        continue;
+                    }
+
+                    if (*mSource == ' ' || *mSource == '\t' || *mSource == '\r' || *mSource == '\v' || *mSource == '\f') {
+                        ++mSource;
+                        continue;
+                    }
+
+                    if (*mSource == ';') {
+                        skipLineComment();
+                        continue;
+                    }
+
+                    break;
+                }
                 return T_EOL;
 
             case ';':

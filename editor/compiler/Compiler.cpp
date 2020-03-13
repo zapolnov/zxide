@@ -16,6 +16,7 @@
 #include <exception>
 #include <QDateTime>
 #include <QDataStream>
+#include <QHash>
 #include <QFileInfo>
 #include <cstdarg>
 #include <sstream>
@@ -73,6 +74,8 @@ void Compiler::addSourceFile(const QString& fullName, const QString& path)
         mCSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("asm"))
         mAssemblerSources.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
+    else if (ext == QStringLiteral("blob"))
+        mAssemblerBlobs.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("gfx"))
         mGraphics.emplace_back(std::make_unique<SourceFile>(SourceFile{ fullName, path }));
     else if (ext == QStringLiteral("map"))
@@ -93,10 +96,52 @@ void Compiler::compile()
         mProjectSettings = std::make_unique<ProjectSettings>();
         mProjectSettings->load(mProjectFile);
 
+        initObfuscator();
+
         if (!runBuildScripts())
             throw CompilationFailed();
         if (!compileCCode())
             throw CompilationFailed();
+
+        // Use blobs if present and up to date
+        if (mAssemblerBlobs.size() > 0) {
+            QHash<QString, QString> blobMap;
+            for (const auto& source : mAssemblerBlobs)
+                blobMap.insert(source->name, source->path);
+
+            size_t n = mAssemblerSources.size();
+            while (n-- > 0) {
+                QString blobName = QStringLiteral("blobs/%1.blob").arg(mAssemblerSources[n]->name);
+                auto it = blobMap.find(blobName);
+                if (it != blobMap.end()) {
+                    QFileInfo asmInfo(mAssemblerSources[n]->path);
+                    QFileInfo blobInfo(it.value());
+
+                    if (asmInfo.lastModified() < blobInfo.lastModified())
+                        mAssemblerSources.erase(mAssemblerSources.begin() + n);
+                    else
+                        blobMap.erase(it);
+                }
+            }
+
+            for (const auto& source : mAssemblerBlobs) {
+                if (blobMap.find(source->name) != blobMap.end()) {
+                    QFileInfo info(source->path);
+                    setStatusText(tr("Loading blob %1").arg(info.fileName()));
+
+                    QByteArray fileData;
+                    try {
+                        fileData = loadFile(info.absoluteFilePath());
+                    } catch (const IOException& e) {
+                        error(source->name, 0, e.message());
+                        break;
+                    }
+
+                    if (!Assembler(this, mProgram.get(), this).parseBlob(source.get(), fileData))
+                        throw CompilationFailed();
+                }
+            }
+        }
 
         // Compile assembler sources
         for (const auto& source : mAssemblerSources) {

@@ -39,6 +39,8 @@ public:
 
     QString statusText() const { QMutexLocker lock(&mMutex); return mStatusText; }
 
+    const QDir& projectDirectory() const { return mProjectDirectory; }
+
     void addSourceFile(const QString& fullName, const QString& path);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
     void setOutputDiskFile(const QString& file) { mOutputDiskFile = file; }
@@ -76,6 +78,7 @@ private:
     std::vector<std::shared_ptr<CodeEmitter>> mCodeEmitters;
     std::vector<std::unique_ptr<SourceFile>> mBasicSources;
     std::vector<std::unique_ptr<SourceFile>> mAssemblerSources;
+    std::vector<std::unique_ptr<SourceFile>> mAssemblerBlobs;
     std::vector<std::unique_ptr<SourceFile>> mCSources;
     std::vector<std::unique_ptr<SourceFile>> mGraphics;
     std::vector<std::unique_ptr<SourceFile>> mMaps;

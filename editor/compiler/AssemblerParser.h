@@ -7,7 +7,7 @@
 
 struct Token;
 class Compiler;
-class AssemblerLexer;
+class IAssemblerLexer;
 class AssemblerContext;
 class Program;
 class ProgramSection;
@@ -31,14 +31,14 @@ public:
         SyntaxError,
     };
 
-    AssemblerParser(Compiler* compiler, AssemblerLexer* lexer, Program* program, IErrorReporter* reporter);
+    AssemblerParser(Compiler* compiler, IAssemblerLexer* lexer, Program* program, IErrorReporter* reporter);
     ~AssemblerParser() override;
 
     void parse();
 
 private:
     Compiler* mCompiler;
-    AssemblerLexer* mLexer;
+    IAssemblerLexer* mLexer;
     Program* mProgram;
     IErrorReporter* mReporter;
     QString mExpressionError;

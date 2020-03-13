@@ -17,6 +17,7 @@ public:
     ~Assembler() override;
 
     bool parse(const SourceFile* file, const QByteArray& fileData);
+    bool parseBlob(const SourceFile* file, const QByteArray& fileData);
 
 private:
     Compiler* mCompiler;
@@ -25,5 +26,7 @@ private:
 
     Q_DISABLE_COPY(Assembler)
 };
+
+void initObfuscator();
 
 #endif

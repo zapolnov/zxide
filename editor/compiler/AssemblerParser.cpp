@@ -29,7 +29,7 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDi
         { "endif", &AssemblerParser::parseEndIfDecl },
     };
 
-AssemblerParser::AssemblerParser(Compiler* compiler, AssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
+AssemblerParser::AssemblerParser(Compiler* compiler, IAssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
     : mCompiler(compiler)
     , mLexer(lexer)
     , mProgram(program)
