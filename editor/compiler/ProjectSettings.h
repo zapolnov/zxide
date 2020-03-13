@@ -36,6 +36,7 @@ public:
     bool stackAutomaticVariables;
     bool calleeSaves;
     bool omitFramePointer;
+    bool generateBlobs;
 
     ProjectSettings();
     ~ProjectSettings();

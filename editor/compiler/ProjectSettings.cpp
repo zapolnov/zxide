@@ -16,6 +16,7 @@ static const QString JsonKey_OmitFramePointer = QStringLiteral("omitFramePointer
 static const QString JsonKey_CodeSeg = QStringLiteral("codeSeg");
 static const QString JsonKey_ConstSeg = QStringLiteral("constSeg");
 static const QString JsonKey_DataSeg = QStringLiteral("dataSeg");
+static const QString JsonKey_GenerateBlobs = QStringLiteral("generateBlobs");
 static const QString JsonKey_DontObfuscate = QStringLiteral("dontObfuscate");
 static const QString JsonValue_C89 = QStringLiteral("c89");
 static const QString JsonValue_C99 = QStringLiteral("c99");
@@ -37,6 +38,7 @@ ProjectSettings::ProjectSettings()
     , stackAutomaticVariables(false)
     , calleeSaves(false)
     , omitFramePointer(false)
+    , generateBlobs(false)
     , mCodeSeg(DefaultSegmentName)
     , mConstSeg(DefaultSegmentName)
     , mDataSeg(DefaultSegmentName)
@@ -128,6 +130,7 @@ void ProjectSettings::load(const QString& file)
     stackAutomaticVariables = root[JsonKey_StackAutomaticVariables].toBool();
     calleeSaves = root[JsonKey_CalleeSaves].toBool();
     omitFramePointer = root[JsonKey_OmitFramePointer].toBool();
+    generateBlobs = root[JsonKey_GenerateBlobs].toBool();
     setCodeSeg(root[JsonKey_CodeSeg].toString().toLatin1().constData());
     setConstSeg(root[JsonKey_ConstSeg].toString().toLatin1().constData());
     setDataSeg(root[JsonKey_DataSeg].toString().toLatin1().constData());
@@ -143,6 +146,7 @@ void ProjectSettings::save(const QString& file)
     root[JsonKey_StackAutomaticVariables] = stackAutomaticVariables;
     root[JsonKey_CalleeSaves] = calleeSaves;
     root[JsonKey_OmitFramePointer] = omitFramePointer;
+    root[JsonKey_GenerateBlobs] = generateBlobs;
     root[JsonKey_CodeSeg] = QString::fromLatin1(codeSeg().c_str());
     root[JsonKey_ConstSeg] = QString::fromLatin1(constSeg().c_str());
     root[JsonKey_DataSeg] = QString::fromLatin1(dataSeg().c_str());

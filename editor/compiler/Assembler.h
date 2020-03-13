@@ -29,6 +29,8 @@ private:
     Q_DISABLE_COPY(Assembler)
 };
 
+extern bool generateBlobs;
+
 void initObfuscator(const QDir& generatedFilesDir, ProjectSettings& settings);
 void dontObfuscate(const std::string& id);
 void saveObfuscatorData(IErrorReporter* errorReporter);

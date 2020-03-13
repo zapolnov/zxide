@@ -96,6 +96,7 @@ void Compiler::compile()
         mProjectSettings = std::make_unique<ProjectSettings>();
         mProjectSettings->load(mProjectFile);
 
+        generateBlobs = mProjectSettings->generateBlobs;
         initObfuscator(mGeneratedFilesDirectory, *mProjectSettings);
 
         if (!runBuildScripts())
