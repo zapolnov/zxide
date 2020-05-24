@@ -74,6 +74,24 @@ macro(qt_add_sources target)
     target_sources("${target}" PRIVATE ${ARGN} ${gen} ${moc} ${rcc})
 endmacro()
 
+macro(qt_install_win32_plugins config targetDir libFile)
+    set(suffix)
+    string(TOUPPER "${config}" cfg)
+    if("${cfg}" STREQUAL "DEBUG")
+        set(suffix "d")
+    endif()
+    get_filename_component(path "${libFile}" DIRECTORY)
+    get_filename_component(path "${path}" DIRECTORY)
+    foreach(plugin ${ARGN})
+        set(name "${plugin}${suffix}.dll")
+        set(file "${path}/plugins/${name}")
+        if(EXISTS "${file}" AND NOT EXISTS "${targetDir}/${name}")
+            message(STATUS "Installing dependency '${name}' (${config})")
+            configure_file("${file}" "${targetDir}/${name}" COPYONLY)
+        endif()
+    endforeach()
+endmacro()
+
 macro(qt_install_library config targetDir lib)
     string(TOUPPER "${config}" cfg)
     get_target_property(file "${lib}" LOCATION_${cfg})
@@ -81,6 +99,18 @@ macro(qt_install_library config targetDir lib)
     if(EXISTS "${file}" AND NOT EXISTS "${targetDir}/${name}")
         message(STATUS "Installing dependency '${name}' (${config})")
         configure_file("${file}" "${targetDir}/${name}" COPYONLY)
+    endif()
+    if(WIN32 AND "${lib}" STREQUAL "Qt5::Gui")
+        qt_install_win32_plugins("${config}" "${targetDir}" "${file}"
+            platforms/qwindows
+            styles/qwindowsvistastyle
+            )
+    endif()
+    if(WIN32 AND "${lib}" STREQUAL "Qt5::Multimedia")
+        qt_install_win32_plugins("${config}" "${targetDir}" "${file}"
+            audio/qtaudio_wasapi
+            audio/qtaudio_windows
+            )
     endif()
 endmacro()
 
