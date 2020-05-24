@@ -43,6 +43,10 @@ ProjectSettingsDialog::ProjectSettingsDialog(Project* project, QWidget* parent)
     mUi->constSegEdit->setText(QString::fromLatin1(mSettings->constSeg().c_str()));
     mUi->dataSegEdit->setText(QString::fromLatin1(mSettings->dataSeg().c_str()));
 
+    mUi->bootFileEdit->setText(QString::fromLatin1(mSettings->loaderFileName().c_str()));
+    mUi->programFileEdit->setText(QString::fromLatin1(mSettings->programFileName().c_str()));
+    mUi->dontOutputMainFileCheck->setChecked(mSettings->dontOutputMainFile);
+
     mUi->charUnsignedCheck->setChecked(mSettings->charIsUnsigned);
     mUi->stackAutoVarsCheck->setChecked(mSettings->stackAutomaticVariables);
     mUi->calleeSavesCheck->setChecked(mSettings->calleeSaves);
@@ -66,10 +70,13 @@ void ProjectSettingsDialog::done(int r)
             mSettings->setCodeSeg(mUi->codeSegEdit->text().trimmed().toLatin1().constData());
             mSettings->setConstSeg(mUi->constSegEdit->text().trimmed().toLatin1().constData());
             mSettings->setDataSeg(mUi->dataSegEdit->text().trimmed().toLatin1().constData());
+            mSettings->setLoaderFileName(mUi->bootFileEdit->text().trimmed().toLatin1().constData());
+            mSettings->setProgramFileName(mUi->programFileEdit->text().trimmed().toLatin1().constData());
             mSettings->charIsUnsigned = mUi->charUnsignedCheck->isChecked();
             mSettings->stackAutomaticVariables = mUi->stackAutoVarsCheck->isChecked();
             mSettings->calleeSaves = mUi->calleeSavesCheck->isChecked();
             mSettings->omitFramePointer = mUi->omitFramePointerCheck->isChecked();
+            mSettings->dontOutputMainFile = mUi->dontOutputMainFileCheck->isChecked();
 
             mSettings->defines.clear();
             int n = mUi->definesList->count();
@@ -112,4 +119,5 @@ void ProjectSettingsDialog::on_removeDefineButton_clicked()
 void ProjectSettingsDialog::updateUi()
 {
     mUi->removeDefineButton->setEnabled(mUi->definesList->currentRow() >= 0);
+    mUi->programFileEdit->setEnabled(!mUi->dontOutputMainFileCheck->isChecked());
 }

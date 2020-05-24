@@ -21,6 +21,7 @@ public:
 
     void setLoaderName(std::string loaderName) { mLoaderName = std::move(loaderName); }
     void setProgramName(std::string programName) { mProgramName = std::move(programName); }
+    void setDontOutputMainFile(bool flag) { mDontOutputMainFile = flag; }
 
     bool writeSclFile(const QString& fileName);
 
@@ -29,6 +30,7 @@ private:
     IErrorReporter* mReporter;
     std::string mLoaderName;
     std::string mProgramName;
+    bool mDontOutputMainFile;
     QByteArray mBasicCode;
     int mBasicStartLine;
 

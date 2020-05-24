@@ -27,6 +27,7 @@ private:
     Q_SLOT void on_addDefineButton_clicked();
     Q_SLOT void on_removeDefineButton_clicked();
     Q_SLOT void on_definesList_currentItemChanged(QListWidgetItem*, QListWidgetItem*) { updateUi(); }
+    Q_SLOT void on_dontOutputMainFile_toggled(bool) { updateUi(); }
 
     void updateUi();
 

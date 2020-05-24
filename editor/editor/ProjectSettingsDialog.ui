@@ -25,6 +25,46 @@
      <property name="movable">
       <bool>false</bool>
      </property>
+     <widget class="QWidget" name="generalTab">
+      <attribute name="title">
+       <string>General</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="bootFileLabel">
+         <property name="text">
+          <string>&amp;Boot file name:</string>
+         </property>
+         <property name="buddy">
+          <cstring>bootFileEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="bootFileEdit"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="programFileLabel">
+         <property name="text">
+          <string>&amp;Program file name:</string>
+         </property>
+         <property name="buddy">
+          <cstring>programFileEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="programFileEdit"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="dontOutputMainFileCheck">
+         <property name="text">
+          <string>&amp;Don't output main file</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="cTab">
       <attribute name="title">
        <string>&amp;C</string>

@@ -491,6 +491,7 @@ TapeFileWriter::TapeFileWriter(ProgramBinary* program, IErrorReporter* reporter)
     , mReporter(reporter)
     , mLoaderName(ProjectSettings::DefaultLoaderFileName)
     , mProgramName(ProjectSettings::DefaultProgramFileName)
+    , mDontOutputMainFile(false)
     , mBasicStartLine(-1)
 {
 }
@@ -533,6 +534,8 @@ bool TapeFileWriter::makeTape()
         for (const auto& it : mProgram->files()) {
             mProgram->setCurrentFile(it.first);
             if (mProgram->codeLength() == 0)
+                continue;
+            if (mDontOutputMainFile && it.first.empty())
                 continue;
             if (it.first == "INTRO" || it.first == "LOADER" || endsWith(it.first, ":imaginary"))
                 continue;

@@ -24,6 +24,7 @@ public:
 
     void setLoaderName(std::string loaderName) { mLoaderName = std::move(loaderName); }
     void setProgramName(std::string programName) { mProgramName = std::move(programName); }
+    void setDontOutputMainFile(bool flag) { mDontOutputMainFile = flag; }
 
     bool makeTape();
 
@@ -37,6 +38,7 @@ private:
     std::unique_ptr<ILibSpectrumTape> mTape;
     std::string mLoaderName;
     std::string mProgramName;
+    bool mDontOutputMainFile;
     QByteArray mBasicCode;
     int mBasicStartLine;
 

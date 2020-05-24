@@ -277,6 +277,7 @@ void Compiler::compile()
         tapeWriter.setBasicStartLine(mProjectSettings->basicStartLine);
         tapeWriter.setLoaderName(mProjectSettings->loaderFileName());
         tapeWriter.setProgramName(mProjectSettings->programFileName());
+        tapeWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
         if (!tapeWriter.makeTape()
                 || !tapeWriter.writeTapeFile(mOutputTapeFile)
                 || !tapeWriter.writeWavFile(mOutputWavFile))
@@ -288,6 +289,7 @@ void Compiler::compile()
         diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
         diskWriter.setLoaderName(mProjectSettings->loaderFileName());
         diskWriter.setProgramName(mProjectSettings->programFileName());
+        diskWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
         if (!diskWriter.writeSclFile(mOutputDiskFile))
             throw CompilationFailed();
 

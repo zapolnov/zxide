@@ -37,6 +37,7 @@ public:
     bool calleeSaves;
     bool omitFramePointer;
     bool generateBlobs;
+    bool dontOutputMainFile;
 
     ProjectSettings();
     ~ProjectSettings();
