@@ -15,7 +15,7 @@ public:
     GfxFormat format;
     GfxColorMode colorMode;
     QString entity;
-    bool walkable;
+    int blocking;
 
     GfxFile();
     explicit GfxFile(const QByteArray& data);

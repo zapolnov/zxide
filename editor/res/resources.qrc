@@ -1,5 +1,21 @@
 <RCC>
   <qresource prefix="resources">
+    <file>blocking/00.png</file>
+    <file>blocking/01.png</file>
+    <file>blocking/02.png</file>
+    <file>blocking/03.png</file>
+    <file>blocking/04.png</file>
+    <file>blocking/05.png</file>
+    <file>blocking/06.png</file>
+    <file>blocking/07.png</file>
+    <file>blocking/08.png</file>
+    <file>blocking/09.png</file>
+    <file>blocking/10.png</file>
+    <file>blocking/11.png</file>
+    <file>blocking/12.png</file>
+    <file>blocking/13.png</file>
+    <file>blocking/14.png</file>
+    <file>blocking/15.png</file>
     <file>colors/00_black.png</file>
     <file>colors/01_blue.png</file>
     <file>colors/02_red.png</file>

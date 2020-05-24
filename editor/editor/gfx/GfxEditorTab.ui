@@ -119,24 +119,17 @@
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="walkableLabel">
+          <widget class="QLabel" name="blockingLabel">
            <property name="text">
-            <string>Walkable:</string>
-           </property>
-           <property name="buddy">
-            <cstring>walkableCheck</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QCheckBox" name="walkableCheck">
-           <property name="text">
-            <string/>
+            <string>Blocking:</string>
            </property>
           </widget>
          </item>
          <item row="4" column="1">
           <widget class="QLineEdit" name="entityEdit"/>
+         </item>
+         <item row="5" column="1">
+          <widget class="QComboBox" name="blockingCombo"/>
          </item>
         </layout>
        </item>
@@ -605,7 +598,7 @@
             <x>0</x>
             <y>0</y>
             <width>598</width>
-            <height>139</height>
+            <height>131</height>
            </rect>
           </property>
           <property name="text">
@@ -641,7 +634,11 @@
   <tabstop>colorModeCombo</tabstop>
   <tabstop>formatCombo</tabstop>
   <tabstop>entityEdit</tabstop>
-  <tabstop>walkableCheck</tabstop>
+  <tabstop>blockingCombo</tabstop>
+  <tabstop>backgroundImageVisibleCheck</tabstop>
+  <tabstop>backgroundImageOpacitySlider</tabstop>
+  <tabstop>browseBackgroundImageButton</tabstop>
+  <tabstop>exportImageButton</tabstop>
   <tabstop>blackButton</tabstop>
   <tabstop>blueButton</tabstop>
   <tabstop>redButton</tabstop>

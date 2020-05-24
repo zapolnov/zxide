@@ -78,7 +78,7 @@ private:
     int mSavedWidth;
     int mSavedHeight;
     int mSelectedColor;
-    bool mSavedWalkable;
+    int mSavedBlocking;
 
     void reset();
     void setSaved();
@@ -89,7 +89,7 @@ private:
     Q_SLOT void on_colorModeCombo_currentIndexChanged(int);
     Q_SLOT void on_widthCombo_currentIndexChanged(int);
     Q_SLOT void on_heightCombo_currentIndexChanged(int);
-    Q_SLOT void on_walkableCheck_toggled(bool checked);
+    Q_SLOT void on_blockingCombo_currentIndexChanged(int);
     Q_SLOT void on_entityEdit_textChanged(const QString& text);
     Q_SLOT void on_backgroundImageVisibleCheck_toggled(bool flag);
     Q_SLOT void on_backgroundImageOpacitySlider_valueChanged(int value);

@@ -18,7 +18,7 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     , mSavedWidth(GfxFile::MinWidth)
     , mSavedHeight(GfxFile::MinHeight)
     , mSelectedColor(-1)
-    , mSavedWalkable(false)
+    , mSavedBlocking(0)
 {
     mUi->setupUi(this);
     mUi->editorWidget->setPreviewWidget(mUi->previewWidget);
@@ -37,6 +37,23 @@ GfxEditorTab::GfxEditorTab(QWidget* parent)
     mUi->formatCombo->addItem(tr("None"), int(GfxFormat::None));
     mUi->formatCombo->addItem(tr("Monochrome"), int(GfxFormat::Monochrome));
     mUi->formatCombo->addItem(tr("BTile 16x16"), int(GfxFormat::BTile16));
+
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/00.png")), QStringLiteral(""),  0);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/01.png")), QStringLiteral(""),  1);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/02.png")), QStringLiteral(""),  2);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/03.png")), QStringLiteral(""),  3);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/04.png")), QStringLiteral(""),  4);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/05.png")), QStringLiteral(""),  5);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/06.png")), QStringLiteral(""),  6);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/07.png")), QStringLiteral(""),  7);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/08.png")), QStringLiteral(""),  8);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/09.png")), QStringLiteral(""),  9);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/10.png")), QStringLiteral(""), 10);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/11.png")), QStringLiteral(""), 11);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/12.png")), QStringLiteral(""), 12);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/13.png")), QStringLiteral(""), 13);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/14.png")), QStringLiteral(""), 14);
+    mUi->blockingCombo->addItem(QIcon(QStringLiteral(":/resources/blocking/15.png")), QStringLiteral(""), 15);
 
     mUi->backgroundImageVisibleCheck->setEnabled(false);
     mUi->backgroundImageOpacitySlider->setEnabled(false);
@@ -68,7 +85,7 @@ bool GfxEditorTab::loadFile(File* f)
     comboSelectItem(mUi->colorModeCombo, int(fileData.colorMode));
     comboSelectItem(mUi->widthCombo, mUi->editorWidget->width());
     comboSelectItem(mUi->heightCombo, mUi->editorWidget->height());
-    mUi->walkableCheck->setChecked(fileData.walkable);
+    comboSelectItem(mUi->blockingCombo, fileData.blocking);
     mUi->entityEdit->setText(fileData.entity);
 
     mUi->formatCombo->setEnabled(true);
@@ -77,7 +94,7 @@ bool GfxEditorTab::loadFile(File* f)
     mUi->colorModeCombo->setEnabled(true);
     mUi->editScrollArea->setEnabled(true);
     mUi->previewScrollArea->setEnabled(true);
-    mUi->walkableCheck->setEnabled(true);
+    mUi->blockingCombo->setEnabled(true);
     mUi->entityEdit->setEnabled(true);
 
     reloadSettings();
@@ -100,7 +117,7 @@ bool GfxEditorTab::isModified() const
         return true;
     if (mSavedHeight != comboSelectedItem(mUi->heightCombo).toInt())
         return true;
-    if (mSavedWalkable != mUi->walkableCheck->isChecked())
+    if (mSavedBlocking != comboSelectedItem(mUi->blockingCombo).toInt())
         return true;
     if (mSavedEntity != mUi->entityEdit->text())
         return true;
@@ -235,7 +252,7 @@ bool GfxEditorTab::save()
     GfxFile file;
     file.format = GfxFormat(comboSelectedItem(mUi->formatCombo).toInt());
     file.colorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
-    file.walkable = mUi->walkableCheck->isChecked();
+    file.blocking = comboSelectedItem(mUi->blockingCombo).toInt();
     file.entity = mUi->entityEdit->text();
     mUi->editorWidget->serialize(file);
 
@@ -367,8 +384,8 @@ void GfxEditorTab::reset()
     mUi->heightCombo->setEnabled(false);
     mUi->colorModeCombo->setCurrentIndex(-1);
     mUi->colorModeCombo->setEnabled(false);
-    mUi->walkableCheck->setChecked(false);
-    mUi->walkableCheck->setEnabled(false);
+    mUi->blockingCombo->setCurrentIndex(-1);
+    mUi->blockingCombo->setEnabled(false);
     mUi->entityEdit->setText(QString());
     mUi->entityEdit->setEnabled(false);
     mUi->editScrollArea->setEnabled(false);
@@ -382,7 +399,7 @@ void GfxEditorTab::setSaved()
     mSavedColorMode = GfxColorMode(comboSelectedItem(mUi->colorModeCombo).toInt());
     mSavedWidth = comboSelectedItem(mUi->widthCombo).toInt();
     mSavedHeight = comboSelectedItem(mUi->heightCombo).toInt();
-    mSavedWalkable = mUi->walkableCheck->isChecked();
+    mSavedBlocking = comboSelectedItem(mUi->blockingCombo).toInt();
     mSavedEntity = mUi->entityEdit->text();
     mUi->editorWidget->setSaved();
 }
@@ -416,7 +433,7 @@ void GfxEditorTab::on_heightCombo_currentIndexChanged(int)
     emit updateUi();
 }
 
-void GfxEditorTab::on_walkableCheck_toggled(bool)
+void GfxEditorTab::on_blockingCombo_currentIndexChanged(int)
 {
     emit updateUi();
 }

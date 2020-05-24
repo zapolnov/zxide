@@ -5,13 +5,14 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-static const int FileFormatVersion = 1;
+static const int FileFormatVersion = 2;
 
 static const QString JsonKey_Version = QStringLiteral("version");
 static const QString JsonKey_Format = QStringLiteral("format");
 static const QString JsonKey_ColorMode = QStringLiteral("color_mode");
 static const QString JsonKey_Entity = QStringLiteral("entity");
 static const QString JsonKey_Walkable = QStringLiteral("walkable");
+static const QString JsonKey_Blocking = QStringLiteral("blocking");
 static const QString JsonKey_Width = QStringLiteral("width");
 static const QString JsonKey_Height = QStringLiteral("height");
 static const QString JsonKey_Pixels = QStringLiteral("pixels");
@@ -26,7 +27,7 @@ static const QString JsonValue_FormatBTile16 = QStringLiteral("btile16");
 GfxFile::GfxFile()
     : format(GfxFormat::None)
     , colorMode(GfxColorMode::Standard)
-    , walkable(false)
+    , blocking(0)
 {
 }
 
@@ -82,7 +83,10 @@ bool GfxFile::deserializeFromJson(GfxData* data)
         return false;
     }
 
-    walkable = root[JsonKey_Walkable].toBool();
+    if (formatVersion == 1)
+        blocking = (root[JsonKey_Walkable].toBool() ? 0 : 15);
+    else
+        blocking = root[JsonKey_Blocking].toInt();
     entity = root[JsonKey_Entity].toString();
     int width = root[JsonKey_Width].toInt();
     int height = root[JsonKey_Height].toInt();
@@ -135,7 +139,7 @@ void GfxFile::serializeToJson(const GfxData* data)
     QJsonObject root;
 
     root[JsonKey_Version] = FileFormatVersion;
-    root[JsonKey_Walkable] = walkable;
+    root[JsonKey_Blocking] = blocking;
     root[JsonKey_Entity] = entity;
     root[JsonKey_Width] = data->width();
     root[JsonKey_Height] = data->height();
