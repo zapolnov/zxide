@@ -1163,6 +1163,13 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
         ControlFlowInfo info;
         info.bank = bank;
         info.codeAddress = address;
+        info.regs.sp = SP;
+        info.regs.af = AF;
+        info.regs.bc = BC;
+        info.regs.de = DE;
+        info.regs.hl = HL;
+        info.regs.ix = IX;
+        info.regs.iy = IY;
         size_t len = 0;
         debugger_disassemble(info.instruction, sizeof(info.instruction), &len, info.codeAddress);
 

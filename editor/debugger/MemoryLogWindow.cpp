@@ -39,6 +39,9 @@ public:
 
     void addOperations(std::vector<MemoryOperationInfo>& operations)
     {
+        if (mReachedROM)
+            return;
+
         if (filters != 0) {
             size_t i = 0;
             for (auto it = operations.begin(); it != operations.end(); ++it) {
@@ -55,10 +58,19 @@ public:
             operations.resize(i);
         }
 
-        if (operations.empty())
+        size_t n = operations.size();
+        if (n == 0)
             return;
 
-        size_t newSize = mOperations.size() + operations.size() - 1;
+        for (size_t i = 0; i < n; i++) {
+            if (operations[i].codeAddress < 0x4000) {
+                mReachedROM = true;
+                n = i + 1;
+                break;
+            }
+        }
+
+        size_t newSize = mOperations.size() + n - 1;
         if (newSize > size_t(MaxEntries))
             return;
 
@@ -68,7 +80,7 @@ public:
             return;
 
         emit beginInsertRows(QModelIndex(), first, last);
-        mOperations.insert(mOperations.end(), operations.begin(), operations.end());
+        mOperations.insert(mOperations.end(), operations.begin(), operations.begin() + n);
         emit endInsertRows();
     }
 
@@ -144,6 +156,7 @@ public:
 
 private:
     std::vector<MemoryOperationInfo> mOperations;
+    bool mReachedROM = false;
 
     Q_DISABLE_COPY(Model)
 };

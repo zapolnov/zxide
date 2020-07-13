@@ -31,10 +31,22 @@ public:
 
     void addOperations(std::vector<ControlFlowInfo>& operations)
     {
-        if (operations.empty())
+        if (mReachedROM)
             return;
 
-        size_t newSize = mControlFlow.size() + operations.size() - 1;
+        size_t n = operations.size();
+        if (n == 0)
+            return;
+
+        for (size_t i = 0; i < n; i++) {
+            if (operations[i].codeAddress < 0x4000) {
+                mReachedROM = true;
+                n = i + 1;
+                break;
+            }
+        }
+
+        size_t newSize = mControlFlow.size() + n - 1;
         if (newSize > size_t(MaxEntries)) {
             size_t numToRemove = newSize - MaxEntries;
             emit beginRemoveRows(QModelIndex(), 0, (int)numToRemove);
@@ -48,7 +60,7 @@ public:
             return;
 
         emit beginInsertRows(QModelIndex(), first, last);
-        mControlFlow.insert(mControlFlow.end(), operations.begin(), operations.end());
+        mControlFlow.insert(mControlFlow.end(), operations.begin(), operations.begin() + n);
         emit endInsertRows();
     }
 
@@ -70,7 +82,7 @@ public:
     {
         if (parent.isValid())
             return 0;
-        return 3;
+        return 10;
     }
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override
@@ -82,6 +94,13 @@ public:
             case 0: return tr("Bank");
             case 1: return tr("Code address");
             case 2: return tr("Instruction");
+            case 3: return tr("SP");
+            case 4: return tr("AF");
+            case 5: return tr("BC");
+            case 6: return tr("DE");
+            case 7: return tr("HL");
+            case 8: return tr("IX");
+            case 9: return tr("IY");
             default: return QVariant();
         }
     }
@@ -111,6 +130,20 @@ public:
 
             case 2:
                 return QString::fromLatin1(op.instruction);
+            case 3:
+                return QString::number(op.regs.sp, 16);
+            case 4:
+                return QString::number(op.regs.af, 16);
+            case 5:
+                return QString::number(op.regs.bc, 16);
+            case 6:
+                return QString::number(op.regs.de, 16);
+            case 7:
+                return QString::number(op.regs.hl, 16);
+            case 8:
+                return QString::number(op.regs.ix, 16);
+            case 9:
+                return QString::number(op.regs.iy, 16);
 
             default:
                 return QVariant();
@@ -119,6 +152,7 @@ public:
 
 private:
     std::vector<ControlFlowInfo> mControlFlow;
+    bool mReachedROM = false;
 
     Q_DISABLE_COPY(Model)
 };
