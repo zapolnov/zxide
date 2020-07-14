@@ -90,6 +90,7 @@ public:
     QSize paintSize() const;
     bool hasFlash() const;
     QImage toImage(int scale, bool flashState) const;
+    QByteArray toSCR() const;
 
 protected:
     void paintEvent(QPaintEvent* event) override;

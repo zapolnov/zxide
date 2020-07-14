@@ -4,7 +4,6 @@
 #include "util/GfxFileUtil.h"
 #include <QPainter>
 #include <QMessageBox>
-#include <QSaveFile>
 #include <QClipboard>
 #include <QMimeData>
 #include <QApplication>
@@ -1207,6 +1206,30 @@ QImage GfxEditorWidget::toImage(int scale, bool flashState) const
         }
     }
     return image;
+}
+
+QByteArray GfxEditorWidget::toSCR() const
+{
+    int w = 256;
+    int h = 192;
+
+    QByteArray result;
+    result.resize(6192);
+    memset(result.data(), 0, result.size());
+
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            int offset = ((y & 7) << 8) | ((y << 2) & 0xe0) | ((y << 5) & 0x1800) | (x >> 3);
+            char value = (mGfxData->isValidCoord(x, y) ? mGfxData->at(x, y) : 0);
+            if (value)
+                result[offset] = result[offset] | (0x80 >> (x & 7));
+
+            char attrib = (mGfxData->isValidCoord(x, y) ? mGfxData->attribAt(x, y, mColorMode) : 0);
+            result[0x1800 + (y / 8) * 32 + (x / 8)] = attrib;
+        }
+    }
+
+    return result;
 }
 
 void GfxEditorWidget::paintEvent(QPaintEvent* event)

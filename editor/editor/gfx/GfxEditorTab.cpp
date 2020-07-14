@@ -8,7 +8,6 @@
 #include "ui_GfxEditorTab.h"
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QSaveFile>
 
 GfxEditorTab::GfxEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
@@ -504,6 +503,25 @@ void GfxEditorTab::on_exportImageButton_clicked()
             QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
             return;
         }
+    }
+}
+
+void GfxEditorTab::on_exportScreenButton_clicked()
+{
+    QString name = QStringLiteral("%1.scr").arg(file()->fileInfo().completeBaseName());
+
+    auto filter = QStringLiteral("%1 (*.scr)").arg(tr("SCR files"));
+    QString file = QFileDialog::getSaveFileName(this, tr("Save image"), QDir(lastPath).absoluteFilePath(name), filter);
+    if (file.isEmpty())
+        return;
+
+    lastPath = QFileInfo(file).absolutePath();
+
+    QByteArray data = mUi->editorWidget->toSCR();
+    try {
+        saveFile(file, data);
+    } catch (const IOException& e) {
+        QMessageBox::critical(this, tr("Error"), e.message());
     }
 }
 

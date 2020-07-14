@@ -5,7 +5,6 @@
 #include "compiler/TileSetData.h"
 #include <QPainter>
 #include <QMessageBox>
-#include <QSaveFile>
 #include <QClipboard>
 #include <QMimeData>
 #include <QApplication>

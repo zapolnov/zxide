@@ -95,6 +95,7 @@ private:
     Q_SLOT void on_backgroundImageOpacitySlider_valueChanged(int value);
     Q_SLOT void on_browseBackgroundImageButton_clicked();
     Q_SLOT void on_exportImageButton_clicked();
+    Q_SLOT void on_exportScreenButton_clicked();
 
     void setColor(int color, bool setTool = true);
     Q_SLOT void on_blackButton_clicked() { setColor(0); }

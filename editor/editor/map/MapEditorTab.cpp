@@ -17,7 +17,6 @@
 #include <QFileDialog>
 #include <QPainter>
 #include <QMessageBox>
-#include <QSaveFile>
 
 MapEditorTab::MapEditorTab(QWidget* parent)
     : AbstractEditorTab(parent)
