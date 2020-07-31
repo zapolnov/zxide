@@ -1,5 +1,5 @@
-#ifndef UTIL_GFXFILEUTIL_H
-#define UTIL_GFXFILEUTIL_H
+#ifndef SCRIPTING_GFXFILEUTIL_H
+#define SCRIPTING_GFXFILEUTIL_H
 
 class QColor;
 class QImage;

@@ -1,8 +1,10 @@
 #include "LuaGfx.h"
 #include "LuaFiles.h"
 #include "LuaVM.h"
+#include "GfxFileUtil.h"
 #include "compiler/GfxFile.h"
 #include "compiler/GfxData.h"
+#include <QImage>
 #include <string>
 #include <sstream>
 #include <lua.hpp>
@@ -83,6 +85,29 @@ static int luaGfxGetFragment(lua_State* L)
     GfxData* newData = vm->pushNew<GfxData>(w, h);
     newData->setBytes(0, 0, w, h, pixels);
     newData->setAttrib(0, 0, w, h, attrib);
+
+    return 1;
+}
+
+static int luaGfxSetFragment(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& targetData = vm->check<GfxData>(1);
+    int targetX = luaL_checkinteger(L, 2);
+    int targetY = luaL_checkinteger(L, 3);
+    GfxData& sourceData = vm->check<GfxData>(4);
+
+    for (int y = 0; y < sourceData.height(); y++) {
+        for (int x = 0; x < sourceData.width(); x++) {
+            int xx = targetX + x;
+            int yy = targetY + y;
+            if (!targetData.isValidCoord(xx, yy))
+                continue;
+            targetData.at(xx, yy) = sourceData.at(x, y);
+            targetData.attribAt(xx, yy, GfxColorMode::Multicolor) = sourceData.attribAt(x, y, GfxColorMode::Multicolor);
+        }
+    }
 
     return 1;
 }
@@ -387,11 +412,29 @@ static int luaGfxWriteBTile16Attributes(lua_State* L)
     return luaWriteFile(L, fileName.c_str(), str.data(), str.length());
 }
 
+static int luaGfxWritePNG(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+
+    const QDir& dir = vm->projectDirectory();
+    QString fileName = QString::fromUtf8(luaL_checkstring(L, 2));
+    QString filePath = dir.absoluteFilePath(fileName);
+
+    QImage image = gfxToQImage(&data, GfxColorMode::Multicolor, 1, false);
+    if (!image.save(filePath, "PNG"))
+        return luaL_error(L, "%s", QObject::tr("Unable to save image \"%1\".").arg(filePath).toUtf8().constData());
+
+    return 0;
+}
+
 const luaL_Reg LuaGfx[] = {
     { "gfxCreate", luaGfxCreate },
     { "gfxLoad", luaGfxLoad },
     { "gfxGetDimensions", luaGfxGetDimensions },
     { "gfxGetFragment", luaGfxGetFragment },
+    { "gfxSetFragment", luaGfxSetFragment },
     { "gfxGetPixel", luaGfxGetPixel },
     { "gfxSetPixel", luaGfxSetPixel },
     { "gfxGetStandardAttrib", luaGfxGetStandardAttrib },
@@ -406,5 +449,6 @@ const luaL_Reg LuaGfx[] = {
     { "gfxWriteMonochrome", luaGfxWriteMonochrome },
     { "gfxWriteBTile16", luaGfxWriteBTile16 },
     { "gfxWriteBTile16Attributes", luaGfxWriteBTile16Attributes },
+    { "gfxWritePNG", luaGfxWritePNG },
     { nullptr, nullptr }
 };

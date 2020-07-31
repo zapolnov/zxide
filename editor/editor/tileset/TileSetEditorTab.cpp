@@ -8,7 +8,7 @@
 #include "compiler/GfxFile.h"
 #include "util/ComboBox.h"
 #include "util/FileSelectorMenu.h"
-#include "util/GfxFileUtil.h"
+#include "scripting/GfxFileUtil.h"
 #include "ui_TileSetEditorTab.h"
 #include <set>
 #include <QMessageBox>

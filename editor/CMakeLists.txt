@@ -107,8 +107,6 @@ qt_add_sources(GameEditor
         util/ComboBox.h
         util/FileSelectorMenu.cpp
         util/FileSelectorMenu.h
-        util/GfxFileUtil.cpp
-        util/GfxFileUtil.h
         util/ImageImport.cpp
         util/ImageImport.h
         util/ScrollBar.cpp

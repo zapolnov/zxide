@@ -5,6 +5,8 @@ target_link_libraries(Scripting Lua Md5 Compiler LibAyFly)
 qt_link_libraries(Scripting Core Gui Widgets)
 
 qt_add_sources(Scripting
+        GfxFileUtil.cpp
+        GfxFileUtil.h
         LuaFiles.cpp
         LuaFiles.h
         LuaGfx.cpp

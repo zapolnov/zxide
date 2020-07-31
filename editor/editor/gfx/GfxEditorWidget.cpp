@@ -1,7 +1,7 @@
 #include "GfxEditorWidget.h"
 #include "compiler/GfxData.h"
 #include "compiler/GfxFile.h"
-#include "util/GfxFileUtil.h"
+#include "scripting/GfxFileUtil.h"
 #include <QPainter>
 #include <QMessageBox>
 #include <QClipboard>

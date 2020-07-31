@@ -10,7 +10,7 @@
 #include "compiler/IO.h"
 #include "util/ComboBox.h"
 #include "util/FileSelectorMenu.h"
-#include "util/GfxFileUtil.h"
+#include "scripting/GfxFileUtil.h"
 #include "ui_MapEditorTab.h"
 #include <QTimer>
 #include <QIcon>
