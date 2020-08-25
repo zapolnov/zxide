@@ -28,35 +28,37 @@
 
 #include "zx7.h"
 
-static unsigned char* output_data;
-static size_t output_index;
-static size_t bit_index;
-static int bit_mask;
+typedef struct Ctx {
+    unsigned char* output_data;
+    size_t output_index;
+    size_t bit_index;
+    int bit_mask;
+} Ctx;
 
-static void write_byte(int value) {
-    output_data[output_index++] = value;
+static void write_byte(Ctx* ctx, int value) {
+    ctx->output_data[ctx->output_index++] = value;
 }
 
-static void write_bit(int value) {
-    if (bit_mask == 0) {
-        bit_mask = 128;
-        bit_index = output_index;
-        write_byte(0);
+static void write_bit(Ctx* ctx, int value) {
+    if (ctx->bit_mask == 0) {
+        ctx->bit_mask = 128;
+        ctx->bit_index = ctx->output_index;
+        write_byte(ctx, 0);
     }
     if (value > 0) {
-        output_data[bit_index] |= bit_mask;
+        ctx->output_data[ctx->bit_index] |= ctx->bit_mask;
     }
-    bit_mask >>= 1;
+    ctx->bit_mask >>= 1;
 }
 
-static void write_elias_gamma(int value) {
+static void write_elias_gamma(Ctx* ctx, int value) {
     int i;
 
     for (i = 2; i <= value; i <<= 1) {
-        write_bit(0);
+        write_bit(ctx, 0);
     }
     while ((i >>= 1) > 0) {
-        write_bit(value & i);
+        write_bit(ctx, value & i);
     }
 }
 
@@ -67,11 +69,13 @@ unsigned char *zx7_compress(Optimal *optimal, unsigned char *input_data, size_t 
     int mask;
     int i;
 
+    Ctx ctx;
+
     /* calculate and allocate output buffer */
     input_index = input_size-1;
     *output_size = (optimal[input_index].bits+18+7)/8;
-    output_data = (unsigned char *)malloc(*output_size);
-    if (!output_data) {
+    ctx.output_data = (unsigned char *)malloc(*output_size);
+    if (!ctx.output_data) {
          /*fprintf(stderr, "Error: Insufficient memory\n");
          exit(1);*/
          return NULL;
@@ -85,52 +89,53 @@ unsigned char *zx7_compress(Optimal *optimal, unsigned char *input_data, size_t 
         input_index = input_prev;
     }
 
-    output_index = 0;
-    bit_mask = 0;
+    ctx.output_index = 0;
+    ctx.bit_index = 0;
+    ctx.bit_mask = 0;
 
     /* first byte is always literal */
-    write_byte(input_data[0]);
+    write_byte(&ctx, input_data[0]);
 
     /* process remaining bytes */
     while ((input_index = optimal[input_index].bits) > 0) {
         if (optimal[input_index].len == 0) {
 
             /* literal indicator */
-            write_bit(0);
+            write_bit(&ctx, 0);
 
             /* literal value */
-            write_byte(input_data[input_index]);
+            write_byte(&ctx, input_data[input_index]);
 
         } else {
 
             /* sequence indicator */
-            write_bit(1);
+            write_bit(&ctx, 1);
 
             /* sequence length */
-            write_elias_gamma(optimal[input_index].len-1);
+            write_elias_gamma(&ctx, optimal[input_index].len-1);
 
             /* sequence offset */
             offset1 = optimal[input_index].offset-1;
             if (offset1 < 128) {
-                write_byte(offset1);
+                write_byte(&ctx, offset1);
             } else {
                 offset1 -= 128;
-                write_byte((offset1 & 127) | 128);
+                write_byte(&ctx, (offset1 & 127) | 128);
                 for (mask = 1024; mask > 127; mask >>= 1) {
-                    write_bit(offset1 & mask);
+                    write_bit(&ctx, offset1 & mask);
                 }
             }
         }
     }
 
     /* sequence indicator */
-    write_bit(1);
+    write_bit(&ctx, 1);
 
     /* end marker > MAX_LEN */
     for (i = 0; i < 16; i++) {
-        write_bit(0);
+        write_bit(&ctx, 0);
     }
-    write_bit(1);
+    write_bit(&ctx, 1);
 
-    return output_data;
+    return ctx.output_data;
 }
