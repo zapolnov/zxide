@@ -364,7 +364,7 @@ Registers EmulatorCore::registers() const
     return ::registers;
 }
 
-quint16 EmulatorCore::instructionPointer() const
+quint32 EmulatorCore::instructionPointer() const
 {
     QMutexLocker lock(&mutex);
     return ::registers.pc;
@@ -796,6 +796,7 @@ void EmulatorCore::update()
         pausePC_ = pausePC;
         SP_ = SP;
         PC_ = PC;
+        PC_ |= (quint32)(machine_current->ram.current_page) << 16;
         runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
         std::swap(::controlFlows, controlFlows_mainThread);
@@ -1114,6 +1115,7 @@ int ui_debugger_activate()
             shouldEmitPausedSignal = true;
             shouldUpdateUi = true;
             pausePC = PC;
+            pausePC |= (quint32)(machine_current->ram.current_page) << 16;
         }
     }
 

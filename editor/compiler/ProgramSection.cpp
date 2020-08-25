@@ -20,15 +20,15 @@ ProgramSection::ProgramSection(Program* program, const Token& token, std::string
     , mHasFileName(false)
     , mIsImaginary(false)
 {
-    if (mName.find("BANK1") != std::string::npos)
+    if (mName.find("BANK1") != std::string::npos || mName.find("bank1") != std::string::npos)
         mBankAddress = 0x10000;
-    else if (mName.find("BANK3") != std::string::npos)
+    else if (mName.find("BANK3") != std::string::npos || mName.find("bank3") != std::string::npos)
         mBankAddress = 0x30000;
-    else if (mName.find("BANK4") != std::string::npos)
+    else if (mName.find("BANK4") != std::string::npos || mName.find("bank4") != std::string::npos)
         mBankAddress = 0x40000;
-    else if (mName.find("BANK6") != std::string::npos)
+    else if (mName.find("BANK6") != std::string::npos || mName.find("bank6") != std::string::npos)
         mBankAddress = 0x60000;
-    else if (mName.find("BANK7") != std::string::npos)
+    else if (mName.find("BANK7") != std::string::npos || mName.find("bank7") != std::string::npos)
         mBankAddress = 0x70000;
     else
         mBankAddress = 0;

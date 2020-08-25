@@ -169,7 +169,7 @@ public:
     void setCollectControlFlow(bool flag);
 
     Registers registers() const;
-    quint16 instructionPointer() const;
+    quint32 instructionPointer() const;
     quint16 stackPointer() const;
     void setRegister(Register reg, quint16 value);
 

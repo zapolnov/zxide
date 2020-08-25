@@ -24,7 +24,7 @@ const SourceLocation& ProgramDebugInfo::sourceLocationForAddress(unsigned addres
 
         if (withAux) {
             for (const auto& aux : mAuxiliaryInfos) {
-                const auto& loc1 = mSourceLocations[address];
+                const auto& loc1 = aux->mSourceLocations[address];
                 if (!loc1.file.isEmpty())
                     return loc1;
             }
