@@ -9,6 +9,7 @@
 
 static int luaMusicProcess(lua_State* L)
 {
+    /*
     LuaVM* vm = LuaVM::fromLua(L);
 
     const char* fileName = luaL_checkstring(L, 1);
@@ -34,6 +35,8 @@ static int luaMusicProcess(lua_State* L)
 
     lua_pushlstring(L, code.data(), int(code.size()));
     return 1;
+    */
+    return luaL_error(L, "not implemented.");
 }
 
 const luaL_Reg LuaMusic[] = {

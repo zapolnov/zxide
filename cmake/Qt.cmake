@@ -92,14 +92,18 @@ macro(qt_install_win32_plugins config targetDir libFile)
     endforeach()
 endmacro()
 
-macro(qt_install_library config targetDir lib)
-    string(TOUPPER "${config}" cfg)
-    get_target_property(file "${lib}" LOCATION_${cfg})
+macro(_install_library file config targetDir)
     get_filename_component(name "${file}" NAME)
     if(EXISTS "${file}" AND NOT EXISTS "${targetDir}/${name}")
         message(STATUS "Installing dependency '${name}' (${config})")
         configure_file("${file}" "${targetDir}/${name}" COPYONLY)
     endif()
+endmacro()
+
+macro(qt_install_library config targetDir lib)
+    string(TOUPPER "${config}" cfg)
+    get_target_property(file "${lib}" LOCATION_${cfg})
+    _install_library("${file}" "${config}" "${targetDir}")
     if(WIN32 AND "${lib}" STREQUAL "Qt5::Gui")
         qt_install_win32_plugins("${config}" "${targetDir}" "${file}"
             platforms/qwindows

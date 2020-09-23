@@ -1,6 +1,8 @@
 #ifndef COMPILER_MUSICCOMPILER_H
 #define COMPILER_MUSICCOMPILER_H
 
+#if 0
+
 #include <sstream>
 #include <ayfly.h>
 
@@ -1395,5 +1397,7 @@ end.
 
     };
 }
+
+#endif
 
 #endif

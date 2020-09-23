@@ -48,6 +48,9 @@ public:
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectFile(const QString& file) { mProjectFile = file; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
+    void setWriteTapeFile(bool flag) { mWriteTapFile = flag; }
+    void setWriteDiskFile(bool flag) { mWriteDiskFile = flag; }
+    void setWriteWavFile(bool flag) { mWriteWavFile = flag; }
 
     const std::vector<std::unique_ptr<SourceFile>>& basicSources() const { return mBasicSources; }
     const std::vector<std::unique_ptr<SourceFile>>& assemblerSources() const { return mAssemblerSources; }
@@ -57,6 +60,8 @@ public:
     void compile();
 
 signals:
+    void statusText(const QString& message);
+    void errorMessage(const QString& message);
     void diagnosticMessage(const QString& message);
     void compilationEnded();
 
@@ -84,6 +89,9 @@ private:
     std::vector<std::unique_ptr<SourceFile>> mMaps;
     std::vector<std::unique_ptr<SourceFile>> mBuildScripts;
     int mErrorLine;
+    bool mWriteTapFile;
+    bool mWriteDiskFile;
+    bool mWriteWavFile;
     bool mWasError;
 
     void error(const QString& file, int line, const QString& message) override;

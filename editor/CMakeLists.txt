@@ -1,4 +1,6 @@
 
+set(BUILD_FUSE TRUE)
+set(BUILD_SCINTILLA TRUE)
 add_subdirectory(3rdparty)
 
 include_directories(

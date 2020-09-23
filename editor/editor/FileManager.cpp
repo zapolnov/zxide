@@ -275,7 +275,7 @@ void FileManager::refreshDirectory(Directory* directory)
         if (directory == mRootDirectory) {
             if (!info.isDir() && info.suffix() == Project::FileSuffix)
                 continue;
-            if (fileName == Project::OutDirectory)
+            if (fileName == Project::OutDirectory || fileName == Project::PortDirectory)
                 continue;
         }
 
@@ -427,7 +427,7 @@ void FileManager::on_newDirectoryAction_triggered()
         QMessageBox::critical(this, tr("Error"), tr("Directory name should not be empty."));
         return;
     }
-    if (parent == mRootDirectory && (name == Project::OutDirectory || name == Project::GeneratedDirectory)) {
+    if (parent == mRootDirectory && (name == Project::OutDirectory || name == Project::PortDirectory || name == Project::GeneratedDirectory)) {
         QMessageBox::critical(this, tr("Error"), tr("Name \"%1\" is reserved.").arg(name));
         return;
     }

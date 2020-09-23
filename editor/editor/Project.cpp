@@ -9,6 +9,7 @@
 const QString Project::FileSuffix = QStringLiteral("zxprj");
 const QString Project::GeneratedDirectory = QStringLiteral("generated");
 const QString Project::OutDirectory = QStringLiteral("_out");
+const QString Project::PortDirectory = QStringLiteral("_port");
 
 Project::Project(QWidget* parent)
     : QObject(parent)

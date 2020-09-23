@@ -1,0 +1,6 @@
+For starters, returning to BASIC will change the top bank to bank 7. It will also automatically select ROM 0
+for you, so no need to set bit 4. Most importantly, you need to disable interrupts and keep the system variable
+at 23388 updated with the value you send to the port.
+
+I recommend you write a small MC loader and stick it into BASIC. Then run the whole thing with
+RANDOMIZE USR (PEEK 23635+256*PEEK 23636+5).

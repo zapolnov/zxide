@@ -1,7 +1,7 @@
 
 add_library(Scripting STATIC)
 set_target_properties(Scripting PROPERTIES FOLDER "Compiler")
-target_link_libraries(Scripting Lua Md5 Compiler LibAyFly)
+target_link_libraries(Scripting Lua Md5 Compiler) #LibAyFly)
 qt_link_libraries(Scripting Core Gui Widgets)
 
 qt_add_sources(Scripting

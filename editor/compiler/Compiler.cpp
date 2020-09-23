@@ -43,8 +43,12 @@ Compiler::Compiler(QObject* parent)
     , mOutputDiskFile(QStringLiteral("out.scl"))
     , mOutputWavFile(QStringLiteral("out.wav"))
     , mErrorLine(0)
+    , mWriteTapFile(true)
+    , mWriteDiskFile(true)
+    , mWriteWavFile(true)
     , mWasError(false)
 {
+    Q_INIT_RESOURCE(compiler);
 }
 
 Compiler::~Compiler()
@@ -271,27 +275,34 @@ void Compiler::compile()
             writeFile(fileName, data.data(), data.size(), this);
         }
 
-        setStatusText(tr("Writing tape file..."));
-        TapeFileWriter tapeWriter(mProgramBinary.get(), this);
-        tapeWriter.setBasicCode(mCompiledBasicCode);
-        tapeWriter.setBasicStartLine(mProjectSettings->basicStartLine);
-        tapeWriter.setLoaderName(mProjectSettings->loaderFileName());
-        tapeWriter.setProgramName(mProjectSettings->programFileName());
-        tapeWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
-        if (!tapeWriter.makeTape()
-                || !tapeWriter.writeTapeFile(mOutputTapeFile)
-                || !tapeWriter.writeWavFile(mOutputWavFile))
-            throw CompilationFailed();
+        if (mWriteTapFile || mWriteWavFile) {
+            setStatusText(tr("Writing tape file..."));
+            TapeFileWriter tapeWriter(mProgramBinary.get(), this);
+            tapeWriter.setBasicCode(mCompiledBasicCode);
+            tapeWriter.setBasicStartLine(mProjectSettings->basicStartLine);
+            tapeWriter.setLoaderName(mProjectSettings->loaderFileName());
+            tapeWriter.setProgramName(mProjectSettings->programFileName());
+            tapeWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
+            if (!tapeWriter.makeTape())
+                throw CompilationFailed();
 
-        setStatusText(tr("Writing disk file..."));
-        DiskFileWriter diskWriter(mProgramBinary.get(), this);
-        diskWriter.setBasicCode(mCompiledBasicCode);
-        diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
-        diskWriter.setLoaderName(mProjectSettings->loaderFileName());
-        diskWriter.setProgramName(mProjectSettings->programFileName());
-        diskWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
-        if (!diskWriter.writeSclFile(mOutputDiskFile))
-            throw CompilationFailed();
+            if (mWriteTapFile && !tapeWriter.writeTapeFile(mOutputTapeFile))
+                throw CompilationFailed();
+            if (mWriteWavFile && !tapeWriter.writeWavFile(mOutputWavFile))
+                throw CompilationFailed();
+        }
+
+        if (mWriteDiskFile) {
+            setStatusText(tr("Writing disk file..."));
+            DiskFileWriter diskWriter(mProgramBinary.get(), this);
+            diskWriter.setBasicCode(mCompiledBasicCode);
+            diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
+            diskWriter.setLoaderName(mProjectSettings->loaderFileName());
+            diskWriter.setProgramName(mProjectSettings->programFileName());
+            diskWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
+            if (!diskWriter.writeSclFile(mOutputDiskFile))
+                throw CompilationFailed();
+        }
 
         mProgramBinary->setCurrentFile(std::string());
     } catch (const CompilationFailed&) {
@@ -320,15 +331,19 @@ void Compiler::error(const QString& file, int line, const QString& message)
         mErrorMessage = message;
         mErrorFile = file;
         mErrorLine = line;
+        emit errorMessage(QStringLiteral("%1(%2): %3").arg(mErrorMessage).arg(mErrorFile).arg(mErrorLine));
         mStatusText = tr("Compilation failed!");
+        emit statusText(mStatusText);
     }
 }
 
 void Compiler::setStatusText(const QString& text)
 {
     QMutexLocker lock(&mMutex);
-    if (!mWasError)
+    if (!mWasError) {
         mStatusText = text;
+        emit statusText(text);
+    }
 }
 
 bool Compiler::runBuildScripts()

@@ -13,6 +13,7 @@ target_link_libraries(Compiler LibSpectrum LibAudioFile Scripting Tape2Wav Bas2T
 qt_link_libraries(Compiler Core)
 
 qt_add_sources(Compiler
+        ../res/compiler.qrc
         Assembler.cpp
         Assembler.h
         AssemblerContext.cpp

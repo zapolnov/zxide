@@ -117,4 +117,36 @@
     <file alias="plus3-2.rom">../3rdparty/fuse/roms/plus3-2.rom</file>
     <file alias="plus3-3.rom">../3rdparty/fuse/roms/plus3-3.rom</file>
   </qresource>
+  <qresource prefix="include">
+    <file alias="asm/default/features.h">../3rdparty/sdcc/device/include/asm/default/features.h</file>
+    <file alias="asm/z80/features.h">../3rdparty/sdcc/device/include/asm/z80/features.h</file>
+    <file alias="assert.h">../3rdparty/sdcc/device/include/assert.h</file>
+    <file alias="ctype.h">../3rdparty/sdcc/device/include/ctype.h</file>
+    <file alias="errno.h">../3rdparty/sdcc/device/include/errno.h</file>
+    <file alias="float.h">../3rdparty/sdcc/device/include/float.h</file>
+    <file alias="iso646.h">../3rdparty/sdcc/device/include/iso646.h</file>
+    <file alias="limits.h">../3rdparty/sdcc/device/include/limits.h</file>
+    <file alias="math.h">../3rdparty/sdcc/device/include/math.h</file>
+    <file alias="sdcc-lib.h">../3rdparty/sdcc/device/include/sdcc-lib.h</file>
+    <file alias="setjmp.h">../3rdparty/sdcc/device/include/setjmp.h</file>
+    <file alias="signal.h">../3rdparty/sdcc/device/include/signal.h</file>
+    <file alias="stdalign.h">../3rdparty/sdcc/device/include/stdalign.h</file>
+    <file alias="stdarg.h">../3rdparty/sdcc/device/include/stdarg.h</file>
+    <file alias="stdbool.h">../3rdparty/sdcc/device/include/stdbool.h</file>
+    <file alias="stddef.h">../3rdparty/sdcc/device/include/stddef.h</file>
+    <file alias="stdint.h">../3rdparty/sdcc/device/include/stdint.h</file>
+    <file alias="stdio.h">../3rdparty/sdcc/device/include/stdio.h</file>
+    <file alias="stdlib.h">../3rdparty/sdcc/device/include/stdlib.h</file>
+    <file alias="stdnoreturn.h">../3rdparty/sdcc/device/include/stdnoreturn.h</file>
+    <file alias="string.h">../3rdparty/sdcc/device/include/string.h</file>
+    <file alias="time.h">../3rdparty/sdcc/device/include/time.h</file>
+    <file alias="typeof.h">../3rdparty/sdcc/device/include/typeof.h</file>
+    <file alias="uchar.h">../3rdparty/sdcc/device/include/uchar.h</file>
+    <file alias="wchar.h">../3rdparty/sdcc/device/include/wchar.h</file>
+  </qresource>
+  <qresource prefix="z88dk">
+    <file alias="sdcc_opt.1">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.1</file>
+    <file alias="sdcc_opt.2">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.2</file>
+    <file alias="sdcc_opt.9">../3rdparty/z88dk/libsrc/_DEVELOPMENT/sdcc_opt.9</file>
+  </qresource>
 </RCC>

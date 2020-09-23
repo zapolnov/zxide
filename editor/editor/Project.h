@@ -12,6 +12,7 @@ public:
     static const QString FileSuffix;
     static const QString GeneratedDirectory;
     static const QString OutDirectory;
+    static const QString PortDirectory;
 
     explicit Project(QWidget* parent = nullptr);
     ~Project() override;
