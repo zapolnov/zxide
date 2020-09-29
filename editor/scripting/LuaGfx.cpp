@@ -429,6 +429,35 @@ static int luaGfxWritePNG(lua_State* L)
     return 0;
 }
 
+static int luaGfxWriteTransparentPNG(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    GfxData& maskData = vm->check<GfxData>(2);
+
+    const QDir& dir = vm->projectDirectory();
+    QString fileName = QString::fromUtf8(luaL_checkstring(L, 3));
+    QString filePath = dir.absoluteFilePath(fileName);
+
+    QImage image = gfxToQImage(&data, GfxColorMode::Multicolor, 1, false);
+
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            if (!maskData.isValidCoord(x, y) || maskData.at(x, y) == 0) {
+                QColor c = image.pixelColor(x, y);
+                c.setAlpha(0);
+                image.setPixelColor(x, y, c);
+            }
+        }
+    }
+
+    if (!image.save(filePath, "PNG"))
+        return luaL_error(L, "%s", QObject::tr("Unable to save image \"%1\".").arg(filePath).toUtf8().constData());
+
+    return 0;
+}
+
 const luaL_Reg LuaGfx[] = {
     { "gfxCreate", luaGfxCreate },
     { "gfxLoad", luaGfxLoad },
@@ -450,5 +479,6 @@ const luaL_Reg LuaGfx[] = {
     { "gfxWriteBTile16", luaGfxWriteBTile16 },
     { "gfxWriteBTile16Attributes", luaGfxWriteBTile16Attributes },
     { "gfxWritePNG", luaGfxWritePNG },
+    { "gfxWriteTransparentPNG", luaGfxWriteTransparentPNG },
     { nullptr, nullptr }
 };
