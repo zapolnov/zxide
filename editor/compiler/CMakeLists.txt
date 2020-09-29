@@ -83,4 +83,6 @@ qt_add_sources(Compiler
         Z80Opcodes.h
     )
 
-add_subdirectory(tests)
+if(BUILD_COMPILER_TESTS)
+    add_subdirectory(tests)
+endif()

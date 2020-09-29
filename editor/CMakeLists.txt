@@ -8,6 +8,7 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}"
     )
 
+set(BUILD_COMPILER_TESTS TRUE)
 add_subdirectory(compiler)
 add_subdirectory(scripting)
 

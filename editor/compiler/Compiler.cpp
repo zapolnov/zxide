@@ -331,7 +331,7 @@ void Compiler::error(const QString& file, int line, const QString& message)
         mErrorMessage = message;
         mErrorFile = file;
         mErrorLine = line;
-        emit errorMessage(QStringLiteral("%1(%2): %3").arg(mErrorMessage).arg(mErrorFile).arg(mErrorLine));
+        emit errorMessage(QStringLiteral("%1(%2): %3").arg(mErrorFile).arg(mErrorLine).arg(mErrorMessage));
         mStatusText = tr("Compilation failed!");
         emit statusText(mStatusText);
     }
