@@ -180,6 +180,22 @@ static int luaGfxSetStandardAttrib(lua_State* L)
     return 0;
 }
 
+static int luaGfxSetMulticolorAttrib(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int x = luaL_checkinteger(L, 2);
+    int y = luaL_checkinteger(L, 3);
+    int value = luaL_checkinteger(L, 4);
+
+    if (!data.isValidCoord(x, y))
+        return luaL_error(L, "invalid coordinates.");
+
+    data.attribAt(x, y, GfxColorMode::Multicolor) = (char)(value & 0xff);
+    return 0;
+}
+
 static std::string generateMonochrome(const GfxData& data)
 {
     GfxFile file;
@@ -468,6 +484,7 @@ const luaL_Reg LuaGfx[] = {
     { "gfxSetPixel", luaGfxSetPixel },
     { "gfxGetStandardAttrib", luaGfxGetStandardAttrib },
     { "gfxSetStandardAttrib", luaGfxSetStandardAttrib },
+    { "gfxSetMulticolorAttrib", luaGfxSetMulticolorAttrib },
     { "gfxGenerateMonochromeAssembly", luaGfxGenerateMonochromeAssembly },
     { "gfxGenerateStandardAssembly", luaGfxGenerateStandardAssembly },
     { "gfxGenerateStandardAttributesAssembly", luaGfxGenerateStandardAttributesAssembly },
