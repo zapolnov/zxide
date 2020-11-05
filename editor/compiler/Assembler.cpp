@@ -113,6 +113,7 @@ static void initStringMapping()
     stringId("lddr");
     stringId("ldi");
     stringId("ldir");
+    stringId("lzsa2");
     stringId("m");
     stringId("nc");
     stringId("neg");

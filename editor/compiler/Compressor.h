@@ -45,4 +45,16 @@ protected:
     Q_DISABLE_COPY(Zx7Compressor)
 };
 
+class LzsaCompressor final : public Compressor
+{
+public:
+    explicit LzsaCompressor(IProgramBinary* binary) : Compressor(binary) {}
+    ~LzsaCompressor() override = default;
+
+protected:
+    void compress(std::vector<quint8> src, std::vector<quint8>& dst) override;
+
+    Q_DISABLE_COPY(LzsaCompressor)
+};
+
 #endif

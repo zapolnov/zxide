@@ -13,6 +13,7 @@ enum class Compression
     Unspecified,
     None,
     Zx7,
+    Lzsa2,
 };
 
 class ProgramSection : public CodeEmitter

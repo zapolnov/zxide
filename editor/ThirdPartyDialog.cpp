@@ -86,6 +86,12 @@ ThirdPartyDialog::ThirdPartyDialog(QWidget* parent)
 
         "<hr>"
 
+        "<p>This program uses LZSA:<br>"
+        "<a href=\"https://github.com/emmanuel-marty/lzsa\">https://github.com/emmanuel-marty/lzsa</a><br>"
+        "Licensed under the Zlib license, except for src/matchfinder.c which is placed under the Creative Commons CC0 license.</p>"
+
+        "<hr>"
+
         "<p>This program uses Scintilla:<br>"
         "<a href=\"https://www.scintilla.org/\">https://www.scintilla.org/</a><br>"
         "Copyright &copy; 1998-2003 by Neil Hodgson. All Rights Reserved.<br>"

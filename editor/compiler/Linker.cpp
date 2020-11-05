@@ -126,6 +126,13 @@ size_t Linker::emitCodeForSection(IProgramBinary* binary, ProgramSection* sectio
             compressedLength = compressor.flush();
             break;
         }
+
+        case Compression::Lzsa2: {
+            LzsaCompressor compressor(binary);
+            section->emitCode(mProgram, &compressor, mReporter);
+            compressedLength = compressor.flush();
+            break;
+        }
     }
 
     return compressedLength;

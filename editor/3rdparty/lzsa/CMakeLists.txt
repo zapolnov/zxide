@@ -1,0 +1,43 @@
+
+add_library(Lzsa STATIC ${src})
+set_target_properties(Lzsa PROPERTIES FOLDER "ThirdParty")
+target_include_directories(Lzsa PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(Lzsa PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/libdivsufsort/include")
+
+add_sources(Lzsa
+    src/libdivsufsort/lib/divsufsort.c
+    src/libdivsufsort/lib/divsufsort_utils.c
+    src/libdivsufsort/lib/sssort.c
+    src/libdivsufsort/lib/trsort.c
+    src/dictionary.c
+    src/dictionary.h
+    src/expand_block_v1.c
+    src/expand_block_v1.h
+    src/expand_block_v2.c
+    src/expand_block_v2.h
+    src/expand_context.c
+    src/expand_context.h
+    src/expand_inmem.c
+    src/expand_inmem.h
+    src/expand_streaming.c
+    src/expand_streaming.h
+    src/format.h
+    src/frame.c
+    src/frame.h
+    src/lib.h
+    #src/lzsa.c
+    src/matchfinder.c
+    src/matchfinder.h
+    src/shrink_block_v1.c
+    src/shrink_block_v1.h
+    src/shrink_block_v2.c
+    src/shrink_block_v2.h
+    src/shrink_context.c
+    src/shrink_context.h
+    src/shrink_inmem.c
+    src/shrink_inmem.h
+    src/shrink_streaming.c
+    src/shrink_streaming.h
+    src/stream.c
+    src/stream.h
+    )
