@@ -180,6 +180,21 @@ static int luaGfxSetStandardAttrib(lua_State* L)
     return 0;
 }
 
+static int luaGfxSetDimensions(lua_State* L)
+{
+    LuaVM* vm = LuaVM::fromLua(L);
+
+    GfxData& data = vm->check<GfxData>(1);
+    int w = luaL_checkinteger(L, 2);
+    int h = luaL_checkinteger(L, 3);
+
+    if (w <= 0 || h <= 0)
+        return luaL_error(L, "invalid dimensions.");
+
+    data.resize(w, h);
+    return 0;
+}
+
 static int luaGfxSetMulticolorAttrib(lua_State* L)
 {
     LuaVM* vm = LuaVM::fromLua(L);
@@ -484,6 +499,7 @@ const luaL_Reg LuaGfx[] = {
     { "gfxSetPixel", luaGfxSetPixel },
     { "gfxGetStandardAttrib", luaGfxGetStandardAttrib },
     { "gfxSetStandardAttrib", luaGfxSetStandardAttrib },
+    { "gfxSetDimensions", luaGfxSetDimensions },
     { "gfxSetMulticolorAttrib", luaGfxSetMulticolorAttrib },
     { "gfxGenerateMonochromeAssembly", luaGfxGenerateMonochromeAssembly },
     { "gfxGenerateStandardAssembly", luaGfxGenerateStandardAssembly },
