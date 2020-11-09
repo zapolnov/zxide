@@ -34,7 +34,7 @@ public:
 class MapEditorWidget::DrawOperation : public Operation
 {
 public:
-    DrawOperation(MapEditorWidget* widget, int x, int y, unsigned char value)
+    DrawOperation(MapEditorWidget* widget, int x, int y, unsigned short value)
         : mX(x)
         , mY(y)
         , mNewValue(value)
@@ -69,15 +69,15 @@ private:
     int mWidth;
     int mHeight;
     QByteArray mOldData;
-    unsigned char mNewValue;
+    unsigned short mNewValue;
 };
 
 class MapEditorWidget::DrawRectOperation : public Operation
 {
 public:
-    DrawRectOperation(MapEditorWidget* widget, const Rect& r, unsigned char value)
+    DrawRectOperation(MapEditorWidget* widget, const Rect& r, unsigned short value)
         : mRect(r)
-        , mOldValue(new unsigned char[r.width() * r.height()])
+        , mOldValue(new unsigned short[r.width() * r.height()])
         , mNewValue(value)
     {
         auto it = widget->mTiles.find(mNewValue);
@@ -94,7 +94,7 @@ public:
         for (int y = mRect.y1; y <= mRect.y2; y++) {
             int tileX = 0;
             for (int x = mRect.x1; x <= mRect.x2; x++) {
-                unsigned char& ref = data->at(x, y);
+                unsigned short& ref = data->at(x, y);
                 mOldValue[(y - mRect.y1) * w + (x - mRect.x1)] = ref;
                 ref = (tileOriginY + tileY) * TileSetData::GridWidth + (tileOriginX + tileX);
                 tileX = (tileX + 1) % mTileWidth;
@@ -116,14 +116,14 @@ private:
     Rect mRect;
     int mTileWidth;
     int mTileHeight;
-    std::unique_ptr<unsigned char[]> mOldValue;
-    unsigned char mNewValue;
+    std::unique_ptr<unsigned short[]> mOldValue;
+    unsigned short mNewValue;
 };
 
 class MapEditorWidget::FillOperation : public Operation
 {
 public:
-    FillOperation(int x, int y, unsigned char value)
+    FillOperation(int x, int y, unsigned short value)
         : mStart(x, y)
         , mNewValue(value)
     {
@@ -133,7 +133,7 @@ public:
     {
         mOldValue.clear();
 
-        unsigned char original = data->at(mStart.first, mStart.second);
+        unsigned short original = data->at(mStart.first, mStart.second);
         if (original == mNewValue)
             return;
 
@@ -146,7 +146,7 @@ public:
 
             int x = p.first;
             int y = p.second;
-            unsigned char& ref = data->at(x, y);
+            unsigned short& ref = data->at(x, y);
 
             if (ref == original) {
                 mOldValue[p] = ref;
@@ -172,8 +172,8 @@ public:
 
 private:
     std::pair<int, int> mStart;
-    std::map<std::pair<int, int>, unsigned char> mOldValue;
-    unsigned char mNewValue;
+    std::map<std::pair<int, int>, unsigned short> mOldValue;
+    unsigned short mNewValue;
 };
 
 class MapEditorWidget::ClearOperation : public Operation
@@ -917,17 +917,17 @@ void MapEditorWidget::clearSelection()
     }
 }
 
-unsigned char MapEditorWidget::at(int x, int y) const
+unsigned short MapEditorWidget::at(int x, int y) const
 {
     return mMapData->at(x, y);
 }
 
-unsigned char MapEditorWidget::at(const QPoint& p) const
+unsigned short MapEditorWidget::at(const QPoint& p) const
 {
     return mMapData->at(p);
 }
 
-void MapEditorWidget::setItem(unsigned char item)
+void MapEditorWidget::setItem(unsigned short item)
 {
     if (item != mCurrentItem) {
         cancelInput();

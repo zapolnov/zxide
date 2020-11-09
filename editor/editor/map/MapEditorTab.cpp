@@ -50,7 +50,7 @@ MapEditorTab::~MapEditorTab()
 {
 }
 
-void MapEditorTab::selectTile(unsigned char item)
+void MapEditorTab::selectTile(unsigned short item)
 {
     int n = mUi->paletteListWidget->count();
     for (int i = 0; i < n; i++) {
@@ -353,7 +353,7 @@ void MapEditorTab::on_editorWidget_sizeChanged()
     mUi->heightSpin->setValue(mUi->editorWidget->height());
 }
 
-void MapEditorTab::on_editorWidget_itemPicked(unsigned char item)
+void MapEditorTab::on_editorWidget_itemPicked(unsigned short item)
 {
     selectTile(item);
 }

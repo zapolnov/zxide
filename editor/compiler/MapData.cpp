@@ -3,7 +3,7 @@
 
 MapData::MapData(int w, int h, QObject* parent)
     : QObject(parent)
-    , mData(new unsigned char[w * h])
+    , mData(new unsigned short[w * h])
     , mEntities(new std::string[w * h])
     , mWidth(w)
     , mHeight(h)
@@ -23,7 +23,7 @@ void MapData::resize(int w, int h)
     if (mWidth == w && mHeight == h)
         return;
 
-    std::unique_ptr<unsigned char[]> newData{new unsigned char[w * h]};
+    std::unique_ptr<unsigned short[]> newData{new unsigned short[w * h]};
     std::unique_ptr<std::string[]> newEntities{new std::string[w * h]};
 
     for (int y = 0; y < h; y++) {
@@ -51,7 +51,7 @@ bool MapData::isValidCoord(const QPoint& pt) const
     return isValidCoord(pt.x(), pt.y());
 }
 
-unsigned char MapData::at(int x, int y) const
+unsigned short MapData::at(int x, int y) const
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y))
@@ -60,16 +60,16 @@ unsigned char MapData::at(int x, int y) const
     return mData[y * mWidth + x];
 }
 
-unsigned char MapData::at(const QPoint& p) const
+unsigned short MapData::at(const QPoint& p) const
 {
     return at(p.x(), p.y());
 }
 
-unsigned char& MapData::at(int x, int y)
+unsigned short& MapData::at(int x, int y)
 {
     Q_ASSERT(isValidCoord(x, y));
     if (!isValidCoord(x, y)) {
-        static unsigned char dummy;
+        static unsigned short dummy;
         dummy = 0;
         return dummy;
     }
@@ -77,7 +77,7 @@ unsigned char& MapData::at(int x, int y)
     return mData[y * mWidth + x];
 }
 
-unsigned char& MapData::at(const QPoint& p)
+unsigned short& MapData::at(const QPoint& p)
 {
     return at(p.x(), p.y());
 }
@@ -142,10 +142,13 @@ QByteArray MapData::bytes(int x1, int y1, int x2, int y2) const
     int w = (x2 - x1 + 1);
     int h = (y2 - y1 + 1);
 
-    QByteArray result(w * h * 5, Qt::Uninitialized);
+    QByteArray result(w * h * 2 + w * h * 4, Qt::Uninitialized);
     for (int y = y1; y <= y2; y++) {
-        for (int x = x1; x <= x2; x++)
-            result[(y - y1) * w + (x - x1)] = isValidCoord(x, y) ? at(x, y) : 0;
+        for (int x = x1; x <= x2; x++) {
+            unsigned short v = isValidCoord(x, y) ? at(x, y) : 0;
+            result[((y - y1) * w + (x - x1)) * 2 + 0] = (v & 0xff);
+            result[((y - y1) * w + (x - x1)) * 2 + 1] = ((v >> 8) & 0xff);
+        }
     }
 
     QByteArray strings;
@@ -164,7 +167,7 @@ QByteArray MapData::bytes(int x1, int y1, int x2, int y2) const
                 }
             }
 
-            int offset = w * h + ((y - y1) * w + (x - x1)) * 4;
+            int offset = w * h * 2 + ((y - y1) * w + (x - x1)) * 4;
             result[offset+0] = char(quint8( quint32(index) & 0xff));
             result[offset+1] = char(quint8((quint32(index) >>  8) & 0xff));
             result[offset+2] = char(quint8((quint32(index) >> 16) & 0xff));
@@ -186,8 +189,11 @@ void MapData::setBytes(int x, int y, int w, int h, const QByteArray& data)
         for (int ix = 0; ix < w; ix++) {
             int xx = x + ix;
             int yy = y + iy;
-            if (isValidCoord(xx, yy))
-                at(xx, yy) = data[iy * w + ix];
+            if (isValidCoord(xx, yy)) {
+                uint8_t u1 = data[(iy * w + ix) * 2 + 0];
+                uint8_t u2 = data[(iy * w + ix) * 2 + 1];
+                at(xx, yy) = (uint16_t(u2) << 8) | u1;
+            }
         }
     }
 
@@ -197,7 +203,7 @@ void MapData::setBytes(int x, int y, int w, int h, const QByteArray& data)
             int yy = y + iy;
             if (isValidCoord(xx, yy)) {
                 quint32 uindex;
-                int offset = w * h + (iy * w + ix) * 4;
+                int offset = w * h * 2 + (iy * w + ix) * 4;
                 uindex  = quint32(quint8(data[offset+0]));
                 uindex |= quint32(quint8(data[offset+1])) <<  8;
                 uindex |= quint32(quint8(data[offset+2])) << 16;
@@ -207,7 +213,7 @@ void MapData::setBytes(int x, int y, int w, int h, const QByteArray& data)
                     entityAt(xx, yy).clear();
                 else {
                     Q_ASSERT(index >= 0);
-                    entityAt(xx, yy) = data.constData() + w * h * 5 + index;
+                    entityAt(xx, yy) = data.constData() + w * h * 6 + index;
                 }
             }
         }

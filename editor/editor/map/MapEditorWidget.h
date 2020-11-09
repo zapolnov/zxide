@@ -81,11 +81,11 @@ public:
     void selectAll();
     void clearSelection();
 
-    unsigned char at(int x, int y) const;
-    unsigned char at(const QPoint& p) const;
+    unsigned short at(int x, int y) const;
+    unsigned short at(const QPoint& p) const;
 
-    unsigned char currentItem() const { return mCurrentItem; }
-    void setItem(unsigned char item);
+    unsigned short currentItem() const { return mCurrentItem; }
+    void setItem(unsigned short item);
 
     MapEditorTool currentTool() const;
     void setTool(MapEditorTool tool);
@@ -103,7 +103,7 @@ protected:
 signals:
     void updateUi();
     void sizeChanged();
-    void itemPicked(unsigned char item);
+    void itemPicked(unsigned short item);
 
 private:
     class Operation;
@@ -155,7 +155,7 @@ private:
     QHash<int, MapEditorTile> mTiles;
     Rect mSelection;
     QPoint mMousePosition;
-    unsigned char mCurrentItem;
+    unsigned short mCurrentItem;
     bool mMousePressed;
     bool mEntitiesVisible;
     bool mEntityNamesVisible;

@@ -97,7 +97,7 @@ bool MapFile::deserializeFromJson(MapData* data)
         }
 
         for (int x = 0; x < width; x++)
-            data->at(x, y) = char(line[x].toInt() & 0xff);
+            data->at(x, y) = static_cast<unsigned short>(line[x].toInt() & 0xffff);
 
         if (formatVersion > 1) {
             line = entities[y].toArray();

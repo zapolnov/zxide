@@ -26,10 +26,10 @@ public:
     bool isValidCoord(int x, int y) const;
     bool isValidCoord(const QPoint& pt) const;
 
-    unsigned char at(int x, int y) const;
-    unsigned char at(const QPoint& p) const;
-    unsigned char& at(int x, int y);
-    unsigned char& at(const QPoint& p);
+    unsigned short at(int x, int y) const;
+    unsigned short at(const QPoint& p) const;
+    unsigned short& at(int x, int y);
+    unsigned short& at(const QPoint& p);
 
     const std::string& entityAt(int x, int y) const;
     const std::string& entityAt(const QPoint& p) const;
@@ -49,7 +49,7 @@ signals:
     void sizeChanged();
 
 private:
-    std::unique_ptr<unsigned char[]> mData;
+    std::unique_ptr<unsigned short[]> mData;
     std::unique_ptr<std::string[]> mEntities;
     int mWidth;
     int mHeight;
