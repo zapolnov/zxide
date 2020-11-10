@@ -1,4 +1,5 @@
 #include "NullOutput.h"
+#include "ProgramDebugInfo.h"
 #include "compiler/Compiler.h"
 
 NullOutput::NullOutput(unsigned addr)
@@ -34,6 +35,10 @@ void NullOutput::setSourceLocation(unsigned, const QString&, int)
 }
 
 void NullOutput::setTStatesForLocation(const SourceFile*, int, unsigned, unsigned)
+{
+}
+
+void NullOutput::addWriteProtection(ProgramWriteProtection protection)
 {
 }
 
@@ -108,6 +113,11 @@ void ImaginaryOutput::setSourceLocation(unsigned addr, const QString& fileName, 
 void ImaginaryOutput::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
     mBinary->setTStatesForLocation(file, line, taken, notTaken);
+}
+
+void ImaginaryOutput::addWriteProtection(ProgramWriteProtection protection)
+{
+    mBinary->addWriteProtection(std::move(protection));
 }
 
 void ImaginaryOutput::emitByte(const SourceFile* file, int line, quint8)

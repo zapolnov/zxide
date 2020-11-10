@@ -27,6 +27,8 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDi
         { "if", &AssemblerParser::parseIfDecl },
         { "else", &AssemblerParser::parseElseDecl },
         { "endif", &AssemblerParser::parseEndIfDecl },
+        { "allowwrite", &AssemblerParser::parseAllowWrite },
+        { "disallowwrite", &AssemblerParser::parseDisallowWrite },
     };
 
 AssemblerParser::AssemblerParser(Compiler* compiler, IAssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
@@ -303,6 +305,44 @@ void AssemblerParser::parseEndIfDecl()
     popContext();
 
     expectEol(nextToken());
+}
+
+void AssemblerParser::parseAllowWrite()
+{
+    Token token = lastToken();
+
+    auto startExpr = parseExpression(nextToken(), true);
+    if (!startExpr)
+        error(mExpressionError);
+
+    expectComma(lastTokenId());
+
+    auto sizeExpr = parseExpression(nextToken(), true);
+    if (!sizeExpr)
+        error(mExpressionError);
+
+    expectEol(lastTokenId());
+
+    mContext->codeEmitter()->emit<WriteDirective>(token, std::move(startExpr), std::move(sizeExpr), true);
+}
+
+void AssemblerParser::parseDisallowWrite()
+{
+    Token token = lastToken();
+
+    auto startExpr = parseExpression(nextToken(), true);
+    if (!startExpr)
+        error(mExpressionError);
+
+    expectComma(lastTokenId());
+
+    auto sizeExpr = parseExpression(nextToken(), true);
+    if (!sizeExpr)
+        error(mExpressionError);
+
+    expectEol(lastTokenId());
+
+    mContext->codeEmitter()->emit<WriteDirective>(token, std::move(startExpr), std::move(sizeExpr), false);
 }
 
 void AssemblerParser::parseDefByte()

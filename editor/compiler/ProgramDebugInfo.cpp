@@ -116,6 +116,26 @@ void ProgramDebugInfo::setSectionCompressedLength(const ProgramSection* section,
     mSections[index].compressedLength = compressedLength;
 }
 
+void ProgramDebugInfo::addWriteProtection(const ProgramSection* section, unsigned address, ProgramWriteProtection protection)
+{
+    Q_ASSERT(address < 0x10000);
+    if (address < 0x10000) {
+        address |= section->bankAddress();
+        mWriteProtection[address].emplace_back(std::move(protection));
+    }
+}
+
+void ProgramDebugInfo::getWriteProtection(std::unordered_map<unsigned, std::vector<ProgramWriteProtection>>& writeProtection)
+{
+    writeProtection = mWriteProtection;
+    for (const auto& auxInfo : mAuxiliaryInfos) {
+        for (const auto& it : auxInfo->mWriteProtection) {
+            Q_ASSERT(writeProtection.find(it.first) == writeProtection.end());
+            writeProtection[it.first] = it.second;
+        }
+    }
+}
+
 void ProgramDebugInfo::setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken)
 {
     if (!file)

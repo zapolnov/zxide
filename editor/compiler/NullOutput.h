@@ -3,6 +3,8 @@
 
 #include "compiler/ProgramBinary.h"
 
+struct ProgramWriteProtection;
+
 class NullOutput final : public IProgramBinary
 {
 public:
@@ -15,6 +17,7 @@ public:
     void setAddressForName(const QString& name, unsigned address) override;
     void setSourceLocation(unsigned addr, const QString& fileName, int line) override;
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) override;
+    void addWriteProtection(ProgramWriteProtection protection) override;
     void emitByte(const SourceFile* file, int line, quint8 byte) override;;
     void emitWord(const SourceFile* file, int line, quint16 word) override;
     void emitDWord(const SourceFile* file, int line, quint32 dword) override;
@@ -39,6 +42,7 @@ public:
     void setAddressForName(const QString& name, unsigned address) override;
     void setSourceLocation(unsigned addr, const QString& fileName, int line) override;
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) override;
+    void addWriteProtection(ProgramWriteProtection protection) override;
     void emitByte(const SourceFile* file, int line, quint8 byte) override;;
     void emitWord(const SourceFile* file, int line, quint16 word) override;
     void emitDWord(const SourceFile* file, int line, quint32 dword) override;

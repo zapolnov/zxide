@@ -31,6 +31,21 @@ struct ProgramSectionInfo
     std::multimap<unsigned, QString> symbols;
 };
 
+struct ProgramWriteProtection
+{
+    enum class What
+    {
+        AllowWrite,
+        DisallowWrite,
+        PushAllowWrite,
+        PopAllowWrite,
+    };
+
+    What what;
+    unsigned startAddress;
+    unsigned size;
+};
+
 class ProgramDebugInfo
 {
 public:
@@ -47,6 +62,9 @@ public:
     const std::vector<ProgramSectionInfo>& sections() const { return mSections; }
     void addSection(const ProgramSection* section, unsigned start, unsigned originalLength);
     void setSectionCompressedLength(const ProgramSection* section, unsigned compressedLength);
+
+    void addWriteProtection(const ProgramSection* section, unsigned address, ProgramWriteProtection protection);
+    void getWriteProtection(std::unordered_map<unsigned, std::vector<ProgramWriteProtection>>& writeProtection);
 
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken);
     const std::map<int, TStates>& tstatesForFile(const QString& file, bool withAux) const;
@@ -66,6 +84,7 @@ private:
     std::unordered_map<QString, std::map<int, unsigned>, hash> mFileToMemory;
     std::unordered_map<QString, std::map<int, TStates>, hash> mFileToTStates;
     std::unordered_map<QString, unsigned, hash> mNameToAddress;
+    std::unordered_map<unsigned, std::vector<ProgramWriteProtection>> mWriteProtection;
     std::map<unsigned, QString> mAddressToName;
     std::vector<std::shared_ptr<ProgramDebugInfo>> mAuxiliaryInfos;
     // that's quite suboptimal use of memory, but who counts memory these days?!

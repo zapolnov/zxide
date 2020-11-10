@@ -74,6 +74,21 @@ class Opcode:
         code += '    binary->setTStatesForLocation(token().file, token().line, %d, %d);\n' \
             % (self.tstatesIfTaken, self.tstatesIfNotTaken)
 
+        after_code = ''
+        if self.name == 'ld' and self.operands[0] == '(##)':
+            size = 0
+            if self.operands[1] in [ 'a' ]:
+                size = 1
+            elif self.operands[1] in [ 'hl', 'de', 'bc', 'ix', 'iy', 'sp' ]:
+                size = 2
+            code += '    ProgramWriteProtection wp;\n'
+            code += '    wp.what = ProgramWriteProtection::What::PushAllowWrite;\n'
+            code += '    wp.startAddress = context1.evaluateWord(mLiteral1);\n'
+            code += '    wp.size = %d;\n' % size
+            code += '    binary->addWriteProtection(std::move(wp));\n'
+            after_code += '    wp.what = ProgramWriteProtection::What::PopAllowWrite;\n'
+            after_code += '    binary->addWriteProtection(std::move(wp));\n'
+
         for byte in self.bytes:
             if byte == '#':
                 found = False
@@ -102,6 +117,8 @@ class Opcode:
                     raise Exception('Invalid operand')
             else:
                 code += '    binary->emitByte(token().file, token().line, 0x%02X);\n' % byte
+
+        code += after_code
         return code
 
 opcodes = [

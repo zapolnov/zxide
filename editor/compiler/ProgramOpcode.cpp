@@ -1,4 +1,5 @@
 #include "ProgramOpcode.h"
+#include "ProgramDebugInfo.h"
 #include "Compiler.h"
 #include "AssemblerToken.h"
 #include "Expression.h"
@@ -240,4 +241,31 @@ bool RepeatMacro::resolveAddress(quint32& address, Program* program, IErrorRepor
 void RepeatMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     mCodeEmitter.lock()->emitCode(program, binary, reporter);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+WriteDirective::WriteDirective(const Token& token, std::unique_ptr<Expression> startExpr,
+        std::unique_ptr<Expression> sizeExpr, bool enabled)
+    : ProgramOpcode(token)
+    , mStartExpr(std::move(startExpr))
+    , mSizeExpr(std::move(sizeExpr))
+    , mEnabled(enabled)
+{
+}
+
+WriteDirective::~WriteDirective()
+{
+}
+
+void WriteDirective::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
+{
+    ExprEvalContext context(program, reporter, binary->endAddress(), this);
+
+    ProgramWriteProtection wp;
+    wp.what = (mEnabled ? ProgramWriteProtection::What::AllowWrite : ProgramWriteProtection::What::DisallowWrite);
+    wp.startAddress = context.evaluateWord(mStartExpr);
+    wp.size = context.evaluateDWord(mSizeExpr);
+
+    binary->addWriteProtection(std::move(wp));
 }

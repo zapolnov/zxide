@@ -68,7 +68,13 @@ public:
     {
         if (row < 0 || row >= count())
             return -1;
-        return int(mControlFlow[size_t(row)].codeAddress);
+
+        unsigned addr = mControlFlow[size_t(row)].codeAddress;
+        int bank = mControlFlow[size_t(row)].bank;
+        if (bank != 2 && bank != 5 && addr >= 0xc000)
+            addr |= bank << 16;
+
+        return int(addr);
     }
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override

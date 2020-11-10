@@ -64,6 +64,16 @@ const Color ZXPalette[] = {
     { 0xff, 0xff, 0xff },
 };
 
+namespace
+{
+    struct AllowStack
+    {
+        unsigned start;
+        unsigned size;
+        std::vector<bool> values;
+    };
+}
+
 static QElapsedTimer elapsedTimer;
 static QMutex mutex;
 static std::vector<std::function<void()>> commandQueue;
@@ -72,6 +82,9 @@ static std::vector<MemoryOperationInfo> memoryOperations_mainThread;
 static std::vector<ControlFlowInfo> controlFlows;
 static std::vector<ControlFlowInfo> controlFlows_mainThread;
 static std::vector<Breakpoint> breakpoints;
+static bool writeAllowed[0x10000];
+static std::vector<AllowStack> writeAllowStack;
+static std::unordered_map<unsigned, std::vector<ProgramWriteProtection>> writeProtection;
 static std::unique_ptr<ProgramBinary> programBinary;
 static QImage screenBack;
 static QImage screenFront;
@@ -144,6 +157,9 @@ bool EmulatorCore::start()
         return false;
 
     updateBreakpoints();
+
+    memset(writeAllowed, true, sizeof(writeAllowed));
+    writeAllowStack.clear();
 
     tapeFile = mTapeFile;
     prevSP = unsigned(-1);
@@ -292,6 +308,10 @@ void EmulatorCore::setProgramBinary(std::unique_ptr<ProgramBinary> binary)
         QMutexLocker lock(&mutex);
         old = std::move(programBinary);
         programBinary = std::move(binary);
+        if (programBinary && programBinary->debugInfo() != nullptr)
+            programBinary->debugInfo()->getWriteProtection(writeProtection);
+        else
+            writeProtection.clear();
     }
 }
 
@@ -796,7 +816,9 @@ void EmulatorCore::update()
         pausePC_ = pausePC;
         SP_ = SP;
         PC_ = PC;
-        PC_ |= (quint32)(machine_current->ram.current_page) << 16;
+        quint32 bank = (quint32)(machine_current->ram.current_page);
+        if (bank != 2 && bank != 5 && PC_ >= 0xc000)
+            PC_ |= bank << 16;
         runtoAddress_ = runtoAddress;
         std::swap(::memoryOperations, memoryOperations_mainThread);
         std::swap(::controlFlows, controlFlows_mainThread);
@@ -850,7 +872,9 @@ static void getRegisters(Registers& regs)
     regs.iy = IY;
     regs.sp = SP;
     regs.pc = PC;
-    regs.pc |= (quint32)(machine_current->ram.current_page) << 16;
+    quint32 bank = (quint32)(machine_current->ram.current_page);
+    if (bank != 2 && bank != 5 && regs.pc >= 0xc000)
+        regs.pc |= bank << 16;
     regs.af_ = AF_;
     regs.bc_ = BC_;
     regs.de_ = DE_;
@@ -1115,7 +1139,10 @@ int ui_debugger_activate()
             shouldEmitPausedSignal = true;
             shouldUpdateUi = true;
             pausePC = PC;
-            pausePC |= (quint32)(machine_current->ram.current_page) << 16;
+
+            quint32 page = (quint32)(machine_current->ram.current_page);
+            if (page != 2 && page != 5 && pausePC >= 0xc000)
+                pausePC |= page << 16;
         }
     }
 
@@ -1146,6 +1173,15 @@ extern "C" void ui_notify_memory_page_changed(int page)
 
 extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigned codeAddress, unsigned value)
 {
+    Q_ASSERT(memoryAddress < 0x10000);
+    if (!writeAllowed[memoryAddress]) {
+        if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS) {
+            QMutexLocker lock(&mutex);
+            runtoAddress = -1;
+        }
+        debugger_mode = DEBUGGER_MODE_HALTED;
+    }
+
     if (collectMemoryOperations) {
         MemoryOperationInfo info;
         info.operation = MemoryOperation::WriteByte;
@@ -1161,6 +1197,69 @@ extern "C" void ui_notify_memory_write(int bank, unsigned memoryAddress, unsigne
 
 extern "C" void ui_notify_control_flow(int bank, unsigned address)
 {
+    unsigned addr = address;
+    if (bank != 2 && bank != 5 && addr >= 0xc000)
+        addr |= bank << 16;
+
+    {
+        QMutexLocker lock(&mutex);
+        auto it = writeProtection.find(addr);
+        if (it != writeProtection.end()) {
+            for (const auto& jt : it->second) {
+                switch (jt.what) {
+                    case ProgramWriteProtection::What::AllowWrite:
+                        for (unsigned i = 0; i < jt.size; i++) {
+                            unsigned addr = jt.startAddress + i;
+                            Q_ASSERT(addr < 0x10000);
+                            if (addr < 0x10000)
+                                writeAllowed[addr] = true;
+                        }
+                        break;
+
+                    case ProgramWriteProtection::What::DisallowWrite:
+                        for (unsigned i = 0; i < jt.size; i++) {
+                            unsigned addr = jt.startAddress + i;
+                            Q_ASSERT(addr < 0x10000);
+                            if (addr < 0x10000)
+                                writeAllowed[addr] = false;
+                        }
+                        break;
+
+                    case ProgramWriteProtection::What::PushAllowWrite: {
+                        AllowStack s;
+                        s.start = jt.startAddress;
+                        s.size = jt.size;
+                        s.values.reserve(jt.size);
+                        for (unsigned i = 0; i < jt.size; i++) {
+                            unsigned addr = jt.startAddress + i;
+                            Q_ASSERT(addr < 0x10000);
+                            if (addr < 0x10000) {
+                                s.values.emplace_back(writeAllowed[addr]);
+                                writeAllowed[addr] = true;
+                            }
+                        }
+                        writeAllowStack.emplace_back(std::move(s));
+                        break;
+                    }
+
+                    case ProgramWriteProtection::What::PopAllowWrite:
+                        if (!writeAllowStack.empty()) {
+                            AllowStack s = std::move(writeAllowStack.back());
+                            writeAllowStack.pop_back();
+                            unsigned k = 0;
+                            for (unsigned i = 0; i < s.size; i++) {
+                                unsigned addr = s.start + i;
+                                Q_ASSERT(addr < 0x10000);
+                                if (addr < 0x10000)
+                                    writeAllowed[addr] = s.values[k++];
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
     if (collectControlFlow) {
         ControlFlowInfo info;
         info.bank = bank;

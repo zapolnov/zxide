@@ -2,6 +2,7 @@
 #define COMPILER_COMPRESSOR_H
 
 #include "compiler/ProgramBinary.h"
+#include "compiler/ProgramDebugInfo.h"
 
 class Compressor : public IProgramBinary
 {
@@ -15,6 +16,7 @@ public:
     void setAddressForName(const QString& name, unsigned address) final override;
     void setSourceLocation(unsigned addr, const QString& fileName, int line) final override;
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) final override;
+    void addWriteProtection(ProgramWriteProtection protection) final override;
     void emitByte(const SourceFile* file, int line, quint8 byte) final override;
     void emitWord(const SourceFile* file, int line, quint16 word) final override;
     void emitDWord(const SourceFile* file, int line, quint32 dword) final override;

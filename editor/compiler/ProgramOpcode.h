@@ -190,4 +190,24 @@ private:
     Q_DISABLE_COPY(RepeatMacro)
 };
 
+class WriteDirective final : public ProgramOpcode
+{
+public:
+    WriteDirective(const Token& token, std::unique_ptr<Expression> startExpr, std::unique_ptr<Expression> sizeExpr, bool enable);
+    ~WriteDirective() override;
+
+    unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfNotTaken(const Program*, IErrorReporter*) const final override { return 0; }
+    unsigned tstatesIfTaken(const Program*, IErrorReporter*) const final override { return 0; }
+
+    void emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const final override;
+
+private:
+    std::unique_ptr<Expression> mStartExpr;
+    std::unique_ptr<Expression> mSizeExpr;
+    bool mEnabled;
+
+    Q_DISABLE_COPY(WriteDirective)
+};
+
 #endif

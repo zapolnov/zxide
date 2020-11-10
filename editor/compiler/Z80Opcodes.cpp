@@ -2097,61 +2097,110 @@ void LD_mnn_A::emitBinary(Program* program, IProgramBinary* binary, IErrorReport
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 13, 13);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 1;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0x32);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_BC::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 20, 20);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x43);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_DE::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 20, 20);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x53);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_HL::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 16, 16);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_SP::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 20, 20);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0xED);
     binary->emitByte(token().file, token().line, 0x73);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_IX::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 20, 20);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0xDD);
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_mnn_IY::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const
 {
     ExprEvalContext context1(program, reporter, binary->endAddress(), this);
     binary->setTStatesForLocation(token().file, token().line, 20, 20);
+    ProgramWriteProtection wp;
+    wp.what = ProgramWriteProtection::What::PushAllowWrite;
+    wp.startAddress = context1.evaluateWord(mLiteral1);
+    wp.size = 2;
+    binary->addWriteProtection(std::move(wp));
     binary->emitByte(token().file, token().line, 0xFD);
     binary->emitByte(token().file, token().line, 0x22);
     binary->emitWord(token().file, token().line, context1.evaluateWord(mLiteral1));
+    wp.what = ProgramWriteProtection::What::PopAllowWrite;
+    binary->addWriteProtection(std::move(wp));
 }
 
 void LD_BC_nn::emitBinary(Program* program, IProgramBinary* binary, IErrorReporter* reporter) const

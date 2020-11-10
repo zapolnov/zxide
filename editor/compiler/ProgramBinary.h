@@ -8,6 +8,7 @@
 #include <vector>
 
 struct SourceFile;
+struct ProgramWriteProtection;
 class ProgramDebugInfo;
 class ProgramSection;
 
@@ -21,6 +22,7 @@ public:
     virtual void setAddressForName(const QString& name, unsigned address) = 0;
     virtual void setSourceLocation(unsigned addr, const QString& fileName, int line) = 0;
     virtual void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) = 0;
+    virtual void addWriteProtection(ProgramWriteProtection protection) = 0;
     virtual void emitByte(const SourceFile* file, int line, quint8 byte) = 0;;
     virtual void emitWord(const SourceFile* file, int line, quint16 word) = 0;
     virtual void emitDWord(const SourceFile* file, int line, quint32 dword) = 0;
@@ -63,6 +65,7 @@ public:
     void setAddressForName(const QString& name, unsigned address) override;
     void setSourceLocation(unsigned addr, const QString& fileName, int line) override;
     void setTStatesForLocation(const SourceFile* file, int line, unsigned taken, unsigned notTaken) override;
+    void addWriteProtection(ProgramWriteProtection protection);
 
     const FileMap& files() const { return mFiles; }
 

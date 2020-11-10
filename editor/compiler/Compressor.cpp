@@ -50,6 +50,11 @@ void Compressor::setTStatesForLocation(const SourceFile* file, int line, unsigne
     //mBinary->setTStatesForLocation(file, line, taken, notTaken);
 }
 
+void Compressor::addWriteProtection(ProgramWriteProtection protection)
+{
+    // FIXME
+}
+
 void Compressor::emitByte(const SourceFile* file, int line, quint8 byte)
 {
     QString fileName = (file ? file->name : QString());

@@ -46,6 +46,11 @@ void ProgramBinary::setTStatesForLocation(const SourceFile* file, int line, unsi
     debugInfo()->setTStatesForLocation(file, line, taken, notTaken);
 }
 
+void ProgramBinary::addWriteProtection(ProgramWriteProtection protection)
+{
+    debugInfo()->addWriteProtection(mCurrentSection, mCurrentFile->second.endAddress, protection);
+}
+
 void ProgramBinary::emitByte(const SourceFile* file, int line, quint8 byte)
 {
     QString fileName = (file ? file->name : QString());
