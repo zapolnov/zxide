@@ -2,6 +2,7 @@
 #define COMPILER_PROGRAMOPCODE_H
 
 #include "AssemblerToken.h"
+#include "ProgramDebugInfo.h"
 #include <QByteArray>
 #include <memory>
 #include <vector>
@@ -193,7 +194,7 @@ private:
 class WriteDirective final : public ProgramOpcode
 {
 public:
-    WriteDirective(const Token& token, std::unique_ptr<Expression> startExpr, std::unique_ptr<Expression> sizeExpr, bool enable);
+    WriteDirective(const Token& token, std::unique_ptr<Expression> startExpr, std::unique_ptr<Expression> sizeExpr, ProgramWriteProtection::What what);
     ~WriteDirective() override;
 
     unsigned lengthInBytes(const Program*, IErrorReporter*) const final override { return 0; }
@@ -205,7 +206,7 @@ public:
 private:
     std::unique_ptr<Expression> mStartExpr;
     std::unique_ptr<Expression> mSizeExpr;
-    bool mEnabled;
+    ProgramWriteProtection::What mWhat;
 
     Q_DISABLE_COPY(WriteDirective)
 };

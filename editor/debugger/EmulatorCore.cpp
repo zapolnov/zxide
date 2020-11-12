@@ -1206,26 +1206,21 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
         auto it = writeProtection.find(addr);
         if (it != writeProtection.end()) {
             for (const auto& jt : it->second) {
+                unsigned start = jt.startAddress;
+                unsigned size = jt.size;
                 switch (jt.what) {
                     case ProgramWriteProtection::What::AllowWrite:
-                        for (unsigned i = 0; i < jt.size; i++) {
-                            unsigned addr = jt.startAddress + i;
-                            Q_ASSERT(addr < 0x10000);
-                            if (addr < 0x10000)
-                                writeAllowed[addr] = true;
-                        }
-                        break;
-
                     case ProgramWriteProtection::What::DisallowWrite:
                         for (unsigned i = 0; i < jt.size; i++) {
                             unsigned addr = jt.startAddress + i;
                             Q_ASSERT(addr < 0x10000);
                             if (addr < 0x10000)
-                                writeAllowed[addr] = false;
+                                writeAllowed[addr] = (jt.what == ProgramWriteProtection::What::AllowWrite);
                         }
                         break;
 
-                    case ProgramWriteProtection::What::PushAllowWrite: {
+                    case ProgramWriteProtection::What::PushAllowWrite:
+                    case ProgramWriteProtection::What::PushDisallowWrite: {
                         AllowStack s;
                         s.start = jt.startAddress;
                         s.size = jt.size;
@@ -1235,17 +1230,20 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                             Q_ASSERT(addr < 0x10000);
                             if (addr < 0x10000) {
                                 s.values.emplace_back(writeAllowed[addr]);
-                                writeAllowed[addr] = true;
+                                writeAllowed[addr] = (jt.what == ProgramWriteProtection::What::PushAllowWrite);
                             }
                         }
                         writeAllowStack.emplace_back(std::move(s));
                         break;
                     }
 
-                    case ProgramWriteProtection::What::PopAllowWrite:
+                    case ProgramWriteProtection::What::PopAllowWriteEarly:
+                        Q_ASSERT(!writeAllowStack.empty());
                         if (!writeAllowStack.empty()) {
                             AllowStack s = std::move(writeAllowStack.back());
                             writeAllowStack.pop_back();
+                            Q_ASSERT(s.start == jt.startAddress);
+                            Q_ASSERT(s.size == jt.size);
                             unsigned k = 0;
                             for (unsigned i = 0; i < s.size; i++) {
                                 unsigned addr = s.start + i;
@@ -1254,6 +1252,9 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                                     writeAllowed[addr] = s.values[k++];
                             }
                         }
+                        break;
+
+                    case ProgramWriteProtection::What::PopAllowWrite:
                         break;
                 }
             }
@@ -1276,6 +1277,49 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
 
         QMutexLocker lock(&mutex);
         controlFlows.emplace_back(std::move(info));
+    }
+}
+
+extern "C" void ui_notify_control_flow_after(int bank, unsigned address)
+{
+    unsigned addr = address;
+    if (bank != 2 && bank != 5 && addr >= 0xc000)
+        addr |= bank << 16;
+
+    {
+        QMutexLocker lock(&mutex);
+        auto it = writeProtection.find(addr);
+        if (it != writeProtection.end()) {
+            for (const auto& jt : it->second) {
+                unsigned start = jt.startAddress;
+                unsigned size = jt.size;
+                switch (jt.what) {
+                    case ProgramWriteProtection::What::AllowWrite:
+                    case ProgramWriteProtection::What::DisallowWrite:
+                    case ProgramWriteProtection::What::PushAllowWrite:
+                    case ProgramWriteProtection::What::PushDisallowWrite:
+                    case ProgramWriteProtection::What::PopAllowWriteEarly:
+                        break;
+
+                    case ProgramWriteProtection::What::PopAllowWrite:
+                        Q_ASSERT(!writeAllowStack.empty());
+                        if (!writeAllowStack.empty()) {
+                            AllowStack s = std::move(writeAllowStack.back());
+                            writeAllowStack.pop_back();
+                            Q_ASSERT(s.start == jt.startAddress);
+                            Q_ASSERT(s.size == jt.size);
+                            unsigned k = 0;
+                            for (unsigned i = 0; i < s.size; i++) {
+                                unsigned addr = s.start + i;
+                                Q_ASSERT(addr < 0x10000);
+                                if (addr < 0x10000)
+                                    writeAllowed[addr] = s.values[k++];
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 }
 

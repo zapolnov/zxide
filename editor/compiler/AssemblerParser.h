@@ -59,6 +59,10 @@ private:
     void parseEndIfDecl();
     void parseAllowWrite();
     void parseDisallowWrite();
+    void parsePushAllowWrite();
+    void parsePushDisallowWrite();
+    void parsePopAllowWrite();
+    void parsePopAllowWriteAfter();
 
     void parseDefByte();
     void parseDefWord();

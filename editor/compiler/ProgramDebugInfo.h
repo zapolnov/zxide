@@ -38,7 +38,9 @@ struct ProgramWriteProtection
         AllowWrite,
         DisallowWrite,
         PushAllowWrite,
+        PushDisallowWrite,
         PopAllowWrite,
+        PopAllowWriteEarly,
     };
 
     What what;

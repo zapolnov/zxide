@@ -109,6 +109,7 @@ static libspectrum_byte opcode = 0x00;
 #endif
 
 void ui_notify_control_flow(int bank, unsigned address);
+void ui_notify_control_flow_after(int bank, unsigned address);
 
 /* Execute Z80 opcodes until the next event */
 void
@@ -160,6 +161,7 @@ z80_do_opcodes( void )
 
     END_CHECK
 
+    unsigned originalPC = PC;
     ui_notify_control_flow(machine_current->ram.current_page, PC);
 
     /* Check if the debugger should become active at this point */
@@ -273,6 +275,7 @@ z80_do_opcodes( void )
 
     if( tstates & 1 ) {
       if( ++tstates == event_next_event ) {
+        ui_notify_control_flow_after(machine_current->ram.current_page, originalPC);
 	break;
       }
     }
@@ -364,6 +367,8 @@ z80_do_opcodes( void )
     switch(opcode) {
 #include "z80/opcodes_base.c"
     }
+
+    ui_notify_control_flow_after(machine_current->ram.current_page, originalPC);
 
   }
 

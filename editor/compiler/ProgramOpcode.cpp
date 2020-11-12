@@ -246,11 +246,11 @@ void RepeatMacro::emitBinary(Program* program, IProgramBinary* binary, IErrorRep
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 WriteDirective::WriteDirective(const Token& token, std::unique_ptr<Expression> startExpr,
-        std::unique_ptr<Expression> sizeExpr, bool enabled)
+        std::unique_ptr<Expression> sizeExpr, ProgramWriteProtection::What what)
     : ProgramOpcode(token)
     , mStartExpr(std::move(startExpr))
     , mSizeExpr(std::move(sizeExpr))
-    , mEnabled(enabled)
+    , mWhat(what)
 {
 }
 
@@ -263,7 +263,7 @@ void WriteDirective::emitBinary(Program* program, IProgramBinary* binary, IError
     ExprEvalContext context(program, reporter, binary->endAddress(), this);
 
     ProgramWriteProtection wp;
-    wp.what = (mEnabled ? ProgramWriteProtection::What::AllowWrite : ProgramWriteProtection::What::DisallowWrite);
+    wp.what = mWhat;
     wp.startAddress = context.evaluateWord(mStartExpr);
     wp.size = context.evaluateDWord(mSizeExpr);
 
