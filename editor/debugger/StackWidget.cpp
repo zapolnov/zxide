@@ -51,8 +51,8 @@ void StackWidget::paintGL()
     EmulatorCore::instance()->getMemory(firstAddr, mDataBuffer.data(), dataBufferSize);
 
     for (int i = 0; i < h; i++) {
-        quint16 b1 = quint8(mDataBuffer[(addr + 0) - firstAddr]);
-        quint16 b2 = quint8(mDataBuffer[(addr + 1) - firstAddr]);
+        quint16 b1 = quint8(mDataBuffer[((addr + 0) - firstAddr) & 0xffff]);
+        quint16 b2 = quint8(mDataBuffer[((addr + 1) - firstAddr) & 0xffff]);
         quint16 value = b1 | (b2 << 8);
 
         char current[2];

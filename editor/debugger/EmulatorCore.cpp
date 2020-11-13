@@ -70,7 +70,7 @@ namespace
     {
         unsigned start;
         unsigned size;
-        std::vector<bool> values;
+        std::vector<uint8_t> values;
     };
 }
 
@@ -1224,15 +1224,17 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                         AllowStack s;
                         s.start = jt.startAddress;
                         s.size = jt.size;
-                        s.values.reserve(jt.size);
+                        s.values.resize(jt.size);
+                        uint8_t* p = &s.values[0];
                         for (unsigned i = 0; i < jt.size; i++) {
                             unsigned addr = jt.startAddress + i;
                             Q_ASSERT(addr < 0x10000);
                             if (addr < 0x10000) {
-                                s.values.emplace_back(writeAllowed[addr]);
+                                *p++ = writeAllowed[addr] ? 1 : 0;
                                 writeAllowed[addr] = (jt.what == ProgramWriteProtection::What::PushAllowWrite);
                             }
                         }
+                        s.values.resize(p - &s.values[0]);
                         writeAllowStack.emplace_back(std::move(s));
                         break;
                     }
@@ -1244,12 +1246,12 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                             writeAllowStack.pop_back();
                             Q_ASSERT(s.start == jt.startAddress);
                             Q_ASSERT(s.size == jt.size);
-                            unsigned k = 0;
+                            const uint8_t* p = &s.values[0];
                             for (unsigned i = 0; i < s.size; i++) {
                                 unsigned addr = s.start + i;
                                 Q_ASSERT(addr < 0x10000);
                                 if (addr < 0x10000)
-                                    writeAllowed[addr] = s.values[k++];
+                                    writeAllowed[addr] = *p++ != 0;
                             }
                         }
                         break;
@@ -1308,12 +1310,12 @@ extern "C" void ui_notify_control_flow_after(int bank, unsigned address)
                             writeAllowStack.pop_back();
                             Q_ASSERT(s.start == jt.startAddress);
                             Q_ASSERT(s.size == jt.size);
-                            unsigned k = 0;
+                            const uint8_t* p = &s.values[0];
                             for (unsigned i = 0; i < s.size; i++) {
                                 unsigned addr = s.start + i;
                                 Q_ASSERT(addr < 0x10000);
                                 if (addr < 0x10000)
-                                    writeAllowed[addr] = s.values[k++];
+                                    writeAllowed[addr] = *p++ != 0;
                             }
                         }
                         break;
