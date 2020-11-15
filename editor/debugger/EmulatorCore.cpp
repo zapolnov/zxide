@@ -1212,10 +1212,14 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                     case ProgramWriteProtection::What::AllowWrite:
                     case ProgramWriteProtection::What::DisallowWrite:
                         for (unsigned i = 0; i < jt.size; i++) {
-                            unsigned addr = jt.startAddress + i;
-                            Q_ASSERT(addr < 0x10000);
-                            if (addr < 0x10000)
-                                writeAllowed[addr] = (jt.what == ProgramWriteProtection::What::AllowWrite);
+                            unsigned addr1 = jt.startAddress + i;
+                            Q_ASSERT(addr1 < 0x10000);
+                            if (addr1 >= 0x10000) {
+                                static volatile unsigned value;
+                                value = addr1;
+                                abort();
+                            } else
+                                writeAllowed[addr1] = (jt.what == ProgramWriteProtection::What::AllowWrite);
                         }
                         break;
 
@@ -1227,11 +1231,15 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                         s.values.resize(jt.size);
                         uint8_t* p = &s.values[0];
                         for (unsigned i = 0; i < jt.size; i++) {
-                            unsigned addr = jt.startAddress + i;
-                            Q_ASSERT(addr < 0x10000);
-                            if (addr < 0x10000) {
-                                *p++ = writeAllowed[addr] ? 1 : 0;
-                                writeAllowed[addr] = (jt.what == ProgramWriteProtection::What::PushAllowWrite);
+                            unsigned addr1 = jt.startAddress + i;
+                            Q_ASSERT(addr1 < 0x10000);
+                            if (addr1 >= 0x10000) {
+                                static volatile unsigned value;
+                                value = addr1;
+                                abort();
+                            } else {
+                                *p++ = writeAllowed[addr1] ? 1 : 0;
+                                writeAllowed[addr1] = (jt.what == ProgramWriteProtection::What::PushAllowWrite);
                             }
                         }
                         s.values.resize(p - &s.values[0]);
@@ -1246,12 +1254,28 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                             writeAllowStack.pop_back();
                             Q_ASSERT(s.start == jt.startAddress);
                             Q_ASSERT(s.size == jt.size);
+                            if (s.start != jt.startAddress) {
+                                static volatile unsigned value1, value2;
+                                value1 = s.start;
+                                value2 = jt.startAddress;
+                                abort();
+                            }
+                            if (s.size != jt.size) {
+                                static volatile unsigned value1, value2;
+                                value1 = s.size;
+                                value2 = jt.size;
+                                abort();
+                            }
                             const uint8_t* p = &s.values[0];
                             for (unsigned i = 0; i < s.size; i++) {
-                                unsigned addr = s.start + i;
-                                Q_ASSERT(addr < 0x10000);
-                                if (addr < 0x10000)
-                                    writeAllowed[addr] = *p++ != 0;
+                                unsigned addr1 = s.start + i;
+                                Q_ASSERT(addr1 < 0x10000);
+                                if (addr1 >= 0x10000) {
+                                    static volatile unsigned value;
+                                    value = addr1;
+                                    abort();
+                                } else
+                                    writeAllowed[addr1] = *p++ != 0;
                             }
                         }
                         break;
@@ -1305,17 +1329,35 @@ extern "C" void ui_notify_control_flow_after(int bank, unsigned address)
 
                     case ProgramWriteProtection::What::PopAllowWrite:
                         Q_ASSERT(!writeAllowStack.empty());
-                        if (!writeAllowStack.empty()) {
+                        if (writeAllowStack.empty())
+                            abort();
+                        else {
                             AllowStack s = std::move(writeAllowStack.back());
                             writeAllowStack.pop_back();
                             Q_ASSERT(s.start == jt.startAddress);
                             Q_ASSERT(s.size == jt.size);
+                            if (s.start != jt.startAddress) {
+                                static volatile unsigned value1, value2;
+                                value1 = s.start;
+                                value2 = jt.startAddress;
+                                abort();
+                            }
+                            if (s.size != jt.size) {
+                                static volatile unsigned value1, value2;
+                                value1 = s.size;
+                                value2 = jt.size;
+                                abort();
+                            }
                             const uint8_t* p = &s.values[0];
                             for (unsigned i = 0; i < s.size; i++) {
-                                unsigned addr = s.start + i;
-                                Q_ASSERT(addr < 0x10000);
-                                if (addr < 0x10000)
-                                    writeAllowed[addr] = *p++ != 0;
+                                unsigned addr1 = s.start + i;
+                                Q_ASSERT(addr1 < 0x10000);
+                                if (addr1 >= 0x10000) {
+                                    static volatile unsigned value;
+                                    value = addr1;
+                                    abort();
+                                } else
+                                    writeAllowed[addr1] = *p++ != 0;
                             }
                         }
                         break;
