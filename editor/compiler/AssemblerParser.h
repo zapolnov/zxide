@@ -63,6 +63,7 @@ private:
     void parsePushDisallowWrite();
     void parsePopAllowWrite();
     void parsePopAllowWriteAfter();
+    void parseAssertBank();
 
     void parseDefByte();
     void parseDefWord();

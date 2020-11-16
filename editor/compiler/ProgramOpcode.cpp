@@ -265,7 +265,7 @@ void WriteDirective::emitBinary(Program* program, IProgramBinary* binary, IError
     ProgramWriteProtection wp;
     wp.what = mWhat;
     wp.startAddress = context.evaluateWord(mStartExpr);
-    wp.size = context.evaluateDWord(mSizeExpr);
+    wp.size = (mSizeExpr ? context.evaluateDWord(mSizeExpr) : 0);
 
     binary->addWriteProtection(std::move(wp));
 }

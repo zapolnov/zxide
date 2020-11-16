@@ -33,6 +33,7 @@ std::unordered_map<std::string, void(AssemblerParser::*)()> AssemblerParser::mDi
         { "pushdisallowwrite", &AssemblerParser::parsePushDisallowWrite },
         { "popallowwrite", &AssemblerParser::parsePopAllowWrite },
         { "popallowwriteafter", &AssemblerParser::parsePopAllowWriteAfter },
+        { "assertbank", &AssemblerParser::parseAssertBank },
     };
 
 AssemblerParser::AssemblerParser(Compiler* compiler, IAssemblerLexer* lexer, Program* program, IErrorReporter* reporter)
@@ -423,6 +424,19 @@ void AssemblerParser::parsePopAllowWriteAfter()
     expectEol(lastTokenId());
 
     mContext->codeEmitter()->emit<WriteDirective>(token, std::move(startExpr), std::move(sizeExpr), ProgramWriteProtection::What::PopAllowWrite);
+}
+
+void AssemblerParser::parseAssertBank()
+{
+    Token token = lastToken();
+
+    auto expr = parseExpression(nextToken(), true);
+    if (!expr)
+        error(mExpressionError);
+
+    expectEol(lastTokenId());
+
+    mContext->codeEmitter()->emit<WriteDirective>(token, std::move(expr), nullptr, ProgramWriteProtection::What::AssertBank);
 }
 
 void AssemblerParser::parseDefByte()

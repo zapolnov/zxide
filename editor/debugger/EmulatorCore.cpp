@@ -1211,8 +1211,8 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                 switch (jt.what) {
                     case ProgramWriteProtection::What::AllowWrite:
                     case ProgramWriteProtection::What::DisallowWrite:
-                        for (unsigned i = 0; i < jt.size; i++) {
-                            unsigned addr1 = jt.startAddress + i;
+                        for (unsigned i = 0; i < size; i++) {
+                            unsigned addr1 = start + i;
                             Q_ASSERT(addr1 < 0x10000);
                             if (addr1 >= 0x10000) {
                                 static volatile unsigned value;
@@ -1226,12 +1226,12 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                     case ProgramWriteProtection::What::PushAllowWrite:
                     case ProgramWriteProtection::What::PushDisallowWrite: {
                         AllowStack s;
-                        s.start = jt.startAddress;
-                        s.size = jt.size;
-                        s.values.resize(jt.size);
+                        s.start = start;
+                        s.size = size;
+                        s.values.resize(size);
                         uint8_t* p = &s.values[0];
-                        for (unsigned i = 0; i < jt.size; i++) {
-                            unsigned addr1 = jt.startAddress + i;
+                        for (unsigned i = 0; i < size; i++) {
+                            unsigned addr1 = start + i;
                             Q_ASSERT(addr1 < 0x10000);
                             if (addr1 >= 0x10000) {
                                 static volatile unsigned value;
@@ -1252,18 +1252,18 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                         if (!writeAllowStack.empty()) {
                             AllowStack s = std::move(writeAllowStack.back());
                             writeAllowStack.pop_back();
-                            Q_ASSERT(s.start == jt.startAddress);
-                            Q_ASSERT(s.size == jt.size);
-                            if (s.start != jt.startAddress) {
+                            Q_ASSERT(s.start == start);
+                            Q_ASSERT(s.size == size);
+                            if (s.start != start) {
                                 static volatile unsigned value1, value2;
                                 value1 = s.start;
-                                value2 = jt.startAddress;
+                                value2 = start;
                                 abort();
                             }
-                            if (s.size != jt.size) {
+                            if (s.size != size) {
                                 static volatile unsigned value1, value2;
                                 value1 = s.size;
-                                value2 = jt.size;
+                                value2 = size;
                                 abort();
                             }
                             const uint8_t* p = &s.values[0];
@@ -1277,6 +1277,16 @@ extern "C" void ui_notify_control_flow(int bank, unsigned address)
                                 } else
                                     writeAllowed[addr1] = *p++ != 0;
                             }
+                        }
+                        break;
+
+                    case ProgramWriteProtection::What::AssertBank:
+                        if (bank != start) {
+                            if (debugger_mode == DEBUGGER_MODE_RUN_TO_ADDRESS) {
+                                QMutexLocker lock(&mutex);
+                                runtoAddress = -1;
+                            }
+                            debugger_mode = DEBUGGER_MODE_HALTED;
                         }
                         break;
 
@@ -1334,18 +1344,18 @@ extern "C" void ui_notify_control_flow_after(int bank, unsigned address)
                         else {
                             AllowStack s = std::move(writeAllowStack.back());
                             writeAllowStack.pop_back();
-                            Q_ASSERT(s.start == jt.startAddress);
-                            Q_ASSERT(s.size == jt.size);
-                            if (s.start != jt.startAddress) {
+                            Q_ASSERT(s.start == start);
+                            Q_ASSERT(s.size == size);
+                            if (s.start != start) {
                                 static volatile unsigned value1, value2;
                                 value1 = s.start;
-                                value2 = jt.startAddress;
+                                value2 = start;
                                 abort();
                             }
-                            if (s.size != jt.size) {
+                            if (s.size != size) {
                                 static volatile unsigned value1, value2;
                                 value1 = s.size;
-                                value2 = jt.size;
+                                value2 = size;
                                 abort();
                             }
                             const uint8_t* p = &s.values[0];

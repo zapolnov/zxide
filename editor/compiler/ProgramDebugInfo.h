@@ -41,6 +41,7 @@ struct ProgramWriteProtection
         PushDisallowWrite,
         PopAllowWrite,
         PopAllowWriteEarly,
+        AssertBank,
     };
 
     What what;
