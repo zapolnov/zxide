@@ -139,8 +139,10 @@ static int luaGfxSetPixel(lua_State* L)
     int y = luaL_checkinteger(L, 3);
     int value = lua_isboolean(L, 4) ? lua_toboolean(L, 4) : luaL_checkinteger(L, 4);
 
-    if (!data.isValidCoord(x, y))
-        return luaL_error(L, "invalid coordinates.");
+    if (!data.isValidCoord(x, y)) {
+        return luaL_error(L,
+            "invalid coordinates (%d, %d) for dimensions (%d, %d).", x, y, data.width(), data.height());
+    }
 
     data.at(x, y) = (value ? 1 : 0);
 
@@ -155,8 +157,10 @@ static int luaGfxGetStandardAttrib(lua_State* L)
     int x = luaL_checkinteger(L, 2);
     int y = luaL_checkinteger(L, 3);
 
-    if (!data.isValidCoord(x, y))
-        return luaL_error(L, "invalid coordinates.");
+    if (!data.isValidCoord(x, y)) {
+        return luaL_error(L,
+            "invalid coordinates (%d, %d) for dimensions (%d, %d).", x, y, data.width(), data.height());
+    }
 
     char a = data.attribAt(x, y, GfxColorMode::Standard);
     lua_pushinteger(L, (unsigned char)a);
@@ -173,8 +177,10 @@ static int luaGfxSetStandardAttrib(lua_State* L)
     int y = luaL_checkinteger(L, 3);
     int value = luaL_checkinteger(L, 4);
 
-    if (!data.isValidCoord(x, y))
-        return luaL_error(L, "invalid coordinates.");
+    if (!data.isValidCoord(x, y)) {
+        return luaL_error(L,
+            "invalid coordinates (%d, %d) for dimensions (%d, %d).", x, y, data.width(), data.height());
+    }
 
     data.attribAt(x, y, GfxColorMode::Standard) = (char)(value & 0xff);
     return 0;
@@ -189,7 +195,7 @@ static int luaGfxSetDimensions(lua_State* L)
     int h = luaL_checkinteger(L, 3);
 
     if (w <= 0 || h <= 0)
-        return luaL_error(L, "invalid dimensions.");
+        return luaL_error(L, "invalid dimensions (%d, %d).", w, h);
 
     data.resize(w, h);
     return 0;
@@ -204,8 +210,10 @@ static int luaGfxSetMulticolorAttrib(lua_State* L)
     int y = luaL_checkinteger(L, 3);
     int value = luaL_checkinteger(L, 4);
 
-    if (!data.isValidCoord(x, y))
-        return luaL_error(L, "invalid coordinates.");
+    if (!data.isValidCoord(x, y)) {
+        return luaL_error(L,
+            "invalid coordinates (%d, %d) for dimensions (%d, %d).", x, y, data.width(), data.height());
+    }
 
     data.attribAt(x, y, GfxColorMode::Multicolor) = (char)(value & 0xff);
     return 0;
