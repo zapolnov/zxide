@@ -120,6 +120,7 @@ private:
     Q_SLOT void on_actionDisassembly_triggered();
     Q_SLOT void on_actionMemoryLog_triggered();
     Q_SLOT void on_actionControlFlowLog_triggered();
+    Q_SLOT void on_actionLoadSnapshot_triggered();
 
     Q_SLOT void on_actionDraw_triggered();
     Q_SLOT void on_actionDrawRect_triggered();

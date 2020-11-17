@@ -214,6 +214,8 @@
     <addaction name="actionDisassembly"/>
     <addaction name="actionMemoryLog"/>
     <addaction name="actionControlFlowLog"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoadSnapshot"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -1279,12 +1281,17 @@
   </action>
   <action name="actionControlFlowLog">
    <property name="text">
-    <string>Control flow log...</string>
+    <string>Control &amp;flow log...</string>
    </property>
   </action>
   <action name="actionImportSCR">
    <property name="text">
     <string>Import SCR graphic...</string>
+   </property>
+  </action>
+  <action name="actionLoadSnapshot">
+   <property name="text">
+    <string>&amp;Load snapshot...</string>
    </property>
   </action>
  </widget>

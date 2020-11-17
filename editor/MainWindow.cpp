@@ -543,6 +543,7 @@ void MainWindow::updateUi()
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
     mUi->actionToggleBreakpoint->setEnabled(tab->canToggleBreakpoint());
     mUi->actionDisassembly->setEnabled(emulatorRunning);
+    mUi->actionLoadSnapshot->setEnabled(mProject && !emulatorRunning);
     mUi->actionEditProjectSettings->setEnabled(mProject != nullptr);
 
     mUi->actionDraw->setChecked(tab->isDrawToolActive());
@@ -1099,6 +1100,23 @@ void MainWindow::on_actionControlFlowLog_triggered()
     mControlFlowLogWindow->show();
     qApp->setActiveWindow(mControlFlowLogWindow);
     mControlFlowLogWindow->setFocus();
+}
+
+void MainWindow::on_actionLoadSnapshot_triggered()
+{
+    if (!mProject || mEmulatorCore->isRunning())
+        return;
+
+    Settings settings;
+    auto filter = QStringLiteral("%1 (*.%2)").arg(tr("Snapshot files")).arg(QStringLiteral("sna"));
+    QString file = QFileDialog::getOpenFileName(this, tr("Load snapshot"), settings.lastLoadedSNA(), filter);
+    if (file.isEmpty())
+        return;
+
+    settings.setLastLoadedSNA(file);
+
+    mEmulatorCore->setSnapshotFile(file);
+    mEmulatorCore->start();
 }
 
 void MainWindow::on_actionDraw_triggered()

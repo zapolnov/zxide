@@ -157,7 +157,8 @@ public:
     void unpause();
     bool isPaused() const;
 
-    void setTapeFile(const QString& file) { mTapeFile = file; }
+    void setTapeFile(const QString& file) { mTapeFile = file; mSnapshotFile.clear(); }
+    void setSnapshotFile(const QString& file) { mSnapshotFile = file; mTapeFile.clear(); }
 
     bool hasProgramBinary() const;
     void setProgramBinary(std::unique_ptr<ProgramBinary> binary);
@@ -217,6 +218,7 @@ private:
 
     static EmulatorCore* mInstance;
     QString mTapeFile;
+    QString mSnapshotFile;
     QTimer* mTimer;
     Thread* mThread;
     bool mShiftPressed;

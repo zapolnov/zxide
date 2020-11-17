@@ -110,11 +110,14 @@
     <file alias="48.rom">../3rdparty/fuse/roms/48.rom</file>
     <file alias="128-0.rom">../3rdparty/fuse/roms/128-0.rom</file>
     <file alias="128-1.rom">../3rdparty/fuse/roms/128-1.rom</file>
+    <file alias="128p-0.rom">../3rdparty/fuse/roms/128p-0.rom</file>
+    <file alias="128p-1.rom">../3rdparty/fuse/roms/128p-1.rom</file>
     <file alias="plus2-0.rom">../3rdparty/fuse/roms/plus2-0.rom</file>
     <file alias="plus2-1.rom">../3rdparty/fuse/roms/plus2-1.rom</file>
     <file alias="plus3-0.rom">../3rdparty/fuse/roms/plus3-0.rom</file>
     <file alias="plus3-1.rom">../3rdparty/fuse/roms/plus3-1.rom</file>
     <file alias="plus3-2.rom">../3rdparty/fuse/roms/plus3-2.rom</file>
     <file alias="plus3-3.rom">../3rdparty/fuse/roms/plus3-3.rom</file>
+    <file alias="trdos.rom">../3rdparty/fuse/roms/trdos.rom</file>
   </qresource>
 </RCC>

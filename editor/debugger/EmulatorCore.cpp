@@ -106,6 +106,7 @@ static bool emulatorPaused;
 static bool paused;
 static Registers registers;
 static QString tapeFile;
+static QString snapshotFile;
 static Machine currentMachine;
 static int emulatorSpeed;
 
@@ -162,6 +163,7 @@ bool EmulatorCore::start()
     writeAllowStack.clear();
 
     tapeFile = mTapeFile;
+    snapshotFile = mSnapshotFile;
     prevSP = unsigned(-1);
     prevPC = unsigned(-1);
     dxsoundShouldAbort = 0;
@@ -1095,8 +1097,17 @@ extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg,
 
     #define SETSTRING(N, V) if (fuse->N) libspectrum_free(fuse->N); fuse->N = utils_safe_strdup(V)
 
-    if (!tapeFile.isEmpty())
+    if (!tapeFile.isEmpty()) {
         SETSTRING(tape_file, tapeFile.toUtf8().constData());
+    } else {
+        SETSTRING(tape_file, nullptr);
+    }
+
+    if (!snapshotFile.isEmpty()) {
+        SETSTRING(snapshot, snapshotFile.toUtf8().constData());
+    } else {
+        SETSTRING(snapshot, nullptr);
+    }
 
     Machine machine = settings.emulatorMachine();
     switch (machine) {

@@ -14,6 +14,7 @@ public:
     QString lastProjectFile() const;
     QString lastImportedPNG() const;
     QString lastImportedSCR() const;
+    QString lastLoadedSNA() const;
     bool loadLastProjectOnStart() const;
     bool autoIndent() const;
     bool tabIndents() const;
@@ -32,6 +33,7 @@ public:
     void setLastProjectFile(const QString& file);
     void setLastImportedPNG(const QString& file);
     void setLastImportedSCR(const QString& file);
+    void setLastLoadedSNA(const QString& file);
     void setLoadLastProjectOnStart(bool flag);
     void setAutoIndent(bool flag);
     void setTabIndents(bool flag);
