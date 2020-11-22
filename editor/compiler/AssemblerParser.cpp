@@ -211,8 +211,10 @@ void AssemblerParser::parseSectionDecl()
                     comp = Compression::Zx7;
                 else if (str == "lzsa2")
                     comp = Compression::Lzsa2;
+                else if (str == "uncompressed")
+                    comp = Compression::Uncompressed;
                 else
-                    error(tr("invalid compression mode '%1' (expected 'none', 'zx7' or 'lzsa2')").arg(str.c_str()));
+                    error(tr("invalid compression mode '%1' (expected 'none', 'zx7', 'lzsa2' or 'uncompressed')").arg(str.c_str()));
                 if (section->compression() != comp && section->compression() != Compression::Unspecified)
                     error(tr("conflicting compression mode for section '%1'").arg(section->nameCStr()));
                 section->setCompression(comp);

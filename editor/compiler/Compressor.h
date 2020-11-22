@@ -35,6 +35,18 @@ private:
     Q_DISABLE_COPY(Compressor)
 };
 
+class UncompressedCompressor final : public Compressor
+{
+public:
+    explicit UncompressedCompressor(IProgramBinary* binary) : Compressor(binary) {}
+    ~UncompressedCompressor() override = default;
+
+protected:
+    void compress(std::vector<quint8> src, std::vector<quint8>& dst) override;
+
+    Q_DISABLE_COPY(UncompressedCompressor)
+};
+
 class Zx7Compressor final : public Compressor
 {
 public:

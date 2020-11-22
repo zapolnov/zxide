@@ -158,6 +158,7 @@ static void initStringMapping()
     stringId("sra");
     stringId("srl");
     stringId("sub");
+    stringId("uncompressed");
     stringId("xor");
     stringId("z");
     stringId("zx7");

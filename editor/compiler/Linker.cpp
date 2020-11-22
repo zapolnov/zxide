@@ -133,6 +133,13 @@ size_t Linker::emitCodeForSection(IProgramBinary* binary, ProgramSection* sectio
             compressedLength = compressor.flush();
             break;
         }
+
+        case Compression::Uncompressed: {
+            UncompressedCompressor compressor(binary);
+            section->emitCode(mProgram, &compressor, mReporter);
+            compressedLength = compressor.flush();
+            break;
+        }
     }
 
     return compressedLength;
