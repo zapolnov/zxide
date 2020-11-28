@@ -466,7 +466,7 @@ TEST_CASE("address is too large 3", "[sections]")
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
     REQUIRE(errorConsumer.lastErrorMessage() == "address is over 64K");
-    REQUIRE(errorConsumer.lastErrorLine() == 4);
+    REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
 
@@ -504,7 +504,7 @@ TEST_CASE("sections shouldn't overlap", "[sections]")
 
     ErrorConsumer errorConsumer;
     DataBlob actual = assemble(errorConsumer, source);
-    REQUIRE(errorConsumer.lastErrorMessage() == "section 'sec2' overlaps with address 0x1001 which belongs to another section");
+    REQUIRE(errorConsumer.lastErrorMessage() == "section 'sec2' overlaps with another section (expected base address 0x1001, got 0x1002)");
     REQUIRE(errorConsumer.lastErrorLine() == 3);
     REQUIRE(errorConsumer.errorCount() == 1);
 }
