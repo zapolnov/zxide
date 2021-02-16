@@ -1,0 +1,14 @@
+{
+    "Cdefines": [
+    ],
+    "Coptimization": "size",
+    "Cstandard": "c99",
+    "calleeSaves": false,
+    "charIsUnsigned": false,
+    "codeSeg": "main",
+    "constSeg": "main",
+    "dataSeg": "main",
+    "omitFramePointer": false,
+    "stackAutomaticVariables": false,
+    "version": 1
+}
