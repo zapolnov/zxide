@@ -40,11 +40,13 @@ Compiler::Compiler(QObject* parent)
     : QObject(parent)
     , mProgram(new Program)
     , mOutputTapeFile(QStringLiteral("out.tap"))
-    , mOutputDiskFile(QStringLiteral("out.scl"))
+    , mOutputSclFile(QStringLiteral("out.scl"))
+    , mOutputTrdFile(QStringLiteral("out.trd"))
     , mOutputWavFile(QStringLiteral("out.wav"))
     , mErrorLine(0)
     , mWriteTapFile(true)
-    , mWriteDiskFile(true)
+    , mWriteSclFile(true)
+    , mWriteTrdFile(true)
     , mWriteWavFile(true)
     , mWasError(false)
 {
@@ -292,15 +294,27 @@ void Compiler::compile()
                 throw CompilationFailed();
         }
 
-        if (mWriteDiskFile) {
-            setStatusText(tr("Writing disk file..."));
+        if (mWriteSclFile) {
+            setStatusText(tr("Writing SCL file..."));
             DiskFileWriter diskWriter(mProgramBinary.get(), this);
             diskWriter.setBasicCode(mCompiledBasicCode);
             diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
             diskWriter.setLoaderName(mProjectSettings->loaderFileName());
             diskWriter.setProgramName(mProjectSettings->programFileName());
             diskWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
-            if (!diskWriter.writeSclFile(mOutputDiskFile))
+            if (!diskWriter.writeSclFile(mOutputSclFile))
+                throw CompilationFailed();
+        }
+
+        if (mWriteTrdFile) {
+            setStatusText(tr("Writing TRD file..."));
+            DiskFileWriter diskWriter(mProgramBinary.get(), this);
+            diskWriter.setBasicCode(mCompiledBasicCode);
+            diskWriter.setBasicStartLine(mProjectSettings->basicStartLine);
+            diskWriter.setLoaderName(mProjectSettings->loaderFileName());
+            diskWriter.setProgramName(mProjectSettings->programFileName());
+            diskWriter.setDontOutputMainFile(mProjectSettings->dontOutputMainFile);
+            if (!diskWriter.writeTrdFile(mOutputTrdFile))
                 throw CompilationFailed();
         }
 

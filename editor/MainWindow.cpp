@@ -73,6 +73,9 @@ MainWindow::MainWindow()
 
     mUi->setupUi(this);
 
+    mUi->actionLoadAsTAP->setChecked(true);
+    mUi->actionLoadAsTRD->setChecked(false);
+
     mUi->memoryWidget->setScrollBar(mUi->memoryWidgetScrollBar);
     mUi->watchView->setModel(WatchModel::instance());
 
@@ -379,7 +382,8 @@ bool MainWindow::build()
     dlg.setGeneratedFilesDirectory(mProject->generatedFilesDirectory());
     dlg.setOutputWavFile(mProject->wavFileName());
     dlg.setOutputTapeFile(mProject->tapeFileName());
-    dlg.setOutputDiskFile(mProject->diskFileName());
+    dlg.setOutputSclFile(mProject->sclFileName());
+    dlg.setOutputTrdFile(mProject->trdFileName());
 
     std::vector<File*> files;
     mUi->fileManager->enumerateFiles(files, false);
@@ -543,6 +547,8 @@ void MainWindow::updateUi()
     mUi->actionRunToCursor->setEnabled(emulatorRunning && mEmulatorCore->isPaused() && tab->canRunToCursor());
     mUi->actionToggleBreakpoint->setEnabled(tab->canToggleBreakpoint());
     mUi->actionDisassembly->setEnabled(emulatorRunning);
+    mUi->actionLoadAsTAP->setEnabled(mProject && !emulatorRunning);
+    mUi->actionLoadAsTRD->setEnabled(mProject && !emulatorRunning);
     mUi->actionLoadSnapshot->setEnabled(mProject && !emulatorRunning);
     mUi->actionEditProjectSettings->setEnabled(mProject != nullptr);
 
@@ -936,7 +942,10 @@ void MainWindow::on_actionRun_triggered()
 
     if (!mEmulatorCore->isRunning()) {
         if (build()) {
-            mEmulatorCore->setTapeFile(mProject->tapeFileName());
+            if (mUi->actionLoadAsTAP->isChecked())
+                mEmulatorCore->setTapeFile(mProject->tapeFileName());
+            else
+                mEmulatorCore->setTrdFile(mProject->trdFileName());
             mEmulatorCore->start();
         }
     } else {
@@ -1100,6 +1109,26 @@ void MainWindow::on_actionControlFlowLog_triggered()
     mControlFlowLogWindow->show();
     qApp->setActiveWindow(mControlFlowLogWindow);
     mControlFlowLogWindow->setFocus();
+}
+
+void MainWindow::on_actionLoadAsTAP_toggled()
+{
+    if (!mRecursiveLoadAsAction) {
+        mRecursiveLoadAsAction = true;
+        mUi->actionLoadAsTAP->setChecked(true);
+        mUi->actionLoadAsTRD->setChecked(false);
+        mRecursiveLoadAsAction = false;
+    }
+}
+
+void MainWindow::on_actionLoadAsTRD_toggled()
+{
+    if (!mRecursiveLoadAsAction) {
+        mRecursiveLoadAsAction = true;
+        mUi->actionLoadAsTAP->setChecked(false);
+        mUi->actionLoadAsTRD->setChecked(true);
+        mRecursiveLoadAsAction = false;
+    }
 }
 
 void MainWindow::on_actionLoadSnapshot_triggered()

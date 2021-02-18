@@ -112,6 +112,10 @@
     <file alias="128-1.rom">../3rdparty/fuse/roms/128-1.rom</file>
     <file alias="128p-0.rom">../3rdparty/fuse/roms/128p-0.rom</file>
     <file alias="128p-1.rom">../3rdparty/fuse/roms/128p-1.rom</file>
+    <file alias="256s-0.rom">../3rdparty/fuse/roms/256s-0.rom</file>
+    <file alias="256s-1.rom">../3rdparty/fuse/roms/256s-1.rom</file>
+    <file alias="256s-2.rom">../3rdparty/fuse/roms/256s-2.rom</file>
+    <file alias="256s-3.rom">../3rdparty/fuse/roms/256s-3.rom</file>
     <file alias="plus2-0.rom">../3rdparty/fuse/roms/plus2-0.rom</file>
     <file alias="plus2-1.rom">../3rdparty/fuse/roms/plus2-1.rom</file>
     <file alias="plus3-0.rom">../3rdparty/fuse/roms/plus3-0.rom</file>

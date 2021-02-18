@@ -22,7 +22,8 @@ public:
     const QDir& dir() const { return mDir; }
 
     QString tapeFileName() const;
-    QString diskFileName() const;
+    QString sclFileName() const;
+    QString trdFileName() const;
     QString wavFileName() const;
     const QDir& projectDirectory() const { return mDir; }
     QDir generatedFilesDirectory() const;

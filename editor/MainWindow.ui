@@ -215,6 +215,9 @@
     <addaction name="actionMemoryLog"/>
     <addaction name="actionControlFlowLog"/>
     <addaction name="separator"/>
+    <addaction name="actionLoadAsTAP"/>
+    <addaction name="actionLoadAsTRD"/>
+    <addaction name="separator"/>
     <addaction name="actionLoadSnapshot"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -293,7 +296,7 @@
     <widget class="DisplayWidget" name="displayWidget">
      <property name="geometry">
       <rect>
-       <x>89</x>
+       <x>77</x>
        <y>96</y>
        <width>0</width>
        <height>0</height>
@@ -1292,6 +1295,22 @@
   <action name="actionLoadSnapshot">
    <property name="text">
     <string>&amp;Load snapshot...</string>
+   </property>
+  </action>
+  <action name="actionLoadAsTAP">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Load as TAP</string>
+   </property>
+  </action>
+  <action name="actionLoadAsTRD">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Load as TRD</string>
    </property>
   </action>
  </widget>

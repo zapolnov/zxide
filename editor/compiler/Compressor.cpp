@@ -1,6 +1,7 @@
 #include "Compressor.h"
 #include "compiler/ProgramDebugInfo.h"
 #include "compiler/Compiler.h"
+#include <stdexcept>
 
 extern "C" {
 #include <zx7.h>

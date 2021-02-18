@@ -106,6 +106,7 @@ static bool emulatorPaused;
 static bool paused;
 static Registers registers;
 static QString tapeFile;
+static QString trdFile;
 static QString snapshotFile;
 static Machine currentMachine;
 static int emulatorSpeed;
@@ -163,6 +164,7 @@ bool EmulatorCore::start()
     writeAllowStack.clear();
 
     tapeFile = mTapeFile;
+    trdFile = mTrdFile;
     snapshotFile = mSnapshotFile;
     prevSP = unsigned(-1);
     prevPC = unsigned(-1);
@@ -1101,6 +1103,12 @@ extern "C" int settings_command_line(struct settings_info* fuse, int* first_arg,
         SETSTRING(tape_file, tapeFile.toUtf8().constData());
     } else {
         SETSTRING(tape_file, nullptr);
+    }
+
+    if (!trdFile.isEmpty()) {
+        SETSTRING(betadisk_file, trdFile.toUtf8().constData());
+    } else {
+        SETSTRING(betadisk_file, nullptr);
     }
 
     if (!snapshotFile.isEmpty()) {

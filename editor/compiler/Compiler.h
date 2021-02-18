@@ -43,13 +43,15 @@ public:
 
     void addSourceFile(const QString& fullName, const QString& path);
     void setOutputTapeFile(const QString& file) { mOutputTapeFile = file; }
-    void setOutputDiskFile(const QString& file) { mOutputDiskFile = file; }
+    void setOutputSclFile(const QString& file) { mOutputSclFile = file; }
+    void setOutputTrdFile(const QString& file) { mOutputTrdFile = file; }
     void setOutputWavFile(const QString& file) { mOutputWavFile = file; }
     void setGeneratedFilesDirectory(const QDir& dir) { mGeneratedFilesDirectory = dir; }
     void setProjectFile(const QString& file) { mProjectFile = file; }
     void setProjectDirectory(const QDir& dir) { mProjectDirectory = dir; }
     void setWriteTapeFile(bool flag) { mWriteTapFile = flag; }
-    void setWriteDiskFile(bool flag) { mWriteDiskFile = flag; }
+    void setWriteSclFile(bool flag) { mWriteSclFile = flag; }
+    void setWriteTrdFile(bool flag) { mWriteTrdFile = flag; }
     void setWriteWavFile(bool flag) { mWriteWavFile = flag; }
 
     const std::vector<std::unique_ptr<SourceFile>>& basicSources() const { return mBasicSources; }
@@ -74,7 +76,8 @@ private:
     QString mErrorFile;
     QString mErrorMessage;
     QString mOutputTapeFile;
-    QString mOutputDiskFile;
+    QString mOutputSclFile;
+    QString mOutputTrdFile;
     QString mOutputWavFile;
     QString mProjectFile;
     QDir mGeneratedFilesDirectory;
@@ -90,7 +93,8 @@ private:
     std::vector<std::unique_ptr<SourceFile>> mBuildScripts;
     int mErrorLine;
     bool mWriteTapFile;
-    bool mWriteDiskFile;
+    bool mWriteTrdFile;
+    bool mWriteSclFile;
     bool mWriteWavFile;
     bool mWasError;
 

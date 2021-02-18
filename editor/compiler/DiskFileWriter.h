@@ -24,6 +24,7 @@ public:
     void setDontOutputMainFile(bool flag) { mDontOutputMainFile = flag; }
 
     bool writeSclFile(const QString& fileName);
+    bool writeTrdFile(const QString& fileName);
 
 private:
     ProgramBinary* mProgram;

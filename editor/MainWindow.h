@@ -62,6 +62,7 @@ private:
     BreakpointsModel* mBreakpointsModel;
     WatchModel* mWatchModel;
     EditorTabFactory* mTabFactory;
+    bool mRecursiveLoadAsAction = false;
 
     bool confirmSaveAll();
     bool confirmSave(File* file);
@@ -120,6 +121,8 @@ private:
     Q_SLOT void on_actionDisassembly_triggered();
     Q_SLOT void on_actionMemoryLog_triggered();
     Q_SLOT void on_actionControlFlowLog_triggered();
+    Q_SLOT void on_actionLoadAsTAP_toggled();
+    Q_SLOT void on_actionLoadAsTRD_toggled();
     Q_SLOT void on_actionLoadSnapshot_triggered();
 
     Q_SLOT void on_actionDraw_triggered();
