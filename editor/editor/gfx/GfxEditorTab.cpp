@@ -487,7 +487,7 @@ void GfxEditorTab::on_exportImageButton_clicked()
 
     lastPath = QFileInfo(file).absolutePath();
 
-    QImage image = mUi->editorWidget->toImage(2, false);
+    QImage image = mUi->editorWidget->toImage(mUi->exportImageScale->value(), false);
     if (!image.save(file, "PNG")) {
         QMessageBox::critical(this, tr("Error"), tr("Unable to save image \"%1\".").arg(file));
         return;

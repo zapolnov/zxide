@@ -1,6 +1,9 @@
 ZX Spectrum IDE
 ===============
 
+**NOTE: this software is deprecated. It is not being actively developed and contains a lot of bugs and problems.
+It is highly recommented to AVOID USING THIS SOFTWARE. Thank you!**
+
 This is a simple Integrated Development Environment for assembler (and, to the limited extent, BASIC)
 programming for ZX Spectrum.
 

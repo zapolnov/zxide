@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>69</width>
+         <width>57</width>
          <height>574</height>
         </rect>
        </property>
@@ -222,9 +222,36 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="exportImageButton">
+        <layout class="QHBoxLayout" name="exportImageLayout">
+         <item>
+          <widget class="QSpinBox" name="exportImageScale">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="exportImageButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Export as PNG...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exportScreenButton">
          <property name="text">
-          <string>Export as PNG...</string>
+          <string>Export as SCR...</string>
          </property>
         </widget>
        </item>
@@ -597,8 +624,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>598</width>
-            <height>131</height>
+            <width>610</width>
+            <height>117</height>
            </rect>
           </property>
           <property name="text">
@@ -632,13 +659,15 @@
   <tabstop>widthCombo</tabstop>
   <tabstop>heightCombo</tabstop>
   <tabstop>colorModeCombo</tabstop>
-  <tabstop>formatCombo</tabstop>
   <tabstop>entityEdit</tabstop>
+  <tabstop>formatCombo</tabstop>
   <tabstop>blockingCombo</tabstop>
   <tabstop>backgroundImageVisibleCheck</tabstop>
   <tabstop>backgroundImageOpacitySlider</tabstop>
   <tabstop>browseBackgroundImageButton</tabstop>
+  <tabstop>exportImageScale</tabstop>
   <tabstop>exportImageButton</tabstop>
+  <tabstop>exportScreenButton</tabstop>
   <tabstop>blackButton</tabstop>
   <tabstop>blueButton</tabstop>
   <tabstop>redButton</tabstop>
