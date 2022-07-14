@@ -6,6 +6,7 @@
 #include <map>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 
 struct SourceFile;
 class ProgramSection;
