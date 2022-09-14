@@ -166,7 +166,7 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 typedef size_t yy_size_t;
 #endif
 
-extern yy_size_t yyleng;
+extern yy_size_t fuse_yyleng;
 
 extern FILE *yyin, *yyout;
 
@@ -181,17 +181,17 @@ extern FILE *yyin, *yyout;
 #define yyless(n) \
 	do \
 		{ \
-		/* Undo effects of setting up yytext. */ \
+		/* Undo effects of setting up fuse_yytext. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
 		*yy_cp = (yy_hold_char); \
 		YY_RESTORE_YY_MORE_OFFSET \
 		(yy_c_buf_p) = yy_cp = yy_bp + yyless_macro_arg - YY_MORE_ADJ; \
-		YY_DO_BEFORE_ACTION; /* set up yytext again */ \
+		YY_DO_BEFORE_ACTION; /* set up fuse_yytext again */ \
 		} \
 	while ( 0 )
 
-#define unput(c) yyunput( c, (yytext_ptr)  )
+#define unput(c) yyunput( c, (fuse_yytext_ptr)  )
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
@@ -278,10 +278,10 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
  */
 #define YY_CURRENT_BUFFER_LVALUE (yy_buffer_stack)[(yy_buffer_stack_top)]
 
-/* yy_hold_char holds the character lost when yytext is formed. */
+/* yy_hold_char holds the character lost when fuse_yytext is formed. */
 static char yy_hold_char;
 static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
-yy_size_t yyleng;
+yy_size_t fuse_yyleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
@@ -349,8 +349,8 @@ extern int yylineno;
 
 int yylineno = 1;
 
-extern char *yytext;
-#define yytext_ptr yytext
+extern char *fuse_yytext;
+#define fuse_yytext_ptr fuse_yytext
 
 static yy_state_type yy_get_previous_state (void );
 static yy_state_type yy_try_NUL_trans (yy_state_type current_state  );
@@ -358,11 +358,11 @@ static int yy_get_next_buffer (void );
 static void yy_fatal_error (yyconst char msg[]  );
 
 /* Done after the current pattern has been matched and before the
- * corresponding action - sets up yytext.
+ * corresponding action - sets up fuse_yytext.
  */
 #define YY_DO_BEFORE_ACTION \
-	(yytext_ptr) = yy_bp; \
-	yyleng = (size_t) (yy_cp - yy_bp); \
+	(fuse_yytext_ptr) = yy_bp; \
+	fuse_yyleng = (size_t) (yy_cp - yy_bp); \
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
@@ -652,7 +652,7 @@ int yy_flex_debug = 0;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-char *yytext;
+char *fuse_yytext;
 #line 1 "debugger/commandl.l"
 /* commandl.l: Debugger command lexical scanner
    Copyright (c) 2002-2017 Philip Kendall, Sergio Baldoví
@@ -762,7 +762,7 @@ extern int yywrap (void );
 
     static void yyunput (int c,char *buf_ptr  );
     
-#ifndef yytext_ptr
+#ifndef fuse_yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int );
 #endif
 
@@ -795,7 +795,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( yytext, yyleng, 1, yyout )) {} } while (0)
+#define ECHO do { if (fwrite( fuse_yytext, fuse_yyleng, 1, yyout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -865,7 +865,7 @@ extern int yylex (void);
 #define YY_DECL int yylex (void)
 #endif /* !YY_DECL */
 
-/* Code executed at the beginning of each rule, after yytext and yyleng
+/* Code executed at the beginning of each rule, after fuse_yytext and fuse_yyleng
  * have been set up.
  */
 #ifndef YY_USER_ACTION
@@ -924,7 +924,7 @@ YY_DECL
 		{
 		yy_cp = (yy_c_buf_p);
 
-		/* Support of yytext. */
+		/* Support of fuse_yytext. */
 		*yy_cp = (yy_hold_char);
 
 		/* yy_bp points to the position in yy_ch_buf of the start of
@@ -1116,45 +1116,45 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 89 "debugger/commandl.l"
-{ yylval.token = '!'; return NEGATE; }
+{ fuse_yylval.token = '!'; return NEGATE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 90 "debugger/commandl.l"
-{ yylval.token = '~'; return NEGATE; }
+{ fuse_yylval.token = '~'; return NEGATE; }
 	YY_BREAK
 /* The hex constants used here are the appropriate Unicode characters */
 case 30:
 YY_RULE_SETUP
 #line 94 "debugger/commandl.l"
-{ yylval.token = DEBUGGER_TOKEN_EQUAL_TO; return EQUALITY; }
+{ fuse_yylval.token = DEBUGGER_TOKEN_EQUAL_TO; return EQUALITY; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 95 "debugger/commandl.l"
-{ yylval.token = DEBUGGER_TOKEN_NOT_EQUAL_TO;
+{ fuse_yylval.token = DEBUGGER_TOKEN_NOT_EQUAL_TO;
 		  return EQUALITY; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 98 "debugger/commandl.l"
-{ yylval.token = '<'; return COMPARISON; }
+{ fuse_yylval.token = '<'; return COMPARISON; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 99 "debugger/commandl.l"
-{ yylval.token = '>'; return COMPARISON; }
+{ fuse_yylval.token = '>'; return COMPARISON; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 100 "debugger/commandl.l"
-{ yylval.token = DEBUGGER_TOKEN_LESS_THAN_OR_EQUAL_TO;
+{ fuse_yylval.token = DEBUGGER_TOKEN_LESS_THAN_OR_EQUAL_TO;
 		  return COMPARISON; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 102 "debugger/commandl.l"
-{ yylval.token = DEBUGGER_TOKEN_GREATER_THAN_OR_EQUAL_TO;
+{ fuse_yylval.token = DEBUGGER_TOKEN_GREATER_THAN_OR_EQUAL_TO;
 		  return COMPARISON; }
 	YY_BREAK
 case 36:
@@ -1210,21 +1210,21 @@ YY_RULE_SETUP
 case 46:
 YY_RULE_SETUP
 #line 119 "debugger/commandl.l"
-{ yylval.integer = strtol( yytext+1, NULL, 16 );
+{ fuse_yylval.integer = strtol( fuse_yytext+1, NULL, 16 );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 		  return NUMBER; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 122 "debugger/commandl.l"
-{ yylval.integer = strtol( yytext+2, NULL, 16 );
+{ fuse_yylval.integer = strtol( fuse_yytext+2, NULL, 16 );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 	          return NUMBER; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 125 "debugger/commandl.l"
-{ yylval.integer = atoi( yytext );
+{ fuse_yylval.integer = atoi( fuse_yytext );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 		  return NUMBER; }
 	YY_BREAK
@@ -1232,10 +1232,10 @@ case 49:
 YY_RULE_SETUP
 #line 129 "debugger/commandl.l"
 { char *dest, *source;
-  yylval.string = mempool_malloc( debugger_memory_pool, strlen( yytext ) + 1 );
+  fuse_yylval.string = mempool_malloc( debugger_memory_pool, strlen( fuse_yytext ) + 1 );
   /* remove escape characters */
-  dest = yylval.string;
-  source = yytext;
+  dest = fuse_yylval.string;
+  source = fuse_yytext;
   while( *source ) {
     if( *source != '\\' ) {
       *dest++ = *source;
@@ -1248,7 +1248,7 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 #line 143 "debugger/commandl.l"
-{ yylval.string = mempool_strdup( debugger_memory_pool, yytext + 1 ); return VARIABLE; }
+{ fuse_yylval.string = mempool_strdup( debugger_memory_pool, fuse_yytext + 1 ); return VARIABLE; }
 	YY_BREAK
 case 51:
 /* rule 51 can match eol */
@@ -1278,7 +1278,7 @@ YY_RULE_SETUP
 case 55:
 YY_RULE_SETUP
 #line 159 "debugger/commandl.l"
-{ yylval.string = mempool_strdup( debugger_memory_pool, yytext ); return STRING; }
+{ fuse_yylval.string = mempool_strdup( debugger_memory_pool, fuse_yytext ); return STRING; }
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
@@ -1301,7 +1301,7 @@ case YY_STATE_EOF(COMMANDSTATE2):
 	case YY_END_OF_BUFFER:
 		{
 		/* Amount of text matched not including the EOB char. */
-		int yy_amount_of_matched_text = (int) (yy_cp - (yytext_ptr)) - 1;
+		int yy_amount_of_matched_text = (int) (yy_cp - (fuse_yytext_ptr)) - 1;
 
 		/* Undo the effects of YY_DO_BEFORE_ACTION. */
 		*yy_cp = (yy_hold_char);
@@ -1334,7 +1334,7 @@ case YY_STATE_EOF(COMMANDSTATE2):
 			{ /* This was really a NUL. */
 			yy_state_type yy_next_state;
 
-			(yy_c_buf_p) = (yytext_ptr) + yy_amount_of_matched_text;
+			(yy_c_buf_p) = (fuse_yytext_ptr) + yy_amount_of_matched_text;
 
 			yy_current_state = yy_get_previous_state(  );
 
@@ -1349,7 +1349,7 @@ case YY_STATE_EOF(COMMANDSTATE2):
 
 			yy_next_state = yy_try_NUL_trans( yy_current_state );
 
-			yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+			yy_bp = (fuse_yytext_ptr) + YY_MORE_ADJ;
 
 			if ( yy_next_state )
 				{
@@ -1376,14 +1376,14 @@ case YY_STATE_EOF(COMMANDSTATE2):
 					{
 					/* Note: because we've taken care in
 					 * yy_get_next_buffer() to have set up
-					 * yytext, we can now set up
+					 * fuse_yytext, we can now set up
 					 * yy_c_buf_p so that if some total
 					 * hoser (like flex itself) wants to
 					 * call the scanner after we return the
 					 * YY_NULL, it'll still work - another
 					 * YY_NULL will get returned.
 					 */
-					(yy_c_buf_p) = (yytext_ptr) + YY_MORE_ADJ;
+					(yy_c_buf_p) = (fuse_yytext_ptr) + YY_MORE_ADJ;
 
 					yy_act = YY_STATE_EOF(YY_START);
 					goto do_action;
@@ -1399,12 +1399,12 @@ case YY_STATE_EOF(COMMANDSTATE2):
 
 			case EOB_ACT_CONTINUE_SCAN:
 				(yy_c_buf_p) =
-					(yytext_ptr) + yy_amount_of_matched_text;
+					(fuse_yytext_ptr) + yy_amount_of_matched_text;
 
 				yy_current_state = yy_get_previous_state(  );
 
 				yy_cp = (yy_c_buf_p);
-				yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+				yy_bp = (fuse_yytext_ptr) + YY_MORE_ADJ;
 				goto yy_match;
 
 			case EOB_ACT_LAST_MATCH:
@@ -1414,7 +1414,7 @@ case YY_STATE_EOF(COMMANDSTATE2):
 				yy_current_state = yy_get_previous_state(  );
 
 				yy_cp = (yy_c_buf_p);
-				yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+				yy_bp = (fuse_yytext_ptr) + YY_MORE_ADJ;
 				goto yy_find_action;
 			}
 		break;
@@ -1438,7 +1438,7 @@ case YY_STATE_EOF(COMMANDSTATE2):
 static int yy_get_next_buffer (void)
 {
     	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-	register char *source = (yytext_ptr);
+	register char *source = (fuse_yytext_ptr);
 	register int number_to_move, i;
 	int ret_val;
 
@@ -1448,7 +1448,7 @@ static int yy_get_next_buffer (void)
 
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
-		if ( (yy_c_buf_p) - (yytext_ptr) - YY_MORE_ADJ == 1 )
+		if ( (yy_c_buf_p) - (fuse_yytext_ptr) - YY_MORE_ADJ == 1 )
 			{
 			/* We matched a single character, the EOB, so
 			 * treat this as a final EOF.
@@ -1468,7 +1468,7 @@ static int yy_get_next_buffer (void)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
+	number_to_move = (int) ((yy_c_buf_p) - (fuse_yytext_ptr)) - 1;
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1562,7 +1562,7 @@ static int yy_get_next_buffer (void)
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
 
-	(yytext_ptr) = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[0];
+	(fuse_yytext_ptr) = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[0];
 
 	return ret_val;
 }
@@ -1576,7 +1576,7 @@ static int yy_get_next_buffer (void)
     
 	yy_current_state = (yy_start);
 
-	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
+	for ( yy_cp = (fuse_yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
 		{
 		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
 		if ( yy_accept[yy_current_state] )
@@ -1630,7 +1630,7 @@ static int yy_get_next_buffer (void)
     
     yy_cp = (yy_c_buf_p);
 
-	/* undo effects of setting up yytext */
+	/* undo effects of setting up fuse_yytext */
 	*yy_cp = (yy_hold_char);
 
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
@@ -1656,7 +1656,7 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
-	(yytext_ptr) = yy_bp;
+	(fuse_yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
 }
@@ -1685,7 +1685,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
+			yy_size_t offset = (yy_c_buf_p) - (fuse_yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1721,14 +1721,14 @@ static int yy_get_next_buffer (void)
 					}
 
 				case EOB_ACT_CONTINUE_SCAN:
-					(yy_c_buf_p) = (yytext_ptr) + offset;
+					(yy_c_buf_p) = (fuse_yytext_ptr) + offset;
 					break;
 				}
 			}
 		}
 
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
-	*(yy_c_buf_p) = '\0';	/* preserve yytext */
+	*(yy_c_buf_p) = '\0';	/* preserve fuse_yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
 
 	return c;
@@ -1791,7 +1791,7 @@ static int yy_get_next_buffer (void)
 static void yy_load_buffer_state  (void)
 {
     	(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
-	(yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
+	(fuse_yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
 	yyin = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
 	(yy_hold_char) = *(yy_c_buf_p);
 }
@@ -2104,14 +2104,14 @@ static void yy_fatal_error (yyconst char* msg )
 #define yyless(n) \
 	do \
 		{ \
-		/* Undo effects of setting up yytext. */ \
+		/* Undo effects of setting up fuse_yytext. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
-		yytext[yyleng] = (yy_hold_char); \
-		(yy_c_buf_p) = yytext + yyless_macro_arg; \
+		fuse_yytext[fuse_yyleng] = (yy_hold_char); \
+		(yy_c_buf_p) = fuse_yytext + yyless_macro_arg; \
 		(yy_hold_char) = *(yy_c_buf_p); \
 		*(yy_c_buf_p) = '\0'; \
-		yyleng = yyless_macro_arg; \
+		fuse_yyleng = yyless_macro_arg; \
 		} \
 	while ( 0 )
 
@@ -2147,7 +2147,7 @@ FILE *yyget_out  (void)
  */
 yy_size_t yyget_leng  (void)
 {
-        return yyleng;
+        return fuse_yyleng;
 }
 
 /** Get the current token.
@@ -2156,7 +2156,7 @@ yy_size_t yyget_leng  (void)
 
 char *yyget_text  (void)
 {
-        return yytext;
+        return fuse_yytext;
 }
 
 /** Set the current line number.
@@ -2249,7 +2249,7 @@ int yylex_destroy  (void)
  * Internal utility routines.
  */
 
-#ifndef yytext_ptr
+#ifndef fuse_yytext_ptr
 static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
 {
 	register int i;

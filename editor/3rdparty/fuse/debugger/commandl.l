@@ -86,20 +86,20 @@ w|wr|wri|writ|write { return WRITE; }
 "["             { return '['; }
 "]"             { return ']'; }
 
-"!"		{ yylval.token = '!'; return NEGATE; }
-"~"		{ yylval.token = '~'; return NEGATE; }
+"!"		{ fuse_yylval.token = '!'; return NEGATE; }
+"~"		{ fuse_yylval.token = '~'; return NEGATE; }
 
  /* The hex constants used here are the appropriate Unicode characters */
 
-"=="		{ yylval.token = DEBUGGER_TOKEN_EQUAL_TO; return EQUALITY; }
-"!="		{ yylval.token = DEBUGGER_TOKEN_NOT_EQUAL_TO;
+"=="		{ fuse_yylval.token = DEBUGGER_TOKEN_EQUAL_TO; return EQUALITY; }
+"!="		{ fuse_yylval.token = DEBUGGER_TOKEN_NOT_EQUAL_TO;
 		  return EQUALITY; }
 
-"<"		{ yylval.token = '<'; return COMPARISON; }
-">"		{ yylval.token = '>'; return COMPARISON; }
-"<="		{ yylval.token = DEBUGGER_TOKEN_LESS_THAN_OR_EQUAL_TO;
+"<"		{ fuse_yylval.token = '<'; return COMPARISON; }
+">"		{ fuse_yylval.token = '>'; return COMPARISON; }
+"<="		{ fuse_yylval.token = DEBUGGER_TOKEN_LESS_THAN_OR_EQUAL_TO;
 		  return COMPARISON; }
-">="		{ yylval.token = DEBUGGER_TOKEN_GREATER_THAN_OR_EQUAL_TO;
+">="		{ fuse_yylval.token = DEBUGGER_TOKEN_GREATER_THAN_OR_EQUAL_TO;
 		  return COMPARISON; }
 
 "+"		{ return '+'; }
@@ -116,21 +116,21 @@ w|wr|wri|writ|write { return WRITE; }
 
 ":"		{ return ':'; }
 
-$[[:xdigit:]]+	{ yylval.integer = strtol( yytext+1, NULL, 16 );
+$[[:xdigit:]]+	{ fuse_yylval.integer = strtol( fuse_yytext+1, NULL, 16 );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 		  return NUMBER; }
-0x[[:xdigit:]]+	{ yylval.integer = strtol( yytext+2, NULL, 16 );
+0x[[:xdigit:]]+	{ fuse_yylval.integer = strtol( fuse_yytext+2, NULL, 16 );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 	          return NUMBER; }
-[[:digit:]]+	{ yylval.integer = atoi( yytext );
+[[:digit:]]+	{ fuse_yylval.integer = atoi( fuse_yytext );
 		  if( YY_START == COMMANDSTATE1 ) BEGIN( COMMANDSTATE2 );
 		  return NUMBER; }
 
 {ID}		{ char *dest, *source;
-  yylval.string = mempool_malloc( debugger_memory_pool, strlen( yytext ) + 1 );
+  fuse_yylval.string = mempool_malloc( debugger_memory_pool, strlen( fuse_yytext ) + 1 );
   /* remove escape characters */
-  dest = yylval.string;
-  source = yytext;
+  dest = fuse_yylval.string;
+  source = fuse_yytext;
   while( *source ) {
     if( *source != '\\' ) {
       *dest++ = *source;
@@ -140,7 +140,7 @@ $[[:xdigit:]]+	{ yylval.integer = strtol( yytext+1, NULL, 16 );
   *dest = '\0';
   return STRING; }
 
-${ID}		{ yylval.string = mempool_strdup( debugger_memory_pool, yytext + 1 ); return VARIABLE; }
+${ID}		{ fuse_yylval.string = mempool_strdup( debugger_memory_pool, fuse_yytext + 1 ); return VARIABLE; }
 
 \n		{ return '\n'; }
 
@@ -156,7 +156,7 @@ ${ID}		{ yylval.string = mempool_strdup( debugger_memory_pool, yytext + 1 ); ret
 
 end             { BEGIN(INITIAL); return DEBUGGER_END; }
 
-[^\n]*          { yylval.string = mempool_strdup( debugger_memory_pool, yytext ); return STRING; }
+[^\n]*          { fuse_yylval.string = mempool_strdup( debugger_memory_pool, fuse_yytext ); return STRING; }
 \n              { return '\n'; }
 
 }

@@ -37,7 +37,7 @@
 # define YYDEBUG 1
 #endif
 #if YYDEBUG
-extern int yydebug;
+extern int fuse_yydebug;
 #endif
 
 /* Token type.  */
@@ -143,7 +143,7 @@ union YYSTYPE
 #endif
 
 
-extern YYSTYPE yylval;
+extern YYSTYPE fuse_yylval;
 
 int yyparse (void);
 

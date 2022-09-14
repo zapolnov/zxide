@@ -40,7 +40,7 @@ extern "C" {
 #endif
 
 /* Forward declaration */
-typedef enum _lzsa_status_t lzsa_status_t;
+#include "enum.h"
 typedef struct _lzsa_stats lzsa_stats;
 
 /*-------------- File API -------------- */

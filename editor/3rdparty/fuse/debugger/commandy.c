@@ -109,7 +109,7 @@
 # define YYDEBUG 1
 #endif
 #if YYDEBUG
-extern int yydebug;
+extern int fuse_yydebug;
 #endif
 
 /* Token type.  */
@@ -215,7 +215,7 @@ union YYSTYPE
 #endif
 
 
-extern YYSTYPE yylval;
+extern YYSTYPE fuse_yylval;
 
 int yyparse (void);
 
@@ -315,7 +315,7 @@ typedef short int yytype_int16;
 #endif
 
 #if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
-/* Suppress an incorrect diagnostic about yylval being uninitialized.  */
+/* Suppress an incorrect diagnostic about fuse_yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
     _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")\
@@ -740,7 +740,7 @@ static const yytype_uint8 yyr2[] =
 
 
 #define yyerrok         (yyerrstatus = 0)
-#define yyclearin       (yychar = YYEMPTY)
+#define yyclearin       (fuse_yychar = YYEMPTY)
 #define YYEMPTY         (-2)
 #define YYEOF           0
 
@@ -753,10 +753,10 @@ static const yytype_uint8 yyr2[] =
 
 #define YYBACKUP(Token, Value)                                  \
 do                                                              \
-  if (yychar == YYEMPTY)                                        \
+  if (fuse_yychar == YYEMPTY)                                        \
     {                                                           \
-      yychar = (Token);                                         \
-      yylval = (Value);                                         \
+      fuse_yychar = (Token);                                         \
+      fuse_yylval = (Value);                                         \
       YYPOPSTACK (yylen);                                       \
       yystate = *yyssp;                                         \
       goto yybackup;                                            \
@@ -784,7 +784,7 @@ while (0)
 
 # define YYDPRINTF(Args)                        \
 do {                                            \
-  if (yydebug)                                  \
+  if (fuse_yydebug)                                  \
     YYFPRINTF Args;                             \
 } while (0)
 
@@ -796,7 +796,7 @@ do {                                            \
 
 # define YY_SYMBOL_PRINT(Title, Type, Value, Location)                    \
 do {                                                                      \
-  if (yydebug)                                                            \
+  if (fuse_yydebug)                                                            \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
@@ -858,7 +858,7 @@ yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
 
 # define YY_STACK_PRINT(Bottom, Top)                            \
 do {                                                            \
-  if (yydebug)                                                  \
+  if (fuse_yydebug)                                                  \
     yy_stack_print ((Bottom), (Top));                           \
 } while (0)
 
@@ -889,13 +889,13 @@ yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
 
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
-  if (yydebug)                          \
+  if (fuse_yydebug)                          \
     yy_reduce_print (yyssp, yyvsp, Rule); \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
    multiple parsers can coexist.  */
-int yydebug;
+int fuse_yydebug;
 #else /* !YYDEBUG */
 # define YYDPRINTF(Args)
 # define YY_SYMBOL_PRINT(Title, Type, Value, Location)
@@ -1035,7 +1035,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
        the only way this function was invoked is if the default action
        is an error action.  In that case, don't check for expected
        tokens because there are none.
-     - The only way there can be no lookahead present (in yychar) is if
+     - The only way there can be no lookahead present (in fuse_yychar) is if
        this state is a consistent state with a default action.  Thus,
        detecting the absence of a lookahead is sufficient to determine
        that there is no unexpected or expected token to report.  In that
@@ -1043,7 +1043,7 @@ yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
      - Don't assume there isn't a lookahead just because this state is a
        consistent state with a default action.  There might have been a
        previous inconsistent state, consistent state with a non-default
-       action, or user semantic action that manipulated yychar.
+       action, or user semantic action that manipulated fuse_yychar.
      - Of course, the expected token list depends on states to have
        correct lookahead information, and it depends on the parser not
        to perform extra reductions after fetching a lookahead from the
@@ -1164,12 +1164,12 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)
 
 
 /* The lookahead symbol.  */
-int yychar;
+int fuse_yychar;
 
 /* The semantic value of the lookahead symbol.  */
-YYSTYPE yylval;
+YYSTYPE fuse_yylval;
 /* Number of syntax errors so far.  */
-int yynerrs;
+int fuse_yynerrs;
 
 
 /*----------.
@@ -1231,8 +1231,8 @@ yyparse (void)
 
   yystate = 0;
   yyerrstatus = 0;
-  yynerrs = 0;
-  yychar = YYEMPTY; /* Cause a token to be read.  */
+  fuse_yynerrs = 0;
+  fuse_yychar = YYEMPTY; /* Cause a token to be read.  */
   goto yysetstate;
 
 /*------------------------------------------------------------.
@@ -1329,22 +1329,22 @@ yybackup:
 
   /* Not known => get a lookahead token if don't already have one.  */
 
-  /* YYCHAR is either YYEMPTY or YYEOF or a valid lookahead symbol.  */
-  if (yychar == YYEMPTY)
+  /* fuse_yychar is either YYEMPTY or YYEOF or a valid lookahead symbol.  */
+  if (fuse_yychar == YYEMPTY)
     {
       YYDPRINTF ((stderr, "Reading a token: "));
-      yychar = yylex ();
+      fuse_yychar = yylex ();
     }
 
-  if (yychar <= YYEOF)
+  if (fuse_yychar <= YYEOF)
     {
-      yychar = yytoken = YYEOF;
+      fuse_yychar = yytoken = YYEOF;
       YYDPRINTF ((stderr, "Now at end of input.\n"));
     }
   else
     {
-      yytoken = YYTRANSLATE (yychar);
-      YY_SYMBOL_PRINT ("Next token is", yytoken, &yylval, &yylloc);
+      yytoken = YYTRANSLATE (fuse_yychar);
+      YY_SYMBOL_PRINT ("Next token is", yytoken, &fuse_yylval, &yylloc);
     }
 
   /* If the proper action on seeing token YYTOKEN is to reduce or to
@@ -1367,14 +1367,14 @@ yybackup:
     yyerrstatus--;
 
   /* Shift the lookahead token.  */
-  YY_SYMBOL_PRINT ("Shifting", yytoken, &yylval, &yylloc);
+  YY_SYMBOL_PRINT ("Shifting", yytoken, &fuse_yylval, &yylloc);
 
   /* Discard the shifted token.  */
-  yychar = YYEMPTY;
+  fuse_yychar = YYEMPTY;
 
   yystate = yyn;
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  *++yyvsp = yylval;
+  *++yyvsp = fuse_yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 
   goto yynewstate;
@@ -1872,12 +1872,12 @@ yyreduce:
 #line 1873 "debugger/commandy.c" /* yacc.c:1646  */
       default: break;
     }
-  /* User semantic actions sometimes alter yychar, and that requires
+  /* User semantic actions sometimes alter fuse_yychar, and that requires
      that yytoken be updated with the new translation.  We take the
      approach of translating immediately before every use of yytoken.
      One alternative is translating here after every semantic action,
      but that translation would be missed if the semantic action invokes
-     YYABORT, YYACCEPT, or YYERROR immediately after altering yychar or
+     YYABORT, YYACCEPT, or YYERROR immediately after altering fuse_yychar or
      if it invokes YYBACKUP.  In the case of YYABORT or YYACCEPT, an
      incorrect destructor might then be invoked immediately.  In the
      case of YYERROR or YYBACKUP, subsequent parser actions might lead
@@ -1912,12 +1912,12 @@ yyreduce:
 yyerrlab:
   /* Make sure we have latest lookahead translation.  See comments at
      user semantic actions for why this is necessary.  */
-  yytoken = yychar == YYEMPTY ? YYEMPTY : YYTRANSLATE (yychar);
+  yytoken = fuse_yychar == YYEMPTY ? YYEMPTY : YYTRANSLATE (fuse_yychar);
 
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
-      ++yynerrs;
+      ++fuse_yynerrs;
 #if ! YYERROR_VERBOSE
       yyerror (YY_("syntax error"));
 #else
@@ -1961,17 +1961,17 @@ yyerrlab:
       /* If just tried and failed to reuse lookahead token after an
          error, discard it.  */
 
-      if (yychar <= YYEOF)
+      if (fuse_yychar <= YYEOF)
         {
           /* Return failure if at end of input.  */
-          if (yychar == YYEOF)
+          if (fuse_yychar == YYEOF)
             YYABORT;
         }
       else
         {
           yydestruct ("Error: discarding",
-                      yytoken, &yylval);
-          yychar = YYEMPTY;
+                      yytoken, &fuse_yylval);
+          fuse_yychar = YYEMPTY;
         }
     }
 
@@ -2033,7 +2033,7 @@ yyerrlab1:
     }
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  *++yyvsp = yylval;
+  *++yyvsp = fuse_yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 
 
@@ -2069,13 +2069,13 @@ yyexhaustedlab:
 #endif
 
 yyreturn:
-  if (yychar != YYEMPTY)
+  if (fuse_yychar != YYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at
          user semantic actions for why this is necessary.  */
-      yytoken = YYTRANSLATE (yychar);
+      yytoken = YYTRANSLATE (fuse_yychar);
       yydestruct ("Cleanup: discarding lookahead",
-                  yytoken, &yylval);
+                  yytoken, &fuse_yylval);
     }
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYABORT or YYACCEPT.  */
